@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Define\ServiceType.cs" />
+    <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <Folder Include="etc\" />
     <Folder Include="IF\" />
+    <Folder Include="Logic\NicoNico\" />
     <Folder Include="Logic\Utility\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

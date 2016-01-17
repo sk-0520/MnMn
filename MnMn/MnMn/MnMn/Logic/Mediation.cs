@@ -19,20 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
+namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class MainViewModel: ViewModelBase
+    /// <summary>
+    /// データ連携等々の橋渡し。
+    /// </summary>
+    public class Mediation
     {
-        #region property
-
-        Mediation Mediation { get; } = new Mediation();
-
-        #endregion
-
-        #region function
-        #endregion
     }
 }
