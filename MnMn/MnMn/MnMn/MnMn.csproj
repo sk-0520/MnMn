@@ -106,6 +106,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Logic\Mediation.cs" />
+    <Compile Include="Model\NicoNico\Video\CategoryModel.cs" />
+    <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -143,10 +145,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="etc\" />
+    <Folder Include="Define\NicoNico\" />
     <Folder Include="IF\" />
     <Folder Include="Logic\NicoNico\" />
     <Folder Include="Logic\Utility\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="etc\niconico\ranking.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

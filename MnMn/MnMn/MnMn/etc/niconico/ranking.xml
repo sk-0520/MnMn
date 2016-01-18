@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ranking>
+	<category>
+		<genres>
+			<genre key="all">
+				<title kang="ja-JP" word="カテゴリ合算" />
+			</genre>
+		</genres>
+	</category>
+	<category>
+		<genres>
+			<genre key="g_ent2">
+				<title kang="ja-JP" word="エンタメ・音楽" />
+			</genre>
+			<genre key="ent">
+				<title kang="ja-JP" word="エンターテイメント" />
+			</genre>
+			<genre key="music">
+				<title kang="ja-JP" word="音楽" />
+			</genre>
+			<genre key="sing">
+				<title kang="ja-JP" word="歌ってみた" />
+			</genre>
+			<genre key="dance">
+				<title kang="ja-JP" word="ダンス" />
+			</genre>
+			<genre key="vocaloid">
+				<title kang="ja-JP" word="VOCALOID" />
+			</genre>
+			<genre key="nicoindies">
+				<title kang="ja-JP" word="ニコニコインディーズ" />
+			</genre>
+		</genres>
+	</category>
+</ranking>
