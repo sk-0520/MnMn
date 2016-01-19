@@ -1,35 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ranking>
-	<category>
-		<genres>
-			<genre key="all">
-				<title kang="ja-JP" word="カテゴリ合算" />
-			</genre>
-		</genres>
-	</category>
-	<category>
-		<genres>
-			<genre key="g_ent2">
-				<title kang="ja-JP" word="エンタメ・音楽" />
-			</genre>
-			<genre key="ent">
-				<title kang="ja-JP" word="エンターテイメント" />
-			</genre>
-			<genre key="music">
-				<title kang="ja-JP" word="音楽" />
-			</genre>
-			<genre key="sing">
-				<title kang="ja-JP" word="歌ってみた" />
-			</genre>
-			<genre key="dance">
-				<title kang="ja-JP" word="ダンス" />
-			</genre>
-			<genre key="vocaloid">
-				<title kang="ja-JP" word="VOCALOID" />
-			</genre>
-			<genre key="nicoindies">
-				<title kang="ja-JP" word="ニコニコインディーズ" />
-			</genre>
-		</genres>
-	</category>
+	<!--<groups>-->
+		<categories>
+			<category key="all">
+				<words>
+					<word lang="ja-JP" value="カテゴリ合算" />
+				</words>
+			</category>
+		</categories>
+		<categories>
+			<category key="g_ent2">
+				<words>
+					<word lang="ja-JP" value="エンタメ・音楽" />
+				</words>
+			</category>
+			<category key="ent">
+				<words>
+					<word lang="ja-JP" value="エンターテイメント" />
+				</words>
+			</category>
+			<category key="music">
+				<words>
+					<word lang="ja-JP" value="音楽" />
+				</words>
+			</category>
+			<category key="sing">
+				<words>
+					<word lang="ja-JP" value="歌ってみた" />
+				</words>
+			</category>
+			<category key="dance">
+				<words>
+					<word lang="ja-JP" value="ダンス" />
+				</words>
+			</category>
+			<category key="vocaloid">
+				<words>
+					<word lang="ja-JP" value="VOCALOID" />
+				</words>
+			</category>
+			<category key="nicoindies">
+				<words>
+					<word lang="ja-JP" value="ニコニコインディーズ" />
+				</words>
+			</category>
+		</categories>
 </ranking>

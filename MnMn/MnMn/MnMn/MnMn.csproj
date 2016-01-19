@@ -106,10 +106,12 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Logic\Mediation.cs" />
+    <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
+    <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -151,7 +153,9 @@
     <Folder Include="Logic\Utility\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="etc\niconico\ranking.xml" />
+    <Content Include="etc\niconico\ranking.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
