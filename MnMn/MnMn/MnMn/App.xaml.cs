@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MnMn
+namespace ContentTypeTextNet.MnMn.MnMn
 {
     /// <summary>
     /// App.xaml の相互作用ロジック
@@ -16,6 +16,9 @@ namespace MnMn
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+#if DEBUG
+            DoDebug();
+#endif
         }
     }
 }

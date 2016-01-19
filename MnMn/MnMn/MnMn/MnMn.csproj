@@ -99,20 +99,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="App.Debug.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\ServiceType.cs" />
+    <Compile Include="Define\UriParameterType.cs" />
+    <Compile Include="IF\IResponseCompatibility.cs" />
+    <Compile Include="IF\IUriCompatibility.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
+    <Compile Include="Model\UriItemModel.cs" />
+    <Compile Include="Model\UriListModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NicoNico\UserSessionViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -148,12 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Define\NicoNico\" />
-    <Folder Include="IF\" />
     <Folder Include="Logic\NicoNico\" />
     <Folder Include="Logic\Utility\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="etc\niconico\ranking.xml">
+    <Content Include="etc\niconico\uri-list.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\niconico\video\ranking.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
