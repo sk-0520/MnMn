@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// URI定義。
+    /// URIパラメータ。
     /// </summary>
     [Serializable]
     public class UriParameterModel: ModelBase

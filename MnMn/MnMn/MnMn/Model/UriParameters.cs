@@ -25,7 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// URI定義リスト。
+    /// URIパラメータ一覧。
     /// </summary>
     [Serializable, XmlRoot("uri-params")]
     public class UriParametersModel: ModelBase

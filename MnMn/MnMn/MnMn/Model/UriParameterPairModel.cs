@@ -26,18 +26,28 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// URI定義。
+    /// URIパラメータのペア。
+    /// <para>キーがなければ値のみ使用する。</para>
     /// </summary>
     [Serializable]
     public class UriParameterPairModel: ModelBase
     {
         #region property
 
+        /// <summary>
+        /// キー。
+        /// </summary>
         [XmlAttribute("key")]
         public string Key { get; set; }
-
+        /// <summary>
+        /// 値。
+        /// </summary>
         [XmlAttribute("value")]
         public string Value { get; set; }
+        /// <summary>
+        /// キーが存在するか。
+        /// </summary>
+        public bool HasKey => string.IsNullOrWhiteSpace(Key);
 
         #endregion
     }
