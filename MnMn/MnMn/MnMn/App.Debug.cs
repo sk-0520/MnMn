@@ -18,7 +18,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void DoDebug()
         {
             //login();
-            load_uri();
+            //load_uri();
+            param();
         }
 
         async void login()
@@ -40,6 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var path = @"etc\niconico\uri-list.xml";
             var list = SerializeUtility.LoadXmlSerializeFromFile<UriListModel>(path);
+        }
+
+        void param()
+        {
+            var path = @"etc\niconico\uri-params.xml";
+            var list = SerializeUtility.LoadXmlSerializeFromFile<UriParametersModel>(path);
         }
     }
 #endif
