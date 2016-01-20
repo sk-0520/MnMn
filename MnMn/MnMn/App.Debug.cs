@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         void DoDebug()
         {
-            //login();
+            login();
             //load_uri();
-            param();
+            //param();
         }
 
         async void login()
