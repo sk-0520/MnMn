@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
 {
     /// <summary>
     /// 受信データの互換処理。

@@ -19,30 +19,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 {
-    /// <summary>
-    /// URIパラメータ。
-    /// </summary>
-    [Serializable]
-    public class UriParameterModel: ModelBase
+    public class VideoMediation: MediationBase
     {
-        #region property
-        /// <summary>
-        /// URIパラメータの検索キー。
-        /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
 
-        /// <summary>
-        /// URIパラメータのキーと値。
-        /// </summary>
-        [XmlElement("uri-param-pair")]
-        public CollectionModel<UriParameterPairModel> Pairs { get; set; } = new CollectionModel<UriParameterPairModel>();
+        #region MediationBase
+
+        public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.NicoNicoVideo) {
+                ThrowNotSupportGetUri(key, replaceMap, serviceType);
+            }
+
+            return GetUri_Impl(key, replaceMap, serviceType);
+        }
+
+        public override string ConvertUri(string uri, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.NicoNicoVideo) {
+                ThrowNotSupportConvertUri(uri, serviceType);
+            }
+
+            return uri;
+        }
 
         #endregion
     }

@@ -19,22 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
-    /// <summary>
-    /// URIパラメータ一覧。
-    /// </summary>
-    [Serializable, XmlRoot("uri-params")]
-    public class UriParametersModel: ModelBase
+    public interface IGetUri
     {
-        #region property
-
-        [XmlElement("uri-param")]
-        public UriParameterModel UriParameter { get; set; } = new UriParameterModel();
-
-        #endregion
+        string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

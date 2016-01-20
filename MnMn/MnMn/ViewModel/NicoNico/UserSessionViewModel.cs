@@ -84,7 +84,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             LoginState = LoginState.In;
 
             var client = new HttpClient(ClientHandler);
-            var url = "https://secure.nicovideo.jp/secure/login?site=niconico";
+            //var url = "https://secure.nicovideo.jp/secure/login?site=niconico";
+            var url = Mediation.GetUri("video-login", Mediation.EmptyMap, ServiceType.NicoNico);
             var content = new FormUrlEncodedContent(new Dictionary<string, string> {
                 { "next_url", string.Empty },
                 { "mail", UserAccount.User },

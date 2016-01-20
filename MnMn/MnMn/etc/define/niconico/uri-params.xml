@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+	<param key="video-login">
+		<param-pair key="site" value="niconico" />
+	</param>
+</parameters>

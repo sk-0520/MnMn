@@ -114,17 +114,21 @@
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
-    <Compile Include="IF\IResponseCompatibility.cs" />
-    <Compile Include="IF\IUriCompatibility.cs" />
+    <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
+    <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
+    <Compile Include="IF\IGetUri.cs" />
     <Compile Include="Logic\Mediation.cs" />
+    <Compile Include="Logic\MediationBase.cs" />
+    <Compile Include="Logic\NicoNico\NicoNicoMediation.cs" />
+    <Compile Include="Logic\NicoNico\Video\VideoMediation.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
-    <Compile Include="Model\UriParameterPairModel.cs" />
-    <Compile Include="Model\UriParameterModel.cs" />
+    <Compile Include="Model\RequestParameterPairModel.cs" />
+    <Compile Include="Model\RequestParameterModel.cs" />
     <Compile Include="Model\UriItemModel.cs" />
-    <Compile Include="Model\UriParameters.cs" />
+    <Compile Include="Model\RequestParametersModel.cs" />
     <Compile Include="Model\UriListModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
@@ -165,17 +169,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Define\NicoNico\" />
-    <Folder Include="Logic\NicoNico\" />
+    <Folder Include="etc\script\niconico\" />
     <Folder Include="Logic\Utility\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="etc\niconico\uri-list.xml">
+    <Content Include="etc\define\niconico\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\niconico\uri-params.xml">
+    <Content Include="etc\define\niconico\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\niconico\video\ranking.xml">
+    <Content Include="etc\define\niconico\video\ranking.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

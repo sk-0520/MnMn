@@ -19,21 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
 {
     /// <summary>
-    /// 対象サービス種別。
+    /// URI変換の互換処理。
     /// </summary>
-    public enum ServiceType
+    public interface IUriCompatibility
     {
         /// <summary>
-        /// ニコニコ。
+        /// 処理前に実行されるURI変更処理。
         /// </summary>
-        NicoNico,
-        /// <summary>
-        /// ニコニコ動画。
-        /// </summary>
-        NicoNicoVideo,
+        /// <param name="uri">使用するURI</param>
+        /// <param name="serviceType">呼び出し元の使用目的</param>
+        /// <returns></returns>
+        string ConvertUri(string uri, ServiceType serviceType);
     }
 }

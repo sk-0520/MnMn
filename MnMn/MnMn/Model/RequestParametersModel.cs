@@ -19,21 +19,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// 対象サービス種別。
+    /// URIパラメータ一覧。
     /// </summary>
-    public enum ServiceType
+    [Serializable, XmlRoot("parameters")]
+    public class RequestParametersModel: ModelBase
     {
-        /// <summary>
-        /// ニコニコ。
-        /// </summary>
-        NicoNico,
-        /// <summary>
-        /// ニコニコ動画。
-        /// </summary>
-        NicoNicoVideo,
+        #region property
+
+        [XmlElement("param")]
+        public CollectionModel<RequestParameterModel> Parameter { get; set; } = new CollectionModel<RequestParameterModel>();
+
+        #endregion
     }
 }

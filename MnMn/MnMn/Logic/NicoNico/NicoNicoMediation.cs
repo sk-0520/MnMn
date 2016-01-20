@@ -16,36 +16,32 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 {
-    /// <summary>
-    /// データ連携等々の橋渡し。
-    /// </summary>
-    public class Mediation: MediationBase
+    public class NicoNicoMediation: MediationBase
     {
-        public Mediation()
-            : base()
+        public NicoNicoMediation()
+            :base(Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersPath)
         { }
 
         #region property
 
-            /// <summary>
-            /// ニコニコ関係。
-            /// </summary>
-            NicoNicoMediation NicoNico { get; } = new NicoNicoMediation();
+        /// <summary>
+        /// ニコニコ動画関係。
+        /// </summary>
+        VideoMediation VideoMediation { get; } = new VideoMediation();
 
         #endregion
 
         #region function
-
-
 
         #endregion
 
@@ -55,8 +51,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             switch(serviceType) {
                 case ServiceType.NicoNico:
+                    return GetUri_Impl(key, replaceMap, serviceType);
+
                 case ServiceType.NicoNicoVideo:
-                    return NicoNico.GetUri(key, replaceMap, serviceType);
+                    return VideoMediation.GetUri(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -68,15 +66,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             switch(serviceType) {
                 case ServiceType.NicoNico:
+                    return uri;
+
                 case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertUri(uri, serviceType);
+                    return VideoMediation.ConvertUri(uri, serviceType);
 
                 default:
                     ThrowNotSupportConvertUri(uri, serviceType);
                     throw new NotImplementedException();
             }
         }
-
 
         #endregion
     }

@@ -19,21 +19,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// URI変換の互換処理。
+    /// URIパラメータのペア。
+    /// <para>キーがなければ値のみ使用する。</para>
     /// </summary>
-    public interface IUriCompatibility
+    [Serializable]
+    public class RequestParameterPairModel: ModelBase
     {
+        #region property
+
         /// <summary>
-        /// 処理前に実行されるURI変更処理。
+        /// キー。
         /// </summary>
-        /// <param name="uri">使用するURI</param>
-        /// <param name="serviceType">呼び出し元の使用目的</param>
-        /// <returns></returns>
-        string ConvertUri(string uri, ServiceType serviceType);
+        [XmlAttribute("key")]
+        public string Key { get; set; }
+        /// <summary>
+        /// 値。
+        /// </summary>
+        [XmlAttribute("value")]
+        public string Value { get; set; }
+        /// <summary>
+        /// キーが存在するか。
+        /// </summary>
+        public bool HasKey => !string.IsNullOrWhiteSpace(Key);
+
+        #endregion
     }
 }
