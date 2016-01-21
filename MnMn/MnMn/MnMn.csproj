@@ -111,12 +111,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Define\Delegate\JudgeResponsePageScraping.cs" />
+    <Compile Include="Define\Delegate\CreateHttpUserAgent.cs" />
+    <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
     <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
     <Compile Include="IF\Compatibility\IRequestCompatibility.cs" />
     <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
+    <Compile Include="IF\ICreateHttpUserAgent.cs" />
     <Compile Include="IF\IGetRequestParameter.cs" />
     <Compile Include="IF\IGetUri.cs" />
     <Compile Include="Logic\PageScraping.cs" />
@@ -124,6 +128,8 @@
     <Compile Include="Logic\MediationBase.cs" />
     <Compile Include="Logic\NicoNico\NicoNicoMediation.cs" />
     <Compile Include="Logic\NicoNico\Video\VideoMediation.cs" />
+    <Compile Include="Model\CheckModel.cs" />
+    <Compile Include="Model\CheckResultModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />

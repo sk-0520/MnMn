@@ -18,8 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -30,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public abstract class MediationBase:
+        DisposeFinalizeBase,
         IGetUri,
         IGetRequestParameter,
         IUriCompatibility,
@@ -99,6 +102,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportCheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(headers)}: {headers}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
@@ -225,6 +233,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region IResponseCompatibility
+
+        public virtual CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
         {

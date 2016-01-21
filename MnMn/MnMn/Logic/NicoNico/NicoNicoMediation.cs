@@ -18,11 +18,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 {
@@ -88,6 +90,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 
                 default:
                     ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return CheckModel.Success();
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.CheckResponseHeader(uri, headers, serviceType);
+
+                default:
+                    ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
                     throw new NotImplementedException();
             }
         }

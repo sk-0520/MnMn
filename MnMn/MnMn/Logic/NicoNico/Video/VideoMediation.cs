@@ -17,9 +17,11 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 {
@@ -62,6 +64,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
             }
 
             return (IDictionary<string, string>)requestParams;
+        }
+
+        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            return CheckModel.Success();
         }
 
         public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)

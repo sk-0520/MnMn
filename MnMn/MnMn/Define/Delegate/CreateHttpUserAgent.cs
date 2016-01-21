@@ -16,25 +16,12 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
-namespace ContentTypeTextNet.MnMn.MnMn
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Delegate
 {
-    /// <summary>
-    /// App.xaml の相互作用ロジック
-    /// </summary>
-    public partial class App: Application
-    {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-#if DEBUG
-            DoDebug();
-#endif
-        }
-    }
+    public delegate HttpClient CreateHttpUserAgent();
 }

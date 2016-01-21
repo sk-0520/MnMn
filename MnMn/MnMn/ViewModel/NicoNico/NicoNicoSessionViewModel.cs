@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
@@ -58,52 +59,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             }
 
             LoginState = LoginState.In;
+            using(var page = new PageScraping(Mediation, this, "video-session-login", ServiceType.NicoNico)) {
+                page.StopHeaderCheck = true;
 
-            using(var client = CreateHttpClient()) {
-                var srcUri = Mediation.GetUri("video-session-login", Mediation.EmptyMap, ServiceType.NicoNico);
-                var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
-                var uri = new Uri(dstUri);
-                var contentMap = new Dictionary<string, string>() {
-                    { "user", UserAccount.User },
-                    { "pass", UserAccount.Password },
-                };
-                var srcContent = Mediation.GetRequestParameter("video-session-login", contentMap, ServiceType.NicoNico);
-                var dstContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)srcContent, ServiceType.NicoNico);
-                var content = new FormUrlEncodedContent(dstContent);
+                page.ReplaceRequestParameters["user"] = UserAccount.User;
+                page.ReplaceRequestParameters["pass"] = UserAccount.Password;
 
-                var response = await client.PostAsync(uri, content);
-
-                if(!response.IsSuccessStatusCode) {
+                page.JudgeFailureStatusCode = response => {
                     LoginState = LoginState.Failure;
-                    return;
-                }
+                    return CheckModel.Failure();
+                };
+                page.JudgeSuccessStatusCode = response => {
+                    LoginState = LoginState.Check;
+                    return CheckModel.Success();
+                };
 
-                LoginState = LoginState.Check;
+                page.JudgeCheckResponseHeaders = response => {
+                    var successLogin = response.Headers
+                        .FirstOrDefault(h => h.Key == "x-niconico-authflag")
+                        .Value.Any(s => s == "1")
+                    ;
 
-                // TODO: ヘッダチェックの外部化
-                var successLogin = response.Headers
-                    .FirstOrDefault(h => h.Key == "x-niconico-authflag")
-                    .Value.Any(s => s == "1")
-                ;
+                    if(successLogin) {
+                        LoginState = LoginState.Logged;
+                        return CheckModel.Success();
+                    }
 
-                if(successLogin) {
-                    LoginState = LoginState.Logged;
-                    return;
-                }
+                    LoginState = LoginState.Failure;
 
-                // ヘッダチェックでまずログインチェック、失敗時は解析処理に委譲。
+                    return CheckModel.Failure();
+                };
 
-                //var srcBinary = await response.Content.ReadAsByteArrayAsync();
-                //var dstBinary = Mediation.ConvertBinary(uri, srcBinary, ServiceType.NicoNico);
-                //var encoding = Mediation.GetEncoding(uri, dstBinary, ServiceType.NicoNico);
-                //var text = encoding.GetString(dstBinary);
-                //var html = Mediation.ConvertString(uri, text, ServiceType.NicoNico);
-
-                ////TODO: 解析
-                //Debug.WriteLine(html);
-
-                LoginState = LoginState.Failure;
+                await page.GetResponseTextAsync(Define.HttpMethod.Post);
             }
+            return;
         }
 
         public override async Task LogoutAsync()
@@ -112,15 +101,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return;
             }
 
-            using(var client = CreateHttpClient()) {
-
-                var srcUri = Mediation.GetUri("video-session-logout", Mediation.EmptyMap, ServiceType.NicoNico);
-                var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
-                var uri = new Uri(dstUri);
-
-                var response = await client.GetAsync(uri);
-
-                LoginState = LoginState.None;
+            using(var page = new PageScraping(Mediation, this, "video-session-logout", ServiceType.NicoNico)) {
+                page.StopHeaderCheck = true;
+                page.ExitProcess = () => {
+                    LoginState = LoginState.None;
+                };
+                await page.GetResponseTextAsync(Define.HttpMethod.Get);
             }
         }
 
@@ -130,29 +116,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return false;
             }
 
-            using(var client = CreateHttpClient()) {
-                var srcUri = Mediation.GetUri("video-session-check", Mediation.EmptyMap, ServiceType.NicoNico);
-                var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
-                var uri = new Uri(dstUri);
+            using(var page = new PageScraping(Mediation, this, "video-session-check", ServiceType.NicoNico)) {
+                page.StopHeaderCheck = true;
+                page.JudgeCheckResponseHeaders = response => {
+                    var successLogin = response.Headers
+                        .FirstOrDefault(h => h.Key == "x-niconico-authflag")
+                        .Value.Any(s => s == "1")
+                    ;
+                    if(successLogin) {
+                        LoginState = LoginState.Logged;
+                        return CheckModel.Success();
+                    }
 
-                var response = await client.GetAsync(uri);
-
-                var isLogged = response.Headers
-                    .FirstOrDefault(h => h.Key == "x-niconico-authflag")
-                    .Value.Any(s => s != "0")
-                ;
-
-                if(isLogged) {
-                    return true;
-                }
-
-                var srcBinary = await response.Content.ReadAsByteArrayAsync();
-                var dstBinary = Mediation.ConvertBinary(uri, srcBinary, ServiceType.NicoNico);
-                var encoding = Mediation.GetEncoding(uri, dstBinary, ServiceType.NicoNico);
-                var text = encoding.GetString(dstBinary);
-                var html = Mediation.ConvertString(uri, text, ServiceType.NicoNico);
-
-                return false;
+                    return CheckModel.Failure();
+                };
+                var result = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                return result.IsSuccess;
             }
 
             #endregion

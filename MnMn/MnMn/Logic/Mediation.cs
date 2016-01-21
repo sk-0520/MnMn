@@ -17,11 +17,13 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -99,6 +101,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 default:
                     ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.CheckResponseHeader(uri, headers, serviceType);
+
+                default:
+                    ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
                     throw new NotImplementedException();
             }
         }
