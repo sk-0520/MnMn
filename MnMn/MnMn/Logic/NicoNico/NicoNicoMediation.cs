@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
     public class NicoNicoMediation: MediationBase
     {
         public NicoNicoMediation()
-            :base(Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersPath)
+            :base(Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersListPath, Constants.NicoNicoRequestParametersListPath)
         { }
 
         #region property
@@ -62,6 +62,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
             }
         }
 
+        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return GetRequestParameter_Impl(key, replaceMap, serviceType);
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.GetRequestParameter(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -73,6 +88,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 
                 default:
                     ThrowNotSupportConvertUri(uri, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return (IDictionary<string, string>)requestParams;
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.ConvertRequestParameter(requestParams, serviceType);
+
+                default:
+                    ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
                     throw new NotImplementedException();
             }
         }

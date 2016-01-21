@@ -84,15 +84,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             LoginState = LoginState.In;
 
             var client = new HttpClient(ClientHandler);
-            //var url = "https://secure.nicovideo.jp/secure/login?site=niconico";
-            var url = Mediation.GetUri("video-login", Mediation.EmptyMap, ServiceType.NicoNico);
-            var content = new FormUrlEncodedContent(new Dictionary<string, string> {
-                { "next_url", string.Empty },
-                { "mail", UserAccount.User },
-                { "password", UserAccount.Password }
-            });
+            var srcUri = Mediation.GetUri("video-login", Mediation.EmptyMap, ServiceType.NicoNico);
+            var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
+            var uri = new Uri(dstUri);
+            var contentMap = new Dictionary<string, string>() {
+                { "user", UserAccount.User },
+                { "pass", UserAccount.Password },
+            };
+            var srcContent = Mediation.GetRequestParameter("video-login", contentMap, ServiceType.NicoNico);
+            var dstContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)srcContent, ServiceType.NicoNico);
+            var content = new FormUrlEncodedContent(dstContent);
 
-            var response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(uri, content);
 
             if(!response.IsSuccessStatusCode) {
                 LoginState = LoginState.Failure;

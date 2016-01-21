@@ -19,36 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
 {
     /// <summary>
-    /// URIパラメータのペア。
-    /// <para>キーがなければ値のみ使用する。</para>
+    /// リクエスト変換の互換処理。
     /// </summary>
-    [Serializable]
-    public class RequestParameterPairModel: ModelBase
+    public interface IRequestCompatibility
     {
-        #region property
-
         /// <summary>
-        /// キー。
+        /// 処理前に実行されるリクエスト変更処理。
         /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
-        /// <summary>
-        /// 値。
-        /// </summary>
-        [XmlAttribute("value")]
-        public string Value { get; set; }
-        /// <summary>
-        /// キーが存在するか。
-        /// </summary>
-        public bool HasKey => !string.IsNullOrWhiteSpace(Key);
-
-        #endregion
+        /// <param name="requestParams">使用するリクエストデータ。</param>
+        /// <param name="serviceType">呼び出し元の使用目的。</param>
+        /// <returns></returns>
+        IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType);
     }
 }

@@ -29,13 +29,16 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public abstract class MediationBase: IGetUri, IUriCompatibility
+    public abstract class MediationBase: 
+        IGetUri,
+        IGetRequestParameter,
+        IUriCompatibility
     {
         public MediationBase()
-            : this(null, null)
+            : this(null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath)
+        protected MediationBase(string uriListPath, string uriParametersPath, string requestParametersPath)
         {
             if(uriListPath != null) {
                 UriList = SerializeUtility.LoadXmlSerializeFromFile<UriListModel>(uriListPath);
@@ -44,9 +47,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             if(uriParametersPath != null) {
-                UriParameters = SerializeUtility.LoadXmlSerializeFromFile<RequestParametersModel>(uriParametersPath);
+                UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(uriParametersPath);
             } else {
-                UriParameters = new RequestParametersModel();
+                UriParameterList = new ParameterListModel();
+            }
+
+            if(requestParametersPath != null) {
+                RequestParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(requestParametersPath);
+            } else {
+                RequestParameterList = new ParameterListModel();
             }
         }
 
@@ -56,7 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected UriListModel UriList { get; private set; }
 
-        protected RequestParametersModel UriParameters { get; private set; }
+        protected ParameterListModel UriParameterList { get; private set; }
+
+        protected ParameterListModel RequestParameterList { get; private set; }
 
         #endregion
 
@@ -72,14 +83,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
+        protected void ThrowNotSupportGetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+        }
+
         protected void ThrowNotSupportConvertUri(string uri, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
+        protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
+        }
 
-        string ToUriParameterString(RequestParameterPairModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
+        protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
+        
+        string ToUriParameterString(ParameterPairModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
@@ -108,7 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 return uri;
             }
 
-            var convertedParams = UriParameters.Parameter
+            var convertedParams = UriParameterList.Parameters
                 .First(up => up.Key == uriItem.Key)
                 .Pairs
                 .Select(p => ToUriParameterString(p, uriItem.UriParameterType, replaceMap))
@@ -127,6 +148,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected string GetUri_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType) => GetFormatedUri(GetUriItem(key), replaceMap);
 
+        protected IDictionary<string, string> GetRequestParameter_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            return RequestParameterList.Parameters
+                .First(up => up.Key == key)
+                .Pairs
+                .Where(p => p.HasKey)
+                .ToDictionary(
+                    p => p.Key,
+                    p => ReplaceString(p.Value, replaceMap)
+                )
+            ;
+        }
         #endregion
 
         #region IGetUri
@@ -138,9 +171,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
+        #region IGetRequestParameter
+
+        public virtual IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
+
         #region IUriCompatibility
 
         public virtual string ConvertUri(string uri, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IRequestCompatibility
+
+        public virtual IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

@@ -42,7 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string DefineNicoNicoDirectoryPath => Path.Combine(DefineDirectoryPath, "niconico");
 
         public static string NicoNicoUriListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-list.xml");
-        public static string NicoNicoUriParametersPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-params.xml");
+        public static string NicoNicoUriParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-params.xml");
+        public static string NicoNicoRequestParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "request-params.xml");
 
         public static string DefineNicoNicoVideoDirectoryPath => Path.Combine(DefineNicoNicoDirectoryPath, "video");
 

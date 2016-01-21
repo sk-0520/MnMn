@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// URIパラメータ。
     /// </summary>
     [Serializable]
-    public class RequestParameterModel: ModelBase
+    public class ParameterModel: ModelBase
     {
         #region property
         /// <summary>
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// URIパラメータのキーと値。
         /// </summary>
         [XmlElement("param-pair")]
-        public CollectionModel<RequestParameterPairModel> Pairs { get; set; } = new CollectionModel<RequestParameterPairModel>();
+        public CollectionModel<ParameterPairModel> Pairs { get; set; } = new CollectionModel<ParameterPairModel>();
 
         #endregion
     }

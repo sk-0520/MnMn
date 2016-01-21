@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void param()
         {
             var path = @"etc\niconico\uri-params.xml";
-            var list = SerializeUtility.LoadXmlSerializeFromFile<RequestParametersModel>(path);
+            var list = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(path);
         }
     }
 #endif

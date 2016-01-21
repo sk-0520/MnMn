@@ -64,6 +64,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.GetRequestParameter(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -76,6 +89,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     throw new NotImplementedException();
             }
         }
+
+        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.ConvertRequestParameter(requestParams, serviceType);
+
+                default:
+                    ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
 
 
         #endregion

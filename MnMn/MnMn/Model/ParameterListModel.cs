@@ -25,15 +25,15 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// URIパラメータ一覧。
+    /// パラメータ一覧。
     /// </summary>
     [Serializable, XmlRoot("parameters")]
-    public class RequestParametersModel: ModelBase
+    public class ParameterListModel: ModelBase
     {
         #region property
 
         [XmlElement("param")]
-        public CollectionModel<RequestParameterModel> Parameter { get; set; } = new CollectionModel<RequestParameterModel>();
+        public CollectionModel<ParameterModel> Parameters { get; set; } = new CollectionModel<ParameterModel>();
 
         #endregion
     }
