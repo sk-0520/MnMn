@@ -23,6 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
@@ -38,6 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //load_uri();
             //param();
             //getthumbinfo();
+            var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
         }
 
         async void login()

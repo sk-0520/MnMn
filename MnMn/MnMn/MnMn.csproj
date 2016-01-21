@@ -127,6 +127,9 @@
     <Compile Include="Define\Delegate\CreateHttpUserAgent.cs" />
     <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
+    <Compile Include="Define\NicoNico\Video\MovieType.cs" />
+    <Compile Include="Define\NicoNico\Video\ThumbType.cs" />
+    <Compile Include="Define\NicoNico\Video\VideoInformationLoad.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
     <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
@@ -143,6 +146,8 @@
     <Compile Include="Logic\NicoNico\NicoNicoMediation.cs" />
     <Compile Include="Logic\NicoNico\Video\VideoMediation.cs" />
     <Compile Include="Logic\HttpUserAgentHost.cs" />
+    <Compile Include="Logic\Utility\NicoNico\Video\GetthumbinfoUtility.cs" />
+    <Compile Include="Logic\Utility\RawValueUtility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
@@ -163,6 +168,7 @@
     <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NicoNico\NicoNicoSessionViewModel.cs" />
+    <Compile Include="ViewModel\NicoNico\Video\VideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="ViewModel\Control\TreeNodeItemViewModelBase.cs" />
     <Compile Include="View\Control\NicoNico\Video\RankingFinder.xaml.cs">
@@ -208,10 +214,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Define\NicoNico\" />
     <Folder Include="etc\script\niconico\" />
-    <Folder Include="Logic\Utility\" />
-    <Folder Include="ViewModel\NicoNico\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\niconico\uri-list.xml">
