@@ -17,28 +17,20 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
 {
-    /// <summary>
-    /// カテゴリ。
-    /// </summary>
-    [Serializable]
-    public class RankingGroupModel: ModelBase
+    public class RawVideoTagItemModel: ModelBase
     {
-        #region property
-
-        /// <summary>
-        /// カテゴリ一覧。
-        /// </summary>
-        [XmlElement("element")]
-        public CollectionModel<ElementModel> Items { get; set; } = new CollectionModel<ElementModel>();
-
-        #endregion
+        [XmlAttribute("lock")]
+        public string Lock { get; set; }
+        [XmlAttribute("category")]
+        public string Category { get; set; }
+        [XmlText]
+        public string Text { get; set; }
     }
 }

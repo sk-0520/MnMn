@@ -99,6 +99,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\Control\NicoNico\Video\RankingFinder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Control\NicoNico\Video\RankingToolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Control\NicoNico\Video\VideoFinder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,6 +135,7 @@
     <Compile Include="IF\ICreateHttpUserAgent.cs" />
     <Compile Include="IF\IGetRequestParameter.cs" />
     <Compile Include="IF\IGetUri.cs" />
+    <Compile Include="IF\Control\ITreeNodeItem.cs" />
     <Compile Include="Logic\PageScraping.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />
@@ -135,6 +148,10 @@
     <Compile Include="Model\NicoNico\Video\ElementModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawVideoTagListModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawVideoTagItemModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbResponseModel.cs" />
     <Compile Include="Model\ParameterPairModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Model\UriItemModel.cs" />
@@ -145,6 +162,16 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NicoNico\NicoNicoSessionViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
+    <Compile Include="ViewModel\Control\TreeNodeItemViewModelBase.cs" />
+    <Compile Include="View\Control\NicoNico\Video\RankingFinder.xaml.cs">
+      <DependentUpon>RankingFinder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\NicoNico\Video\RankingToolbar.xaml.cs">
+      <DependentUpon>RankingToolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\NicoNico\Video\VideoFinder.xaml.cs">
+      <DependentUpon>VideoFinder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -182,6 +209,7 @@
     <Folder Include="Define\NicoNico\" />
     <Folder Include="etc\script\niconico\" />
     <Folder Include="Logic\Utility\" />
+    <Folder Include="ViewModel\NicoNico\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\niconico\uri-list.xml">
