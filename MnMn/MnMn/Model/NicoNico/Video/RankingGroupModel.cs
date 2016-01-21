@@ -13,21 +13,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
     /// カテゴリ。
     /// </summary>
     [Serializable]
-    public class CategoryModel
+    public class RankingGroupModel: ModelBase
     {
         #region property
 
         /// <summary>
-        /// カテゴリの検索キー。
+        /// カテゴリ一覧。
         /// </summary>
-        [XmlAttribute("key")]
-        public string Key { get; set; }
-        /// <summary>
-        /// カテゴリタイトル。
-        /// </summary>
-        [XmlArray("words"), XmlArrayItem("word")]
-        public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
-
+        [XmlElement("element")]
+        public CollectionModel<ElementModel> Items { get; set; } = new CollectionModel<ElementModel>();
 
         #endregion
     }

@@ -47,6 +47,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string DefineNicoNicoVideoDirectoryPath => Path.Combine(DefineNicoNicoDirectoryPath, "video");
 
+        public static string NicoNicoVideoUriListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "uri-list.xml");
+        public static string NicoNicoVideoUriParametersListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "uri-params.xml");
+        public static string NicoNicoVideoRequestParametersListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "request-params.xml");
+
         public static string NicoNicoVideoRankingPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "ranking.xml");
 
         #endregion

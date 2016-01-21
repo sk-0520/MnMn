@@ -37,7 +37,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         Query,
         /// <summary>
         /// 末尾に / を付与して / で結合していく。
+        /// <para>値のみ使用される。</para>
         /// </summary>
-        Hierarchy
+        Hierarchy,
+        /// <summary>
+        /// 独自の接頭辞と接尾辞、接続部を用いて結合。
+        /// </summary>
+        PreSuffixes,
     }
 }

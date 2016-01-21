@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+	<param key="video-ranking">
+		<param-pair key="target" value="${target}" prefix="/" />
+		<param-pair key="period" value="${period}" prefix="/" />
+		<param-pair key="category" value="${category}" prefix="/" />
+		<param-pair key="rss" value="2.0" prefix="?"  />
+		<param-pair key="lang" value="${lang}" prefix="&amp;"  />
+	</param>
+</parameters>

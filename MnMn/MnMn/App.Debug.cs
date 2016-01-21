@@ -33,9 +33,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         void DoDebug()
         {
-            login();
+            //login();
             //load_uri();
             //param();
+            ranking();
         }
 
         async void login()
@@ -66,6 +67,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var path = @"etc\niconico\uri-params.xml";
             var list = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(path);
+        }
+
+        void ranking()
+        {
+            var mediation = new Mediation();
+            var cmd = new CommandLine();
+            var account = cmd.GetValue("account");
+            var password = cmd.GetValue("password");
+
+            var model = new UserAccountModel() {
+                User = account,
+                Password = password,
+            };
+            var vm = new NicoNicoSessionViewModel(mediation, model);
         }
     }
 #endif

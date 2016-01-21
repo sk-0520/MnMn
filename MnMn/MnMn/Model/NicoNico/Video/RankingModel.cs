@@ -37,5 +37,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
         /// </summary>
         [XmlElement("categories")]
         public CollectionModel<CategoryGroupModel> Items { get; set; } = new CollectionModel<CategoryGroupModel>();
+
+        [XmlElement("targets")]
+        public CollectionModel<RankingGroupModel> Targets { get; set; } = new CollectionModel<RankingGroupModel>();
+
+        [XmlElement("periods")]
+        public CollectionModel<RankingGroupModel> Periods { get; set; } = new CollectionModel<RankingGroupModel>();
+
     }
 }

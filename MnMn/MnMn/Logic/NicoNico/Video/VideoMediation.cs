@@ -22,11 +22,23 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 {
     public class VideoMediation: MediationBase
     {
+        public VideoMediation()
+            :base(Constants.NicoNicoVideoUriListPath, Constants.NicoNicoVideoUriParametersListPath, Constants.NicoNicoVideoRequestParametersListPath)
+        {
+            Ranking = LoadModelFromFile<RankingModel>(Constants.NicoNicoVideoRankingPath);
+        }
+
+        #region property
+
+        RankingModel Ranking { get; set; }
+
+        #endregion
 
         #region MediationBase
 

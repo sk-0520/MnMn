@@ -10,23 +10,24 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
 {
     /// <summary>
-    /// カテゴリ一覧を包括。
+    /// ランキング要素。
     /// </summary>
     [Serializable]
-    public class CategoryGroupModel: ModelBase
+    public class ElementModel: ModelBase
     {
-        #region 
+        #region property
 
         /// <summary>
-        /// カテゴリ一覧。
+        /// ランキング要素の検索キー。
         /// </summary>
-        [XmlElement("category")]
-        public CollectionModel<ElementModel> Categories { get; set; } = new CollectionModel<ElementModel>();
-
+        [XmlAttribute("key")]
+        public string Key { get; set; }
         /// <summary>
-        /// カテゴリは一つだけか。
+        /// ランキング要素タイトル。
         /// </summary>
-        public bool IsSingleCategory =>  Categories.Count == 1;
+        [XmlArray("words"), XmlArrayItem("word")]
+        public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
+
 
         #endregion
     }

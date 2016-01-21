@@ -21,6 +21,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -76,6 +77,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region function
+
+        protected static TModel LoadModelFromFile<TModel>(string path)
+            where TModel: IModel, new()
+        {
+            if(path != null) {
+                return SerializeUtility.LoadXmlSerializeFromFile<TModel>(path);
+            } else {
+                return new TModel();
+            }
+        }
 
         public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
         {
@@ -145,6 +156,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case UriParameterType.Hierarchy:
                     return val;
 
+                case UriParameterType.PreSuffixes:
+                    return $"{pair.Suffix}{pair.Key}{pair.Bond}{pair.Value}{pair.Suffix}";
+
                 default:
                     throw new NotImplementedException();
             }
@@ -172,6 +186,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case UriParameterType.Hierarchy:
                     return $"{uri}/{string.Join("/", convertedParams)}";
+
+                case UriParameterType.PreSuffixes:
+                    return $"{uri}{string.Join(string.Empty, convertedParams)}";
 
                 default:
                     throw new NotImplementedException();

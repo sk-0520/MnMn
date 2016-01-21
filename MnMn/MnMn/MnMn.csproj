@@ -131,7 +131,8 @@
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
-    <Compile Include="Model\NicoNico\Video\CategoryModel.cs" />
+    <Compile Include="Model\NicoNico\Video\RankingGroupModel.cs" />
+    <Compile Include="Model\NicoNico\Video\ElementModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
     <Compile Include="Model\ParameterPairModel.cs" />
@@ -193,6 +194,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\niconico\video\ranking.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\niconico\video\request-params.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\niconico\video\uri-list.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\niconico\video\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

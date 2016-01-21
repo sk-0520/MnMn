@@ -44,6 +44,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [XmlAttribute("value")]
         public string Value { get; set; }
+
+        /// <summary>
+        /// 接頭辞。
+        /// <para>UriParameterType.PreSuffixes で URI の場合に使用される。</para>
+        /// </summary>
+        [XmlAttribute("prefix")]
+        public string Prefix { get; set; }
+        /// <summary>
+        /// 接尾辞。
+        /// <para>UriParameterType.PreSuffixes で URI の場合に使用される。</para>
+        /// </summary>
+        [XmlAttribute("suffix")]
+        public string Suffix { get; set; }
+        /// <summary>
+        /// 連結部。
+        /// <para>UriParameterType.PreSuffixes で URI の場合に使用される。</para>
+        /// </summary>
+        [XmlAttribute("bond")]
+        public string Bond { get; set; }
         /// <summary>
         /// キーが存在するか。
         /// </summary>
