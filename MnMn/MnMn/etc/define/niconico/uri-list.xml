@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <uri-list>
-	<uri-item key="video-login" uri="https://secure.nicovideo.jp/secure/login" param="Query" />
+	<uri-item key="video-session-login" uri="https://secure.nicovideo.jp/secure/login" param="Query" />
+	<uri-item key="video-session-logout" uri="https://secure.nicovideo.jp/secure/logout" param="None" />
+	<uri-item key="video-session-check" uri="http://www.nicovideo.jp/rss" param="None" />
 </uri-list>

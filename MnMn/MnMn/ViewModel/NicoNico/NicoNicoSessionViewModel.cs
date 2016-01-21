@@ -31,56 +31,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
     /// <summary>
     /// ニコニコユーザーのセッションを管理。
     /// </summary>
-    public class UserSessionViewModel: ViewModelBase
+    public class NicoNicoSessionViewModel: SessionViewModelBase
     {
-        #region variable
 
-        LoginState _loginState;
-
-        #endregion
-
-        public UserSessionViewModel(UserAccountModel userAccountModel, Mediation mediation)
+        public NicoNicoSessionViewModel(Mediation mediation, UserAccountModel userAccountModel)
+            : base(mediation)
         {
             UserAccount = userAccountModel;
-            Mediation = mediation;
         }
 
         #region property
-
-        /// <summary>
-        /// 内部連携。
-        /// </summary>
-        Mediation Mediation { get; set; }
-
-        /// <summary>
-        /// HttpClient用ハンドラ。
-        /// </summary>
-        HttpClientHandler ClientHandler { get; } = new HttpClientHandler();
 
         /// <summary>
         /// ユーザーアカウント情報。
         /// </summary>
         UserAccountModel UserAccount { get; set; }
 
-        /// <summary>
-        /// ログイン状態。
-        /// </summary>
-        public LoginState LoginState
-        {
-            get { return this._loginState; }
-            set { SetVariableValue(ref this._loginState, value); }
-        }
-
         #endregion
 
         #region function
 
-        public HttpClient CreateHttpClient()
-        {
-            return new HttpClient(ClientHandler, false);
-        }
-
-        public async Task LoginAsync()
+        public override async Task LoginAsync()
         {
             if(LoginState == LoginState.In || LoginState == LoginState.Check || LoginState == LoginState.Logged) {
                 return;
@@ -89,14 +60,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             LoginState = LoginState.In;
 
             using(var client = CreateHttpClient()) {
-                var srcUri = Mediation.GetUri("video-login", Mediation.EmptyMap, ServiceType.NicoNico);
+                var srcUri = Mediation.GetUri("video-session-login", Mediation.EmptyMap, ServiceType.NicoNico);
                 var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
                 var uri = new Uri(dstUri);
                 var contentMap = new Dictionary<string, string>() {
                     { "user", UserAccount.User },
                     { "pass", UserAccount.Password },
                 };
-                var srcContent = Mediation.GetRequestParameter("video-login", contentMap, ServiceType.NicoNico);
+                var srcContent = Mediation.GetRequestParameter("video-session-login", contentMap, ServiceType.NicoNico);
                 var dstContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)srcContent, ServiceType.NicoNico);
                 var content = new FormUrlEncodedContent(dstContent);
 
@@ -135,6 +106,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             }
         }
 
-        #endregion
+        public override async Task LogoutAsync()
+        {
+            if(LoginState == LoginState.Failure || LoginState == LoginState.None) {
+                return;
+            }
+
+            using(var client = CreateHttpClient()) {
+
+                var srcUri = Mediation.GetUri("video-session-logout", Mediation.EmptyMap, ServiceType.NicoNico);
+                var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
+                var uri = new Uri(dstUri);
+
+                var response = await client.GetAsync(uri);
+
+                LoginState = LoginState.None;
+            }
+        }
+
+        public override async Task<bool> CheckLoginAsync()
+        {
+            if(LoginState == LoginState.None || LoginState == LoginState.Failure) {
+                return false;
+            }
+
+            using(var client = CreateHttpClient()) {
+                var srcUri = Mediation.GetUri("video-session-check", Mediation.EmptyMap, ServiceType.NicoNico);
+                var dstUri = Mediation.ConvertUri(srcUri, ServiceType.NicoNico);
+                var uri = new Uri(dstUri);
+
+                var response = await client.GetAsync(uri);
+
+                var isLogged = response.Headers
+                    .FirstOrDefault(h => h.Key == "x-niconico-authflag")
+                    .Value.Any(s => s != "0")
+                ;
+
+                if(isLogged) {
+                    return true;
+                }
+
+                var srcBinary = await response.Content.ReadAsByteArrayAsync();
+                var dstBinary = Mediation.ConvertBinary(uri, srcBinary, ServiceType.NicoNico);
+                var encoding = Mediation.GetEncoding(uri, dstBinary, ServiceType.NicoNico);
+                var text = encoding.GetString(dstBinary);
+                var html = Mediation.ConvertString(uri, text, ServiceType.NicoNico);
+
+                return false;
+            }
+
+            #endregion
+        }
     }
 }

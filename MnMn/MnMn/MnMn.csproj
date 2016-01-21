@@ -119,6 +119,7 @@
     <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
     <Compile Include="IF\IGetRequestParameter.cs" />
     <Compile Include="IF\IGetUri.cs" />
+    <Compile Include="Logic\PageScraping.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />
     <Compile Include="Logic\NicoNico\NicoNicoMediation.cs" />
@@ -135,7 +136,8 @@
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\NicoNico\UserSessionViewModel.cs" />
+    <Compile Include="ViewModel\NicoNico\NicoNicoSessionViewModel.cs" />
+    <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

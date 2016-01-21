@@ -150,10 +150,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             var convertedParams = UriParameterList.Parameters
-                .First(up => up.Key == uriItem.Key)
-                .Pairs
-                .Select(p => ToUriParameterString(p, uriItem.UriParameterType, replaceMap))
+                .FirstOrDefault(up => up.Key == uriItem.Key)
+                ?.Pairs
+                ?.Select(p => ToUriParameterString(p, uriItem.UriParameterType, replaceMap))
             ;
+            if(convertedParams == null) {
+                return uri;
+            }
+
             switch(uriItem.UriParameterType) {
                 case UriParameterType.Query:
                     return $"{uri}?{string.Join("&", convertedParams)}";
@@ -171,13 +175,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected IDictionary<string, string> GetRequestParameter_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             return RequestParameterList.Parameters
-                .First(up => up.Key == key)
-                .Pairs
-                .Where(p => p.HasKey)
-                .ToDictionary(
+                .FirstOrDefault(up => up.Key == key)
+                ?.Pairs
+                ?.Where(p => p.HasKey)
+                ?.ToDictionary(
                     p => p.Key,
                     p => ReplaceString(p.Value, replaceMap)
-                )
+                ) 
+                ?? (IDictionary<string, string>)EmptyMap
             ;
         }
         #endregion

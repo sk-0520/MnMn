@@ -33,8 +33,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 User = account,
                 Password = password,
             };
-            var vm = new UserSessionViewModel(model, mediation);
+            var vm = new NicoNicoSessionViewModel(mediation, model);
             await vm.LoginAsync();
+            var a = await vm.CheckLoginAsync();
+            await vm.LogoutAsync();
+            var b = await vm.CheckLoginAsync();
         }
 
         void load_uri()

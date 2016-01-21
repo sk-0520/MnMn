@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <parameters>
-	<param key="video-login">
+	<param key="video-session-login">
 		<param-pair key="mail_tel" value="${user}" />
 		<param-pair key="password" value="${pass}" />
 		<param-pair key="next_url" value="" />
