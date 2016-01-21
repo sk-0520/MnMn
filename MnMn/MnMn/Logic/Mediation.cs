@@ -64,19 +64,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
-        {
-            switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.GetRequestParameter(key, replaceMap, serviceType);
-
-                default:
-                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
-                    throw new NotImplementedException();
-            }
-        }
-
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -86,6 +73,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 default:
                     ThrowNotSupportConvertUri(uri, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.GetRequestParameter(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
                     throw new NotImplementedException();
             }
         }
@@ -103,7 +103,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.ConvertBinary(uri, binary, serviceType);
 
+                default:
+                    ThrowNotSupportConvertBinary(uri, binary, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.GetEncoding(uri, binary, serviceType);
+
+                default:
+                    ThrowNotSupportGetEncoding(uri, binary, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.ConvertString(uri, text, serviceType);
+
+                default:
+                    ThrowNotSupportConvertString(uri, text, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
 
         #endregion
     }

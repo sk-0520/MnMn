@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 Password = password,
             };
             var vm = new UserSessionViewModel(model, mediation);
-            var state = await vm.LoginAsync();
+            await vm.LoginAsync();
         }
 
         void load_uri()

@@ -62,21 +62,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
             }
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
-        {
-            switch(serviceType) {
-                case ServiceType.NicoNico:
-                    return GetRequestParameter_Impl(key, replaceMap, serviceType);
-
-                case ServiceType.NicoNicoVideo:
-                    return VideoMediation.GetRequestParameter(key, replaceMap, serviceType);
-
-                default:
-                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
-                    throw new NotImplementedException();
-            }
-        }
-
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -92,6 +77,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
             }
         }
 
+        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return GetRequestParameter_Impl(key, replaceMap, serviceType);
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.GetRequestParameter(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -103,6 +103,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 
                 default:
                     ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return binary;
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.ConvertBinary(uri, binary, serviceType);
+
+                default:
+                    ThrowNotSupportConvertBinary(uri, binary, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return Encoding.UTF8;
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.GetEncoding(uri, binary, serviceType);
+
+                default:
+                    ThrowNotSupportGetEncoding(uri, binary, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    return text;
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.ConvertString(uri, text, serviceType);
+
+                default:
+                    ThrowNotSupportConvertString(uri, text, serviceType);
                     throw new NotImplementedException();
             }
         }

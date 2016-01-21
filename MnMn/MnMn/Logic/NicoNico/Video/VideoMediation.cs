@@ -51,7 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
             if(serviceType != ServiceType.NicoNicoVideo) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
             }
-            return base.GetRequestParameter(key, replaceMap, serviceType);
+
+            return GetRequestParameter_Impl(key, replaceMap, serviceType);
         }
 
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
@@ -61,6 +62,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
             }
 
             return (IDictionary<string, string>)requestParams;
+        }
+
+        public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            return binary;
+        }
+
+        public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            return Encoding.UTF8;
+        }
+
+        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        {
+            return text;
         }
 
         #endregion

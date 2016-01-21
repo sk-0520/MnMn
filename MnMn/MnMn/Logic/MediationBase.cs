@@ -29,10 +29,11 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public abstract class MediationBase: 
+    public abstract class MediationBase:
         IGetUri,
         IGetRequestParameter,
-        IUriCompatibility
+        IUriCompatibility,
+        IResponseCompatibility
     {
         public MediationBase()
             : this(null, null, null)
@@ -78,6 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return s.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map);
         }
 
+        #region ThrowNotSupport
+
         protected void ThrowNotSupportGetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
@@ -98,8 +101,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
         }
 
+        protected void ThrowNotSupportConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(binary)}: {binary}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportGetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(binary)}: {binary}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportConvertString(Uri uri, string text, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        #endregion
+
         protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
-        
+
         string ToUriParameterString(ParameterPairModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
@@ -171,6 +191,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
+        #region IUriCompatibility
+
+        public virtual string ConvertUri(string uri, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region IGetRequestParameter
 
         public virtual IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -181,21 +210,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        #region IUriCompatibility
-
-        public virtual string ConvertUri(string uri, ServiceType serviceType)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region IRequestCompatibility
 
         public virtual IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region IResponseCompatibility
+
+        public virtual byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual string ConvertString(Uri uri, string text, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
     }

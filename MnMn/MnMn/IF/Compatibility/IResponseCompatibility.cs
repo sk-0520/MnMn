@@ -35,7 +35,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
         /// <param name="binary">バイナリデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        string ConvertBinary(string uri, byte[] binary, ServiceType serviceType);
+        byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType);
+        /// <summary>
+        /// 受信後に呼び出されるバイナリから文字コード取得処理。
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="binary"></param>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType);
         /// <summary>
         /// 受信後に呼び出される文字列変換処理。
         /// </summary>
@@ -43,6 +51,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
         /// <param name="text">テキストデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        string ConvertString(string uri, string text, ServiceType serviceType);
+        string ConvertString(Uri uri, string text, ServiceType serviceType);
     }
 }
