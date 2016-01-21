@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
@@ -32,6 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
         [XmlAttribute("status")]
         public string Status { get; set; }
 
+        [XmlElement("thumb")]
         public RawVideoThumbModel Thumb { get; set; } = new RawVideoThumbModel();
 
         #endregion

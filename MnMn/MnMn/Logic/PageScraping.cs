@@ -43,9 +43,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             HttpUserAgent = userAgentCreator.CreateHttpUserAgent();
             Key = key;
             ServiceType = serviceType;
+            OwnershipUA = true;
+        }
+
+        public PageScraping(Mediation mediation, HttpUserAgentHost host, string key, ServiceType serviceType)
+        {
+            Mediation = mediation;
+            HttpUserAgent = host.Client;
+            Key = key;
+            ServiceType = serviceType;
+            OwnershipUA = false;
         }
 
         #region proeprty
+
+        bool OwnershipUA { get; set; }
 
         Mediation Mediation { get; set; }
 
@@ -234,7 +246,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(!IsDisposed) {
                 HttpUserAgent.CancelPendingRequests();
-                HttpUserAgent.Dispose();
+                if(OwnershipUA) {
+                    HttpUserAgent.Dispose();
+                }
                 HttpUserAgent = null;
 
                 Mediation = null;

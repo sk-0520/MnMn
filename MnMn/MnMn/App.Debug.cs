@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //login();
             //load_uri();
             //param();
-            ranking();
+            //getthumbinfo();
         }
 
         async void login()
@@ -69,18 +70,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var list = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(path);
         }
 
-        void ranking()
+        async void getthumbinfo()
         {
-            var mediation = new Mediation();
-            var cmd = new CommandLine();
-            var account = cmd.GetValue("account");
-            var password = cmd.GetValue("password");
-
-            var model = new UserAccountModel() {
-                User = account,
-                Password = password,
-            };
-            var vm = new NicoNicoSessionViewModel(mediation, model);
+            var gt = new Getthumbinfo(new Mediation());
+            var a = await gt.GetAsync("sm9");
         }
     }
 #endif

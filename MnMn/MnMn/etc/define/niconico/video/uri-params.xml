@@ -7,4 +7,7 @@
 		<param-pair key="rss" value="2.0" prefix="?"  />
 		<param-pair key="lang" value="${lang}" prefix="&amp;"  />
 	</param>
+	<param key="video-getthumbinfo">
+		<param-pair key="video-id" value="${video-id}" />
+	</param>
 </parameters>

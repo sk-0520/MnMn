@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 {
@@ -37,6 +38,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
         #region property
 
         RankingModel Ranking { get; set; }
+
+        #endregion
+
+        #region function
+
 
         #endregion
 
