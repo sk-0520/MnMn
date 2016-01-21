@@ -64,7 +64,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -99,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\Control\NicoNico\Video\ParentPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Control\NicoNico\Video\RankingFinder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +174,9 @@
     <Compile Include="ViewModel\NicoNico\Video\VideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="ViewModel\Control\TreeNodeItemViewModelBase.cs" />
+    <Compile Include="View\Control\NicoNico\Video\ParentPanel.xaml.cs">
+      <DependentUpon>ParentPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Control\NicoNico\Video\RankingFinder.xaml.cs">
       <DependentUpon>RankingFinder.xaml</DependentUpon>
     </Compile>

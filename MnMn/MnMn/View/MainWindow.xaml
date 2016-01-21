@@ -2,7 +2,8 @@
   x:Class="MnMn.View.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  
+  xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video"
+
   Title="MainWindow" 
   Height="240" 
   Width="498"
@@ -27,32 +28,7 @@
 
     <TabControl Grid.Row="1" TabStripPlacement="Left">
       <TabItem Header="2525">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="8" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
-          <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-
-          <TreeView Grid.Column="0">
-            <TreeViewItem Header="ホーム" />
-            <TreeViewItem Header="ランキング" />
-            <TreeViewItem Header="新着" />
-            <TreeViewItem Header="ホットリスト" />
-            <TreeViewItem Header="マイリスト">
-
-            </TreeViewItem>
-            <TreeViewItem Header="ブックマーク">
-
-            </TreeViewItem>
-          </TreeView>
-
-          <Grid Grid.Column="1">
-            
-          </Grid>
-          
-        </Grid>
+        <app_contrl_nc_video:ParentPanel />
       </TabItem>
       <TabItem Header="SETTING">
       </TabItem>
