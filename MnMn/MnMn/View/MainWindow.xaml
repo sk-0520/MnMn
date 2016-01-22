@@ -27,8 +27,8 @@
     </StatusBar>
 
     <TabControl Grid.Row="1" TabStripPlacement="Left">
-      <TabItem Header="2525">
-        <app_contrl_nc_video:VideoManager />
+      <TabItem Header="2525 video" DataContext="{Binding NicoNicoManager}">
+        <app_contrl_nc_video:VideoManager DataContext="{Binding VideoManager}" />
       </TabItem>
       <TabItem Header="SETTING">
       </TabItem>

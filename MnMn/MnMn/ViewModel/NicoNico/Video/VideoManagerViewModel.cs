@@ -20,28 +20,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico.Video
 {
-    public class MainViewModel: ViewModelBase
+    public class VideoManagerViewModel: ViewModelBase
     {
-        public MainViewModel()
+        public VideoManagerViewModel(Mediation mediation)
         {
-            Mediation = new Mediation();
-
-            NicoNicoManager = new NicoNicoManagerViewModel(Mediation);
+            Mediation = mediation;
         }
+
         #region property
 
         Mediation Mediation { get; set; }
 
-        public NicoNicoManagerViewModel NicoNicoManager { get; private set; }
-
-        #endregion
-
-        #region function
+        
         #endregion
     }
 }
