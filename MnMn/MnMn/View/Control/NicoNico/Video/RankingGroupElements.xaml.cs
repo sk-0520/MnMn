@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
 {
     /// <summary>
-    /// VideoFinder.xaml の相互作用ロジック
+    /// RankingToolbar.xaml の相互作用ロジック
     /// </summary>
-    public partial class VideoFinder: UserControl
+    public partial class RankingGroupElements: UserControl
     {
-        public VideoFinder()
+        public RankingGroupElements()
         {
             InitializeComponent();
         }

@@ -39,10 +39,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
         public CollectionModel<CategoryGroupModel> Items { get; set; } = new CollectionModel<CategoryGroupModel>();
 
         [XmlElement("targets")]
-        public CollectionModel<RankingGroupModel> Targets { get; set; } = new CollectionModel<RankingGroupModel>();
+        public RankingGroupModel Targets { get; set; } = new RankingGroupModel();
 
         [XmlElement("periods")]
-        public CollectionModel<RankingGroupModel> Periods { get; set; } = new CollectionModel<RankingGroupModel>();
+        public RankingGroupModel Periods { get; set; } = new RankingGroupModel();
 
     }
 }

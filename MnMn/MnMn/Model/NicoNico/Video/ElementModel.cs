@@ -44,6 +44,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
         [XmlArray("words"), XmlArrayItem("word")]
         public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
 
+        public string CurrentWord {
+            get
+            {
+                var word = Words.FirstOrDefault(w => w.Language == Constants.CurrentLanguageCode);
+                if(word != null) {
+                    return word.Value;
+                }
+
+                return Key;
+            }
+        }
 
         #endregion
     }

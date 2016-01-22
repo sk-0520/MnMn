@@ -20,24 +20,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
 {
-    [Serializable, XmlRoot("nicovideo_thumb_response")]
-    public class RawVideoThumbResponseModel: ModelBase
+    public class RawVideoErrorModel: ModelBase
     {
         #region property
 
-        [XmlAttribute("status")]
-        public string Status { get; set; }
-
-        [XmlElement("thumb")]
-        public RawVideoThumbModel Thumb { get; set; } = new RawVideoThumbModel();
-
-        [XmlElement("error")]
-        RawVideoErrorModel Error { get; set; } = new RawVideoErrorModel();
+        [XmlElement("code")]
+        public string Code { get; set; }
+        [XmlElement("description")]
+        public string Description { get; set; }
 
         #endregion
     }

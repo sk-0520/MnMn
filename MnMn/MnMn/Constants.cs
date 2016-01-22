@@ -21,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -52,6 +53,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string NicoNicoVideoRequestParametersListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "request-params.xml");
 
         public static string NicoNicoVideoRankingPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "ranking.xml");
+
+        public static string CurrentLanguageCode { get; } = "ja-JP";
 
         #endregion
     }

@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         #endregion
 
-            #region DisposeFinalizeBase
+        #region DisposeFinalizeBase
 
         protected override void Dispose(bool disposing)
         {

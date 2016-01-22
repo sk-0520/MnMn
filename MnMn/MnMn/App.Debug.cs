@@ -35,11 +35,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         void DoDebug()
         {
+            new Mediation();
             //login();
             //load_uri();
             //param();
             //getthumbinfo();
-            var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
+            //var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
         }
 
         async void login()
@@ -76,6 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var gt = new Getthumbinfo(new Mediation());
             var a = await gt.GetAsync("sm9");
+            var b = await gt.GetAsync("sm9");
         }
     }
 #endif
