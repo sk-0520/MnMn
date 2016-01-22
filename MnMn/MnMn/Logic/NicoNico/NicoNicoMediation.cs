@@ -49,6 +49,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 
         #region MediationBase
 
+        public override ResponseModel Request(RequestModel request)
+        {
+            switch(request.ServiceType) {
+                case ServiceType.NicoNico:
+                    ThrowNotSupportRequest(request);
+                    throw new NotImplementedException();
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.Request(request);
+
+                default:
+                    ThrowNotSupportRequest(request);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {

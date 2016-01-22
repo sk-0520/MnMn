@@ -43,10 +43,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         #region function
 
+        ResponseModel Request_Impl(RequestModel request)
+        {
+            switch(request.RequestKind) {
+                case RequestKind.Ranking:
+                    return new ResponseModel(request, Ranking);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         #endregion
 
         #region MediationBase
+
+        public override ResponseModel Request(RequestModel request)
+        {
+            if(request.ServiceType != ServiceType.NicoNicoVideo) {
+                ThrowNotSupportRequest(request);
+            }
+
+            return Request_Impl(request);
+        }
 
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {

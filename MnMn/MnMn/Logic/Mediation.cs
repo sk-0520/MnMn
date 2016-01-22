@@ -20,6 +20,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico;
@@ -47,11 +49,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-
-
         #endregion
 
         #region MediationBase
+
+        public override ResponseModel Request(RequestModel request)
+        {
+            CheckUtility.DebugEnforceNotNull(request);
+
+            switch(request.ServiceType) {
+                case ServiceType.NicoNico:
+                case ServiceType.NicoNicoVideo:
+                    return NicoNico.Request(request);
+
+                default:
+                    ThrowNotSupportRequest(request);
+                    throw new NotImplementedException();
+            }
+        }
+
 
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {

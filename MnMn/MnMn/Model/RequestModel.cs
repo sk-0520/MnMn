@@ -16,26 +16,28 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    /// <summary>
-    /// App.xaml の相互作用ロジック
-    /// </summary>
-    public partial class App: Application
+    public class RequestModel: ModelBase
     {
-        protected override void OnStartup(StartupEventArgs e)
+        public RequestModel(RequestKind requestKind, ServiceType serviceType)
         {
-            base.OnStartup(e);
-#if DEBUG
-            DoDebug();
-#endif
+            RequestKind = requestKind;
+            ServiceType = serviceType;
         }
+
+        #region property
+
+        public RequestKind RequestKind { get; private set; }
+
+        public ServiceType ServiceType { get; private set; }
+
+        #endregion
     }
 }

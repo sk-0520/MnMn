@@ -16,26 +16,16 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn
+namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
-    /// <summary>
-    /// App.xaml の相互作用ロジック
-    /// </summary>
-    public partial class App: Application
+    public interface ICommunication
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-#if DEBUG
-            DoDebug();
-#endif
-        }
+        ResponseModel Request(RequestModel request);
     }
 }

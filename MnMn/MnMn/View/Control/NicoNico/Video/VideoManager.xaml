@@ -30,7 +30,7 @@
     </TreeView>
 
     <Grid Grid.Column="2">
-      <app_contrl_nc_video:RankingManager />
+      <app_contrl_nc_video:RankingManager DataContext="{Binding RankingManager}" />
     </Grid>
 
   </Grid>

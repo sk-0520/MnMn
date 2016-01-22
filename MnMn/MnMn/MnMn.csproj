@@ -141,6 +141,7 @@
     <Compile Include="Define\NicoNico\Video\MovieType.cs" />
     <Compile Include="Define\NicoNico\Video\ThumbType.cs" />
     <Compile Include="Define\NicoNico\Video\VideoInformationLoad.cs" />
+    <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
     <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="IF\IGetRequestParameter.cs" />
     <Compile Include="IF\IGetUri.cs" />
     <Compile Include="IF\Control\ITreeNodeItem.cs" />
+    <Compile Include="IF\ICommunication.cs" />
     <Compile Include="Logic\NicoNico\Video\Getthumbinfo.cs" />
     <Compile Include="Logic\PageScraping.cs" />
     <Compile Include="Logic\Mediation.cs" />
@@ -173,6 +175,8 @@
     <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbResponseModel.cs" />
     <Compile Include="Model\ParameterPairModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
+    <Compile Include="Model\RequestModel.cs" />
+    <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Model\UriItemModel.cs" />
     <Compile Include="Model\ParameterListModel.cs" />
     <Compile Include="Model\UriListModel.cs" />

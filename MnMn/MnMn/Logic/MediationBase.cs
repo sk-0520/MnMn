@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         DisposeFinalizeBase,
         IGetUri,
         IGetRequestParameter,
+        ICommunication,
         IUriCompatibility,
         IResponseCompatibility
     {
@@ -94,6 +95,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         #region ThrowNotSupport
+
+        protected void ThrowNotSupportRequest(RequestModel request)
+        {
+            throw new NotSupportedException($"{nameof(ICommunication)} => {nameof(request)}: {request}");
+        }
 
         protected void ThrowNotSupportGetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
@@ -210,6 +216,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ?? (IDictionary<string, string>)EmptyMap
             ;
         }
+        #endregion
+
+        #region ICommunication
+
+        public virtual ResponseModel Request(RequestModel request)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IGetUri
