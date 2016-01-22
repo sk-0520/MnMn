@@ -28,7 +28,7 @@
 
     <TabControl Grid.Row="1" TabStripPlacement="Left">
       <TabItem Header="2525">
-        <app_contrl_nc_video:ParentPanel />
+        <app_contrl_nc_video:VideoManager />
       </TabItem>
       <TabItem Header="SETTING">
       </TabItem>

@@ -1,5 +1,5 @@
 ﻿<UserControl 
-  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video.ParentPanel"
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video.VideoManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video"
@@ -29,8 +29,8 @@
       </TreeViewItem>
     </TreeView>
 
-    <Grid Grid.Column="1">
-
+    <Grid Grid.Column="2">
+      <app_contrl_nc_video:RankingManager />
     </Grid>
 
   </Grid>

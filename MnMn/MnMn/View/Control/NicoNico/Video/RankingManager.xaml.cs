@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
 {
     /// <summary>
-    /// ParentPanel.xaml の相互作用ロジック
+    /// RankingPanel.xaml の相互作用ロジック
     /// </summary>
-    public partial class ParentPanel: UserControl
+    public partial class RankingManager: UserControl
     {
-        public ParentPanel()
+        public RankingManager()
         {
             InitializeComponent();
         }
