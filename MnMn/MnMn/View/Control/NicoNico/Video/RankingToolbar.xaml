@@ -1,18 +1,32 @@
-﻿<UserControl 
+﻿<!--
+  必要データは呼び出し元からバインドする。
+-->
+<UserControl 
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video.RankingToolbar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video"
   
-  
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <Grid>
-    <StackPanel Orientation="Horizontal">
-      <app_contrl_nc_video:RankingGroupElements DataContext="{Binding RankingGroupElements}" />
-      <ComboBox DisplayMemberPath="CurrentWord" ItemsSource="{Binding RankingCategoryItems}" SelectedItem="{Binding SelectedCategoryItem}" />
-    </StackPanel>
-  </Grid>
+  <StackPanel Orientation="Horizontal">
+    <app_contrl_nc_video:RankingGroupElements 
+      TargetItemsSource="{Binding TargetItems}"
+      PeriodItemsSource="{Binding PeriodItems}"
+      SelectedTarget="{Binding SelectedTarget}"
+      SelectedPeriod="{Binding SelectedPeriod}"
+    />
+    <ComboBox 
+      DisplayMemberPath="CurrentWord" 
+      ItemsSource="{Binding RankingCategoryItems}"
+      SelectedItem="{Binding SelectedCategory}"
+    />
+    <Button
+      Content="get"
+      Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+    />
+  </StackPanel>
 </UserControl>

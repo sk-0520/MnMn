@@ -185,10 +185,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\NicoNicoSessionViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\NicoNicoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\RankingGroupElementsViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\RankingCategoryItemViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\Video\RankingManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\RankingToolbarViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\Video\VideoManagerViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\Video\VideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />

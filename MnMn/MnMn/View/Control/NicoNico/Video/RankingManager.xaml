@@ -14,7 +14,11 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
-    <app_contrl_nc_video:RankingToolbar Grid.Row="0" DataContext="{Binding RankingToolbar}" />
+    <app_contrl_nc_video:RankingToolbar 
+      Grid.Row="0" 
+      PeriodItemsSource="{Binding PeriodItems}"
+      Command="{Binding GetRankingCategoryCommand}" 
+    />
 
     <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}">
       <TabControl.Template>

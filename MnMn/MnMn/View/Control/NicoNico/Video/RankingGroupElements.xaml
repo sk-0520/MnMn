@@ -1,4 +1,7 @@
-﻿<UserControl 
+﻿<!--
+  必要データは呼び出し元からバインドする。
+-->
+<UserControl 
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video.RankingGroupElements"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +13,15 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <StackPanel Orientation="Horizontal">
-    <ComboBox DisplayMemberPath="CurrentWord" ItemsSource="{Binding TargetItems}" SelectedItem="{Binding SelectedTarget}"  />
-    <ComboBox DisplayMemberPath="CurrentWord" ItemsSource="{Binding PeriodItems}" SelectedItem="{Binding SelectedPeriod}" />
+    <ComboBox
+      DisplayMemberPath="CurrentWord"
+      ItemsSource="{Binding PeriodItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      SelectedItem="{Binding SelectedPeriod, RelativeSource={RelativeSource AncestorType=UserControl}}"
+    />
+    <ComboBox
+      DisplayMemberPath="CurrentWord"
+      ItemsSource="{Binding TargetItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      SelectedItem="{Binding SelectedTarget, RelativeSource={RelativeSource AncestorType=UserControl}}"
+    />
   </StackPanel>
 </UserControl>
