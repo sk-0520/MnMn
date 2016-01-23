@@ -16,17 +16,21 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Atom2;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
@@ -93,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             {
                 return CreateCommand(
                     o => {
-                        LoadRankingAsync();
+                        LoadRankingAsync().ConfigureAwait(true);
                     }
                 );
             }
@@ -103,22 +107,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #region function
 
-        async void LoadRankingAsync_Impl()
+        async Task LoadRankingAsync_Impl()
         {
-            var host = new HttpUserAgentHost();
+            RankingLoad = RankingLoad.RankingListLoading;
+
+            using(var host = new HttpUserAgentHost())
             using(var page = new PageScraping(Mediation, host, MediationNicoNicoVideoKey.ranking, ServiceType.NicoNicoVideo)) {
                 page.ReplaceUriParameters["target"] = SelectedTarget.Key;
                 page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
                 page.ReplaceUriParameters["category"] = Category.Key;
                 page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
 
-                var rankingXmlText = await page.GetResponseTextAsync(HttpMethod.Get);
+                var rankingXmlResult = await page.GetResponseTextAsync(HttpMethod.Get);
+                if(!rankingXmlResult.IsSuccess) {
+                    RankingLoad = RankingLoad.Failure;
+                    return;
+                }
+
+                RankingLoad = RankingLoad.RankingListChecking;
+                var rankingFeedModel = RestrictUtility.Block(() => {
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
+                        return SerializeUtility.LoadXmlSerializeFromStream<Rss2Model>(stream);
+                    }
+                });
+
             }
         }
 
-        public void LoadRankingAsync()
+        public Task LoadRankingAsync()
         {
-            LoadRankingAsync_Impl();
+            return LoadRankingAsync_Impl();
         }
 
         ElementModel GetContextElemetFromChangeElement(IEnumerable<ElementModel> items, ElementModel element)

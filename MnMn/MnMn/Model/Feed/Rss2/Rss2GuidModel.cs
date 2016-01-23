@@ -19,37 +19,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
 {
     /// <summary>
-    /// ランキングの読込状態。
+    /// チャンネルのコンテンツ情報。
     /// </summary>
-    public enum RankingLoad
+    public class Rss2Guid: ModelBase
     {
-        /// <summary>
-        /// 読み込んでない。
-        /// </summary>
-        None,
-        /// <summary>
-        /// ランキングリスト取得中。
-        /// </summary>
-        RankingListLoading,
-        /// <summary>
-        /// ランキングリストチェック中。
-        /// </summary>
-        RankingListChecking,
-        /// <summary>
-        /// サムネイル取得中。
-        /// </summary>
-        ImageLoading,
-        /// <summary>
-        /// 完了。
-        /// </summary>
-        Completed,
-        /// <summary>
-        /// 失敗。
-        /// </summary>
-        Failure,
+        [XmlAttribute("isPermaLink")]
+        public bool IsPermaLink { get; set; }
+        [XmlText]
+        public string Uri { get; set; }
     }
 }

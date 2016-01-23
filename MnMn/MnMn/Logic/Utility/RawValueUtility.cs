@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static long UnknownLong { get; } = long.MinValue;
         public static DateTime UnknownDateTime { get; } = DateTime.MinValue;
         public static TimeSpan UnknownTimeSpan { get; } = TimeSpan.MinValue;
+
+        public static string Rss2DateTimeFormat { get; } = "ddd, d MMM yyyy HH:mm:ss K";
+        public static CultureInfo Rss2DateTimeCultureInfo { get; } = CultureInfo.CreateSpecificCulture("en-US");
 
         #endregion
 

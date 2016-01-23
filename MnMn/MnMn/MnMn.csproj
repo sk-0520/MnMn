@@ -135,6 +135,7 @@
     <Compile Include="Define\NicoNico\Video\RankingLoad.cs" />
     <Compile Include="Define\NicoNico\Video\ThumbType.cs" />
     <Compile Include="Define\NicoNico\Video\VideoInformationLoad.cs" />
+    <Compile Include="Define\NicoNico\Video\VideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
@@ -157,6 +158,11 @@
     <Compile Include="Logic\Utility\RawValueUtility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />
+    <Compile Include="Model\Feed\Rss2\Rss2GuidModel.cs" />
+    <Compile Include="Model\Feed\Rss2\Rss2ItemModel.cs" />
+    <Compile Include="Model\Feed\Rss2\Rss2Model.cs" />
+    <Compile Include="Model\Feed\Rss2\Rss2ChannelModel.cs" />
+    <Compile Include="Model\Feed\FeedModelBase.cs" />
     <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\ElementModel.cs" />

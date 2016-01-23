@@ -113,8 +113,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                                 return viewModel;
                             }
                         );
-                        selectViewModel.LoadRankingAsync();
-                        SelectedRankingCategory = selectViewModel;
+                        selectViewModel.LoadRankingAsync().ContinueWith(task => {
+                            SelectedRankingCategory = selectViewModel;
+                        });
                     }
                 );
             }

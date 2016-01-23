@@ -19,37 +19,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Atom2
 {
     /// <summary>
-    /// ランキングの読込状態。
+    /// チャンネル情報。
     /// </summary>
-    public enum RankingLoad
+    public class Rss2ChannelModel: ModelBase
     {
-        /// <summary>
-        /// 読み込んでない。
-        /// </summary>
-        None,
-        /// <summary>
-        /// ランキングリスト取得中。
-        /// </summary>
-        RankingListLoading,
-        /// <summary>
-        /// ランキングリストチェック中。
-        /// </summary>
-        RankingListChecking,
-        /// <summary>
-        /// サムネイル取得中。
-        /// </summary>
-        ImageLoading,
-        /// <summary>
-        /// 完了。
-        /// </summary>
-        Completed,
-        /// <summary>
-        /// 失敗。
-        /// </summary>
-        Failure,
+        [XmlElement("title")]
+        public string Title { get; set; }
+        [XmlElement("link")]
+        public string Link { get; set; }
+        [XmlElement("description")]
+        public string Description { get; set; }
+        [XmlElement("item")]
+        public CollectionModel<Rss2ItemModel> Items { get; set; } = new CollectionModel<Rss2ItemModel>();
     }
 }

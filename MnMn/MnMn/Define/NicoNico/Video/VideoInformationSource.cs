@@ -22,33 +22,18 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
 {
-    public enum VideoInformationLoad
+    /// <summary>
+    /// 動画の入力元。
+    /// </summary>
+    public enum VideoInformationSource
     {
         /// <summary>
-        /// 読み込んでない。
+        /// getthumbinfo api を使用。
         /// </summary>
-        None,
+        Getthumbinfo,
         /// <summary>
-        /// サムネイルチェック中。
+        /// ランキングから取得。
         /// </summary>
-        ImageChecking,
-        /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>WEB</para>
-        /// </summary>
-        ImageLoadingFromWeb,
-        /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>ファイル</para>
-        /// </summary>
-        ImageLoadingFromStorage,
-        /// <summary>
-        /// 完了。
-        /// </summary>
-        Completed,
-        /// <summary>
-        /// 失敗。
-        /// </summary>
-        Failure,
+        Ranking,
     }
 }

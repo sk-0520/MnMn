@@ -19,37 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Atom2
 {
     /// <summary>
-    /// ランキングの読込状態。
+    /// ATOM 2
+    /// <para>現状ニコニコのフィード取れりゃそれでいい。</para>
     /// </summary>
-    public enum RankingLoad
+    [Serializable, XmlRoot("rss")]
+    public class Rss2Model: FeedModelBase
     {
-        /// <summary>
-        /// 読み込んでない。
-        /// </summary>
-        None,
-        /// <summary>
-        /// ランキングリスト取得中。
-        /// </summary>
-        RankingListLoading,
-        /// <summary>
-        /// ランキングリストチェック中。
-        /// </summary>
-        RankingListChecking,
-        /// <summary>
-        /// サムネイル取得中。
-        /// </summary>
-        ImageLoading,
-        /// <summary>
-        /// 完了。
-        /// </summary>
-        Completed,
-        /// <summary>
-        /// 失敗。
-        /// </summary>
-        Failure,
+        [XmlAttribute("version")]
+        public string Version { get; set; }
+
+        [XmlElement("channel")]
+        public Rss2ChannelModel Channel { get; set; }
     }
 }

@@ -40,11 +40,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             : base(model)
         {
             Mediation = mediation;
+            VideoInformationSource = VideoInformationSource.Getthumbinfo;
         }
 
         #region property
 
         Mediation Mediation { get; set; }
+
+        VideoInformationSource VideoInformationSource { get; set; }
 
         public VideoInformationLoad VideoLoad
         {
