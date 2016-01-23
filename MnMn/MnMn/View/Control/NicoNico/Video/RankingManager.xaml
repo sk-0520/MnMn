@@ -19,14 +19,7 @@
     <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}">
       <TabControl.Template>
         <ControlTemplate>
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <app_contrl_nc_video:RankingGroupElements Grid.Row="0" />
-            <app_contrl_nc_video:VideoList Grid.Row="0" />
-          </Grid>
+          <app_contrl_nc_video:RankingCategoryItem />
         </ControlTemplate>
       </TabControl.Template>
     </TabControl>

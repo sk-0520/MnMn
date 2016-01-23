@@ -98,11 +98,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\Control\NicoNico\Video\VideoManager.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\Control\NicoNico\Video\RankingCategoryItem.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Control\NicoNico\Video\RankingFinder.xaml">
+    <Page Include="View\Control\NicoNico\Video\VideoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,11 +193,11 @@
     <Compile Include="ViewModel\Control\NicoNico\Video\VideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="ViewModel\Control\TreeNodeItemViewModelBase.cs" />
+    <Compile Include="View\Control\NicoNico\Video\RankingCategoryItem.xaml.cs">
+      <DependentUpon>RankingCategoryItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Control\NicoNico\Video\VideoManager.xaml.cs">
       <DependentUpon>VideoManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Control\NicoNico\Video\RankingFinder.xaml.cs">
-      <DependentUpon>RankingFinder.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Control\NicoNico\Video\RankingGroupElements.xaml.cs">
       <DependentUpon>RankingGroupElements.xaml</DependentUpon>
