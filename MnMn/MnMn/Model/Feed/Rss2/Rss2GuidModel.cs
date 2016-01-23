@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
     /// <summary>
     /// チャンネルのコンテンツ情報。
     /// </summary>
-    public class Rss2Guid: ModelBase
+    public class Rss2GuidModel: ModelBase
     {
         [XmlAttribute("isPermaLink")]
         public bool IsPermaLink { get; set; }

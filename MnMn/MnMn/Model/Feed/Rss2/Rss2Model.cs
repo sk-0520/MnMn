@@ -20,20 +20,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Atom2
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
 {
     /// <summary>
-    /// ATOM 2
+    /// RSS 2
     /// <para>現状ニコニコのフィード取れりゃそれでいい。</para>
     /// </summary>
     [Serializable, XmlRoot("rss")]
-    public class Rss2Model: FeedModelBase
+    public class Rss2ModelBase<TRss2ChannelModel, TRss2ItemModel, TRss2GuidModel>: FeedModelBase
+        where TRss2ChannelModel: Rss2ChannelModelBase<TRss2ItemModel, TRss2GuidModel>
+        where TRss2ItemModel : Rss2ItemModelBase<TRss2GuidModel>
+        where TRss2GuidModel : Rss2GuidModel
     {
         [XmlAttribute("version")]
         public string Version { get; set; }
 
         [XmlElement("channel")]
-        public Rss2ChannelModel Channel { get; set; }
+        public TRss2ChannelModel Channel { get; set; }
     }
+
+    [Serializable, XmlRoot("rss")]
+    public sealed class Rss2Model: Rss2ModelBase<Rss2ChannelModelBase<Rss2ItemModelBase<Rss2GuidModel>, Rss2GuidModel>, Rss2ItemModelBase<Rss2GuidModel>, Rss2GuidModel>
+    { }
 }
+

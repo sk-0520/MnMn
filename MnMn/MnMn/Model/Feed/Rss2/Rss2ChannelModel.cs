@@ -23,12 +23,14 @@ using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Atom2
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
 {
     /// <summary>
     /// チャンネル情報。
     /// </summary>
-    public class Rss2ChannelModel: ModelBase
+    public class Rss2ChannelModelBase<TRss2ItemModel,TRss2GuidModel>: ModelBase
+        where TRss2ItemModel: Rss2ItemModelBase<TRss2GuidModel>
+        where TRss2GuidModel: Rss2GuidModel
     {
         [XmlElement("title")]
         public string Title { get; set; }
@@ -37,6 +39,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Atom2
         [XmlElement("description")]
         public string Description { get; set; }
         [XmlElement("item")]
-        public CollectionModel<Rss2ItemModel> Items { get; set; } = new CollectionModel<Rss2ItemModel>();
+        public CollectionModel<TRss2ItemModel> Items { get; set; } = new CollectionModel<TRss2ItemModel>();
     }
+
+    public sealed class Rss2ChannelModel: Rss2ChannelModelBase<Rss2ItemModelBase<Rss2GuidModel>, Rss2GuidModel>
+    { }
 }
