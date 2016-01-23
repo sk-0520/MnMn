@@ -22,32 +22,32 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
     public class RankingToolbarViewModel: SingleModelWrapperViewModelBase<RankingModel>
     {
         #region variable
 
         ElementModel _selectedCategoryItem;
+        IList<ElementModel> _rankingCategoryItems;
 
         #endregion
 
         public RankingToolbarViewModel(RankingModel model)
             :base(model)
         {
+            RankingCategoryItems = GetLinearRankingElementList(Model.Items).ToList();
             RankingGroupElements = new RankingGroupElementsViewModel(Model.Targets, Model.Periods);
+            SelectedCategoryItem = RankingCategoryItems.First();
         }
 
         #region property
 
-        RankingGroupElementsViewModel RankingGroupElements { get; }
+        public RankingGroupElementsViewModel RankingGroupElements { get; }
 
-        public IList<ElementModel> RankingCategoryItems
-        {
-            get
-            {
-                return GetLinearRankingElementList(Model.Items).ToList();
-            }
+        public IList<ElementModel> RankingCategoryItems {
+            get { return this._rankingCategoryItems; }
+            private set { this._rankingCategoryItems = value; }
         }
 
         public ElementModel SelectedCategoryItem
@@ -65,6 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico.Video
             get { return RankingGroupElements.SelectedPeriod; }
         }
 
+        #endregion
+
+        #region command
         #endregion
 
         #region function

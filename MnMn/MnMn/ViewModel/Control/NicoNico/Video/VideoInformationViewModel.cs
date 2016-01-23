@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
     public class VideoInformationViewModel: SingleModelWrapperViewModelBase<RawVideoThumbModel>
     {

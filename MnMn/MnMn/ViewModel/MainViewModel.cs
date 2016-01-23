@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel

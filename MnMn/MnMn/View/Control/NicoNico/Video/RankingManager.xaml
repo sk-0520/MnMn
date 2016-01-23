@@ -13,10 +13,10 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    
-    <app_contrl_nc_video:RankingToolbar Grid.Row="0" />
-    
-    <TabControl Grid.Row="1">
+
+    <app_contrl_nc_video:RankingToolbar Grid.Row="0" DataContext="{Binding RankingToolbar}" />
+
+    <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}">
       <TabControl.Template>
         <ControlTemplate>
           <Grid>

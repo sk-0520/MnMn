@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
     public class RankingCategoryItemViewModel: ViewModelBase
     {

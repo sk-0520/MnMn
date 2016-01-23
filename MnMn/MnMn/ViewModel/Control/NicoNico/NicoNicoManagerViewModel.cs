@@ -20,32 +20,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico
 {
-    public class VideoManagerViewModel: ViewModelBase
+    public class NicoNicoManagerViewModel: ViewModelBase
     {
-        public VideoManagerViewModel(Mediation mediation)
+        public NicoNicoManagerViewModel(Mediation mediation)
         {
             Mediation = mediation;
-            var response = Mediation.Request(new RequestModel(RequestKind.Ranking, ServiceType.NicoNicoVideo));
-            var rankingModel = (RankingModel)response.Result;
-            RankingManager = new RankingManagerViewModel(rankingModel);
+            VideoManager = new VideoManagerViewModel(Mediation);
         }
 
         #region property
 
         Mediation Mediation { get; set; }
 
-        public RankingManagerViewModel RankingManager { get; private set; }
+        public VideoManagerViewModel VideoManager { get; set; }
 
         #endregion
     }
