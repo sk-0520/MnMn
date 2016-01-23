@@ -37,19 +37,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
-        public VideoInformationViewModel(Mediation mediation, RawVideoThumbModel thumb)
+        VideoInformationViewModel(Mediation mediation, int number)
         {
             Mediation = mediation;
+            Number = number;
+        }
 
+        public VideoInformationViewModel(Mediation mediation, RawVideoThumbModel thumb, int number)
+            : this(mediation, number)
+        {
             Thumb = thumb;
 
             VideoInformationSource = VideoInformationSource.Getthumbinfo;
         }
 
-        public VideoInformationViewModel(Mediation mediation, RankingFeedItemModel ranking)
+        public VideoInformationViewModel(Mediation mediation, RankingFeedItemModel ranking, int number)
+            : this(mediation, number)
         {
-            Mediation = mediation;
-
             Ranking = ranking;
             RankingDetail = RankingUtility.ConvertRawDescription(Ranking.Description);
             RankingDetail.VideoId = RankingUtility.GetVideoId(Ranking);
@@ -66,6 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         RawVideoRankingDetailModel RankingDetail { get; set; }
 
+        public int Number { get; private set; }
 
         public VideoInformationSource VideoInformationSource { get; private set; }
 

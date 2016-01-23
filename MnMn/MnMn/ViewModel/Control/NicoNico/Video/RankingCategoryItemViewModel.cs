@@ -16,10 +16,13 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -44,6 +47,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         RankingLoad _rankingLoad;
 
+        //CollectionView _videoInformationItems;
+
         #endregion
 
         public RankingCategoryItemViewModel(Mediation mediation, RankingModel rankingModel, ElementModel period, ElementModel target, ElementModel category)
@@ -55,6 +60,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
             SetContextElements(period, target);
             Category = category;
+
+            VideoInformationList = new CollectionModel<VideoInformationViewModel>();
+            VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
         }
 
         #region property
@@ -83,8 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             set { SetVariableValue(ref this._rankingLoad, value); }
         }
 
-
-        public CollectionModel<VideoInformationViewModel> VideoInformationItems { get; private set; } = new CollectionModel<VideoInformationViewModel>();
+        CollectionModel<VideoInformationViewModel> VideoInformationList { get; set; }
+        public ICollectionView VideoInformationItems { get; private set; }
 
         public string CategoryName => Category.CurrentWord;
 
@@ -133,10 +141,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 });
 
                 var list = rankingFeedModel.Channel.Items
-                    //.AsParallel()
-                    .Select(i => new VideoInformationViewModel(Mediation, i))
+                    .AsParallel()
+                    .Select((item, index) => new VideoInformationViewModel(Mediation, item, index+1))
                 ;
-                VideoInformationItems.InitializeRange(list);
+
+                VideoInformationList.InitializeRange(list);
             }
         }
 

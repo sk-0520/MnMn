@@ -14,7 +14,7 @@
   <ListView ItemsSource="{Binding VideoInformationItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <ListView.View>
       <GridView>
-        
+        <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
       </GridView>
     </ListView.View>
   </ListView>

@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
 
         public static readonly DependencyProperty VideoInformationItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(VideoInformationItemsSourceProperty)),
-            typeof(ObservableCollection<VideoInformationViewModel>),
+            typeof(object),
             typeof(VideoList),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnVideoInformationItemsSourceChanged))
         );
@@ -40,13 +40,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
         private static void OnVideoInformationItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CastUtility.AsAction<VideoList>(d, control => {
-                control.VideoInformationItemsSource = e.NewValue as ObservableCollection<VideoInformationViewModel>;
+                control.VideoInformationItemsSource = e.NewValue;
             });
         }
 
-        public ObservableCollection<VideoInformationViewModel> VideoInformationItemsSource
+        public object VideoInformationItemsSource
         {
-            get { return GetValue(VideoInformationItemsSourceProperty) as ObservableCollection<VideoInformationViewModel>; }
+            get { return GetValue(VideoInformationItemsSourceProperty); }
             set { SetValue(VideoInformationItemsSourceProperty, value); }
         }
 
