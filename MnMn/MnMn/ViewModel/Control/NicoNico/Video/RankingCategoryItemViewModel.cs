@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
@@ -34,11 +35,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
-        public RankingCategoryItemViewModel(RankingModel rankingModel, ElementModel selectedPeriod, ElementModel selectedTarget, ElementModel category)
+        public RankingCategoryItemViewModel(RankingModel rankingModel, ElementModel period, ElementModel target, ElementModel category)
         {
             PeriodItems = new CollectionModel<ElementModel>(rankingModel.Periods.Items.Select(i => (ElementModel)i.DeepClone()));
             TargetItems = new CollectionModel<ElementModel>(rankingModel.Targets.Items.Select(i => (ElementModel)i.DeepClone()));
 
+            SetContextElements(period, target);
             Category = category;
         }
 
@@ -66,13 +68,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
+        #region command
+
+        public ICommand ReloadCategoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                    }
+                );
+            }
+        }
+
+        #endregion
+
         #region function
 
         public void LoadRankingAsync()
         { }
 
-        public void ChangeContextElemet(ElementModel period, ElementModel target)
+        ElementModel GetContextElemetFromChangeElement(IEnumerable<ElementModel> items, ElementModel element)
         {
+            if(items.Any(i => i == element)) {
+                return element;
+            } else {
+                return items.FirstOrDefault(i => i.Key == element.Key);
+            }
+        }
+
+        public void SetContextElements(ElementModel period, ElementModel target)
+        {
+            SelectedPeriod = GetContextElemetFromChangeElement(PeriodItems, period);
+            SelectedTarget = GetContextElemetFromChangeElement(TargetItems, target);
         }
 
         #endregion

@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         ElementModel _selectedCategory;
 
+        RankingCategoryItemViewModel _selectedRankingCategory;
+
         #endregion
 
         public RankingManagerViewModel(RankingModel rankingModel)
@@ -73,6 +75,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         public IList<ElementModel> CategoryItems { get; private set; }
 
+        public RankingCategoryItemViewModel SelectedRankingCategory{
+            get { return this._selectedRankingCategory; }
+            set { SetVariableValue(ref this._selectedRankingCategory, value); }
+        }
+
         public CollectionModel<RankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<RankingCategoryItemViewModel>();
 
         #endregion
@@ -91,9 +98,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
 
-                        var viewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
-                        RankingCategoryItems.Add(viewModel);
-                        viewModel.LoadRankingAsync();
+                        // すでに存在する場合はそのタブへ遷移
+                        RankingCategoryItemViewModel selectViewModel = null;
+                        var existisRankingCategory = RankingCategoryItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key);
+                        if(existisRankingCategory != null) {
+                            existisRankingCategory.SetContextElements(nowPeriod, nowTarget);
+                            existisRankingCategory.LoadRankingAsync();
+                            selectViewModel = existisRankingCategory;
+                        } else {
+                            var viewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
+                            RankingCategoryItems.Add(viewModel);
+                            viewModel.LoadRankingAsync();
+                            selectViewModel = viewModel;
+                        }
+                        SelectedRankingCategory = selectViewModel;
                     }
                 );
             }

@@ -32,15 +32,27 @@
       />
     </StackPanel>
 
-    <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}">
+    <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}" SelectedItem="{Binding SelectedRankingCategory}">
       <TabControl.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding CategoryName}" />
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding CategoryName}" />
+            <app_contrl_nc_video:RankingContextElements 
+              TargetItemsSource="{Binding TargetItems}"
+              PeriodItemsSource="{Binding PeriodItems}"
+              SelectedTarget="{Binding SelectedTarget, Mode=TwoWay}"
+              SelectedPeriod="{Binding SelectedPeriod, Mode=TwoWay}"
+            />
+            <Button
+              Content="reload"
+              Command="{Binding ReloadCategoryCommand}"
+            />
+          </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <app_contrl_nc_video:RankingCategoryItem DataContext="{Binding}" />
+          <app_contrl_nc_video:VideoList  />
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>

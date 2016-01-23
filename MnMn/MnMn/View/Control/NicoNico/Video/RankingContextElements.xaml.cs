@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
             DependencyPropertyUtility.GetName(nameof(SelectedPeriodProperty)),
             typeof(ElementModel),
             typeof(RankingContextElements),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedPeriodChanged))
+            new FrameworkPropertyMetadata(default(ElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedPeriodChanged))
         );
 
         private static void OnSelectedPeriodChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
             DependencyPropertyUtility.GetName(nameof(SelectedTargetProperty)),
             typeof(ElementModel),
             typeof(RankingContextElements),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedTargetChanged))
+            new FrameworkPropertyMetadata(default(ElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedTargetChanged))
         );
 
         private static void OnSelectedTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
