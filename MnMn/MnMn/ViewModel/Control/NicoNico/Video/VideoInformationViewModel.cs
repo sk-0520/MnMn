@@ -16,9 +16,14 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -33,7 +38,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
     {
         #region variable
 
-        VideoInformationLoad _videoLoad;
+        VideoThumbnailLoad _videoLoad;
+        ImageSource _thumbnailImage;
 
         #endregion
 
@@ -41,6 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             Mediation = mediation;
             Number = number;
+            VideoThumbnailLoad = VideoThumbnailLoad.None;
         }
 
         public VideoInformationViewModel(Mediation mediation, RawVideoThumbModel thumb, int number)
@@ -74,10 +81,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         public VideoInformationSource VideoInformationSource { get; private set; }
 
-        public VideoInformationLoad VideoLoad
+        public VideoThumbnailLoad VideoThumbnailLoad
         {
             get { return this._videoLoad; }
-            set { SetVariableValue(ref this._videoLoad, value); }
+            set
+            {
+                if(SetVariableValue(ref this._videoLoad, value)) {
+                    CallOnPropertyChange(nameof(ThumbnailImage));
+                }
+            }
         }
 
         /// <summary>
@@ -90,6 +102,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public bool Cached { get; set; }
 
         #region 生データから取得
+
+        public string VideoId
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case VideoInformationSource.Getthumbinfo:
+                        return Thumb.VideoId;
+
+                    case VideoInformationSource.Ranking:
+                        return RankingDetail.VideoId;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         public string Title
         {
@@ -108,8 +137,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             }
         }
 
-        public Uri ThumbnailUri { get { return RawValueUtility.ConvertUri(Thumb.ThumbnailUrl); } }
-        public DateTime FirstRetrieve { get { return RawValueUtility.ConvertDateTime(Thumb.FirstRetrieve); } }
+        public Uri ThumbnailUri {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case VideoInformationSource.Getthumbinfo:
+                        return RawValueUtility.ConvertUri(Thumb.ThumbnailUrl);
+
+                    case VideoInformationSource.Ranking:
+                        return RawValueUtility.ConvertUri(RankingDetail.ThumbnailUrl);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+        public DateTime FirstRetrieve { get {
+                switch(VideoInformationSource) {
+                    case VideoInformationSource.Getthumbinfo:
+                        return RawValueUtility.ConvertDateTime(Thumb.FirstRetrieve);
+
+                    case VideoInformationSource.Ranking:
+                        return RawValueUtility.ConvertDateTime(RankingDetail.FirstRetrieve);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            } }
         public TimeSpan Length { get { return GetthumbinfoUtility.ConvertTimeSpan(Thumb.Length); } }
         public MovieType MovieType { get { return GetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
@@ -138,6 +192,74 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
 
         #endregion
+
+        public ImageSource ThumbnailImage
+        {
+            get
+            {
+                switch(VideoThumbnailLoad) {
+                    case VideoThumbnailLoad.None:
+                        return null;
+
+                    case VideoThumbnailLoad.ImageChecking:
+                        return null;
+
+                    case VideoThumbnailLoad.ImageLoadingFromWeb:
+                    case VideoThumbnailLoad.ImageLoadingFromStorage:
+                        return null;
+
+                    case VideoThumbnailLoad.Completed:
+                        return this._thumbnailImage;
+
+                    case VideoThumbnailLoad.Failure:
+                        return null;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region function
+
+        async Task LoadImageAsync_Impl()
+        {
+            VideoThumbnailLoad = VideoThumbnailLoad.ImageChecking;
+            if(Cached) {
+                VideoThumbnailLoad = VideoThumbnailLoad.ImageLoadingFromStorage;
+            }
+            var uri = ThumbnailUri;
+
+            var binary = await RestrictUtility.Block(async () => {
+                using(var userAgent = new HttpUserAgentHost()) {
+                    return await userAgent.Client.GetByteArrayAsync(uri);
+                }
+            });
+            using(var stream = new MemoryStream(binary)) {
+                Debug.WriteLine(uri);
+                Debug.WriteLine(binary.Length);
+                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.None);
+                FreezableUtility.SafeFreeze(image);
+                this._thumbnailImage = image;
+                VideoThumbnailLoad = VideoThumbnailLoad.Completed;
+
+                using(var fs = new FileStream(@"z:\" + VideoId + ".png", FileMode.Create)) {
+                    var p = new PngBitmapEncoder();
+                    p.Frames.Add(image);
+                    p.Save(fs);
+                }
+            }
+            
+            await Task.CompletedTask;
+        }
+
+        public async Task LoadImageAsync()
+        {
+            await LoadImageAsync_Impl();
+        }
 
         #endregion
     }

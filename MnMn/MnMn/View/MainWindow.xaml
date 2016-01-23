@@ -5,8 +5,8 @@
   xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video"
 
   Title="MainWindow" 
-  Height="240" 
-  Width="498"
+  Height="347.692" 
+  Width="692.872"
   ResizeMode="CanResizeWithGrip"
   
   DataContext="{StaticResource MainViewModel}"

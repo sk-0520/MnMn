@@ -15,6 +15,37 @@
     <ListView.View>
       <GridView>
         <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
+        <GridViewColumn>
+          <GridViewColumn.HeaderTemplate>
+            <ItemContainerTemplate>
+              <StackPanel>
+                <Label>test</Label>
+                <Button>asd</Button>
+                <TextBox>789</TextBox>
+              </StackPanel>
+            </ItemContainerTemplate>
+          </GridViewColumn.HeaderTemplate>
+          <GridViewColumn.CellTemplate>
+            <ItemContainerTemplate>
+              <Label>123</Label>
+            </ItemContainerTemplate>
+          </GridViewColumn.CellTemplate>
+        </GridViewColumn>
+        
+        <GridViewColumn>
+          <GridViewColumn.HeaderTemplate>
+            <ItemContainerTemplate>
+              <StackPanel DataContext="{Binding}">
+                <Label>thumbnail</Label>
+              </StackPanel>
+            </ItemContainerTemplate>
+          </GridViewColumn.HeaderTemplate>
+          <GridViewColumn.CellTemplate>
+            <ItemContainerTemplate>
+              <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+            </ItemContainerTemplate>
+          </GridViewColumn.CellTemplate>
+        </GridViewColumn>
       </GridView>
     </ListView.View>
   </ListView>

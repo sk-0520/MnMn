@@ -88,13 +88,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public RankingLoad RankingLoad
         {
             get { return this._rankingLoad; }
-            set { SetVariableValue(ref this._rankingLoad, value); }
+            set
+            {
+                if(SetVariableValue(ref this._rankingLoad, value)) {
+                    CallOnPropertyChange(nameof(CanLoad));
+                }
+            }
         }
 
         CollectionModel<VideoInformationViewModel> VideoInformationList { get; set; }
         public ICollectionView VideoInformationItems { get; private set; }
 
         public string CategoryName => Category.CurrentWord;
+
+        public bool CanLoad
+        {
+            get
+            {
+                var loadSkips = new[] { RankingLoad.RankingListLoading, RankingLoad.RankingListChecking };
+                return !loadSkips.Any(l => l == RankingLoad);
+            }
+        }
 
         #endregion
 
@@ -120,38 +134,64 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             RankingLoad = RankingLoad.RankingListLoading;
 
-            using(var host = new HttpUserAgentHost())
-            using(var page = new PageScraping(Mediation, host, MediationNicoNicoVideoKey.ranking, ServiceType.NicoNicoVideo)) {
-                page.ReplaceUriParameters["target"] = SelectedTarget.Key;
-                page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
-                page.ReplaceUriParameters["category"] = Category.Key;
-                page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+            var rankingFeedModel = await RestrictUtility.Block(async () => {
+                using(var host = new HttpUserAgentHost())
+                using(var page = new PageScraping(Mediation, host, MediationNicoNicoVideoKey.ranking, ServiceType.NicoNicoVideo)) {
+                    page.ReplaceUriParameters["target"] = SelectedTarget.Key;
+                    page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
+                    page.ReplaceUriParameters["category"] = Category.Key;
+                    page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
 
-                var rankingXmlResult = await page.GetResponseTextAsync(HttpMethod.Get);
-                if(!rankingXmlResult.IsSuccess) {
-                    RankingLoad = RankingLoad.Failure;
-                    return;
-                }
-
-                RankingLoad = RankingLoad.RankingListChecking;
-                var rankingFeedModel = RestrictUtility.Block(() => {
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
-                        return SerializeUtility.LoadXmlSerializeFromStream<RankingFeedModel>(stream);
+                    var rankingXmlResult = await page.GetResponseTextAsync(HttpMethod.Get);
+                    if(!rankingXmlResult.IsSuccess) {
+                        RankingLoad = RankingLoad.Failure;
+                        return null;
                     }
-                });
 
-                var list = rankingFeedModel.Channel.Items
-                    .AsParallel()
-                    .Select((item, index) => new VideoInformationViewModel(Mediation, item, index+1))
-                ;
+                    RankingLoad = RankingLoad.RankingListChecking;
 
-                VideoInformationList.InitializeRange(list);
+                    return RestrictUtility.Block(() => {
+                        using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
+                            return SerializeUtility.LoadXmlSerializeFromStream<RankingFeedModel>(stream);
+                        }
+                    });
+                }
+            });
+            if(rankingFeedModel == null) {
+                RankingLoad = RankingLoad.Failure;
+                return;
             }
+
+            await Task.Run(() => {
+                return rankingFeedModel.Channel.Items
+                    //.AsParallel()
+                    .Select((item, index) => new VideoInformationViewModel(Mediation, item, index + 1))
+                ;
+            }).ContinueWith(task => {
+                var list = task.Result;
+                VideoInformationList.InitializeRange(list);
+                VideoInformationItems.Refresh();
+                return list;
+            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(async task => {
+                var list = task.Result;
+                RankingLoad = RankingLoad.ImageLoading;
+                foreach(var item in list) {
+                    await item.LoadImageAsync();
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
+                RankingLoad = RankingLoad.Completed;
+                return Task.CompletedTask;
+            });
         }
 
         public Task LoadRankingAsync()
         {
-            return LoadRankingAsync_Impl();
+            var loadSkips = new[] { RankingLoad.RankingListLoading, RankingLoad.RankingListChecking };
+            if(CanLoad) {
+                return LoadRankingAsync_Impl();
+            } else {
+                return Task.CompletedTask;
+            }
         }
 
         ElementModel GetContextElemetFromChangeElement(IEnumerable<ElementModel> items, ElementModel element)

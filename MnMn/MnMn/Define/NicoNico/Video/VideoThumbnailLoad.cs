@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
 {
-    public enum VideoInformationLoad
+    public enum VideoThumbnailLoad
     {
         /// <summary>
         /// 読み込んでない。

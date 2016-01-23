@@ -134,7 +134,7 @@
     <Compile Include="Define\NicoNico\Video\MediationNicoNicoVideoKey.cs" />
     <Compile Include="Define\NicoNico\Video\RankingLoad.cs" />
     <Compile Include="Define\NicoNico\Video\ThumbType.cs" />
-    <Compile Include="Define\NicoNico\Video\VideoInformationLoad.cs" />
+    <Compile Include="Define\NicoNico\Video\VideoThumbnailLoad.cs" />
     <Compile Include="Define\NicoNico\Video\VideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
