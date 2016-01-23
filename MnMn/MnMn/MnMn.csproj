@@ -168,6 +168,10 @@
     <Compile Include="Model\NicoNico\Video\ElementModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
     <Compile Include="Model\NicoNico\UserAccountModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedChannelModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedItemModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedGuidModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\RawVideoErrorModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\RawVideoTagListModel.cs" />

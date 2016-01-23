@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
@@ -127,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 RankingLoad = RankingLoad.RankingListChecking;
                 var rankingFeedModel = RestrictUtility.Block(() => {
                     using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
-                        return SerializeUtility.LoadXmlSerializeFromStream<Rss2Model>(stream);
+                        return SerializeUtility.LoadXmlSerializeFromStream<RankingFeedModel>(stream);
                     }
                 });
 
