@@ -22,26 +22,27 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
 {
-    public enum VideoInformationLoad
+    /// <summary>
+    /// ランキングの読込状態。
+    /// </summary>
+    public enum RankingLoad
     {
         /// <summary>
         /// 読み込んでないか読み込み失敗。
         /// </summary>
         None,
         /// <summary>
-        /// サムネイルチェック中。
+        /// ランキングリスト取得中。
         /// </summary>
-        ImageChecking,
+        RankingListLoading,
         /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>WEB</para>
+        /// ランキングリストチェック中。
         /// </summary>
-        ImageLoadingFromWeb,
+        RankingListChecking,
         /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>ファイル</para>
+        /// サムネイル取得中。
         /// </summary>
-        ImageLoadingFromStorage,
+        ImageLoading,
         /// <summary>
         /// 読込完了。
         /// </summary>

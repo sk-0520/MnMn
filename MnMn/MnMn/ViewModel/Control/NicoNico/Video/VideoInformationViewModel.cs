@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
-        public VideoInformationViewModel(RawVideoThumbModel model, Mediation mediation)
+        public VideoInformationViewModel(Mediation mediation, RawVideoThumbModel model)
             : base(model)
         {
             Mediation = mediation;

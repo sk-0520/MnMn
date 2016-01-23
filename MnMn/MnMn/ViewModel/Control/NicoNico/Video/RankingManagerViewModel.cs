@@ -23,6 +23,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
@@ -40,8 +41,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
-        public RankingManagerViewModel(RankingModel rankingModel)
+        public RankingManagerViewModel(Mediation mediation, RankingModel rankingModel)
         {
+            Mediation = mediation;
+
             RankingModel = rankingModel;
             CategoryItems = new CollectionModel<ElementModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
@@ -51,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #region property
 
-        #region RankingToolbar
+        Mediation Mediation { get; set; }
 
         RankingModel RankingModel { get; set; }
 
@@ -85,8 +88,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
-        #endregion
-
         #region command
 
         public ICommand GetRankingCategoryCommand
@@ -107,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                                 return viewModel;
                             },
                             () => {
-                                var viewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
+                                var viewModel = new RankingCategoryItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
                                 RankingCategoryItems.Add(viewModel);
                                 return viewModel;
                             }

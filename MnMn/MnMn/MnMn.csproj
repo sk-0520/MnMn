@@ -131,6 +131,8 @@
     <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\NicoNico\Video\MovieType.cs" />
+    <Compile Include="Define\NicoNico\Video\MediationNicoNicoVideoKey.cs" />
+    <Compile Include="Define\NicoNico\Video\RankingLoad.cs" />
     <Compile Include="Define\NicoNico\Video\ThumbType.cs" />
     <Compile Include="Define\NicoNico\Video\VideoInformationLoad.cs" />
     <Compile Include="Define\RequestKind.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbResponseModel.cs" />
     <Compile Include="Model\ParameterPairModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
+    <Compile Include="Model\ParametersModel.cs" />
     <Compile Include="Model\RequestModel.cs" />
     <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Model\UriItemModel.cs" />

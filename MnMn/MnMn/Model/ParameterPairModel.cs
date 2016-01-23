@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <summary>
     /// パラメータのペア。
     /// <para>キーがなければ値のみ使用する。</para>
+    /// <para>当初はペアだったのですが跡形もなくなりましたん。</para>
     /// </summary>
     [Serializable]
     public class ParameterPairModel: ModelBase

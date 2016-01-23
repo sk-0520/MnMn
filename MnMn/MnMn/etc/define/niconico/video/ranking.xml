@@ -32,7 +32,7 @@
 
 	<!-- ターゲット -->
 	<targets>
-		<element key="comment">
+		<element key="res">
 			<words>
 				<word lang="ja-JP" value="コメント" />
 			</words>

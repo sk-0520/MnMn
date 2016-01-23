@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
         {
-            return s.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map);
+            return s?.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map) ?? string.Empty;
         }
 
         #region ThrowNotSupport
@@ -154,7 +154,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(type) {
                 case UriParameterType.Query:
                     if(pair.HasKey) {
-                        return $"{pair.Key}={val}";
+                        var key = ReplaceString(pair.Key, replaceMap);
+                        return $"{key}={val}";
                     } else {
                         return val;
                     }
@@ -162,8 +163,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case UriParameterType.Hierarchy:
                     return val;
 
-                case UriParameterType.PreSuffixes:
-                    return $"{pair.Suffix}{pair.Key}{pair.Bond}{pair.Value}{pair.Suffix}";
+                case UriParameterType.PreSuffixes: {
+                        var key = ReplaceString(pair.Key, replaceMap);
+                        var pre = ReplaceString(pair.Prefix, replaceMap);
+                        var bond = ReplaceString(pair.Bond, replaceMap);
+                        var suf = ReplaceString(pair.Suffix, replaceMap);
+                        return $"{pre}{key}{bond}{val}{suf}";
+                    }
 
                 default:
                     throw new NotImplementedException();

@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <parameters>
 	<param key="video-ranking">
-		<param-pair key="target" value="${target}" prefix="/" />
-		<param-pair key="period" value="${period}" prefix="/" />
-		<param-pair key="category" value="${category}" prefix="/" />
-		<param-pair key="rss" value="2.0" prefix="?"  />
-		<param-pair key="lang" value="${lang}" prefix="&amp;"  />
+		<!--ターゲット-->
+		<param-pair key="" value="${target}" prefix="/" />
+		<!--期間-->
+		<param-pair key="" value="${period}" prefix="/" />
+		<!--category-->
+		<param-pair key="" value="${category}" prefix="/" />
+		<param-pair prefix="?" key="rss" bond="=" value="2.0" />
+		<param-pair prefix="&amp;" key="lang" bond="=" value="${lang}" />
 	</param>
 	<param key="video-getthumbinfo">
 		<param-pair key="video-id" value="${video-id}" />

@@ -36,9 +36,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public VideoManagerViewModel(Mediation mediation)
         {
             Mediation = mediation;
+
             var response = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.NicoNicoVideo));
             var rankingModel = (RankingModel)response.Result;
-            RankingManager = new RankingManagerViewModel(rankingModel);
+            RankingManager = new RankingManagerViewModel(Mediation, rankingModel);
         }
 
         #region property

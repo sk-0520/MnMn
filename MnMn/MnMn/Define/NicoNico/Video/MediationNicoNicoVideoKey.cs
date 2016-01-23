@@ -22,29 +22,8 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
 {
-    public enum VideoInformationLoad
+    internal static class MediationNicoNicoVideoKey
     {
-        /// <summary>
-        /// 読み込んでないか読み込み失敗。
-        /// </summary>
-        None,
-        /// <summary>
-        /// サムネイルチェック中。
-        /// </summary>
-        ImageChecking,
-        /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>WEB</para>
-        /// </summary>
-        ImageLoadingFromWeb,
-        /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>ファイル</para>
-        /// </summary>
-        ImageLoadingFromStorage,
-        /// <summary>
-        /// 読込完了。
-        /// </summary>
-        Completed,
+        public const string ranking = "video-ranking";
     }
 }

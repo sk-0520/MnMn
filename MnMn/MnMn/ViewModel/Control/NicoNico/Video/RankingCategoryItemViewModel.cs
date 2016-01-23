@@ -22,6 +22,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
@@ -33,10 +37,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         ElementModel _selectedPeriod;
         ElementModel _selectedTarget;
 
+        RankingLoad _rankingLoad;
+
         #endregion
 
-        public RankingCategoryItemViewModel(RankingModel rankingModel, ElementModel period, ElementModel target, ElementModel category)
+        public RankingCategoryItemViewModel(Mediation mediation, RankingModel rankingModel, ElementModel period, ElementModel target, ElementModel category)
         {
+            Mediation = mediation;
+
             PeriodItems = new CollectionModel<ElementModel>(rankingModel.Periods.Items.Select(i => (ElementModel)i.DeepClone()));
             TargetItems = new CollectionModel<ElementModel>(rankingModel.Targets.Items.Select(i => (ElementModel)i.DeepClone()));
 
@@ -45,6 +53,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         }
 
         #region property
+
+        Mediation Mediation { get; set; }
 
         public IEnumerable<ElementModel> PeriodItems { get; private set; }
         public IEnumerable<ElementModel> TargetItems { get; private set; }
@@ -62,6 +72,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         public ElementModel Category { get; private set; }
 
+        public RankingLoad RankingLoad
+        {
+            get { return this._rankingLoad; }
+            set { SetVariableValue(ref this._rankingLoad, value); }
+        }
+            
+
         public IList<object> VideoInformationItems { get; set; }
 
         public string CategoryName => Category.CurrentWord;
@@ -76,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             {
                 return CreateCommand(
                     o => {
-
+                        LoadRankingAsync();
                     }
                 );
             }
@@ -86,9 +103,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #region function
 
+        async void LoadRankingAsync_Impl()
+        {
+            var host = new HttpUserAgentHost();
+            using(var page = new PageScraping(Mediation, host, MediationNicoNicoVideoKey.ranking, ServiceType.NicoNicoVideo)) {
+                page.ReplaceUriParameters["target"] = SelectedTarget.Key;
+                page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
+                page.ReplaceUriParameters["category"] = Category.Key;
+                page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+
+                var rankingXmlText = await page.GetResponseTextAsync(HttpMethod.Get);
+            }
+        }
+
         public void LoadRankingAsync()
         {
-
+            LoadRankingAsync_Impl();
         }
 
         ElementModel GetContextElemetFromChangeElement(IEnumerable<ElementModel> items, ElementModel element)

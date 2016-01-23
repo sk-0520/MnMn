@@ -28,6 +28,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     public enum RequestKind
     {
         /// <summary>
+        /// セッション。
+        /// </summary>
+        Session,
+        /// <summary>
         /// ランキング定義オブジェクト。
         /// </summary>
         RankingDefine,
