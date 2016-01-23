@@ -17,7 +17,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <app_contrl_nc_video:RankingGroupElements Grid.Row="0" />
+    <app_contrl_nc_video:RankingContextElements Grid.Row="0" />
     <app_contrl_nc_video:VideoList Grid.Row="0" />
   </Grid>
 </UserControl>

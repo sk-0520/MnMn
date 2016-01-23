@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+This file is part of MnMn.
+
+MnMn is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MnMn is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
     {
         #region variable
 
-        ElementModel _selectedTarget;
         ElementModel _selectedPeriod;
+        ElementModel _selectedTarget;
 
         ElementModel _selectedCategory;
 
@@ -24,10 +40,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public RankingManagerViewModel(RankingModel rankingModel)
         {
             RankingModel = rankingModel;
-            RankingCategoryItems = new CollectionModel<ElementModel>(GetLinearRankingElementList(RankingModel.Items));
-            SelectedTarget = TargetItems.First();
+            CategoryItems = new CollectionModel<ElementModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
-            SelectedCategory = RankingCategoryItems.First();
+            SelectedTarget = TargetItems.First();
+            SelectedCategory = CategoryItems.First();
         }
 
         #region property
@@ -44,20 +60,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             get { return this._selectedPeriod; }
             set { SetVariableValue(ref this._selectedPeriod, value); }
         }
-
         public ElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
             set { SetVariableValue(ref this._selectedTarget, value); }
         }
-
-        public CollectionModel<ElementModel> RankingCategoryItems { get; private set; }
-
         public ElementModel SelectedCategory
         {
             get { return this._selectedCategory; }
             set { SetVariableValue(ref this._selectedCategory, value); }
         }
+
+        public IList<ElementModel> CategoryItems { get; private set; }
+
+        public CollectionModel<RankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<RankingCategoryItemViewModel>();
 
         #endregion
 
@@ -74,6 +90,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         var nowPeriod = SelectedPeriod;
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
+
+                        var viewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
+                        RankingCategoryItems.Add(viewModel);
+                        viewModel.LoadRankingAsync();
                     }
                 );
             }
@@ -94,11 +114,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     }
                 }
             }
-        }
-
-        void LoadRankingAsync(ElementModel preiod, ElementModel target, ElementModel category)
-        {
-
         }
 
         #endregion

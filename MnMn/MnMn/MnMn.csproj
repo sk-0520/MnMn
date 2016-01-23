@@ -106,15 +106,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\NicoNico\Video\RankingGroupElements.xaml">
+    <Page Include="View\Control\NicoNico\Video\RankingContextElements.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Control\NicoNico\Video\RankingManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Control\NicoNico\Video\RankingToolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,6 +178,7 @@
     <Compile Include="Model\UriListModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
+    <Compile Include="ViewModel\Control\NicoNico\Video\RankingCategoryItemViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\NicoNicoSessionViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\NicoNicoManagerViewModel.cs" />
@@ -196,14 +193,11 @@
     <Compile Include="View\Control\NicoNico\Video\VideoManager.xaml.cs">
       <DependentUpon>VideoManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\NicoNico\Video\RankingGroupElements.xaml.cs">
-      <DependentUpon>RankingGroupElements.xaml</DependentUpon>
+    <Compile Include="View\Control\NicoNico\Video\RankingContextElements.xaml.cs">
+      <DependentUpon>RankingContextElements.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Control\NicoNico\Video\RankingManager.xaml.cs">
       <DependentUpon>RankingManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Control\NicoNico\Video\RankingToolbar.xaml.cs">
-      <DependentUpon>RankingToolbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Control\NicoNico\Video\VideoList.xaml.cs">
       <DependentUpon>VideoList.xaml</DependentUpon>

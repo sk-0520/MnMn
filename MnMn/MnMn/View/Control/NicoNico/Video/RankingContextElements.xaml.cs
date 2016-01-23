@@ -21,100 +21,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
     /// <summary>
     /// RankingToolbar.xaml の相互作用ロジック
     /// </summary>
-    public partial class RankingToolbar: UserControl
+    public partial class RankingContextElements: UserControl
     {
-        public RankingToolbar()
+        public RankingContextElements()
         {
             InitializeComponent();
         }
-
-        #region CommandProperty
-
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(CommandProperty)),
-            typeof(ICommand),
-            typeof(RankingToolbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandChanged))
-        );
-
-        private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as RankingToolbar;
-            if(control != null) {
-                control.Command = e.NewValue as ICommand;
-            }
-        }
-
-        public ICommand Command
-        {
-            get { return GetValue(CommandProperty) as ICommand; }
-            set { SetValue(CommandProperty, value); }
-        }
-
-        #endregion
-
-        #region CommandParameterProperty
-
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(CommandParameterProperty)),
-            typeof(object),
-            typeof(RankingToolbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandParameterChanged))
-        );
-
-        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as RankingToolbar;
-            control.CommandParameter = e.NewValue;
-        }
-
-        public object CommandParameter
-        {
-            get { return GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
-        }
-
-        #endregion
-
-        #region SelectedCategoryProperty
-
-        public static readonly DependencyProperty SelectedCategoryProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SelectedCategoryProperty)),
-            typeof(ElementModel),
-            typeof(RankingToolbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedCategoryChanged))
-        );
-
-        private static void OnSelectedCategoryChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as RankingToolbar;
-            if(control != null) {
-                control.SelectedCategory = e.NewValue as ElementModel;
-            }
-        }
-
-        public ElementModel SelectedCategory
-        {
-            get { return GetValue(SelectedCategoryProperty) as ElementModel; }
-            set { SetValue(SelectedCategoryProperty, value); }
-        }
-
-        #endregion
-
-        #region RankingToolbar
 
         #region SelectedPeriodProperty
 
         public static readonly DependencyProperty SelectedPeriodProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedPeriodProperty)),
             typeof(ElementModel),
-            typeof(RankingToolbar),
+            typeof(RankingContextElements),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedPeriodChanged))
         );
 
         private static void OnSelectedPeriodChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as RankingToolbar;
+            var control = d as RankingContextElements;
             if(control != null) {
                 control.SelectedPeriod = e.NewValue as ElementModel;
             }
@@ -127,19 +52,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
         }
 
         #endregion
-
+        
         #region SelectedTargetProperty
 
         public static readonly DependencyProperty SelectedTargetProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedTargetProperty)),
             typeof(ElementModel),
-            typeof(RankingToolbar),
+            typeof(RankingContextElements),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedTargetChanged))
         );
 
         private static void OnSelectedTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as RankingToolbar;
+            var control = d as RankingContextElements;
             if(control != null) {
                 control.SelectedTarget = e.NewValue as ElementModel;
             }
@@ -158,13 +83,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
         public static readonly DependencyProperty PeriodItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(PeriodItemsSourceProperty)),
             typeof(ObservableCollection<ElementModel>),
-            typeof(RankingToolbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTargetItemsSourceChanged))
+            typeof(RankingContextElements),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPeriodItemsSourceChanged))
         );
 
         private static void OnPeriodItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<RankingToolbar>(d, control => {
+            CastUtility.AsAction<RankingContextElements>(d, control => {
                 control.PeriodItemsSource = e.NewValue as ObservableCollection<ElementModel>;
             });
         }
@@ -182,13 +107,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
         public static readonly DependencyProperty TargetItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(TargetItemsSourceProperty)),
             typeof(ObservableCollection<ElementModel>),
-            typeof(RankingToolbar),
+            typeof(RankingContextElements),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTargetItemsSourceChanged))
         );
 
         private static void OnTargetItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<RankingToolbar>(d, control => {
+            CastUtility.AsAction<RankingContextElements>(d, control => {
                 control.TargetItemsSource = e.NewValue as ObservableCollection<ElementModel>;
             });
         }
@@ -201,6 +126,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
 
         #endregion
 
-        #endregion
     }
 }

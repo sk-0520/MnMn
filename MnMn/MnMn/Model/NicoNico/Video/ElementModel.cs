@@ -21,6 +21,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
@@ -29,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
     /// ランキング要素。
     /// </summary>
     [Serializable]
-    public class ElementModel: ModelBase
+    public class ElementModel: ModelBase, IDeepClone
     {
         #region property
 
@@ -37,11 +40,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
         /// ランキング要素の検索キー。
         /// </summary>
         [XmlAttribute("key")]
+        [IsDeepClone]
         public string Key { get; set; }
         /// <summary>
         /// ランキング要素タイトル。
         /// </summary>
         [XmlArray("words"), XmlArrayItem("word")]
+        [IsDeepClone]
         public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
 
         public string CurrentWord {
@@ -54,6 +59,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
 
                 return Key;
             }
+        }
+
+        #endregion
+
+        #region IDeepClone
+
+        public IDeepClone DeepClone()
+        {
+            return DeepCloneUtility.Copy<ElementModel>(this);
         }
 
         #endregion

@@ -32,17 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
     [Serializable, XmlRoot("ranking")]
     public class RankingModel: ModelBase
     {
+        [XmlElement("periods")]
+        public RankingGroupModel Periods { get; set; } = new RankingGroupModel();
+
+        [XmlElement("targets")]
+        public RankingGroupModel Targets { get; set; } = new RankingGroupModel();
+
         /// <summary>
         /// 各カテゴリの大枠。
         /// </summary>
         [XmlElement("categories")]
         public CollectionModel<CategoryGroupModel> Items { get; set; } = new CollectionModel<CategoryGroupModel>();
-
-        [XmlElement("targets")]
-        public RankingGroupModel Targets { get; set; } = new RankingGroupModel();
-
-        [XmlElement("periods")]
-        public RankingGroupModel Periods { get; set; } = new RankingGroupModel();
 
     }
 }

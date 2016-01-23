@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
 {

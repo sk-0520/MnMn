@@ -8,7 +8,7 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <ListView ItemsSource="{Binding VideoInformationList}">
+  <ListView ItemsSource="{Binding VideoInformationItems}">
     <ListView.View>
       <GridView>
         
