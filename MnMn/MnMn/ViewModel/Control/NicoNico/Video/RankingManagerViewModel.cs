@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
@@ -99,15 +100,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         var nowCategory = SelectedCategory;
 
                         // すでに存在する場合はそのタブへ遷移
-                        RankingCategoryItemViewModel selectViewModel = null;
-                        var existisRankingCategory = RankingCategoryItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key);
-                        if(existisRankingCategory != null) {
-                            existisRankingCategory.SetContextElements(nowPeriod, nowTarget);
-                            selectViewModel = existisRankingCategory;
-                        } else {
-                            selectViewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
-                            RankingCategoryItems.Add(selectViewModel);
-                        }
+                        var selectViewModel = RestrictUtility.IsNotNull(
+                            RankingCategoryItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key),
+                            viewModel => {
+                                viewModel.SetContextElements(nowPeriod, nowTarget);
+                                return viewModel;
+                            },
+                            () => {
+                                var viewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
+                                RankingCategoryItems.Add(viewModel);
+                                return viewModel;
+                            }
+                        );
                         selectViewModel.LoadRankingAsync();
                         SelectedRankingCategory = selectViewModel;
                     }

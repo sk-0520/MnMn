@@ -55,8 +55,8 @@
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharedLibrary, Version=0.1.5859.21613, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.14\lib\net46\SharedLibrary.dll</HintPath>
+    <Reference Include="SharedLibrary, Version=0.1.5866.25289, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.17\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
