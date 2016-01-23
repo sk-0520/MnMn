@@ -82,9 +82,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             get { return this._rankingLoad; }
             set { SetVariableValue(ref this._rankingLoad, value); }
         }
-            
 
-        public IList<object> VideoInformationItems { get; set; }
+
+        public CollectionModel<VideoInformationViewModel> VideoInformationItems { get; private set; } = new CollectionModel<VideoInformationViewModel>();
 
         public string CategoryName => Category.CurrentWord;
 
@@ -132,6 +132,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     }
                 });
 
+                var list = rankingFeedModel.Channel.Items
+                    //.AsParallel()
+                    .Select(i => new VideoInformationViewModel(Mediation, i))
+                ;
+                VideoInformationItems.InitializeRange(list);
             }
         }
 

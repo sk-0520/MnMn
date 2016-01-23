@@ -25,10 +25,11 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
-    public class VideoInformationViewModel: SingleModelWrapperViewModelBase<RawVideoThumbModel>
+    public class VideoInformationViewModel: ViewModelBase
     {
         #region variable
 
@@ -36,18 +37,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #endregion
 
-        public VideoInformationViewModel(Mediation mediation, RawVideoThumbModel model)
-            : base(model)
+        public VideoInformationViewModel(Mediation mediation, RawVideoThumbModel thumb)
         {
             Mediation = mediation;
+
+            Thumb = thumb;
+
             VideoInformationSource = VideoInformationSource.Getthumbinfo;
+        }
+
+        public VideoInformationViewModel(Mediation mediation, RankingFeedItemModel ranking)
+        {
+            Mediation = mediation;
+
+            Ranking = ranking;
+            RankingDetail = RankingUtility.ConvertRawDescription(Ranking.Description);
+            RankingDetail.VideoId = RankingUtility.GetVideoId(Ranking);
+
+            VideoInformationSource = VideoInformationSource.Ranking;
         }
 
         #region property
 
         Mediation Mediation { get; set; }
 
-        VideoInformationSource VideoInformationSource { get; set; }
+        RawVideoThumbModel Thumb { get; set; }
+        RankingFeedItemModel Ranking { get; set; }
+
+        RawVideoRankingDetailModel RankingDetail { get; set; }
+
+
+        public VideoInformationSource VideoInformationSource { get; private set; }
 
         public VideoInformationLoad VideoLoad
         {
@@ -64,21 +84,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         /// </summary>
         public bool Cached { get; set; }
 
-        public Uri ThumbnailUri { get { return RawValueUtility.ConvertUri(Model.ThumbnailUrl); } }
-        public DateTime FirstRetrieve { get { return RawValueUtility.ConvertDateTime(Model.FirstRetrieve); } }
-        public TimeSpan Length { get { return GetthumbinfoUtility.ConvertTimeSpan(Model.Length); } }
-        public MovieType MovieType { get { return GetthumbinfoUtility.ConvertMovieType(Model.MovieType); } }
-        public long SizeHigh { get { return RawValueUtility.ConvertLong(Model.SizeHigh); } }
-        public long SizeLow{ get { return RawValueUtility.ConvertLong(Model.SizeLow); } }
-        public int ViewCounter { get { return RawValueUtility.ConvertInteger(Model.ViewCounter); } }
-        public int CommentNum { get { return RawValueUtility.ConvertInteger(Model.CommentNum); } }
-        public int MylistCounter { get { return RawValueUtility.ConvertInteger(Model.MylistCounter); } }
-        public Uri WatchUrl { get { return RawValueUtility.ConvertUri(Model.WatchUrl); } }
-        public ThumbType ThumbType { get { return GetthumbinfoUtility.ConvertThumbType(Model.ThumbType); } }
-        public bool Embeddable { get { return GetthumbinfoUtility.IsEmbeddable(Model.Embeddable); } }
-        public bool LivePlay { get { return GetthumbinfoUtility.IsLivePlay(Model.NoLivePlay); } }
-        public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Model.UserIconUrl); } }
-        
+        #region 生データから取得
+
+        public string Title
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case VideoInformationSource.Getthumbinfo:
+                        return Thumb.Title;
+
+                    case VideoInformationSource.Ranking:
+                        return Ranking.Title;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public Uri ThumbnailUri { get { return RawValueUtility.ConvertUri(Thumb.ThumbnailUrl); } }
+        public DateTime FirstRetrieve { get { return RawValueUtility.ConvertDateTime(Thumb.FirstRetrieve); } }
+        public TimeSpan Length { get { return GetthumbinfoUtility.ConvertTimeSpan(Thumb.Length); } }
+        public MovieType MovieType { get { return GetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
+        public long SizeLow{ get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
+        public int ViewCounter { get { return RawValueUtility.ConvertInteger(Thumb.ViewCounter); } }
+        public int CommentNum { get { return RawValueUtility.ConvertInteger(Thumb.CommentNum); } }
+        public int MylistCounter { get { return RawValueUtility.ConvertInteger(Thumb.MylistCounter); } }
+        public Uri WatchUrl
+        {
+            get {
+                switch(VideoInformationSource) {
+                    case VideoInformationSource.Getthumbinfo:
+                        return RawValueUtility.ConvertUri(Thumb.WatchUrl);
+
+                    case VideoInformationSource.Ranking:
+                        return RawValueUtility.ConvertUri(Ranking.Link);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+        public ThumbType ThumbType { get { return GetthumbinfoUtility.ConvertThumbType(Thumb.ThumbType); } }
+        public bool Embeddable { get { return GetthumbinfoUtility.IsEmbeddable(Thumb.Embeddable); } }
+        public bool LivePlay { get { return GetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
+        public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
+
+        #endregion
+
         #endregion
     }
 }

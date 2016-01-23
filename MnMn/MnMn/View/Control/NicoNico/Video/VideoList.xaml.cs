@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
 {
@@ -27,26 +28,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
             InitializeComponent();
         }
 
-        #region PeriodItemsSourceProperty
+        #region VideoInformationItemsSourceProperty
 
-        public static readonly DependencyProperty VideoItemsSourceProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(VideoItemsSourceProperty)),
-            typeof(ObservableCollection<object>),
+        public static readonly DependencyProperty VideoInformationItemsSourceProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(VideoInformationItemsSourceProperty)),
+            typeof(ObservableCollection<VideoInformationViewModel>),
             typeof(VideoList),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnVideoItemsSourceChanged))
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnVideoInformationItemsSourceChanged))
         );
 
-        private static void OnVideoItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnVideoInformationItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CastUtility.AsAction<VideoList>(d, control => {
-                control.PeriodItemsSource = e.NewValue as ObservableCollection<object>;
+                control.VideoInformationItemsSource = e.NewValue as ObservableCollection<VideoInformationViewModel>;
             });
         }
 
-        public ObservableCollection<object> PeriodItemsSource
+        public ObservableCollection<VideoInformationViewModel> VideoInformationItemsSource
         {
-            get { return GetValue(VideoItemsSourceProperty) as ObservableCollection<object>; }
-            set { SetValue(VideoItemsSourceProperty, value); }
+            get { return GetValue(VideoInformationItemsSourceProperty) as ObservableCollection<VideoInformationViewModel>; }
+            set { SetValue(VideoInformationItemsSourceProperty, value); }
         }
 
         #endregion

@@ -52,10 +52,9 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <app_contrl_nc_video:VideoList  />
+          <app_contrl_nc_video:VideoList VideoInformationItemsSource="{Binding VideoInformationItems}" />
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>
-
   </Grid>
 </UserControl>
