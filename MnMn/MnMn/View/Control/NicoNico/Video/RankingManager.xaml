@@ -52,7 +52,20 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <app_contrl_nc_video:VideoList VideoInformationItemsSource="{Binding VideoInformationItems}" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="5*"/>
+              <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <app_contrl_nc_video:VideoList Grid.Column="0" VideoInformationItemsSource="{Binding VideoInformationItems}" />
+            <ListBox Grid.Column="1" ItemsSource="{Binding VideoInformationItems}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Title}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          </Grid>
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>

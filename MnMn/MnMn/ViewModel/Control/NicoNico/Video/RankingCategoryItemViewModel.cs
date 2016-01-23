@@ -47,8 +47,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         RankingLoad _rankingLoad;
 
-        //CollectionView _videoInformationItems;
-
         #endregion
 
         public RankingCategoryItemViewModel(Mediation mediation, RankingModel rankingModel, ElementModel period, ElementModel target, ElementModel category)
@@ -168,25 +166,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     .Select((item, index) => new VideoInformationViewModel(Mediation, item, index + 1))
                 ;
             }).ContinueWith(task => {
-                var list = task.Result;
-                VideoInformationList.InitializeRange(list);
-                VideoInformationItems.Refresh();
-                return list;
-            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(async task => {
-                var list = task.Result;
-                RankingLoad = RankingLoad.ImageLoading;
-                foreach(var item in list) {
-                    await item.LoadImageAsync();
-                }
-            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
-                RankingLoad = RankingLoad.Completed;
-                return Task.CompletedTask;
-            });
+                VideoInformationList.InitializeRange(task.Result);
+                    VideoInformationItems.Refresh();
+                //VideoInformationItems.Refresh();
+
+                Task.Run(() => {
+                    System.Threading.Thread.Sleep(5000);
+                    RankingLoad = RankingLoad.ImageLoading;
+
+                    foreach(var item in VideoInformationList) {
+                        var t = item.LoadImageAsync();
+                        t.Wait();
+                    }
+                }).ContinueWith(t => {
+                    VideoInformationItems.Refresh();
+                    RankingLoad = RankingLoad.Completed;
+                    return Task.CompletedTask;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public Task LoadRankingAsync()
         {
-            var loadSkips = new[] { RankingLoad.RankingListLoading, RankingLoad.RankingListChecking };
             if(CanLoad) {
                 return LoadRankingAsync_Impl();
             } else {

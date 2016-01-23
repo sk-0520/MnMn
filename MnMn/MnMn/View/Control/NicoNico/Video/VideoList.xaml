@@ -11,7 +11,7 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <ListView ItemsSource="{Binding VideoInformationItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
+  <ListView DataContext="{Binding ItemsSource, RelativeSource={RelativeSource Self}}" ItemsSource="{Binding VideoInformationItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <ListView.View>
       <GridView>
         <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
@@ -35,14 +35,33 @@
         <GridViewColumn>
           <GridViewColumn.HeaderTemplate>
             <ItemContainerTemplate>
-              <StackPanel DataContext="{Binding}">
+              <StackPanel>
                 <Label>thumbnail</Label>
               </StackPanel>
             </ItemContainerTemplate>
           </GridViewColumn.HeaderTemplate>
           <GridViewColumn.CellTemplate>
             <ItemContainerTemplate>
-              <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+              <StackPanel>
+                <TextBlock Text="{Binding VideoThumbnailLoad}" />
+                <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+                
+              </StackPanel>
+            </ItemContainerTemplate>
+          </GridViewColumn.CellTemplate>
+        </GridViewColumn>
+        
+        <GridViewColumn>
+          <GridViewColumn.HeaderTemplate>
+            <ItemContainerTemplate>
+              <StackPanel>
+                <Label>title</Label>
+              </StackPanel>
+            </ItemContainerTemplate>
+          </GridViewColumn.HeaderTemplate>
+          <GridViewColumn.CellTemplate>
+            <ItemContainerTemplate>
+                <TextBlock Text="{Binding Title}" />
             </ItemContainerTemplate>
           </GridViewColumn.CellTemplate>
         </GridViewColumn>

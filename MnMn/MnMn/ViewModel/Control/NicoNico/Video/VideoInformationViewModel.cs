@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
     {
         #region variable
 
-        VideoThumbnailLoad _videoLoad;
+        VideoThumbnailLoad _videoThumbnailLoad;
         ImageSource _thumbnailImage;
 
         #endregion
@@ -83,10 +83,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         public VideoThumbnailLoad VideoThumbnailLoad
         {
-            get { return this._videoLoad; }
+            get { return this._videoThumbnailLoad; }
             set
             {
-                if(SetVariableValue(ref this._videoLoad, value)) {
+                if(SetVariableValue(ref this._videoThumbnailLoad, value)) {
                     CallOnPropertyChange(nameof(ThumbnailImage));
                 }
             }
@@ -197,6 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             get
             {
+                Debug.WriteLine(ThumbnailUri);
                 switch(VideoThumbnailLoad) {
                     case VideoThumbnailLoad.None:
                         return null;
@@ -241,7 +242,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             using(var stream = new MemoryStream(binary)) {
                 Debug.WriteLine(uri);
                 Debug.WriteLine(binary.Length);
-                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.None);
+                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 FreezableUtility.SafeFreeze(image);
                 this._thumbnailImage = image;
                 VideoThumbnailLoad = VideoThumbnailLoad.Completed;
