@@ -87,7 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         #region function
 
         public void LoadRankingAsync()
-        { }
+        {
+
+        }
 
         ElementModel GetContextElemetFromChangeElement(IEnumerable<ElementModel> items, ElementModel element)
         {

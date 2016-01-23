@@ -28,8 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     public enum RequestKind
     {
         /// <summary>
-        /// ランキング
+        /// ランキング定義オブジェクト。
         /// </summary>
-        Ranking,
+        RankingDefine,
+        /// <summary>
+        /// ランキングデータ。
+        /// </summary>
+        RankingList,
     }
 }

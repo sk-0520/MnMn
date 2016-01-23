@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
         ResponseModel Request_Impl(RequestModel request)
         {
             switch(request.RequestKind) {
-                case RequestKind.Ranking:
+                case RequestKind.RankingDefine:
                     return new ResponseModel(request, Ranking);
 
                 default:

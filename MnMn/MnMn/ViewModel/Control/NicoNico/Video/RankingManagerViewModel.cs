@@ -103,14 +103,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         var existisRankingCategory = RankingCategoryItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key);
                         if(existisRankingCategory != null) {
                             existisRankingCategory.SetContextElements(nowPeriod, nowTarget);
-                            existisRankingCategory.LoadRankingAsync();
                             selectViewModel = existisRankingCategory;
                         } else {
-                            var viewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
-                            RankingCategoryItems.Add(viewModel);
-                            viewModel.LoadRankingAsync();
-                            selectViewModel = viewModel;
+                            selectViewModel = new RankingCategoryItemViewModel(RankingModel, nowPeriod, nowTarget, nowCategory);
+                            RankingCategoryItems.Add(selectViewModel);
                         }
+                        selectViewModel.LoadRankingAsync();
                         SelectedRankingCategory = selectViewModel;
                     }
                 );
