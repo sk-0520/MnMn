@@ -126,6 +126,7 @@
     <Compile Include="Define\Delegate\CreateHttpUserAgent.cs" />
     <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
+    <Compile Include="Define\NicoNico\MediationNicoNicoKey.cs" />
     <Compile Include="Define\NicoNico\Video\MovieType.cs" />
     <Compile Include="Define\NicoNico\Video\MediationNicoNicoVideoKey.cs" />
     <Compile Include="Define\NicoNico\Video\RankingLoad.cs" />
@@ -143,7 +144,9 @@
     <Compile Include="IF\IGetUri.cs" />
     <Compile Include="IF\Control\ITreeNodeItem.cs" />
     <Compile Include="IF\ICommunication.cs" />
-    <Compile Include="Logic\NicoNico\Video\Getthumbinfo.cs" />
+    <Compile Include="Logic\NicoNico\Video\Api\ApiBase.cs" />
+    <Compile Include="Logic\NicoNico\Video\Api\Getflv.cs" />
+    <Compile Include="Logic\NicoNico\Video\Api\Getthumbinfo.cs" />
     <Compile Include="Logic\PageScraping.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />

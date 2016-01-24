@@ -19,12 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 {
-    internal static class MediationNicoNicoVideoKey
+    public abstract class ApiBase: DisposeFinalizeBase
     {
-        public const string getthumbinfo = "video-getthumbinfo";
-        public const string ranking = "video-ranking";
+        public ApiBase(Mediation mediation)
+        {
+            Mediation = mediation;
+        }
+
+        #region property
+
+        protected Mediation Mediation { get; private set; }
+
+        #endregion
     }
 }

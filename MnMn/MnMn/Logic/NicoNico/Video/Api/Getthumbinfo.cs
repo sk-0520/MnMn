@@ -22,20 +22,18 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 {
-    public class Getthumbinfo: DisposeFinalizeBase
+    public class Getthumbinfo: ApiBase
     {
         public Getthumbinfo(Mediation mediation)
-        {
-            Mediation = mediation;
-        }
+            :base(mediation)
+        { }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         HttpUserAgentHost HttpUserAgentHost { get; set; } = new HttpUserAgentHost();
 
@@ -54,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public async Task<RawVideoThumbResponseModel> GetAsync(string videoId)
         {
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, "video-getthumbinfo", Define.ServiceType.NicoNicoVideo)) {
+            using(var page = new PageScraping(Mediation, HttpUserAgentHost, MediationNicoNicoVideoKey.getthumbinfo, Define.ServiceType.NicoNicoVideo)) {
                 return await GetAsync_Impl(page, videoId);
             }
         }

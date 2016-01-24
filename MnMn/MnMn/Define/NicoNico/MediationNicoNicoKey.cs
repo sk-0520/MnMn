@@ -20,11 +20,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico
 {
-    internal static class MediationNicoNicoVideoKey
+    internal static class MediationNicoNicoKey
     {
-        public const string getthumbinfo = "video-getthumbinfo";
-        public const string ranking = "video-ranking";
+        public const string videoLogin = "video-session-login";
+        public const string videoLogout = "video-session-logout";
+        public const string videoCheck = "video-session-check";
     }
 }

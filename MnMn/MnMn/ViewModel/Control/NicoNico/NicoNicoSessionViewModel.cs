@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageScraping(Mediation, this, "video-session-login", ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, MediationNicoNicoKey.videoLogin, ServiceType.NicoNico)) {
                 page.StopHeaderCheck = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.User;
@@ -102,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return;
             }
 
-            using(var page = new PageScraping(Mediation, this, "video-session-logout", ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, MediationNicoNicoKey.videoLogout, ServiceType.NicoNico)) {
                 page.StopHeaderCheck = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
@@ -117,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return false;
             }
 
-            using(var page = new PageScraping(Mediation, this, "video-session-check", ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, MediationNicoNicoKey.videoCheck, ServiceType.NicoNico)) {
                 page.StopHeaderCheck = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
