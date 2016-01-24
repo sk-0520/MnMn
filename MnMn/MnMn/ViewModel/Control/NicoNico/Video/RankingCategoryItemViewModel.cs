@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -47,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         RankingLoad _rankingLoad;
 
+        bool _nowLoading;
+
         #endregion
 
         public RankingCategoryItemViewModel(Mediation mediation, RankingModel rankingModel, ElementModel period, ElementModel target, ElementModel category)
@@ -66,6 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         #region property
 
         Mediation Mediation { get; set; }
+
+        CancellationTokenSource CancelLoading { get; set;  }
 
         public IEnumerable<ElementModel> PeriodItems { get; private set; }
         public IEnumerable<ElementModel> TargetItems { get; private set; }
@@ -89,15 +94,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             set
             {
                 if(SetVariableValue(ref this._rankingLoad, value)) {
-                    CallOnPropertyChange(nameof(CanLoad));
+                    var propertyNames = new[] {
+                        nameof(CanLoad),
+                        nameof(NowLoading),
+                    };
+                    CallOnPropertyChange(propertyNames);
                 }
             }
         }
 
-        public CollectionModel<VideoInformationViewModel> VideoInformationList { get; set; }
+        CollectionModel<VideoInformationViewModel> VideoInformationList { get; set; }
 
         ICollectionView _VideoInformationItems;
-        public ICollectionView VideoInformationItems {
+        public ICollectionView VideoInformationItems
+        {
             get { return this._VideoInformationItems; }
             private set { SetVariableValue(ref this._VideoInformationItems, value); }
         }
@@ -111,6 +121,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 var loadSkips = new[] { RankingLoad.RankingListLoading, RankingLoad.RankingListChecking };
                 return !loadSkips.Any(l => l == RankingLoad);
             }
+        }
+
+        public bool NowLoading
+        {
+            get { return this._nowLoading; }
+            set { SetVariableValue(ref this._nowLoading, value); }
         }
 
         #endregion
@@ -136,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         async Task LoadRankingAsync_Impl()
         {
             RankingLoad = RankingLoad.RankingListLoading;
-
+            NowLoading = true;
             var rankingFeedModel = await RestrictUtility.Block(async () => {
                 using(var host = new HttpUserAgentHost())
                 using(var page = new PageScraping(Mediation, host, MediationNicoNicoVideoKey.ranking, ServiceType.NicoNicoVideo)) {
@@ -161,9 +177,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 }
             });
             if(rankingFeedModel == null) {
+                NowLoading = false;
                 RankingLoad = RankingLoad.Failure;
                 return;
             }
+
 
             await Task.Run(() => {
                 return rankingFeedModel.Channel.Items
@@ -171,29 +189,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     .Select((item, index) => new VideoInformationViewModel(Mediation, item, index + 1))
                 ;
             }).ContinueWith(task => {
-                    VideoInformationList.InitializeRange(task.Result);
-            VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
+                CancelLoading = new CancellationTokenSource();
+
+                VideoInformationList.InitializeRange(task.Result);
                 VideoInformationItems.Refresh();
+
                 Task.Run(() => {
                     System.Threading.Thread.Sleep(5000);
                     RankingLoad = RankingLoad.ImageLoading;
 
-                    foreach(var item in VideoInformationList) {
+                    foreach(var item in VideoInformationList.ToArray()) {
+                        CancelLoading.Token.ThrowIfCancellationRequested();
+
                         var t = item.LoadImageAsync();
                         t.Wait();
                     }
                 }).ContinueWith(t => {
                     //VideoInformationItems.Refresh();
                     RankingLoad = RankingLoad.Completed;
-                    return Task.CompletedTask;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-
+                    NowLoading = true;
+                   // return Task.CompletedTask;
+                }, CancelLoading.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public Task LoadRankingAsync()
         {
             if(CanLoad) {
+                if(NowLoading) {
+                    DisposeCancelLoading();
+                }
+
                 return LoadRankingAsync_Impl();
             } else {
                 return Task.CompletedTask;
@@ -213,6 +239,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             SelectedPeriod = GetContextElemetFromChangeElement(PeriodItems, period);
             SelectedTarget = GetContextElemetFromChangeElement(TargetItems, target);
+        }
+
+        void DisposeCancelLoading()
+        {
+            if(CancelLoading != null) {
+                CancelLoading.Cancel();
+                CancelLoading.Dispose();
+                CancelLoading = null;
+            }
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DisposeCancelLoading();
+            }
+            base.Dispose(disposing);
         }
 
         #endregion

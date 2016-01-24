@@ -1,0 +1,59 @@
+﻿<ResourceDictionary 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Resources.NicoNico.Video"
+>
+  <GridView x:Key="VideoListView">
+    <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <StackPanel>
+            <Label>test</Label>
+            <Button>asd</Button>
+            <TextBox>789</TextBox>
+          </StackPanel>
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <Label>123</Label>
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
+
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <StackPanel>
+            <Label>thumbnail</Label>
+          </StackPanel>
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <StackPanel>
+            <TextBlock Text="{Binding VideoThumbnailLoad}" />
+            <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+
+          </StackPanel>
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
+
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <StackPanel>
+            <Label>title</Label>
+          </StackPanel>
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <TextBlock Text="{Binding Title}" />
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
+  </GridView>
+</ResourceDictionary>
