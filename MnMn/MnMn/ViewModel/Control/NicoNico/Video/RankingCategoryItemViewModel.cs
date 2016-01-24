@@ -17,14 +17,17 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -185,7 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
             await Task.Run(() => {
                 return rankingFeedModel.Channel.Items
-                    //.AsParallel()
+                    .AsParallel()
                     .Select((item, index) => new VideoInformationViewModel(Mediation, item, index + 1))
                 ;
             }).ContinueWith(task => {
@@ -195,15 +198,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 VideoInformationItems.Refresh();
 
                 Task.Run(() => {
-                    System.Threading.Thread.Sleep(5000);
                     RankingLoad = RankingLoad.ImageLoading;
 
-                    foreach(var item in VideoInformationList.ToArray()) {
-                        CancelLoading.Token.ThrowIfCancellationRequested();
-
-                        var t = item.LoadImageAsync();
-                        t.Wait();
-                    }
+                    Parallel.ForEach(VideoInformationList.ToArray(), item => {
+                        var count = 0;
+                        var max = 3;
+                        var wait = TimeSpan.FromSeconds(1);
+                        while(count++ <= max) {
+                            CancelLoading.Token.ThrowIfCancellationRequested();
+                            try {
+                                var t = item.LoadImageAsync();
+                                t.Wait(CancelLoading.Token);
+                                break;
+                            } catch(WebSocketException ex) {
+                                Debug.WriteLine($"{item}: {ex}");
+                                Thread.Sleep(wait);
+                            } catch(IOException ex) {
+                                Debug.WriteLine($"{item}: {ex}");
+                            }
+                        }
+                    });
                 }).ContinueWith(t => {
                     //VideoInformationItems.Refresh();
                     RankingLoad = RankingLoad.Completed;

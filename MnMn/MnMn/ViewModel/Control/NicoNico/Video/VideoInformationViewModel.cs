@@ -240,8 +240,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 }
             });
             using(var stream = new MemoryStream(binary)) {
-                Debug.WriteLine(uri);
-                Debug.WriteLine(binary.Length);
                 var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 FreezableUtility.SafeFreeze(image);
                 this._thumbnailImage = image;
