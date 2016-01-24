@@ -197,7 +197,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             get
             {
-                Debug.WriteLine(ThumbnailUri);
                 switch(VideoThumbnailLoad) {
                     case VideoThumbnailLoad.None:
                         return null;

@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         t.Wait();
                     }
                 }).ContinueWith(t => {
-                    VideoInformationItems.Refresh();
+                    //VideoInformationItems.Refresh();
                     RankingLoad = RankingLoad.Completed;
                     return Task.CompletedTask;
                 }, TaskScheduler.FromCurrentSynchronizationContext());

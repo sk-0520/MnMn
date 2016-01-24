@@ -8,6 +8,11 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <DataTemplate x:Key="VideoTabItem">
+        <app_contrl_nc_video:VideoList Grid.Row="0" VideoInformationItemsSource="{Binding VideoInformationItems}" />
+    </DataTemplate>
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -32,7 +37,9 @@
       />
     </StackPanel>
 
-    <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}" SelectedItem="{Binding SelectedRankingCategory}">
+    <TabControl Grid.Row="1" ItemsSource="{Binding RankingCategoryItems}" SelectedItem="{Binding SelectedRankingCategory}" 
+                ContentTemplate="{StaticResource VideoTabItem}"
+                >
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
@@ -47,17 +54,81 @@
               Content="reload"
               Command="{Binding ReloadCategoryCommand}"
             />
+            <!--<app_contrl_nc_video:VideoList Grid.Row="0" VideoInformationItemsSource="{Binding VideoInformationItems, Mode=OneWay}" />-->
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>
-      <TabControl.ContentTemplate>
+      <!--<TabControl.ContentTemplate>
         <DataTemplate>
-          <Grid>
+          <Grid DataContext="{Binding}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="5*"/>
               <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <app_contrl_nc_video:VideoList Grid.Column="0" VideoInformationItemsSource="{Binding VideoInformationItems}" />
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+              </Grid.RowDefinitions>
+              <app_contrl_nc_video:VideoList Grid.Row="0" VideoInformationItemsSource="{Binding VideoInformationItems, Mode=OneWay}" />
+              <ListView Grid.Row="1" ItemsSource="{Binding VideoInformationItems}">
+                <ListView.View>
+                  <GridView>
+                    <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <StackPanel>
+                            <Label>test</Label>
+                            <Button>asd</Button>
+                            <TextBox>789</TextBox>
+                          </StackPanel>
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <Label>123</Label>
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <StackPanel>
+                            <Label>thumbnail</Label>
+                          </StackPanel>
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <StackPanel>
+                            <TextBlock Text="{Binding VideoThumbnailLoad}" />
+                            <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+
+                          </StackPanel>
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <StackPanel>
+                            <Label>title</Label>
+                          </StackPanel>
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="{Binding Title}" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                  </GridView>
+                </ListView.View>
+              </ListView>
+            </Grid>
             <ListBox Grid.Column="1" ItemsSource="{Binding VideoInformationItems}">
             <ListBox.ItemTemplate>
               <DataTemplate>
@@ -67,7 +138,7 @@
           </ListBox>
           </Grid>
         </DataTemplate>
-      </TabControl.ContentTemplate>
+      </TabControl.ContentTemplate>-->
     </TabControl>
   </Grid>
 </UserControl>

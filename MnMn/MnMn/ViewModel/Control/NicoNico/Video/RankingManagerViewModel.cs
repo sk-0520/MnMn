@@ -109,13 +109,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                             },
                             () => {
                                 var viewModel = new RankingCategoryItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
-                                RankingCategoryItems.Add(viewModel);
                                 return viewModel;
                             }
                         );
                         selectViewModel.LoadRankingAsync().ContinueWith(task => {
+                            if(!RankingCategoryItems.Any(vm => vm == selectViewModel)) {
+                                RankingCategoryItems.Insert(0, selectViewModel);
+                            }
                             SelectedRankingCategory = selectViewModel;
-                        });
+                        }, TaskScheduler.FromCurrentSynchronizationContext());
                     }
                 );
             }
