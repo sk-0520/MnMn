@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                             cancel.Token.ThrowIfCancellationRequested();
                             try {
                                 var t = item.LoadImageAsync();
-                                t.Wait(cancel.Token);
+                                t.Wait();
                                 break;
                             } catch(Exception ex) {
                                 Debug.WriteLine($"{item}: {ex}");
