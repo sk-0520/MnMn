@@ -14,6 +14,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
         /// </summary>
         public string VideoId { get; set; }
         /// <summary>
+        /// タイトル。
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
         /// 紹介文。
         /// </summary>
         public string Description { get; set; }

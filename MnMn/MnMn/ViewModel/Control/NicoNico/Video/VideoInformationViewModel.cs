@@ -64,6 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             Ranking = ranking;
             RankingDetail = RankingUtility.ConvertRawDescription(Ranking.Description);
             RankingDetail.VideoId = RankingUtility.GetVideoId(Ranking);
+            RankingDetail.Title = RankingUtility.GetTitle(Ranking.Title);
 
             VideoInformationSource = VideoInformationSource.Ranking;
         }
@@ -129,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         return Thumb.Title;
 
                     case VideoInformationSource.Ranking:
-                        return Ranking.Title;
+                        return RankingDetail.Title ?? Ranking.Title;
 
                     default:
                         throw new NotImplementedException();

@@ -41,6 +41,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
             return item.Link.Split('/').Last();
         }
 
+        /// <summary>
+        /// タイトルの取得。
+        /// 
+        /// TODO: 適当。
+        /// </summary>
+        /// <param name="rawTitle"></param>
+        /// <returns></returns>
+        public static string GetTitle(string rawTitle)
+        {
+            var index = rawTitle?.IndexOf("：");
+            if(index != -1 && index < rawTitle?.Length) {
+                return rawTitle?.Substring(index.Value + 1) ?? null;
+            } else {
+                return rawTitle;
+            }
+        }
+
         static string HtmlNodeToString(HtmlNode node)
         {
             return node.InnerHtml;
@@ -50,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
         /// ランキングの生説明部分から各要素に分解。
         /// </summary>
         /// <param name="rawDescription"></param>
-        /// <returns>動画ID以外の情報を設定したデータ。</returns>
+        /// <returns>動画ID, タイトル以外の情報を設定したデータ。</returns>
         public static RawVideoRankingDetailModel ConvertRawDescription(string rawDescription)
         {
             // HTMLの書式に合わせておく
