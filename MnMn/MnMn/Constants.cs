@@ -21,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn
@@ -30,8 +31,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
     /// </summary>
     public class Constants
     {
-
         #region proeprty
+
+        public static string ApplicationName => "MnMn";
 
         public static string AssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string AssemblyParentDirectoryPath => Path.GetDirectoryName(AssemblyPath);
@@ -54,7 +56,25 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string NicoNicoVideoRankingPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "ranking.xml");
 
-        public static string CurrentLanguageCode { get; } = "ja-JP";
+        public static string CurrentLanguageCode => "ja-JP";
+
+        #region command line
+
+        public static CommandLine CommandLine => new CommandLine();
+
+        /// <summary>
+        /// 設定ディレクトリパス。
+        /// </summary>
+        public static string UserDirectoryPath => CommandLine.HasValue("setting-root") ? CommandLine.GetValue("setting-root") : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+
+        /// <summary>
+        /// データ保存ディレクトリパス。
+        /// </summary>
+        public static string UserLocalDirectoryPath => CommandLine.HasValue("local-root") ? CommandLine.GetValue("local-root") : Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+
+        #endregion
 
         #endregion
     }
