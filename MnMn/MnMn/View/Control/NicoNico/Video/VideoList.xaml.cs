@@ -51,5 +51,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
         }
 
         #endregion
+        #region TextProperty
+
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(TextProperty)),
+            typeof(object),
+            typeof(VideoList),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTextChanged))
+        );
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CastUtility.AsAction<VideoList>(d, control => {
+                control.Text = e.NewValue;
+            });
+        }
+
+        public object Text
+        {
+            get { return GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        #endregion
     }
 }

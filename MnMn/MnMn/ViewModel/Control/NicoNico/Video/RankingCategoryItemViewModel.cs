@@ -94,8 +94,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             }
         }
 
-        CollectionModel<VideoInformationViewModel> VideoInformationList { get; set; }
-        public ICollectionView VideoInformationItems { get; private set; }
+        public CollectionModel<VideoInformationViewModel> VideoInformationList { get; set; }
+
+        ICollectionView _VideoInformationItems;
+        public ICollectionView VideoInformationItems {
+            get { return this._VideoInformationItems; }
+            private set { SetVariableValue(ref this._VideoInformationItems, value); }
+        }
 
         public string CategoryName => Category.CurrentWord;
 
@@ -166,10 +171,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     .Select((item, index) => new VideoInformationViewModel(Mediation, item, index + 1))
                 ;
             }).ContinueWith(task => {
-                VideoInformationList.InitializeRange(task.Result);
-                    VideoInformationItems.Refresh();
-                //VideoInformationItems.Refresh();
-
+                    VideoInformationList.InitializeRange(task.Result);
+            VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
+                VideoInformationItems.Refresh();
                 Task.Run(() => {
                     System.Threading.Thread.Sleep(5000);
                     RankingLoad = RankingLoad.ImageLoading;

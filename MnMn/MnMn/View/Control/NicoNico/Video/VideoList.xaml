@@ -11,61 +11,68 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <ListView ItemsSource="{Binding VideoInformationItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
-    <ListView.View>
-      <GridView>
-        <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
-        <GridViewColumn>
-          <GridViewColumn.HeaderTemplate>
-            <ItemContainerTemplate>
-              <StackPanel>
-                <Label>test</Label>
-                <Button>asd</Button>
-                <TextBox>789</TextBox>
-              </StackPanel>
-            </ItemContainerTemplate>
-          </GridViewColumn.HeaderTemplate>
-          <GridViewColumn.CellTemplate>
-            <ItemContainerTemplate>
-              <Label>123</Label>
-            </ItemContainerTemplate>
-          </GridViewColumn.CellTemplate>
-        </GridViewColumn>
-        
-        <GridViewColumn>
-          <GridViewColumn.HeaderTemplate>
-            <ItemContainerTemplate>
-              <StackPanel>
-                <Label>thumbnail</Label>
-              </StackPanel>
-            </ItemContainerTemplate>
-          </GridViewColumn.HeaderTemplate>
-          <GridViewColumn.CellTemplate>
-            <ItemContainerTemplate>
-              <StackPanel>
-                <TextBlock Text="{Binding VideoThumbnailLoad}" />
-                <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
-                
-              </StackPanel>
-            </ItemContainerTemplate>
-          </GridViewColumn.CellTemplate>
-        </GridViewColumn>
-        
-        <GridViewColumn>
-          <GridViewColumn.HeaderTemplate>
-            <ItemContainerTemplate>
-              <StackPanel>
-                <Label>title</Label>
-              </StackPanel>
-            </ItemContainerTemplate>
-          </GridViewColumn.HeaderTemplate>
-          <GridViewColumn.CellTemplate>
-            <ItemContainerTemplate>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <TextBlock Grid.Row="0" Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <ListView Grid.Row="1" ItemsSource="{Binding VideoInformationItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
+          <GridViewColumn>
+            <GridViewColumn.HeaderTemplate>
+              <ItemContainerTemplate>
+                <StackPanel>
+                  <Label>test</Label>
+                  <Button>asd</Button>
+                  <TextBox>789</TextBox>
+                </StackPanel>
+              </ItemContainerTemplate>
+            </GridViewColumn.HeaderTemplate>
+            <GridViewColumn.CellTemplate>
+              <ItemContainerTemplate>
+                <Label>123</Label>
+              </ItemContainerTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+
+          <GridViewColumn>
+            <GridViewColumn.HeaderTemplate>
+              <ItemContainerTemplate>
+                <StackPanel>
+                  <Label>thumbnail</Label>
+                </StackPanel>
+              </ItemContainerTemplate>
+            </GridViewColumn.HeaderTemplate>
+            <GridViewColumn.CellTemplate>
+              <ItemContainerTemplate>
+                <StackPanel>
+                  <TextBlock Text="{Binding VideoThumbnailLoad}" />
+                  <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+
+                </StackPanel>
+              </ItemContainerTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+
+          <GridViewColumn>
+            <GridViewColumn.HeaderTemplate>
+              <ItemContainerTemplate>
+                <StackPanel>
+                  <Label>title</Label>
+                </StackPanel>
+              </ItemContainerTemplate>
+            </GridViewColumn.HeaderTemplate>
+            <GridViewColumn.CellTemplate>
+              <ItemContainerTemplate>
                 <TextBlock Text="{Binding Title}" />
-            </ItemContainerTemplate>
-          </GridViewColumn.CellTemplate>
-        </GridViewColumn>
-      </GridView>
-    </ListView.View>
-  </ListView>
+              </ItemContainerTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+        </GridView>
+      </ListView.View>
+    </ListView>
+  </Grid>
 </UserControl>

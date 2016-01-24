@@ -79,9 +79,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         public IList<ElementModel> CategoryItems { get; private set; }
 
-        public RankingCategoryItemViewModel SelectedRankingCategory{
+        public RankingCategoryItemViewModel SelectedRankingCategory
+        {
             get { return this._selectedRankingCategory; }
-            set { SetVariableValue(ref this._selectedRankingCategory, value); }
+            set{ SetVariableValue(ref this._selectedRankingCategory, value); }
         }
 
         public CollectionModel<RankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<RankingCategoryItemViewModel>();
@@ -117,6 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                                 RankingCategoryItems.Insert(0, selectViewModel);
                             }
                             SelectedRankingCategory = selectViewModel;
+                            CallOnPropertyChange(nameof(selectViewModel.VideoInformationItems));
                         }, TaskScheduler.FromCurrentSynchronizationContext());
                     }
                 );
