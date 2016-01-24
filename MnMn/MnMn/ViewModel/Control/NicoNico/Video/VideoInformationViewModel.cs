@@ -245,12 +245,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 FreezableUtility.SafeFreeze(image);
                 this._thumbnailImage = image;
                 VideoThumbnailLoad = VideoThumbnailLoad.Completed;
-
-                using(var fs = new FileStream(@"z:\" + VideoId + ".png", FileMode.Create)) {
-                    var p = new PngBitmapEncoder();
-                    p.Frames.Add(image);
-                    p.Save(fs);
-                }
             }
             
             await Task.CompletedTask;
