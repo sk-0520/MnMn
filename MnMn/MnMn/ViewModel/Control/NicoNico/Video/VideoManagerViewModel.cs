@@ -28,6 +28,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
@@ -40,11 +42,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             var response = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.NicoNicoVideo));
             var rankingModel = (RankingModel)response.Result;
             RankingManager = new RankingManagerViewModel(Mediation, rankingModel);
-        }
-
-        internal void Temp_OpenPlayer(string v)
-        {
-            throw new NotImplementedException();
         }
 
         #region property
@@ -60,9 +57,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         #region function
 
-        public void Temp_OpenPlayer()
+        public async void Temp_OpenPlayer(string videoId)
         {
-
+            var vm = new VideoPlayerViewModelBase(Mediation);
+            await vm.InitializeAsync(videoId);
+            if(vm.VideoInformationViewModel != null) {
+                var player = new VideoPlayerWindow() {
+                    DataContext = vm,
+                };
+                player.Show();
+            }
         }
 
         #endregion

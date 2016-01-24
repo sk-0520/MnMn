@@ -20,11 +20,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 {
     public class VideoPlayerViewModelBase: ViewModelBase
     {
+        public VideoPlayerViewModelBase(Mediation mediation)
+        {
+            Mediation = mediation;
+        }
 
+        #region property
+
+        Mediation Mediation { get; set; }
+        public VideoInformationViewModel VideoInformationViewModel { get; set; }
+
+        #endregion
+
+        #region function
+
+        public async Task InitializeAsync(string videoId)
+        {
+            var getthumbinfo = new Getthumbinfo(Mediation);
+            var redGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
+            if(GetthumbinfoUtility.IsSuccessResponse(redGetthumbinfoModel)) {
+                VideoInformationViewModel = new VideoInformationViewModel(Mediation, redGetthumbinfoModel.Thumb, -1);
+            }
+        }
+
+        #endregion
     }
 }

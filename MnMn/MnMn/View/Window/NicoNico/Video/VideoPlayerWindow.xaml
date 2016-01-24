@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vlc_wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
         
-        Title="VideoPlayerWindow" Height="300" Width="300"
+        ResizeMode="CanResizeWithGrip"
+        
+        Title="VideoPlayerWindow" Height="387" Width="318"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 >
@@ -17,10 +19,46 @@
     <Menu Grid.Row="0">
       <MenuItem Header="qwertyuiop" />
     </Menu>
-    <StatusBar Grid.Row="2">
-      <TextBox>asdfghjk</TextBox>
-    </StatusBar>
 
     <vlc_wpf:VlcControl Grid.Row="1" />
+
+    <TabControl Grid.Row="2" TabStripPlacement="Bottom">
+      <TabItem Header="movie">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+
+          <StackPanel Grid.Column="0">
+            <Rectangle Width="80" Height="60" />
+          </StackPanel>
+
+          <Grid Grid.Column="2">
+            <WrapPanel Orientation="Horizontal">
+              <TextBlock>tag1</TextBlock>
+              <TextBlock>tag1</TextBlock>
+              <TextBlock>tag2</TextBlock>
+              <TextBlock>tag3</TextBlock>
+              <TextBlock>tag4</TextBlock>
+              <TextBlock>tag5</TextBlock>
+              <TextBlock>tag6</TextBlock>
+              <TextBlock>tag7</TextBlock>
+            </WrapPanel>
+          </Grid>
+        </Grid>
+      </TabItem>
+      <TabItem Header="market ">
+      </TabItem>
+    </TabControl>
+
+    <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="157">
+      <TextBlock>datetime</TextBlock>
+      <TextBlock>play</TextBlock>
+      <TextBlock>mylist</TextBlock>
+    </StackPanel>
+
+
   </Grid>
 </Window>

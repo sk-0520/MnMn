@@ -22,7 +22,7 @@
     </Grid.RowDefinitions>
 
     <Menu Grid.Row="0">
-      <MenuItem Header="test" Command="{Binding Temp_OpenNicoNicoPlayerCommand}">
+      <MenuItem Header="test" Command="{Binding Temp_OpenNicoNicoPlayerCommand}" Width="685" />
     </Menu>
 
     <StatusBar Grid.Row="2">
