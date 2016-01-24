@@ -121,11 +121,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attribute\NameAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Define\Delegate\JudgeResponsePageScraping.cs" />
     <Compile Include="Define\Delegate\CreateHttpUserAgent.cs" />
     <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
+    <Compile Include="Define\NameType.cs" />
     <Compile Include="Define\NicoNico\MediationNicoNicoKey.cs" />
     <Compile Include="Define\NicoNico\Video\MovieType.cs" />
     <Compile Include="Define\NicoNico\Video\MediationNicoNicoVideoKey.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="IF\IGetUri.cs" />
     <Compile Include="IF\Control\ITreeNodeItem.cs" />
     <Compile Include="IF\ICommunication.cs" />
+    <Compile Include="Logic\Attribute\NameAttributeUtility.cs" />
     <Compile Include="Logic\NicoNico\Video\Api\ApiBase.cs" />
     <Compile Include="Logic\NicoNico\Video\Api\Getflv.cs" />
     <Compile Include="Logic\NicoNico\Video\Api\Getthumbinfo.cs" />
@@ -167,6 +170,7 @@
     <Compile Include="Model\NicoNico\Video\RankingGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\ElementModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawVideoGetflvModel.cs" />
     <Compile Include="Model\Setting\NicoNico\UserAccountModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedChannelModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedModel.cs" />
