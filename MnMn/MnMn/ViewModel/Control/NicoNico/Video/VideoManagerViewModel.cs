@@ -42,11 +42,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             RankingManager = new RankingManagerViewModel(Mediation, rankingModel);
         }
 
+        internal void Temp_OpenPlayer(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         #region property
 
         Mediation Mediation { get; set; }
 
         public RankingManagerViewModel RankingManager { get; private set; }
+
+        #endregion
+
+        #region command
+        #endregion
+
+        #region function
+
+        public void Temp_OpenPlayer()
+        {
+
+        }
 
         #endregion
     }

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico;
@@ -39,6 +40,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         Mediation Mediation { get; set; }
 
         public NicoNicoManagerViewModel NicoNicoManager { get; private set; }
+
+        #endregion
+
+        #region command
+
+        public ICommand Temp_OpenNicoNicoPlayerCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                        NicoNicoManager.VideoManager.Temp_OpenPlayer("sm669414");
+                    }
+                );
+            }
+        }
 
         #endregion
 
