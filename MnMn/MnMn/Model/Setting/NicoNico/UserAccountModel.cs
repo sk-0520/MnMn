@@ -25,7 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico
 {
     /// <summary>
     /// アカウント情報を保持。

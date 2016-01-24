@@ -21,6 +21,21 @@
         </ItemContainerTemplate>
       </GridViewColumn.CellTemplate>
     </GridViewColumn>
+    
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <StackPanel>
+            <Label>status</Label>
+          </StackPanel>
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <TextBlock Text="status" />
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
 
     <GridViewColumn>
       <GridViewColumn.HeaderTemplate>

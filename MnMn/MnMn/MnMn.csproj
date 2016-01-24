@@ -164,7 +164,7 @@
     <Compile Include="Model\NicoNico\Video\RankingGroupModel.cs" />
     <Compile Include="Model\NicoNico\Video\ElementModel.cs" />
     <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
-    <Compile Include="Model\NicoNico\UserAccountModel.cs" />
+    <Compile Include="Model\Setting\NicoNico\UserAccountModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedChannelModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedModel.cs" />
     <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedItemModel.cs" />
@@ -180,6 +180,7 @@
     <Compile Include="Model\ParametersModel.cs" />
     <Compile Include="Model\RequestModel.cs" />
     <Compile Include="Model\ResponseModel.cs" />
+    <Compile Include="Model\Setting\SettingModel.cs" />
     <Compile Include="Model\UriItemModel.cs" />
     <Compile Include="Model\ParameterListModel.cs" />
     <Compile Include="Model\UriListModel.cs" />
@@ -232,6 +233,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
   </ItemGroup>
   <ItemGroup>

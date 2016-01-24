@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn

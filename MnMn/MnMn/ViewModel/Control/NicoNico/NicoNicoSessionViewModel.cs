@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
 {
