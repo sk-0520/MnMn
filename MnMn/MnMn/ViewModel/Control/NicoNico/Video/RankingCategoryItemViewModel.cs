@@ -192,7 +192,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     .Select((item, index) => new VideoInformationViewModel(Mediation, item, index + 1))
                 ;
             }).ContinueWith(task => {
-                CancelLoading = new CancellationTokenSource();
+                var cancel = CancelLoading = new CancellationTokenSource();
+
 
                 VideoInformationList.InitializeRange(task.Result);
                 VideoInformationItems.Refresh();
@@ -205,16 +206,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         var max = 3;
                         var wait = TimeSpan.FromSeconds(1);
                         while(count++ <= max) {
-                            CancelLoading.Token.ThrowIfCancellationRequested();
+                            cancel.Token.ThrowIfCancellationRequested();
                             try {
                                 var t = item.LoadImageAsync();
-                                t.Wait(CancelLoading.Token);
+                                t.Wait(cancel.Token);
                                 break;
-                            } catch(WebSocketException ex) {
+                            } catch(Exception ex) {
                                 Debug.WriteLine($"{item}: {ex}");
-                                Thread.Sleep(wait);
-                            } catch(IOException ex) {
-                                Debug.WriteLine($"{item}: {ex}");
+                                if(cancel.IsCancellationRequested) {
+                                    break;
+                                } else {
+                                    Thread.Sleep(wait);
+                                    continue;
+                                }
                             }
                         }
                     });
@@ -223,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                     RankingLoad = RankingLoad.Completed;
                     NowLoading = true;
                    // return Task.CompletedTask;
-                }, CancelLoading.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
+                }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -231,7 +235,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             if(CanLoad) {
                 if(NowLoading) {
-                    DisposeCancelLoading();
+                    CancelLoading.Cancel(true);
                 }
 
                 return LoadRankingAsync_Impl();
@@ -258,7 +262,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         void DisposeCancelLoading()
         {
             if(CancelLoading != null) {
-                CancelLoading.Cancel();
                 CancelLoading.Dispose();
                 CancelLoading = null;
             }

@@ -48,7 +48,14 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding CategoryName}" />
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <TextBlock Grid.Row="0" Text="{Binding CategoryName}" />
+              <TextBlock Grid.Row="1" Text="{Binding RankingLoad}" />
+            </Grid>
             <app_contrl_nc_video:RankingContextElements 
               TargetItemsSource="{Binding TargetItems}"
               PeriodItemsSource="{Binding PeriodItems}"
