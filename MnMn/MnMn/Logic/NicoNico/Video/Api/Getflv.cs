@@ -23,6 +23,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 {
+    /// <summary>
+    /// NOTE: 気持ち後回し
+    /// </summary>
     public class Getflv: ApiBase
     {
         public Getflv(Mediation mediation)

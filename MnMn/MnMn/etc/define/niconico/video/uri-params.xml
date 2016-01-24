@@ -13,4 +13,7 @@
 	<param key="video-getthumbinfo">
 		<param-pair key="video-id" value="${video-id}" />
 	</param>
+	<param key="video-getflv">
+		<param-pair key="video-id" value="${video-id}" />
+	</param>
 </parameters>
