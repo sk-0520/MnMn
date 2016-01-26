@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
             if(!await Session.CheckLoginAsync()) {
                 await Session.LoginAsync();
             }
-            using(var page = new PageScraping(Mediation, Session, MediationNicoNicoVideoKey.getflv, Define.ServiceType.NicoNicoVideo)) {
+            using(var page = new PageScraping(Mediation, Session, MediationNicoNicoVideoKey.getflvNormal, Define.ServiceType.NicoNicoVideo)) {
                 page.ForceUri = uri;
 
                 var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
             var map = new ParametersModel() {
                 { "video-id", videoId },
             };
-            var srcUri = Mediation.GetUri(MediationNicoNicoVideoKey.getflv, map, Define.ServiceType.NicoNicoVideo);
+            var srcUri = Mediation.GetUri(MediationNicoNicoVideoKey.getflvNormal, map, Define.ServiceType.NicoNicoVideo);
             var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.NicoNicoVideo);
             var uri = new Uri(convertedUri);
             return GetAsync(uri);

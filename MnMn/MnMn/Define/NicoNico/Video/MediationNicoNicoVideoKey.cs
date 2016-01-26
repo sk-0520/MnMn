@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
     {
         public const string getthumbinfo = "video-getthumbinfo";
         public const string ranking = "video-ranking";
-        public const string getflv = "video-getflv";
+        public const string getflvNormal = "video-getflv-normal";
+        public const string getflvSwf = "video-getflv-swf";
     }
 }

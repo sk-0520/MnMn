@@ -13,7 +13,11 @@
 	<param key="video-getthumbinfo">
 		<param-pair key="video-id" value="${video-id}" />
 	</param>
-	<param key="video-getflv">
+	<param key="video-getflv-normal">
 		<param-pair key="video-id" value="${video-id}" />
+	</param>
+	<param key="video-getflv-swf">
+		<param-pair key="video-id" value="${video-id}" />
+		<param-pair prefix="?" key="as3" bond="=" value="1" />
 	</param>
 </parameters>
