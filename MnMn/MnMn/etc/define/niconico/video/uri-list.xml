@@ -2,5 +2,5 @@
 <uri-list>
 	<uri-item key="video-ranking" uri="http://www.nicovideo.jp/ranking" param="PreSuffixes" />
 	<uri-item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="Hierarchy" />
-	<uri-item key="video-getflv" uri="http://flapi.nicovideo.jp/api/getflv" />
+	<uri-item key="video-getflv" uri="http://flapi.nicovideo.jp/api/getflv" param="Hierarchy" />
 </uri-list>

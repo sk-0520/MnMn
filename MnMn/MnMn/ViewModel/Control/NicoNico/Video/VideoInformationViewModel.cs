@@ -36,6 +36,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 {
     public class VideoInformationViewModel: ViewModelBase
     {
+        #region define
+
+        public static int NoOrderd => -1;
+
+        #endregion
+
         #region variable
 
         VideoThumbnailLoad _videoThumbnailLoad;

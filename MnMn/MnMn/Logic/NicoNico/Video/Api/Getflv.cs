@@ -16,10 +16,16 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 {
@@ -28,12 +34,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
     /// </summary>
     public class Getflv: ApiBase
     {
-        public Getflv(Mediation mediation)
+        public Getflv(Mediation mediation, NicoNicoSessionViewModel session)
             : base(mediation)
-        { }
+        {
+            Session = session;
+        }
 
         #region property
 
+        NicoNicoSessionViewModel Session { get; set; }
+
+        #endregion
+
+        #region function
+
+        public async Task<RawVideoGetflvModel> GetAsync(Uri uri)
+        {
+            if(!await Session.CheckLoginAsync()) {
+                await Session.LoginAsync();
+            }
+            using(var page = new PageScraping(Mediation, Session, MediationNicoNicoVideoKey.getflv, Define.ServiceType.NicoNicoVideo)) {
+                page.ForceUri = uri;
+
+                var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                var s = response.Result;
+                Debug.WriteLine(s);
+                return new RawVideoGetflvModel();
+            }
+        }
+
+        public Task GetAsync(string videoId)
+        {
+            var map = new ParametersModel() {
+                { "video-id", videoId },
+            };
+            var srcUri = Mediation.GetUri(MediationNicoNicoVideoKey.getflv, map, Define.ServiceType.NicoNicoVideo);
+            var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.NicoNicoVideo);
+            var uri = new Uri(convertedUri);
+            return GetAsync(uri);
+        }
 
         #endregion
     }

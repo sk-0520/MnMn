@@ -98,7 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\Window\NicoNico\Video\VideoPlayerViewModelBase.cs" />
+    <Compile Include="Define\LoadState.cs" />
+    <Compile Include="Logic\MediationCustomBase.cs" />
+    <Compile Include="Logic\VariableConstants.cs" />
+    <Compile Include="ViewModel\Window\NicoNico\Video\VideoPlayerViewModel.cs" />
     <Compile Include="View\Window\NicoNico\Video\VideoPlayerWindow.xaml.cs">
       <DependentUpon>VideoPlayerWindow.xaml</DependentUpon>
     </Compile>

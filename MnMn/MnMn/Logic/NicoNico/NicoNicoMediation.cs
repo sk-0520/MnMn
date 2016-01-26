@@ -25,25 +25,55 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
 {
-    public class NicoNicoMediation: MediationBase
+    public class NicoNicoMediation: MediationCustomBase
     {
-        public NicoNicoMediation()
-            :base(Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersListPath, Constants.NicoNicoRequestParametersListPath)
-        { }
+        public NicoNicoMediation(Mediation mediation)
+            : base(mediation, Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersListPath, Constants.NicoNicoRequestParametersListPath)
+        {
+            VideoMediation = new VideoMediation(Mediation);
+        }
 
         #region property
 
         /// <summary>
         /// ニコニコ動画関係。
         /// </summary>
-        VideoMediation VideoMediation { get; } = new VideoMediation();
+        VideoMediation VideoMediation { get; set; }
+
+        NicoNicoSessionViewModel Session { get; set; }
 
         #endregion
 
         #region function
+
+        ResponseModel Request_Impl(RequestModel request)
+        {
+            switch(request.RequestKind) {
+                case RequestKind.Session:
+                    return RequestSession(request);
+
+                default:
+                    ThrowNotSupportRequest(request);
+                    throw new NotImplementedException();
+            }
+        }
+
+        ResponseModel RequestSession(RequestModel request)
+        {
+            if(Session == null) {
+                var model = new UserAccountModel();
+                model.User = VariableConstants.NicoNicoUserAccountName;
+                model.Password = VariableConstants.NicoNicoUserAccountPassword;
+                Session = new NicoNicoSessionViewModel(Mediation, model);
+            }
+
+            return new ResponseModel(request, Session);
+        }
 
         #endregion
 
@@ -53,8 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         {
             switch(request.ServiceType) {
                 case ServiceType.NicoNico:
-                    ThrowNotSupportRequest(request);
-                    throw new NotImplementedException();
+                    return Request_Impl(request);
 
                 case ServiceType.NicoNicoVideo:
                     return VideoMediation.Request(request);

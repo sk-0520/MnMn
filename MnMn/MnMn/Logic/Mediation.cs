@@ -36,14 +36,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         public Mediation()
             : base()
-        { }
+        {
+            NicoNico = new NicoNicoMediation(this);
+        }
 
         #region property
 
         /// <summary>
         /// ニコニコ関係。
         /// </summary>
-        NicoNicoMediation NicoNico { get; } = new NicoNicoMediation();
+        NicoNicoMediation NicoNico { get; set; }
 
         #endregion
 

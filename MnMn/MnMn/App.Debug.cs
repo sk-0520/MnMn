@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         void DoDebug()
         {
-            new Mediation();
+            //new Mediation();
             //login();
             //load_uri();
             //param();
@@ -49,8 +49,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var mediation = new Mediation();
             var cmd = new CommandLine();
-            var account = cmd.GetValue("account");
-            var password = cmd.GetValue("password");
+            var account = cmd.GetValue("niconico-login-name");
+            var password = cmd.GetValue("niconico-login-pass");
 
             var model = new UserAccountModel() {
                 User = account,

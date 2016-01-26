@@ -59,14 +59,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         public async void Temp_OpenPlayer(string videoId)
         {
-            var vm = new VideoPlayerViewModelBase(Mediation);
+            var vm = new VideoPlayerViewModel(Mediation);
+            var player = new VideoPlayerWindow() {
+                DataContext = vm,
+            };
+            player.Show();
+
             await vm.InitializeAsync(videoId);
-            if(vm.VideoInformationViewModel != null) {
-                var player = new VideoPlayerWindow() {
-                    DataContext = vm,
-                };
-                player.Show();
-            }
         }
 
         #endregion

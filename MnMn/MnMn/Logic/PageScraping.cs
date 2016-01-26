@@ -22,6 +22,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Delegate;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -81,6 +82,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public FormUrlEncodedContent Content { get; private set; }
 
         /// <summary>
+        /// URI構築処理を用いず指定URIの仕様を強制する。
+        /// </summary>
+        public Uri ForceUri { get; set; }
+
+        /// <summary>
         /// 処理終了時に呼び出される。
         /// </summary>
         public Action ExitProcess { get; set; }
@@ -126,10 +132,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void MakeUri()
         {
-            var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
-            var convertedUri = Mediation.ConvertUri(rawUri, ServiceType);
-            var uri = new Uri(convertedUri);
-            Uri = uri;
+            Uri = RestrictUtility.IsNull(
+                ForceUri, () => {
+                    var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
+                    var convertedUri = Mediation.ConvertUri(rawUri, ServiceType);
+                    return new Uri(convertedUri);
+                }, 
+                uri => uri
+            );
         }
 
         protected void MakeRequestParameter()

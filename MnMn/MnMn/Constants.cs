@@ -58,23 +58,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string CurrentLanguageCode => "ja-JP";
 
-        #region command line
-
-        public static CommandLine CommandLine => new CommandLine();
-
         /// <summary>
         /// 設定ディレクトリパス。
         /// </summary>
-        public static string UserDirectoryPath => CommandLine.HasValue("setting-root") ? CommandLine.GetValue("setting-root") : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
+        public static string UserDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         /// <summary>
         /// データ保存ディレクトリパス。
         /// </summary>
-        public static string UserLocalDirectoryPath => CommandLine.HasValue("local-root") ? CommandLine.GetValue("local-root") : Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-
-        #endregion
+        public static string UserLocalDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         #endregion
     }

@@ -27,10 +27,10 @@ using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 {
-    public class VideoMediation: MediationBase
+    public class VideoMediation: MediationCustomBase
     {
-        public VideoMediation()
-            :base(Constants.NicoNicoVideoUriListPath, Constants.NicoNicoVideoUriParametersListPath, Constants.NicoNicoVideoRequestParametersListPath)
+        public VideoMediation(Mediation mediation)
+            :base(mediation, Constants.NicoNicoVideoUriListPath, Constants.NicoNicoVideoUriParametersListPath, Constants.NicoNicoVideoRequestParametersListPath)
         {
             Ranking = LoadModelFromFile<RankingModel>(Constants.NicoNicoVideoRankingPath);
         }
