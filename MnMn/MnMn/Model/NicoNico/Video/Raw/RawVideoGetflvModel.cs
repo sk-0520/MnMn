@@ -31,6 +31,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
         [Name("error")]
         public string Error { get; set; }
 
+        [Name("deleted")]
+        public string Deleted { get; set; }
+
         [Name("thread_id")]
         public string ThreadId { get; set; }
 

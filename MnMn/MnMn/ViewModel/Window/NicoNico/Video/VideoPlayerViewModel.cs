@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 using Vlc.DotNet.Wpf;
 using Vlc.DotNet.Core;
+using System.Windows.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 {
@@ -88,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             set { SetVariableValue(ref this._videoStream, value); }
         }
 
-        public VlcControl Player { get; private set; }
+        public MediaElement Player { get; private set; }
 
 
         #endregion
@@ -114,12 +115,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             // TODO: 細かな制御
             if(RawValueUtility.ConvertBoolean(rawVideoGetflvModel.Done)) {
                 VideoLoadState = LoadState.Loading;
+
                 using(var userAgent = session.CreateHttpUserAgent()) {
+                    var ss = await userAgent.GetStringAsync(VideoInformationViewModel.WatchUrl);
                     //VideoStream = await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl);
                     //VlcContext.LibVlcDllsPath = CommonStrings.LIBVLC_DLLS_PATH_DEFAULT_VALUE_AMD64;
 
                     //  Player.MediaPlayer.Play(new Uri( rawVideoGetflvModel.MovieServerUrl));
                     //Player.MediaPlayer.Play(new Uri("http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi"));
+                    //Player.Source = new Uri(rawVideoGetflvModel.MovieServerUrl);
+                    userAgent.DefaultRequestHeaders.Referrer = VideoInformationViewModel.WatchUrl;
+                    //var buffer = await userAgent.GetByteArrayAsync(rawVideoGetflvModel.MovieServerUrl);
+                    using(var s = await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl)) {
+                        var r = new BinaryReader(s);
+                        using(var w = new BinaryWriter(new FileStream(@"z:\test.mp4", FileMode.Create))) {
+                            byte[] buffer = new Byte[1024];
+                            int bytesRead;
+
+                            while((bytesRead = r.Read(buffer, 0, 1024)) > 0) {
+                                w.Write(buffer, 0, bytesRead);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -140,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             await sessionTask;
         }
 
-        internal void SetPlayer(VlcControl player)
+        internal void SetPlayer(MediaElement player)
         {
             Player = player;
         }
