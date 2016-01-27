@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
             }
         }
 
-        public Task GetAsync(string videoId)
+        public Task<RawVideoGetflvModel> GetAsync(string videoId)
         {
             var map = new ParametersModel() {
                 { "video-id", videoId },

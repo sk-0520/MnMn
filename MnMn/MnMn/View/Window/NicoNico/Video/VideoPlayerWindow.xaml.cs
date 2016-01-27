@@ -22,6 +22,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video
         public VideoPlayerWindow()
         {
             InitializeComponent();
+            player.MediaPlayer.VlcLibDirectoryNeeded += MediaPlayer_VlcLibDirectoryNeeded;
+        }
+        private void MediaPlayer_VlcLibDirectoryNeeded(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
+        {
+            e.VlcLibDirectory = new System.IO.DirectoryInfo(Constants.AssemblyParentDirectoryPath);
         }
     }
 }

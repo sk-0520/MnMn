@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,10 +26,13 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using Vlc.DotNet.Wpf;
+using Vlc.DotNet.Core;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 {
@@ -40,6 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
         LoadState _thumbnailLoadState;
         LoadState _commentLoadState;
         LoadState _videoLoadState;
+
+        Stream _videoStream;
 
         #endregion
 
@@ -67,6 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             get { return this._commentLoadState; }
             set { SetVariableValue(ref this._commentLoadState, value); }
         }
+
         public LoadState VideoLoadState
         {
             get { return this._videoLoadState; }
@@ -74,6 +81,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
         }
 
         public VideoInformationViewModel VideoInformationViewModel { get; set; }
+
+        public Stream VideoStream
+        {
+            get { return this._videoStream; }
+            set { SetVariableValue(ref this._videoStream, value); }
+        }
+
+        public VlcControl Player { get; private set; }
+
 
         #endregion
 
@@ -87,14 +103,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             });
         }
 
-        Task LoadSessionDataAsync()
+        async Task LoadSessionDataAsync()
         {
             var request = new RequestModel(RequestKind.Session, ServiceType.NicoNico);
             var response = Mediation.Request(request);
             var session = (NicoNicoSessionViewModel)response.Result;
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
-            return getflv.GetAsync(VideoInformationViewModel.VideoId);
+            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
+            // TODO: 細かな制御
+            if(RawValueUtility.ConvertBoolean(rawVideoGetflvModel.Done)) {
+                VideoLoadState = LoadState.Loading;
+                using(var userAgent = session.CreateHttpUserAgent()) {
+                    //VideoStream = await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl);
+                    //VlcContext.LibVlcDllsPath = CommonStrings.LIBVLC_DLLS_PATH_DEFAULT_VALUE_AMD64;
+
+                    //  Player.MediaPlayer.Play(new Uri( rawVideoGetflvModel.MovieServerUrl));
+                    //Player.MediaPlayer.Play(new Uri("http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi"));
+                }
+            }
         }
 
         public async Task InitializeAsync(string videoId)
@@ -112,6 +139,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             await noSessionTask;
             await sessionTask;
         }
+
+        internal void SetPlayer(VlcControl player)
+        {
+            Player = player;
+        }
+
 
         #endregion
     }

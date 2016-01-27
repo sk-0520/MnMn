@@ -20,7 +20,7 @@
       <MenuItem Header="qwertyuiop" />
     </Menu>
 
-    <vlc_wpf:VlcControl Grid.Row="1" />
+    <vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />
 
     <TabControl Grid.Row="2" TabStripPlacement="Bottom">
       <TabItem Header="movie">

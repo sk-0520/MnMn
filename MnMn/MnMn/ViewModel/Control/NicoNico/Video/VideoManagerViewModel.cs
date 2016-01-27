@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             var player = new VideoPlayerWindow() {
                 DataContext = vm,
             };
+            vm.SetPlayer(player.player);
             player.Show();
 
             await vm.InitializeAsync(videoId);
