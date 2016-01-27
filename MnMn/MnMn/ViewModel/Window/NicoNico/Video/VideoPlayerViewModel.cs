@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             var response = Mediation.Request(request);
             var session = (NicoNicoSessionViewModel)response.Result;
             var getflv = new Getflv(Mediation, session);
+            getflv.SessionSupport = true;
             return getflv.GetAsync(VideoInformationViewModel.VideoId);
         }
 

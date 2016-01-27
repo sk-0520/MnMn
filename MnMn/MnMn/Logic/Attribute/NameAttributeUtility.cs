@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Attribute
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
-        /// <returns>[プロパティ名: 設定名]</returns>
-        public static IDictionary<string, string> GetNames(object obj)
+        /// <returns>[設定名: プロパティ]</returns>
+        public static IDictionary<string, PropertyInfo> GetNames(object obj)
         {
             var result = new Dictionary<string, string>();
 
@@ -50,10 +50,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Attribute
         /// 
         /// </summary>
         /// <param name="propertyInfos"></param>
-        /// <returns>[プロパティ名: 設定名]</returns>
-        public static IDictionary<string, string> GetNames(IEnumerable<PropertyInfo> propertyInfos)
+        /// <returns>[設定名: プロパティ]</returns>
+        public static IDictionary<string, PropertyInfo> GetNames(IEnumerable<PropertyInfo> propertyInfos)
         {
-            var result = new Dictionary<string, string>();
+            var result = new Dictionary<string, PropertyInfo>();
 
             foreach(var propertyInfo in propertyInfos) {
                 var names = System.Attribute.GetCustomAttributes(propertyInfo, typeof(NameAttribute))
@@ -61,7 +61,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Attribute
                 ;
                 if(names.Any()) {
                     var name = names.Single();
-                    result[propertyInfo.Name] = GetName(propertyInfo.Name, name.Name, name.NameType);
+                    var key = GetName(propertyInfo.Name, name.Name, name.NameType);
+                    result[key] = propertyInfo;
                 }
             }
 

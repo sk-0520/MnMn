@@ -21,10 +21,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
@@ -44,22 +47,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         NicoNicoSessionViewModel Session { get; set; }
 
+        /// <summary>
+        /// セッション操作を行うか。
+        /// </summary>
+        public bool SessionSupport { get; set; }
+
         #endregion
 
         #region function
 
         public async Task<RawVideoGetflvModel> GetAsync(Uri uri)
         {
-            if(!await Session.CheckLoginAsync()) {
-                await Session.LoginAsync();
+            if(SessionSupport) {
+                if(!await Session.CheckLoginAsync()) {
+                    await Session.LoginAsync();
+                }
             }
             using(var page = new PageScraping(Mediation, Session, MediationNicoNicoVideoKey.getflvNormal, Define.ServiceType.NicoNicoVideo)) {
                 page.ForceUri = uri;
 
                 var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
-                var s = response.Result;
-                Debug.WriteLine(s);
-                return new RawVideoGetflvModel();
+                var rawParameters = HttpUtility.ParseQueryString(response.Result);
+                var parameters = rawParameters.AllKeys
+                    .ToDictionary(k => k, k => rawParameters.GetValues(k).First())
+                ;
+                var result = new RawVideoGetflvModel();
+                var map = NameAttributeUtility.GetNames(result);
+                foreach(var pair in map) {
+                    string value;
+                    if(parameters.TryGetValue(pair.Key, out value)) {
+                        pair.Value.SetValue(result, value);
+                    }
+                }
+
+                return result;
             }
         }
 
