@@ -21,7 +21,23 @@
     </Menu>
 
     <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->
-    <MediaElement Name="player" Grid.Row="1"  />
+    <Grid Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <MediaElement Name="player" Grid.Row="0" Grid.Column="0" />
+
+      <ListBox Grid.Row="0" Grid.Column="1">
+        <ListBoxItem>comment</ListBoxItem>
+      </ListBox>
+      
+    </Grid>
 
     <TabControl Grid.Row="2" TabStripPlacement="Bottom">
       <TabItem Header="movie">
