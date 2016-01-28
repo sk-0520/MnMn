@@ -112,29 +112,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
-            // TODO: 細かな制御
+            // TODO: 細かな制御と外部化
             if(RawValueUtility.ConvertBoolean(rawVideoGetflvModel.Done)) {
                 VideoLoadState = LoadState.Loading;
 
                 using(var userAgent = session.CreateHttpUserAgent()) {
-                    var ss = await userAgent.GetStringAsync(VideoInformationViewModel.WatchUrl);
-                    //VideoStream = await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl);
-                    //VlcContext.LibVlcDllsPath = CommonStrings.LIBVLC_DLLS_PATH_DEFAULT_VALUE_AMD64;
-
-                    //  Player.MediaPlayer.Play(new Uri( rawVideoGetflvModel.MovieServerUrl));
-                    //Player.MediaPlayer.Play(new Uri("http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi"));
-                    //Player.Source = new Uri(rawVideoGetflvModel.MovieServerUrl);
+                    var ss = await userAgent.GetByteArrayAsync(VideoInformationViewModel.WatchUrl);
                     userAgent.DefaultRequestHeaders.Referrer = VideoInformationViewModel.WatchUrl;
-                    //var buffer = await userAgent.GetByteArrayAsync(rawVideoGetflvModel.MovieServerUrl);
-                    using(var s = await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl)) {
-                        var r = new BinaryReader(s);
-                        using(var w = new BinaryWriter(new FileStream(@"z:\test.mp4", FileMode.Create))) {
-                            byte[] buffer = new Byte[1024];
+                    using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
+                        var downloadPath = @"z:\test.mp4";
+                        using(var storageWriter = new BinaryWriter(new FileStream(downloadPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))) {
+                            VideoStream = new BufferedStream(new FileStream(downloadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                            byte[] buffer = new byte[1024];
                             int bytesRead;
+                            
+                            Player.LoadedBehavior = MediaState.Manual;
+                            VideoStream = new BufferedStream(new MemoryStream());
 
-                            while((bytesRead = r.Read(buffer, 0, 1024)) > 0) {
-                                w.Write(buffer, 0, bytesRead);
+
+                            while((bytesRead = networkReader.Read(buffer, 0, 1024)) > 0) {
+                                storageWriter.Write(buffer, 0, bytesRead);
+                                VideoStream.Write(buffer, 0, bytesRead);
                             }
+                            VideoLoadState = LoadState.Loaded;
+                            Player.Source = new Uri(downloadPath);
+                            Player.Play();
                         }
                     }
                 }
