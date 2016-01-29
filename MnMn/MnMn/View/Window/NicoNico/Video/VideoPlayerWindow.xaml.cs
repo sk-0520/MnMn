@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +24,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video
         public VideoPlayerWindow()
         {
             InitializeComponent();
+            this.player.MediaPlayer.VlcLibDirectoryNeeded += OnVlcControlNeedsLibDirectory;
+            this.player.MediaPlayer.EndInit();
+        }
+        private void OnVlcControlNeedsLibDirectory(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
+        {
+            var currentAssembly = Assembly.GetEntryAssembly();
+            var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
+            if(currentDirectory == null)
+                return;
+            if(AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
+                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\x86\"));
+            else
+                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\x64\"));
         }
     }
 }

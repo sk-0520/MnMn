@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             get { return this._thumbnailLoadState; }
             set { SetVariableValue(ref this._thumbnailLoadState, value); }
         }
+
         public LoadState CommentLoadState
         {
             get { return this._commentLoadState; }
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             set { SetVariableValue(ref this._videoStream, value); }
         }
 
-        public MediaElement Player { get; private set; }
+        public VlcControl Player { get; private set; }
 
 
         #endregion
@@ -126,17 +127,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
                             byte[] buffer = new byte[1024];
                             int bytesRead;
                             
-                            Player.LoadedBehavior = MediaState.Manual;
                             VideoStream = new BufferedStream(new MemoryStream());
-
-
+                            
                             while((bytesRead = networkReader.Read(buffer, 0, 1024)) > 0) {
                                 storageWriter.Write(buffer, 0, bytesRead);
                                 VideoStream.Write(buffer, 0, bytesRead);
                             }
                             VideoLoadState = LoadState.Loaded;
-                            Player.Source = new Uri(downloadPath);
-                            Player.Play();
+
+                            Player.MediaPlayer.SetMedia(new FileInfo(downloadPath));
+                            Player.MediaPlayer.Play();
                         }
                     }
                 }
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             await sessionTask;
         }
 
-        internal void SetPlayer(MediaElement player)
+        internal void SetPlayer(VlcControl player)
         {
             Player = player;
         }

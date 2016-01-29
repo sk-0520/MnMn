@@ -31,7 +31,8 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <MediaElement Name="player" Grid.Row="0" Grid.Column="0" />
+      <!--<MediaElement Name="player" Grid.Row="0" Grid.Column="0" />-->
+      <vlc_wpf:VlcControl x:Name="player" Grid.Row="0" Grid.Column="0"  />
 
       <ListBox Grid.Row="0" Grid.Column="1">
         <ListBoxItem>comment</ListBoxItem>
