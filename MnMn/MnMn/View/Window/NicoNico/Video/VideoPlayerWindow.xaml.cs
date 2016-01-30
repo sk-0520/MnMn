@@ -34,9 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video
             if(currentDirectory == null)
                 return;
             if(AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
-                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\x86\"));
+                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\lib\x86\"));
             else
-                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\x64\"));
+                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\lib\x64\"));
         }
     }
 }

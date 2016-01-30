@@ -120,25 +120,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
                 using(var userAgent = session.CreateHttpUserAgent()) {
                     var ss = await userAgent.GetByteArrayAsync(VideoInformationViewModel.WatchUrl);
                     userAgent.DefaultRequestHeaders.Referrer = VideoInformationViewModel.WatchUrl;
-                    using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
-                        var downloadPath = @"z:\test.mp4";
-                        using(var storageWriter = new BinaryWriter(new FileStream(downloadPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))) {
-                            VideoStream = new BufferedStream(new FileStream(downloadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-                            byte[] buffer = new byte[1024];
-                            int bytesRead;
+                    Player.MediaPlayer.Play(VideoInformationViewModel.WatchUrl);
+                    //using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
+                    //    var downloadPath = @"z:\test.mp4";
+                    //    using(var storageWriter = new BinaryWriter(new FileStream(downloadPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))) {
+                    //        VideoStream = new BufferedStream(new FileStream(downloadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                    //        byte[] buffer = new byte[1024];
+                    //        int bytesRead;
                             
-                            VideoStream = new BufferedStream(new MemoryStream());
+                    //        VideoStream = new BufferedStream(new MemoryStream());
                             
-                            while((bytesRead = networkReader.Read(buffer, 0, 1024)) > 0) {
-                                storageWriter.Write(buffer, 0, bytesRead);
-                                VideoStream.Write(buffer, 0, bytesRead);
-                            }
-                            VideoLoadState = LoadState.Loaded;
+                    //        while((bytesRead = networkReader.Read(buffer, 0, 1024)) > 0) {
+                    //            storageWriter.Write(buffer, 0, bytesRead);
+                    //            VideoStream.Write(buffer, 0, bytesRead);
+                    //        }
+                    //        VideoLoadState = LoadState.Loaded;
 
-                            Player.MediaPlayer.SetMedia(new FileInfo(downloadPath));
-                            Player.MediaPlayer.Play();
-                        }
-                    }
+                    //        Player.MediaPlayer.SetMedia(new FileInfo(downloadPath));
+                    //        Player.MediaPlayer.Play();
+                    //    }
+                    //}
                 }
             }
         }
