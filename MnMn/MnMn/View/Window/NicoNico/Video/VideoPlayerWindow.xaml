@@ -54,6 +54,7 @@
           Maximum="1"
           LargeChange="0.05"
           SmallChange="0.01"
+          Ticks="0.1"
           Value="{Binding VideoPosition, Mode=OneWay}"
         />
       </Grid>

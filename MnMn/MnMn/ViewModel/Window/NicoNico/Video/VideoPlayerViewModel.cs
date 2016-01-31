@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             getflv.SessionSupport = true;
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
 
-            long videoPlayLowestSize = 64 * 1024 * 10;
+            long videoPlayLowestSize = Constants.ServiceNicoNicoVideoVideoPlayLowestSize;
 
             // TODO: 細かな制御と外部化
             if(RawValueUtility.ConvertBoolean(rawVideoGetflvModel.Done)) {
@@ -241,8 +241,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
                                 //        sss.Write(bbb, 0, (int)bbb.Length);
                                 //        cl.NoDelay = true;
                             var idx = 0;
+                            
                                 using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
-                                    byte[] buffer = new byte[64 * 1024 * 1024];
+                                byte[] buffer = new byte[Constants.ServiceNicoNicoVideoVideoReceiveBuffer];
                                     
                                     int bytesRead=0;
                                 while(true) {

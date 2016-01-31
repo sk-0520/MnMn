@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
+    /// <summary>
+    /// 読込状態。
+    /// <para>読み込んだものがどういったものかまでは状態表示しない。</para>
+    /// </summary>
     public enum LoadState
     {
         None,
         Loading,
         Loaded,
-        /// <summary>
-        /// ログインチェック中。
-        /// </summary>
-        Check,
-        Completed,
         /// <summary>
         /// ログイン失敗。
         /// </summary>

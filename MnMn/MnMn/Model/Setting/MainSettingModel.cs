@@ -17,44 +17,20 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
     /// <summary>
-    /// アカウント情報を保持。
+    /// 設定基底。
     /// </summary>
-    [DataContract]
-    public class UserAccountModel: SettingModelBase, IDeepClone
+    public class MainSettingModel: SettingModelBase
     {
-        #region property
-
         /// <summary>
-        /// アカウント名。
+        /// キャッシュディレクトリ。
         /// </summary>
-        [DataMember, IsDeepClone]
-        public string User { get; set; }
-        /// <summary>
-        /// アカウントパスワード。
-        /// </summary>
-        [DataMember, IsDeepClone]
-        public string Password { get; set; }
-
-        #endregion
-
-        #region IDeepClone
-
-        public IDeepClone DeepClone()
-        {
-            return DeepCloneUtility.Copy(this);
-        }
-
-        #endregion
+        public string CacheDirectoryPath { get; set; }
     }
 }

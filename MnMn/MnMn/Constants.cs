@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
     /// <summary>
     /// 各種定数。
     /// </summary>
-    public class Constants
+    public partial class Constants
     {
         #region proeprty
 

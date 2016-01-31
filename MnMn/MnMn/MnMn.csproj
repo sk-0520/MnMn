@@ -60,6 +60,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
@@ -100,10 +101,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants.Config.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
+    <Compile Include="Model\Setting\MainSettingModel.cs" />
+    <Compile Include="Model\Setting\NicoNico\Video\VideoSettingModel.cs" />
     <Compile Include="ViewModel\Window\NicoNico\Video\VideoPlayerViewModel.cs" />
     <Compile Include="View\Window\NicoNico\Video\VideoPlayerWindow.xaml.cs">
       <DependentUpon>VideoPlayerWindow.xaml</DependentUpon>
@@ -197,7 +203,7 @@
     <Compile Include="Model\ParametersModel.cs" />
     <Compile Include="Model\RequestModel.cs" />
     <Compile Include="Model\ResponseModel.cs" />
-    <Compile Include="Model\Setting\SettingModel.cs" />
+    <Compile Include="Model\Setting\SettingModelBase.cs" />
     <Compile Include="Model\UriItemModel.cs" />
     <Compile Include="Model\ParameterListModel.cs" />
     <Compile Include="Model\UriListModel.cs" />

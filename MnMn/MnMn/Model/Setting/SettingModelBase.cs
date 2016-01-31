@@ -23,7 +23,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    public class SettingModel: ModelBase
-    {
-    }
+    /// <summary>
+    /// 設定基底。
+    /// </summary>
+    public class SettingModelBase: ModelBase
+    { }
 }
