@@ -34,6 +34,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 using Vlc.DotNet.Wpf;
 using Vlc.DotNet.Core;
 using System.Windows.Controls;
+using System.Net.Sockets;
+using System.Net;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 {
@@ -118,18 +121,126 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
                 VideoLoadState = LoadState.Loading;
 
                 using(var userAgent = session.CreateHttpUserAgent()) {
-                    var ss = await userAgent.GetByteArrayAsync(VideoInformationViewModel.WatchUrl);
-                    userAgent.DefaultRequestHeaders.Referrer = VideoInformationViewModel.WatchUrl;
-                    Player.MediaPlayer.Play(VideoInformationViewModel.WatchUrl);
+
+                    //var sock = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Raw);
+                    //var stream = new NetworkStream(sock);
+                    var ev = new EventWaitHandle(false, EventResetMode.AutoReset);
+                    var ip = new IPEndPoint(IPAddress.Any, 12345);
+                    //var sock = new Socket(SocketType.Stream, ProtocolType.IPv4);
+                    var tcp = new TcpListener(ip);
+                    
+                    tcp.Start();
+                    var mem = new MemoryStream();
+                    var task = Task.Run(async () => {
+                        ev.Set();
+                        using(var cl = tcp.AcceptTcpClient()) {
+                            cl.SendTimeout = (int)TimeSpan.MaxValue.TotalMilliseconds;
+                            var downloadPath = @"z:\test.mp4";
+                            var sss = cl.GetStream();
+
+                            var aaa = new byte[8000];
+                            var read = sss.Read(aaa, 0, aaa.Length);
+                            var t = Encoding.UTF8.GetString(aaa.Take(read).ToArray());
+
+                            var ss = await userAgent.GetStringAsync(VideoInformationViewModel.WatchUrl);
+                            userAgent.DefaultRequestHeaders.Referrer = VideoInformationViewModel.WatchUrl;
+                            using(var storageWriter = new BinaryWriter(new FileStream(downloadPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))) {
+
+                                var rerr = new[] {
+                                    "HTTP/1.1 200 OK",
+                                    "Connection: close",
+                                    "Content-Type: application/octet-stream",
+                                    "Content-Length: " + VideoInformationViewModel.SizeHigh,
+                                };
+                                var res = string.Join("\r\n", rerr) + "\r\n\r\n";
+                                var bbb = Encoding.UTF8.GetBytes(res);
+                                sss.Write(bbb, 0, (int)bbb.Length);
+                                var idx = 0;
+                                using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
+                                    byte[] buffer = new byte[1024 * 4];
+                                    int bytesRead; while((bytesRead = networkReader.Read(buffer, 0, buffer.Length)) > 0) {
+                                        storageWriter.Write(buffer, 0, bytesRead);
+                                        mem.Write(buffer, 0, bytesRead);
+                                        //VideoStream.Write(buffer, 0, bytesRead);
+                                        //try {
+                                            //sss.Write(buffer, 0, bytesRead);
+                                            //sss.Flush();
+                                            var a = Encoding.UTF8.GetBytes(bytesRead.ToString() + "\r\n");
+                                            var b = Encoding.UTF8.GetBytes("\r\n\r\n");
+                                            var m = new MemoryStream();
+
+                                            m.Write(a, 0, a.Length);
+                                            m.Write(buffer, 0, bytesRead);
+                                            m.Write(b, 0, b.Length);
+
+                                            var mb = m.GetBuffer();
+                                            //sss.Write(mb, 0, (int)m.Length);
+
+                                        Debug.WriteLine("{0}: {1}", idx++, bytesRead);
+
+                                        //} catch(IOException ex) {
+                                        //    Debug.WriteLine(ex);
+                                        //}
+                                    }
+                                    //var oooo = Encoding.UTF8.GetBytes("0\r\n\r\n");
+                                    //sss.Write(oooo, 0, oooo.Length);
+                                    var aaaaaaa = mem.ToArray();
+                                    sss.Write(aaaaaaa, 0, aaaaaaa.Length);
+                                }
+
+                                sss.Close();
+                                cl.Close();
+                            }
+                        }
+                    });
+                    ev.WaitOne();
+                    //var options = new[] {
+
+                    //};
+                    //Player.MediaPlayer.Play(new Uri("http://127.0.0.1:12345"), options);
+                    Player.MediaPlayer.Play(new Uri("http://127.0.0.1:12345"));
+                    //Player.MediaPlayer.Play(new Uri("http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi"));
+
+                    /*
+                    var ttt = new TcpClient("127.0.0.1", 12345);
+
+                    var ccc = ttt.GetStream();
+                    ccc.WriteByte(1);
+                    var ddd = new MemoryStream();
+                    var eee = new byte[8*1024];
+                    int fff;
+                    while((fff = ccc.Read(eee, 0, eee.Length)) > 0) {
+                        ddd.Write(eee, 0, fff);
+                    }
+                    await task;
+
+                    var pp = new FileStream(@"Z:\@@@.mp4", FileMode.Create);
+                    ddd.Seek(0, SeekOrigin.Begin);
+                    ddd.CopyTo(pp);
+                    pp.Dispose();
+                    //*/
+
+                    await task;
+
+                    //var uri = new Uri(rawVideoGetflvModel.MovieServerUrl);
+                    //var param = new[] {
+                    //    "--imem-cookie=" + session.GetSession(uri)
+                    //};
+                    //Player.MediaPlayer.Playing += MediaPlayer_Playing;
+                    //Player.MediaPlayer.Playing += MediaPlayer_Playing;
+
+                    //Player.MediaPlayer.Play(uri, param);
+                    VideoLoadState = LoadState.Loaded;
+
                     //using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
                     //    var downloadPath = @"z:\test.mp4";
                     //    using(var storageWriter = new BinaryWriter(new FileStream(downloadPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))) {
                     //        VideoStream = new BufferedStream(new FileStream(downloadPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                     //        byte[] buffer = new byte[1024];
                     //        int bytesRead;
-                            
+
                     //        VideoStream = new BufferedStream(new MemoryStream());
-                            
+
                     //        while((bytesRead = networkReader.Read(buffer, 0, 1024)) > 0) {
                     //            storageWriter.Write(buffer, 0, bytesRead);
                     //            VideoStream.Write(buffer, 0, bytesRead);
@@ -142,6 +253,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
                     //}
                 }
             }
+        }
+
+        private void MediaPlayer_Playing(object sender, VlcMediaPlayerPlayingEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task InitializeAsync(string videoId)

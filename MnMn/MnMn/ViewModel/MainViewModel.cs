@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Mediation = new Mediation();
 
             NicoNicoManager = new NicoNicoManagerViewModel(Mediation);
+
+            Temp_OpenNicoNicoPlayerCommand.Execute(null);
         }
         #region property
 

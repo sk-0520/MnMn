@@ -54,6 +54,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
 
         #region function
 
+        public string GetSession(Uri uri)
+        {
+            return ClientHandler.CookieContainer.GetCookies(uri)["user_session"].Value;
+        }
+
         public override async Task LoginAsync()
         {
             if(LoginState == LoginState.In || LoginState == LoginState.Check || LoginState == LoginState.Logged) {
@@ -136,7 +141,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return result.IsSuccess;
             }
 
-            #endregion
         }
+
+        #endregion
     }
 }
