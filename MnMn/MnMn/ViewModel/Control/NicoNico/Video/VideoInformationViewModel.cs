@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -242,16 +244,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
             var binary = await RestrictUtility.Block(async () => {
                 using(var userAgent = new HttpUserAgentHost()) {
-                    return await userAgent.Client.GetByteArrayAsync(uri);
+                    try {
+                        return await userAgent.Client.GetByteArrayAsync(uri);
+                    } catch(HttpRequestException ex) {
+                        Debug.WriteLine(ex);
+                        return null;
+                    }
                 }
             });
-            using(var stream = new MemoryStream(binary)) {
-                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                FreezableUtility.SafeFreeze(image);
-                this._thumbnailImage = image;
-                VideoThumbnailLoad = VideoThumbnailLoad.Completed;
+            if(binary != null) {
+                using(var stream = new MemoryStream(binary)) {
+                    var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                    FreezableUtility.SafeFreeze(image);
+                    this._thumbnailImage = image;
+                    VideoThumbnailLoad = VideoThumbnailLoad.Completed;
+                }
+            } else {
+                VideoThumbnailLoad = VideoThumbnailLoad.Failure;
             }
-            
             await Task.CompletedTask;
         }
 

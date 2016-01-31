@@ -60,11 +60,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public async void Temp_OpenPlayer(string videoId)
         {
             var vm = new VideoPlayerViewModel(Mediation);
-            var player = new VideoPlayerWindow() {
+            var window = new VideoPlayerWindow() {
                 DataContext = vm,
             };
-            vm.SetPlayer(player.player);
-            player.Show();
+            vm.SetView(window);
+            window.Show();
 
             await vm.InitializeAsync(videoId);
         }

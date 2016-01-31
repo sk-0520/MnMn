@@ -53,7 +53,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             {
                 return CreateCommand(
                     o => {
-
                         NicoNicoManager.VideoManager.Temp_OpenPlayer("sm15218544");
                     }
                 );

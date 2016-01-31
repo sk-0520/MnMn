@@ -5,7 +5,7 @@
         
         ResizeMode="CanResizeWithGrip"
         
-        Title="VideoPlayerWindow" Height="387" Width="450.534"
+        Title="VideoPlayerWindow" Height="410.938" Width="507.387"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 >
@@ -23,6 +23,7 @@
     <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->
     <Grid Grid.Row="1">
       <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
@@ -34,10 +35,37 @@
       <!--<MediaElement Name="player" Grid.Row="0" Grid.Column="0" />-->
       <vlc_wpf:VlcControl x:Name="player" Grid.Row="0" Grid.Column="0"  />
 
-      <ListBox Grid.Row="0" Grid.Column="1">
+      <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
         <ListBoxItem>comment</ListBoxItem>
       </ListBox>
-      
+
+      <Grid Grid.Row="1" Grid.Column="0">
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ProgressBar Grid.Row="0" Minimum="0" Maximum="{Binding VideoSize, Mode=OneWay}" Value="{Binding VideoLoadedSize, Mode=OneWay}" />
+        <Slider
+          Name="videoSilder"
+          Grid.Row="1"
+          Background="Transparent"
+          Opacity="0.5"
+          Minimum="0"
+          Maximum="1"
+          LargeChange="0.05"
+          SmallChange="0.01"
+          Value="{Binding VideoPosition, Mode=OneWay}"
+        />
+      </Grid>
+
+      <Grid Grid.Row="2" Grid.Column="0">
+        <TextBox></TextBox>
+      </Grid>
+
+      <Grid>
+
+      </Grid>
+
     </Grid>
 
     <TabControl Grid.Row="2" TabStripPlacement="Bottom">
@@ -50,7 +78,7 @@
           </Grid.ColumnDefinitions>
 
           <StackPanel Grid.Column="0">
-            <Rectangle Width="80" Height="60" />
+            <Image Width="80" Height="60" Source="{Binding ThumbnailImage}" />
           </StackPanel>
 
           <Grid Grid.Column="2">
@@ -67,7 +95,9 @@
           </Grid>
         </Grid>
       </TabItem>
-      <TabItem Header="market ">
+      <TabItem Header="relation">
+      </TabItem>
+      <TabItem Header="market">
       </TabItem>
     </TabControl>
 

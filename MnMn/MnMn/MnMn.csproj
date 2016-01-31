@@ -100,6 +100,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
