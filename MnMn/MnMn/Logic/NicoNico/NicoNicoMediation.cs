@@ -214,6 +214,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
             }
         }
 
+        public override bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.NicoNico:
+                    outputValue = null;
+                    return false;
+
+                case ServiceType.NicoNicoVideo:
+                    return VideoMediation.ConvertValue(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
+
+                default:
+                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         #endregion
     }
 }

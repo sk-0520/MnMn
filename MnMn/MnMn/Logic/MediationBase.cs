@@ -38,7 +38,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IGetRequestParameter,
         ICommunication,
         IUriCompatibility,
-        IResponseCompatibility
+        IResponseCompatibility,
+        IConvertCompatibility
     {
         public MediationBase()
             : this(null, null, null)
@@ -139,6 +140,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportConvertString(Uri uri, string text, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportValueConvert(string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IConvertCompatibility)} => {nameof(inputKey)}: {inputKey}, {nameof(inputValue)}: {inputValue}, {nameof(inputType)}: {inputType}, {nameof(outputType)}: {outputType}, {nameof(serviceType)}: {serviceType}");
         }
 
         #endregion
@@ -292,6 +298,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
+
+        #endregion
+
+        #region IConvertCompatibility
+
+        public virtual bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }

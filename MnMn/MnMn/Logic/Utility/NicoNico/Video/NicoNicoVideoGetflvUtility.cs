@@ -19,16 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
 {
-    internal static class NicoNicoVideoMediationKey
+    public static class NicoNicoVideoGetflvUtility
     {
-        public const string getthumbinfo = "video-getthumbinfo";
-        public const string ranking = "video-ranking";
-        public const string getflvNormal = "video-getflv-normal";
-        public const string getflvSwf = "video-getflv-swf";
+        #region function
 
-        public const string inputEconomyMode = "getflv-economy-mode";
+        public static bool isEconomyMode(string rawUri)
+        {
+            return rawUri.Trim().EndsWith("low", StringComparison.OrdinalIgnoreCase);
+        }
+
+        #endregion
+
     }
 }

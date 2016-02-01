@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             vm.SetView(window);
             window.Show();
 
-            await vm.InitializeAsync(videoId);
+            await vm.LoadAsync(videoId);
         }
 
         #endregion

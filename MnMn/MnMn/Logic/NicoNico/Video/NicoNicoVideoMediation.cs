@@ -21,6 +21,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
@@ -51,6 +53,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        bool ValueConvert_Impl(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        {
+            switch(inputKey) {
+                case NicoNicoVideoMediationKey.inputEconomyMode:
+                    outputValue = NicoNicoVideoGetflvUtility.isEconomyMode((string)inputValue);
+                    return true;
+
+                default:
+                    outputValue = null;
+                    return false;
             }
         }
 
@@ -121,6 +136,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
         public override string ConvertString(Uri uri, string text, ServiceType serviceType)
         {
             return text;
+        }
+
+        public override bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.NicoNicoVideo) {
+                ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
+            }
+
+            switch(serviceType) {
+                case ServiceType.NicoNicoVideo:
+                    return ValueConvert_Impl(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
+
+                default:
+                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

@@ -20,15 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
 {
-    internal static class NicoNicoVideoMediationKey
-    {
-        public const string getthumbinfo = "video-getthumbinfo";
-        public const string ranking = "video-ranking";
-        public const string getflvNormal = "video-getflv-normal";
-        public const string getflvSwf = "video-getflv-swf";
-
-        public const string inputEconomyMode = "getflv-economy-mode";
-    }
+    public class DownloaderEventArgs: EventArgs
+    { }
 }

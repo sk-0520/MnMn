@@ -41,6 +41,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video;
 using System.Windows.Input;
+using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 {
@@ -52,8 +53,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
         LoadState _thumbnailLoadState;
         LoadState _commentLoadState;
         LoadState _videoLoadState;
-
-        Stream _videoStream;
 
         bool _canVideoPlay;
         bool _isVideoPlayng;
@@ -80,7 +79,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
         Vlc.DotNet.Forms.VlcControl Player { get; set; }
         Slider VideoSilder { get; set; }
 
+        public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
+
         public bool ChangingVideoPosition { get; set; }
+        bool IsDead { get; set; }
+        long VideoPlayLowestSize => Constants.ServiceNicoNicoVideoPlayLowestSize;
+        Stream VideoStream { get; set; }
+        string VideoPath { get; set; }
+
 
         public LoadState InformationLoadState
         {
@@ -109,15 +115,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             get { return this._videoLoadState; }
             set { SetVariableValue(ref this._videoLoadState, value); }
         }
-
-        public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
-
-        public Stream VideoStream
-        {
-            get { return this._videoStream; }
-            set { SetVariableValue(ref this._videoStream, value); }
-        }
-
 
         public bool CanVideoPlay
         {
@@ -191,75 +188,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             getflv.SessionSupport = true;
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
 
-            long videoPlayLowestSize = Constants.ServiceNicoNicoVideoVideoPlayLowestSize;
-
             // TODO: 細かな制御と外部化
             if(RawValueUtility.ConvertBoolean(rawVideoGetflvModel.Done)) {
+
                 VideoLoadState = LoadState.Loading;
 
-                using(var userAgent = session.CreateHttpUserAgent()) {
-                    var mem = new MemoryStream();
-                    var task = Task.Run(async () => {
-                        var downloadPath = @"z:\test.mp4";
+                object outIsEconomyMode;
+                var converted = Mediation.ConvertValue(out outIsEconomyMode, NicoNicoVideoMediationKey.inputEconomyMode, rawVideoGetflvModel.MovieServerUrl, typeof(string), typeof(bool), ServiceType.NicoNicoVideo);
+                if(!converted) {
+                    VideoLoadState = LoadState.Failure;
+                    return;
+                }
+                var isEconomyMode = (bool)outIsEconomyMode;
+                VideoSize = isEconomyMode ? VideoInformationViewModel.SizeLow : VideoInformationViewModel.SizeHigh;
+                var downloadUri = new Uri(rawVideoGetflvModel.MovieServerUrl);
+                var downloader = new NicoNicoVideoDownloader(downloadUri, session, VideoInformationViewModel.WatchUrl) {
+                    ReceiveBufferSize = Constants.ServiceNicoNicoVideoReceiveBuffer,
+                    DownloadTotalSize = VideoSize,
+                };
 
-                        CanVideoPlay = false;
-                        var ss = await userAgent.GetStringAsync(VideoInformationViewModel.WatchUrl);
-                        userAgent.DefaultRequestHeaders.Referrer = VideoInformationViewModel.WatchUrl;
+                VideoPath = @"z:\test.mp4";
+                using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                    try {
+                        downloader.DownloadingError += Downloader_DownloadingError;
+                        downloader.Downloading += Downloader_Downloading;
 
-                        using(var storageWriter = new BinaryWriter(new FileStream(downloadPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))) {
-                            // TODO:エコノミー判定
-                            VideoSize = VideoInformationViewModel.SizeLow;
-
-                            var idx = 0;
-
-                            using(var networkReader = new BinaryReader(await userAgent.GetStreamAsync(rawVideoGetflvModel.MovieServerUrl))) {
-                                byte[] buffer = new byte[Constants.ServiceNicoNicoVideoVideoReceiveBuffer];
-
-                                int bytesRead = 0;
-                                while(true) {
-                                    int n = 0;
-                                    int max = 5;
-                                    while(true) {
-                                        try {
-                                            bytesRead = networkReader.Read(buffer, 0, buffer.Length);
-                                            break;
-                                        } catch(IOException ex) {
-                                            Debug.Write(ex);
-                                            if(n++ < max) {
-                                                continue;
-                                            }
-                                            VideoLoadState = LoadState.Failure;
-                                            return;
-                                        }
-                                    }
-                                    if(bytesRead <= 0) {
-                                        break;
-                                    }
-                                    storageWriter.Write(buffer, 0, bytesRead);
-                                    mem.Write(buffer, 0, bytesRead);
-                                    if(!CanVideoPlay) {
-                                        var fi = new FileInfo(downloadPath);
-                                        if(fi.Length > videoPlayLowestSize) {
-                                            await Task.Run(() => {
-                                                Player.Play(new Uri(downloadPath));
-                                            });
-                                            CanVideoPlay = true;
-                                        }
-                                    }
-                                    VideoLoadedSize += bytesRead;
-                                    Debug.WriteLine("{0}: {1:#,###}  [{2:#,###}/{3:#,###}]", idx++, bytesRead, VideoLoadedSize, VideoSize);
-                                }
-                            }
+                        await downloader.StartAsync();
+                        if(downloader.Completed) {
+                            VideoLoadState = LoadState.Loaded;
+                        } else {
+                            VideoLoadState = LoadState.Failure;
                         }
-                        VideoLoadState = LoadState.Loaded;
-                        await Task.CompletedTask;
-                    });
-                    await task;
+                    } catch(Exception ex) {
+                        Debug.WriteLine(ex);
+                        VideoLoadState = LoadState.Failure;
+                    } finally {
+                        downloader.DownloadingError -= Downloader_DownloadingError;
+                        downloader.Downloading -= Downloader_Downloading;
+                    }
                 }
             }
         }
 
-        public async Task InitializeAsync(string videoId)
+        public async Task LoadAsync(string videoId)
         {
             InformationLoadState = LoadState.Loading;
             var getthumbinfo = new Getthumbinfo(Mediation);
@@ -295,6 +266,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             Player.PositionChanged -= Player_PositionChanged;
             View.Closed -= View_Closed;
 
+            IsDead = true;
+
             if(Player.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) {
                 Player.Stop();
             }
@@ -329,5 +302,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             ChangingVideoPosition = false;
             Player.Position = nextPosition;
         }
+
+        private void Downloader_Downloading(object sender, Define.Event.DownloadingEventArgs e)
+        {
+            var downloader = (Downloader)sender;
+            var buffer = e.Data;
+            VideoStream.Write(buffer.Array, 0, e.Data.Count);
+            VideoLoadedSize = downloader.DownloadedSize;
+            if(!CanVideoPlay) {
+                var fi = new FileInfo(VideoPath);
+                if(fi.Length > VideoPlayLowestSize) {
+                    Player.Play(fi);
+                    CanVideoPlay = true;
+                }
+            }
+            Debug.WriteLine($"{e.Counter}: {e.Data.Count}/{VideoLoadedSize}, {VideoSize}");
+            e.Cancel = IsDead;
+        }
+
+        private void Downloader_DownloadingError(object sender, Define.Event.DownloadingErrorEventArgs e)
+        {
+            const int retry = 5;
+
+            e.Cancel = retry < e.Counter;
+            Debug.WriteLine(e.Exception);
+
+            if(e.Cancel) {
+                VideoLoadState = LoadState.Failure;
+            } else {
+                var time = TimeSpan.FromMilliseconds(250);
+                Thread.Sleep(time);
+            }
+        }
+
+
+
+
+
     }
 }
