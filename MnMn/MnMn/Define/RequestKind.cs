@@ -39,5 +39,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// ランキングデータ。
         /// </summary>
         RankingList,
+        /// <summary>
+        /// キャッシュ用ディレクトリパス。
+        /// </summary>
+        CacheDirectoryPath,
     }
 }

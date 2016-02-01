@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IConvertCompatibility
 
-        public virtual bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        public virtual bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

@@ -147,54 +147,72 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return UserAgent.GetStreamAsync(DownloadUri);
         }
 
-        public async virtual Task StartAsync()
+        public virtual Task StartAsync()
         {
             bool isCancel;
-            var stream = await GetStreamAsync(out isCancel);
-            if(isCancel) {
-                Cancled = true;
-                return;
-            }
-            using(var reader = new BinaryReader(stream)) {
-                if(OnDownloadStart()) {
+            return GetStreamAsync(out isCancel).ContinueWith(task => {
+                if(isCancel) {
                     Cancled = true;
                     return;
                 }
-
-                byte[] buffer = new byte[ReceiveBufferSize];
-                int counter = 1;
-
-                while(true) {
-                    int readSize = 0;
-
-                    int errorCounter = 1;
-                    while(true) {
-                        try {
-                            readSize = reader.Read(buffer, 0, buffer.Length);
-                            break;
-                        } catch(IOException ex) {
-                            var cancel = OnDownloadingError(errorCounter++, ex);
-                            if(cancel) {
-                                Cancled = true;
-                                return;
-                            }
-                        }
-                    }
-                    if(readSize == 0) {
-                        // TODO: 最後かどうかわからんけどとりあえず今のところは最後認識。イベントでも作るべし
-                        break;
-                    }
-
-                    DownloadedSize += readSize;
-                    var slice = new ArraySegment<byte>(buffer, 0, readSize);
-                    if(OnDonwloading(slice, counter++)) {
+                using(var reader = new BinaryReader(task.Result)) {
+                    if(OnDownloadStart()) {
                         Cancled = true;
                         return;
                     }
-                }
 
-                Completed = true;
+                    byte[] buffer = new byte[ReceiveBufferSize];
+                    int counter = 1;
+
+                    while(true) {
+                        int readSize = 0;
+
+                        int errorCounter = 1;
+                        while(true) {
+                            try {
+                                readSize = reader.Read(buffer, 0, buffer.Length);
+                                break;
+                            } catch(IOException ex) {
+                                var cancel = OnDownloadingError(errorCounter++, ex);
+                                if(cancel) {
+                                    Cancled = true;
+                                    return;
+                                }
+                            }
+                        }
+                        if(readSize == 0) {
+                            // TODO: 最後かどうかわからんけどとりあえず今のところは最後認識。イベントでも作るべし
+                            break;
+                        }
+
+                        DownloadedSize += readSize;
+                        var slice = new ArraySegment<byte>(buffer, 0, readSize);
+                        if(OnDonwloading(slice, counter++)) {
+                            Cancled = true;
+                            return;
+                        }
+                    }
+
+                    Completed = true;
+                }
+            });
+        }
+
+        #endregion
+
+        #region DisposeFinalizeBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(UserAgent != null) {
+                    UserAgent.CancelPendingRequests();
+                    UserAgent.Dispose();
+                    UserAgent = null;
+                }
             }
+
+            base.Dispose(disposing);
         }
 
         #endregion

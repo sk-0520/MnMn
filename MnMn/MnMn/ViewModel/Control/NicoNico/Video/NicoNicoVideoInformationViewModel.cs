@@ -27,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -48,6 +49,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
 
         NicoNicoVideoVideoThumbnailLoad _videoThumbnailLoad;
         ImageSource _thumbnailImage;
+
+        bool? _isEconomyMode;
 
         #endregion
 
@@ -85,6 +88,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         FeedNicoNicoVideoRankingItemModel Ranking { get; set; }
 
         RawNicoNicoVideoRankingDetailModel RankingDetail { get; set; }
+
+        RawNicoNicoVideoGetflvModel Getflv { get; set; }
 
         public int Number { get; private set; }
 
@@ -161,6 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                 }
             }
         }
+
         public DateTime FirstRetrieve { get {
                 switch(VideoInformationSource) {
                     case NicoNicoVideoVideoInformationSource.Getthumbinfo:
@@ -173,6 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
                         throw new NotImplementedException();
                 }
             } }
+
         public TimeSpan Length { get { return NicoNicoVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length); } }
         public NicoNicoVideoMovieType MovieType { get { return NicoNicoVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
@@ -199,6 +206,73 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         public bool Embeddable { get { return NicoNicoVideoGetthumbinfoUtility.IsEmbeddable(Thumb.Embeddable); } }
         public bool LivePlay { get { return NicoNicoVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
         public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
+
+        #region Getflv
+
+        public bool Done
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return RawValueUtility.ConvertBoolean(Getflv.Done);
+            }
+        }
+        
+
+        public bool IsEconomyMode
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+
+                if(!this._isEconomyMode.HasValue) {
+                    object outIsEconomyMode;
+                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), NicoNicoVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.NicoNicoVideo);
+                    if(!converted) {
+                        throw new Exception();
+                    }
+                    this._isEconomyMode = (bool)outIsEconomyMode;
+                }
+
+                return this._isEconomyMode.Value;
+            }
+        }
+
+        public long VideoSize
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return IsEconomyMode ? SizeLow : SizeHigh;
+            }
+        }
+
+        public Uri MovieServerUrl
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return new Uri(Getflv.MovieServerUrl);
+            }
+        }
+        public Uri MessageServerUrl
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return new Uri(Getflv.MessageServerUrl);
+            }
+        }
+        public Uri MessageServerSubUrl
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return new Uri(Getflv.MessageServerSubUrl);
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -229,10 +303,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
             }
         }
 
+        public bool HasGetflv => Getflv != null;
 
         #endregion
 
         #region function
+
+        void ThrowHasNotGetflv()
+        {
+            if(!HasGetflv) {
+                throw new InvalidOperationException(nameof(Getflv));
+            }
+        }
+        void ThrowNotGetthumbinfoSource()
+        {
+            if(VideoInformationSource != NicoNicoVideoVideoInformationSource.Getthumbinfo) {
+                throw new InvalidOperationException($"{nameof(VideoInformationSource)}: {VideoInformationSource}");
+            }
+        }
 
         async Task LoadImageAsync_Impl()
         {
@@ -269,6 +357,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
         {
             await LoadImageAsync_Impl();
         }
+
+        public void SetGetflvModel(RawNicoNicoVideoGetflvModel getFlvModel)
+        {
+            Getflv = getFlvModel;
+        }
+
+        public void SetThumbModel(RawNicoNicoVideoThumbModel thumbModel)
+        {
+            Thumb = thumbModel;
+            VideoInformationSource = NicoNicoVideoVideoInformationSource.Getthumbinfo;
+        }
+
 
         #endregion
     }

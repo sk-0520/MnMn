@@ -175,12 +175,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.NicoNico:
                 case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertValue(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
+                    return NicoNico.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);

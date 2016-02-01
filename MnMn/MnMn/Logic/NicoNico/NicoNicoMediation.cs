@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
             }
         }
 
-        public override bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.NicoNico:
@@ -222,7 +222,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
                     return false;
 
                 case ServiceType.NicoNicoVideo:
-                    return VideoMediation.ConvertValue(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
+                    return VideoMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);

@@ -42,6 +42,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
+using System.Windows;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 {
@@ -171,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 
         #region function
 
-        Task LoadNoSessionDataAsync()
+        Task LoadDataWithoutSessionAsync()
         {
             ThumbnailLoadState = LoadState.Loading;
             return VideoInformationViewModel.LoadImageAsync().ContinueWith(task => {
@@ -179,7 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             });
         }
 
-        async Task LoadSessionDataAsync()
+        async Task LoadDataWithSessionAsync()
         {
             var request = new RequestModel(RequestKind.Session, ServiceType.NicoNico);
             var response = Mediation.Request(request);
@@ -187,44 +188,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
+            VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
             // TODO: 細かな制御と外部化
-            if(RawValueUtility.ConvertBoolean(rawVideoGetflvModel.Done)) {
-
+            if(VideoInformationViewModel.Done) {
                 VideoLoadState = LoadState.Loading;
+                VideoSize = VideoInformationViewModel.VideoSize;
 
-                object outIsEconomyMode;
-                var converted = Mediation.ConvertValue(out outIsEconomyMode, NicoNicoVideoMediationKey.inputEconomyMode, rawVideoGetflvModel.MovieServerUrl, typeof(string), typeof(bool), ServiceType.NicoNicoVideo);
-                if(!converted) {
-                    VideoLoadState = LoadState.Failure;
-                    return;
-                }
-                var isEconomyMode = (bool)outIsEconomyMode;
-                VideoSize = isEconomyMode ? VideoInformationViewModel.SizeLow : VideoInformationViewModel.SizeHigh;
-                var downloadUri = new Uri(rawVideoGetflvModel.MovieServerUrl);
-                var downloader = new NicoNicoVideoDownloader(downloadUri, session, VideoInformationViewModel.WatchUrl) {
+                using(var downloader = new NicoNicoVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
                     ReceiveBufferSize = Constants.ServiceNicoNicoVideoReceiveBuffer,
                     DownloadTotalSize = VideoSize,
-                };
+                }) {
+                    VideoPath = @"z:\test.mp4";
+                    using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                        try {
+                            downloader.DownloadingError += Downloader_DownloadingError;
+                            downloader.Downloading += Downloader_Downloading;
 
-                VideoPath = @"z:\test.mp4";
-                using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
-                    try {
-                        downloader.DownloadingError += Downloader_DownloadingError;
-                        downloader.Downloading += Downloader_Downloading;
-
-                        await downloader.StartAsync();
-                        if(downloader.Completed) {
-                            VideoLoadState = LoadState.Loaded;
-                        } else {
+                            await downloader.StartAsync();
+                            if(downloader.Completed) {
+                                VideoLoadState = LoadState.Loaded;
+                                // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
+                                if(!CanVideoPlay) {
+                                    AutoPlay(new FileInfo(VideoPath));
+                                }
+                            } else {
+                                VideoLoadState = LoadState.Failure;
+                            }
+                        } catch(Exception ex) {
+                            Debug.WriteLine(ex);
                             VideoLoadState = LoadState.Failure;
+                        } finally {
+                            downloader.DownloadingError -= Downloader_DownloadingError;
+                            downloader.Downloading -= Downloader_Downloading;
                         }
-                    } catch(Exception ex) {
-                        Debug.WriteLine(ex);
-                        VideoLoadState = LoadState.Failure;
-                    } finally {
-                        downloader.DownloadingError -= Downloader_DownloadingError;
-                        downloader.Downloading -= Downloader_Downloading;
                     }
                 }
             }
@@ -238,8 +235,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             VideoInformationViewModel = new NicoNicoVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, NicoNicoVideoInformationViewModel.NoOrderd);
             InformationLoadState = LoadState.Loaded;
 
-            var noSessionTask = LoadNoSessionDataAsync();
-            var sessionTask = LoadSessionDataAsync();
+            var noSessionTask = LoadDataWithoutSessionAsync();
+            var sessionTask = LoadDataWithSessionAsync();
 
             //Task.WaitAll(noSessionTask, sessionTask);
             await noSessionTask;
@@ -256,6 +253,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
             VideoSilder.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+        }
+
+        void AutoPlay(FileInfo fileInfo)
+        {
+            Player.Play(fileInfo);
+            CanVideoPlay = true;
         }
 
         #endregion
@@ -308,15 +311,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             var downloader = (Downloader)sender;
             var buffer = e.Data;
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
+            //Application.Current.Dispatcher.Invoke(() => );
             VideoLoadedSize = downloader.DownloadedSize;
+
             if(!CanVideoPlay) {
                 var fi = new FileInfo(VideoPath);
                 if(fi.Length > VideoPlayLowestSize) {
-                    Player.Play(fi);
-                    CanVideoPlay = true;
+                    AutoPlay(fi);
                 }
             }
-            Debug.WriteLine($"{e.Counter}: {e.Data.Count}/{VideoLoadedSize}, {VideoSize}");
+            Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoSize:#,###}");
             e.Cancel = IsDead;
         }
 

@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
             return text;
         }
 
-        public override bool ConvertValue(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             if(serviceType != ServiceType.NicoNicoVideo) {
                 ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
