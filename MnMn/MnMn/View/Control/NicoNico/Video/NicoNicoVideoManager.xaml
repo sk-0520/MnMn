@@ -1,0 +1,37 @@
+﻿<UserControl 
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video.NicoNicoVideoVideoManager"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video"
+  
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  mc:Ignorable="d" 
+  d:DesignHeight="300" d:DesignWidth="300"
+>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="8" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+
+    <TreeView Grid.Column="0">
+      <TreeViewItem Header="ホーム" />
+      <TreeViewItem Header="ランキング" />
+      <TreeViewItem Header="新着" />
+      <TreeViewItem Header="ホットリスト" />
+      <TreeViewItem Header="マイリスト">
+
+      </TreeViewItem>
+      <TreeViewItem Header="ブックマーク">
+
+      </TreeViewItem>
+    </TreeView>
+
+    <Grid Grid.Column="2">
+      <app_contrl_nc_video:NicoNicoVideoRankingManager DataContext="{Binding RankingManager}" />
+    </Grid>
+
+  </Grid>
+</UserControl>

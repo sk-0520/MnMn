@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var account = cmd.GetValue("niconico-login-name");
             var password = cmd.GetValue("niconico-login-pass");
 
-            var model = new UserAccountModel() {
+            var model = new NicoNicoUserAccountModel() {
                 User = account,
                 Password = password,
             };

@@ -56,14 +56,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         #region function
 
-        public async Task<RawVideoGetflvModel> GetAsync(Uri uri)
+        public async Task<RawNicoNicoVideoGetflvModel> GetAsync(Uri uri)
         {
             if(SessionSupport) {
                 if(!await Session.CheckLoginAsync()) {
                     await Session.LoginAsync();
                 }
             }
-            using(var page = new PageScraping(Mediation, Session, MediationNicoNicoVideoKey.getflvNormal, Define.ServiceType.NicoNicoVideo)) {
+            using(var page = new PageScraping(Mediation, Session, NicoNicoVideoMediationKey.getflvNormal, Define.ServiceType.NicoNicoVideo)) {
                 page.ForceUri = uri;
 
                 var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
                 var parameters = rawParameters.AllKeys
                     .ToDictionary(k => k, k => rawParameters.GetValues(k).First())
                 ;
-                var result = new RawVideoGetflvModel();
+                var result = new RawNicoNicoVideoGetflvModel();
                 var map = NameAttributeUtility.GetNames(result);
                 foreach(var pair in map) {
                     string value;
@@ -84,12 +84,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
             }
         }
 
-        public Task<RawVideoGetflvModel> GetAsync(string videoId)
+        public Task<RawNicoNicoVideoGetflvModel> GetAsync(string videoId)
         {
             var map = new ParametersModel() {
                 { "video-id", videoId },
             };
-            var srcUri = Mediation.GetUri(MediationNicoNicoVideoKey.getflvNormal, map, Define.ServiceType.NicoNicoVideo);
+            var srcUri = Mediation.GetUri(NicoNicoVideoMediationKey.getflvNormal, map, Define.ServiceType.NicoNicoVideo);
             var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.NicoNicoVideo);
             var uri = new Uri(convertedUri);
             return GetAsync(uri);

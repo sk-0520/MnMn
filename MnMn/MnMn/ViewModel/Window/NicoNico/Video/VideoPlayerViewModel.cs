@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
 
         Mediation Mediation { get; set; }
 
-        VideoPlayerWindow View { get; set; }
+        NicoNicoVideoPlayerWindow View { get; set; }
         Vlc.DotNet.Forms.VlcControl Player { get; set; }
         Slider VideoSilder { get; set; }
 
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             set { SetVariableValue(ref this._videoLoadState, value); }
         }
 
-        public VideoInformationViewModel VideoInformationViewModel { get; set; }
+        public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
 
         public Stream VideoStream
         {
@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             InformationLoadState = LoadState.Loading;
             var getthumbinfo = new Getthumbinfo(Mediation);
             var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
-            VideoInformationViewModel = new VideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, VideoInformationViewModel.NoOrderd);
+            VideoInformationViewModel = new NicoNicoVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, NicoNicoVideoInformationViewModel.NoOrderd);
             InformationLoadState = LoadState.Loaded;
 
             var noSessionTask = LoadNoSessionDataAsync();
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
             await sessionTask;
         }
 
-        internal void SetView(VideoPlayerWindow view)
+        internal void SetView(NicoNicoVideoPlayerWindow view)
         {
             View = view;
             Player = view.player.MediaPlayer;

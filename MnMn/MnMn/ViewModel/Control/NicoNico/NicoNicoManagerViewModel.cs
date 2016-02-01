@@ -34,14 +34,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico
         public NicoNicoManagerViewModel(Mediation mediation)
         {
             Mediation = mediation;
-            VideoManager = new VideoManagerViewModel(Mediation);
+            VideoManager = new NicoNicoVideoManagerViewModel(Mediation);
         }
 
         #region property
 
         Mediation Mediation { get; set; }
 
-        public VideoManagerViewModel VideoManager { get; set; }
+        public NicoNicoVideoManagerViewModel VideoManager { get; set; }
 
         #endregion
     }

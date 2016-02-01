@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public NicoNicoMediation(Mediation mediation)
             : base(mediation, Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersListPath, Constants.NicoNicoRequestParametersListPath)
         {
-            VideoMediation = new VideoMediation(Mediation);
+            VideoMediation = new NicoNicoVideoMediation(Mediation);
         }
 
         #region property
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         /// <summary>
         /// ニコニコ動画関係。
         /// </summary>
-        VideoMediation VideoMediation { get; set; }
+        NicoNicoVideoMediation VideoMediation { get; set; }
 
         NicoNicoSessionViewModel Session { get; set; }
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         ResponseModel RequestSession(RequestModel request)
         {
             if(Session == null) {
-                var model = new UserAccountModel();
+                var model = new NicoNicoUserAccountModel();
                 model.User = VariableConstants.NicoNicoUserAccountName;
                 model.Password = VariableConstants.NicoNicoUserAccountPassword;
                 Session = new NicoNicoSessionViewModel(Mediation, model);

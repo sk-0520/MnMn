@@ -109,20 +109,20 @@
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
-    <Compile Include="Model\Setting\NicoNico\Video\VideoSettingModel.cs" />
+    <Compile Include="Model\Setting\NicoNico\Video\NicoNicoVideoSettingModel.cs" />
     <Compile Include="ViewModel\Window\NicoNico\Video\VideoPlayerViewModel.cs" />
-    <Compile Include="View\Window\NicoNico\Video\VideoPlayerWindow.xaml.cs">
-      <DependentUpon>VideoPlayerWindow.xaml</DependentUpon>
+    <Compile Include="View\Window\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml.cs">
+      <DependentUpon>NicoNicoVideoPlayerWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\Control\NicoNico\Video\VideoManager.xaml">
+    <Page Include="View\Control\NicoNico\Video\NicoNicoVideoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\NicoNico\Video\RankingContextElements.xaml">
+    <Page Include="View\Control\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Control\NicoNico\Video\RankingManager.xaml">
+    <Page Include="View\Control\NicoNico\Video\NicoNicoVideoRankingManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,13 +144,13 @@
     <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\NameType.cs" />
-    <Compile Include="Define\NicoNico\MediationNicoNicoKey.cs" />
-    <Compile Include="Define\NicoNico\Video\MovieType.cs" />
-    <Compile Include="Define\NicoNico\Video\MediationNicoNicoVideoKey.cs" />
-    <Compile Include="Define\NicoNico\Video\RankingLoad.cs" />
-    <Compile Include="Define\NicoNico\Video\ThumbType.cs" />
-    <Compile Include="Define\NicoNico\Video\VideoThumbnailLoad.cs" />
-    <Compile Include="Define\NicoNico\Video\VideoInformationSource.cs" />
+    <Compile Include="Define\NicoNico\NicoNicoMediationKey.cs" />
+    <Compile Include="Define\NicoNico\Video\NicoNicoVideoMovieType.cs" />
+    <Compile Include="Define\NicoNico\Video\NicoNicoVideoMediationKey.cs" />
+    <Compile Include="Define\NicoNico\Video\NicoNicoVideoRankingLoad.cs" />
+    <Compile Include="Define\NicoNico\Video\NicoNicoVideoThumbType.cs" />
+    <Compile Include="Define\NicoNico\Video\NicoNicoVideoVideoThumbnailLoad.cs" />
+    <Compile Include="Define\NicoNico\Video\NicoNicoVideoVideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
@@ -170,10 +170,10 @@
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />
     <Compile Include="Logic\NicoNico\NicoNicoMediation.cs" />
-    <Compile Include="Logic\NicoNico\Video\VideoMediation.cs" />
+    <Compile Include="Logic\NicoNico\Video\NicoNicoVideoMediation.cs" />
     <Compile Include="Logic\HttpUserAgentHost.cs" />
-    <Compile Include="Logic\Utility\NicoNico\Video\GetthumbinfoUtility.cs" />
-    <Compile Include="Logic\Utility\NicoNico\Video\RankingUtility.cs" />
+    <Compile Include="Logic\Utility\NicoNico\Video\NicoNicoVideoGetthumbinfoUtility.cs" />
+    <Compile Include="Logic\Utility\NicoNico\Video\NicoNicoVideoRankingUtility.cs" />
     <Compile Include="Logic\Utility\RawValueUtility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />
@@ -182,22 +182,22 @@
     <Compile Include="Model\Feed\Rss2\Rss2Model.cs" />
     <Compile Include="Model\Feed\Rss2\Rss2ChannelModel.cs" />
     <Compile Include="Model\Feed\FeedModelBase.cs" />
-    <Compile Include="Model\NicoNico\Video\CategoryGroupModel.cs" />
-    <Compile Include="Model\NicoNico\Video\RankingGroupModel.cs" />
-    <Compile Include="Model\NicoNico\Video\ElementModel.cs" />
-    <Compile Include="Model\NicoNico\Video\RankingModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoGetflvModel.cs" />
-    <Compile Include="Model\Setting\NicoNico\UserAccountModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedChannelModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedItemModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\RankingFeedGuidModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoErrorModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoRankingDetailModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoTagListModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoTagItemModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawVideoThumbResponseModel.cs" />
+    <Compile Include="Model\NicoNico\Video\NicoNicoVideoCategoryGroupModel.cs" />
+    <Compile Include="Model\NicoNico\Video\NicoNicoVideoRankingGroupModel.cs" />
+    <Compile Include="Model\NicoNico\Video\NicoNicoVideoElementModel.cs" />
+    <Compile Include="Model\NicoNico\Video\NicoNicoVideoRankingModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoGetflvModel.cs" />
+    <Compile Include="Model\Setting\NicoNico\NicoNicoUserAccountModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingChannelModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingItemModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingGuidModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoErrorModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoRankingDetailModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoThumbModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoTagListModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoTagItemModel.cs" />
+    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoThumbResponseModel.cs" />
     <Compile Include="Model\ParameterPairModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Model\ParametersModel.cs" />
@@ -209,23 +209,23 @@
     <Compile Include="Model\UriListModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\RankingCategoryItemViewModel.cs" />
+    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoRankingCategoryItemViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\NicoNicoSessionViewModel.cs" />
     <Compile Include="ViewModel\Control\NicoNico\NicoNicoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\RankingManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\VideoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\VideoInformationViewModel.cs" />
+    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoRankingManagerViewModel.cs" />
+    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoManagerViewModel.cs" />
+    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="ViewModel\Control\TreeNodeItemViewModelBase.cs" />
-    <Compile Include="View\Control\NicoNico\Video\VideoManager.xaml.cs">
-      <DependentUpon>VideoManager.xaml</DependentUpon>
+    <Compile Include="View\Control\NicoNico\Video\NicoNicoVideoManager.xaml.cs">
+      <DependentUpon>NicoNicoVideoManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\NicoNico\Video\RankingContextElements.xaml.cs">
-      <DependentUpon>RankingContextElements.xaml</DependentUpon>
+    <Compile Include="View\Control\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml.cs">
+      <DependentUpon>NicoNicoVideoRankingContextElements.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\NicoNico\Video\RankingManager.xaml.cs">
-      <DependentUpon>RankingManager.xaml</DependentUpon>
+    <Compile Include="View\Control\NicoNico\Video\NicoNicoVideoRankingManager.xaml.cs">
+      <DependentUpon>NicoNicoVideoRankingManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -235,7 +235,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Window\NicoNico\Video\VideoPlayerWindow.xaml">
+    <Page Include="View\Window\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

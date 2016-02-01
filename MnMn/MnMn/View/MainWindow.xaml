@@ -31,7 +31,7 @@
 
     <TabControl Grid.Row="1" TabStripPlacement="Left">
       <TabItem Header="2525 video" DataContext="{Binding NicoNicoManager}">
-        <app_contrl_nc_video:VideoManager DataContext="{Binding VideoManager}" />
+        <app_contrl_nc_video:NicoNicoVideoVideoManager DataContext="{Binding VideoManager}" />
       </TabItem>
       <TabItem Header="SETTING">
       </TabItem>

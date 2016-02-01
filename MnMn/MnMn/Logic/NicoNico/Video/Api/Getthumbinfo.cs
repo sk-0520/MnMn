@@ -41,18 +41,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         #region function
 
-        async Task<RawVideoThumbResponseModel> GetAsync_Impl(PageScraping page, string videoId)
+        async Task<RawNicoNicoVideoThumbResponseModel> GetAsync_Impl(PageScraping page, string videoId)
         {
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.HttpMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
-                return SerializeUtility.LoadXmlSerializeFromStream<RawVideoThumbResponseModel>(stream);
+                return SerializeUtility.LoadXmlSerializeFromStream<RawNicoNicoVideoThumbResponseModel>(stream);
             }
         }
 
-        public async Task<RawVideoThumbResponseModel> GetAsync(string videoId)
+        public async Task<RawNicoNicoVideoThumbResponseModel> GetAsync(string videoId)
         {
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, MediationNicoNicoVideoKey.getthumbinfo, Define.ServiceType.NicoNicoVideo)) {
+            using(var page = new PageScraping(Mediation, HttpUserAgentHost, NicoNicoVideoMediationKey.getthumbinfo, Define.ServiceType.NicoNicoVideo)) {
                 return await GetAsync_Impl(page, videoId);
             }
         }

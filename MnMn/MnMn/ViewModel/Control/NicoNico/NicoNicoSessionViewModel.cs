@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
     public class NicoNicoSessionViewModel: SessionViewModelBase
     {
 
-        public NicoNicoSessionViewModel(Mediation mediation, UserAccountModel userAccountModel)
+        public NicoNicoSessionViewModel(Mediation mediation, NicoNicoUserAccountModel userAccountModel)
             : base(mediation)
         {
             UserAccount = userAccountModel;
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
         /// <summary>
         /// ユーザーアカウント情報。
         /// </summary>
-        UserAccountModel UserAccount { get; set; }
+        NicoNicoUserAccountModel UserAccount { get; set; }
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageScraping(Mediation, this, MediationNicoNicoKey.videoLogin, ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, NicoNicoMediationKey.videoLogin, ServiceType.NicoNico)) {
                 page.StopHeaderCheck = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.User;
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return;
             }
 
-            using(var page = new PageScraping(Mediation, this, MediationNicoNicoKey.videoLogout, ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, NicoNicoMediationKey.videoLogout, ServiceType.NicoNico)) {
                 page.StopHeaderCheck = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return false;
             }
 
-            using(var page = new PageScraping(Mediation, this, MediationNicoNicoKey.videoCheck, ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, NicoNicoMediationKey.videoCheck, ServiceType.NicoNico)) {
                 page.StopHeaderCheck = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
