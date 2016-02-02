@@ -117,19 +117,19 @@
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
     <Compile Include="Model\Setting\NicoNico\Video\NicoNicoVideoSettingModel.cs" />
-    <Compile Include="ViewModel\Window\NicoNico\Video\VideoPlayerViewModel.cs" />
-    <Compile Include="View\Window\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml.cs">
+    <Compile Include="ViewModel\Controls\NicoNico\Video\VideoPlayerViewModel.cs" />
+    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml.cs">
       <DependentUpon>NicoNicoVideoPlayerWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\Control\NicoNico\Video\NicoNicoVideoManager.xaml">
+    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml">
+    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Control\NicoNico\Video\NicoNicoVideoRankingManager.xaml">
+    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,22 +216,22 @@
     <Compile Include="Model\UriListModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoRankingCategoryItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoRankingCategoryItemViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\NicoNicoSessionViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\NicoNicoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoRankingManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Control\NicoNico\Video\NicoNicoVideoInformationViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\NicoNicoSessionViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\NicoNicoManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoRankingManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
-    <Compile Include="ViewModel\Control\TreeNodeItemViewModelBase.cs" />
-    <Compile Include="View\Control\NicoNico\Video\NicoNicoVideoManager.xaml.cs">
+    <Compile Include="ViewModel\Controls\TreeNodeItemViewModelBase.cs" />
+    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoManager.xaml.cs">
       <DependentUpon>NicoNicoVideoManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml.cs">
+    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml.cs">
       <DependentUpon>NicoNicoVideoRankingContextElements.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\NicoNico\Video\NicoNicoVideoRankingManager.xaml.cs">
+    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingManager.xaml.cs">
       <DependentUpon>NicoNicoVideoRankingManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
@@ -242,7 +242,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Window\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml">
+    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
