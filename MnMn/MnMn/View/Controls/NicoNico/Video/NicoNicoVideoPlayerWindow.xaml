@@ -1,14 +1,28 @@
 ﻿<Window x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video.NicoNicoVideoPlayerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vlc_wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+        xmlns:vlc_wpf="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
         
         ResizeMode="CanResizeWithGrip"
         
         Title="VideoPlayerWindow" Height="410.938" Width="507.387"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        
 >
+  <Window.Resources>
+    <Storyboard x:Key="Storyboard1">
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="label" AutoReverse="True" RepeatBehavior="Forever" >
+        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="176.788"/>
+        <EasingDoubleKeyFrame KeyTime="0:0:1" Value="355.957"/>
+      </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+  </Window.Resources>
+  <Window.Triggers>
+    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+      <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+    </EventTrigger>
+  </Window.Triggers>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -33,7 +47,9 @@
       </Grid.ColumnDefinitions>
 
       <!--<MediaElement Name="player" Grid.Row="0" Grid.Column="0" />-->
-      <vlc_wpf:VlcControl x:Name="player" Grid.Row="0" Grid.Column="0"  />
+      <vlc_wpf:VlcControl 
+        x:Name="player" Grid.Row="0" Grid.Column="0" Margin="25,10,149,25"  />
+
 
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
         <ListBoxItem>comment</ListBoxItem>
@@ -64,7 +80,21 @@
       </Grid>
 
       <Grid>
-
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="51" Margin="178,36,0,0" VerticalAlignment="Top" Width="123"/>
+        <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="126" Margin="306,64,0,0" VerticalAlignment="Top" Width="113"/>
+        <Label x:Name="label" 
+        	Grid.Row="0" Grid.Column="0" 
+        	Content="Label" HorizontalAlignment="Left" Margin="217,92,0,0" VerticalAlignment="Top" Height="72" Width="152" Foreground="Lime" BorderBrush="#FF44FB00" FontSize="48" RenderTransformOrigin="0.5,0.5"
+      >
+          <Label.RenderTransform>
+            <TransformGroup>
+              <ScaleTransform/>
+              <SkewTransform/>
+              <RotateTransform/>
+              <TranslateTransform/>
+            </TransformGroup>
+          </Label.RenderTransform>
+        </Label>
       </Grid>
 
     </Grid>

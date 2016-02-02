@@ -168,6 +168,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             set { SetVariableValue(ref this._videoPosition, value); }
         }
 
+        public MediaElement Player2 { get; private set; }
+
         #endregion
 
         #region function
@@ -248,7 +250,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             View = view;
             Player = view.player.MediaPlayer;
             VideoSilder = view.videoSilder;
-
+            Player2 = view.mediaElement;
             // あれこれイベント
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
@@ -258,6 +260,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         void AutoPlay(FileInfo fileInfo)
         {
             Player.Play(fileInfo);
+            View.Dispatcher.BeginInvoke(new Action(() => {
+                Player2.LoadedBehavior = MediaState.Manual;
+                Player2.Source = new Uri(VideoPath);
+                Player2.Play();
+            }));
+            //TaskScheduler.FromCurrentSynchronizationContext().
             CanVideoPlay = true;
         }
 
