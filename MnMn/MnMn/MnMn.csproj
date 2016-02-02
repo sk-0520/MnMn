@@ -105,6 +105,8 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\Event\DownloadStartType.cs" />
+    <Compile Include="Define\Event\DownloadStartEventArgs.cs" />
     <Compile Include="Define\Event\DownloadingErrorEventArgs.cs" />
     <Compile Include="Define\Event\DownloadingEventArgs.cs" />
     <Compile Include="Define\Event\DownloaderEventArgs.cs" />

@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// タウンロード開始時に呼び出される。
         /// <para>ストリーム作成時。</para>
         /// </summary>
-        public event CancelEventHandler DownloadStart;
+        public event EventHandler<DownloadStartEventArgs> DownloadStart;
         /// <summary>
         /// データ受信時に発生する。
         /// </summary>
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <para>キャンセルが立てば処理終了。</para>
         /// </summary>
         public event EventHandler<DownloadingErrorEventArgs> DownloadingError;
-        
+
         #endregion
 
         public Downloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator)
@@ -71,6 +71,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Uri DownloadUri { get; protected set; }
         protected ICreateHttpUserAgent UserAgentCreator { get; set; }
         protected HttpClient UserAgent { get; set; }
+
+        public long RangeHeadPotision { get; set; }
+        public long RangeTailPotision { get; set; }
 
         /// <summary>
         /// 受信時のバッファサイズ。
@@ -94,13 +97,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        protected bool OnDownloadStart()
+        protected bool OnDownloadStart(DownloadStartType downloadStart, long rangeHeadPosition, long rangeTailPosition)
         {
             if(DownloadStart == null) {
                 return false;
             }
 
-            var e = new CancelEventArgs();
+            var e = new DownloadStartEventArgs(downloadStart, rangeHeadPosition, rangeTailPosition);
             DownloadStart(this, e);
 
             return e.Cancel;
@@ -156,7 +159,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return;
                 }
                 using(var reader = new BinaryReader(task.Result)) {
-                    if(OnDownloadStart()) {
+                    var downloadStartType = 0 < RangeHeadPotision ? DownloadStartType.Begin : DownloadStartType.Range;
+                    if(OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision)) {
                         Cancled = true;
                         return;
                     }
