@@ -112,7 +112,8 @@
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
     <Compile Include="Model\Setting\NicoNico\Video\NicoNicoVideoSettingModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\VideoPlayerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoPlayerViewModel.cs" />
     <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml.cs">
       <DependentUpon>NicoNicoVideoPlayerWindow.xaml</DependentUpon>
     </Compile>
