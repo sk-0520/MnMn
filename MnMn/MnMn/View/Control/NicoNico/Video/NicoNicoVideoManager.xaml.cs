@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 {
     /// <summary>
     /// NicoNicoVideoManager.xaml の相互作用ロジック

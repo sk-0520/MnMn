@@ -26,7 +26,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 {
     public class NicoNicoVideoRankingManagerViewModel: ViewModelBase
     {

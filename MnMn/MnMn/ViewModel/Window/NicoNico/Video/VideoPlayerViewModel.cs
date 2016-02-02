@@ -29,7 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 using Vlc.DotNet.Wpf;
 using Vlc.DotNet.Core;
@@ -39,12 +39,12 @@ using System.Net;
 using System.Diagnostics;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System.Windows.Media;
-using ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 using System.Windows;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 {
     public class VideoPlayerViewModel: ViewModelBase
     {

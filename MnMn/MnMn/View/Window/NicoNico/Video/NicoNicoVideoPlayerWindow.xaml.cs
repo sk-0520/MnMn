@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 {
     /// <summary>
     /// NicoNicoVideoPlayerWindow.xaml の相互作用ロジック

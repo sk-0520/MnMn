@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Control.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 {
     /// <summary>
     /// NicoNicoVideoRankingManager.xaml の相互作用ロジック

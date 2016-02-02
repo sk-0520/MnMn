@@ -25,9 +25,9 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico
 {
     public class NicoNicoManagerViewModel: ViewModelBase
     {

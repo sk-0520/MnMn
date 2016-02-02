@@ -27,7 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api

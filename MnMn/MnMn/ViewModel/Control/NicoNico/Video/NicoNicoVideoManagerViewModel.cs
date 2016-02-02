@@ -28,10 +28,10 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.View.Window.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Window.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 {
     public class NicoNicoVideoManagerViewModel: ViewModelBase
     {

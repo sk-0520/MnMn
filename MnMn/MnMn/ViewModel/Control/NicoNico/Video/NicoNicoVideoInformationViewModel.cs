@@ -35,7 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Control.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 {
     public class NicoNicoVideoInformationViewModel: ViewModelBase
     {
