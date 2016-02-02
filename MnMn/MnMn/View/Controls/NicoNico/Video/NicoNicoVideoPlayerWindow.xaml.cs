@@ -24,19 +24,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
         public NicoNicoVideoPlayerWindow()
         {
             InitializeComponent();
-            this.player.MediaPlayer.VlcLibDirectoryNeeded += OnVlcControlNeedsLibDirectory;
-            this.player.MediaPlayer.EndInit();
+            //this.player.MediaPlayer.VlcLibDirectoryNeeded += OnVlcControlNeedsLibDirectory;
+            //this.player.MediaPlayer.EndInit();
         }
-        private void OnVlcControlNeedsLibDirectory(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
-        {
-            var currentAssembly = Assembly.GetEntryAssembly();
-            var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
-            if(currentDirectory == null)
-                return;
-            if(AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
-                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\lib\x86\"));
-            else
-                e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\lib\x64\"));
-        }
+        //private void OnVlcControlNeedsLibDirectory(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
+        //{
+        //    var currentAssembly = Assembly.GetEntryAssembly();
+        //    var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
+        //    if(currentDirectory == null)
+        //        return;
+        //    if(AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
+        //        e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\lib\x86\"));
+        //    else
+        //        e.VlcLibDirectory = new DirectoryInfo(System.IO.Path.Combine(currentDirectory, @"lib\lib\x64\"));
+        //}
     }
 }

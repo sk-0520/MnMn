@@ -31,8 +31,6 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
-using Vlc.DotNet.Wpf;
-using Vlc.DotNet.Core;
 using System.Windows.Controls;
 using System.Net.Sockets;
 using System.Net;
@@ -77,7 +75,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         Mediation Mediation { get; set; }
 
         NicoNicoVideoPlayerWindow View { get; set; }
-        Vlc.DotNet.Forms.VlcControl Player { get; set; }
+        //Vlc.DotNet.Forms.VlcControl Player { get; set; }
+        xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         Slider VideoSilder { get; set; }
 
         public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
@@ -168,8 +167,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             set { SetVariableValue(ref this._videoPosition, value); }
         }
 
-        public MediaElement Player2 { get; private set; }
-
         #endregion
 
         #region function
@@ -248,9 +245,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         internal void SetView(NicoNicoVideoPlayerWindow view)
         {
             View = view;
-            Player = view.player.MediaPlayer;
+            Player = view.player;//.MediaPlayer;
             VideoSilder = view.videoSilder;
-            Player2 = view.mediaElement;
             // あれこれイベント
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
@@ -259,13 +255,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         void AutoPlay(FileInfo fileInfo)
         {
-            Player.Play(fileInfo);
-            View.Dispatcher.BeginInvoke(new Action(() => {
-                Player2.LoadedBehavior = MediaState.Manual;
-                Player2.Source = new Uri(VideoPath);
-                Player2.Play();
-            }));
-            //TaskScheduler.FromCurrentSynchronizationContext().
+            Player.LoadMedia(VideoPath);
+            Player.Play();
+
             CanVideoPlay = true;
         }
 
@@ -279,15 +271,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
             IsDead = true;
 
-            if(Player.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) {
-                Player.Stop();
+            if(Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
+                Player.BeginStop();
             }
         }
 
-        private void Player_PositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)
+        private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
-                VideoPosition = e.NewPosition;
+                VideoPosition = Player.Position;
             }
         }
 
