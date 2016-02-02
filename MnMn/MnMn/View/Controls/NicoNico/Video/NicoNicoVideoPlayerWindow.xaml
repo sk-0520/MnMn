@@ -48,7 +48,7 @@
 
       <!--<MediaElement Name="player" Grid.Row="0" Grid.Column="0" />-->
       <vlc_wpf:VlcPlayer  
-        x:Name="player" Grid.Row="0" Grid.Column="0" Margin="25,10,149,25"  />
+        x:Name="player" Grid.Row="0" Grid.Column="0" Margin="25,71,220,40"  />
 
 
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
@@ -80,11 +80,9 @@
       </Grid>
 
       <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="51" Margin="178,36,0,0" VerticalAlignment="Top" Width="123"/>
-        <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="126" Margin="306,64,0,0" VerticalAlignment="Top" Width="113"/>
         <Label x:Name="label" 
         	Grid.Row="0" Grid.Column="0" 
-        	Content="Label" HorizontalAlignment="Left" Margin="217,92,0,0" VerticalAlignment="Top" Height="72" Width="152" Foreground="Lime" BorderBrush="#FF44FB00" FontSize="48" RenderTransformOrigin="0.5,0.5"
+        	Content="Label" HorizontalAlignment="Left" Margin="42,53,0,0" VerticalAlignment="Top" Height="72" Width="152" Foreground="Lime" BorderBrush="#FF44FB00" FontSize="48" RenderTransformOrigin="0.5,0.5"
       >
           <Label.RenderTransform>
             <TransformGroup>
