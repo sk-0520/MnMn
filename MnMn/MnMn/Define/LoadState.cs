@@ -12,11 +12,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     /// </summary>
     public enum LoadState
     {
+        /// <summary>
+        /// 何もしてない。
+        /// </summary>
         None,
+        /// <summary>
+        /// 準備中。
+        /// </summary>
+        Preparation,
+        /// <summary>
+        /// 読み込み中。
+        /// </summary>
         Loading,
+        /// <summary>
+        /// 読み込んだ。
+        /// </summary>
         Loaded,
         /// <summary>
-        /// ログイン失敗。
+        /// 読み込み失敗。
         /// </summary>
         Failure,
     }

@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
             // TODO: 細かな制御と外部化
             if(VideoInformationViewModel.Done) {
-                VideoLoadState = LoadState.Loading;
+                VideoLoadState = LoadState.Preparation;
                 VideoSize = VideoInformationViewModel.VideoSize;
 
                 using(var downloader = new NicoNicoVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
@@ -201,6 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
                     VideoPath = @"z:\test.mp4";
                     using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
                         try {
+                            downloader.DownloadStart += Downloader_DownloadStart;
                             downloader.DownloadingError += Downloader_DownloadingError;
                             downloader.Downloading += Downloader_Downloading;
 
@@ -218,6 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
                             Debug.WriteLine(ex);
                             VideoLoadState = LoadState.Failure;
                         } finally {
+                            downloader.DownloadStart -= Downloader_DownloadStart;
                             downloader.DownloadingError -= Downloader_DownloadingError;
                             downloader.Downloading -= Downloader_Downloading;
                         }
@@ -304,6 +306,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             var nextPosition = (float)VideoSilder.Value;
             ChangingVideoPosition = false;
             Player.Position = nextPosition;
+        }
+
+        private void Downloader_DownloadStart(object sender, Define.Event.DownloadStartEventArgs e)
+        {
+            VideoLoadState = LoadState.Loading;
         }
 
         private void Downloader_Downloading(object sender, Define.Event.DownloadingEventArgs e)
