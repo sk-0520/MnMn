@@ -31,8 +31,6 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
-using Vlc.DotNet.Wpf;
-using Vlc.DotNet.Core;
 using System.Windows.Controls;
 using System.Net.Sockets;
 using System.Net;
@@ -251,7 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             VideoSilder = view.videoSilder;
             // あれこれイベント
             View.Closed += View_Closed;
-            //-Player.PositionChanged += Player_PositionChanged;
+            Player.PositionChanged += Player_PositionChanged;
             VideoSilder.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
@@ -268,20 +266,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         private void View_Closed(object sender, EventArgs e)
         {
             VideoSilder.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-            //-Player.PositionChanged -= Player_PositionChanged;
+            Player.PositionChanged -= Player_PositionChanged;
             View.Closed -= View_Closed;
 
             IsDead = true;
 
-            //-if(Player.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) {
-            //-Player.Stop();
-            //-}
+            if(Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
+                Player.BeginStop();
+            }
         }
 
-        private void Player_PositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)
+        private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
-                VideoPosition = e.NewPosition;
+                VideoPosition = Player.Position;
             }
         }
 
