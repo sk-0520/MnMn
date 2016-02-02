@@ -1,125 +1,40 @@
-﻿using System;
+﻿/*
+This file is part of MnMn.
+
+MnMn is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MnMn is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// 毎度毎度 Dictionary&lt;string, string&gt; 入力がしんどい。
+    /// パラメータ一覧。
     /// </summary>
-    internal class ParametersModel: Dictionary<string, string>
+    [Serializable, XmlRoot("parameters")]
+    public class ParametersModel: ModelBase
     {
-        //
-        // 概要:
-        //     空で、既定の初期量を備え、キーの型の既定の等値比較子を使用する、System.Collections.Generic.Dictionary`2 クラスの新しいインスタンスを初期化します。
-        public ParametersModel()
-            : base()
-        { }
+        #region property
 
-        //
-        // 概要:
-        //     空で、指定した初期量を備え、キーの型の既定の等値比較子を使用する、System.Collections.Generic.Dictionary`2 クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   capacity:
-        //     System.Collections.Generic.Dictionary`2 が格納できる要素数の初期値。
-        //
-        // 例外:
-        //   T:System.ArgumentOutOfRangeException:
-        //     capacity が 0 未満です。
-        public ParametersModel(int capacity)
-            : base(capacity)
-        { }
+        [XmlElement("param")]
+        public CollectionModel<ParameterModel> Parameters { get; set; } = new CollectionModel<ParameterModel>();
 
-        //
-        // 概要:
-        //     空で、既定の初期量を備え、指定した System.Collections.Generic.Dictionary`2 を使用する、System.Collections.Generic.IEqualityComparer`1
-        //     クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   comparer:
-        //     キーの比較時に使用する System.Collections.Generic.IEqualityComparer`1 実装。キーの型の既定の null を使用する場合は
-        //     System.Collections.Generic.EqualityComparer`1。
-        public ParametersModel(IEqualityComparer<string> comparer)
-            : base(comparer)
-        { }
-
-        //
-        // 概要:
-        //     指定した System.Collections.Generic.IDictionary`2 から要素をコピーして格納し、キーの型の既定の等値比較子を使用する、System.Collections.Generic.Dictionary`2
-        //     クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   dictionary:
-        //     新しい System.Collections.Generic.IDictionary`2 に要素がコピーされた System.Collections.Generic.Dictionary`2。
-        //
-        // 例外:
-        //   T:System.ArgumentNullException:
-        //     dictionary は null です。
-        //
-        //   T:System.ArgumentException:
-        //     dictionary に、1 つ以上の重複するキーが格納されています。
-        public ParametersModel(IDictionary<string, string> dictionary)
-             : base(dictionary)
-        { }
-       //
-        // 概要:
-        //     空で、指定した初期量を備え、指定した System.Collections.Generic.Dictionary`2 を使用する、System.Collections.Generic.IEqualityComparer`1
-        //     クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   capacity:
-        //     System.Collections.Generic.Dictionary`2 が格納できる要素数の初期値。
-        //
-        //   comparer:
-        //     キーの比較時に使用する System.Collections.Generic.IEqualityComparer`1 実装。キーの型の既定の null を使用する場合は
-        //     System.Collections.Generic.EqualityComparer`1。
-        //
-        // 例外:
-        //   T:System.ArgumentOutOfRangeException:
-        //     capacity が 0 未満です。
-        public ParametersModel(int capacity, IEqualityComparer<string> comparer)
-             : base(capacity, comparer)
-        { }
-       //
-        // 概要:
-        //     指定した System.Collections.Generic.IDictionary`2 から要素をコピーして格納し、指定した System.Collections.Generic.IEqualityComparer`1
-        //     を使用する、System.Collections.Generic.Dictionary`2 クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   dictionary:
-        //     新しい System.Collections.Generic.IDictionary`2 に要素がコピーされた System.Collections.Generic.Dictionary`2。
-        //
-        //   comparer:
-        //     キーの比較時に使用する System.Collections.Generic.IEqualityComparer`1 実装。キーの型の既定の null を使用する場合は
-        //     System.Collections.Generic.EqualityComparer`1。
-        //
-        // 例外:
-        //   T:System.ArgumentNullException:
-        //     dictionary は null です。
-        //
-        //   T:System.ArgumentException:
-        //     dictionary に、1 つ以上の重複するキーが格納されています。
-        public ParametersModel(IDictionary<string, string> dictionary, IEqualityComparer<string> comparer)
-            : base(dictionary, comparer)
-        { }
-        //
-        // 概要:
-        //     シリアル化したデータを使用して、System.Collections.Generic.Dictionary`2 クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   info:
-        //     System.Runtime.Serialization.SerializationInfo をシリアル化するために必要な情報を格納している System.Collections.Generic.Dictionary`2
-        //     オブジェクト。
-        //
-        //   context:
-        //     System.Collections.Generic.Dictionary`2 に関連付けられているシリアル化ストリームの送信元および送信先を格納している
-        //     System.Runtime.Serialization.StreamingContext 構造体。
-        protected ParametersModel(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
+        #endregion
     }
 }

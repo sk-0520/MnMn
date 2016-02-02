@@ -48,21 +48,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected MediationBase(string uriListPath, string uriParametersPath, string requestParametersPath)
         {
             if(uriListPath != null) {
-                UriList = SerializeUtility.LoadXmlSerializeFromFile<UriListModel>(uriListPath);
+                UriList = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(uriListPath);
             } else {
-                UriList = new UriListModel();
+                UriList = new UrisModel();
             }
 
             if(uriParametersPath != null) {
-                UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(uriParametersPath);
+                UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(uriParametersPath);
             } else {
-                UriParameterList = new ParameterListModel();
+                UriParameterList = new ParametersModel();
             }
 
             if(requestParametersPath != null) {
-                RequestParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(requestParametersPath);
+                RequestParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestParametersPath);
             } else {
-                RequestParameterList = new ParameterListModel();
+                RequestParameterList = new ParametersModel();
             }
         }
 
@@ -70,11 +70,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static IReadOnlyDictionary<string, string> EmptyMap { get; } = new Dictionary<string, string>();
 
-        protected UriListModel UriList { get; private set; }
+        protected UrisModel UriList { get; private set; }
 
-        protected ParameterListModel UriParameterList { get; private set; }
+        protected ParametersModel UriParameterList { get; private set; }
 
-        protected ParameterListModel RequestParameterList { get; private set; }
+        protected ParametersModel RequestParameterList { get; private set; }
 
         #endregion
 
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
 
-        string ToUriParameterString(ParameterPairModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
+        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             var convertedParams = UriParameterList.Parameters
                 .FirstOrDefault(up => up.Key == uriItem.Key)
-                ?.Pairs
+                ?.Items
                 ?.Select(p => ToUriParameterString(p, uriItem.UriParameterType, replaceMap))
             ;
             if(convertedParams == null) {
@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             return RequestParameterList.Parameters
                 .FirstOrDefault(up => up.Key == key)
-                ?.Pairs
+                ?.Items
                 ?.Where(p => p.HasKey)
                 ?.ToDictionary(
                     p => p.Key,

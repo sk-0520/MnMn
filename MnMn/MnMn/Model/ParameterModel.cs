@@ -41,8 +41,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// <summary>
         /// URIパラメータのキーと値。
         /// </summary>
-        [XmlElement("param-pair")]
-        public CollectionModel<ParameterPairModel> Pairs { get; set; } = new CollectionModel<ParameterPairModel>();
+        [XmlElement("item")]
+        public CollectionModel<ParameterItemModel> Items { get; set; } = new CollectionModel<ParameterItemModel>();
 
         #endregion
     }

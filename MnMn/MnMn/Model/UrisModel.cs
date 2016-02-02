@@ -27,12 +27,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <summary>
     /// URI定義リスト。
     /// </summary>
-    [Serializable, XmlRoot("uri-list")]
-    public class UriListModel: ModelBase
+    [Serializable, XmlRoot("uri")]
+    public class UrisModel: ModelBase
     {
         #region property
 
-        [XmlElement("uri-item")]
+        [XmlElement("item")]
         public CollectionModel<UriItemModel> Items { get; set; } = new CollectionModel<UriItemModel>();
 
         #endregion

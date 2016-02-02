@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         public Task<RawNicoNicoVideoGetflvModel> GetAsync(string videoId)
         {
-            var map = new ParametersModel() {
+            var map = new StringsModel() {
                 { "video-id", videoId },
             };
             var srcUri = Mediation.GetUri(NicoNicoVideoMediationKey.getflvNormal, map, Define.ServiceType.NicoNicoVideo);

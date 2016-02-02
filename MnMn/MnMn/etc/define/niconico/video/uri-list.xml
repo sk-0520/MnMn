@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<uri-list>
-	<uri-item key="video-ranking" uri="http://www.nicovideo.jp/ranking" param="PreSuffixes" />
-	<uri-item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="Hierarchy" />
-	<uri-item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="Hierarchy" />
-	<uri-item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="PreSuffixes" />
-</uri-list>
+<uri>
+	<item key="video-ranking" uri="http://www.nicovideo.jp/ranking" param="PreSuffixes" />
+	<item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="Hierarchy" />
+	<item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="Hierarchy" />
+	<item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="PreSuffixes" />
+</uri>

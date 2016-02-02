@@ -26,12 +26,11 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// パラメータのペア。
+    /// パラメータの内部データ。
     /// <para>キーがなければ値のみ使用する。</para>
-    /// <para>当初はペアだったのですが跡形もなくなりましたん。</para>
     /// </summary>
     [Serializable]
-    public class ParameterPairModel: ModelBase
+    public class ParameterItemModel: ModelBase
     {
         #region property
 

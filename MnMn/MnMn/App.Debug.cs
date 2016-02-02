@@ -66,13 +66,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void load_uri()
         {
             var path = @"etc\niconico\uri-list.xml";
-            var list = SerializeUtility.LoadXmlSerializeFromFile<UriListModel>(path);
+            var list = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(path);
         }
 
         void param()
         {
             var path = @"etc\niconico\uri-params.xml";
-            var list = SerializeUtility.LoadXmlSerializeFromFile<ParameterListModel>(path);
+            var list = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(path);
         }
 
         async void getthumbinfo()

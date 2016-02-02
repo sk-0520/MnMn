@@ -2,22 +2,22 @@
 <parameters>
 	<param key="video-ranking">
 		<!--ターゲット-->
-		<param-pair key="" value="${target}" prefix="/" />
+		<item key="" value="${target}" prefix="/" />
 		<!--期間-->
-		<param-pair key="" value="${period}" prefix="/" />
+		<item key="" value="${period}" prefix="/" />
 		<!--category-->
-		<param-pair key="" value="${category}" prefix="/" />
-		<param-pair prefix="?" key="rss" bond="=" value="2.0" />
-		<param-pair prefix="&amp;" key="lang" bond="=" value="${lang}" />
+		<item key="" value="${category}" prefix="/" />
+		<item prefix="?" key="rss" bond="=" value="2.0" />
+		<item prefix="&amp;" key="lang" bond="=" value="${lang}" />
 	</param>
 	<param key="video-getthumbinfo">
-		<param-pair key="video-id" value="${video-id}" />
+		<item key="video-id" value="${video-id}" />
 	</param>
 	<param key="video-getflv-normal">
-		<param-pair key="video-id" value="${video-id}" />
+		<item key="video-id" value="${video-id}" />
 	</param>
 	<param key="video-getflv-swf">
-		<param-pair key="video-id" value="${video-id}" />
-		<param-pair prefix="?" key="as3" bond="=" value="1" />
+		<item key="video-id" value="${video-id}" />
+		<item prefix="?" key="as3" bond="=" value="1" />
 	</param>
 </parameters>
