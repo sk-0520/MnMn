@@ -48,8 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         CacheState _cacheState;
 
-        long _videoLoadedSize;
-        long _videoSize = Downloader.UnknownDonwloadSize;
+        long _videoLoadedSize = 0;
+        long _videoSize = 1;
 
         #endregion
 
@@ -134,9 +134,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #region function
 
-        protected void OnLoadDataWithoutSessionStart()
+        protected virtual void OnLoadDataWithoutSessionStart()
         { }
-        protected void OnLoadDataWithoutSessionEnd()
+        protected virtual void OnLoadDataWithoutSessionEnd()
         { }
 
         protected Task LoadDataWithoutSessionAsync()
@@ -149,62 +149,96 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             });
         }
 
-        protected void OnLoadDataWithSessionStart()
+        protected virtual void OnLoadDataWithSessionStart()
         { }
-        protected void OnLoadDataWithSessionEnd()
+        protected virtual void OnLoadDataWithSessionEnd()
         { }
 
-        protected async Task LoadDataWithSessionAsync()
+        protected virtual void OnLoadGetflvStart()
+        { }
+        protected virtual void OnLoadGetflvEnd()
+        { }
+
+        Task LoadGetflvAsync(NicoNicoSessionViewModel session)
         {
-            OnLoadDataWithSessionStart();
-            var request = new RequestModel(RequestKind.Session, ServiceType.NicoNico);
-            var response = Mediation.Request(request);
-            var session = (NicoNicoSessionViewModel)response.Result;
+            OnLoadGetflvStart();
+
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
-            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
-            VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
+            return getflv.GetAsync(VideoInformationViewModel.VideoId).ContinueWith(task => {
+                var rawVideoGetflvModel = task.Result;
+                VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
-            // TODO: 細かな制御と外部化
-            if(VideoInformationViewModel.Done) {
-                VideoLoadState = LoadState.Preparation;
-                VideoSize = VideoInformationViewModel.VideoSize;
+                OnLoadGetflvEnd();
+            });
+        }
 
-                using(var downloader = new NicoNicoVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
-                    ReceiveBufferSize = Constants.ServiceNicoNicoVideoReceiveBuffer,
-                    DownloadTotalSize = VideoSize,
-                }) {
-                    VideoPath = @"z:\test.mp4";
-                    using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
-                        try {
-                            downloader.DownloadStart += Downloader_DownloadStart;
-                            downloader.DownloadingError += Downloader_DownloadingError;
-                            downloader.Downloading += Downloader_Downloading;
+        protected virtual void OnLoadVideoStart()
+        { }
+        protected virtual void OnLoadVideoEnd()
+        { }
 
-                            await downloader.StartAsync();
-                            if(downloader.Completed) {
-                                VideoLoadState = LoadState.Loaded;
-                            } else {
-                                VideoLoadState = LoadState.Failure;
-                            }
-                        } catch(Exception ex) {
-                            Debug.WriteLine(ex);
+        protected async Task LoadVideoAsync(NicoNicoSessionViewModel session)
+        {
+            OnLoadVideoStart();
+
+            VideoLoadState = LoadState.Preparation;
+            VideoSize = VideoInformationViewModel.VideoSize;
+
+            using(var downloader = new NicoNicoVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
+                ReceiveBufferSize = Constants.ServiceNicoNicoVideoReceiveBuffer,
+                DownloadTotalSize = VideoSize,
+            }) {
+                VideoPath = @"z:\test.mp4";
+                using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                    try {
+                        downloader.DownloadStart += Downloader_DownloadStart;
+                        downloader.DownloadingError += Downloader_DownloadingError;
+                        downloader.Downloading += Downloader_Downloading;
+
+                        await downloader.StartAsync();
+                        if(downloader.Completed) {
+                            VideoLoadState = LoadState.Loaded;
+                        } else {
                             VideoLoadState = LoadState.Failure;
-                        } finally {
-                            downloader.DownloadStart -= Downloader_DownloadStart;
-                            downloader.DownloadingError -= Downloader_DownloadingError;
-                            downloader.Downloading -= Downloader_Downloading;
-                            OnLoadDataWithSessionEnd();
                         }
+                        OnLoadVideoEnd();
+                    } catch(Exception ex) {
+                        Debug.WriteLine(ex);
+                        VideoLoadState = LoadState.Failure;
+                    } finally {
+                        downloader.DownloadStart -= Downloader_DownloadStart;
+                        downloader.DownloadingError -= Downloader_DownloadingError;
+                        downloader.Downloading -= Downloader_Downloading;
+
+                        OnLoadVideoEnd();
                     }
                 }
             }
         }
 
-        protected void OnLoadStart()
+        protected async Task LoadDataWithSessionAsync()
+        {
+            OnLoadDataWithSessionStart();
+
+            var request = new RequestModel(RequestKind.Session, ServiceType.NicoNico);
+            var response = Mediation.Request(request);
+            var session = (NicoNicoSessionViewModel)response.Result;
+            var tcs = new CancellationTokenSource();
+            await LoadGetflvAsync(session);
+
+            // TODO: これ違う
+            if(!VideoInformationViewModel.Done) {
+                return;
+            }
+
+            await LoadVideoAsync(session);
+        }
+
+        protected virtual void OnLoadStart()
         { }
 
-        protected void OnLoadEnd()
+        protected virtual void OnLoadEnd()
         { }
 
         public async Task LoadAsync(string videoId)
@@ -227,13 +261,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             OnLoadEnd();
         }
 
-        protected void OnDownloadStart(object sender, DownloadStartEventArgs e)
+        protected virtual void OnDownloadStart(object sender, DownloadStartEventArgs e)
         { }
 
-        protected void OnDownloading(object sender, DownloadingEventArgs e)
+        protected virtual void OnDownloading(object sender, DownloadingEventArgs e)
         { }
 
-        protected void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
+        protected virtual void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
         { }
 
         #endregion
@@ -250,7 +284,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             var buffer = e.Data;
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = downloader.DownloadedSize;
-            
+
             Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoSize:#,###}");
 
             OnDownloading(sender, e);

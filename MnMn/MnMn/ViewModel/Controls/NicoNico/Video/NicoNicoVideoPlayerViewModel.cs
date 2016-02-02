@@ -41,80 +41,36 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
 using System.Windows;
+using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 {
-    public class NicoNicoVideoPlayerViewModel: ViewModelBase
+    public class NicoNicoVideoPlayerViewModel: NicoNicoVideoDownloadViewModel
     {
         #region variable
 
-        LoadState _informationLoadState;
-        LoadState _thumbnailLoadState;
-        LoadState _commentLoadState;
-        LoadState _videoLoadState;
-
         bool _canVideoPlay;
         bool _isVideoPlayng;
-
-        CacheState _cacheState;
-
-        long _videoLoadedSize;
-        long _videoSize = 1;
 
         float _videoPosition;
 
         #endregion
 
         public NicoNicoVideoPlayerViewModel(Mediation mediation)
-        {
-            Mediation = mediation;
-        }
+            : base(mediation)
+        { }
 
         #region property
 
         Mediation Mediation { get; set; }
 
         NicoNicoVideoPlayerWindow View { get; set; }
-        //Vlc.DotNet.Forms.VlcControl Player { get; set; }
         xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         Slider VideoSilder { get; set; }
-
-        public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
 
         public bool ChangingVideoPosition { get; set; }
         bool IsDead { get; set; }
         long VideoPlayLowestSize => Constants.ServiceNicoNicoVideoPlayLowestSize;
-        Stream VideoStream { get; set; }
-        string VideoPath { get; set; }
-
-
-        public LoadState InformationLoadState
-        {
-            get { return this._informationLoadState; }
-            set { SetVariableValue(ref this._informationLoadState, value); }
-        }
-        public LoadState ThumbnailLoadState
-        {
-            get { return this._thumbnailLoadState; }
-            set
-            {
-                if(SetVariableValue(ref this._thumbnailLoadState, value)) {
-                    CallOnPropertyChange(nameof(ThumbnailImage));
-                }
-            }
-        }
-
-        public LoadState CommentLoadState
-        {
-            get { return this._commentLoadState; }
-            set { SetVariableValue(ref this._commentLoadState, value); }
-        }
-
-        public LoadState VideoLoadState
-        {
-            get { return this._videoLoadState; }
-            set { SetVariableValue(ref this._videoLoadState, value); }
-        }
 
         public bool CanVideoPlay
         {
@@ -128,39 +84,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             set { SetVariableValue(ref this._isVideoPlayng, value); }
         }
         
-
-        public CacheState CacheState
-        {
-            get { return this._cacheState; }
-            set { SetVariableValue(ref this._cacheState, value); }
-        }
-
-        public long VideoLoadedSize
-        {
-            get { return this._videoLoadedSize; }
-            private set { SetVariableValue(ref this._videoLoadedSize, value); }
-        }
-
-        public long VideoSize
-        {
-            get { return this._videoSize; }
-            private set { SetVariableValue(ref this._videoSize, value); }
-        }
-
-        public ImageSource ThumbnailImage
-        {
-            get
-            {
-                switch(ThumbnailLoadState) {
-                    case LoadState.Loaded:
-                        return VideoInformationViewModel.ThumbnailImage;
-
-                    default:
-                        return null;
-                }
-            }
-        }
-
         public float VideoPosition
         {
             get { return this._videoPosition; }
@@ -170,79 +93,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         #endregion
 
         #region function
-
-        Task LoadDataWithoutSessionAsync()
-        {
-            ThumbnailLoadState = LoadState.Loading;
-            return VideoInformationViewModel.LoadImageAsync().ContinueWith(task => {
-                ThumbnailLoadState = LoadState.Loaded;
-            });
-        }
-
-        async Task LoadDataWithSessionAsync()
-        {
-            var request = new RequestModel(RequestKind.Session, ServiceType.NicoNico);
-            var response = Mediation.Request(request);
-            var session = (NicoNicoSessionViewModel)response.Result;
-            var getflv = new Getflv(Mediation, session);
-            getflv.SessionSupport = true;
-            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
-            VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
-
-            // TODO: 細かな制御と外部化
-            if(VideoInformationViewModel.Done) {
-                VideoLoadState = LoadState.Preparation;
-                VideoSize = VideoInformationViewModel.VideoSize;
-
-                using(var downloader = new NicoNicoVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
-                    ReceiveBufferSize = Constants.ServiceNicoNicoVideoReceiveBuffer,
-                    DownloadTotalSize = VideoSize,
-                }) {
-                    VideoPath = @"z:\test.mp4";
-                    using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
-                        try {
-                            downloader.DownloadStart += Downloader_DownloadStart;
-                            downloader.DownloadingError += Downloader_DownloadingError;
-                            downloader.Downloading += Downloader_Downloading;
-
-                            await downloader.StartAsync();
-                            if(downloader.Completed) {
-                                VideoLoadState = LoadState.Loaded;
-                                // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
-                                if(!CanVideoPlay) {
-                                    AutoPlay(new FileInfo(VideoPath));
-                                }
-                            } else {
-                                VideoLoadState = LoadState.Failure;
-                            }
-                        } catch(Exception ex) {
-                            Debug.WriteLine(ex);
-                            VideoLoadState = LoadState.Failure;
-                        } finally {
-                            downloader.DownloadStart -= Downloader_DownloadStart;
-                            downloader.DownloadingError -= Downloader_DownloadingError;
-                            downloader.Downloading -= Downloader_Downloading;
-                        }
-                    }
-                }
-            }
-        }
-
-        public async Task LoadAsync(string videoId)
-        {
-            InformationLoadState = LoadState.Loading;
-            var getthumbinfo = new Getthumbinfo(Mediation);
-            var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
-            VideoInformationViewModel = new NicoNicoVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, NicoNicoVideoInformationViewModel.NoOrderd);
-            InformationLoadState = LoadState.Loaded;
-
-            var noSessionTask = LoadDataWithoutSessionAsync();
-            var sessionTask = LoadDataWithSessionAsync();
-
-            //Task.WaitAll(noSessionTask, sessionTask);
-            await noSessionTask;
-            await sessionTask;
-        }
 
         internal void SetView(NicoNicoVideoPlayerWindow view)
         {
@@ -261,6 +111,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             Player.Play();
 
             CanVideoPlay = true;
+        }
+
+        #endregion
+
+        #region NicoNicoVideoDownloadViewModel
+
+        protected override void OnDownloading(object sender, DownloadingEventArgs e)
+        {
+            if(!CanVideoPlay) {
+                var fi = new FileInfo(VideoPath);
+                if(fi.Length > VideoPlayLowestSize) {
+                    AutoPlay(fi);
+                }
+            }
+            e.Cancel = IsDead;
+
+            base.OnDownloading(sender, e);
+        }
+
+        protected override void OnLoadVideoEnd()
+        {
+            // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
+            if(!CanVideoPlay) {
+                AutoPlay(new FileInfo(VideoPath));
+            }
+
+            base.OnLoadVideoEnd();
         }
 
         #endregion
@@ -307,48 +184,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             ChangingVideoPosition = false;
             Player.Position = nextPosition;
         }
-
-        private void Downloader_DownloadStart(object sender, Define.Event.DownloadStartEventArgs e)
-        {
-            VideoLoadState = LoadState.Loading;
-        }
-
-        private void Downloader_Downloading(object sender, Define.Event.DownloadingEventArgs e)
-        {
-            var downloader = (Downloader)sender;
-            var buffer = e.Data;
-            VideoStream.Write(buffer.Array, 0, e.Data.Count);
-            //Application.Current.Dispatcher.Invoke(() => );
-            VideoLoadedSize = downloader.DownloadedSize;
-
-            if(!CanVideoPlay) {
-                var fi = new FileInfo(VideoPath);
-                if(fi.Length > VideoPlayLowestSize) {
-                    AutoPlay(fi);
-                }
-            }
-            Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoSize:#,###}");
-            e.Cancel = IsDead;
-        }
-
-        private void Downloader_DownloadingError(object sender, Define.Event.DownloadingErrorEventArgs e)
-        {
-            const int retry = 5;
-
-            e.Cancel = retry < e.Counter;
-            Debug.WriteLine(e.Exception);
-
-            if(e.Cancel) {
-                VideoLoadState = LoadState.Failure;
-            } else {
-                var time = TimeSpan.FromMilliseconds(250);
-                Thread.Sleep(time);
-            }
-        }
-
-
-
-
-
     }
 }

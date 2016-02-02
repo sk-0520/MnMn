@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static int DefaultReceiveBufferSize => 8 * 1024;
         public static long UnknownDonwloadSize => -1;
+        public static long RangeAll => -1;
 
         #endregion
 
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected HttpClient UserAgent { get; set; }
 
         public long RangeHeadPotision { get; set; }
-        public long RangeTailPotision { get; set; }
+        public long RangeTailPotision { get; set; } = RangeAll;
 
         /// <summary>
         /// 受信時のバッファサイズ。
@@ -88,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// ダウンロード済みデータ量。
         /// </summary>
-        public long DownloadedSize { get; protected set; }
+        public long DownloadedSize { get; protected set; } = UnknownDonwloadSize;
 
         public bool Cancled { get; protected set; }
         public bool Completed { get; protected set; }
@@ -159,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return;
                 }
                 using(var reader = new BinaryReader(task.Result)) {
-                    var downloadStartType = 0 < RangeHeadPotision ? DownloadStartType.Begin : DownloadStartType.Range;
+                    var downloadStartType = 0 < RangeHeadPotision ? DownloadStartType.Range : DownloadStartType.Begin;
                     if(OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision)) {
                         Cancled = true;
                         return;

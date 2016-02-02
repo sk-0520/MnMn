@@ -48,19 +48,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         protected override Task<Stream> GetStreamAsync(out bool cancel)
         {
-            UserAgent = UserAgentCreator.CreateHttpUserAgent();
             try {
-                var dummy = UserAgent.GetStringAsync(ReferrerUri).ConfigureAwait(true);
-                Thread.Sleep(WatchToMovieWaitTime);
+                UserAgent = UserAgentCreator.CreateHttpUserAgent();
+                var t = UserAgent.GetStringAsync(ReferrerUri);
+                t.Wait();
+                cancel = false;
+                UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
+                UserAgent.GetStringAsync(ReferrerUri);
+                return UserAgent.GetStreamAsync(DownloadUri);
             } catch(Exception ex) {
                 Debug.WriteLine(ex);
                 cancel = true;
                 return new Task<Stream>(() => null);
             }
-
-            cancel = false;
-            UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
-            return UserAgent.GetStreamAsync(DownloadUri);
         }
 
         #endregion

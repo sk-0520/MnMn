@@ -20,28 +20,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
 {
     public class DownloadStartEventArgs: DownloaderEventArgs
     {
-        #region define
-
-        public static long RangeAll => -1;
-
-        #endregion
-
         public DownloadStartEventArgs(DownloadStartType downloadStartType)
             : this(downloadStartType, 0)
         { }
 
         public DownloadStartEventArgs(DownloadStartType downloadStartType, long rangeHeadPosition)
-            : this(downloadStartType, rangeHeadPosition, RangeAll)
+            : this(downloadStartType, rangeHeadPosition, Downloader.RangeAll)
         { }
 
         public DownloadStartEventArgs(DownloadStartType downloadStartType, long rangeHeadPosition, long rangeTailPosition)
         {
-            if(rangeHeadPosition != RangeAll) {
+            if(rangeTailPosition != Downloader.RangeAll) {
                 CheckUtility.Enforce<ArgumentException>(rangeHeadPosition < rangeTailPosition);
             }
 
