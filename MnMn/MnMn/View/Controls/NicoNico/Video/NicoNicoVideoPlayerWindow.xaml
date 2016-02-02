@@ -11,12 +11,7 @@
         
 >
   <Window.Resources>
-    <Storyboard x:Key="Storyboard1">
-      <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="label" AutoReverse="True" RepeatBehavior="Forever" >
-        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="176.788"/>
-        <EasingDoubleKeyFrame KeyTime="0:0:1" Value="355.957"/>
-      </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
+    <Storyboard x:Key="Storyboard1"/>
   </Window.Resources>
   <Window.Triggers>
     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -46,11 +41,12 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <!--<MediaElement Name="player" Grid.Row="0" Grid.Column="0" />-->
       <vlc_wpf:VlcPlayer  
-        x:Name="player" Grid.Row="0" Grid.Column="0" Margin="25,71,220,40"  />
-
-
+        x:Name="player" 
+        Grid.Row="0"
+        Grid.Column="0"
+      />
+      
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
         <ListBoxItem>comment</ListBoxItem>
       </ListBox>
@@ -78,23 +74,7 @@
       <Grid Grid.Row="2" Grid.Column="0">
         <TextBox></TextBox>
       </Grid>
-
-      <Grid>
-        <Label x:Name="label" 
-        	Grid.Row="0" Grid.Column="0" 
-        	Content="Label" HorizontalAlignment="Left" Margin="42,53,0,0" VerticalAlignment="Top" Height="72" Width="152" Foreground="Lime" BorderBrush="#FF44FB00" FontSize="48" RenderTransformOrigin="0.5,0.5"
-      >
-          <Label.RenderTransform>
-            <TransformGroup>
-              <ScaleTransform/>
-              <SkewTransform/>
-              <RotateTransform/>
-              <TranslateTransform/>
-            </TransformGroup>
-          </Label.RenderTransform>
-        </Label>
-      </Grid>
-
+      
     </Grid>
 
     <TabControl Grid.Row="2" TabStripPlacement="Bottom">
