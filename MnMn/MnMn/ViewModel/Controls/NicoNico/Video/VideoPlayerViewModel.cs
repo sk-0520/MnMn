@@ -77,7 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         Mediation Mediation { get; set; }
 
         NicoNicoVideoPlayerWindow View { get; set; }
-        Vlc.DotNet.Forms.VlcControl Player { get; set; }
+        //Vlc.DotNet.Forms.VlcControl Player { get; set; }
+        xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         Slider VideoSilder { get; set; }
 
         public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
@@ -248,18 +249,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         internal void SetView(NicoNicoVideoPlayerWindow view)
         {
             View = view;
-            Player = view.player.MediaPlayer;
+            Player = view.player;//.MediaPlayer;
             VideoSilder = view.videoSilder;
             Player2 = view.mediaElement;
             // あれこれイベント
             View.Closed += View_Closed;
-            Player.PositionChanged += Player_PositionChanged;
+            //-Player.PositionChanged += Player_PositionChanged;
             VideoSilder.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
         void AutoPlay(FileInfo fileInfo)
         {
-            Player.Play(fileInfo);
+            Player.LoadMedia(VideoPath);
+            //Player.Play(fileInfo);
+            Player.Play();
             View.Dispatcher.BeginInvoke(new Action(() => {
                 Player2.LoadedBehavior = MediaState.Manual;
                 Player2.Source = new Uri(VideoPath);
@@ -274,14 +277,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         private void View_Closed(object sender, EventArgs e)
         {
             VideoSilder.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-            Player.PositionChanged -= Player_PositionChanged;
+            //-Player.PositionChanged -= Player_PositionChanged;
             View.Closed -= View_Closed;
 
             IsDead = true;
 
-            if(Player.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) {
-                Player.Stop();
-            }
+            //-if(Player.State == Vlc.DotNet.Core.Interops.Signatures.MediaStates.Playing) {
+            //-Player.Stop();
+            //-}
         }
 
         private void Player_PositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)

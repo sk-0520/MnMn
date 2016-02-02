@@ -1,8 +1,8 @@
 ﻿<Window x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video.NicoNicoVideoPlayerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vlc_wpf="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
         
+        xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
         ResizeMode="CanResizeWithGrip"
         
         Title="VideoPlayerWindow" Height="410.938" Width="507.387"
@@ -47,7 +47,7 @@
       </Grid.ColumnDefinitions>
 
       <!--<MediaElement Name="player" Grid.Row="0" Grid.Column="0" />-->
-      <vlc_wpf:VlcControl 
+      <vlc_wpf:VlcPlayer  
         x:Name="player" Grid.Row="0" Grid.Column="0" Margin="25,10,149,25"  />
 
 

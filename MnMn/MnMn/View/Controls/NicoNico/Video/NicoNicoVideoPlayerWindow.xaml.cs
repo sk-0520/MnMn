@@ -24,8 +24,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
         public NicoNicoVideoPlayerWindow()
         {
             InitializeComponent();
-            this.player.MediaPlayer.VlcLibDirectoryNeeded += OnVlcControlNeedsLibDirectory;
-            this.player.MediaPlayer.EndInit();
+            //this.player.MediaPlayer.VlcLibDirectoryNeeded += OnVlcControlNeedsLibDirectory;
+            //this.player.MediaPlayer.EndInit();
+            //xZune.Vlc.Vlc.LibDirectory = System.IO.Path.Combine(Constants.AssemblyParentDirectoryPath, @"lib\lib\x86\");
         }
         private void OnVlcControlNeedsLibDirectory(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
         {

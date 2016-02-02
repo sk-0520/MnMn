@@ -96,6 +96,14 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="xZune.Vlc, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\xZune.Vlc.16.01.17\lib\net45\x86\xZune.Vlc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xZune.Vlc.Wpf, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\xZune.Vlc.Wpf.16.01.17\lib\net45\x86\xZune.Vlc.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -237,7 +245,6 @@
     <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingManager.xaml.cs">
       <DependentUpon>NicoNicoVideoRankingManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\VlcControl.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
