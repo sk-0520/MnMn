@@ -51,6 +51,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
+        private ResponseModel Request_CacheDirectoryPath_Impl(RequestModel request)
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
 
         #region MediationBase
@@ -58,6 +64,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override ResponseModel Request(RequestModel request)
         {
             CheckUtility.DebugEnforceNotNull(request);
+
+            if(request.RequestKind == RequestKind.CacheDirectoryPath) {
+                return Request_CacheDirectoryPath_Impl(request);
+            }
 
             switch(request.ServiceType) {
                 case ServiceType.NicoNico:

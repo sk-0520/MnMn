@@ -38,17 +38,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string AssemblyParentDirectoryPath => Path.GetDirectoryName(AssemblyPath);
 
+        public static string ServiceSmileName => "smile";
+        public static string ServiceSmileVideoName => "video";
+
         public static string EtcDirectoryPath => Path.Combine(AssemblyParentDirectoryPath, "etc");
 
         public static string DefineDirectoryPath => Path.Combine(EtcDirectoryPath, "define");
 
-        public static string DefineNicoNicoDirectoryPath => Path.Combine(DefineDirectoryPath, "niconico");
+        public static string DefineNicoNicoDirectoryPath => Path.Combine(DefineDirectoryPath, ServiceSmileName);
 
         public static string NicoNicoUriListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-list.xml");
         public static string NicoNicoUriParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-params.xml");
         public static string NicoNicoRequestParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "request-params.xml");
 
-        public static string DefineNicoNicoVideoDirectoryPath => Path.Combine(DefineNicoNicoDirectoryPath, "video");
+        public static string DefineNicoNicoVideoDirectoryPath => Path.Combine(DefineNicoNicoDirectoryPath, ServiceSmileVideoName);
 
         public static string NicoNicoVideoUriListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "uri-list.xml");
         public static string NicoNicoVideoUriParametersListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "uri-params.xml");

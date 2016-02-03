@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
             switch(request.RequestKind) {
                 case RequestKind.RankingDefine:
                     return new ResponseModel(request, Ranking);
-
+ 
                 default:
                     throw new NotImplementedException();
             }
