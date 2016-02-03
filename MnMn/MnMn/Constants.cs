@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn
@@ -47,6 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>http://yosiopp.net/archives/225</para>
         /// </summary>
         public static long MinimumPngFileSize => 67;
+
+        public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
 
         public static string ServiceName => "service";
         public static string ServiceSmileName => "smile";

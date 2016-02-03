@@ -168,6 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             OnLoadGetflvStart();
 
+            // こいつはキャッシュを作らない
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
             return getflv.GetAsync(VideoInformationViewModel.VideoId).ContinueWith(task => {
@@ -189,6 +190,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             VideoLoadState = LoadState.Preparation;
             VideoSize = VideoInformationViewModel.VideoSize;
+
+            // TODO: キャッシュとかエコノミー確認であれこれ分岐
 
             using(var downloader = new SmileVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,

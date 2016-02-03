@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public TimeSpan Expires { get; }
 
         public static CacheSpan NoCache => new CacheSpan();
+        public static CacheSpan InfinityCache => new CacheSpan(DateTime.MaxValue, TimeSpan.MaxValue);
 
         #endregion
 

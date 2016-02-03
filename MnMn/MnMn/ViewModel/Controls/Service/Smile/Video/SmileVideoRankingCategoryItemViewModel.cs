@@ -142,9 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        var thumbCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
-                        var imageCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
-                        LoadRankingAsync(thumbCache, imageCache).ConfigureAwait(true);
+                        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
                     }
                 );
             }

@@ -114,9 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 return viewModel;
                             }
                         );
-                        var thumbCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
-                        var imageCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
-                        selectViewModel.LoadRankingAsync(thumbCache, imageCache).ContinueWith(task => {
+                        selectViewModel.LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(task => {
                             SelectedRankingCategory = selectViewModel;
                         }, TaskScheduler.FromCurrentSynchronizationContext());
                     }
