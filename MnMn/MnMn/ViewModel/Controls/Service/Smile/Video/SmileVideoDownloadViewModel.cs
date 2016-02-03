@@ -23,12 +23,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -63,6 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Mediation Mediation { get; set; }
 
         public SmileVideoInformationViewModel VideoInformationViewModel { get; set; }
+
+        protected DirectoryInfo DownloadDirectory { get; set; }
 
         protected string VideoPath { get; set; }
 
@@ -241,14 +245,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadEnd()
         { }
 
-        public async Task LoadAsync(string videoId)
+        public async Task LoadAsync(string videoId, DateTime cacheBaseTime, TimeSpan cacheUsingTime)
         {
             OnLoadStart();
 
             InformationLoadState = LoadState.Loading;
-            var getthumbinfo = new Getthumbinfo(Mediation);
-            var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
-            VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
+
+            var baseDir = RestrictUtility.Block(() => {
+                var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+                return (DirectoryInfo)response.Result;
+            });
+            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
+
+            bool usingCache = false;
+            var cacheThumbinfoPath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetthumbinfoFileName);
+            if(Directory.Exists(cacheThumbinfoPath)) {
+                // 動画情報キャッシュあり
+                var fileInfo = new FileInfo(cacheThumbinfoPath);
+                if(fileInfo.LastWriteTime - cacheBaseTime < cacheUsingTime && "</>".Length < fileInfo.Length) {
+                    using(var stream = new FileStream(cacheThumbinfoPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        var cacherawThumbinfo = Getthumbinfo.Load(stream);
+                        VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, cacherawThumbinfo.Thumb, SmileVideoInformationViewModel.NoOrderd);
+                        usingCache = true;
+                    }
+                }
+            }
+            if(!usingCache) {
+                var getthumbinfo = new Getthumbinfo(Mediation);
+                var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
+                SerializeUtility.SaveXmlSerializeToFile(cacheThumbinfoPath, rawGetthumbinfoModel);
+                VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
+            }
+
             InformationLoadState = LoadState.Loaded;
 
             var noSessionTask = LoadDataWithoutSessionAsync();

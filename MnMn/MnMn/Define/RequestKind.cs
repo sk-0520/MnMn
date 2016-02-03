@@ -42,6 +42,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// キャッシュ用ディレクトリパス。
         /// </summary>
-        CacheDirectoryPath,
+        CacheDirectory,
     }
 }

@@ -16,6 +16,8 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -26,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -35,12 +38,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public class Mediation: MediationBase
     {
         public Mediation()
-            : base()
         {
+            // 二重生成だけど気にしない
+            Setting = new MainSettingModel();
+
             Smile = new SmileMediation(this);
         }
 
+        public Mediation(MainSettingModel mainSettingModel)
+            : this()
+        {
+            Setting = mainSettingModel;
+        }
+
         #region property
+
+        MainSettingModel Setting { get; }
 
         /// <summary>
         /// ニコニコ関係。
@@ -51,9 +64,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        private ResponseModel Request_CacheDirectoryPath_Impl(RequestModel request)
+        private ResponseModel Request_CacheDirectory_Impl(RequestModel request)
         {
-            throw new NotImplementedException();
+            Debug.Assert(request.RequestKind == RequestKind.CacheDirectory);
+
+            var map = new Dictionary<ServiceType, IEnumerable<string>>() {
+                {ServiceType.Smile, new [] { Constants.ServiceName, Constants.ServiceSmileName } },
+                {ServiceType.SmileVideo, new [] { Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName } },
+            };
+
+            // 設定値よりコマンドラインオプションを優先する
+            var baseDir = VariableConstants.HasOptionCacheRootDirectoryPath
+                ? Path.Combine(VariableConstants.OptionValueCacheRootDirectoryPath, Constants.ApplicationName)
+                : Setting.CacheDirectoryPath;
+            ;
+            if(string.IsNullOrWhiteSpace(baseDir)) {
+                baseDir = Path.Combine(Constants.CacheDirectoryPath, Constants.ApplicationName);
+            }
+
+            var path = new List<string>() {
+                baseDir,
+            };
+            path.AddRange(map[request.ServiceType]);
+
+            var directoryPath = Environment.ExpandEnvironmentVariables(Path.Combine(path.ToArray()));
+            
+            if(Directory.Exists(directoryPath)) {
+                var response = new ResponseModel(request, new DirectoryInfo(directoryPath));
+                return response;
+            } else {
+                var response = new ResponseModel(request, Directory.CreateDirectory(directoryPath));
+                return response;
+            }
         }
 
 
@@ -65,8 +107,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             CheckUtility.DebugEnforceNotNull(request);
 
-            if(request.RequestKind == RequestKind.CacheDirectoryPath) {
-                return Request_CacheDirectoryPath_Impl(request);
+            if(request.RequestKind == RequestKind.CacheDirectory) {
+                return Request_CacheDirectory_Impl(request);
             }
 
             switch(request.ServiceType) {

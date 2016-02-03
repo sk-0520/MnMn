@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             vm.SetView(window);
             window.Show();
 
-            await vm.LoadAsync(videoId);
+            await vm.LoadAsync(videoId, DateTime.Now, TimeSpan.FromMinutes(5));
         }
 
         #endregion

@@ -38,14 +38,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string AssemblyParentDirectoryPath => Path.GetDirectoryName(AssemblyPath);
 
+        public static string ServiceName => "service";
         public static string ServiceSmileName => "smile";
         public static string ServiceSmileVideoName => "video";
 
+        public static string DefineName => "define";
+
         public static string EtcDirectoryPath => Path.Combine(AssemblyParentDirectoryPath, "etc");
 
-        public static string DefineDirectoryPath => Path.Combine(EtcDirectoryPath, "define");
+        public static string DefineDirectoryPath => Path.Combine(EtcDirectoryPath, DefineName);
 
-        public static string DefineServiceDirectoryPath => Path.Combine(DefineDirectoryPath, "service");
+        public static string DefineServiceDirectoryPath => Path.Combine(DefineDirectoryPath, ServiceName);
 
         public static string DefineSmileDirectoryPath => Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
 
@@ -61,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
 
+        public static string SmileVideoCacheGetthumbinfoFileName => "thumb.xml";
+
         public static string CurrentLanguageCode => "ja-JP";
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// データ保存ディレクトリパス。
         /// </summary>
-        public static string UserLocalDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static string CacheDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         #endregion
     }

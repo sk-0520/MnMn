@@ -67,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             if(Session == null) {
                 var model = new SmileUserAccountModel();
-                model.User = VariableConstants.SmileUserAccountName;
-                model.Password = VariableConstants.SmileUserAccountPassword;
+                model.User = VariableConstants.OptionValueSmileUserAccountName;
+                model.Password = VariableConstants.OptionValueSmileUserAccountPassword;
                 Session = new SmileSessionViewModel(Mediation, model);
             }
 

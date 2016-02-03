@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -31,15 +32,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
     {
         public MainViewModel()
         {
-            Mediation = new Mediation();
+            Setting = LoadSetting();
 
+            Mediation = new Mediation(Setting);
+            
             SmileManager = new SmileManagerViewModel(Mediation);
 
             Temp_OpenSmilePlayerCommand.Execute(null);
         }
+
         #region property
 
         Mediation Mediation { get; set; }
+
+        MainSettingModel Setting { get; }
 
         public SmileManagerViewModel SmileManager { get; private set; }
 
@@ -62,6 +68,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #endregion
 
         #region function
+
+        MainSettingModel LoadSetting()
+        {
+            return new MainSettingModel();
+        }
+
         #endregion
     }
 }

@@ -13,8 +13,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region 
 
-        public static string SmileUserAccountName => CommandLine.GetValue("smile-login-name");
-        public static string SmileUserAccountPassword => CommandLine.GetValue("smile-login-pass");
+        public static bool HasOptionCacheRootDirectoryPath => CommandLine.HasValue("cache-root");
+        public static string OptionValueCacheRootDirectoryPath => CommandLine.GetValue("cache-root");
+
+        public static bool HasOptionSmileUserAccountName => CommandLine.HasValue("smile-login-name");
+        public static string OptionValueSmileUserAccountName => CommandLine.GetValue("smile-login-name");
+
+        public static bool HasOptionSmileUserAccountPassword => CommandLine.HasValue("smile-login-pass");
+        public static string OptionValueSmileUserAccountPassword => CommandLine.GetValue("smile-login-pass");
+
+
 
         #endregion
 

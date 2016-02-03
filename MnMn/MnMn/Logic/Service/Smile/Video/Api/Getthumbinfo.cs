@@ -41,12 +41,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         #region function
 
+        public static RawSmileVideoThumbResponseModel Load(Stream stream)
+        {
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoThumbResponseModel>(stream);
+        }
+
         async Task<RawSmileVideoThumbResponseModel> GetAsync_Impl(PageScraping page, string videoId)
         {
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.HttpMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
-                return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoThumbResponseModel>(stream);
+                return Load(stream);
             }
         }
 

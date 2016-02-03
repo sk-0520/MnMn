@@ -26,6 +26,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
     public static class SmileVideoGetthumbinfoUtility
     {
+        #region define
+
+        /// <summary>
+        /// エコノミーモード時にダウンロードしたファイル名
+        /// </summary>
+        public static string EconomyFileSuffix => "economy";
+
+        #endregion
+
         #region function
 
         /// <summary>
@@ -101,6 +110,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static bool IsLocked(RawSmileVideoTagItemModel tag)
         {
             return RawValueUtility.ConvertBoolean(tag.Lock);
+        }
+
+        public static string GetFileExtension(SmileVideoMovieType movieType)
+        {
+            switch(movieType) {
+                case SmileVideoMovieType.Mp4:
+                    return "mp4";
+
+                case SmileVideoMovieType.Flv:
+                    return "flv";
+
+                case SmileVideoMovieType.Swf:
+                    return "swf";
+
+                default: // 仕様追従できない場合に落ちることがないように NotImplementedException は投げない
+                    return "unknown";
+            }
+
         }
 
         #endregion
