@@ -78,8 +78,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         async void getthumbinfo()
         {
             var gt = new Getthumbinfo(new Mediation());
-            var a = await gt.GetAsync("sm9");
-            var b = await gt.GetAsync("sm9");
+            var a = await gt.GetAsync("sm9", CacheSpan.NoCache);
+            var b = await gt.GetAsync("sm9", CacheSpan.NoCache);
         }
     }
 #endif

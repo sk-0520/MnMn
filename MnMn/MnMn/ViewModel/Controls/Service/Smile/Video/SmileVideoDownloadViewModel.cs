@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadEnd()
         { }
 
-        public async Task LoadAsync(string videoId, DateTime cacheBaseTime, TimeSpan cacheUsingTime)
+        public async Task LoadAsync(string videoId, CacheSpan cacheSpan)
         {
             OnLoadStart();
 
@@ -257,26 +257,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
             DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
 
-            bool usingCache = false;
-            var cacheThumbinfoPath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetthumbinfoFileName);
-            if(Directory.Exists(cacheThumbinfoPath)) {
-                // 動画情報キャッシュあり
-                var fileInfo = new FileInfo(cacheThumbinfoPath);
-                if(fileInfo.LastWriteTime - cacheBaseTime < cacheUsingTime && "</>".Length < fileInfo.Length) {
-                    using(var stream = new FileStream(cacheThumbinfoPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        var cacherawThumbinfo = Getthumbinfo.Load(stream);
-                        VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, cacherawThumbinfo.Thumb, SmileVideoInformationViewModel.NoOrderd);
-                        usingCache = true;
-                    }
-                }
-            }
-            if(!usingCache) {
-                var getthumbinfo = new Getthumbinfo(Mediation);
-                var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
-                SerializeUtility.SaveXmlSerializeToFile(cacheThumbinfoPath, rawGetthumbinfoModel);
-                VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
-            }
-
+            var getthumbinfo = new Getthumbinfo(Mediation);
+            var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId, cacheSpan);
+            VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
             InformationLoadState = LoadState.Loaded;
 
             var noSessionTask = LoadDataWithoutSessionAsync();

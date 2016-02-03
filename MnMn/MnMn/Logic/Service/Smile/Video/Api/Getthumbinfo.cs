@@ -16,13 +16,16 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
@@ -51,14 +54,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.HttpMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
-                return Load(stream);
+                var result = Load(stream);
+                return result;
             }
         }
 
-        public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId)
+        public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId, CacheSpan cacheSpan)
         {
+            var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var dirInfo = (DirectoryInfo)response.Result;
+            var plainXml = Path.Combine(dirInfo.FullName, videoId, Constants.SmileVideoCacheGetthumbinfoFileName);
+            if(File.Exists(plainXml)) {
+                var fileInfo = new FileInfo(plainXml);
+                if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && "</>".Length < fileInfo.Length) {
+                    using(var stream = new FileStream(plainXml, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        return Load(stream);
+                    }
+                }
+            }
+
             using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
-                return await GetAsync_Impl(page, videoId);
+                var result = await GetAsync_Impl(page, videoId);
+                try {
+                    SerializeUtility.SaveXmlSerializeToFile(plainXml, result);
+                } catch(FileNotFoundException) {
+                    // BUGS: いかんのう
+                }
+
+                return result;
             }
         }
 

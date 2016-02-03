@@ -105,6 +105,7 @@
     <Compile Include="Define\Event\DownloaderEventArgs.cs" />
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
+    <Compile Include="Logic\CacheSpan.cs" />
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
