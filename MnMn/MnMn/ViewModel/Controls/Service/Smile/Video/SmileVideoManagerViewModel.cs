@@ -65,8 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             };
             vm.SetView(window);
             window.Show();
-            var cs = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
-            await vm.LoadAsync(videoId, cs);
+            var thumbCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
+            var imageCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
+            await vm.LoadAsync(videoId, thumbCache, imageCache);
         }
 
         #endregion

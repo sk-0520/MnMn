@@ -38,6 +38,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string AssemblyParentDirectoryPath => Path.GetDirectoryName(AssemblyPath);
 
+        /// <summary>
+        /// 最小XMLファイルサイズ。
+        /// </summary>
+        public static long MinimumXmlFileSize => "<x/>".Length;
+        /// <summary>
+        /// 最小PNGファイルサイズ。
+        /// <para>http://yosiopp.net/archives/225</para>
+        /// </summary>
+        public static long MinimumPngFileSize => 67;
+
         public static string ServiceName => "service";
         public static string ServiceSmileName => "smile";
         public static string ServiceSmileVideoName => "video";

@@ -142,7 +142,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        LoadRankingAsync().ConfigureAwait(true);
+                        var thumbCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
+                        var imageCache = new CacheSpan(DateTime.Now, TimeSpan.FromMinutes(5));
+                        LoadRankingAsync(thumbCache, imageCache).ConfigureAwait(true);
                     }
                 );
             }
@@ -152,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        async Task LoadRankingAsync_Impl()
+        async Task LoadRankingAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             RankingLoad = SmileVideoRankingLoad.RankingListLoading;
             NowLoading = true;
@@ -208,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         while(count++ <= max) {
                             cancel.Token.ThrowIfCancellationRequested();
                             try {
-                                var t = item.LoadImageAsync();
+                                var t = item.LoadImageAsync(imageCacheSpan);
                                 t.Wait();
                                 break;
                             } catch(Exception ex) {
@@ -231,14 +233,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public Task LoadRankingAsync()
+        public Task LoadRankingAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             if(CanLoad) {
                 if(NowLoading) {
                     CancelLoading.Cancel(true);
                 }
 
-                return LoadRankingAsync_Impl();
+                return LoadRankingAsync_Impl(thumbCacheSpan, imageCacheSpan);
             } else {
                 return Task.CompletedTask;
             }

@@ -59,29 +59,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
             }
         }
 
-        public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId, CacheSpan cacheSpan)
+        public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId)
         {
-            var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            var dirInfo = (DirectoryInfo)response.Result;
-            var plainXml = Path.Combine(dirInfo.FullName, videoId, Constants.SmileVideoCacheGetthumbinfoFileName);
-            if(File.Exists(plainXml)) {
-                var fileInfo = new FileInfo(plainXml);
-                if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && "</>".Length < fileInfo.Length) {
-                    using(var stream = new FileStream(plainXml, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        return Load(stream);
-                    }
-                }
-            }
-
             using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
-                var result = await GetAsync_Impl(page, videoId);
-                try {
-                    SerializeUtility.SaveXmlSerializeToFile(plainXml, result);
-                } catch(FileNotFoundException) {
-                    // BUGS: いかんのう
-                }
-
-                return result;
+                return await GetAsync_Impl(page, videoId);
             }
         }
 

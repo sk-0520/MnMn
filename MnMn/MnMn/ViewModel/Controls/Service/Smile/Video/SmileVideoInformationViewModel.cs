@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region variable
 
         SmileVideoVideoThumbnailLoad _videoThumbnailLoad;
-        ImageSource _thumbnailImage;
+        BitmapSource _thumbnailImage;
 
         bool? _isEconomyMode;
 
@@ -105,15 +106,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-
-        /// <summary>
-        /// 見たことがある。
-        /// </summary>
-        public bool Visited { get;set;}
-        /// <summary>
-        /// キャッシュ済み。
-        /// </summary>
-        public bool Cached { get; set; }
 
         #region 生データから取得
 
@@ -333,12 +325,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return $"{VideoId}{eco}.{ext}";
         }
 
+        ImageSource Load(Stream stream)
+        {
+            var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+            FreezableUtility.SafeFreeze(image);
+            return this._thumbnailImage = image;
+        }
+
         async Task LoadImageAsync_Impl()
         {
-            VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageChecking;
-            if(Cached) {
-                VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageLoadingFromStorage;
-            }
             var uri = ThumbnailUri;
 
             var binary = await RestrictUtility.Block(async () => {
@@ -353,9 +348,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
             if(binary != null) {
                 using(var stream = new MemoryStream(binary)) {
-                    var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                    FreezableUtility.SafeFreeze(image);
-                    this._thumbnailImage = image;
+                    Load(stream);
                     VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Completed;
                 }
             } else {
@@ -364,9 +357,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             await Task.CompletedTask;
         }
 
-        public async Task LoadImageAsync()
+        public async Task LoadImageAsync(CacheSpan cacheSpan)
         {
+            VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageChecking;
+
+            var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var dirInfo = (DirectoryInfo)response.Result;
+            var cachedFilePath = Path.Combine(dirInfo.FullName, VideoId, VideoId + ".png");
+            if(File.Exists(cachedFilePath)) {
+                var fileInfo = new FileInfo(cachedFilePath);
+                if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumPngFileSize <= fileInfo.Length) {
+
+                    VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageLoadingFromStorage;
+
+                    using(var stream = new FileStream(cachedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        Load(stream);
+                        VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Completed;
+                        return;
+                    }
+                }
+            }
+
             await LoadImageAsync_Impl();
+
+            if(VideoThumbnailLoad == SmileVideoVideoThumbnailLoad.Completed) {
+                // キャッシュ構築
+                var frame = BitmapFrame.Create(this._thumbnailImage);
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(frame);
+                FileUtility.MakeFileParentDirectory(cachedFilePath);
+                using(var stream = new FileStream(cachedFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+                    encoder.Save(stream);
+                }
+            }
         }
 
         public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)
