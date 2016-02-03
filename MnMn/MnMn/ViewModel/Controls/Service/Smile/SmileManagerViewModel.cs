@@ -20,28 +20,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 {
-    public class NicoNicoManagerViewModel: ViewModelBase
+    public class SmileManagerViewModel: ViewModelBase
     {
-        public NicoNicoManagerViewModel(Mediation mediation)
+        public SmileManagerViewModel(Mediation mediation)
         {
             Mediation = mediation;
-            VideoManager = new NicoNicoVideoManagerViewModel(Mediation);
+            VideoManager = new SmileVideoManagerViewModel(Mediation);
         }
 
         #region property
 
         Mediation Mediation { get; set; }
 
-        public NicoNicoVideoManagerViewModel VideoManager { get; set; }
+        public SmileVideoManagerViewModel VideoManager { get; set; }
 
         #endregion
     }

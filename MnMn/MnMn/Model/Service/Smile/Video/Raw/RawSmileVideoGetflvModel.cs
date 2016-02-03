@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawNicoNicoVideoGetflvModel: ModelBase
+    public class RawSmileVideoGetflvModel: ModelBase
     {
         #region property
 

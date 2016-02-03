@@ -2,10 +2,10 @@
   必要データは呼び出し元からバインドする。
 -->
 <UserControl 
-  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video.NicoNicoVideoRankingContextElements"
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoRankingContextElements"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video"
+  xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 

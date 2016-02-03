@@ -47,19 +47,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string DefineServiceDirectoryPath => Path.Combine(DefineDirectoryPath, "service");
 
-        public static string DefineNicoNicoDirectoryPath => Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
+        public static string DefineSmileDirectoryPath => Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
 
-        public static string NicoNicoUriListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-list.xml");
-        public static string NicoNicoUriParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-params.xml");
-        public static string NicoNicoRequestParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "request-params.xml");
+        public static string SmileUriListPath => Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
+        public static string SmileUriParametersListPath => Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
+        public static string SmileRequestParametersListPath => Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
 
-        public static string DefineNicoNicoVideoDirectoryPath => Path.Combine(DefineNicoNicoDirectoryPath, ServiceSmileVideoName);
+        public static string DefineSmileVideoDirectoryPath => Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
 
-        public static string NicoNicoVideoUriListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "uri-list.xml");
-        public static string NicoNicoVideoUriParametersListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "uri-params.xml");
-        public static string NicoNicoVideoRequestParametersListPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "request-params.xml");
+        public static string SmileVideoUriListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
+        public static string SmileVideoUriParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
+        public static string SmileVideoRequestParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
 
-        public static string NicoNicoVideoRankingPath => Path.Combine(DefineNicoNicoVideoDirectoryPath, "ranking.xml");
+        public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
 
         public static string CurrentLanguageCode => "ja-JP";
 

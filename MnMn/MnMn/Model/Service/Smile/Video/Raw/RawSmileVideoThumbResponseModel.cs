@@ -23,10 +23,10 @@ using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, XmlRoot("nicovideo_thumb_response")]
-    public class RawNicoNicoVideoThumbResponseModel: ModelBase
+    public class RawSmileVideoThumbResponseModel: ModelBase
     {
         #region property
 
@@ -34,10 +34,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
         public string Status { get; set; }
 
         [XmlElement("thumb")]
-        public RawNicoNicoVideoThumbModel Thumb { get; set; } = new RawNicoNicoVideoThumbModel();
+        public RawSmileVideoThumbModel Thumb { get; set; } = new RawSmileVideoThumbModel();
 
         [XmlElement("error")]
-        RawNicoNicoVideoErrorModel Error { get; set; } = new RawNicoNicoVideoErrorModel();
+        RawSmileVideoErrorModel Error { get; set; } = new RawSmileVideoErrorModel();
 
         #endregion
     }

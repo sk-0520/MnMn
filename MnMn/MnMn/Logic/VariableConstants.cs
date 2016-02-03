@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region 
 
-        public static string NicoNicoUserAccountName => CommandLine.GetValue("niconico-login-name");
-        public static string NicoNicoUserAccountPassword => CommandLine.GetValue("niconico-login-pass");
+        public static string SmileUserAccountName => CommandLine.GetValue("smile-login-name");
+        public static string SmileUserAccountPassword => CommandLine.GetValue("smile-login-pass");
 
         #endregion
 

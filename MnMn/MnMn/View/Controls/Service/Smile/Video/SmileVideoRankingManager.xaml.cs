@@ -14,14 +14,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
-    /// NicoNicoVideoRankingManager.xaml の相互作用ロジック
+    /// SmileVideoRankingManager.xaml の相互作用ロジック
     /// </summary>
-    public partial class NicoNicoVideoRankingManager: UserControl
+    public partial class SmileVideoRankingManager: UserControl
     {
-        public NicoNicoVideoRankingManager()
+        public SmileVideoRankingManager()
         {
             InitializeComponent();
         }

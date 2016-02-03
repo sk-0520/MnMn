@@ -22,13 +22,13 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -49,14 +49,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             var mediation = new Mediation();
             var cmd = new CommandLine();
-            var account = cmd.GetValue("niconico-login-name");
-            var password = cmd.GetValue("niconico-login-pass");
+            var account = cmd.GetValue("smile-login-name");
+            var password = cmd.GetValue("smile-login-pass");
 
-            var model = new NicoNicoUserAccountModel() {
+            var model = new SmileUserAccountModel() {
                 User = account,
                 Password = password,
             };
-            var vm = new NicoNicoSessionViewModel(mediation, model);
+            var vm = new SmileSessionViewModel(mediation, model);
             await vm.LoginAsync();
             var a = await vm.CheckLoginAsync();
             await vm.LogoutAsync();

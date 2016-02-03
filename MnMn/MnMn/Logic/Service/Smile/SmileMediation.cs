@@ -23,19 +23,19 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
-    public class NicoNicoMediation: MediationCustomBase
+    public class SmileMediation: MediationCustomBase
     {
-        public NicoNicoMediation(Mediation mediation)
-            : base(mediation, Constants.NicoNicoUriListPath, Constants.NicoNicoUriParametersListPath, Constants.NicoNicoRequestParametersListPath)
+        public SmileMediation(Mediation mediation)
+            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath)
         {
-            VideoMediation = new NicoNicoVideoMediation(Mediation);
+            VideoMediation = new SmileVideoMediation(Mediation);
         }
 
         #region property
@@ -43,9 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         /// <summary>
         /// ニコニコ動画関係。
         /// </summary>
-        NicoNicoVideoMediation VideoMediation { get; set; }
+        SmileVideoMediation VideoMediation { get; set; }
 
-        NicoNicoSessionViewModel Session { get; set; }
+        SmileSessionViewModel Session { get; set; }
 
         #endregion
 
@@ -66,10 +66,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         ResponseModel RequestSession(RequestModel request)
         {
             if(Session == null) {
-                var model = new NicoNicoUserAccountModel();
-                model.User = VariableConstants.NicoNicoUserAccountName;
-                model.Password = VariableConstants.NicoNicoUserAccountPassword;
-                Session = new NicoNicoSessionViewModel(Mediation, model);
+                var model = new SmileUserAccountModel();
+                model.User = VariableConstants.SmileUserAccountName;
+                model.Password = VariableConstants.SmileUserAccountPassword;
+                Session = new SmileSessionViewModel(Mediation, model);
             }
 
             return new ResponseModel(request, Session);
@@ -82,10 +82,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override ResponseModel Request(RequestModel request)
         {
             switch(request.ServiceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return Request_Impl(request);
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.Request(request);
 
                 default:
@@ -97,10 +97,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return GetUri_Impl(key, replaceMap, serviceType);
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.GetUri(key, replaceMap, serviceType);
 
                 default:
@@ -112,10 +112,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return uri;
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.ConvertUri(uri, serviceType);
 
                 default:
@@ -127,10 +127,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return GetRequestParameter_Impl(key, replaceMap, serviceType);
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.GetRequestParameter(key, replaceMap, serviceType);
 
                 default:
@@ -142,10 +142,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return CheckModel.Success();
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.CheckResponseHeader(uri, headers, serviceType);
 
                 default:
@@ -157,10 +157,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return (IDictionary<string, string>)requestParams;
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.ConvertRequestParameter(requestParams, serviceType);
 
                 default:
@@ -172,10 +172,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return binary;
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.ConvertBinary(uri, binary, serviceType);
 
                 default:
@@ -187,10 +187,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return Encoding.UTF8;
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.GetEncoding(uri, binary, serviceType);
 
                 default:
@@ -202,10 +202,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override string ConvertString(Uri uri, string text, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     return text;
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.ConvertString(uri, text, serviceType);
 
                 default:
@@ -217,11 +217,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
+                case ServiceType.Smile:
                     outputValue = null;
                     return false;
 
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return VideoMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:

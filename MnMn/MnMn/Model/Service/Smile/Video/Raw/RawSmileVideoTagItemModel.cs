@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawNicoNicoVideoTagItemModel: ModelBase
+    public class RawSmileVideoTagItemModel: ModelBase
     {
         [XmlAttribute("lock")]
         public string Lock { get; set; }

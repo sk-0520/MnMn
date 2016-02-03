@@ -23,21 +23,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 {
     /// <summary>
     /// NOTE: 気持ち後回し
     /// </summary>
     public class Getflv: ApiBase
     {
-        public Getflv(Mediation mediation, NicoNicoSessionViewModel session)
+        public Getflv(Mediation mediation, SmileSessionViewModel session)
             : base(mediation)
         {
             Session = session;
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         #region property
 
-        NicoNicoSessionViewModel Session { get; set; }
+        SmileSessionViewModel Session { get; set; }
 
         /// <summary>
         /// セッション操作を行うか。
@@ -56,14 +56,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         #region function
 
-        public async Task<RawNicoNicoVideoGetflvModel> GetAsync(Uri uri)
+        public async Task<RawSmileVideoGetflvModel> GetAsync(Uri uri)
         {
             if(SessionSupport) {
                 if(!await Session.CheckLoginAsync()) {
                     await Session.LoginAsync();
                 }
             }
-            using(var page = new PageScraping(Mediation, Session, SmileVideoMediationKey.getflvNormal, Define.ServiceType.NicoNicoVideo)) {
+            using(var page = new PageScraping(Mediation, Session, SmileVideoMediationKey.getflvNormal, Define.ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
 
                 var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
                 var parameters = rawParameters.AllKeys
                     .ToDictionary(k => k, k => rawParameters.GetValues(k).First())
                 ;
-                var result = new RawNicoNicoVideoGetflvModel();
+                var result = new RawSmileVideoGetflvModel();
                 var map = NameAttributeUtility.GetNames(result);
                 foreach(var pair in map) {
                     string value;
@@ -84,13 +84,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
             }
         }
 
-        public Task<RawNicoNicoVideoGetflvModel> GetAsync(string videoId)
+        public Task<RawSmileVideoGetflvModel> GetAsync(string videoId)
         {
             var map = new StringsModel() {
                 { "video-id", videoId },
             };
-            var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.NicoNicoVideo);
-            var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.NicoNicoVideo);
+            var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
+            var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.SmileVideo);
             var uri = new Uri(convertedUri);
             return GetAsync(uri);
         }

@@ -22,10 +22,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 {
     public class Getthumbinfo: ApiBase
     {
@@ -41,18 +41,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
 
         #region function
 
-        async Task<RawNicoNicoVideoThumbResponseModel> GetAsync_Impl(PageScraping page, string videoId)
+        async Task<RawSmileVideoThumbResponseModel> GetAsync_Impl(PageScraping page, string videoId)
         {
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.HttpMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
-                return SerializeUtility.LoadXmlSerializeFromStream<RawNicoNicoVideoThumbResponseModel>(stream);
+                return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoThumbResponseModel>(stream);
             }
         }
 
-        public async Task<RawNicoNicoVideoThumbResponseModel> GetAsync(string videoId)
+        public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId)
         {
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.NicoNicoVideo)) {
+            using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
                 return await GetAsync_Impl(page, videoId);
             }
         }

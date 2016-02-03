@@ -32,22 +32,22 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class NicoNicoVideoRankingCategoryItemViewModel: ViewModelBase
+    public class SmileVideoRankingCategoryItemViewModel: ViewModelBase
     {
         #region variable
 
-        NicoNicoVideoElementModel _selectedPeriod;
-        NicoNicoVideoElementModel _selectedTarget;
+        SmileVideoElementModel _selectedPeriod;
+        SmileVideoElementModel _selectedTarget;
 
         SmileVideoRankingLoad _rankingLoad;
 
@@ -55,17 +55,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #endregion
 
-        public NicoNicoVideoRankingCategoryItemViewModel(Mediation mediation, NicoNicoVideoRankingModel rankingModel, NicoNicoVideoElementModel period, NicoNicoVideoElementModel target, NicoNicoVideoElementModel category)
+        public SmileVideoRankingCategoryItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
         {
             Mediation = mediation;
 
-            PeriodItems = new CollectionModel<NicoNicoVideoElementModel>(rankingModel.Periods.Items.Select(i => (NicoNicoVideoElementModel)i.DeepClone()));
-            TargetItems = new CollectionModel<NicoNicoVideoElementModel>(rankingModel.Targets.Items.Select(i => (NicoNicoVideoElementModel)i.DeepClone()));
+            PeriodItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Periods.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
+            TargetItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Targets.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
 
             SetContextElements(period, target);
             Category = category;
 
-            VideoInformationList = new CollectionModel<NicoNicoVideoInformationViewModel>();
+            VideoInformationList = new CollectionModel<SmileVideoInformationViewModel>();
             VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
         }
 
@@ -75,21 +75,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         CancellationTokenSource CancelLoading { get; set;  }
 
-        public IEnumerable<NicoNicoVideoElementModel> PeriodItems { get; private set; }
-        public IEnumerable<NicoNicoVideoElementModel> TargetItems { get; private set; }
+        public IEnumerable<SmileVideoElementModel> PeriodItems { get; private set; }
+        public IEnumerable<SmileVideoElementModel> TargetItems { get; private set; }
 
-        public NicoNicoVideoElementModel SelectedPeriod
+        public SmileVideoElementModel SelectedPeriod
         {
             get { return this._selectedPeriod; }
             set { SetVariableValue(ref this._selectedPeriod, value); }
         }
-        public NicoNicoVideoElementModel SelectedTarget
+        public SmileVideoElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
             set { SetVariableValue(ref this._selectedTarget, value); }
         }
 
-        public NicoNicoVideoElementModel Category { get; private set; }
+        public SmileVideoElementModel Category { get; private set; }
 
         public SmileVideoRankingLoad RankingLoad
         {
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             }
         }
 
-        CollectionModel<NicoNicoVideoInformationViewModel> VideoInformationList { get; set; }
+        CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; set; }
 
         ICollectionView _VideoInformationItems;
         public ICollectionView VideoInformationItems
@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             NowLoading = true;
             var rankingFeedModel = await RestrictUtility.Block(async () => {
                 using(var host = new HttpUserAgentHost())
-                using(var page = new PageScraping(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.NicoNicoVideo)) {
+                using(var page = new PageScraping(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
                     page.ReplaceUriParameters["target"] = SelectedTarget.Key;
                     page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
                     page.ReplaceUriParameters["category"] = Category.Key;
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
                     return RestrictUtility.Block(() => {
                         using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
-                            return SerializeUtility.LoadXmlSerializeFromStream<FeedNicoNicoVideoRankingModel>(stream);
+                            return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoRankingModel>(stream);
                         }
                     });
                 }
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             await Task.Run(() => {
                 return rankingFeedModel.Channel.Items
                     .AsParallel()
-                    .Select((item, index) => new NicoNicoVideoInformationViewModel(Mediation, item, index + 1))
+                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1))
                 ;
             }).ContinueWith(task => {
                 var cancel = CancelLoading = new CancellationTokenSource();
@@ -244,7 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             }
         }
 
-        NicoNicoVideoElementModel GetContextElemetFromChangeElement(IEnumerable<NicoNicoVideoElementModel> items, NicoNicoVideoElementModel element)
+        SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
         {
             if(items.Any(i => i == element)) {
                 return element;
@@ -253,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             }
         }
 
-        public void SetContextElements(NicoNicoVideoElementModel period, NicoNicoVideoElementModel target)
+        public void SetContextElements(SmileVideoElementModel period, SmileVideoElementModel target)
         {
             SelectedPeriod = GetContextElemetFromChangeElement(PeriodItems, period);
             SelectedTarget = GetContextElemetFromChangeElement(TargetItems, target);

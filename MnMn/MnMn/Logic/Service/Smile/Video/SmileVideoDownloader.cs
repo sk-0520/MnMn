@@ -26,11 +26,11 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class NicoNicoVideoDownloader: Downloader
+    public class SmileVideoDownloader: Downloader
     {
-        public NicoNicoVideoDownloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, Uri referrerUri)
+        public SmileVideoDownloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, Uri referrerUri)
             : base(downloadUri, userAgentCreator)
         {
             ReferrerUri = referrerUri;
@@ -40,11 +40,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
         #region property
 
         public Uri ReferrerUri { get; }
-        public TimeSpan WatchToMovieWaitTime {get;set;} = Constants.ServiceNicoNicoVideoWatchToMovieWaitTime;
+        public TimeSpan WatchToMovieWaitTime {get;set;} = Constants.ServiceSmileVideoWatchToMovieWaitTime;
 
         #endregion
 
-        #region NicoNicoVideoDownloader
+        #region SmileVideoDownloader
 
         protected override Task<Stream> GetStreamAsync(out bool cancel)
         {

@@ -14,16 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
-    /// NicoNicoVideoRankingContextElements.xaml の相互作用ロジック
+    /// SmileVideoRankingContextElements.xaml の相互作用ロジック
     /// </summary>
-    public partial class NicoNicoVideoRankingContextElements: UserControl
+    public partial class SmileVideoRankingContextElements: UserControl
     {
-        public NicoNicoVideoRankingContextElements()
+        public SmileVideoRankingContextElements()
         {
             InitializeComponent();
         }
@@ -32,22 +32,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 
         public static readonly DependencyProperty SelectedPeriodProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedPeriodProperty)),
-            typeof(NicoNicoVideoElementModel),
-            typeof(NicoNicoVideoRankingContextElements),
-            new FrameworkPropertyMetadata(default(NicoNicoVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedPeriodChanged))
+            typeof(SmileVideoElementModel),
+            typeof(SmileVideoRankingContextElements),
+            new FrameworkPropertyMetadata(default(SmileVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedPeriodChanged))
         );
 
         private static void OnSelectedPeriodChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as NicoNicoVideoRankingContextElements;
+            var control = d as SmileVideoRankingContextElements;
             if(control != null) {
-                control.SelectedPeriod = e.NewValue as NicoNicoVideoElementModel;
+                control.SelectedPeriod = e.NewValue as SmileVideoElementModel;
             }
         }
 
-        public NicoNicoVideoElementModel SelectedPeriod
+        public SmileVideoElementModel SelectedPeriod
         {
-            get { return GetValue(SelectedPeriodProperty) as NicoNicoVideoElementModel; }
+            get { return GetValue(SelectedPeriodProperty) as SmileVideoElementModel; }
             set { SetValue(SelectedPeriodProperty, value); }
         }
 
@@ -57,22 +57,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 
         public static readonly DependencyProperty SelectedTargetProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedTargetProperty)),
-            typeof(NicoNicoVideoElementModel),
-            typeof(NicoNicoVideoRankingContextElements),
-            new FrameworkPropertyMetadata(default(NicoNicoVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedTargetChanged))
+            typeof(SmileVideoElementModel),
+            typeof(SmileVideoRankingContextElements),
+            new FrameworkPropertyMetadata(default(SmileVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedTargetChanged))
         );
 
         private static void OnSelectedTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as NicoNicoVideoRankingContextElements;
+            var control = d as SmileVideoRankingContextElements;
             if(control != null) {
-                control.SelectedTarget = e.NewValue as NicoNicoVideoElementModel;
+                control.SelectedTarget = e.NewValue as SmileVideoElementModel;
             }
         }
 
-        public NicoNicoVideoElementModel SelectedTarget
+        public SmileVideoElementModel SelectedTarget
         {
-            get { return GetValue(SelectedTargetProperty) as NicoNicoVideoElementModel; }
+            get { return GetValue(SelectedTargetProperty) as SmileVideoElementModel; }
             set { SetValue(SelectedTargetProperty, value); }
         }
 
@@ -82,21 +82,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 
         public static readonly DependencyProperty PeriodItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(PeriodItemsSourceProperty)),
-            typeof(ObservableCollection<NicoNicoVideoElementModel>),
-            typeof(NicoNicoVideoRankingContextElements),
+            typeof(ObservableCollection<SmileVideoElementModel>),
+            typeof(SmileVideoRankingContextElements),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPeriodItemsSourceChanged))
         );
 
         private static void OnPeriodItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<NicoNicoVideoRankingContextElements>(d, control => {
-                control.PeriodItemsSource = e.NewValue as ObservableCollection<NicoNicoVideoElementModel>;
+            CastUtility.AsAction<SmileVideoRankingContextElements>(d, control => {
+                control.PeriodItemsSource = e.NewValue as ObservableCollection<SmileVideoElementModel>;
             });
         }
 
-        public ObservableCollection<NicoNicoVideoElementModel> PeriodItemsSource
+        public ObservableCollection<SmileVideoElementModel> PeriodItemsSource
         {
-            get { return GetValue(PeriodItemsSourceProperty) as ObservableCollection<NicoNicoVideoElementModel>; }
+            get { return GetValue(PeriodItemsSourceProperty) as ObservableCollection<SmileVideoElementModel>; }
             set { SetValue(PeriodItemsSourceProperty, value); }
         }
 
@@ -106,21 +106,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
 
         public static readonly DependencyProperty TargetItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(TargetItemsSourceProperty)),
-            typeof(ObservableCollection<NicoNicoVideoElementModel>),
-            typeof(NicoNicoVideoRankingContextElements),
+            typeof(ObservableCollection<SmileVideoElementModel>),
+            typeof(SmileVideoRankingContextElements),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTargetItemsSourceChanged))
         );
 
         private static void OnTargetItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<NicoNicoVideoRankingContextElements>(d, control => {
-                control.TargetItemsSource = e.NewValue as ObservableCollection<NicoNicoVideoElementModel>;
+            CastUtility.AsAction<SmileVideoRankingContextElements>(d, control => {
+                control.TargetItemsSource = e.NewValue as ObservableCollection<SmileVideoElementModel>;
             });
         }
 
-        public ObservableCollection<NicoNicoVideoElementModel> TargetItemsSource
+        public ObservableCollection<SmileVideoElementModel> TargetItemsSource
         {
-            get { return GetValue(TargetItemsSourceProperty) as ObservableCollection<NicoNicoVideoElementModel>; }
+            get { return GetValue(TargetItemsSourceProperty) as ObservableCollection<SmileVideoElementModel>; }
             set { SetValue(TargetItemsSourceProperty, value); }
         }
 

@@ -23,29 +23,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using System.Windows.Controls;
 using System.Net.Sockets;
 using System.Net;
 using System.Diagnostics;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using System.Windows.Media;
-using ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using System.Windows.Input;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class NicoNicoVideoPlayerViewModel: NicoNicoVideoDownloadViewModel
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel
     {
         #region variable
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #endregion
 
-        public NicoNicoVideoPlayerViewModel(Mediation mediation)
+        public SmileVideoPlayerViewModel(Mediation mediation)
             : base(mediation)
         { }
 
@@ -64,13 +64,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         Mediation Mediation { get; set; }
 
-        NicoNicoVideoPlayerWindow View { get; set; }
+        SmileVideoPlayerWindow View { get; set; }
         xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         Slider VideoSilder { get; set; }
 
         public bool ChangingVideoPosition { get; set; }
         bool IsDead { get; set; }
-        long VideoPlayLowestSize => Constants.ServiceNicoNicoVideoPlayLowestSize;
+        long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
 
         public bool CanVideoPlay
         {
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #region function
 
-        internal void SetView(NicoNicoVideoPlayerWindow view)
+        internal void SetView(SmileVideoPlayerWindow view)
         {
             View = view;
             Player = view.player;//.MediaPlayer;
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #endregion
 
-        #region NicoNicoVideoDownloadViewModel
+        #region SmileVideoDownloadViewModel
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
         {

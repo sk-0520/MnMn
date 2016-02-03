@@ -20,9 +20,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    public class NicoNicoVideoSettingModel: SettingModelBase
+    public class SmileVideoSettingModel: SettingModelBase
     {
         /// <summary>
         /// 自動再生を行うか。

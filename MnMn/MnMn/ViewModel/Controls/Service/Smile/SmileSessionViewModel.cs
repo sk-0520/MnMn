@@ -23,21 +23,21 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 {
     /// <summary>
     /// ニコニコユーザーのセッションを管理。
     /// </summary>
-    public class NicoNicoSessionViewModel: SessionViewModelBase
+    public class SmileSessionViewModel: SessionViewModelBase
     {
 
-        public NicoNicoSessionViewModel(Mediation mediation, NicoNicoUserAccountModel userAccountModel)
+        public SmileSessionViewModel(Mediation mediation, SmileUserAccountModel userAccountModel)
             : base(mediation)
         {
             UserAccount = userAccountModel;
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
         /// <summary>
         /// ユーザーアカウント情報。
         /// </summary>
-        NicoNicoUserAccountModel UserAccount { get; set; }
+        SmileUserAccountModel UserAccount { get; set; }
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageScraping(Mediation, this, NicoNicoMediationKey.videoLogin, ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
                 page.StopHeaderCheck = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.User;
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return;
             }
 
-            using(var page = new PageScraping(Mediation, this, NicoNicoMediationKey.videoLogout, ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
                 page.StopHeaderCheck = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico
                 return false;
             }
 
-            using(var page = new PageScraping(Mediation, this, NicoNicoMediationKey.videoCheck, ServiceType.NicoNico)) {
+            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
                 page.StopHeaderCheck = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers

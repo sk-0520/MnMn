@@ -24,25 +24,25 @@ using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     /// <summary>
     /// ランキング一覧。
     /// </summary>
     [Serializable, XmlRoot("ranking")]
-    public class NicoNicoVideoRankingModel: ModelBase
+    public class SmileVideoRankingModel: ModelBase
     {
         [XmlElement("periods")]
-        public NicoNicoVideoRankingGroupModel Periods { get; set; } = new NicoNicoVideoRankingGroupModel();
+        public SmileVideoRankingGroupModel Periods { get; set; } = new SmileVideoRankingGroupModel();
 
         [XmlElement("targets")]
-        public NicoNicoVideoRankingGroupModel Targets { get; set; } = new NicoNicoVideoRankingGroupModel();
+        public SmileVideoRankingGroupModel Targets { get; set; } = new SmileVideoRankingGroupModel();
 
         /// <summary>
         /// 各カテゴリの大枠。
         /// </summary>
         [XmlElement("categories")]
-        public CollectionModel<NicoNicoVideoCategoryGroupModel> Items { get; set; } = new CollectionModel<NicoNicoVideoCategoryGroupModel>();
+        public CollectionModel<SmileVideoCategoryGroupModel> Items { get; set; } = new CollectionModel<SmileVideoCategoryGroupModel>();
 
     }
 }

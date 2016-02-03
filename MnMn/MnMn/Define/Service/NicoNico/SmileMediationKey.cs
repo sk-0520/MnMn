@@ -20,9 +20,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    internal static class NicoNicoMediationKey
+    internal static class SmileMediationKey
     {
         public const string videoLogin = "video-session-login";
         public const string videoLogout = "video-session-logout";

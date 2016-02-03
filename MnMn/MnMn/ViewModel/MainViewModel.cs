@@ -22,8 +22,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
@@ -33,27 +33,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             Mediation = new Mediation();
 
-            NicoNicoManager = new NicoNicoManagerViewModel(Mediation);
+            SmileManager = new SmileManagerViewModel(Mediation);
 
-            Temp_OpenNicoNicoPlayerCommand.Execute(null);
+            Temp_OpenSmilePlayerCommand.Execute(null);
         }
         #region property
 
         Mediation Mediation { get; set; }
 
-        public NicoNicoManagerViewModel NicoNicoManager { get; private set; }
+        public SmileManagerViewModel SmileManager { get; private set; }
 
         #endregion
 
         #region command
 
-        public ICommand Temp_OpenNicoNicoPlayerCommand
+        public ICommand Temp_OpenSmilePlayerCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        NicoNicoManager.VideoManager.Temp_OpenPlayer("sm15218544");
+                        SmileManager.VideoManager.Temp_OpenPlayer("sm15218544");
                     }
                 );
             }

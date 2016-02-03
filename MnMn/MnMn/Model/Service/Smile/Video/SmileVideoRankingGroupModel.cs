@@ -23,13 +23,13 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     /// <summary>
     /// カテゴリ。
     /// </summary>
     [Serializable]
-    public class NicoNicoVideoRankingGroupModel: ModelBase
+    public class SmileVideoRankingGroupModel: ModelBase
     {
         #region property
 
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
         /// カテゴリ一覧。
         /// </summary>
         [XmlElement("element")]
-        public CollectionModel<NicoNicoVideoElementModel> Items { get; set; } = new CollectionModel<NicoNicoVideoElementModel>();
+        public CollectionModel<SmileVideoElementModel> Items { get; set; } = new CollectionModel<SmileVideoElementModel>();
 
         #endregion
     }

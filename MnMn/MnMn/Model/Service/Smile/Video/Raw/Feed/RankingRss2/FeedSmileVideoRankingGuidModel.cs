@@ -21,8 +21,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2
 {
-    public class FeedNicoNicoVideoRankingGuidModel: Rss2GuidModel
+    public class FeedSmileVideoRankingGuidModel: Rss2GuidModel
     { }
 }

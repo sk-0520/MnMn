@@ -24,7 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Mediation()
             : base()
         {
-            NicoNico = new NicoNicoMediation(this);
+            Smile = new SmileMediation(this);
         }
 
         #region property
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// ニコニコ関係。
         /// </summary>
-        NicoNicoMediation NicoNico { get; set; }
+        SmileMediation Smile { get; set; }
 
         #endregion
 
@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             switch(request.ServiceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.Request(request);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.Request(request);
 
                 default:
                     ThrowNotSupportRequest(request);
@@ -84,9 +84,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.GetUri(key, replaceMap, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.GetUri(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -97,9 +97,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertUri(uri, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.ConvertUri(uri, serviceType);
 
                 default:
                     ThrowNotSupportConvertUri(uri, serviceType);
@@ -110,9 +110,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.GetRequestParameter(key, replaceMap, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.GetRequestParameter(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
@@ -123,9 +123,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertRequestParameter(requestParams, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.ConvertRequestParameter(requestParams, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
@@ -136,9 +136,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.CheckResponseHeader(uri, headers, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.CheckResponseHeader(uri, headers, serviceType);
 
                 default:
                     ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
@@ -149,9 +149,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertBinary(uri, binary, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.ConvertBinary(uri, binary, serviceType);
 
                 default:
                     ThrowNotSupportConvertBinary(uri, binary, serviceType);
@@ -162,9 +162,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.GetEncoding(uri, binary, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.GetEncoding(uri, binary, serviceType);
 
                 default:
                     ThrowNotSupportGetEncoding(uri, binary, serviceType);
@@ -175,9 +175,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override string ConvertString(Uri uri, string text, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertString(uri, text, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.ConvertString(uri, text, serviceType);
 
                 default:
                     ThrowNotSupportConvertString(uri, text, serviceType);
@@ -188,9 +188,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             switch(serviceType) {
-                case ServiceType.NicoNico:
-                case ServiceType.NicoNicoVideo:
-                    return NicoNico.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);

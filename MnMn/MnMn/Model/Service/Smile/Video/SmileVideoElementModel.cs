@@ -26,13 +26,13 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     /// <summary>
     /// ランキング要素。
     /// </summary>
     [Serializable]
-    public class NicoNicoVideoElementModel: ModelBase, IDeepClone
+    public class SmileVideoElementModel: ModelBase, IDeepClone
     {
         #region property
 
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video
 
         public IDeepClone DeepClone()
         {
-            return DeepCloneUtility.Copy<NicoNicoVideoElementModel>(this);
+            return DeepCloneUtility.Copy<SmileVideoElementModel>(this);
         }
 
         #endregion

@@ -21,34 +21,34 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class NicoNicoVideoManagerViewModel: ViewModelBase
+    public class SmileVideoManagerViewModel: ViewModelBase
     {
-        public NicoNicoVideoManagerViewModel(Mediation mediation)
+        public SmileVideoManagerViewModel(Mediation mediation)
         {
             Mediation = mediation;
 
-            var response = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.NicoNicoVideo));
-            var rankingModel = (NicoNicoVideoRankingModel)response.Result;
-            RankingManager = new NicoNicoVideoRankingManagerViewModel(Mediation, rankingModel);
+            var response = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+            var rankingModel = (SmileVideoRankingModel)response.Result;
+            RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingModel);
         }
 
         #region property
 
         Mediation Mediation { get; set; }
 
-        public NicoNicoVideoRankingManagerViewModel RankingManager { get; private set; }
+        public SmileVideoRankingManagerViewModel RankingManager { get; private set; }
 
         #endregion
 
@@ -59,8 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         public async void Temp_OpenPlayer(string videoId)
         {
-            var vm = new NicoNicoVideoPlayerViewModel(Mediation);
-            var window = new NicoNicoVideoPlayerWindow() {
+            var vm = new SmileVideoPlayerViewModel(Mediation);
+            var window = new SmileVideoPlayerWindow() {
                 DataContext = vm,
             };
             vm.SetView(window);

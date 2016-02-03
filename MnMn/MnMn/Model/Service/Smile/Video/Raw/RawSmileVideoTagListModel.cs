@@ -22,13 +22,13 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawNicoNicoVideoTagListModel: ModelBase
+    public class RawSmileVideoTagListModel: ModelBase
     {
         [XmlAttribute("domain")]
         public string Domain { get; set; }
         [XmlElement("tag")]
-        public CollectionModel<RawNicoNicoVideoTagItemModel> Tags { get; set; } = new CollectionModel<RawNicoNicoVideoTagItemModel>();
+        public CollectionModel<RawSmileVideoTagItemModel> Tags { get; set; } = new CollectionModel<RawSmileVideoTagItemModel>();
     }
 }

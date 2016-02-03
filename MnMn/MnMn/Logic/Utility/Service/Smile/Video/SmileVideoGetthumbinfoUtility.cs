@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    public static class NicoNicoVideoGetthumbinfoUtility
+    public static class SmileVideoGetthumbinfoUtility
     {
         #region function
 
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
         /// </summary>
         /// <param name="rawModel"></param>
         /// <returns></returns>
-        public static bool IsSuccessResponse(RawNicoNicoVideoThumbResponseModel rawModel)
+        public static bool IsSuccessResponse(RawSmileVideoThumbResponseModel rawModel)
         {
             return string.Compare(rawModel.Status.Trim(), "ok", true) == 0;
         }
@@ -93,12 +93,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
             return !RawValueUtility.ConvertBoolean(s);
         }
 
-        public static bool IsCategory(RawNicoNicoVideoTagItemModel tag)
+        public static bool IsCategory(RawSmileVideoTagItemModel tag)
         {
             return RawValueUtility.ConvertBoolean(tag.Category);
         }
 
-        public static bool IsLocked(RawNicoNicoVideoTagItemModel tag)
+        public static bool IsLocked(RawSmileVideoTagItemModel tag)
         {
             return RawValueUtility.ConvertBoolean(tag.Lock);
         }

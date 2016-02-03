@@ -25,13 +25,13 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.NicoNico
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 {
     /// <summary>
     /// アカウント情報を保持。
     /// </summary>
     [DataContract]
-    public class NicoNicoUserAccountModel: SettingModelBase, IDeepClone
+    public class SmileUserAccountModel: SettingModelBase, IDeepClone
     {
         #region property
 

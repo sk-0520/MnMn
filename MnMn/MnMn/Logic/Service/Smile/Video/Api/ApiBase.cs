@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 {
     public abstract class ApiBase: DisposeFinalizeBase
     {

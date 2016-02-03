@@ -19,13 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 using HtmlAgilityPack;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    public static class NicoNicoVideoRankingUtility
+    public static class SmileVideoRankingUtility
     {
         #region function
 
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static string GetVideoId(FeedNicoNicoVideoRankingItemModel item)
+        public static string GetVideoId(FeedSmileVideoRankingItemModel item)
         {
             return item.Link.Split('/').Last();
         }
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
         /// </summary>
         /// <param name="rawDescription"></param>
         /// <returns>動画ID, タイトル以外の情報を設定したデータ。</returns>
-        public static RawNicoNicoVideoRankingDetailModel ConvertRawDescription(string rawDescription)
+        public static RawSmileVideoRankingDetailModel ConvertRawDescription(string rawDescription)
         {
             // HTMLの書式に合わせておく
             var html = "<html><body>" + rawDescription + "</body></html>";
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video
             var resCounter = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-res']");
             var mylist = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-mylist']");
 
-            var result = new RawNicoNicoVideoRankingDetailModel() {
+            var result = new RawSmileVideoRankingDetailModel() {
                 FirstRetrieve = HtmlNodeToString(date),
                 Description = HtmlNodeToString(description),
                 CommentNum = HtmlNodeToString(resCounter),

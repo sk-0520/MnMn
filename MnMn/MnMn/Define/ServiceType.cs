@@ -30,10 +30,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// ニコニコ。
         /// </summary>
-        NicoNico,
+        Smile,
         /// <summary>
         /// ニコニコ動画。
         /// </summary>
-        NicoNicoVideo,
+        SmileVideo,
     }
 }

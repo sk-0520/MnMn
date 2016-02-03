@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2
 {
     [Serializable, XmlRoot("rss")]
-    public class FeedNicoNicoVideoRankingModel: Rss2ModelBase<FeedNicoNicoVideoRankingChannelModel, FeedNicoNicoVideoRankingItemModel, FeedNicoNicoVideoRankingGuidModel>
+    public class FeedSmileVideoRankingModel: Rss2ModelBase<FeedSmileVideoRankingChannelModel, FeedSmileVideoRankingItemModel, FeedSmileVideoRankingGuidModel>
     { }
 }

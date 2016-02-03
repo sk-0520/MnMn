@@ -21,25 +21,25 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class NicoNicoVideoMediation: MediationCustomBase
+    public class SmileVideoMediation: MediationCustomBase
     {
-        public NicoNicoVideoMediation(Mediation mediation)
-            :base(mediation, Constants.NicoNicoVideoUriListPath, Constants.NicoNicoVideoUriParametersListPath, Constants.NicoNicoVideoRequestParametersListPath)
+        public SmileVideoMediation(Mediation mediation)
+            :base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath)
         {
-            Ranking = LoadModelFromFile<NicoNicoVideoRankingModel>(Constants.NicoNicoVideoRankingPath);
+            Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
         }
 
         #region property
 
-        NicoNicoVideoRankingModel Ranking { get; set; }
+        SmileVideoRankingModel Ranking { get; set; }
 
         #endregion
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
         {
             switch(inputKey) {
                 case SmileVideoMediationKey.inputEconomyMode:
-                    outputValue = NicoNicoVideoGetflvUtility.isEconomyMode((string)inputValue);
+                    outputValue = SmileVideoGetflvUtility.isEconomyMode((string)inputValue);
                     return true;
 
                 default:
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public override ResponseModel Request(RequestModel request)
         {
-            if(request.ServiceType != ServiceType.NicoNicoVideo) {
+            if(request.ServiceType != ServiceType.SmileVideo) {
                 ThrowNotSupportRequest(request);
             }
 
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.NicoNicoVideo) {
+            if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
             }
 
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.NicoNicoVideo) {
+            if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportConvertUri(uri, serviceType);
             }
 
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.NicoNicoVideo) {
+            if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
             }
 
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.NicoNicoVideo) {
+            if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
             }
 
@@ -140,12 +140,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video
 
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.NicoNicoVideo) {
+            if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
             }
 
             switch(serviceType) {
-                case ServiceType.NicoNicoVideo:
+                case ServiceType.SmileVideo:
                     return ValueConvert_Impl(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
 
                 default:

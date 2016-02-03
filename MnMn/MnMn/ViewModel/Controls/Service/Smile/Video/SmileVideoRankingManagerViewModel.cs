@@ -24,29 +24,29 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class NicoNicoVideoRankingManagerViewModel: ViewModelBase
+    public class SmileVideoRankingManagerViewModel: ViewModelBase
     {
         #region variable
 
-        NicoNicoVideoElementModel _selectedPeriod;
-        NicoNicoVideoElementModel _selectedTarget;
+        SmileVideoElementModel _selectedPeriod;
+        SmileVideoElementModel _selectedTarget;
 
-        NicoNicoVideoElementModel _selectedCategory;
+        SmileVideoElementModel _selectedCategory;
 
-        NicoNicoVideoRankingCategoryItemViewModel _selectedRankingCategory;
+        SmileVideoRankingCategoryItemViewModel _selectedRankingCategory;
 
         #endregion
 
-        public NicoNicoVideoRankingManagerViewModel(Mediation mediation, NicoNicoVideoRankingModel rankingModel)
+        public SmileVideoRankingManagerViewModel(Mediation mediation, SmileVideoRankingModel rankingModel)
         {
             Mediation = mediation;
 
             RankingModel = rankingModel;
-            CategoryItems = new CollectionModel<NicoNicoVideoElementModel>(GetLinearRankingElementList(RankingModel.Items));
+            CategoryItems = new CollectionModel<SmileVideoElementModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
             SelectedTarget = TargetItems.First();
             SelectedCategory = CategoryItems.First();
@@ -56,36 +56,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         Mediation Mediation { get; set; }
 
-        NicoNicoVideoRankingModel RankingModel { get; set; }
+        SmileVideoRankingModel RankingModel { get; set; }
 
-        public IList<NicoNicoVideoElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
-        public IList<NicoNicoVideoElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
+        public IList<SmileVideoElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
+        public IList<SmileVideoElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
 
-        public NicoNicoVideoElementModel SelectedPeriod
+        public SmileVideoElementModel SelectedPeriod
         {
             get { return this._selectedPeriod; }
             set { SetVariableValue(ref this._selectedPeriod, value); }
         }
-        public NicoNicoVideoElementModel SelectedTarget
+        public SmileVideoElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
             set { SetVariableValue(ref this._selectedTarget, value); }
         }
-        public NicoNicoVideoElementModel SelectedCategory
+        public SmileVideoElementModel SelectedCategory
         {
             get { return this._selectedCategory; }
             set { SetVariableValue(ref this._selectedCategory, value); }
         }
 
-        public IList<NicoNicoVideoElementModel> CategoryItems { get; private set; }
+        public IList<SmileVideoElementModel> CategoryItems { get; private set; }
 
-        public NicoNicoVideoRankingCategoryItemViewModel SelectedRankingCategory
+        public SmileVideoRankingCategoryItemViewModel SelectedRankingCategory
         {
             get { return this._selectedRankingCategory; }
             set{ SetVariableValue(ref this._selectedRankingCategory, value); }
         }
 
-        public CollectionModel<NicoNicoVideoRankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<NicoNicoVideoRankingCategoryItemViewModel>();
+        public CollectionModel<SmileVideoRankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<SmileVideoRankingCategoryItemViewModel>();
 
         #endregion
 
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
                                 return viewModel;
                             },
                             () => {
-                                var viewModel = new NicoNicoVideoRankingCategoryItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
+                                var viewModel = new SmileVideoRankingCategoryItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
                                 RankingCategoryItems.Insert(0, viewModel);
                                 return viewModel;
                             }
@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #region function
 
-        IEnumerable<NicoNicoVideoElementModel> GetLinearRankingElementList(IEnumerable<NicoNicoVideoCategoryGroupModel> items)
+        IEnumerable<SmileVideoElementModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
         {
             foreach(var item in items) {
                 if(item.IsSingleCategory) {

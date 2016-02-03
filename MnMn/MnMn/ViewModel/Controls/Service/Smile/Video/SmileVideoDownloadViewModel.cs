@@ -27,17 +27,17 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Logic.NicoNico.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.NicoNico;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     /// <summary>
     /// 指定動画ダウンロード。
     /// </summary>
-    public class NicoNicoVideoDownloadViewModel: ViewModelBase
+    public class SmileVideoDownloadViewModel: ViewModelBase
     {
         #region variable
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #endregion
 
-        public NicoNicoVideoDownloadViewModel(Mediation mediation)
+        public SmileVideoDownloadViewModel(Mediation mediation)
         {
             Mediation = mediation;
         }
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         Mediation Mediation { get; set; }
 
-        public NicoNicoVideoInformationViewModel VideoInformationViewModel { get; set; }
+        public SmileVideoInformationViewModel VideoInformationViewModel { get; set; }
 
         protected string VideoPath { get; set; }
 
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         protected virtual void OnLoadGetflvEnd()
         { }
 
-        Task LoadGetflvAsync(NicoNicoSessionViewModel session)
+        Task LoadGetflvAsync(SmileSessionViewModel session)
         {
             OnLoadGetflvStart();
 
@@ -178,15 +178,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         protected virtual void OnLoadVideoEnd()
         { }
 
-        protected async Task LoadVideoAsync(NicoNicoSessionViewModel session)
+        protected async Task LoadVideoAsync(SmileSessionViewModel session)
         {
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
             VideoSize = VideoInformationViewModel.VideoSize;
 
-            using(var downloader = new NicoNicoVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
-                ReceiveBufferSize = Constants.ServiceNicoNicoVideoReceiveBuffer,
+            using(var downloader = new SmileVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
+                ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoSize,
             }) {
                 VideoPath = @"z:\test.mp4";
@@ -221,9 +221,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
         {
             OnLoadDataWithSessionStart();
 
-            var request = new RequestModel(RequestKind.Session, ServiceType.NicoNico);
+            var request = new RequestModel(RequestKind.Session, ServiceType.Smile);
             var response = Mediation.Request(request);
-            var session = (NicoNicoSessionViewModel)response.Result;
+            var session = (SmileSessionViewModel)response.Result;
             var tcs = new CancellationTokenSource();
             await LoadGetflvAsync(session);
 
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             InformationLoadState = LoadState.Loading;
             var getthumbinfo = new Getthumbinfo(Mediation);
             var rawGetthumbinfoModel = await getthumbinfo.GetAsync(videoId);
-            VideoInformationViewModel = new NicoNicoVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, NicoNicoVideoInformationViewModel.NoOrderd);
+            VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
             InformationLoadState = LoadState.Loaded;
 
             var noSessionTask = LoadDataWithoutSessionAsync();
@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         private void Downloader_DownloadingError(object sender, DownloadingErrorEventArgs e)
         {
-            int retry = Constants.ServiceNicoNicoVideoDownloadingErrorRetryCount;
+            int retry = Constants.ServiceSmileVideoDownloadingErrorRetryCount;
 
             e.Cancel = retry < e.Counter;
             Debug.WriteLine(e.Exception);
@@ -300,7 +300,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;
             } else {
-                var time = Constants.ServiceNicoNicoVideoDownloadingErrorWaitTime;
+                var time = Constants.ServiceSmileVideoDownloadingErrorWaitTime;
                 Thread.Sleep(time);
             }
 

@@ -1,9 +1,9 @@
 ﻿<UserControl 
-  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video.NicoNicoVideoRankingManager"
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoRankingManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video"
-  xmlns:app_vm_control_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video"
+  xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_vm_control_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video"
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
@@ -23,7 +23,7 @@
     </Grid.RowDefinitions>
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <app_contrl_nc_video:NicoNicoVideoRankingContextElements 
+      <app_contrl_nc_video:SmileVideoRankingContextElements 
         TargetItemsSource="{Binding TargetItems}"
         PeriodItemsSource="{Binding PeriodItems}"
         SelectedTarget="{Binding SelectedTarget}"
@@ -56,7 +56,7 @@
               <TextBlock Grid.Row="0" Text="{Binding CategoryName}" />
               <TextBlock Grid.Row="1" Text="{Binding RankingLoad}" />
             </Grid>
-            <app_contrl_nc_video:NicoNicoVideoRankingContextElements 
+            <app_contrl_nc_video:SmileVideoRankingContextElements 
               TargetItemsSource="{Binding TargetItems}"
               PeriodItemsSource="{Binding PeriodItems}"
               SelectedTarget="{Binding SelectedTarget, Mode=TwoWay}"

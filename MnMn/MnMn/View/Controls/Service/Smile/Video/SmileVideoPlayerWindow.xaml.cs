@@ -14,14 +14,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
-    /// NicoNicoVideoPlayerWindow.xaml の相互作用ロジック
+    /// SmileVideoPlayerWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NicoNicoVideoPlayerWindow: System.Windows.Window
+    public partial class SmileVideoPlayerWindow: System.Windows.Window
     {
-        public NicoNicoVideoPlayerWindow()
+        public SmileVideoPlayerWindow()
         {
             InitializeComponent();
             //this.player.MediaPlayer.VlcLibDirectoryNeeded += OnVlcControlNeedsLibDirectory;

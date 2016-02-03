@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawNicoNicoVideoThumbModel: ModelBase
+    public class RawSmileVideoThumbModel: ModelBase
     {
         #region property
         /// <summary>
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw
         [XmlElement("no_live_play")]
         public string NoLivePlay { get; set; }
         [XmlElement("tags")]
-        public CollectionModel<RawNicoNicoVideoTagListModel> Tags { get; set; } = new CollectionModel<RawNicoNicoVideoTagListModel>();
+        public CollectionModel<RawSmileVideoTagListModel> Tags { get; set; } = new CollectionModel<RawSmileVideoTagListModel>();
         /// <summary>
         /// アップロードユーザーID。
         /// </summary>

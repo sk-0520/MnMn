@@ -28,16 +28,16 @@ using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Define.NicoNico.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.NicoNico.Video;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.NicoNico.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class NicoNicoVideoInformationViewModel: ViewModelBase
+    public class SmileVideoInformationViewModel: ViewModelBase
     {
         #region define
 
@@ -54,14 +54,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         #endregion
 
-        NicoNicoVideoInformationViewModel(Mediation mediation, int number)
+        SmileVideoInformationViewModel(Mediation mediation, int number)
         {
             Mediation = mediation;
             Number = number;
             VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.None;
         }
 
-        public NicoNicoVideoInformationViewModel(Mediation mediation, RawNicoNicoVideoThumbModel thumb, int number)
+        public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)
             : this(mediation, number)
         {
             Thumb = thumb;
@@ -69,13 +69,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
         }
 
-        public NicoNicoVideoInformationViewModel(Mediation mediation, FeedNicoNicoVideoRankingItemModel ranking, int number)
+        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoRankingItemModel ranking, int number)
             : this(mediation, number)
         {
             Ranking = ranking;
-            RankingDetail = NicoNicoVideoRankingUtility.ConvertRawDescription(Ranking.Description);
-            RankingDetail.VideoId = NicoNicoVideoRankingUtility.GetVideoId(Ranking);
-            RankingDetail.Title = NicoNicoVideoRankingUtility.GetTitle(Ranking.Title);
+            RankingDetail = SmileVideoRankingUtility.ConvertRawDescription(Ranking.Description);
+            RankingDetail.VideoId = SmileVideoRankingUtility.GetVideoId(Ranking);
+            RankingDetail.Title = SmileVideoRankingUtility.GetTitle(Ranking.Title);
 
             VideoInformationSource = SmileVideoVideoInformationSource.Ranking;
         }
@@ -84,12 +84,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
         Mediation Mediation { get; set; }
 
-        RawNicoNicoVideoThumbModel Thumb { get; set; }
-        FeedNicoNicoVideoRankingItemModel Ranking { get; set; }
+        RawSmileVideoThumbModel Thumb { get; set; }
+        FeedSmileVideoRankingItemModel Ranking { get; set; }
 
-        RawNicoNicoVideoRankingDetailModel RankingDetail { get; set; }
+        RawSmileVideoRankingDetailModel RankingDetail { get; set; }
 
-        RawNicoNicoVideoGetflvModel Getflv { get; set; }
+        RawSmileVideoGetflvModel Getflv { get; set; }
 
         public int Number { get; private set; }
 
@@ -180,8 +180,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
                 }
             } }
 
-        public TimeSpan Length { get { return NicoNicoVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length); } }
-        public SmileVideoMovieType MovieType { get { return NicoNicoVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public TimeSpan Length { get { return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length); } }
+        public SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow{ get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
         public int ViewCounter { get { return RawValueUtility.ConvertInteger(Thumb.ViewCounter); } }
@@ -202,9 +202,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
                 }
             }
         }
-        public SmileVideoThumbType ThumbType { get { return NicoNicoVideoGetthumbinfoUtility.ConvertThumbType(Thumb.ThumbType); } }
-        public bool Embeddable { get { return NicoNicoVideoGetthumbinfoUtility.IsEmbeddable(Thumb.Embeddable); } }
-        public bool LivePlay { get { return NicoNicoVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
+        public SmileVideoThumbType ThumbType { get { return SmileVideoGetthumbinfoUtility.ConvertThumbType(Thumb.ThumbType); } }
+        public bool Embeddable { get { return SmileVideoGetthumbinfoUtility.IsEmbeddable(Thumb.Embeddable); } }
+        public bool LivePlay { get { return SmileVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
         public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
 
         #region Getflv
@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
 
                 if(!this._isEconomyMode.HasValue) {
                     object outIsEconomyMode;
-                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.NicoNicoVideo);
+                    var converted = Mediation.ConvertValue(out outIsEconomyMode, typeof(bool), SmileVideoMediationKey.inputEconomyMode, Getflv.MovieServerUrl, typeof(string), ServiceType.SmileVideo);
                     if(!converted) {
                         throw new Exception();
                     }
@@ -358,12 +358,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.NicoNico.Video
             await LoadImageAsync_Impl();
         }
 
-        public void SetGetflvModel(RawNicoNicoVideoGetflvModel getFlvModel)
+        public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)
         {
             Getflv = getFlvModel;
         }
 
-        public void SetThumbModel(RawNicoNicoVideoThumbModel thumbModel)
+        public void SetThumbModel(RawSmileVideoThumbModel thumbModel)
         {
             Thumb = thumbModel;
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
