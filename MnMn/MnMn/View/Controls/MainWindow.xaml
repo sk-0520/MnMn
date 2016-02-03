@@ -1,5 +1,5 @@
 ﻿<Window 
-  x:Class="MnMn.View.MainWindow"
+  x:Class="MnMn.View.Controls.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:app_contrl_nc_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
