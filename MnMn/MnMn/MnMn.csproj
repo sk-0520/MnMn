@@ -107,25 +107,25 @@
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
-    <Compile Include="Logic\NicoNico\Video\NicoNicoVideoDownloader.cs" />
-    <Compile Include="Logic\Utility\NicoNico\Video\NicoNicoVideoGetflvUtility.cs" />
+    <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
-    <Compile Include="Model\Setting\NicoNico\Video\NicoNicoVideoSettingModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoDownloadViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoPlayerViewModel.cs" />
-    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml.cs">
-      <DependentUpon>NicoNicoVideoPlayerWindow.xaml</DependentUpon>
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml.cs">
+      <DependentUpon>SmileVideoPlayerWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoManager.xaml">
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml">
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoRankingContextElements.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingManager.xaml">
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoRankingManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,13 +147,13 @@
     <Compile Include="Define\HttpMethods.cs" />
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\NameType.cs" />
-    <Compile Include="Define\NicoNico\NicoNicoMediationKey.cs" />
-    <Compile Include="Define\NicoNico\Video\NicoNicoVideoMovieType.cs" />
-    <Compile Include="Define\NicoNico\Video\NicoNicoVideoMediationKey.cs" />
-    <Compile Include="Define\NicoNico\Video\NicoNicoVideoRankingLoad.cs" />
-    <Compile Include="Define\NicoNico\Video\NicoNicoVideoThumbType.cs" />
-    <Compile Include="Define\NicoNico\Video\NicoNicoVideoVideoThumbnailLoad.cs" />
-    <Compile Include="Define\NicoNico\Video\NicoNicoVideoVideoInformationSource.cs" />
+    <Compile Include="Define\Service\NicoNico\SmileMediationKey.cs" />
+    <Compile Include="Define\Service\NicoNico\Video\SmileVideoMovieType.cs" />
+    <Compile Include="Define\Service\NicoNico\Video\SmileVideoMediationKey.cs" />
+    <Compile Include="Define\Service\NicoNico\Video\SmileVideoRankingLoad.cs" />
+    <Compile Include="Define\Service\NicoNico\Video\SmileVideoThumbType.cs" />
+    <Compile Include="Define\Service\NicoNico\Video\SmileVideoVideoThumbnailLoad.cs" />
+    <Compile Include="Define\Service\NicoNico\Video\SmileVideoVideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
@@ -166,17 +166,17 @@
     <Compile Include="IF\Control\ITreeNodeItem.cs" />
     <Compile Include="IF\ICommunication.cs" />
     <Compile Include="Logic\Attribute\NameAttributeUtility.cs" />
-    <Compile Include="Logic\NicoNico\Video\Api\ApiBase.cs" />
-    <Compile Include="Logic\NicoNico\Video\Api\Getflv.cs" />
-    <Compile Include="Logic\NicoNico\Video\Api\Getthumbinfo.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\ApiBase.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\Getflv.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\Getthumbinfo.cs" />
     <Compile Include="Logic\PageScraping.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />
-    <Compile Include="Logic\NicoNico\NicoNicoMediation.cs" />
-    <Compile Include="Logic\NicoNico\Video\NicoNicoVideoMediation.cs" />
+    <Compile Include="Logic\Service\Smile\SmileMediation.cs" />
+    <Compile Include="Logic\Service\Smile\Video\SmileVideoMediation.cs" />
     <Compile Include="Logic\HttpUserAgentHost.cs" />
-    <Compile Include="Logic\Utility\NicoNico\Video\NicoNicoVideoGetthumbinfoUtility.cs" />
-    <Compile Include="Logic\Utility\NicoNico\Video\NicoNicoVideoRankingUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetthumbinfoUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRankingUtility.cs" />
     <Compile Include="Logic\Utility\RawValueUtility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />
@@ -185,22 +185,22 @@
     <Compile Include="Model\Feed\Rss2\Rss2Model.cs" />
     <Compile Include="Model\Feed\Rss2\Rss2ChannelModel.cs" />
     <Compile Include="Model\Feed\FeedModelBase.cs" />
-    <Compile Include="Model\NicoNico\Video\NicoNicoVideoCategoryGroupModel.cs" />
-    <Compile Include="Model\NicoNico\Video\NicoNicoVideoRankingGroupModel.cs" />
-    <Compile Include="Model\NicoNico\Video\NicoNicoVideoElementModel.cs" />
-    <Compile Include="Model\NicoNico\Video\NicoNicoVideoRankingModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoGetflvModel.cs" />
-    <Compile Include="Model\Setting\NicoNico\NicoNicoUserAccountModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingChannelModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingItemModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\Feed\RankingRss2\FeedNicoNicoVideoRankingGuidModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoErrorModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoRankingDetailModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoThumbModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoTagListModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoTagItemModel.cs" />
-    <Compile Include="Model\NicoNico\Video\Raw\RawNicoNicoVideoThumbResponseModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoCategoryGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoRankingGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoElementModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoRankingModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetflvModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\SmileUserAccountModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingChannelModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingGuidModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoErrorModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRankingDetailModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoThumbModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoTagListModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoTagItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoThumbResponseModel.cs" />
     <Compile Include="Model\ParameterItemModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Model\StringsModel.cs" />
@@ -212,33 +212,33 @@
     <Compile Include="Model\UrisModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoRankingCategoryItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoRankingCategoryItemViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\NicoNicoSessionViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\NicoNicoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoRankingManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NicoNico\Video\NicoNicoVideoInformationViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\SmileSessionViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\SmileManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoRankingManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\TreeNodeItemViewModelBase.cs" />
-    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoManager.xaml.cs">
-      <DependentUpon>NicoNicoVideoManager.xaml</DependentUpon>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml.cs">
+      <DependentUpon>SmileVideoManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingContextElements.xaml.cs">
-      <DependentUpon>NicoNicoVideoRankingContextElements.xaml</DependentUpon>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingContextElements.xaml.cs">
+      <DependentUpon>SmileVideoRankingContextElements.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\NicoNico\Video\NicoNicoVideoRankingManager.xaml.cs">
-      <DependentUpon>NicoNicoVideoRankingManager.xaml</DependentUpon>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingManager.xaml.cs">
+      <DependentUpon>SmileVideoRankingManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Resources\NicoNico\Video\VideoListDictionary.xaml">
+    <Page Include="View\Resources\Service\Smile\Video\VideoListDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\NicoNico\Video\NicoNicoVideoPlayerWindow.xaml">
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -267,25 +267,25 @@
     <Folder Include="etc\script\niconico\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="etc\define\niconico\uri-list.xml">
+    <Content Include="etc\define\service\smile\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\define\niconico\request-params.xml">
+    <Content Include="etc\define\service\smile\request-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\define\niconico\uri-params.xml">
+    <Content Include="etc\define\service\smile\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\define\niconico\video\ranking.xml">
+    <Content Include="etc\define\service\smile\video\ranking.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\define\niconico\video\request-params.xml">
+    <Content Include="etc\define\service\smile\video\request-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\define\niconico\video\uri-list.xml">
+    <Content Include="etc\define\service\smile\video\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\define\niconico\video\uri-params.xml">
+    <Content Include="etc\define\service\smile\video\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

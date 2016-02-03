@@ -45,7 +45,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string DefineDirectoryPath => Path.Combine(EtcDirectoryPath, "define");
 
-        public static string DefineNicoNicoDirectoryPath => Path.Combine(DefineDirectoryPath, ServiceSmileName);
+        public static string DefineServiceDirectoryPath => Path.Combine(DefineDirectoryPath, "service");
+
+        public static string DefineNicoNicoDirectoryPath => Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
 
         public static string NicoNicoUriListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-list.xml");
         public static string NicoNicoUriParametersListPath => Path.Combine(DefineNicoNicoDirectoryPath, "uri-params.xml");
