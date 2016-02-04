@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void AutoPlay(FileInfo fileInfo)
         {
-            Player.LoadMedia(VideoPath);
+            Player.LoadMedia(VideoFile.FullName);
             Player.Play();
 
             CanVideoPlay = true;
@@ -120,7 +120,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
         {
             if(!CanVideoPlay) {
-                var fi = new FileInfo(VideoPath);
+                // とりあえず待って
+                var fi = new FileInfo(VideoFile.FullName);
                 if(fi.Length > VideoPlayLowestSize) {
                     AutoPlay(fi);
                 }
@@ -134,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
             if(!CanVideoPlay) {
-                AutoPlay(new FileInfo(VideoPath));
+                AutoPlay(VideoFile);
             }
 
             base.OnLoadVideoEnd();

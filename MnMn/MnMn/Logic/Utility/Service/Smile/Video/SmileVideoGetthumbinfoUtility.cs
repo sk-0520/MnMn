@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static SmileVideoMovieType ConvertMovieType(string s)
         {
             SmileVideoMovieType result;
-            if(Enum.TryParse<SmileVideoMovieType>(s, out result)) {
+            if(Enum.TryParse<SmileVideoMovieType>(s, true, out result)) {
                 return result;
             }
 
@@ -127,7 +127,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 default: // 仕様追従できない場合に落ちることがないように NotImplementedException は投げない
                     return "unknown";
             }
+        }
 
+        public static string GetFileName(string videoId, SmileVideoMovieType movieType, bool isEconomyMode)
+        {
+            var ext = GetFileExtension(movieType);
+            var eco = isEconomyMode ? "-" + EconomyFileSuffix : string.Empty;
+
+            return $"{videoId}{eco}.{ext}";
         }
 
         #endregion

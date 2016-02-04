@@ -317,12 +317,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public string GetVideoFileName(bool isEconomyMode)
         {
             ThrowNotGetthumbinfoSource();
-            ThrowHasNotGetflv();
 
-            var ext = SmileVideoGetthumbinfoUtility.GetFileExtension(MovieType);
-            var eco = isEconomyMode ? "-" + SmileVideoGetthumbinfoUtility.EconomyFileSuffix : string.Empty;
-
-            return $"{VideoId}{eco}.{ext}";
+            return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
         }
 
         ImageSource Load(Stream stream)

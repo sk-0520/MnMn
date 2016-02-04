@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             
             SmileManager = new SmileManagerViewModel(Mediation);
 
-            //Temp_OpenSmilePlayerCommand.Execute(null);
+            Temp_OpenSmilePlayerCommand.Execute(null);
         }
 
         #region property

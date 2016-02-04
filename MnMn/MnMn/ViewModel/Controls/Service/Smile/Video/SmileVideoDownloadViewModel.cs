@@ -42,6 +42,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// </summary>
     public class SmileVideoDownloadViewModel: ViewModelBase
     {
+        #region define
+
+        const long isDonwloaded = -1;
+
+        #endregion
+
         #region variable
 
         LoadState _informationLoadState;
@@ -69,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected DirectoryInfo DownloadDirectory { get; set; }
 
-        protected string VideoPath { get; set; }
+        protected FileInfo VideoFile { get; set; }
 
         protected Stream VideoStream { get; private set; }
 
@@ -184,21 +190,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadVideoEnd()
         { }
 
-        protected async Task LoadVideoAsync(SmileSessionViewModel session)
+        protected async Task LoadVideoAsync(SmileSessionViewModel session, FileInfo donwloadFile, long headPosition)
         {
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
             VideoSize = VideoInformationViewModel.VideoSize;
 
-            // TODO: キャッシュとかエコノミー確認であれこれ分岐
-
             using(var downloader = new SmileVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoSize,
             }) {
-                VideoPath = @"z:\test.mp4";
-                using(VideoStream = new FileStream(VideoPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                VideoFile = donwloadFile;
+                using(VideoStream = new FileStream(VideoFile.FullName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
                     try {
                         downloader.DownloadStart += Downloader_DownloadStart;
                         downloader.DownloadingError += Downloader_DownloadingError;
@@ -225,6 +229,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected static long GetDownloadHeadPosition(FileInfo fileInfo, long completeSize)
+        {
+            if(fileInfo.Exists) {
+                if(fileInfo.Length == completeSize) {
+                    return isDonwloaded;
+                } else {
+                    // 途中からダウンロード
+                    return fileInfo.Length;
+                }
+            }
+
+            return 0;
+        }
+
         protected async Task LoadDataWithSessionAsync()
         {
             OnLoadDataWithSessionStart();
@@ -240,7 +258,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
-            await LoadVideoAsync(session);
+            // TODO: キャッシュとかエコノミー確認であれこれ分岐
+            Debug.Assert(DownloadDirectory != null);
+            var normalVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, VideoInformationViewModel.GetVideoFileName(false)));
+            var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, VideoInformationViewModel.SizeHigh);
+            if(normalHeadPosition == isDonwloaded) {
+                // ダウンロード済み
+                VideoFile = normalVideoFile;
+                VideoLoadState = LoadState.Loaded;
+                OnLoadVideoEnd();
+                return;
+            }
+
+            long headPosition = 0;
+            FileInfo donwloadFile;
+            // エコノミーキャッシュが存在しても非エコノミーでダウンロードできるなら新たにファイルを落とす。
+            var isEconomyMode = VideoInformationViewModel.IsEconomyMode;
+            if(isEconomyMode) {
+                var economyVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, VideoInformationViewModel.GetVideoFileName(true)));
+                var economyHeadPosition = GetDownloadHeadPosition(economyVideoFile, VideoInformationViewModel.SizeHigh);
+                if(economyHeadPosition == isDonwloaded) {
+                    // エコノミーダウンロード済み
+                    VideoFile = economyVideoFile;
+                    VideoLoadState = LoadState.Loaded;
+                    OnLoadVideoEnd();
+                    return;
+                }
+                headPosition = economyHeadPosition;
+                donwloadFile = economyVideoFile;
+            } else {
+                headPosition = normalHeadPosition;
+                donwloadFile = normalVideoFile;
+            }
+
+
+            await LoadVideoAsync(session, donwloadFile, headPosition);
         }
 
         protected virtual void OnLoadStart()
@@ -251,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(string videoId, CacheSpan thumbCacheSpan)
         {
-            var cachedThumbFilePath = Path.Combine(DownloadDirectory.FullName, videoId, Constants.SmileVideoCacheGetthumbinfoFileName);
+            var cachedThumbFilePath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetthumbinfoFileName);
             if(File.Exists(cachedThumbFilePath)) {
                 var fileInfo = new FileInfo(cachedThumbFilePath);
                 if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
