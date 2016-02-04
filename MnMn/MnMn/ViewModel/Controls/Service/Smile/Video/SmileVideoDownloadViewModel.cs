@@ -79,6 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected Stream VideoStream { get; private set; }
 
+        protected long DonwloadStartPosition { get; private set; }
+
         public LoadState InformationLoadState
         {
             get { return this._informationLoadState; }
@@ -196,13 +198,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             VideoLoadState = LoadState.Preparation;
             VideoSize = VideoInformationViewModel.VideoSize;
+            VideoFile = donwloadFile;
 
             using(var downloader = new SmileVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoSize,
+                RangeHeadPotision = headPosition,
             }) {
-                VideoFile = donwloadFile;
-                using(VideoStream = new FileStream(VideoFile.FullName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                var fileMode = downloader.UsingRangeDonwload ? FileMode.Append: FileMode.Create;
+                using(VideoStream = new FileStream(VideoFile.FullName, fileMode, FileAccess.Write, FileShare.Read)) {
                     try {
                         downloader.DownloadStart += Downloader_DownloadStart;
                         downloader.DownloadingError += Downloader_DownloadingError;
@@ -367,6 +371,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
         {
             VideoLoadState = LoadState.Loading;
+            if(e.DownloadStartType == DownloadStartType.Range) {
+                DonwloadStartPosition = e.RangeHeadPosition;
+            }
+
             OnDownloadStart(sender, e);
         }
 
@@ -375,7 +383,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var downloader = (Downloader)sender;
             var buffer = e.Data;
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
-            VideoLoadedSize = downloader.DownloadedSize;
+            VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
             Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoSize:#,###}");
 

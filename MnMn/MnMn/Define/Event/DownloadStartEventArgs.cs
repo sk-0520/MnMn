@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
 
             DownloadStartType = downloadStartType;
             RangeHeadPosition = rangeHeadPosition;
-            RangeHeadPosition = rangeTailPosition;
+            RangeTailPosition = rangeTailPosition;
         }
 
         #region property

@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
@@ -75,6 +76,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public long RangeHeadPotision { get; set; }
         public long RangeTailPotision { get; set; } = RangeAll;
+
+        public bool UsingRangeDonwload => RangeHeadPotision != 0;
 
         /// <summary>
         /// 受信時のバッファサイズ。
@@ -144,10 +147,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return e.Cancel;
         }
 
+        protected void IfUsingSetRangeHeader()
+        {
+            if(UsingRangeDonwload) {
+                if(RangeTailPotision == RangeAll) {
+                    UserAgent.DefaultRequestHeaders.Range = new RangeHeaderValue(RangeHeadPotision, null);
+                } else {
+                    UserAgent.DefaultRequestHeaders.Range = new RangeHeaderValue(RangeHeadPotision, RangeTailPotision);
+                }
+            }
+        }
+
         protected virtual Task<Stream> GetStreamAsync(out bool cancel)
         {
             cancel = false;
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
+            IfUsingSetRangeHeader();
             return UserAgent.GetStreamAsync(DownloadUri);
         }
 
@@ -160,7 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return;
                 }
                 using(var reader = new BinaryReader(task.Result)) {
-                    var downloadStartType = 0 < RangeHeadPotision ? DownloadStartType.Range : DownloadStartType.Begin;
+                    var downloadStartType = UsingRangeDonwload ? DownloadStartType.Range : DownloadStartType.Begin;
                     if(OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision)) {
                         Cancled = true;
                         return;

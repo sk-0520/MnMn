@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 t.Wait();
                 cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
+                IfUsingSetRangeHeader();
                 UserAgent.GetStringAsync(ReferrerUri);
                 return UserAgent.GetStreamAsync(DownloadUri);
             } catch(Exception ex) {
