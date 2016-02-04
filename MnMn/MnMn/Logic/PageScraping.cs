@@ -82,7 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public Uri Uri { get; private set; }
 
-        public FormUrlEncodedContent Content { get; private set; }
+        public FormUrlEncodedContent PlainContent { get; private set; }
+        public StringContent MappingContent { get; private set; }
 
         /// <summary>
         /// リクエストパラメータに使用する形式。
@@ -152,10 +153,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void MakeRequestParameter()
         {
-            var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
-            var convertedContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)rawContent, ServiceType);
-            var content = new FormUrlEncodedContent(convertedContent);
-            Content = content;
+            switch(ParameterType) {
+                case ParameterType.Plain: {
+                        var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
+                        var convertedContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)rawContent, ServiceType);
+                        var content = new FormUrlEncodedContent(convertedContent);
+                        PlainContent = content;
+                    }
+                    break;
+
+                case ParameterType.Mapping: {
+                        var rawContent = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
+                        var convertedContent = Mediation.ConvertRequestMapping(rawContent, ServiceType);
+                        MappingContent = new StringContent(convertedContent);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         protected Func<Task<HttpResponseMessage>> GetExecutor(Define.HttpMethod httpMethod)
@@ -168,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         return HttpUserAgent.GetAsync(Uri);
                     }
                 } },
-                { Define.HttpMethod.Post, () => HttpUserAgent.PostAsync(Uri, Content) },
+                { Define.HttpMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
             };
 
             return method[httpMethod];

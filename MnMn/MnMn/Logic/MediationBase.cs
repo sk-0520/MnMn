@@ -247,9 +247,64 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
+        protected string ToMappingItemString(MappingItemModel item, IReadOnlyDictionary<string, string> replaceMap)
+        {
+            var value = ReplaceString(item.Value, replaceMap);
+
+            switch(item.Type) {
+                case MappingItemType.Simple:
+                    return $"{value}";
+
+                case MappingItemType.Pair: {
+                        var name = ReplaceString(item.Name, replaceMap);
+                        var bond = ReplaceString(item.Bond, replaceMap);
+                        return $"{name}{bond}{value}";
+                    }
+
+                case MappingItemType.ForcePair: {
+                        var name = ReplaceString(item.Name, replaceMap);
+                        var bond = ReplaceString(item.Bond, replaceMap);
+                        var success = $"{name}{bond}{value}";
+                        if(!string.IsNullOrWhiteSpace(success)) {
+                            return success;
+                        }
+                        var fail = ReplaceString(item.Failure, replaceMap);
+                        return fail;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         protected string GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            throw new NotImplementedException("うへー");
+            var mapping = RequestMappingList.Mappings
+                .FirstOrDefault(up => up.Key == key)
+            ;
+            if(mapping == null) {
+                return string.Empty;
+            }
+
+            var mappingParams = mapping.Items
+                .ToDictionary(
+                    i => i.Key,
+                    i => ToMappingItemString(i, replaceMap)
+                )
+            ;
+            var replacedContent = ReplaceString(mapping.Content.Value, mappingParams);
+            var trimMap = new Dictionary<MappingContentTrim, Func<string, string>>() {
+                { MappingContentTrim.None, s => s },
+                { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c))) },
+                { MappingContentTrim.Line, s => string.Join(Environment.NewLine, s.SplitLines().Select(l => l.Trim())) },
+                { MappingContentTrim.Content, s => string.Join(Environment.NewLine, string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c))).SplitLines().Select(l => l.Trim())) },
+            };
+            var trimedContent = trimMap[mapping.Content.Trim](replacedContent);
+            if(mapping.Content.Oneline) {
+                return string.Join(string.Empty, trimedContent.SplitLines());
+            }
+
+            return trimedContent;
         }
 
         #endregion
