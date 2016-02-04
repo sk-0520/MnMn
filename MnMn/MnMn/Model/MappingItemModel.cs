@@ -48,6 +48,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("fail")]
         public string Failure { get; set; }
 
+        /// <summary>
+        /// キーが存在するか。
+        /// </summary>
+        public bool HasKey => !string.IsNullOrWhiteSpace(Key);
+
         #endregion
     }
 }

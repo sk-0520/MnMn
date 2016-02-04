@@ -120,6 +120,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
+        protected void ThrowNotSupportGetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+        }
+
         protected void ThrowNotSupportConvertUri(string uri, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
@@ -128,6 +133,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportConvertRequestMapping(string mapping, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(mapping)}: {mapping}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportCheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
@@ -232,10 +242,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ?.ToDictionary(
                     p => p.Key,
                     p => ReplaceString(p.Value, replaceMap)
-                ) 
+                )
                 ?? (IDictionary<string, string>)EmptyMap
             ;
         }
+
+        protected string GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotImplementedException("うへー");
+        }
+
         #endregion
 
         #region ICommunication
@@ -272,6 +288,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
+        public virtual string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
@@ -281,6 +301,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             throw new NotImplementedException();
         }
+
+        public virtual string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
 

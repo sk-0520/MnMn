@@ -162,6 +162,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        public override string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.GetRequestMapping(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+            
+        }
+
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -171,6 +185,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 default:
                     ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    return Smile.ConvertRequestMapping(mapping, serviceType);
+
+                default:
+                    ThrowNotSupportConvertRequestMapping(mapping, serviceType);
                     throw new NotImplementedException();
             }
         }

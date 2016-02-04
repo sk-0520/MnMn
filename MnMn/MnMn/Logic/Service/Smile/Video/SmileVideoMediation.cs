@@ -109,6 +109,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestParameter_Impl(key, replaceMap, serviceType);
         }
 
+        public override string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileVideo) {
+                ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
+            }
+
+            return GetRequestMapping_Impl(key, replaceMap, serviceType);
+        }
+
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
@@ -116,6 +125,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
 
             return (IDictionary<string, string>)requestParams;
+        }
+
+        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileVideo) {
+                ThrowNotSupportConvertRequestMapping(mapping, serviceType);
+            }
+
+            return mapping;
         }
 
         public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)

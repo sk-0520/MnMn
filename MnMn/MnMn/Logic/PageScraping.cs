@@ -58,6 +58,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region proeprty
 
+        /// <summary>
+        /// UAは本オブジェクトの所有物か。
+        /// </summary>
         bool OwnershipUA { get; set; }
 
         Mediation Mediation { get; set; }
@@ -80,6 +83,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Uri Uri { get; private set; }
 
         public FormUrlEncodedContent Content { get; private set; }
+
+        /// <summary>
+        /// リクエストパラメータに使用する形式。
+        /// </summary>
+        public ParameterType ParameterType { get; set; } = ParameterType.Plain;
 
         /// <summary>
         /// URI構築処理を用いず指定URIの仕様を強制する。

@@ -19,13 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public interface IGetRequestParameter
+    public enum ParameterType
     {
-        IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
-        string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
+        Plain,
+        Mapping,
     }
 }

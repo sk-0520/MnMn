@@ -35,5 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
         IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType);
+
+        string ConvertRequestMapping(string mapping, ServiceType serviceType);
     }
 }

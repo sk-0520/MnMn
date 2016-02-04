@@ -139,6 +139,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
+        public override string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                    return GetRequestMapping_Impl(key, replaceMap, serviceType);
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.GetRequestMapping(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
@@ -165,6 +180,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 default:
                     ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                    return mapping;
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.ConvertRequestMapping(mapping, serviceType);
+
+                default:
+                    ThrowNotSupportConvertRequestMapping(mapping, serviceType);
                     throw new NotImplementedException();
             }
         }
