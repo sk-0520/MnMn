@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
     public class SmileMediation: MediationCustomBase
     {
         public SmileMediation(Mediation mediation)
-            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath)
+            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath, null)
         {
             VideoMediation = new SmileVideoMediation(Mediation);
         }

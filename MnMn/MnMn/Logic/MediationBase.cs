@@ -42,10 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IConvertCompatibility
     {
         public MediationBase()
-            : this(null, null, null)
+            : this(null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestParametersPath)
+        protected MediationBase(string uriListPath, string uriParametersPath, string requestParametersPath, string requestMappingsPath)
         {
             if(uriListPath != null) {
                 UriList = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(uriListPath);
@@ -64,6 +64,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             } else {
                 RequestParameterList = new ParametersModel();
             }
+
+            if(requestMappingsPath != null) {
+                RequestMappingList = SerializeUtility.LoadXmlSerializeFromFile<MappingsModel>(requestMappingsPath);
+            } else {
+                RequestMappingList = new MappingsModel();
+            }
         }
 
         #region property
@@ -75,6 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected ParametersModel UriParameterList { get; private set; }
 
         protected ParametersModel RequestParameterList { get; private set; }
+
+        protected MappingsModel RequestMappingList { get; }
 
         #endregion
 

@@ -16,6 +16,8 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //param();
             //getthumbinfo();
             //var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
+            mappng();
         }
 
         async void login()
@@ -81,6 +84,27 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var a = await gt.GetAsync("sm9");
             var b = await gt.GetAsync("sm9");
         }
+
+        void mappng()
+        {
+            var ms = new MappingsModel();
+            var mm = new MappingModel();
+            var mi = new MappingItemModel();
+
+            mm.Key = "test";
+            mm.Content.Value = "content\r\ncontent";
+
+            mi.Key = "item1";
+            mm.Items.Add(mi);
+
+            ms.Mappings.Add(mm);
+            using(var stream = new MemoryStream()) {
+                SerializeUtility.SaveXmlSerializeToStream(stream, ms);
+                var s = Encoding.UTF8.GetString(stream.ToArray());
+                Debug.WriteLine(s);
+            }
+        }
+
     }
 #endif
 }

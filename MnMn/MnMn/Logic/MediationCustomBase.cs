@@ -8,8 +8,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public abstract class MediationCustomBase: MediationBase
     {
-        protected MediationCustomBase(Mediation mediation, string uriListPath, string uriParametersPath, string requestParametersPath)
-            : base(uriListPath, uriParametersPath, requestParametersPath)
+        protected MediationCustomBase(Mediation mediation, string uriListPath, string uriParametersPath, string requestParametersPath, string requestMappingsPath)
+            : base(uriListPath, uriParametersPath, requestParametersPath, requestMappingsPath)
         {
             Mediation = mediation;
         }

@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     public class SmileVideoMediation: MediationCustomBase
     {
         public SmileVideoMediation(Mediation mediation)
-            :base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath)
+            :base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
         }

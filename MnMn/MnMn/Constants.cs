@@ -75,6 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoUriListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
         public static string SmileVideoUriParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
         public static string SmileVideoRequestParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
+        public static string SmileVideoRequestMappingsListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-mapping.xml");
 
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
 

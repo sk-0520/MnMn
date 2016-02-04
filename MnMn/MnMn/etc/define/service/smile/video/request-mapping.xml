@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mappings>
+	<mapping key="video-msg">
+		<item key="thread-id" type="simple" value="${thread-id}"  />
+		<item key="version"   type="simple" value="${version}"  />
+		<item key="res_from"  type="simple" value="${res_from}"  />
+		<item key="user_id"   type="force-pair" name="user_id" bond="=" value="${user_id}" fail="" />
+		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="" />
+		<item key="span" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
+
+		<content trim="content" oneline="true">
+			<![CDATA[
+				<packet>
+					<thread thread="${thread-id}" version="${version}" scores="(0|1)" nicoru="(0|1)" language="(0|1|2)" with_global="(0|1)"/>
+					<thread_leaves thread="${thread-id}" scores="(0|1)" nicoru="(0|1)" language="(0|1|2)">0-10:100,500</thread_leaves>
+					<thread thread="${thread-id}" version="${version}" res_from="-1000" fork="1"/>
+				</packet>
+			]]>
+		</content>
+	</mapping>
+</mappings>
