@@ -79,6 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
 
         public static string SmileVideoCacheGetthumbinfoFileName => "thumb.xml";
+        public static string SmileVideoCacheGetflvFileName => "getflv.xml";
 
         public static string CurrentLanguageCode => "ja-JP";
 

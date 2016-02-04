@@ -24,6 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
+    [Serializable]
     public class RawSmileVideoGetflvModel: ModelBase
     {
         #region property

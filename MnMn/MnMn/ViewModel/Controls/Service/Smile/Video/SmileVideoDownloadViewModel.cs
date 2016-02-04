@@ -176,11 +176,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             OnLoadGetflvStart();
 
-            // こいつはキャッシュを作らない
+            // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
             return getflv.GetAsync(VideoInformationViewModel.VideoId).ContinueWith(task => {
                 var rawVideoGetflvModel = task.Result;
+                Task.Run(() => {
+                    var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
+                    SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+                });
                 VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
                 OnLoadGetflvEnd();
