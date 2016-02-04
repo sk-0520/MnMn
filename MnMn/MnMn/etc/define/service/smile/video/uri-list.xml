@@ -4,5 +4,5 @@
 	<item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="Hierarchy" />
 	<item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="Hierarchy" />
 	<item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="PreSuffixes" />
-	<item key="video-msg" uri="{msg-uri}" param="None" />
+	<item key="video-msg" uri="${msg-uri}" param="None" />
 </uri>

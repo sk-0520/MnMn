@@ -210,7 +210,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
         
-
         public bool IsEconomyMode
         {
             get
@@ -247,6 +246,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return new Uri(Getflv.MovieServerUrl);
             }
         }
+
         public Uri MessageServerUrl
         {
             get
@@ -255,12 +255,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return new Uri(Getflv.MessageServerUrl);
             }
         }
+
         public Uri MessageServerSubUrl
         {
             get
             {
                 ThrowHasNotGetflv();
                 return new Uri(Getflv.MessageServerSubUrl);
+            }
+        }
+
+        public string ThreadId
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return Getflv.ThreadId;
+            }
+        }
+
+        public string UserId
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return Getflv.UserId;
             }
         }
 

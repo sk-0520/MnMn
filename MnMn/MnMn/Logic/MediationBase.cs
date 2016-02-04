@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected string GetFormatedUri(UriItemModel uriItem, IReadOnlyDictionary<string, string> replaceMap)
         {
-            var uri = uriItem.Uri.Trim();
+            var uri = ReplaceString(uriItem.Uri, replaceMap).Trim();
             if(uriItem.UriParameterType == UriParameterType.None) {
                 return uri;
             }
@@ -295,9 +295,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var replacedContent = ReplaceString(mapping.Content.Value, mappingParams);
             var trimMap = new Dictionary<MappingContentTrim, Func<string, string>>() {
                 { MappingContentTrim.None, s => s },
-                { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c))) },
+                { MappingContentTrim.Block, s => string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c)).Reverse()) },
                 { MappingContentTrim.Line, s => string.Join(Environment.NewLine, s.SplitLines().Select(l => l.Trim())) },
-                { MappingContentTrim.Content, s => string.Join(Environment.NewLine, string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c))).SplitLines().Select(l => l.Trim())) },
+                { MappingContentTrim.Content, s => string.Join(Environment.NewLine, string.Concat(s.SkipWhile(c => char.IsWhiteSpace(c)).Reverse().SkipWhile(c => char.IsWhiteSpace(c)).Reverse()).SplitLines().Select(l => l.Trim())) },
             };
             var trimedContent = trimMap[mapping.Content.Trim](replacedContent);
             if(mapping.Content.Oneline) {

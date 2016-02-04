@@ -265,6 +265,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(!VideoInformationViewModel.Done) {
                 return;
             }
+            var commetTask = Task.Run(() => {
+                var page = new PageScraping(Mediation, session, "video-msg", ServiceType.SmileVideo);
+                page.ParameterType = ParameterType.Mapping;
+                page.ReplaceUriParameters["msg-uri"] = VideoInformationViewModel.MessageServerUrl.OriginalString;
+                page.ReplaceRequestParameters["thread-id"] = VideoInformationViewModel.ThreadId;
+                page.ReplaceRequestParameters["res_from"] = "-1000";
+                page.ReplaceRequestParameters["user_id"] = VideoInformationViewModel.UserId;
+                page.ReplaceRequestParameters["time-size"] = string.Empty;
+                page.ReplaceRequestParameters["all-size"] = string.Empty;
+                return page.GetResponseTextAsync(HttpMethod.Post);
+            }).ContinueWith(task => {
+                Debug.WriteLine(task.Result);
+            });
 
             // TODO: キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(DownloadDirectory != null);
@@ -299,8 +312,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 donwloadFile = normalVideoFile;
             }
 
-
             await LoadVideoAsync(session, donwloadFile, headPosition);
+            await commetTask;
         }
 
         protected virtual void OnLoadStart()

@@ -173,7 +173,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
                     throw new NotImplementedException();
             }
-            
         }
 
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
