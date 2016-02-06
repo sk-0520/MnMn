@@ -22,7 +22,8 @@
     </Grid.ColumnDefinitions>
     <ToggleButton Grid.Column="0">▶||</ToggleButton>
     <Button Grid.Column="1">■</Button>
-    <Slider 
+    <Slider
+      x:Name="slider"
       Grid.Column="2"
       Margin="4,2"
       Minimum="0"

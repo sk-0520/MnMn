@@ -55,29 +55,11 @@
         <Grid.RowDefinitions>
           <RowDefinition/>
           <RowDefinition/>
-          <RowDefinition/>
         </Grid.RowDefinitions>
-        <ProgressBar Grid.Row="0" Minimum="0" Maximum="{Binding VideoTotalSize, Mode=OneWay}" Value="{Binding VideoLoadedSize, Mode=OneWay}" />
-        <Slider
-          Name="videoSilder"
-          Grid.Row="1"
-          Background="Transparent"
-          Opacity="0.5"
-          Minimum="0"
-          Maximum="1"
-          LargeChange="0.05"
-          SmallChange="0.01"
-          Ticks="0.1"
-          SelectionStart="0.5"
-          SelectionEnd="0.7"
-          Value="{Binding VideoPosition, Mode=OneWay}"
-          IsSnapToTickEnabled="False"
-        />
         <app_ctrl:Seekbar
-          Grid.Row="2"
- 
-          
-          VideoPosition="{Binding VideoPosition, Mode=OneWay}"
+          x:Name="seekbar"
+          Grid.Row="0"
+          VideoPosition="{Binding VideoPosition}"
           VideoLoadedSize="{Binding VideoLoadedSize}"
           VideoTotalSize="{Binding VideoTotalSize}"
         />

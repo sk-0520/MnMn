@@ -314,6 +314,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected void LoadVideoFromCache(FileInfo videoFile)
         {
             VideoFile = videoFile;
+            VideoLoadedSize = VideoTotalSize = VideoFile.Length;
             VideoLoadState = LoadState.Loaded;
             OnLoadVideoEnd();
         }
