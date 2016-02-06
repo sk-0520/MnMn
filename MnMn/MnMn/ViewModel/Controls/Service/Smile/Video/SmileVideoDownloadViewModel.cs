@@ -289,13 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return rawMessagePacket;
         }
 
-        protected virtual void OnLoadCommentStart()
-        { }
-
-        protected virtual void OnLoadCommentEnd()
-        { }
-
-        protected Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
+        protected virtual Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
             CommentLoadState = LoadState.Loaded;
             return Task.CompletedTask;

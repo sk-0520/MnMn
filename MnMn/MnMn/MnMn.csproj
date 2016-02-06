@@ -107,6 +107,7 @@
     <Compile Include="Define\MappingContentTrim.cs" />
     <Compile Include="Define\MappingItemType.cs" />
     <Compile Include="Define\ParameterType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
     <Compile Include="Logic\Downloader.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\Getthreadkey.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\MappingItemBracketModel.cs" />
     <Compile Include="Model\MappingItemModel.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml.cs">

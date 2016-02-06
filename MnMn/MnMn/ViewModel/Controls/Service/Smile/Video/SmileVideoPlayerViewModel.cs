@@ -42,6 +42,8 @@ using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -67,6 +69,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoPlayerWindow View { get; set; }
         xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         Slider VideoSilder { get; set; }
+
+        public CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        public CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
         public bool ChangingVideoPosition { get; set; }
         bool IsDead { get; set; }
@@ -139,6 +144,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             base.OnLoadVideoEnd();
+        }
+
+        protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
+        {
+            var comments = rawMsgPacket.Chat.Select(c => new SmileVideoCommentViewModel(c)).OrderBy(c => c.ElapsedTime).ToArray();
+
+            NormalCommentList.InitializeRange(comments.Where(c => !c.IsContributor));
+            ContributorCommentList.InitializeRange(comments.Where(c => c.IsContributor));
+            
+            return base.LoadCommentAsync(rawMsgPacket);
         }
 
         #endregion
