@@ -1,0 +1,89 @@
+﻿<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Seekbar"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  mc:Ignorable="d" 
+  d:DesignHeight="30" d:DesignWidth="300"
+>
+  <UserControl.Resources>
+    <sys:Double x:Key="ProgressHeight">8</sys:Double>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+    <ToggleButton Grid.Column="0">▶||</ToggleButton>
+    <Button Grid.Column="1">■</Button>
+    <Slider 
+      Grid.Column="2"
+      Margin="4,2"
+      Minimum="0"
+      Maximum="1"
+      LargeChange="0.05"
+      SmallChange="0.01"
+      Ticks="0.1"
+      Value="{Binding VideoPosition, RelativeSource={RelativeSource AncestorType=UserControl}}"
+    >
+      <Slider.Template>
+        <ControlTemplate TargetType="Slider">
+          <Border>
+            <Grid>
+              <ProgressBar
+                Margin="8,0"
+                Height="{StaticResource ProgressHeight}"
+                Minimum="0"
+                Maximum="{Binding VideoTotalSize, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Value="{Binding VideoLoadedSize, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Foreground="{Binding VideoLoadingForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Background="{Binding VideoLoadingBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
+              />
+              <Track x:Name="PART_Track">
+                <Track.Thumb>
+                  <Thumb>
+                    <Thumb.Template>
+                      <ControlTemplate>
+                        <Rectangle
+                          Width="20" 
+                          RadiusX="4" 
+                          RadiusY="4" 
+                          Fill="AliceBlue" 
+                          Stroke="Red"
+                          StrokeThickness="1"
+                        />
+                      </ControlTemplate>
+                    </Thumb.Template>
+                  </Thumb>
+                </Track.Thumb>
+              </Track>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Slider.Template>
+    </Slider>
+    <StackPanel Grid.Column="3" Orientation="Horizontal">
+      <TextBlock>
+        <Run>now</Run>
+        <Run>/</Run>
+        <Run>len</Run>
+      </TextBlock>
+      <Label Content="{Binding VideoLoadedSize, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+    </StackPanel>
+    <Grid Grid.Column="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <ToggleButton Grid.Column="0">音</ToggleButton>
+      <Slider Grid.Column="1" Width="80" Minimum="0" Maximum="100" Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </Grid>
+
+  </Grid>
+</UserControl>

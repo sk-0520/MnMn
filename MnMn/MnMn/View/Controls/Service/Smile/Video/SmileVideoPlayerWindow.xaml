@@ -1,14 +1,15 @@
-﻿<Window x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+﻿<Window 
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:app_ctrl="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
         
-        xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
-        ResizeMode="CanResizeWithGrip"
+  xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
+  ResizeMode="CanResizeWithGrip"
         
-        Title="VideoPlayerWindow" Height="410.938" Width="507.387"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        
+  Title="VideoPlayerWindow" Height="410.938" Width="507.387"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
 >
   <Window.Resources>
     <Storyboard x:Key="Storyboard1"/>
@@ -54,8 +55,9 @@
         <Grid.RowDefinitions>
           <RowDefinition/>
           <RowDefinition/>
+          <RowDefinition/>
         </Grid.RowDefinitions>
-        <ProgressBar Grid.Row="0" Minimum="0" Maximum="{Binding VideoSize, Mode=OneWay}" Value="{Binding VideoLoadedSize, Mode=OneWay}" />
+        <ProgressBar Grid.Row="0" Minimum="0" Maximum="{Binding VideoTotalSize, Mode=OneWay}" Value="{Binding VideoLoadedSize, Mode=OneWay}" />
         <Slider
           Name="videoSilder"
           Grid.Row="1"
@@ -66,7 +68,18 @@
           LargeChange="0.05"
           SmallChange="0.01"
           Ticks="0.1"
+          SelectionStart="0.5"
+          SelectionEnd="0.7"
           Value="{Binding VideoPosition, Mode=OneWay}"
+          IsSnapToTickEnabled="False"
+        />
+        <app_ctrl:Seekbar
+          Grid.Row="2"
+ 
+          
+          VideoPosition="{Binding VideoPosition, Mode=OneWay}"
+          VideoLoadedSize="{Binding VideoLoadedSize}"
+          VideoTotalSize="{Binding VideoTotalSize}"
         />
       </Grid>
 

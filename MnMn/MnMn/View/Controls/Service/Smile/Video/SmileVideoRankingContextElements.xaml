@@ -1,7 +1,4 @@
-﻿<!--
-  必要データは呼び出し元からバインドする。
--->
-<UserControl 
+﻿<UserControl 
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoRankingContextElements"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

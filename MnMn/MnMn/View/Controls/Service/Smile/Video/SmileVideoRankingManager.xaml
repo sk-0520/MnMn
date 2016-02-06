@@ -1,4 +1,7 @@
-﻿<UserControl 
+﻿<!--
+  呼び出し元から DataContext を設定して使用。
+-->
+<UserControl 
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoRankingManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

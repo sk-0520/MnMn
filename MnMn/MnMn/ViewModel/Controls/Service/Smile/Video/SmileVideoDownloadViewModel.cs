@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CacheState _cacheState;
 
         long _videoLoadedSize = 0;
-        long _videoSize = 1;
+        long _videoTotalSize = 1;
 
         #endregion
 
@@ -120,13 +120,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public long VideoLoadedSize
         {
             get { return this._videoLoadedSize; }
-            private set { SetVariableValue(ref this._videoLoadedSize, value); }
+            // TowWay用
+            set { SetVariableValue(ref this._videoLoadedSize, value); }
         }
 
-        public long VideoSize
+        public long VideoTotalSize
         {
-            get { return this._videoSize; }
-            private set { SetVariableValue(ref this._videoSize, value); }
+            get { return this._videoTotalSize; }
+            // TowWay用
+            set { SetVariableValue(ref this._videoTotalSize, value); }
         }
 
         public ImageSource ThumbnailImage
@@ -201,12 +203,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
-            VideoSize = VideoInformationViewModel.VideoSize;
+            VideoTotalSize = VideoInformationViewModel.VideoSize;
             VideoFile = donwloadFile;
 
             using(var downloader = new SmileVideoDownloader(VideoInformationViewModel.MovieServerUrl, session, VideoInformationViewModel.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
-                DownloadTotalSize = VideoSize,
+                DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
                 var fileMode = downloader.UsingRangeDonwload ? FileMode.Append: FileMode.Create;
@@ -451,7 +453,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
-            Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoSize:#,###}");
+            Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
 
             OnDownloading(sender, e);
         }
