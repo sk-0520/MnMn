@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
     public abstract class ApiBase: DisposeFinalizeBase
     {
@@ -34,6 +34,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         protected Mediation Mediation { get; private set; }
 
+        /// <summary>
+        /// セッション操作を行うか。
+        /// </summary>
+        public virtual bool SessionSupport { get; set; }
+
+        protected HttpUserAgentHost HttpUserAgentHost { get; set; } = new HttpUserAgentHost();
+
         #endregion
+
+        #region DisposeFinalizeBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(HttpUserAgentHost != null) {
+                    HttpUserAgentHost.Dispose();
+                    HttpUserAgentHost = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
     }
 }

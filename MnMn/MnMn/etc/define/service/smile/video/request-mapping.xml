@@ -4,16 +4,24 @@
 		<item key="thread-id" type="simple" value="${thread-id}"  />
 		<item key="version"   type="simple" value="20061206"  />
 		<item key="res_from"  type="simple" value="${res_from}"  />
-		<item key="user_id"   type="force-pair" name="user_id" bond="=" value="${user_id}" fail="" />
-		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="" />
+		<item key="user-id"   type="force-pair" name="user_id" bond="=" value="${user-id}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="threadkey" type="force-pair" name="threadkey" bond="=" value="${threadkey}" fail="" >
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="">
+			<bracket target="value" open="&quot;" close="&quot;" />
+		</item>
+		
 		<item key="time-msg" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
 
 		<content trim="content" oneline="true">
 			<![CDATA[
 				<packet>
-					<thread thread="${thread-id}" version="${version}" />
+					<thread thread="${thread-id}" scores="1" version="${version}" res_from="${res_from}" ${user-id} ${threadkey} ${force_184} />
 					<thread_leaves thread="${thread-id}" >${time-msg}</thread_leaves>
-					<thread thread="${thread-id}" version="${version}" res_from="${res_from}" fork="1"/>
+					<thread thread="${thread-id}" version="${version}" res_from="${res_from}" ${threadkey} ${force_184} fork="1"/>
 				</packet>
 			]]>
 		</content>

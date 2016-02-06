@@ -20,6 +20,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
@@ -88,6 +90,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static bool ConvertBoolean(string s)
         {
             return Convert.ToBoolean(s);
+        }
+
+        public static TResultModel ConvertNameModelFromWWWFormData<TResultModel>(string rawWwwFormData)
+            where TResultModel: new()
+        {
+            var rawParameters = HttpUtility.ParseQueryString(rawWwwFormData);
+            var parameters = rawParameters.AllKeys
+                .ToDictionary(k => k, k => rawParameters.GetValues(k).First())
+            ;
+            var result = new TResultModel();
+            var map = NameAttributeUtility.GetNames(result);
+            foreach(var pair in map) {
+                string value;
+                if(parameters.TryGetValue(pair.Key, out value)) {
+                    pair.Value.SetValue(result, value);
+                }
+            }
+
+            return result;
         }
 
         #endregion

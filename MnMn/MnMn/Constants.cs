@@ -81,6 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileVideoCacheGetthumbinfoFileName => "thumb.xml";
         public static string SmileVideoCacheGetflvFileName => "getflv.xml";
+        public static string SmileVideoCacheMsgFileName => "msg.xml";
 
         public static string CurrentLanguageCode => "ja-JP";
 

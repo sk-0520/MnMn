@@ -36,12 +36,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
             :base(mediation)
         { }
 
-        #region property
-
-        HttpUserAgentHost HttpUserAgentHost { get; set; } = new HttpUserAgentHost();
-
-        #endregion
-
         #region function
 
         public static RawSmileVideoThumbResponseModel Load(Stream stream)
@@ -64,21 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
             using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
                 return await GetAsync_Impl(page, videoId);
             }
-        }
-
-        #endregion
-
-        #region DisposeFinalizeBase
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                if(HttpUserAgentHost != null) {
-                    HttpUserAgentHost.Dispose();
-                    HttpUserAgentHost = null;
-                }
-            }
-            base.Dispose(disposing);
         }
 
         #endregion

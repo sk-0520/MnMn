@@ -20,4 +20,7 @@
 		<item key="video-id" value="${video-id}" />
 		<item prefix="?" key="as3" bond="=" value="1" />
 	</param>
+	<param key="video-getthreadkey">
+		<item key="thread" value="${thread-id}" />
+	</param>
 </parameters>

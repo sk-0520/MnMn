@@ -237,6 +237,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected async Task LoadCommentAsync(SmileSessionViewModel session)
+        {
+            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheMsgFileName);
+
+            var getThreadkey = new Getthreadkey(Mediation);
+            var threadkeyModel = await getThreadkey.GetAsync(VideoInformationViewModel.ThreadId);
+
+            var msg = new Msg(Mediation, session);
+            var rawMessagePacket = await msg.GetAsync(
+                VideoInformationViewModel.MessageServerUrl, 
+                VideoInformationViewModel.ThreadId, 
+                VideoInformationViewModel.UserId, 
+                1000, 
+                1, 10, 100, 
+                500, 
+                threadkeyModel
+            );
+
+            // キャッシュ構築
+            try {
+                SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
+            } catch(FileNotFoundException) {
+                // BUGS: いかんのう
+            }
+
+        }
+
         protected static long GetDownloadHeadPosition(FileInfo fileInfo, long completeSize)
         {
             if(fileInfo.Exists) {
@@ -265,21 +292,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(!VideoInformationViewModel.Done) {
                 return;
             }
-            var commetTask = Task.Run(() => {
-                var page = new PageScraping(Mediation, session, "video-msg", ServiceType.SmileVideo);
-                page.ParameterType = ParameterType.Mapping;
-                page.ReplaceUriParameters["msg-uri"] = VideoInformationViewModel.MessageServerUrl.OriginalString;
-                page.ReplaceRequestParameters["thread-id"] = VideoInformationViewModel.ThreadId;
-                page.ReplaceRequestParameters["res_from"] = "-1000";
-                page.ReplaceRequestParameters["user_id"] = VideoInformationViewModel.UserId;
-                page.ReplaceRequestParameters["time-size"] = string.Empty;
-                page.ReplaceRequestParameters["all-size"] = string.Empty;
-                return page.GetResponseTextAsync(HttpMethod.Post);
-            }).ContinueWith(task => {
-                Debug.WriteLine(task.Result);
-            });
 
-            // TODO: キャッシュとかエコノミー確認であれこれ分岐
+            await LoadCommentAsync(session);
+
+            // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(DownloadDirectory != null);
             var normalVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, VideoInformationViewModel.GetVideoFileName(false)));
             var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, VideoInformationViewModel.SizeHigh);
@@ -313,7 +329,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             await LoadVideoAsync(session, donwloadFile, headPosition);
-            await commetTask;
         }
 
         protected virtual void OnLoadStart()

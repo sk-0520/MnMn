@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     public class MappingItemModel: ModelBase
     {
+        #region define
+        public const string targetName = "name";
+        public const string targetBond = "bond";
+        public const string targetValue = "value";
+        #endregion
+
         #region property
 
         [XmlAttribute("key")]
@@ -36,17 +42,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("type")]
         public MappingItemType Type { get; set; }
 
-        [XmlAttribute("name")]
+        [XmlAttribute(targetName)]
         public string Name { get; set; }
 
-        [XmlAttribute("bond")]
+        [XmlAttribute(targetBond)]
         public string Bond { get; set; }
 
-        [XmlAttribute("value")]
+        [XmlAttribute(targetValue)]
         public string Value { get; set; }
 
         [XmlAttribute("fail")]
         public string Failure { get; set; }
+
+        [XmlElement("bracket")]
+        public CollectionModel<MappingItemBracketModel> Brackets { get; set; } = new CollectionModel<MappingItemBracketModel>();
 
         /// <summary>
         /// キーが存在するか。

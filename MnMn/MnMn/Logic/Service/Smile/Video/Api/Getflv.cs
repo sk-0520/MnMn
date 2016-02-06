@@ -25,6 +25,7 @@ using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -35,51 +36,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
     /// <summary>
     /// NOTE: 気持ち後回し
     /// </summary>
-    public class Getflv: ApiBase
+    public class Getflv: SessionApiBase
     {
         public Getflv(Mediation mediation, SmileSessionViewModel session)
-            : base(mediation)
-        {
-            Session = session;
-        }
+            : base(mediation, session)
+        { }
 
         #region property
-
-        SmileSessionViewModel Session { get; set; }
-
-        /// <summary>
-        /// セッション操作を行うか。
-        /// </summary>
-        public bool SessionSupport { get; set; }
-
         #endregion
 
         #region function
 
         public async Task<RawSmileVideoGetflvModel> GetAsync(Uri uri)
         {
-            if(SessionSupport) {
-                if(!await Session.CheckLoginAsync()) {
-                    await Session.LoginAsync();
-                }
-            }
-            using(var page = new PageScraping(Mediation, Session, SmileVideoMediationKey.getflvNormal, Define.ServiceType.SmileVideo)) {
+            await LoginIfNotLoginAsync();
+
+            using(var page = new PageScraping(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, Define.ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
 
                 var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
-                var rawParameters = HttpUtility.ParseQueryString(response.Result);
-                var parameters = rawParameters.AllKeys
-                    .ToDictionary(k => k, k => rawParameters.GetValues(k).First())
-                ;
-                var result = new RawSmileVideoGetflvModel();
-                var map = NameAttributeUtility.GetNames(result);
-                foreach(var pair in map) {
-                    string value;
-                    if(parameters.TryGetValue(pair.Key, out value)) {
-                        pair.Value.SetValue(result, value);
-                    }
-                }
-
+                var result = RawValueUtility.ConvertNameModelFromWWWFormData< RawSmileVideoGetflvModel>(response.Result);
                 return result;
             }
         }

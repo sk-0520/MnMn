@@ -247,29 +247,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
+        protected string ToMappingBranket(string s, string target, IEnumerable<MappingItemBracketModel> list)
+        {
+            var bracket = list.FirstOrDefault(b => b.Target == target);
+            if(bracket == null) {
+                return s;
+            }
+            return $"{bracket.Open}{s}{bracket.Close}";
+        }
+
         protected string ToMappingItemString(MappingItemModel item, IReadOnlyDictionary<string, string> replaceMap)
         {
             var value = ReplaceString(item.Value, replaceMap);
 
             switch(item.Type) {
                 case MappingItemType.Simple:
-                    return $"{value}";
+                    return $"{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
 
                 case MappingItemType.Pair: {
                         var name = ReplaceString(item.Name, replaceMap);
                         var bond = ReplaceString(item.Bond, replaceMap);
-                        return $"{name}{bond}{value}";
+                        
+                        return $"{ToMappingBranket(name, MappingItemModel.targetName, item.Brackets)}{ToMappingBranket(bond, MappingItemModel.targetBond, item.Brackets)}{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
                     }
 
                 case MappingItemType.ForcePair: {
                         var name = ReplaceString(item.Name, replaceMap);
                         var bond = ReplaceString(item.Bond, replaceMap);
-                        var success = $"{name}{bond}{value}";
-                        if(!string.IsNullOrWhiteSpace(success)) {
-                            return success;
+                        var hasEmpty = new[] { name, bond, value }.Any(s => string.IsNullOrWhiteSpace(s));
+                        if(hasEmpty) {
+                            var fail = ReplaceString(item.Failure, replaceMap);
+                            return fail;
                         }
-                        var fail = ReplaceString(item.Failure, replaceMap);
-                        return fail;
+                        return $"{ToMappingBranket(name, MappingItemModel.targetName, item.Brackets)}{ToMappingBranket(bond, MappingItemModel.targetBond, item.Brackets)}{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
                     }
 
                 default:
