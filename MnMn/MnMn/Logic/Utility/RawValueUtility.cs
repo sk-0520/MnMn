@@ -89,6 +89,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static bool ConvertBoolean(string s)
         {
+            if(string.IsNullOrEmpty(s)) {
+                return false;
+            }
+
+            if(s.Length == 1) {
+                if(s[0] == '1') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
             return Convert.ToBoolean(s);
         }
 

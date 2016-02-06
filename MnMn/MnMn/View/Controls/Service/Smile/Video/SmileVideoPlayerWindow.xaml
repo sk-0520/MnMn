@@ -41,11 +41,10 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <vlc_wpf:VlcPlayer  
-        x:Name="player" 
-        Grid.Row="0"
-        Grid.Column="0"
-      />
+      <Grid Grid.Row="0" Grid.Column="0">
+        <Canvas x:Name="commentArea" />
+        <vlc_wpf:VlcPlayer x:Name="player" />
+      </Grid>
       
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
         <ListBoxItem>comment</ListBoxItem>

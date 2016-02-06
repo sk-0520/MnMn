@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoPlayerWindow View { get; set; }
         xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         Slider VideoSilder { get; set; }
+        Canvas CommentArea { get; set; }
 
         public CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         public CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -104,6 +105,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             View = view;
             Player = view.player;//.MediaPlayer;
             VideoSilder = view.videoSilder;
+            CommentArea = view.commentArea;
+
             // あれこれイベント
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
