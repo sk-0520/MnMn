@@ -201,6 +201,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region Getflv
 
+        public bool HasError
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+
+                return !string.IsNullOrWhiteSpace(Getflv.Error);
+            }
+        }
+
         public bool Done
         {
             get

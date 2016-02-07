@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoRankingCategoryItemViewModel SelectedRankingCategory
         {
             get { return this._selectedRankingCategory; }
-            set{ SetVariableValue(ref this._selectedRankingCategory, value); }
+            set { SetVariableValue(ref this._selectedRankingCategory, value); }
         }
 
         public CollectionModel<SmileVideoRankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<SmileVideoRankingCategoryItemViewModel>();

@@ -69,6 +69,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             await vm.LoadAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
+        public async void OpenPlayer(string videoId)
+        {
+            var vm = new SmileVideoPlayerViewModel(Mediation);
+            var window = new SmileVideoPlayerWindow() {
+                DataContext = vm,
+            };
+            vm.SetView(window);
+            window.Show();
+
+            await vm.LoadAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
         #endregion
     }
 }

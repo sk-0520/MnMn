@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -50,6 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoElementModel _selectedTarget;
 
         SmileVideoRankingLoad _rankingLoad;
+
+        SmileVideoInformationViewModel _selectedVideoInformation;
 
         bool _nowLoading;
 
@@ -132,6 +135,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._nowLoading, value); }
         }
 
+        public SmileVideoInformationViewModel SelectedVideoInformation
+        {
+            get { return this._selectedVideoInformation; }
+            set { SetVariableValue(ref this._selectedVideoInformation, value); }
+        }
+
+        public async void OpenPlayer(SmileVideoInformationViewModel videoInformation)
+        {
+            var vm = new SmileVideoPlayerViewModel(Mediation);
+            var window = new SmileVideoPlayerWindow() {
+                DataContext = vm,
+            };
+            vm.SetView(window);
+            window.Show();
+
+            await vm.LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
         #endregion
 
         #region command
@@ -143,6 +164,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => {
                         LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
+                    }
+                );
+            }
+        }
+
+        public ICommand OpenVideoCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        OpenPlayer(SelectedVideoInformation);
                     }
                 );
             }
