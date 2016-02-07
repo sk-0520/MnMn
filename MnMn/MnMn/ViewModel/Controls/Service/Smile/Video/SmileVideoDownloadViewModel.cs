@@ -188,9 +188,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             getflv.SessionSupport = true;
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
 
-            var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
-            SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
-
             VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
             if(VideoInformationViewModel.HasError) {
@@ -209,11 +206,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var flvInfo = flashvars.SelectToken("flvInfo");
                         var rawFlvText = flvInfo.ToString();
                         var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
-                        var rawRetryVideoGetflvModel = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(convertedFlvText);
-                        VideoInformationViewModel.SetGetflvModel(rawRetryVideoGetflvModel);
+                        rawVideoGetflvModel = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(convertedFlvText);
+                        VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
                     }
                 }
             }
+            var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
+            SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
 
             OnLoadGetflvEnd();
         }
