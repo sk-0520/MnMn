@@ -1,6 +1,6 @@
 ﻿<UserControl
   x:Name="root"
-  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Seekbar"
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Navigationbar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -11,6 +11,7 @@
 >
   <UserControl.Resources>
     <sys:Double x:Key="ProgressHeight">8</sys:Double>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -20,10 +21,24 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
-    <ToggleButton Grid.Column="0">▶||</ToggleButton>
-    <Button Grid.Column="1">■</Button>
+    <Button 
+      Grid.Column="0"
+      IsEnabled="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      Command="{Binding PlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      CommandParameter="{Binding PlayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+    >
+      ▶||
+    </Button>
+    <Button
+      Grid.Column="1"
+      IsEnabled="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      Command="{Binding StopCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      CommandParameter="{Binding StopCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+    >
+      ■
+    </Button>
     <Slider
-      x:Name="slider"
+      x:Name="seekbar"
       Grid.Column="2"
       Margin="4,2"
       Minimum="0"
@@ -48,7 +63,7 @@
               />
               <Track x:Name="PART_Track">
                 <Track.Thumb>
-                  <Thumb>
+                  <Thumb Visibility="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Thumb.Template>
                       <ControlTemplate>
                         <Rectangle
@@ -71,9 +86,9 @@
     </Slider>
     <StackPanel Grid.Column="3" Orientation="Horizontal">
       <TextBlock>
-        <Run>now</Run>
+        <Run Text="{Binding PlayTime, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         <Run>/</Run>
-        <Run>len</Run>
+        <Run Text="{Binding TotalTime, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
       </TextBlock>
       <Label Content="{Binding VideoLoadedSize, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
     </StackPanel>
@@ -82,8 +97,20 @@
         <ColumnDefinition />
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
-      <ToggleButton Grid.Column="0">音</ToggleButton>
-      <Slider Grid.Column="1" Width="80" Minimum="0" Maximum="100" Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+      <Button
+        Grid.Column="0"
+        Command="{Binding MuteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        CommandParameter="{Binding MuteCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      >
+        音
+      </Button>
+      <Slider 
+        Grid.Column="1" 
+        Width="80" 
+        Minimum="0" 
+        Maximum="100" 
+        Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      />
     </Grid>
 
   </Grid>

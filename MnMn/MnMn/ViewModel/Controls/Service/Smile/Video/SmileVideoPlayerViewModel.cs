@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isVideoPlayng;
 
         float _videoPosition;
+        int _volume=50;
 
         #endregion
 
@@ -71,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         //Slider VideoSilder { get; set; }
         Canvas CommentArea { get; set; }
-        Seekbar Seekbar { get; set; }
+        Navigationbar Seekbar { get; set; }
 
         public CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         public CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -94,12 +95,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._isVideoPlayng; }
             set { SetVariableValue(ref this._isVideoPlayng, value); }
         }
-        
+
         public float VideoPosition
         {
             get { return this._videoPosition; }
             set { SetVariableValue(ref this._videoPosition, value); }
         }
+
+        public int Volume
+        {
+            get { return this._volume; }
+            set { if(SetVariableValue(ref this._volume, value)) {
+                    if(Player != null) {
+                        Player.Volume = this._volume;
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -111,6 +124,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player = view.player;//.MediaPlayer;
             CommentArea = view.commentArea;
             Seekbar = view.seekbar;
+
+            // 初期設定
+            Player.Volume = Volume;
 
             // あれこれイベント
             View.Closed += View_Closed;
@@ -184,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         private void View_Closed(object sender, EventArgs e)
         {
-            Seekbar.slider.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+            Seekbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
             Player.PositionChanged -= Player_PositionChanged;
             View.Closed -= View_Closed;
 
@@ -209,9 +225,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             ChangingVideoPosition = true;
-            SeekbarMouseDownPosition = e.GetPosition(Seekbar.slider);
-            Seekbar.slider.PreviewMouseUp += VideoSilder_PreviewMouseUp;
-            Seekbar.slider.MouseMove += Seekbar_MouseMove;
+            SeekbarMouseDownPosition = e.GetPosition(Seekbar.seekbar);
+            Seekbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
+            Seekbar.seekbar.MouseMove += Seekbar_MouseMove;
         }
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
@@ -223,14 +239,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Debug.Assert(CanVideoPlay);
 
-            Seekbar.slider.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
-            Seekbar.slider.MouseMove -= Seekbar_MouseMove;
+            Seekbar.seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
+            Seekbar.seekbar.MouseMove -= Seekbar_MouseMove;
 
             float nextPosition;
 
             if(!SeekbarThumbMoving) {
-                var pos = e.GetPosition(Seekbar.slider);
-                nextPosition = (float)(pos.X / Seekbar.slider.ActualWidth);
+                var pos = e.GetPosition(Seekbar.seekbar);
+                nextPosition = (float)(pos.X / Seekbar.seekbar.ActualWidth);
             } else {
                 nextPosition = (float)Seekbar.VideoPosition;
             }

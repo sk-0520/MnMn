@@ -56,12 +56,13 @@
           <RowDefinition/>
           <RowDefinition/>
         </Grid.RowDefinitions>
-        <app_ctrl:Seekbar
+        <app_ctrl:Navigationbar
           x:Name="seekbar"
           Grid.Row="0"
           VideoPosition="{Binding VideoPosition}"
           VideoLoadedSize="{Binding VideoLoadedSize}"
           VideoTotalSize="{Binding VideoTotalSize}"
+          Volume="{Binding Volume}"
         />
       </Grid>
 
