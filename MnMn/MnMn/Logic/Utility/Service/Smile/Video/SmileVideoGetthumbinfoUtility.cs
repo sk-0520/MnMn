@@ -49,11 +49,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static TimeSpan ConvertTimeSpan(string s)
         {
-            var result = RawValueUtility.ConvertTimeSpan(s);
-            if(result != RawValueUtility.UnknownTimeSpan) {
-                return result;
-            }
-
             // mmm:ss形式を考慮
             var values = s.Split(':');
             if(values.Length != 2) {
