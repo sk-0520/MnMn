@@ -301,6 +301,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string OptionalThreadId
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return Getflv.OptionalThreadId;
+            }
+        }
+
         #endregion
 
         #endregion

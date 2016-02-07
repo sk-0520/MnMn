@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -31,10 +32,13 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -175,23 +179,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadGetflvEnd()
         { }
 
-        Task LoadGetflvAsync(SmileSessionViewModel session)
+        async Task LoadGetflvAsync(SmileSessionViewModel session)
         {
             OnLoadGetflvStart();
 
             // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
-            return getflv.GetAsync(VideoInformationViewModel.VideoId).ContinueWith(task => {
-                var rawVideoGetflvModel = task.Result;
-                Task.Run(() => {
-                    var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
-                    SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
-                });
-                VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
+            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
 
-                OnLoadGetflvEnd();
-            });
+            var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
+            SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+
+            VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
+
+            if(VideoInformationViewModel.HasError) {
+                // 公式動画はWEBから取得してみる
+                using(var page = new PageScraping(Mediation, session, SmileVideoMediationKey.getflvOfficial, ServiceType.SmileVideo)) {
+                    page.ForceUri = VideoInformationViewModel.WatchUrl;
+                    var response = await page.GetResponseTextAsync(HttpMethod.Get);
+                    if(response.IsSuccess) {
+                        var document = new HtmlDocument();
+                        document.LoadHtml(response.Result);
+                        var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
+                        var watchApiDataText =  HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
+
+                        var json = JObject.Parse(watchApiDataText);
+                        var flashvars = json.SelectToken("flashvars");
+                        var flvInfo = flashvars.SelectToken("flvInfo");
+                        var rawFlvText = flvInfo.ToString();
+                        var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
+                        var rawRetryVideoGetflvModel = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(convertedFlvText);
+                        VideoInformationViewModel.SetGetflvModel(rawRetryVideoGetflvModel);
+                    }
+                }
+            }
+
+            OnLoadGetflvEnd();
         }
 
         protected virtual void OnLoadVideoStart()
@@ -274,11 +298,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             CommentLoadState = LoadState.Loading;
 
             var getThreadkey = new Getthreadkey(Mediation);
-            var threadkeyModel = await getThreadkey.GetAsync(VideoInformationViewModel.ThreadId);
-
+            var threadkeyModel = await getThreadkey.GetAsync(
+                VideoInformationViewModel.ThreadId
+            );
+            
             var msg = new Msg(Mediation, session);
             var rawMessagePacket = await msg.GetAsync(
-                VideoInformationViewModel.MessageServerUrl, 
+                VideoInformationViewModel.MessageServerUrl,
+                //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
                 VideoInformationViewModel.ThreadId, 
                 VideoInformationViewModel.UserId, 
                 1000, 
@@ -288,10 +315,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             );
 
             // キャッシュ構築
-            try {
-                SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
-            } catch(FileNotFoundException) {
-                // BUGS: いかんのう
+            if(rawMessagePacket.Chat.Any()) {
+                try {
+                    SerializeUtility.SaveXmlSerializeToFile(cacheFilePath, rawMessagePacket);
+                } catch(FileNotFoundException) {
+                    // BUGS: いかんのう
+                }
             }
 
             OnLoadMsgEnd();

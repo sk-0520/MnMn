@@ -2,7 +2,8 @@
 <mappings>
 	<mapping key="video-msg">
 		<item key="thread-id" type="simple" value="${thread-id}"  />
-		<item key="version"   type="simple" value="20061206"  />
+		<item key="version"   type="simple" value="20090904"  />
+		<item key="version-old"   type="simple" value="20061206"  />
 		<item key="res_from"  type="simple" value="${res_from}"  />
 		<item key="user-id"   type="force-pair" name="user_id" bond="=" value="${user-id}" fail="">
 			<bracket target="value" open="&quot;" close="&quot;" />
@@ -16,12 +17,18 @@
 		
 		<item key="time-msg" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
 
+		<item key="with_global"  type="simple" value="1"  />
+		<item key="language"  type="simple" value="0"  />
+		<item key="nicoru"  type="simple" value="1"  />
+		<item key="scores"  type="simple" value="1"  />
+		<item key="click_revisio"  type="simple" value="-1"  />
+
 		<content trim="content" oneline="true">
 			<![CDATA[
 				<packet>
-					<thread thread="${thread-id}" scores="1" version="${version}" res_from="${res_from}" ${user-id} ${threadkey} ${force_184} />
-					<thread_leaves thread="${thread-id}" >${time-msg}</thread_leaves>
-					<thread thread="${thread-id}" version="${version}" res_from="${res_from}" ${threadkey} ${force_184} fork="1"/>
+					<thread        with_global="${with_global}"     language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}" version="${version}"     res_from="${res_from}" ${force_184} ${threadkey} />
+					<thread_leaves                                  language="${language}" nicoru="${nicoru}" scores="${scores}" thread="${thread-id}"                                                 ${force_184} ${threadkey} >${time-msg}</thread_leaves>
+					<thread        click_revisio="${click_revisio}"                                           scores="${scores}" thread="${thread-id}" version="${version-old}" res_from="${res_from}" ${force_184} ${threadkey} fork="1" />
 				</packet>
 			]]>
 		</content>

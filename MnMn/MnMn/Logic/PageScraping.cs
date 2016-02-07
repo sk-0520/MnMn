@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -165,6 +166,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ParameterType.Mapping: {
                         var rawContent = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
                         var convertedContent = Mediation.ConvertRequestMapping(rawContent, ServiceType);
+                        Debug.WriteLine("request param");
+                        Debug.WriteLine(convertedContent);
                         MappingContent = new StringContent(convertedContent);
                     }
                     break;
@@ -217,7 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 MakeRequestParameter();
 
                 var executor = GetExecutor(httpMethod);
-
+                
                 using(var response = await executor()) {
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {

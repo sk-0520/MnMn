@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         public async Task<RawSmileVideoMsgPacketModel> GetAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
         {
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.msg, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageScraping(Mediation, Session, SmileVideoMediationKey.msg, Define.ServiceType.SmileVideo)) {
                 page.ParameterType = ParameterType.Mapping;
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -64,7 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
                     page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
                     page.ReplaceRequestParameters["force_184"] = threadkeyModel.Force184;
                 }
+                
                 var rawMessage = await page.GetResponseTextAsync(Define.HttpMethod.Post);
+                Debug.WriteLine(rawMessage.Result);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawMessage.Result))) {
                     var result = Load(stream);
                     return result;
