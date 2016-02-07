@@ -24,9 +24,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     public class SmileVideoSettingModel: SettingModelBase
     {
+        #region property
+
         /// <summary>
         /// 自動再生を行うか。
         /// </summary>
-        public bool AutoPlay { get; set; }
+        public bool AutoPlay { get; set; } = false;
+        /// <summary>
+        /// フォント種別。
+        /// </summary>
+        public string FontFamily { get; set; } = Constants.CommentFontFamily;
+        /// <summary>
+        /// フォントサイズ。
+        /// </summary>
+        public double FontSize { get; set; } = Constants.CommentFontSize;
+        /// <summary>
+        /// フォント透明度。
+        /// </summary>
+        public double FontAlpha { get; set; } = Constants.CommentFontAlpha;
+        /// <summary>
+        /// コメント表示時間。
+        /// </summary>
+        public TimeSpan ShowTime { get; set; } = Constants.CommentShowTime;
+
+        #endregion
     }
 }

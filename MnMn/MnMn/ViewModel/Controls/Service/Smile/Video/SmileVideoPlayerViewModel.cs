@@ -47,11 +47,34 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using System.Globalization;
+using System.Windows.Media.Effects;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel
     {
+        #region
+
+        class CommentData
+        {
+            public CommentData(SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
+            {
+                ViewModel = viewModel;
+                Animation = animation;
+            }
+
+            #region property
+
+            public SmileVideoCommentViewModel ViewModel { get; }
+            public AnimationTimeline Animation { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region variable
 
         bool _canVideoPlay;
@@ -90,6 +113,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool IsDead { get; set; }
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
+
+        List<CommentData> CommentBoxList { get; } = new List<CommentData>();
 
         public bool CanVideoPlay
         {
@@ -181,24 +206,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void FireShowComment()
         {
             Debug.WriteLine("{0} - {1}", PrevTime, PlayTime);
-            foreach(var comment in NormalCommentList.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)) {
-                var label = new Label();
-                label.DataContext = comment;
-                label.Content = comment.Content;
-                NormalCommentArea.Children.Add(label);
-                NormalCommentArea.UpdateLayout();
-                Canvas.SetLeft(label, NormalCommentArea.ActualWidth);
-                var animation = new DoubleAnimation();
-                animation.From = NormalCommentArea.ActualWidth;
-                animation.To = -label.ActualWidth;
-                animation.Duration = new Duration(TimeSpan.FromSeconds(3));
-                animation.Completed += Animation_Completed;
-                label.BeginAnimation(Canvas.LeftProperty, animation);
-            }
-        }
+            
+            foreach(var commentViewModel in NormalCommentList.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
+                var ft = new FormattedText(
+                    commentViewModel.Content,
+                    CultureInfo.GetCultureInfo(Constants.CurrentLanguageCode),
+                    FlowDirection.LeftToRight,
+                    new Typeface(Setting.FontFamily),
+                    Setting.FontSize,
+                    commentViewModel.Foreground
+                );
+                var geometry = ft.BuildGeometry(new Point());
+                var drawing = new GeometryDrawing(null, new Pen(Brushes.Red, 2), geometry);
+                var box = new Label();
+                box.BeginInit();
+                box.Foreground = commentViewModel.Foreground;
+                box.FontFamily = new FontFamily(Setting.FontFamily);
+                box.FontSize = Setting.FontSize;
+                box.Opacity = Setting.FontAlpha;
+                box.Content = commentViewModel.Content;
+                box.Effect = new DropShadowEffect() {
+                    Color = commentViewModel.GetShadowColor(commentViewModel.GetForeColor()),
+                    Direction = 315,
+                    BlurRadius = 2,
+                    ShadowDepth = 2,
+                    Opacity = 0.8,
+                    RenderingBias = RenderingBias.Performance,
+                };
+                box.EndInit();
 
-        private void Animation_Completed(object sender, EventArgs e)
-        {
+                NormalCommentArea.Children.Add(box);
+                NormalCommentArea.UpdateLayout();
+
+                Canvas.SetLeft(box, NormalCommentArea.ActualWidth);
+
+                var animation = new DoubleAnimation();
+                var data = new CommentData(commentViewModel, animation);
+                CommentBoxList.Add(data);
+
+                var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevTime.TotalMilliseconds;
+                var diffPosition = starTime / NormalCommentArea.ActualWidth;
+
+                animation.From = NormalCommentArea.ActualWidth + diffPosition;
+                animation.To = - box.ActualWidth;
+                animation.Duration = new Duration(Setting.ShowTime);
+
+                EventDisposer< EventHandler> ev = null;
+                animation.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                    NormalCommentArea.Children.Remove(box);
+                    CommentBoxList.Remove(data);
+                    ev.Dispose();
+                    box =  null;
+                    ev = null;
+                }, h => NormalCommentArea.Dispatcher.Invoke(() =>  animation.Completed -= h), out ev);
+
+                box.BeginAnimation(Canvas.LeftProperty, animation);
+            }
         }
 
         #endregion
@@ -231,7 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
-            var comments = rawMsgPacket.Chat.Select(c => new SmileVideoCommentViewModel(c)).OrderBy(c => c.ElapsedTime).ToArray();
+            var comments = rawMsgPacket.Chat.Select(c => new SmileVideoCommentViewModel(c, Setting)).OrderBy(c => c.ElapsedTime).ToArray();
 
             NormalCommentList.InitializeRange(comments.Where(c => !c.IsContributor));
             ContributorCommentList.InitializeRange(comments.Where(c => c.IsContributor));

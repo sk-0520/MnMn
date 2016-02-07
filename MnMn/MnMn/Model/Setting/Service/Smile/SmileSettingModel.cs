@@ -17,21 +17,21 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 {
-    internal static class SmileVideoMediationKey
+    [DataContract]
+    public class SmileSettingModel: ModelBase
     {
-        public const string getthumbinfo = "video-getthumbinfo";
-        public const string ranking = "video-ranking";
-        public const string getflvNormal = "video-getflv-normal";
-        public const string getflvSwf = "video-getflv-swf";
-        public const string getflvWebpage = "video-getflv-web";
-        public const string getthreadkey = "video-getthreadkey";
-        public const string msg = "video-msg";
+        #region property
 
-        public const string inputEconomyMode = "getflv-economy-mode";
+        public SmileVideoSettingModel VideoSetting { get; set; } = new SmileVideoSettingModel();
+
+        #endregion
     }
 }

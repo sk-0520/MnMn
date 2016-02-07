@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
@@ -70,11 +71,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoDownloadViewModel(Mediation mediation)
         {
             Mediation = mediation;
+
+            var response = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            Setting = (SmileVideoSettingModel)response.Result;
         }
 
         #region property
 
         Mediation Mediation { get; set; }
+
+        protected SmileVideoSettingModel Setting { get; }
 
         public SmileVideoInformationViewModel VideoInformationViewModel { get; set; }
 
@@ -191,8 +197,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
             if(VideoInformationViewModel.HasError) {
-                // 公式動画はWEBから取得してみる
-                using(var page = new PageScraping(Mediation, session, SmileVideoMediationKey.getflvOfficial, ServiceType.SmileVideo)) {
+                // 公式動画かもしれないのではWEBから取得してみる
+                using(var page = new PageScraping(Mediation, session, SmileVideoMediationKey.getflvWebpage, ServiceType.SmileVideo)) {
                     page.ForceUri = VideoInformationViewModel.WatchUrl;
                     var response = await page.GetResponseTextAsync(HttpMethod.Get);
                     if(response.IsSuccess) {

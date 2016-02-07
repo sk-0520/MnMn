@@ -32,13 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
     public class SmileMediation: MediationCustomBase
     {
-        public SmileMediation(Mediation mediation)
+        public SmileMediation(Mediation mediation, SmileSettingModel setting)
             : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath, null)
         {
-            VideoMediation = new SmileVideoMediation(Mediation);
+            Setting = setting;
+
+            VideoMediation = new SmileVideoMediation(Mediation, Setting.VideoSetting);
         }
 
         #region property
+
+        SmileSettingModel Setting { get; set; }
 
         /// <summary>
         /// ニコニコ動画関係。

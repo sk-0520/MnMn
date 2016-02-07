@@ -7,7 +7,9 @@
   xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
   ResizeMode="CanResizeWithGrip"
         
-  Title="VideoPlayerWindow" Height="410.938" Width="507.387"
+  Title="VideoPlayerWindow" 
+  Width="640"
+  Height="480"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
@@ -42,11 +44,16 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <Grid Grid.Row="0" Grid.Column="0">
-        <vlc_wpf:VlcPlayer x:Name="player" />
-        <Canvas x:Name="normalCommentArea" />
-        <Canvas x:Name="contributorCommentArea" />
-      </Grid>
+      <Viewbox
+        Grid.Row="0"
+        Grid.Column="0"
+      >
+        <Grid>
+          <vlc_wpf:VlcPlayer x:Name="player" />
+          <Canvas x:Name="normalCommentArea" />
+          <Canvas x:Name="contributorCommentArea" />
+        </Grid>
+      </Viewbox>
       
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
         <ListBoxItem>comment</ListBoxItem>

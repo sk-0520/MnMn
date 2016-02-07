@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoCommentViewModel: SingleModelWrapperViewModelBase<RawSmileVideoMsgChatModel>
     {
-        public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model)
+        public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model, SmileVideoSettingModel setting)
             : base(model)
-        { }
+        {
+            Setting = setting;
+        }
 
         #region property
+
+        SmileVideoSettingModel Setting { get; }
 
         public int Score
         {
@@ -61,9 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string Command { get { return Model.Mail; } }
+        public string Command { get { return Model.Mail ?? string.Empty; ; } }
 
-        public string Content { get { return Model.Content; } }
+        public string Content { get { return Model.Content ?? string.Empty; } }
 
         public bool Anonymity
         {
@@ -76,6 +83,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool IsContributor
         {
             get { return RawValueUtility.ConvertBoolean(Model.Fork); }
+        }
+
+        public double FontSize { get { return Setting.FontSize; } }
+
+        public string FontFamily { get { return Setting.FontFamily; } }
+
+        public Brush Foreground
+        {
+            get
+            {
+                return new SolidColorBrush(GetForeColor());
+            }
+        }
+
+        public Brush Shadow
+        {
+            get
+            {
+                return new SolidColorBrush(GetShadowColor(GetForeColor()));
+            }
+        }
+
+
+        #endregion
+
+        #region function
+
+        public Color GetForeColor()
+        {
+            return Colors.White;
+        }
+
+        public Color GetShadowColor(Color foreColor)
+        {
+            return MediaUtility.GetAutoColor(foreColor);
         }
 
         #endregion

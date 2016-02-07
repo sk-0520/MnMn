@@ -26,18 +26,23 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoMediation: MediationCustomBase
     {
-        public SmileVideoMediation(Mediation mediation)
+        public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel  setting)
             :base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
+            Setting = setting;
+
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
         }
 
         #region property
+
+        SmileVideoSettingModel Setting { get; }
 
         SmileVideoRankingModel Ranking { get; set; }
 
@@ -50,6 +55,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             switch(request.RequestKind) {
                 case RequestKind.RankingDefine:
                     return new ResponseModel(request, Ranking);
+
+                case RequestKind.Setting:
+                    return new ResponseModel(request, Setting);
  
                 default:
                     throw new NotImplementedException();

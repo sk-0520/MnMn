@@ -21,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -94,6 +95,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoCacheGetflvFileName => "getflv.xml";
         public static string SmileVideoCacheMsgFileName => "msg.xml";
         public static string SmileVideoIndividualVideoSettingName => "setting.json";
+
+        public static double CommentFontSize => System.Windows.SystemFonts.MessageFontSize * 2.5;
+        public static string CommentFontFamily => System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value;
+        public static double CommentFontAlpha => 1;
+        public static TimeSpan CommentShowTime => TimeSpan.FromSeconds(3);
 
         public static string CurrentLanguageCode => "ja-JP";
 

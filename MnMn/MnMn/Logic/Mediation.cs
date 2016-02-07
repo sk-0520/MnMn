@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             // 二重生成だけど気にしない
             Setting = new MainSettingModel();
 
-            Smile = new SmileMediation(this);
+            Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
 
         public Mediation(MainSettingModel mainSettingModel)
