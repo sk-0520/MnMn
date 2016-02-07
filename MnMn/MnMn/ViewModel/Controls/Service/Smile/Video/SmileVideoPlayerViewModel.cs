@@ -76,8 +76,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoPlayerWindow View { get; set; }
         xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
         //Slider VideoSilder { get; set; }
-        Canvas CommentArea { get; set; }
-        Navigationbar Seekbar { get; set; }
+        Canvas NormalCommentArea { get; set; }
+        Canvas ContributorCommentArea { get; set; }
+        
+        Navigationbar Navigationbar { get; set; }
 
         public CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         public CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -139,8 +141,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             View = view;
             Player = view.player;//.MediaPlayer;
-            CommentArea = view.commentArea;
-            Seekbar = view.seekbar;
+            NormalCommentArea = view.normalCommentArea;
+            ContributorCommentArea = view.contributorCommentArea;
+            Navigationbar = view.seekbar;
 
             // 初期設定
             Player.Volume = Volume;
@@ -148,7 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // あれこれイベント
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
-            Seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+            Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
         void AutoPlay(FileInfo fileInfo)
@@ -182,16 +185,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var label = new Label();
                 label.DataContext = comment;
                 label.Content = comment.Content;
-                CommentArea.Children.Add(label);
-                CommentArea.UpdateLayout();
-                Canvas.SetLeft(label, CommentArea.ActualWidth);
+                NormalCommentArea.Children.Add(label);
+                NormalCommentArea.UpdateLayout();
+                Canvas.SetLeft(label, NormalCommentArea.ActualWidth);
                 var animation = new DoubleAnimation();
-                animation.From = CommentArea.ActualWidth;
+                animation.From = NormalCommentArea.ActualWidth;
                 animation.To = -label.ActualWidth;
                 animation.Duration = new Duration(TimeSpan.FromSeconds(3));
-
+                animation.Completed += Animation_Completed;
                 label.BeginAnimation(Canvas.LeftProperty, animation);
             }
+        }
+
+        private void Animation_Completed(object sender, EventArgs e)
+        {
         }
 
         #endregion
@@ -242,7 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         private void View_Closed(object sender, EventArgs e)
         {
-            Seekbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+            Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
             Player.PositionChanged -= Player_PositionChanged;
             View.Closed -= View_Closed;
 
@@ -270,9 +277,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             ChangingVideoPosition = true;
-            SeekbarMouseDownPosition = e.GetPosition(Seekbar.seekbar);
-            Seekbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
-            Seekbar.seekbar.MouseMove += Seekbar_MouseMove;
+            SeekbarMouseDownPosition = e.GetPosition(Navigationbar.seekbar);
+            Navigationbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
+            Navigationbar.seekbar.MouseMove += Seekbar_MouseMove;
         }
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
@@ -284,16 +291,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Debug.Assert(CanVideoPlay);
 
-            Seekbar.seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
-            Seekbar.seekbar.MouseMove -= Seekbar_MouseMove;
+            Navigationbar.seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
+            Navigationbar.seekbar.MouseMove -= Seekbar_MouseMove;
 
             float nextPosition;
 
             if(!SeekbarThumbMoving) {
-                var pos = e.GetPosition(Seekbar.seekbar);
-                nextPosition = (float)(pos.X / Seekbar.seekbar.ActualWidth);
+                var pos = e.GetPosition(Navigationbar.seekbar);
+                nextPosition = (float)(pos.X / Navigationbar.seekbar.ActualWidth);
             } else {
-                nextPosition = (float)Seekbar.VideoPosition;
+                nextPosition = (float)Navigationbar.VideoPosition;
             }
             // TODO: 読み込んでない部分は移動不可にする
             MoveVideoPostion(nextPosition);

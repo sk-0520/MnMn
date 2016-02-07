@@ -54,6 +54,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>http://yosiopp.net/archives/225</para>
         /// </summary>
         public static long MinimumPngFileSize => 67;
+        /// <summary>
+        /// 最小Jsonファイルサイズ。
+        /// </summary>
+        public static long MinimumJsonFileSize => "{}".Length;
 
         public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
@@ -89,6 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoCacheGetthumbinfoFileName => "thumb.xml";
         public static string SmileVideoCacheGetflvFileName => "getflv.xml";
         public static string SmileVideoCacheMsgFileName => "msg.xml";
+        public static string SmileVideoIndividualVideoSettingName => "setting.json";
 
         public static string CurrentLanguageCode => "ja-JP";
 

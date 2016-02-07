@@ -44,7 +44,8 @@
 
       <Grid Grid.Row="0" Grid.Column="0">
         <vlc_wpf:VlcPlayer x:Name="player" />
-        <Canvas x:Name="commentArea" />
+        <Canvas x:Name="normalCommentArea" />
+        <Canvas x:Name="contributorCommentArea" />
       </Grid>
       
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">

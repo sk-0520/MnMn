@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -68,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Thumb = thumb;
 
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+            Initialize();
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoRankingItemModel ranking, int number)
@@ -79,11 +81,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             RankingDetail.Title = SmileVideoRankingUtility.GetTitle(Ranking.Title);
 
             VideoInformationSource = SmileVideoVideoInformationSource.Ranking;
+            Initialize();
         }
 
         #region property
 
         Mediation Mediation { get; set; }
+
+        SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
+        FileInfo IndividualVideoSettingFile { get; set; }
 
         RawSmileVideoThumbModel Thumb { get; set; }
         FeedSmileVideoRankingItemModel Ranking { get; set; }
@@ -91,6 +97,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         RawSmileVideoRankingDetailModel RankingDetail { get; set; }
 
         RawSmileVideoGetflvModel Getflv { get; set; }
+
+        DirectoryInfo CacheDirectory { get; set; }
 
         public int Number { get; private set; }
 
@@ -326,9 +334,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public bool HasGetflv => Getflv != null;
 
+        public bool LoadedNormalVideo
+        {
+            get { return IndividualVideoSetting.LoadedNormal; }
+            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.LoadedNormal)); }
+        }
+        public bool LoadedEconomyVideo
+        {
+            get { return IndividualVideoSetting.LoadedEconomyMode; }
+            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.LoadedEconomyMode)); }
+        }
+
         #endregion
 
         #region function
+
+        void Initialize()
+        {
+            var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var dirInfo = (DirectoryInfo)response.Result;
+            var cachedDirPath = Path.Combine(dirInfo.FullName, VideoId);
+            if(Directory.Exists(cachedDirPath)) {
+                CacheDirectory = new DirectoryInfo(cachedDirPath);
+            } else {
+                CacheDirectory = Directory.CreateDirectory(cachedDirPath);
+            }
+
+            IndividualVideoSettingFile = new FileInfo(Path.Combine(CacheDirectory.FullName, Constants.SmileVideoIndividualVideoSettingName));
+            if(IndividualVideoSettingFile.Exists && IndividualVideoSettingFile.Length <= Constants.MinimumJsonFileSize) {
+                IndividualVideoSetting = SerializeUtility.LoadJsonDataFromFile<SmileVideoIndividualVideoSettingModel>(IndividualVideoSettingFile.FullName);
+            } else {
+                IndividualVideoSetting = new SmileVideoIndividualVideoSettingModel();
+            }
+        }
 
         void ThrowHasNotGetflv()
         {
@@ -386,9 +424,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageChecking;
 
-            var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            var dirInfo = (DirectoryInfo)response.Result;
-            var cachedFilePath = Path.Combine(dirInfo.FullName, VideoId, VideoId + ".png");
+            var cachedFilePath = Path.Combine(CacheDirectory.FullName, VideoId + ".png");
             if(File.Exists(cachedFilePath)) {
                 var fileInfo = new FileInfo(cachedFilePath);
                 if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumPngFileSize <= fileInfo.Length) {
@@ -428,6 +464,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
         }
 
+        public bool SaveSetting()
+        {
+            if(!IsChanged) {
+                return false;
+            }
+
+            SerializeUtility.SaveJsonDataToFile(IndividualVideoSettingFile.FullName, IndividualVideoSetting);
+            ResetChangeFlag();
+            return true;
+        }
 
         #endregion
     }

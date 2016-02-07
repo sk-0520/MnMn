@@ -222,6 +222,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         await downloader.StartAsync();
                         if(downloader.Completed) {
                             VideoLoadState = LoadState.Loaded;
+                            if(VideoInformationViewModel.IsEconomyMode) {
+                                VideoInformationViewModel.LoadedEconomyVideo = true;
+                            }else {
+                                VideoInformationViewModel.LoadedNormalVideo = true;
+                            }
+                            VideoInformationViewModel.SaveSetting();
                         } else {
                             VideoLoadState = LoadState.Failure;
                         }
