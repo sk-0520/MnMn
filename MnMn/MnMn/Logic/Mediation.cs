@@ -75,11 +75,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             // 設定値よりコマンドラインオプションを優先する
             var baseDir = VariableConstants.HasOptionCacheRootDirectoryPath
-                ? Path.Combine(VariableConstants.OptionValueCacheRootDirectoryPath, Constants.ApplicationName)
+                ? Path.Combine(VariableConstants.OptionValueCacheRootDirectoryPath, Constants.ApplicationDirectoryName)
                 : Setting.CacheDirectoryPath;
             ;
             if(string.IsNullOrWhiteSpace(baseDir)) {
-                baseDir = Path.Combine(Constants.CacheDirectoryPath, Constants.ApplicationName);
+                baseDir = Path.Combine(Constants.CacheDirectoryPath, Constants.ApplicationDirectoryName);
             }
 
             var path = new List<string>() {

@@ -39,6 +39,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string AssemblyParentDirectoryPath => Path.GetDirectoryName(AssemblyPath);
 
+#if DEBUG
+        public static string ApplicationDirectoryName => ApplicationName + "-debug";
+#else
+        public static string ApplicationDirectoryName => ApplicationName;
+#endif
+
         /// <summary>
         /// 最小XMLファイルサイズ。
         /// </summary>
@@ -96,6 +102,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string CacheDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        #endregion
+#endregion
     }
 }

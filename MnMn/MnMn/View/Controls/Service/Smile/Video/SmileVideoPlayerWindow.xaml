@@ -43,8 +43,8 @@
       </Grid.ColumnDefinitions>
 
       <Grid Grid.Row="0" Grid.Column="0">
-        <Canvas x:Name="commentArea" />
         <vlc_wpf:VlcPlayer x:Name="player" />
+        <Canvas x:Name="commentArea" />
       </Grid>
       
       <ListBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
@@ -53,7 +53,6 @@
 
       <Grid Grid.Row="1" Grid.Column="0">
         <Grid.RowDefinitions>
-          <RowDefinition/>
           <RowDefinition/>
         </Grid.RowDefinitions>
         <app_ctrl:Navigationbar

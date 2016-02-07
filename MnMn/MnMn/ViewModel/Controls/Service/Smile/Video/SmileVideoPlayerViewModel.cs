@@ -45,6 +45,8 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using System.Windows.Media.Animation;
+using System.Windows.Data;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -127,6 +129,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._totalTime, value); }
         }
 
+        TimeSpan PrevTime { get; set; }
+
         #endregion
 
         #region function
@@ -169,6 +173,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             Player.Position = setPosition;
+        }
+
+        void FireShowComment()
+        {
+            Debug.WriteLine("{0} - {1}", PrevTime, PlayTime);
+            foreach(var comment in NormalCommentList.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)) {
+                var label = new Label();
+                label.DataContext = comment;
+                label.Content = comment.Content;
+                CommentArea.Children.Add(label);
+                CommentArea.UpdateLayout();
+                Canvas.SetLeft(label, CommentArea.ActualWidth);
+                var animation = new DoubleAnimation();
+                animation.From = CommentArea.ActualWidth;
+                animation.To = -label.ActualWidth;
+                animation.Duration = new Duration(TimeSpan.FromSeconds(3));
+
+                label.BeginAnimation(Canvas.LeftProperty, animation);
+            }
         }
 
         #endregion
@@ -235,6 +258,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(CanVideoPlay && !ChangingVideoPosition) {
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
+                FireShowComment();
+                PrevTime = PlayTime;
             }
         }
 
