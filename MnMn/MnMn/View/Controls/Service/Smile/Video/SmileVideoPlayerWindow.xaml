@@ -63,6 +63,8 @@
           VideoLoadedSize="{Binding VideoLoadedSize}"
           VideoTotalSize="{Binding VideoTotalSize}"
           Volume="{Binding Volume}"
+          PlayTime="{Binding PlayTime}"
+          TotalTime="{Binding TotalTime}"
         />
       </Grid>
 

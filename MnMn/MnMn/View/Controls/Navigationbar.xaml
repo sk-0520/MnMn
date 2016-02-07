@@ -86,9 +86,9 @@
     </Slider>
     <StackPanel Grid.Column="3" Orientation="Horizontal">
       <TextBlock>
-        <Run Text="{Binding PlayTime, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <Run Text="{Binding PlayTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         <Run>/</Run>
-        <Run Text="{Binding TotalTime, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <Run Text="{Binding TotalTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
       </TextBlock>
       <Label Content="{Binding VideoLoadedSize, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
     </StackPanel>

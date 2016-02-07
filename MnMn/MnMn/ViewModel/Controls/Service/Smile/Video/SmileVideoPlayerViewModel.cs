@@ -56,7 +56,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isVideoPlayng;
 
         float _videoPosition;
-        int _volume=50;
+        int _volume=100;
+
+        TimeSpan _totalTime;
+        TimeSpan _playTime;
 
         #endregion
 
@@ -113,6 +116,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public TimeSpan PlayTime
+        {
+            get { return this._playTime; }
+            set { SetVariableValue(ref this._playTime, value); }
+        }
+        public TimeSpan TotalTime
+        {
+            get { return this._totalTime; }
+            set { SetVariableValue(ref this._totalTime, value); }
+        }
 
         #endregion
 
@@ -140,6 +153,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player.Play();
 
             CanVideoPlay = true;
+        }
+
+        void MoveVideoPostion(float targetPosition)
+        {
+            float setPosition = targetPosition;
+
+            if(targetPosition <= 0) {
+                setPosition = 0;
+            } else {
+                var percentLoaded = (double)VideoLoadedSize / (double)VideoTotalSize;
+                if(percentLoaded < targetPosition) {
+                    setPosition = (float)percentLoaded;
+                }
+            }
+
+            Player.Position = setPosition;
         }
 
         #endregion
@@ -180,20 +209,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return base.LoadCommentAsync(rawMsgPacket);
         }
 
-        void MoveVideoPostion(float targetPosition)
+        protected override void OnLoadGetthumbinfoEnd()
         {
-            float setPosition = targetPosition;
-
-            if(targetPosition <= 0) {
-                setPosition = 0;
-            } else {
-                var percentLoaded = (double)VideoLoadedSize / (double)VideoTotalSize;
-                if(percentLoaded < targetPosition) {
-                    setPosition = (float)percentLoaded;
-                }
-            }
-
-            Player.Position = setPosition;
+            TotalTime = VideoInformationViewModel.Length;
+            base.OnLoadGetthumbinfoEnd();
         }
 
         #endregion
@@ -215,6 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
                 VideoPosition = Player.Position;
+                PlayTime = Player.Time;
             }
         }
 
