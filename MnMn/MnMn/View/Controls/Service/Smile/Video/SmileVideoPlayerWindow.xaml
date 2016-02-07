@@ -47,6 +47,7 @@
       <Viewbox
         Grid.Row="0"
         Grid.Column="0"
+        ClipToBounds="True"
       >
         <Grid>
           <vlc_wpf:VlcPlayer x:Name="player" />

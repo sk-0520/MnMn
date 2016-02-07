@@ -16,6 +16,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoCommentViewModel: SingleModelWrapperViewModelBase<RawSmileVideoMsgChatModel>
     {
+        #region variable
+
+        double _left;
+        double _top;
+        double _width;
+        double _height;
+
+        #endregion
+
         public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model, SmileVideoSettingModel setting)
             : base(model)
         {
@@ -25,6 +34,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
+
+        public double Left
+        {
+            get { return this._left; }
+            set { SetVariableValue(ref this._left, value); }
+        }
+        public double Top
+        {
+            get { return this._top; }
+            set { SetVariableValue(ref this._top, value); }
+        }
+        public double Width
+        {
+            get { return this._width; }
+            set { SetVariableValue(ref this._width, value); }
+        }
+        public double Height
+        {
+            get { return this._height; }
+            set { SetVariableValue(ref this._height, value); }
+        }
 
         public int Score
         {

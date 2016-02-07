@@ -59,14 +59,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         class CommentData
         {
-            public CommentData(SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
+            public CommentData(FrameworkElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
             {
+                Element = element;
                 ViewModel = viewModel;
                 Animation = animation;
             }
 
             #region property
 
+            public FrameworkElement Element { get; }
             public SmileVideoCommentViewModel ViewModel { get; }
             public AnimationTimeline Animation { get; }
 
@@ -114,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool IsDead { get; set; }
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
 
-        List<CommentData> CommentBoxList { get; } = new List<CommentData>();
+        List<CommentData> NormalCommentShowList { get; } = new List<CommentData>();
 
         public bool CanVideoPlay
         {
@@ -206,7 +208,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void FireShowComment()
         {
             Debug.WriteLine("{0} - {1}", PrevTime, PlayTime);
-            
+
+            var commentArea = new Size(
+                NormalCommentArea.ActualWidth,
+                NormalCommentArea.ActualHeight
+            );
+
             foreach(var commentViewModel in NormalCommentList.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
                 var ft = new FormattedText(
                     commentViewModel.Content,
@@ -240,9 +247,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 Canvas.SetLeft(box, NormalCommentArea.ActualWidth);
 
+                // 今あるコメントから安全圏を走査
+                var lastData = NormalCommentShowList
+                    .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
+                    .OrderBy(i => Canvas.GetTop(i.Element))
+                    .LastOrDefault()
+                ;
+                if(lastData != null) {
+                    var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
+                    if(commentArea.Height < nextY + box.ActualHeight) {
+                        Canvas.SetTop(box, 0);
+                    } else {
+                        Canvas.SetTop(box, nextY);
+                    }
+                } else {
+                    Canvas.SetTop(box, 0);
+                }
+
+
                 var animation = new DoubleAnimation();
-                var data = new CommentData(commentViewModel, animation);
-                CommentBoxList.Add(data);
+                var data = new CommentData(box, commentViewModel, animation);
+                NormalCommentShowList.Add(data);
 
                 var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevTime.TotalMilliseconds;
                 var diffPosition = starTime / NormalCommentArea.ActualWidth;
@@ -254,11 +279,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 EventDisposer< EventHandler> ev = null;
                 animation.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
                     NormalCommentArea.Children.Remove(box);
-                    CommentBoxList.Remove(data);
+                    NormalCommentShowList.Remove(data);
                     ev.Dispose();
                     box =  null;
                     ev = null;
-                }, h => NormalCommentArea.Dispatcher.Invoke(() =>  animation.Completed -= h), out ev);
+                }, h => NormalCommentArea.Dispatcher.BeginInvoke(new Action(() =>  animation.Completed -= h)), out ev);
 
                 box.BeginAnimation(Canvas.LeftProperty, animation);
             }
@@ -294,7 +319,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
-            var comments = rawMsgPacket.Chat.Select(c => new SmileVideoCommentViewModel(c, Setting)).OrderBy(c => c.ElapsedTime).ToArray();
+            var comments = rawMsgPacket.Chat
+                .GroupBy(c => c.No)
+                .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
+                .OrderBy(c => c.ElapsedTime)
+                .ToArray()
+            ;
 
             NormalCommentList.InitializeRange(comments.Where(c => !c.IsContributor));
             ContributorCommentList.InitializeRange(comments.Where(c => c.IsContributor));
