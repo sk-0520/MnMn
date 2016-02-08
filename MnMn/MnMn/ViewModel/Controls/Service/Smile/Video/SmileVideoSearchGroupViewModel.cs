@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoElementModel _selectedMethod;
         SmileVideoElementModel _selectedSort;
         SmileVideoElementModel _selectedType;
+
+        ICollectionView _selectedVideoInformationItems;
 
         #endregion
 
@@ -72,7 +75,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedType, value); }
         }
 
-        CollectionModel<SmileVideoSearchItemViewModel> SearchItems { get; } = new CollectionModel<SmileVideoSearchItemViewModel>();
+        public CollectionModel<SmileVideoSearchItemViewModel> SearchItems { get; } = new CollectionModel<SmileVideoSearchItemViewModel>();
+
+        public ICollectionView SelectedVideoInformationItems {
+            get { return this._selectedVideoInformationItems; }
+            set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
+        }
 
         #endregion
 
@@ -100,7 +108,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task LoadAsync()
         {
             var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, SelectedMethod, SelectedSort, SelectedType, Query, 0, 100);
-            return vm.LoadAsync();
+            return vm.LoadAsync().ContinueWith(task => {
+                SearchItems.Add(vm);
+                SelectedVideoInformationItems = vm.VideoInformationItems;
+            });
         }
 
         #endregion

@@ -70,7 +70,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Sort.Key,
                 Index,
                 Count
-            );
+            ).ContinueWith(task => {
+                var result = task.Result;
+                var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index));
+                return list;
+            }).ContinueWith(task => {
+                var list = task.Result;
+                VideoInformationList.InitializeRange(list);
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion

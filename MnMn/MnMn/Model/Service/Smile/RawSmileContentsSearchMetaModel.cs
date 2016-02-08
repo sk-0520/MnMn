@@ -17,27 +17,21 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using Newtonsoft.Json;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
-    /// <summary>
-    /// 動画の入力元。
-    /// </summary>
-    public enum SmileVideoVideoInformationSource
+    public class RawSmileContentsSearchMetaModel: ModelBase
     {
-        /// <summary>
-        /// getthumbinfo api を使用。
-        /// </summary>
-        Getthumbinfo,
-        /// <summary>
-        /// ランキングから取得。
-        /// </summary>
-        Ranking,
-        /// <summary>
-        /// 検索から取得。
-        /// </summary>
-        Search,
+        [DataMember(Name = "status")]
+        public string Status { get; set; }
+        [DataMember(Name = "totalCount")]
+        public string TotalCount { get; set; }
+        [DataMember(Name = "id")]
+        public string Id { get; set; }
     }
 }

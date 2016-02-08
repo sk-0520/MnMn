@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
 {
@@ -92,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
             return map[searchField];
         }
 
-        public async Task GetAsnc(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
+        public async Task<RawSmileContentsSearchModel> GetAsnc(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
@@ -107,9 +110,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
                 page.ReplaceUriParameters["limit"] = getCount.ToString();
                 page.ReplaceUriParameters["context"] = "test";
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(response.Result))) {
+                    return SerializeUtility.LoadJsonDataFromStream<RawSmileContentsSearchModel>(stream);
+                }
             }
         }
-        public Task GetAsnc(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
+        public Task<RawSmileContentsSearchModel> GetAsnc(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
             return GetAsnc(

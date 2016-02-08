@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -72,6 +73,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
+        public SmileVideoInformationViewModel(Mediation mediation, RawSmileContentsSearchItemModel search, int number)
+            : this(mediation, number)
+        {
+            Search = search;
+
+            VideoInformationSource = SmileVideoVideoInformationSource.Search;
+            Initialize();
+        }
+
         public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoRankingItemModel ranking, int number)
             : this(mediation, number)
         {
@@ -93,6 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         RawSmileVideoThumbModel Thumb { get; set; }
         FeedSmileVideoRankingItemModel Ranking { get; set; }
+        RawSmileContentsSearchItemModel Search { get; }
 
         RawSmileVideoRankingDetailModel RankingDetail { get; set; }
 
@@ -127,6 +138,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                     case SmileVideoVideoInformationSource.Ranking:
                         return RankingDetail.VideoId;
+
+                    case SmileVideoVideoInformationSource.Search:
+                        return Search.ContentId;
 
                     default:
                         throw new NotImplementedException();

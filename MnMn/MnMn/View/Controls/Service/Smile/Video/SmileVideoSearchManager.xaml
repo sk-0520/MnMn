@@ -71,7 +71,7 @@
         <DataTemplate>
           <Grid>
             <Grid.RowDefinitions>
-              <RowDefinition />
+              <RowDefinition Height="*" />
               <RowDefinition />
               <RowDefinition />
             </Grid.RowDefinitions>
