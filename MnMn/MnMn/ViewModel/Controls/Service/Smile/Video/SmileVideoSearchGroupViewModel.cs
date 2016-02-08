@@ -33,7 +33,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoElementModel _selectedMethod;
         SmileVideoElementModel _selectedSort;
-        SmileVideoElementModel _selectedType;
 
         ICollectionView _selectedVideoInformationItems;
 
@@ -44,8 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation = mediation;
             SearchModel = searchModel;
             Query = query;
+            Type = type;
 
-            SetContextElements(method, sort, type);
+            SetContextElements(method, sort);
         }
 
         #region property
@@ -55,9 +55,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
         public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
-        public IList<SmileVideoElementModel> TypeItems => SearchModel.Type;
 
         public string Query { get; }
+        public SmileVideoElementModel Type { get; }
 
         public SmileVideoElementModel SelectedMethod
         {
@@ -68,11 +68,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._selectedSort; }
             set { SetVariableValue(ref this._selectedSort, value); }
-        }
-        public SmileVideoElementModel SelectedType
-        {
-            get { return this._selectedType; }
-            set { SetVariableValue(ref this._selectedType, value); }
         }
 
         public CollectionModel<SmileVideoSearchItemViewModel> SearchItems { get; } = new CollectionModel<SmileVideoSearchItemViewModel>();
@@ -98,16 +93,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public void SetContextElements(SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type)
+        public void SetContextElements(SmileVideoElementModel method, SmileVideoElementModel sort)
         {
             SelectedMethod = GetContextElemetFromChangeElement(MethodItems, method);
             SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
-            SelectedType = GetContextElemetFromChangeElement(TypeItems, type);
         }
 
         public Task LoadAsync()
         {
-            var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, SelectedMethod, SelectedSort, SelectedType, Query, 0, 100);
+            var nowMethod = SelectedMethod;
+            var nowSort = SelectedSort;
+
+            var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, 100);
             return vm.LoadAsync().ContinueWith(task => {
                 SearchItems.Add(vm);
                 SelectedVideoInformationItems = vm.VideoInformationItems;

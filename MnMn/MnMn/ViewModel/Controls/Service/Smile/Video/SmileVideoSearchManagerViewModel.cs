@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -36,6 +37,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoElementModel _selectedType;
 
         string _inputQuery = "ACV";
+
+        SmileVideoSearchGroupViewModel _selectedSearchGroup;
 
         #endregion
 
@@ -58,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
         public IList<SmileVideoElementModel> TypeItems => SearchModel.Type;
 
-        public CollectionModel<SmileVideoSearchGroupViewModel> SearchGroupItems { get; } = new CollectionModel<SmileVideoSearchGroupViewModel>();
+        public CollectionModel<SmileVideoSearchGroupViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupViewModel>();
 
         public SmileVideoElementModel SelectedMethod
         {
@@ -82,6 +85,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._inputQuery, value); }
         }
 
+        public SmileVideoSearchGroupViewModel SelectedSearchGroup
+        {
+            get { return this._selectedSearchGroup; }
+            set { SetVariableValue(ref this._selectedSearchGroup, value); }
+        }
 
 
         #endregion
@@ -93,9 +101,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 return CreateCommand(o => {
-                    var vm = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, SelectedMethod, SelectedSort, SelectedType, InputQuery);
-                    SearchGroupItems.Add(vm);
-                    vm.LoadAsync().ContinueWith(task => {
+                    var nowMethod = SelectedMethod;
+                    var nowSort = SelectedSort;
+                    var nowType = SelectedType;
+                    var nowQuery = InputQuery;
+
+                    // 存在する場合は該当タブへ遷移
+                    var selectViewModel = RestrictUtility.IsNotNull(
+                        SearchGroups.FirstOrDefault(i => i.Query == nowQuery && i.Type.Key == nowType.Key),
+                        viewModel => {
+                            viewModel.SetContextElements(nowMethod, nowSort);
+                            return viewModel;
+                        },
+                        () => {
+                            var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, nowMethod, nowSort, nowType, nowQuery);
+                            SearchGroups.Insert(0, viewModel);
+                            return viewModel;
+                        }
+                    );
+                    selectViewModel.LoadAsync().ContinueWith(task => {
+                        SelectedSearchGroup = selectViewModel;
                     });
                 });
             }

@@ -47,7 +47,11 @@
       <Button Command="{Binding SearchCommand}">search</Button>
     </StackPanel>
 
-    <TabControl Grid.Row="1" ItemsSource="{Binding SearchGroupItems}">
+    <TabControl 
+      Grid.Row="1" 
+      ItemsSource="{Binding SearchGroups}"
+      SelectedItem="{Binding SelectedSearchGroup}"
+    >
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">

@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
 
-                        // すでに存在する場合はそのタブへ遷移
+                        // 存在する場合は該当タブへ遷移
                         var selectViewModel = RestrictUtility.IsNotNull(
                             RankingCategoryGroupItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key),
                             viewModel => {
