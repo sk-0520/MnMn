@@ -43,7 +43,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoRankingCategoryItemViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoRankingCategoryGroupItemViewModel: SmileVideoFinderViewModelBase
     {
         #region variable
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoRankingCategoryItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
+        public SmileVideoRankingCategoryGroupItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
             :base(mediation)
         {
             PeriodItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Periods.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
@@ -82,15 +82,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoElementModel Category { get; private set; }
 
         public string CategoryName => Category.CurrentWord;
-
-        public override bool CanLoad
-        {
-            get
-            {
-                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
-                return !loadSkips.Any(l => l == FinderLoadState);
-            }
-        }
 
         #endregion
 
@@ -223,12 +214,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region ViewModelBase
 
-        protected override void Dispose(bool disposing)
+        public override bool CanLoad
         {
-            if(!IsDisposed) {
-                DisposeCancelLoading();
+            get
+            {
+                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
+                return !loadSkips.Any(l => l == FinderLoadState);
             }
-            base.Dispose(disposing);
         }
 
         #endregion

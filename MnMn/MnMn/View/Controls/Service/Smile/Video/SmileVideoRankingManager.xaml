@@ -46,7 +46,7 @@
 
     <TabControl 
       Grid.Row="1" 
-      ItemsSource="{Binding RankingCategoryItems}" 
+      ItemsSource="{Binding RankingCategoryGroupItems}" 
       SelectedItem="{Binding SelectedRankingCategory}" 
     >
       <TabControl.ItemTemplate>

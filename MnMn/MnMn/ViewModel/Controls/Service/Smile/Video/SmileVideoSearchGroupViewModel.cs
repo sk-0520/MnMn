@@ -23,7 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoSearchViewModel: ViewModelBase
+    public class SmileVideoSearchGroupViewModel:ViewModelBase
     {
     }
 }
