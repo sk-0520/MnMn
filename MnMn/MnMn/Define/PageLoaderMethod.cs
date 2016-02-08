@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public enum HttpMethod
+    public enum PageLoaderMethod
     {
         Post,
         Get,

@@ -59,9 +59,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
-            using(var page = new PageScraping(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
-                var response = await page.GetResponseTextAsync(HttpMethod.Get);
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 var document = new HtmlDocument();
                 document.LoadHtml(response.Result);
                 var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
@@ -80,10 +80,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         async Task<RawSmileVideoGetflvModel> GetNormalAsync(Uri uri)
         {
-            using(var page = new PageScraping(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
 
-                var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 var result = Load(response.Result);
                 return result;
             }

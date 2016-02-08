@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileMediationKey.contentsSearch, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.contentsSearch, ServiceType.Smile)) {
                 page.ReplaceUriParameters["service"] = ToContentsSearchServiceString(searchService);
                 page.ReplaceUriParameters["query"] = query;
                 page.ReplaceUriParameters["targets"] = ToSmileContentsSearchTypeString(searchType);
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
                 page.ReplaceUriParameters["offset"] = fromIndex.ToString();
                 page.ReplaceUriParameters["limit"] = getCount.ToString();
                 page.ReplaceUriParameters["context"] = "test";
-                var response = await page.GetResponseTextAsync(HttpMethod.Get);
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
             }
         }
     }

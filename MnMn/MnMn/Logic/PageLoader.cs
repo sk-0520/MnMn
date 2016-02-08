@@ -34,12 +34,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     /// <summary>
     /// ページ取得からあれこれ解析まで一通り頑張る人。
-    /// <para>名前似てるけどウェブスクレイピングを明示的に行う処理ではない、名前思いつかなかった。</para>
     /// <para>こまごま public だけど基本的に GetTextAsync のみで使い捨て。</para>
     /// </summary>
-    public class PageScraping: DisposeFinalizeBase
+    public class PageLoader: DisposeFinalizeBase
     {
-        public PageScraping(Mediation mediation, ICreateHttpUserAgent userAgentCreator, string key, ServiceType serviceType)
+        public PageLoader(Mediation mediation, ICreateHttpUserAgent userAgentCreator, string key, ServiceType serviceType)
         {
             Mediation = mediation;
             HttpUserAgent = userAgentCreator.CreateHttpUserAgent();
@@ -48,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             OwnershipUA = true;
         }
 
-        public PageScraping(Mediation mediation, HttpUserAgentHost host, string key, ServiceType serviceType)
+        public PageLoader(Mediation mediation, HttpUserAgentHost host, string key, ServiceType serviceType)
         {
             Mediation = mediation;
             HttpUserAgent = host.Client;
@@ -177,17 +176,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected Func<Task<HttpResponseMessage>> GetExecutor(Define.HttpMethod httpMethod)
+        protected Func<Task<HttpResponseMessage>> GetExecutor(Define.PageLoaderMethod httpMethod)
         {
-            var method = new Dictionary<Define.HttpMethod, Func<Task<HttpResponseMessage>>>() {
-                { Define.HttpMethod.Get, () => {
+            var method = new Dictionary<Define.PageLoaderMethod, Func<Task<HttpResponseMessage>>>() {
+                { Define.PageLoaderMethod.Get, () => {
                     if(StopHeaderCheck) {
                         return HttpUserAgent.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead);
                     } else {
                         return HttpUserAgent.GetAsync(Uri);
                     }
                 } },
-                { Define.HttpMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
+                { Define.PageLoaderMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
             };
 
             return method[httpMethod];
@@ -213,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// 一連の処理を自動化してテキストデータを返す。
         /// </summary>
         /// <returns></returns>
-        public async Task<CheckResultModel<string>> GetResponseTextAsync(Define.HttpMethod httpMethod)
+        public async Task<CheckResultModel<string>> GetResponseTextAsync(Define.PageLoaderMethod httpMethod)
         {
             try {
                 MakeUri();

@@ -191,13 +191,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             NowLoading = true;
             var rankingFeedModel = await RestrictUtility.Block(async () => {
                 using(var host = new HttpUserAgentHost())
-                using(var page = new PageScraping(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
+                using(var page = new PageLoader(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
                     page.ReplaceUriParameters["target"] = SelectedTarget.Key;
                     page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
                     page.ReplaceUriParameters["category"] = Category.Key;
                     page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
 
-                    var rankingXmlResult = await page.GetResponseTextAsync(HttpMethod.Get);
+                    var rankingXmlResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                     if(!rankingXmlResult.IsSuccess) {
                         RankingLoad = SmileVideoRankingLoad.Failure;
                         return null;

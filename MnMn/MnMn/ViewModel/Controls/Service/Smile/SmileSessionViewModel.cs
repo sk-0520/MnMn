@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
                 page.StopHeaderCheck = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.User;
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                     return CheckModel.Failure();
                 };
 
-                await page.GetResponseTextAsync(Define.HttpMethod.Post);
+                await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
             }
             return;
         }
@@ -108,12 +108,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return;
             }
 
-            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
                 page.StopHeaderCheck = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
                 };
-                await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
             }
         }
 
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return false;
             }
 
-            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
                 page.StopHeaderCheck = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
                     return CheckModel.Failure();
                 };
-                var result = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                var result = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 return result.IsSuccess;
             }
 

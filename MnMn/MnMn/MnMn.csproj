@@ -181,7 +181,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Define\Delegate\JudgeResponsePageScraping.cs" />
     <Compile Include="Define\Delegate\CreateHttpUserAgent.cs" />
-    <Compile Include="Define\HttpMethods.cs" />
+    <Compile Include="Define\PageLoaderMethod.cs" />
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\NameType.cs" />
     <Compile Include="Define\Service\Smile\SmileMediationKey.cs" />
@@ -205,7 +205,7 @@
     <Compile Include="Logic\Attribute\NameAttributeUtility.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getflv.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getthumbinfo.cs" />
-    <Compile Include="Logic\PageScraping.cs" />
+    <Compile Include="Logic\PageLoader.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />
     <Compile Include="Logic\Service\Smile\SmileMediation.cs" />
