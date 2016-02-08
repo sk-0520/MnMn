@@ -297,6 +297,7 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
+    <Folder Include="Logic\Service\Smile\Video\HalfBakedApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

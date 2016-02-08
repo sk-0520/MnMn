@@ -65,6 +65,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             set { SetVariableValue(ref this._loginState, value); }
         }
 
+        /// <summary>
+        /// この期間内であればログイン済みと判断する。
+        /// </summary>
+        public　virtual  CacheSpan CacheSpan { get; }
+
         #endregion
 
         #region function
@@ -72,6 +77,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public abstract Task LoginAsync();
         public abstract Task LogoutAsync();
         public abstract Task<bool> CheckLoginAsync();
+
+        /// <summary>
+        /// ログインを自動実行する。
+        /// </summary>
+        /// <returns></returns>
+        public async Task LoginIfNotLoginAsync()
+        {
+            if(!await CheckLoginAsync()) {
+                await LoginAsync();
+            }
+        }
 
         #endregion
 
