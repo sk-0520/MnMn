@@ -23,6 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -72,8 +73,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public void Temp_Find(string videoId)
         {
-            var ss = new Snapshot(Mediation);
-            ss.GetAsnc(SmileVideoSnapshotSearchType.Tag, "ACV", SmileVideoSnapshotSortBy.ViewCounter, Library.SharedLibrary.Define.OrderBy.Asc, 0, 100).ContinueWith(task => {
+            var ss = new ContentsSearch(Mediation);
+            ss.GetAsnc(
+                Define.Service.Smile.SmileContentsSearchService.Video, 
+                "ACV", 
+                Define.Service.Smile.SmileContentsSearchType.Tag, 
+                Define.Service.Smile.SmileContentsSearchField.ViewCounter,
+                new [] {
+                Define.Service.Smile.SmileContentsSearchField.ContentId,
+                Define.Service.Smile.SmileContentsSearchField.Title,
+                Define.Service.Smile.SmileContentsSearchField.Description,
+                Define.Service.Smile.SmileContentsSearchField.StartTime,
+                Define.Service.Smile.SmileContentsSearchField.Tags,
+                Define.Service.Smile.SmileContentsSearchField.CategoryTags,
+                Define.Service.Smile.SmileContentsSearchField.CommentCounter,
+                Define.Service.Smile.SmileContentsSearchField.ViewCounter,
+                Define.Service.Smile.SmileContentsSearchField.MylistCounter,
+                Define.Service.Smile.SmileContentsSearchField.StartTime,
+                },
+                Library.SharedLibrary.Define.OrderBy.Asc, 
+                0, 
+                100
+            ).ContinueWith(task => {
             });
         }
 

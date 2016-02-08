@@ -20,20 +20,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
     /// <summary>
-    /// 検索方法。
+    /// 検索対象のサービス。
     /// </summary>
-    public enum SmileVideoSnapshotSearchType
+    public enum SmileContentsSearchService
     {
         /// <summary>
-        /// タグ検索。
+        /// 動画。
         /// </summary>
-        Tag,
+        Video,
         /// <summary>
-        /// キーワード検索。
+        /// 生放送。
         /// </summary>
-        Keyword,
+        Live,
+        /// <summary>
+        /// 静画(イラスト)。
+        /// </summary>
+        Illust,
+        /// <summary>
+        /// 静画(マンガ)。
+        /// </summary>
+        Manga,
+        /// <summary>
+        /// 静画(書籍)。
+        /// </summary>
+        Book,
+        /// <summary>
+        /// チャンネル。
+        /// </summary>
+        Channel,
+        /// <summary>
+        /// ブロマガ記事(著名人)。
+        /// </summary>
+        ChannelArticle,
+        /// <summary>
+        /// ニュース。
+        /// </summary>
+        News,
     }
 }

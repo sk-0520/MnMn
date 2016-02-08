@@ -64,6 +64,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("bond")]
         public string Bond { get; set; }
         /// <summary>
+        /// 値が無い場合にはキーも処理対象外とする。
+        /// </summary>
+        [XmlAttribute("force")]
+        public bool Force { get; set; }
+        /// <summary>
         /// キーが存在するか。
         /// </summary>
         public bool HasKey => !string.IsNullOrWhiteSpace(Key);

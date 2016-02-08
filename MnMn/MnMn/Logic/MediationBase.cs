@@ -174,6 +174,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Debug.Assert(type != UriParameterType.None);
 
             var val = ReplaceString(pair.Value, replaceMap);
+            if(pair.Force && string.IsNullOrEmpty(val)) {
+                return string.Empty;
+            }
 
             switch(type) {
                 case UriParameterType.Query:
@@ -211,6 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 .FirstOrDefault(up => up.Key == uriItem.Key)
                 ?.Items
                 ?.Select(p => ToUriParameterString(p, uriItem.UriParameterType, replaceMap))
+                ?.Where(s => !string.IsNullOrEmpty(s))
             ;
             if(convertedParams == null) {
                 return uri;

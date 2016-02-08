@@ -20,36 +20,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    /// <summary>
-    /// 並び替え方法。
-    /// </summary>
-    public enum SmileVideoSnapshotSortBy
+    public enum SmileContentsSearchType
     {
         /// <summary>
-        /// コメントが新しい/古い順。
+        /// タグ検索。
         /// </summary>
-        LastCommentTime,
+        Tag,
         /// <summary>
-        /// 再生数が多い/少ない順。
+        /// キーワード検索。
         /// </summary>
-        ViewCounter,
-        /// <summary>
-        /// 投稿日時が新しい/古い順。
-        /// </summary>
-        StartTime,
-        /// <summary>
-        /// マイリスト数が多い/少ない順。
-        /// </summary>
-        MylistCounter,
-        /// <summary>
-        /// コメント数が多い順/少ない順。
-        /// </summary>
-        CommentCounter,
-        /// <summary>
-        /// 再生時間が長い順/短い順。
-        /// </summary>
-        LengthSeconds,
+        Keyword,
     }
 }

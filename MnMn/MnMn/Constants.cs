@@ -81,13 +81,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileUriListPath => Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
         public static string SmileUriParametersListPath => Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
         public static string SmileRequestParametersListPath => Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
+        public static string SmileRequestMappingsListPath => Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
 
         public static string DefineSmileVideoDirectoryPath => Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
 
         public static string SmileVideoUriListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
         public static string SmileVideoUriParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
         public static string SmileVideoRequestParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
-        public static string SmileVideoRequestMappingsListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-mapping.xml");
+        public static string SmileVideoRequestMappingsListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
 
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
 

@@ -27,5 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string videoLogin = "video-session-login";
         public const string videoLogout = "video-session-logout";
         public const string videoCheck = "video-session-check";
+
+        public const string contentsSearch = "smile-contents-search";
     }
 }

@@ -31,7 +31,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string getflvScraping = "video-getflv-scraping";
         public const string getthreadkey = "video-getthreadkey";
         public const string msg = "video-msg";
-        public const string snapshot = "video-snapshot";
 
         public const string inputEconomyMode = "getflv-economy-mode";
         public const string inputScrapingVideo = "getthumbinfo-scraping-video";

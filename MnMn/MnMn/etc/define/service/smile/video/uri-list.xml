@@ -6,5 +6,4 @@
 	<item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="PreSuffixes" />
 	<item key="video-getthreadkey" uri="http://flapi.nicovideo.jp/api/getthreadkey" param="Query" />
 	<item key="video-msg" uri="${msg-uri}" param="None" />
-	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="None" />
 </uri>
