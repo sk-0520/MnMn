@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
-            using(var page = new PageScraping(Mediation, SessionBase, SmileVideoMediationKey.getflvWebpage, ServiceType.SmileVideo)) {
+            using(var page = new PageScraping(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
                 var response = await page.GetResponseTextAsync(HttpMethod.Get);
                 var document = new HtmlDocument();

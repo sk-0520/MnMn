@@ -116,11 +116,14 @@
     <Compile Include="Logic\Service\ApiBase.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Msg.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getthreadkey.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\Snapshot.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\MappingItemBracketModel.cs" />
+    <Compile Include="Model\MappingItemNodeBase.cs" />
+    <Compile Include="Model\MappingItemCustomModel.cs" />
     <Compile Include="Model\MappingItemModel.cs" />
     <Compile Include="Model\MappingContentModel.cs" />
     <Compile Include="Model\MappingModel.cs" />

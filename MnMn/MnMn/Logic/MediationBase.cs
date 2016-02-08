@@ -247,9 +247,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
-        protected string ToMappingBranket(string s, string target, IEnumerable<MappingItemBracketModel> list)
+        protected string BuildMapping(string s, string target, MappingItemModel item)
         {
-            var bracket = list.FirstOrDefault(b => b.Target == target);
+            var bracket = item.Brackets.FirstOrDefault(b => b.Target == target);
             if(bracket == null) {
                 return s;
             }
@@ -262,13 +262,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             switch(item.Type) {
                 case MappingItemType.Simple:
-                    return $"{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
+                    return $"{BuildMapping(value, MappingItemModel.targetValue, item)}";
 
                 case MappingItemType.Pair: {
                         var name = ReplaceString(item.Name, replaceMap);
                         var bond = ReplaceString(item.Bond, replaceMap);
                         
-                        return $"{ToMappingBranket(name, MappingItemModel.targetName, item.Brackets)}{ToMappingBranket(bond, MappingItemModel.targetBond, item.Brackets)}{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
+                        return $"{BuildMapping(name, MappingItemModel.targetName, item)}{BuildMapping(bond, MappingItemModel.targetBond, item)}{BuildMapping(value, MappingItemModel.targetValue, item)}";
                     }
 
                 case MappingItemType.ForcePair: {
@@ -279,7 +279,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             var fail = ReplaceString(item.Failure, replaceMap);
                             return fail;
                         }
-                        return $"{ToMappingBranket(name, MappingItemModel.targetName, item.Brackets)}{ToMappingBranket(bond, MappingItemModel.targetBond, item.Brackets)}{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
+                        return $"{BuildMapping(name, MappingItemModel.targetName, item)}{BuildMapping(bond, MappingItemModel.targetBond, item)}{BuildMapping(value, MappingItemModel.targetValue, item)}";
                     }
 
                 default:

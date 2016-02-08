@@ -21,19 +21,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingItemBracketModel: MappingItemNodeBase
+    public abstract class MappingItemNodeBase: ModelBase
     {
-        #region
-
-        [XmlAttribute("open")]
-        public string Open { get; set; }
-
-        [XmlAttribute("close")]
-        public string Close { get; set; }
-
-        #endregion
+        [XmlAttribute("target")]
+        public string Target { get; set; }
     }
 }
