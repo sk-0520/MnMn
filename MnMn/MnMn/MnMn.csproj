@@ -144,7 +144,9 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchViewModel.cs" />
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
       <DependentUpon>Navigationbar.xaml</DependentUpon>
     </Compile>
@@ -188,7 +190,7 @@
     <Compile Include="Define\Service\Smile\SmileMediationKey.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoMovieType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoMediationKey.cs" />
-    <Compile Include="Define\Service\Smile\Video\SmileVideoRankingLoad.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoFinderLoadState.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoThumbType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoVideoThumbnailLoad.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoVideoInformationSource.cs" />

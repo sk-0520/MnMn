@@ -58,7 +58,7 @@
                 <RowDefinition />
               </Grid.RowDefinitions>
               <TextBlock Grid.Row="0" Text="{Binding CategoryName}" />
-              <TextBlock Grid.Row="1" Text="{Binding RankingLoad}" />
+              <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
             </Grid>
             <app_contrl_nc_video:SmileVideoRankingContextElements 
               TargetItemsSource="{Binding TargetItems}"

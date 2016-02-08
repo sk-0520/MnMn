@@ -23,9 +23,9 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
     /// <summary>
-    /// ランキングの読込状態。
+    /// 動画リストの読込状態。
     /// </summary>
-    public enum SmileVideoRankingLoad
+    public enum SmileVideoFinderLoadState
     {
         /// <summary>
         /// 読み込んでない。
@@ -34,11 +34,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// <summary>
         /// ランキングリスト取得中。
         /// </summary>
-        RankingListLoading,
+        VideoSourceLoading,
         /// <summary>
         /// ランキングリストチェック中。
         /// </summary>
-        RankingListChecking,
+        VideoSourceChecking,
         /// <summary>
         /// サムネイル取得中。
         /// </summary>
