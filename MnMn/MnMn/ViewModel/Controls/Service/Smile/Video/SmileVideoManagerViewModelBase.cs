@@ -19,33 +19,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum RequestKind
+    public class SmileVideoManagerViewModelBase: ViewModelBase
     {
-        /// <summary>
-        /// セッション。
-        /// </summary>
-        Session,
-        /// <summary>
-        /// ランキング定義オブジェクト。
-        /// </summary>
-        RankingDefine,
-        /// <summary>
-        /// 検索定義オブジェクト。
-        /// </summary>
-        SearchDefine,
-        /// <summary>
-        /// キャッシュ用ディレクトリパス。
-        /// </summary>
-        CacheDirectory,
-        /// <summary>
-        /// 基本設定データ。
-        /// </summary>
-        Setting,
+        #region variable
+
+        bool _visible;
+
+        #endregion
+
+        public SmileVideoManagerViewModelBase(Mediation mediation)
+        {
+            Mediation = mediation;
+        }
+
+        #region property
+
+        protected Mediation Mediation { get; }
+
+        public bool Visible
+        {
+            get { return this._visible; }
+            set { SetVariableValue(ref this._visible, value); }
+        }
+
+        #endregion
     }
 }

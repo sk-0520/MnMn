@@ -91,6 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoRequestMappingsListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
 
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
+        public static string SmileVideoSearchPath => Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
 
         public static string SmileVideoCacheGetthumbinfoFileName => "thumb.xml";
         public static string SmileVideoCacheGetflvFileName => "getflv.xml";

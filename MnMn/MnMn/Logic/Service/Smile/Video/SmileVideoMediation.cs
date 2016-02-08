@@ -38,13 +38,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             Setting = setting;
 
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
+            Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
         }
 
         #region property
 
         SmileVideoSettingModel Setting { get; }
 
-        SmileVideoRankingModel Ranking { get; set; }
+        SmileVideoRankingModel Ranking { get; }
+        SmileVideoSearchModel Search { get; }
 
         #endregion
 
@@ -55,6 +57,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             switch(request.RequestKind) {
                 case RequestKind.RankingDefine:
                     return new ResponseModel(request, Ranking);
+
+                case RequestKind.SearchDefine:
+                    return new ResponseModel(request, Search);
 
                 case RequestKind.Setting:
                     return new ResponseModel(request, Setting);

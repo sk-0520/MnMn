@@ -11,6 +11,9 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+  </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
@@ -21,14 +24,15 @@
 
     <StackPanel Grid.Column="0">
       <Button>home</Button>
-      <Button>search</Button>
-      <Button>ranking</Button>
+      <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding SearchManager}">search</Button>
+      <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding RankingManager}">ranking</Button>
       <Button>new</Button>
       <Button>hotlist</Button>
     </StackPanel>
 
     <Grid Grid.Column="2">
-      <app_controls_service_smile_video:SmileVideoRankingManager DataContext="{Binding RankingManager}" />
+      <app_controls_service_smile_video:SmileVideoSearchManager DataContext="{Binding SearchManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+      <app_controls_service_smile_video:SmileVideoRankingManager DataContext="{Binding RankingManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 
   </Grid>

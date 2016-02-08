@@ -21,14 +21,59 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoSearchItemViewModel: SmileVideoFinderViewModelBase
     {
-        public SmileVideoSearchItemViewModel(Mediation mediation)
+        public SmileVideoSearchItemViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query, int index, int count)
             :base(mediation)
-        {}
+        {
+            SearchModel = searchModel;
+
+            Method = method;
+            Sort = sort;
+            Type = type;
+            Query = query;
+
+            Index = index;
+            Count = count;
+        }
+
+        #region property
+
+        SmileVideoSearchModel SearchModel { get; }
+
+        SmileVideoElementModel Method { get; }
+        SmileVideoElementModel Sort { get; }
+        SmileVideoElementModel Type { get; }
+        string Query { get; }
+
+        int Index { get; }
+        int Count { get; }
+
+        #endregion
+
+        #region function
+
+        public Task LoadAsync()
+        {
+            var search = new ContentsSearch(Mediation);
+            return search.GetAsnc(
+                SearchModel.Service,
+                Query,
+                Type.Key,
+                Method.Key,
+                SearchModel.Results,
+                Sort.Key,
+                Index,
+                Count
+            );
+        }
+
+        #endregion
 
         #region ViewModelBase
 

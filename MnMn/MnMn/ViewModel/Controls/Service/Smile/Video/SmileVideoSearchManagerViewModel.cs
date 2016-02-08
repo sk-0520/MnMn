@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -26,35 +27,38 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoSearchGroupViewModel:ViewModelBase
+    public class SmileVideoSearchManagerViewModel: SmileVideoManagerViewModelBase
     {
-        #region variable
+        #region property
 
         SmileVideoElementModel _selectedMethod;
         SmileVideoElementModel _selectedSort;
         SmileVideoElementModel _selectedType;
 
+        string _inputQuery = "ACV";
+
         #endregion
 
-        public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query)
+        public SmileVideoSearchManagerViewModel(Mediation mediation, SmileVideoSearchModel searchModel)
+            : base(mediation)
         {
-            Mediation = mediation;
             SearchModel = searchModel;
-            Query = query;
 
-            SetContextElements(method, sort, type);
+            SelectedMethod = MethodItems.First();
+            SelectedSort = SortItems.First();
+            SelectedType = TypeItems.First();
         }
+
 
         #region property
 
-        Mediation Mediation { get; }
         SmileVideoSearchModel SearchModel { get; }
 
         public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
         public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
         public IList<SmileVideoElementModel> TypeItems => SearchModel.Type;
 
-        public string Query { get; }
+        public CollectionModel<SmileVideoSearchGroupViewModel> SearchGroupItems { get; } = new CollectionModel<SmileVideoSearchGroupViewModel>();
 
         public SmileVideoElementModel SelectedMethod
         {
@@ -72,35 +76,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedType, value); }
         }
 
-        CollectionModel<SmileVideoSearchItemViewModel> SearchItems { get; } = new CollectionModel<SmileVideoSearchItemViewModel>();
+        public string InputQuery
+        {
+            get { return this._inputQuery; }
+            set { SetVariableValue(ref this._inputQuery, value); }
+        }
+
+
 
         #endregion
 
         #region command
-        #endregion
 
-        #region function
-
-        SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
+        public ICommand SearchCommand
         {
-            if(items.Any(i => i == element)) {
-                return element;
-            } else {
-                return items.FirstOrDefault(i => i.Key == element.Key);
+            get
+            {
+                return CreateCommand(o => {
+                    var vm = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, SelectedMethod, SelectedSort, SelectedType, InputQuery);
+                    SearchGroupItems.Add(vm);
+                    vm.LoadAsync().ContinueWith(task => {
+                    });
+                });
             }
-        }
-
-        public void SetContextElements(SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type)
-        {
-            SelectedMethod = GetContextElemetFromChangeElement(MethodItems, method);
-            SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
-            SelectedType = GetContextElemetFromChangeElement(TypeItems, type);
-        }
-
-        public Task LoadAsync()
-        {
-            var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, SelectedMethod, SelectedSort, SelectedType, Query, 0, 100);
-            return vm.LoadAsync();
         }
 
         #endregion

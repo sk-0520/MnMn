@@ -138,6 +138,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThreadModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
@@ -145,7 +146,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchGroupViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchItemViewModel.cs" />
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
@@ -335,6 +338,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\video\request-params.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\search.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\video\uri-list.xml">

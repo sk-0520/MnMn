@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -37,24 +38,63 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoManagerViewModel: ViewModelBase
     {
+        #region variable
+
+        SmileVideoManagerViewModelBase _selectedManager;
+
+        #endregion
+
         public SmileVideoManagerViewModel(Mediation mediation)
         {
             Mediation = mediation;
 
-            var response = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
-            var rankingModel = (SmileVideoRankingModel)response.Result;
+            var rankingResponse = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
+            var rankingModel = (SmileVideoRankingModel)rankingResponse.Result;
             RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingModel);
+
+            var searchResponse = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
+            var searchModel = (SmileVideoSearchModel)searchResponse.Result;
+            SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel);
+
+            SwitchViewCommand.Execute(ManagerItems.First());
         }
 
         #region property
 
         Mediation Mediation { get; set; }
 
-        public SmileVideoRankingManagerViewModel RankingManager { get; private set; }
+        public SmileVideoRankingManagerViewModel RankingManager { get;  }
+        public SmileVideoSearchManagerViewModel SearchManager { get; }
+        public IEnumerable<SmileVideoManagerViewModelBase> ManagerItems => new SmileVideoManagerViewModelBase[] { SearchManager, RankingManager };
+
+        public SmileVideoManagerViewModelBase SelectedManager
+        {
+            get { return this._selectedManager; }
+            set {
+                if(SetVariableValue(ref this._selectedManager, value)) {
+                    foreach(var item in ManagerItems.Where(i => i.Visible)) {
+                        item.Visible = false;
+                    }
+                    SelectedManager.Visible = true;
+                }
+            }
+        }
+
 
         #endregion
 
         #region command
+
+        public ICommand SwitchViewCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    SelectedManager = (SmileVideoManagerViewModelBase)o;
+                });
+            }
+        }
+
         #endregion
 
         #region function

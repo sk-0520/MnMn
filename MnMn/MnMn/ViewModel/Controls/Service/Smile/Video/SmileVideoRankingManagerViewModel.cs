@@ -28,7 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoRankingManagerViewModel: ViewModelBase
+    public class SmileVideoRankingManagerViewModel: SmileVideoManagerViewModelBase
     {
         #region variable
 
@@ -42,9 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         public SmileVideoRankingManagerViewModel(Mediation mediation, SmileVideoRankingModel rankingModel)
+            : base(mediation)
         {
-            Mediation = mediation;
-
             RankingModel = rankingModel;
             CategoryItems = new CollectionModel<SmileVideoElementModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
@@ -53,8 +52,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         SmileVideoRankingModel RankingModel { get; set; }
 
