@@ -47,6 +47,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         public TimeSpan ShowTime { get; set; } = Constants.CommentShowTime;
 
+        /// <summary>
+        /// 動画検索で一度に取得する数。
+        /// </summary>
+        public int SearchCount { get; set; } = Constants.SmileVideoSearchCount;
+
         #endregion
     }
 }

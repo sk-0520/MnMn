@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
@@ -48,13 +49,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Mediation = mediation;
 
+            var settingResponse = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            Setting = (SmileVideoSettingModel)settingResponse.Result;
+
             var rankingResponse = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
             var rankingModel = (SmileVideoRankingModel)rankingResponse.Result;
             RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingModel);
 
             var searchResponse = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
             var searchModel = (SmileVideoSearchModel)searchResponse.Result;
-            SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel);
+            SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel, Setting);
 
             SwitchViewCommand.Execute(ManagerItems.First());
         }
@@ -62,6 +66,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         Mediation Mediation { get; set; }
+
+        SmileVideoSettingModel Setting { get; }
 
         public SmileVideoRankingManagerViewModel RankingManager { get;  }
         public SmileVideoSearchManagerViewModel SearchManager { get; }

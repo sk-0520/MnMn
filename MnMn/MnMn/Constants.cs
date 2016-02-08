@@ -103,6 +103,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double CommentFontAlpha => 1;
         public static TimeSpan CommentShowTime => TimeSpan.FromSeconds(3);
 
+        public static int SmileVideoSearchCount => 100;
+
+
         public static string CurrentLanguageCode => "ja-JP";
 
         /// <summary>

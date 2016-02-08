@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -42,10 +43,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoSearchManagerViewModel(Mediation mediation, SmileVideoSearchModel searchModel)
+        public SmileVideoSearchManagerViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoSettingModel setting)
             : base(mediation)
         {
             SearchModel = searchModel;
+            Setting = setting;
 
             SelectedMethod = MethodItems.First();
             SelectedSort = SortItems.First();
@@ -56,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSearchModel SearchModel { get; }
+        SmileVideoSettingModel Setting { get; }
 
         public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
         public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
@@ -114,12 +117,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             return viewModel;
                         },
                         () => {
-                            var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, nowMethod, nowSort, nowType, nowQuery);
+                            var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, Setting, nowMethod, nowSort, nowType, nowQuery);
                             SearchGroups.Insert(0, viewModel);
                             return viewModel;
                         }
                     );
-                    selectViewModel.LoadAsync().ContinueWith(task => {
+                    selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(task => {
                         SelectedSearchGroup = selectViewModel;
                     });
                 });
