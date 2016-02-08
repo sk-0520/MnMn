@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return $"{videoId}{eco}.{ext}";
         }
 
-        public static bool isOfficialMovie(string videoId)
+        public static bool isScrapingMovie(string videoId)
         {
             return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
         }

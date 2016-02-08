@@ -56,25 +56,27 @@
 		
 		<content trim="none" oneline="false">
 			<![CDATA[
-			"query": ${query},
-			"service": [ "video" ],
-			"search": [ ${search} ],
-			"join": [ 
-				"cmsid", 
-				"title", 
-				"description", 
-				"start_time", 
-				"thumbnail_url", 
-				"view_counter", 
-				"comment_counter", 
-				"mylist_counter", 
-				"length_seconds" 
-			],
-			"from": ${from},
-			"size": ${size},
-			"sort_by": ${sort_by},
-			"order": ${order},
-			"issuer": ${issuer}
+				{
+					"query": ${query},
+					"service": [ "video" ],
+					"search": [ ${search} ],
+					"join": [ 
+						"cmsid", 
+						"title", 
+						"description", 
+						"start_time", 
+						"thumbnail_url", 
+						"view_counter", 
+						"comment_counter", 
+						"mylist_counter", 
+						"length_seconds" 
+					],
+					"from": ${from},
+					"size": ${size},
+					"sort_by": ${sort_by},
+					"order": ${order},
+					"issuer": ${issuer}
+				}
 			]]>
 		</content>
 	</mapping>

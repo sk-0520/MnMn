@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return true;
 
                 case SmileVideoMediationKey.inputScrapingVideo:
-                    outputValue = SmileVideoGetthumbinfoUtility.isOfficialMovie((string)inputValue);
+                    outputValue = SmileVideoGetthumbinfoUtility.isScrapingMovie((string)inputValue);
                     return true;
 
                 default:

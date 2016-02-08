@@ -23,6 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -67,6 +68,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             window.Show();
 
             await vm.LoadAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
+        public void Temp_Find(string videoId)
+        {
+            var ss = new Snapshot(Mediation);
+            ss.GetAsnc(SmileVideoSnapshotSearchType.Tag, "ACV", SmileVideoSnapshotSortBy.ViewCounter, Library.SharedLibrary.Define.OrderBy.Asc, 0, 100).ContinueWith(task => {
+            });
         }
 
         public async void OpenPlayer(string videoId)
