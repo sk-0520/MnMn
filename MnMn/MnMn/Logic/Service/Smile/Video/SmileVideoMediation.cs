@@ -71,6 +71,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     outputValue = SmileVideoGetflvUtility.isEconomyMode((string)inputValue);
                     return true;
 
+                case SmileVideoMediationKey.inputScrapingVideo:
+                    outputValue = SmileVideoGetthumbinfoUtility.isOfficialMovie((string)inputValue);
+                    return true;
+
                 default:
                     outputValue = null;
                     return false;

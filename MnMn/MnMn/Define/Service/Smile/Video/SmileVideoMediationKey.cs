@@ -33,5 +33,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string msg = "video-msg";
 
         public const string inputEconomyMode = "getflv-economy-mode";
+        public const string inputScrapingVideo = "getthumbinfo-scraping-video";
     }
 }

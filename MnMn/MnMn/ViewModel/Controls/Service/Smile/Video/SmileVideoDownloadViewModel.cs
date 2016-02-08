@@ -192,31 +192,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
             var getflv = new Getflv(Mediation, session);
             getflv.SessionSupport = true;
-            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId);
-
+            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId, VideoInformationViewModel.WatchUrl);
             VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
-            if(VideoInformationViewModel.HasError) {
-                // 公式動画かもしれないのではWEBから取得してみる
-                using(var page = new PageScraping(Mediation, session, SmileVideoMediationKey.getflvWebpage, ServiceType.SmileVideo)) {
-                    page.ForceUri = VideoInformationViewModel.WatchUrl;
-                    var response = await page.GetResponseTextAsync(HttpMethod.Get);
-                    if(response.IsSuccess) {
-                        var document = new HtmlDocument();
-                        document.LoadHtml(response.Result);
-                        var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
-                        var watchApiDataText =  HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
-
-                        var json = JObject.Parse(watchApiDataText);
-                        var flashvars = json.SelectToken("flashvars");
-                        var flvInfo = flashvars.SelectToken("flvInfo");
-                        var rawFlvText = flvInfo.ToString();
-                        var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
-                        rawVideoGetflvModel = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(convertedFlvText);
-                        VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
-                    }
-                }
-            }
             var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
             SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
 
