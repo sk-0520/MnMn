@@ -163,11 +163,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     break;
 
                 case ParameterType.Mapping: {
-                        var rawContent = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
-                        var convertedContent = Mediation.ConvertRequestMapping(rawContent, ServiceType);
+                        var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
+                        var convertedContent = Mediation.ConvertRequestMapping(mappingResult.Result, ServiceType);
                         Debug.WriteLine("request param");
                         Debug.WriteLine(convertedContent);
                         MappingContent = new StringContent(convertedContent);
+                        if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
+                            MappingContent.Headers.ContentType = new MediaTypeHeaderValue(mappingResult.ContentType);
+                        }
                     }
                     break;
 

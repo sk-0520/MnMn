@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mappings>
 	<!-- コメント取得 -->
-	<mapping key="video-msg">
+	<mapping key="video-msg" content-type="text/xml">
 		<item key="thread-id" type="simple" value="${thread-id}"  />
 		<item key="version"   type="simple" value="20090904"  />
 		<item key="version-old"   type="simple" value="20061206"  />

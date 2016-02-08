@@ -291,13 +291,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected string GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected MappingResult GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
+            var result = new MappingResult();
             var mapping = RequestMappingList.Mappings
                 .FirstOrDefault(up => up.Key == key)
             ;
             if(mapping == null) {
-                return string.Empty;
+                result.Result = string.Empty;
+                return result;
+            }
+
+            if(!string.IsNullOrWhiteSpace(mapping.ContentType)) {
+                result.ContentType = mapping.ContentType;
             }
 
             var mappingParams = mapping.Items
@@ -315,10 +321,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             };
             var trimedContent = trimMap[mapping.Content.Trim](replacedContent);
             if(mapping.Content.Oneline) {
-                return string.Join(string.Empty, trimedContent.SplitLines());
+                result.Result = string.Join(string.Empty, trimedContent.SplitLines());
+            }else {
+                result.Result = trimedContent;
             }
 
-            return trimedContent;
+            return result;
         }
 
         #endregion
@@ -357,7 +365,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

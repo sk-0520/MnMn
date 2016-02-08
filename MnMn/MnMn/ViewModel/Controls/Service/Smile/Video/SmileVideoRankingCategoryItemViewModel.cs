@@ -175,7 +175,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        OpenPlayer(SelectedVideoInformation);
+                        var item = SelectedVideoInformation;
+                        if(item != null) {
+                            OpenPlayer(item);
+                        }
                     }
                 );
             }

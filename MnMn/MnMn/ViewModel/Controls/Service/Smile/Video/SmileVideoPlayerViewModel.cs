@@ -213,8 +213,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 NormalCommentArea.ActualWidth,
                 NormalCommentArea.ActualHeight
             );
-
-            foreach(var commentViewModel in NormalCommentList.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
+            var list = NormalCommentList.ToArray();
+            foreach(var commentViewModel in list.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
                 var ft = new FormattedText(
                     commentViewModel.Content,
                     CultureInfo.GetCultureInfo(Constants.CurrentLanguageCode),

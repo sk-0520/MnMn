@@ -131,6 +131,7 @@
     <Compile Include="Model\MappingItemModel.cs" />
     <Compile Include="Model\MappingContentModel.cs" />
     <Compile Include="Model\MappingModel.cs" />
+    <Compile Include="Model\MappingResult.cs" />
     <Compile Include="Model\MappingsModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
