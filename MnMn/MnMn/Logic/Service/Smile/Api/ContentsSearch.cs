@@ -92,22 +92,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
             return map[searchField];
         }
 
-        public async Task GetAsnc(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
+        public async Task GetAsnc(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
             using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileMediationKey.contentsSearch, ServiceType.Smile)) {
-                page.ReplaceUriParameters["service"] = ToContentsSearchServiceString(searchService);
+                page.ReplaceUriParameters["service"] = searchService;
                 page.ReplaceUriParameters["query"] = query;
-                page.ReplaceUriParameters["targets"] = ToSmileContentsSearchTypeString(searchType);
-                page.ReplaceUriParameters["fields"] = string.Join(",", getFilelds.Select(f => ToSmileContentsSearchFieldString(f)));
+                page.ReplaceUriParameters["targets"] = searchType;
+                page.ReplaceUriParameters["fields"] = string.Join(",", getFilelds);
                 page.ReplaceUriParameters["filters"] = string.Empty;
-                page.ReplaceUriParameters["sort"] = ToOrderByString(orderBy) + ToSmileContentsSearchFieldString(searchField);
+                page.ReplaceUriParameters["sort"] = orderBy + sortField;
                 page.ReplaceUriParameters["offset"] = fromIndex.ToString();
                 page.ReplaceUriParameters["limit"] = getCount.ToString();
                 page.ReplaceUriParameters["context"] = "test";
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
             }
+        }
+        public Task GetAsnc(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
+        {
+            CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
+            return GetAsnc(
+                ToContentsSearchServiceString(searchService),
+                query,
+                ToSmileContentsSearchTypeString(searchType),
+                ToSmileContentsSearchFieldString(searchField),
+                getFilelds.Select(f => ToSmileContentsSearchFieldString(f)),
+                ToOrderByString(orderBy),
+                fromIndex,
+                getCount
+            );
         }
     }
 }
