@@ -329,6 +329,7 @@
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\request-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -348,6 +349,7 @@
     </Content>
     <Content Include="etc\define\service\smile\video\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\video\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

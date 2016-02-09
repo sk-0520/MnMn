@@ -9,6 +9,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class CacheSpan: ModelBase
     {
+        #region define
+
+        public static CacheSpan NoCache => new CacheSpan();
+        public static CacheSpan InfinityCache => new CacheSpan(DateTime.MaxValue, TimeSpan.MaxValue);
+
+        #endregion
+
         CacheSpan()
         {
             IsEnabled = false;
@@ -28,9 +35,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public DateTime BaseTime { get; }
         public TimeSpan Expires { get; }
-
-        public static CacheSpan NoCache => new CacheSpan();
-        public static CacheSpan InfinityCache => new CacheSpan(DateTime.MaxValue, TimeSpan.MaxValue);
 
         #endregion
 
