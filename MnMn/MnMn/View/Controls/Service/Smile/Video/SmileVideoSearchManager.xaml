@@ -81,6 +81,7 @@
             </Grid.RowDefinitions>
 
             <ListView 
+              x:Name="finder"
               Grid.Row="0" 
               View="{StaticResource VideoListView}"
               ItemsSource="{Binding SelectedVideoInformationItems}" 
@@ -93,6 +94,33 @@
               </i:Interaction.Triggers>
             </ListView>
 
+            <Grid Grid.Row="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0">
+                <Run>けっか</Run>
+                <Run Text="{Binding TotalCount}" />
+              </TextBlock>
+
+              <ItemsControl Grid.Column="1" ItemsSource="{Binding IndexItems}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Button
+                      Content="{Binding }"
+                      Command="{Binding DataContext.PageChangeCommand, ElementName=finder}"
+                      CommandParameter="{Binding }"
+                    />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Grid>
             <!--<ListBox ItemsSource="{Binding GroupPageItems}">
               
             </ListBox>-->

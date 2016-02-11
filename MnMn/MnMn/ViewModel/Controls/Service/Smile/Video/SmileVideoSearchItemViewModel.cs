@@ -22,12 +22,19 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoSearchItemViewModel: SmileVideoFinderViewModelBase
     {
+        #region variable
+
+        int _totalCount;
+
+        #endregion
+
         public SmileVideoSearchItemViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query, int index, int count)
             :base(mediation)
         {
@@ -46,13 +53,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoSearchModel SearchModel { get; }
 
-        SmileVideoElementModel Method { get; }
-        SmileVideoElementModel Sort { get; }
-        SmileVideoElementModel Type { get; }
-        string Query { get; }
+        public SmileVideoElementModel Method { get; }
+        public SmileVideoElementModel Sort { get; }
+        public SmileVideoElementModel Type { get; }
+        public string Query { get; }
 
-        int Index { get; }
-        int Count { get; }
+        public int Index { get; }
+        public int Count { get; }
+
+        public int TotalCount
+        {
+            get { return this._totalCount; }
+            set { SetVariableValue(ref this._totalCount, value); }
+        }
 
         #endregion
 
@@ -72,6 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Count
             ).ContinueWith(task => {
                 var result = task.Result;
+                TotalCount = RawValueUtility.ConvertInteger(result.Meta.TotalCount);
                 var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index));
                 return list;
             }).ContinueWith(task => {

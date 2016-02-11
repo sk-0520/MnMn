@@ -41,6 +41,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         [XmlArray("result"), XmlArrayItem("field")]
         public CollectionModel<string> Results { get; set; } = new CollectionModel<string>();
 
+        [XmlAttribute("max-index")]
+        public int MaximumIndex { get; set; }
+        [XmlAttribute("max-count")]
+        public int MaximumCount { get; set; }
+
         #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<search service="video">
+<search service="video" max-index="1600" max-count="100">
 	<!-- 検索 -->
 	<method>
 		<element key="viewCounter">
