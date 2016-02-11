@@ -26,6 +26,7 @@ using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -42,10 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoElementModel _selectedMethod;
         SmileVideoElementModel _selectedSort;
 
-        ICollectionView _selectedVideoInformationItems;
+        //ICollectionView _selectedVideoInformationItems;
 
         int _totalCount;
-        //CollectionModel<int> _indexItems;
+        SmileSearchPageViewModel<SmileVideoSearchItemViewModel> _selectedPage;
 
         #endregion
 
@@ -87,16 +88,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public CollectionModel<SmileSearchPageViewModel<SmileVideoSearchItemViewModel>> SearchItems { get; } = new CollectionModel<SmileSearchPageViewModel<SmileVideoSearchItemViewModel>>();
 
+        public SmileSearchPageViewModel<SmileVideoSearchItemViewModel> SelectedPage
+        {
+            get { return this._selectedPage; }
+            set {
+                var oldSelectedPage = this._selectedPage;
+                if(SetVariableValue(ref this._selectedPage, value)) {
+                    if(oldSelectedPage!= null) {
+                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+                    }
+                    CallPageItemOnPropertyChange();
+                }
+            }
+        }
+
         public ICollectionView SelectedVideoInformationItems
         {
-            get { return this._selectedVideoInformationItems; }
-            set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
+            get {
+                if(SelectedPage == null) {
+                    return null;
+                }
+                return SelectedPage.ViewModel.VideoInformationItems; }
+            //set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
         }
 
         public int TotalCount
         {
             get { return this._totalCount; }
             set { SetVariableValue(ref this._totalCount, value); }
+        }
+
+        public override SmileVideoFinderLoadState FinderLoadState
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    return SmileVideoFinderLoadState.None;
+                }
+                return SelectedPage.ViewModel.FinderLoadState;
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
         }
 
         #endregion
@@ -114,20 +149,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
                             var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
 
-                            pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
-                                SelectedVideoInformationItems = pageVm.ViewModel.VideoInformationItems;
-                            }, TaskScheduler.FromCurrentSynchronizationContext());
+                            SelectedPage = pageVm;
+                            pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+                            pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ConfigureAwait(true);
                         } else {
-                            SelectedVideoInformationItems = pageVm.ViewModel.VideoInformationItems;
+                            SelectedPage = pageVm;
                         }
                     }
                 );
             }
         }
 
+        public ICommand ReloadSearchCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ConfigureAwait(true);
+                    }
+                );
+            }
+        }
+
+        static IEnumerable<string> ChangePagePropertyNames => new[] {
+            nameof(SelectedVideoInformationItems),
+            nameof(FinderLoadState),
+            nameof(CanLoad),
+            nameof(NowLoading),
+        };
+
+
         #endregion
 
         #region function
+
+        void CallPageItemOnPropertyChange()
+        {
+            CallOnPropertyChange(ChangePagePropertyNames);
+        }
 
         SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
         {
@@ -157,6 +217,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
+            vm.PropertyChanged += PageVm_PropertyChanged;
             return vm.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
                 if(isReload) {
                     TotalCount = vm.TotalCount;
@@ -179,10 +240,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         SearchItems.InitializeRange(new[] { pageVm });
                     }
                 }
-                SelectedVideoInformationItems = vm.VideoInformationItems;
+                SelectedPage = SearchItems.First();
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion
+
+        #region SmileVideoFinderViewModelBase
+
+        public override bool CanLoad
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    return false;
+                }
+
+                return SelectedPage.ViewModel.CanLoad;
+            }
+        }
+
+        #endregion
+
+        private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(FinderLoadState)) {
+                CallPageItemOnPropertyChange();
+            }
+        }
+
     }
 }

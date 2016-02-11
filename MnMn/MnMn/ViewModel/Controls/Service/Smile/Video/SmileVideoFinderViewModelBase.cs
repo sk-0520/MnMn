@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    private set { SetVariableValue(ref this._VideoInformationItems, value); }
         //}
 
-        public bool NowLoading
+        public virtual bool NowLoading
         {
             get { return this._nowLoading; }
             set { SetVariableValue(ref this._nowLoading, value); }
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedVideoInformation, value); }
         }
 
-        public SmileVideoFinderLoadState FinderLoadState
+        public virtual SmileVideoFinderLoadState FinderLoadState
         {
             get { return this._finderLoadState; }
             set

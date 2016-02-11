@@ -18,9 +18,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -73,10 +75,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        public async Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
+            FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
+            NowLoading = true;
             var search = new ContentsSearch(Mediation);
-            return search.GetAsnc(
+            await search.GetAsnc(
                 SearchModel.Service,
                 Query,
                 Type.Key,
@@ -86,6 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Index,
                 Count
             ).ContinueWith(task => {
+                FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
                 var result = task.Result;
                 TotalCount = RawValueUtility.ConvertInteger(result.Meta.TotalCount);
                 var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index + 1));
@@ -94,23 +99,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var list = task.Result;
                 VideoInformationList.InitializeRange(list);
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
-                var loader = new SmileVideoInformationLoader(VideoInformationList);
-                return loader.LoadInformationAsync(thumbCacheSpan);
-            }).ContinueWith(task => {
-                var loader = new SmileVideoInformationLoader(VideoInformationList);
-                loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                var cancel = CancelLoading = new CancellationTokenSource();
+                Task.Run(() => {
+                    FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
+                    var loader = new SmileVideoInformationLoader(VideoInformationList);
+                    return loader.LoadInformationAsync(thumbCacheSpan);
+                }).ContinueWith(async _ => {
+                    FinderLoadState = SmileVideoFinderLoadState.ImageLoading;
+                    var loader = new SmileVideoInformationLoader(VideoInformationList);
+                    await loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                }).ContinueWith(_ => {
+                    FinderLoadState = SmileVideoFinderLoadState.Completed;
+                    NowLoading = false;
+                }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.Current);
             });
         }
 
         #endregion
 
-        #region ViewModelBase
+        #region SmileVideoFinderViewModelBase
 
         public override bool CanLoad
         {
             get
             {
-                return true;
+                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
+                return !loadSkips.Any(l => l == FinderLoadState);
             }
         }
 

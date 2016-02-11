@@ -32,13 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// </summary>
         None,
         /// <summary>
-        /// ランキングリスト取得中。
+        /// リスト取得中。
         /// </summary>
         VideoSourceLoading,
         /// <summary>
-        /// ランキングリストチェック中。
+        /// リストチェック中。
         /// </summary>
         VideoSourceChecking,
+        /// <summary>
+        /// 動画情報取得中。
+        /// </summary>
+        InformationLoading,
         /// <summary>
         /// サムネイル取得中。
         /// </summary>

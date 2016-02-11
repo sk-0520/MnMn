@@ -60,12 +60,25 @@
                 <RowDefinition />
                 <RowDefinition />
               </Grid.RowDefinitions>
-              <TextBlock Grid.Row="0" Text="{Binding Query}" />
+              <StackPanel Grid.Row="0">
+                <TextBlock Text="{Binding Query}" />
+                <TextBlock Text="{Binding Type.CurrentWord}" />
+              </StackPanel>
               <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
             </Grid>
+            <ComboBox 
+              DisplayMemberPath="CurrentWord" 
+              ItemsSource="{Binding MethodItems}" 
+              SelectedItem="{Binding SelectedMethod}"
+            />
+            <ComboBox 
+              DisplayMemberPath="CurrentWord" 
+              ItemsSource="{Binding SortItems}" 
+              SelectedItem="{Binding SelectedSort}"
+            />
             <Button
               Content="reload"
-              Command="{Binding ReloadCategoryCommand}"
+              Command="{Binding ReloadSearchCommand}"
               IsEnabled="{Binding CanLoad}"
             />
           </StackPanel>
