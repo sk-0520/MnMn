@@ -30,7 +30,7 @@
 				<word lang="ja-JP" value="昇順" />
 			</words>
 		</element>
-		<element key="%2B">
+		<element key="+">
 			<words>
 				<word lang="ja-JP" value="降順" />
 			</words>

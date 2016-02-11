@@ -21,6 +21,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -169,11 +170,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
 
+        string ToParameterEncodeTypeString(string s, ParameterEncodeType encodeType)
+        {
+            switch(encodeType) {
+                case ParameterEncodeType.None:
+                    return s;
+
+                case ParameterEncodeType.Uri:
+                    return HttpUtility.UrlEncode(s);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
-            var val = ReplaceString(pair.Value, replaceMap);
+            var val = ToParameterEncodeTypeString(ReplaceString(pair.Value, replaceMap), pair.Encode);
             if(pair.Force && string.IsNullOrEmpty(val)) {
                 return string.Empty;
             }
@@ -181,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(type) {
                 case UriParameterType.Query:
                     if(pair.HasKey) {
-                        var key = ReplaceString(pair.Key, replaceMap);
+                        var key = ToParameterEncodeTypeString(ReplaceString(pair.Key, replaceMap), pair.Encode);
                         return $"{key}={val}";
                     } else {
                         return val;
@@ -191,10 +206,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return val;
 
                 case UriParameterType.PreSuffixes: {
-                        var key = ReplaceString(pair.Key, replaceMap);
-                        var pre = ReplaceString(pair.Prefix, replaceMap);
-                        var bond = ReplaceString(pair.Bond, replaceMap);
-                        var suf = ReplaceString(pair.Suffix, replaceMap);
+                        var key = ToParameterEncodeTypeString(ReplaceString(pair.Key, replaceMap), pair.Encode);
+                        var pre = ToParameterEncodeTypeString(ReplaceString(pair.Prefix, replaceMap), pair.Encode);
+                        var bond = ToParameterEncodeTypeString(ReplaceString(pair.Bond, replaceMap), pair.Encode);
+                        var suf = ToParameterEncodeTypeString(ReplaceString(pair.Suffix, replaceMap), pair.Encode);
                         return $"{pre}{key}{bond}{val}{suf}";
                     }
 

@@ -630,6 +630,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //SetThumbModel(rawGetthumbinfo.Thumb);
             Thumb = rawGetthumbinfo.Thumb;
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+            var propertyNames = new[] {
+                nameof(Length)
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)

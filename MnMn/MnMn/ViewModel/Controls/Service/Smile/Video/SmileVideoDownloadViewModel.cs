@@ -452,17 +452,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
             DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoInformation.VideoId));
 
-            if(videoInformation.VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
-                OnLoadGetthumbinfoStart();
-                //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoInformation.VideoId, thumbCacheSpan);
-                //VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
-                //VideoInformationViewModel = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoInformation.VideoId, thumbCacheSpan);
-                await videoInformation.LoadInformationAsync(thumbCacheSpan);
-                VideoInformationViewModel = videoInformation;
-                OnLoadGetthumbinfoEnd();
-            } else {
-                VideoInformationViewModel = videoInformation;
+            OnLoadGetthumbinfoStart();
+            VideoInformationViewModel = videoInformation;
+            if(VideoInformationViewModel.VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
+                await VideoInformationViewModel.LoadInformationAsync(thumbCacheSpan);
             }
+            OnLoadGetthumbinfoEnd();
             InformationLoadState = LoadState.Loaded;
 
             var noSessionTask = LoadDataWithoutSessionAsync(imageCacheSpan);

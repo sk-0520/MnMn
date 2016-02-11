@@ -68,6 +68,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [XmlAttribute("force")]
         public bool Force { get; set; }
+
+        [XmlAttribute("encode")]
+        public ParameterEncodeType Encode { get; set; }
+
         /// <summary>
         /// キーが存在するか。
         /// </summary>

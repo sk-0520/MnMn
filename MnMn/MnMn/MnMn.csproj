@@ -106,6 +106,7 @@
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Define\MappingContentTrim.cs" />
     <Compile Include="Define\MappingItemType.cs" />
+    <Compile Include="Define\ParameterEncodeType.cs" />
     <Compile Include="Define\ParameterType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
