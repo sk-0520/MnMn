@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public bool IsLoadVideoTime
+        public bool IsLoadVideoInformation
         {
             get { return Setting.LoadVideoTime; }
         }
@@ -656,9 +656,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public async Task LoadInformationAsync(CacheSpan cacheSpan)
         {
+            InformationLoadState = LoadState.Preparation;
+
+            InformationLoadState = LoadState.Loading;
+
             var rawGetthumbinfo = await LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan);
             //SetThumbModel(rawGetthumbinfo.Thumb);
             Thumb = rawGetthumbinfo.Thumb;
+            InformationLoadState = LoadState.Loaded;
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
             var propertyNames = new[] {
                 nameof(Length),

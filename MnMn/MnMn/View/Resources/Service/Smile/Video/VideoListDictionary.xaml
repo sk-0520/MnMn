@@ -93,7 +93,7 @@
               <ColumnDefinition />
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             <TextBlock Grid.Row="0" Grid.Column="0" Text="再生数" />
             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ViewCounter, Mode=OneWay, StringFormat=N0}" Style="{StaticResource value}" />
 
@@ -108,12 +108,76 @@
               <TextBlock.Style>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource value}">
                   <Style.Triggers>
-                    <DataTrigger Binding="{Binding HasLength}" Value="True">
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="--:--" />
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
+                        <Condition Binding="{Binding HasLength}" Value="True" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </MultiDataTrigger>
+                    
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="True" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="None" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="未処理" />
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Preparation" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="準備中" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Loading" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="読込中" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Failure" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="読込失敗" />
+                    </MultiDataTrigger>
+
+                    <!--<DataTrigger Binding="{Binding HasLength}" Value="True">
                       <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding HasLength}" Value="False">
-                      <Setter Property="Text" Value="--:--" />
-                    </DataTrigger>
+                      <Setter Property="Text" Value="-i-:-i-" />
+                    </DataTrigger>-->
                   </Style.Triggers>
                 </Style>
               </TextBlock.Style>
