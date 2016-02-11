@@ -52,7 +52,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         public int SearchCount { get; set; } = Constants.SmileVideoSearchCount;
 
-        public bool LoadVideoTime { get; set; } = true;
+        /// <summary>
+        /// 動画の長さを取得するか。
+        /// <para>※元データが長さを持っていない場合に使用。</para>
+        /// </summary>
+        public bool LoadVideoTime { get; set; } = Constants.SmileVideoLoadVideoTime;
 
         #endregion
     }

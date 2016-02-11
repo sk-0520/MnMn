@@ -20,9 +20,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -42,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ICollectionView _selectedVideoInformationItems;
 
         int _totalCount;
-        CollectionModel<int> _indexItems;
+        //CollectionModel<int> _indexItems;
 
         #endregion
 
@@ -82,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedSort, value); }
         }
 
-        public CollectionModel<SmileVideoSearchItemViewModel> SearchItems { get; } = new CollectionModel<SmileVideoSearchItemViewModel>();
+        public CollectionModel<SmileSearchPageViewModel<SmileVideoSearchItemViewModel>> SearchItems { get; } = new CollectionModel<SmileSearchPageViewModel<SmileVideoSearchItemViewModel>>();
 
         public ICollectionView SelectedVideoInformationItems
         {
@@ -96,12 +99,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._totalCount, value); }
         }
 
-        public CollectionModel<int> IndexItems
-        {
-            get { return this._indexItems; }
-            set { SetVariableValue(ref this._indexItems, value); }
-        }
-
         #endregion
 
         #region command
@@ -112,19 +109,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        var pageNumber = (int)o;
-                        var index = pageNumber - 1;
-                        var loadIndex = index * Setting.SearchCount;
-                        if(SearchItems[index] == null) {
+                        var pageVm = (SmileSearchPageViewModel<SmileVideoSearchItemViewModel>)o;
+                        if(pageVm.LoadState != LoadState.Loaded) {
                             var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
                             var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
-                            var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, LoadingMethod, LoadingSort, Type, Query, loadIndex, Setting.SearchCount);
-                            vm.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
-                                SearchItems[index] = vm;
-                                SelectedVideoInformationItems = vm.VideoInformationItems;
-                            });
+
+                            pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
+                                SelectedVideoInformationItems = pageVm.ViewModel.VideoInformationItems;
+                            }, TaskScheduler.FromCurrentSynchronizationContext());
                         } else {
-                            SelectedVideoInformationItems = SearchItems[index].VideoInformationItems;
+                            SelectedVideoInformationItems = pageVm.ViewModel.VideoInformationItems;
                         }
                     }
                 );
@@ -150,11 +144,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
         }
 
-        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool reload)
+        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
         {
             SmileVideoElementModel nowMethod;
             SmileVideoElementModel nowSort;
-            if(reload) {
+            if(isReload) {
                 nowMethod = SelectedMethod;
                 nowSort = SelectedSort;
             } else {
@@ -164,20 +158,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
             return vm.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
-                if(reload) {
+                if(isReload) {
                     TotalCount = vm.TotalCount;
                     if(TotalCount > 0) {
-                        var splitCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
-                        var preList = new SmileVideoSearchItemViewModel[Enumerable.Range(0, splitCount).Count()];
+                        var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
+                        var preList = Enumerable.Range(1, pageCount - 1)
+                            .Select((n, i) => new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
+                            .Select((v, i) => new SmileSearchPageViewModel<SmileVideoSearchItemViewModel>(v, i + 2))
+                            .ToList()
+                        ;
+                        var pageVm = new SmileSearchPageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
+                            LoadState = LoadState.Loaded,
+                        };
+                        preList.Insert(0, pageVm);
                         SearchItems.InitializeRange(preList);
-
-                        IndexItems = new CollectionModel<int>(preList.Select((_,i) => i + 1));
                     }
                 }
-                var index = vm.Index / Setting.SearchCount;
-                SearchItems[index] = vm;
+                //var index = vm.Index / Setting.SearchCount;
+                //SearchItems[index] = vm;
                 SelectedVideoInformationItems = vm.VideoInformationItems;
-            });
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion

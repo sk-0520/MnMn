@@ -104,7 +104,7 @@
                 <Run Text="{Binding TotalCount}" />
               </TextBlock>
 
-              <ItemsControl Grid.Column="1" ItemsSource="{Binding IndexItems}">
+              <ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">
                 <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
@@ -113,7 +113,7 @@
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <Button
-                      Content="{Binding }"
+                      Content="{Binding PageNumber }"
                       Command="{Binding DataContext.PageChangeCommand, ElementName=finder}"
                       CommandParameter="{Binding }"
                     />

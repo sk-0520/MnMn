@@ -32,8 +32,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             List = list;
         }
 
+        #region property
+
         IEnumerable<SmileVideoInformationViewModel> List { get; }
-        CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
+
+        public CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
+
+        #endregion
+
 
         public Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
         {

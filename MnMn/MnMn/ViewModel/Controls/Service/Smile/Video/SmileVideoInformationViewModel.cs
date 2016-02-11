@@ -130,6 +130,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public bool HasLength
+        {
+            get
+            {
+                return VideoInformationSource == SmileVideoVideoInformationSource.Search;
+            }
+        }
+
         #region 生データから取得
 
         public string VideoId
@@ -631,7 +639,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Thumb = rawGetthumbinfo.Thumb;
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
             var propertyNames = new[] {
-                nameof(Length)
+                nameof(Length),
+                nameof(HasLength),
             };
             CallOnPropertyChange(propertyNames);
         }
