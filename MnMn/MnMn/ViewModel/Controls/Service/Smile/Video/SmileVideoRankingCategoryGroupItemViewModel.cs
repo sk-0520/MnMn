@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         while(count++ <= max) {
                             cancel.Token.ThrowIfCancellationRequested();
                             try {
-                                var t = item.LoadImageAsync(imageCacheSpan);
+                                var t = item.LoadThumbnaiImageAsync(imageCacheSpan);
                                 t.Wait();
                                 break;
                             } catch(Exception ex) {

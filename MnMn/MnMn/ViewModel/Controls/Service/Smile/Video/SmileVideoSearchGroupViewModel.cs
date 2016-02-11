@@ -28,7 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoSearchGroupViewModel:ViewModelBase
+    public class SmileVideoSearchGroupViewModel: SmileVideoFinderViewModelBase
     {
         #region variable
 
@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoSettingModel setting, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query)
+            : base(mediation)
         {
-            Mediation = mediation;
             SearchModel = searchModel;
             Query = query;
             Type = type;
@@ -52,7 +52,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        Mediation Mediation { get; }
         SmileVideoSearchModel SearchModel { get; }
         SmileVideoSettingModel Setting { get; }
 
@@ -78,7 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public CollectionModel<SmileVideoSearchItemViewModel> SearchItems { get; } = new CollectionModel<SmileVideoSearchItemViewModel>();
 
-        public ICollectionView SelectedVideoInformationItems {
+        public ICollectionView SelectedVideoInformationItems
+        {
             get { return this._selectedVideoInformationItems; }
             set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
         }

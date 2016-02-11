@@ -76,12 +76,21 @@
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition Height="*" />
-              <RowDefinition />
-              <RowDefinition />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <ListView Grid.Row="0" ItemsSource="{Binding SelectedVideoInformationItems}">
-              
+            <ListView 
+              Grid.Row="0" 
+              View="{StaticResource VideoListView}"
+              ItemsSource="{Binding SelectedVideoInformationItems}" 
+              SelectedItem="{Binding SelectedVideoInformation}"
+            >
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                  <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" CommandParameter="{Binding}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
             </ListView>
 
             <!--<ListBox ItemsSource="{Binding GroupPageItems}">

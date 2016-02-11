@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -159,6 +160,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Ranking:
                         return RankingDetail.Title ?? Ranking.Title;
 
+                    case SmileVideoVideoInformationSource.Search:
+                        return Search.Title;
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -175,13 +179,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Ranking:
                         return RawValueUtility.ConvertUri(RankingDetail.ThumbnailUrl);
 
+                    case SmileVideoVideoInformationSource.Search:
+                        return RawValueUtility.ConvertUri(Search.ThumbnailUrl);
+
                     default:
                         throw new NotImplementedException();
                 }
             }
         }
 
-        public DateTime FirstRetrieve { get {
+        public DateTime FirstRetrieve
+        {
+            get
+            {
                 switch(VideoInformationSource) {
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertDateTime(Thumb.FirstRetrieve);
@@ -189,18 +199,94 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Ranking:
                         return RawValueUtility.ConvertDateTime(RankingDetail.FirstRetrieve);
 
+                    case SmileVideoVideoInformationSource.Search:
+                        return RawValueUtility.ConvertDateTime(Search.StartTime);
+
                     default:
                         throw new NotImplementedException();
                 }
-            } }
+            }
+        }
 
-        public TimeSpan Length { get { return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length); } }
+        public TimeSpan Length
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                        return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length);
+
+                    case SmileVideoVideoInformationSource.Ranking:
+                        return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(RankingDetail.Length);
+
+                    case SmileVideoVideoInformationSource.Search:
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
         public SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow{ get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
-        public int ViewCounter { get { return RawValueUtility.ConvertInteger(Thumb.ViewCounter); } }
-        public int CommentNum { get { return RawValueUtility.ConvertInteger(Thumb.CommentNum); } }
-        public int MylistCounter { get { return RawValueUtility.ConvertInteger(Thumb.MylistCounter); } }
+        public int ViewCounter
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                        return RawValueUtility.ConvertInteger(Thumb.ViewCounter);
+
+                    case SmileVideoVideoInformationSource.Ranking:
+                        return RawValueUtility.ConvertInteger(RankingDetail.ViewCounter);
+
+                    case SmileVideoVideoInformationSource.Search:
+                        return RawValueUtility.ConvertInteger(Search.ViewCounter);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+        public int CommentCount
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                        return RawValueUtility.ConvertInteger(Thumb.CommentNum);
+
+                    case SmileVideoVideoInformationSource.Ranking:
+                        return RawValueUtility.ConvertInteger(RankingDetail.CommentNum);
+
+                    case SmileVideoVideoInformationSource.Search:
+                        return RawValueUtility.ConvertInteger(Search.CommentCounter);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public int MylistCounter
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                        return RawValueUtility.ConvertInteger(Thumb.MylistCounter);
+
+                    case SmileVideoVideoInformationSource.Ranking:
+                        return RawValueUtility.ConvertInteger(RankingDetail.MylistCounter);
+
+                    case SmileVideoVideoInformationSource.Search:
+                        return RawValueUtility.ConvertInteger(Search.MylistCounter);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
         public Uri WatchUrl
         {
             get {
@@ -372,10 +458,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        {
+            var response = mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var dirInfo = (DirectoryInfo)response.Result;
+            var cachedDirPath = Path.Combine(dirInfo.FullName, videoId);
+            if(!Directory.Exists(cachedDirPath)) {
+                Directory.CreateDirectory(cachedDirPath);
+            }
+
+            RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
+            var cachedThumbFilePath = Path.Combine(cachedDirPath, Constants.SmileVideoCacheGetthumbinfoFileName);
+            if(File.Exists(cachedThumbFilePath)) {
+                var fileInfo = new FileInfo(cachedThumbFilePath);
+                if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+                    using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        rawGetthumbinfo = Getthumbinfo.Load(stream);
+                    }
+                }
+            }
+            if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+                var getthumbinfo = new Getthumbinfo(mediation);
+                rawGetthumbinfo = await getthumbinfo.GetAsync(videoId);
+            }
+
+            // キャッシュ構築
+            try {
+                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
+            } catch(FileNotFoundException) {
+                // BUGS: いかんのう
+            }
+
+            return rawGetthumbinfo;
+        }
+
+        public static async Task<SmileVideoInformationViewModel> CreateFromVideoIdAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        {
+            var rawGetthumbinfo = await LoadGetthumbinfoAsync(mediation, videoId, thumbCacheSpan);
+            return new SmileVideoInformationViewModel(mediation, rawGetthumbinfo.Thumb, NoOrderd);
+        }
+
         void Initialize()
         {
             var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var dirInfo = (DirectoryInfo)response.Result;
+            // 未調査だけど VideoId が null の可能性あり！
             var cachedDirPath = Path.Combine(dirInfo.FullName, VideoId);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
@@ -397,6 +524,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 throw new InvalidOperationException(nameof(Getflv));
             }
         }
+
         void ThrowNotGetthumbinfoSource()
         {
             if(VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
@@ -411,14 +539,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
         }
 
-        ImageSource Load(Stream stream)
+        ImageSource GetImage(Stream stream)
         {
             var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
             FreezableUtility.SafeFreeze(image);
             return this._thumbnailImage = image;
         }
 
-        async Task LoadImageAsync_Impl()
+        async Task LoadThumbnaiImageAsync_Impl()
         {
             var uri = ThumbnailUri;
 
@@ -434,7 +562,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
             if(binary != null) {
                 using(var stream = new MemoryStream(binary)) {
-                    Load(stream);
+                    GetImage(stream);
                     VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Completed;
                 }
             } else {
@@ -443,7 +571,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             await Task.CompletedTask;
         }
 
-        public async Task LoadImageAsync(CacheSpan cacheSpan)
+        public async Task LoadThumbnaiImageAsync(CacheSpan cacheSpan)
         {
             VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageChecking;
 
@@ -455,14 +583,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageLoadingFromStorage;
 
                     using(var stream = new FileStream(cachedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        Load(stream);
+                        GetImage(stream);
                         VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Completed;
                         return;
                     }
                 }
             }
 
-            await LoadImageAsync_Impl();
+            await LoadThumbnaiImageAsync_Impl();
 
             if(VideoThumbnailLoad == SmileVideoVideoThumbnailLoad.Completed) {
                 // キャッシュ構築
@@ -476,16 +604,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public async Task LoadInformationAsync(CacheSpan cacheSpan)
+        {
+            var rawGetthumbinfo = await LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan);
+            //SetThumbModel(rawGetthumbinfo.Thumb);
+            Thumb = rawGetthumbinfo.Thumb;
+            VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+        }
+
         public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)
         {
             Getflv = getFlvModel;
         }
 
-        public void SetThumbModel(RawSmileVideoThumbModel thumbModel)
-        {
-            Thumb = thumbModel;
-            VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
-        }
+        //public void SetThumbModel(RawSmileVideoThumbModel thumbModel)
+        //{
+        //    Thumb = thumbModel;
+        //    VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+        //}
 
         public bool SaveSetting()
         {

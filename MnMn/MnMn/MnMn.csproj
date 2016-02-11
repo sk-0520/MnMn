@@ -55,8 +55,8 @@
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SharedLibrary, Version=0.1.5866.34076, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.18\lib\net46\SharedLibrary.dll</HintPath>
+    <Reference Include="SharedLibrary, Version=0.1.5877.29119, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.19\lib\net46\SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -82,11 +82,11 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="xZune.Vlc, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\xZune.Vlc.16.01.17\lib\net45\x86\xZune.Vlc.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="xZune.Vlc.Wpf, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\xZune.Vlc.Wpf.16.01.17\lib\net45\x86\xZune.Vlc.Wpf.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

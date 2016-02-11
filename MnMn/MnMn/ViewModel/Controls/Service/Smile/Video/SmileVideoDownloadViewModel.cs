@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ThumbnailLoadState = LoadState.Loading;
             OnLoadDataWithoutSessionStart();
-            return VideoInformationViewModel.LoadImageAsync(imageCacheSpan).ContinueWith(task => {
+            return VideoInformationViewModel.LoadThumbnaiImageAsync(imageCacheSpan).ContinueWith(task => {
                 ThumbnailLoadState = LoadState.Loaded;
                 OnLoadDataWithoutSessionEnd();
             });
@@ -393,30 +393,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadEnd()
         { }
 
-        async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(string videoId, CacheSpan thumbCacheSpan)
-        {
-            var cachedThumbFilePath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetthumbinfoFileName);
-            if(File.Exists(cachedThumbFilePath)) {
-                var fileInfo = new FileInfo(cachedThumbFilePath);
-                if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-                    using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        return Getthumbinfo.Load(stream);
-                    }
-                }
-            }
+        //async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(string videoId, CacheSpan thumbCacheSpan)
+        //{
+        //    var cachedThumbFilePath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetthumbinfoFileName);
+        //    if(File.Exists(cachedThumbFilePath)) {
+        //        var fileInfo = new FileInfo(cachedThumbFilePath);
+        //        if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+        //            using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+        //                return Getthumbinfo.Load(stream);
+        //            }
+        //        }
+        //    }
 
-            var getthumbinfo = new Getthumbinfo(Mediation);
-            var result = await getthumbinfo.GetAsync(videoId);
+        //    var getthumbinfo = new Getthumbinfo(Mediation);
+        //    var result = await getthumbinfo.GetAsync(videoId);
 
-            // キャッシュ構築
-            try {
-                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, result);
-            } catch(FileNotFoundException) {
-                // BUGS: いかんのう
-            }
+        //    // キャッシュ構築
+        //    try {
+        //        SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, result);
+        //    } catch(FileNotFoundException) {
+        //        // BUGS: いかんのう
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         protected virtual void OnLoadGetthumbinfoStart() { }
         protected virtual void OnLoadGetthumbinfoEnd() { }
@@ -432,8 +432,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
 
             OnLoadGetthumbinfoStart();
-            var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
-            VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
+            //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
+            //VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
+            VideoInformationViewModel = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, thumbCacheSpan);
             OnLoadGetthumbinfoEnd();
 
             await LoadAsync(VideoInformationViewModel, thumbCacheSpan, imageCacheSpan);
@@ -453,8 +454,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(videoInformation.VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
                 OnLoadGetthumbinfoStart();
-                var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoInformation.VideoId, thumbCacheSpan);
-                VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
+                //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoInformation.VideoId, thumbCacheSpan);
+                //VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
+                //VideoInformationViewModel = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoInformation.VideoId, thumbCacheSpan);
+                await videoInformation.LoadInformationAsync(thumbCacheSpan);
+                VideoInformationViewModel = videoInformation;
                 OnLoadGetthumbinfoEnd();
             } else {
                 VideoInformationViewModel = videoInformation;
