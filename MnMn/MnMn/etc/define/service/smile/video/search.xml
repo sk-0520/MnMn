@@ -22,11 +22,6 @@
 				<word lang="ja-JP" value="投稿時間" />
 			</words>
 		</element>
-		<element key="viewCounter">
-			<words>
-				<word lang="ja-JP" value="再生数" />
-			</words>
-		</element>
 	</method>
 	<!-- ソート -->
 	<sort>
@@ -35,7 +30,7 @@
 				<word lang="ja-JP" value="昇順" />
 			</words>
 		</element>
-		<element key="+">
+		<element key="%2B">
 			<words>
 				<word lang="ja-JP" value="降順" />
 			</words>

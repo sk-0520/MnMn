@@ -23,6 +23,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -38,6 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -456,6 +459,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
+        #region command
+
+        public ICommand OpenVideoCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        OpenPlayerAsync();
+                    }
+                );
+            }
+        }
+
+        #endregion
+
         #region function
 
         static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
@@ -594,6 +613,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(VideoThumbnailLoad == SmileVideoVideoThumbnailLoad.Completed) {
                 // キャッシュ構築
+                // TODO: 別スレッドで所有うんぬん
                 var frame = BitmapFrame.Create(this._thumbnailImage);
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(frame);
@@ -632,6 +652,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SerializeUtility.SaveJsonDataToFile(IndividualVideoSettingFile.FullName, IndividualVideoSetting);
             ResetChangeFlag();
             return true;
+        }
+
+        public async void OpenPlayerAsync()
+        {
+            var vm = new SmileVideoPlayerViewModel(Mediation);
+            var window = new SmileVideoPlayerWindow() {
+                DataContext = vm,
+            };
+            vm.SetView(window);
+            window.Show();
+
+            await vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary 
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 >
   <!--
     パス固定。
@@ -50,6 +51,11 @@
       <GridViewColumn.CellTemplate>
         <ItemContainerTemplate>
           <StackPanel>
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="MouseDoubleClick">
+                <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" CommandParameter="{Binding}"/>
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TextBlock Text="{Binding VideoThumbnailLoad}" />
             <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
 

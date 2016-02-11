@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        public Task LoadAsync(CacheSpan imageCacheSpan)
+        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             var search = new ContentsSearch(Mediation);
             return search.GetAsnc(
@@ -93,6 +93,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var list = task.Result;
                 VideoInformationList.InitializeRange(list);
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
+                var loader = new SmileVideoInformationLoader(VideoInformationList);
+                return loader.LoadInformationAsync(thumbCacheSpan);
+            }).ContinueWith(task => {
                 var loader = new SmileVideoInformationLoader(VideoInformationList);
                 loader.LoadThumbnaiImageAsync(imageCacheSpan);
             });

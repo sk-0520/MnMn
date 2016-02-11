@@ -61,5 +61,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 });
             });
         }
+
+        public async Task LoadInformationAsync(CacheSpan cacheSpan)
+        {
+            foreach(var item in List) {
+                await item.LoadInformationAsync(cacheSpan);
+            }
+        }
+
     }
 }

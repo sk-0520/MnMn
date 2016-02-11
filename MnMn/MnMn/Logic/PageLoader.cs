@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             }
                         } else {
                             CallExitFailure();
-                            return CheckResultModel.Failure<string>(response.IsSuccessStatusCode.ToString());
+                            return CheckResultModel.Failure<string>(response.ToString());
                         }
                     }
 
