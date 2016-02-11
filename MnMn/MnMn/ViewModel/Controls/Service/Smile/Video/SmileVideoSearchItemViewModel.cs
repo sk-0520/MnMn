@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
@@ -71,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        public Task LoadAsync()
+        public Task LoadAsync(CacheSpan imageCacheSpan)
         {
             var search = new ContentsSearch(Mediation);
             return search.GetAsnc(
@@ -86,12 +87,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ).ContinueWith(task => {
                 var result = task.Result;
                 TotalCount = RawValueUtility.ConvertInteger(result.Meta.TotalCount);
-                var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index));
+                var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index + 1));
                 return list;
             }).ContinueWith(task => {
                 var list = task.Result;
                 VideoInformationList.InitializeRange(list);
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
+                var loader = new SmileVideoInformationLoader(VideoInformationList);
+                loader.LoadThumbnaiImageAsync(imageCacheSpan);
+            });
         }
 
         #endregion

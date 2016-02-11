@@ -34,6 +34,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -151,28 +152,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 Task.Run(() => {
                     FinderLoadState = SmileVideoFinderLoadState.ImageLoading;
-
-                    Parallel.ForEach(VideoInformationList.ToArray(), item => {
-                        var count = 0;
-                        var max = 3;
-                        var wait = TimeSpan.FromSeconds(1);
-                        while(count++ <= max) {
-                            cancel.Token.ThrowIfCancellationRequested();
-                            try {
-                                var t = item.LoadThumbnaiImageAsync(imageCacheSpan);
-                                t.Wait();
-                                break;
-                            } catch(Exception ex) {
-                                Debug.WriteLine($"{item}: {ex}");
-                                if(cancel.IsCancellationRequested) {
-                                    break;
-                                } else {
-                                    Thread.Sleep(wait);
-                                    continue;
-                                }
-                            }
-                        }
-                    });
+                    var loader = new SmileVideoInformationLoader(VideoInformationList);
+                    loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 }).ContinueWith(t => {
                     //VideoInformationItems.Refresh();
                     FinderLoadState = SmileVideoFinderLoadState.Completed;

@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         public int SearchCount { get; set; } = Constants.SmileVideoSearchCount;
 
+        public bool LoadVideoTime { get; set; } = true;
+
         #endregion
     }
 }

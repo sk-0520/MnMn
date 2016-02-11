@@ -116,8 +116,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var index = pageNumber - 1;
                         var loadIndex = index * Setting.SearchCount;
                         if(SearchItems[index] == null) {
+                            var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
                             var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, LoadingMethod, LoadingSort, Type, Query, loadIndex, Setting.SearchCount);
-                            vm.LoadAsync().ContinueWith(task => {
+                            vm.LoadAsync(imageCacheSpan).ContinueWith(task => {
                                 SearchItems[index] = vm;
                                 SelectedVideoInformationItems = vm.VideoInformationItems;
                             });
@@ -161,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
-            return vm.LoadAsync().ContinueWith(task => {
+            return vm.LoadAsync(imageCacheSpan).ContinueWith(task => {
                 if(reload) {
                     TotalCount = vm.TotalCount;
                     if(TotalCount > 0) {
