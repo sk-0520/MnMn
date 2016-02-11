@@ -33,20 +33,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public abstract class SmileVideoFinderViewModelBase: ViewModelBase
     {
-        #region property
+        #region variable
 
         ICollectionView _VideoInformationItems;
         bool _nowLoading;
         SmileVideoInformationViewModel _selectedVideoInformation;
         SmileVideoFinderLoadState _finderLoadState;
 
+        string _inputFilter="#";
+        bool _isBlacklist;
+
         #endregion
+
         public SmileVideoFinderViewModelBase(Mediation mediation)
         {
             Mediation = mediation;
 
             VideoInformationList = new CollectionModel<SmileVideoInformationViewModel>();
             VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
+            VideoInformationItems.Filter = FilterItems;
         }
 
         #region property
@@ -85,6 +90,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         nameof(NowLoading),
                     };
                     CallOnPropertyChange(propertyNames);
+                }
+            }
+        }
+
+        public string InputFilter
+        {
+            get { return this._inputFilter; }
+            set
+            {
+                if(SetVariableValue(ref this._inputFilter, value)) {
+                    VideoInformationItems.Refresh();
+                }
+            }
+        }
+        public bool IsBlacklist
+        {
+            get { return this._isBlacklist; }
+            set
+            {
+                if(SetVariableValue(ref this._isBlacklist, value)) {
+                    VideoInformationItems.Refresh();
                 }
             }
         }
@@ -133,6 +159,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 CancelLoading = null;
             }
         }
+
+        bool FilterItems(object obj)
+        {
+            var filter = InputFilter;
+            if(string.IsNullOrEmpty(filter)) {
+                return true;
+            }
+            var isBlack = IsBlacklist;
+
+            var viewModel = (SmileVideoInformationViewModel)obj;
+            var isHit = viewModel.Title.IndexOf(filter ?? string.Empty) >= -1;
+            if(IsBlacklist) {
+                return !isHit;
+            } else {
+                return isHit;
+            }
+        }
+
 
         #endregion
 

@@ -106,7 +106,7 @@
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Define\MappingContentTrim.cs" />
     <Compile Include="Define\MappingItemType.cs" />
-    <Compile Include="Define\ParameterEncodeType.cs" />
+    <Compile Include="Define\ParameterEncode.cs" />
     <Compile Include="Define\ParameterType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
@@ -166,6 +166,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml.cs">
       <DependentUpon>SmileVideoSearchManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Page Include="View\Controls\Navigationbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,7 +206,6 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoMediationKey.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoFinderLoadState.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoThumbType.cs" />
-    <Compile Include="Define\Service\Smile\Video\SmileVideoVideoThumbnailLoad.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoVideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />

@@ -170,13 +170,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
 
-        string ToParameterEncodeTypeString(string s, ParameterEncodeType encodeType)
+        string ToParameterEncodeTypeString(string s, ParameterEncode encodeType)
         {
             switch(encodeType) {
-                case ParameterEncodeType.None:
+                case ParameterEncode.None:
                     return s;
 
-                case ParameterEncodeType.Uri:
+                case ParameterEncode.Uri:
                     return HttpUtility.UrlEncode(s);
 
                 default:

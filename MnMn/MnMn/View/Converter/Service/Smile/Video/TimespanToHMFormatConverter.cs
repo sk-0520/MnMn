@@ -16,18 +16,31 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.Windows.Data;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
 {
-    public enum ParameterEncodeType
+    public class TimespanToHMFormatConverter: IValueConverter
     {
-        [XmlEnum("none")]
-        None,
-        [XmlEnum("uri")]
-        Uri,
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var ts = (TimeSpan)value;
+            if(ts.Hours > 0) {
+                var hour = ts.Hours * 60;
+                return $"{hour + ts.Minutes}:{ts:ss}";
+            } else {
+                return ts.ToString(@"mm\:ss");
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

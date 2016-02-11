@@ -99,6 +99,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return result;
         }
 
+        public static int ConvertInteger(string s)
+        {
+            if(s.Any(c => c == ',')) {
+                s = string.Concat(s.Where(c => c != ','));
+            }
+
+            return RawValueUtility.ConvertInteger(s);
+        }
+
         #endregion
 
     }

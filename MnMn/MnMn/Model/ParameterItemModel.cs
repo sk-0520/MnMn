@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         public bool Force { get; set; }
 
         [XmlAttribute("encode")]
-        public ParameterEncodeType Encode { get; set; }
+        public ParameterEncode Encode { get; set; }
 
         /// <summary>
         /// キーが存在するか。

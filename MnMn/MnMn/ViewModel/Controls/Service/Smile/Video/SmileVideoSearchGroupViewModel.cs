@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return vm.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
                 if(isReload) {
                     TotalCount = vm.TotalCount;
-                    if(TotalCount > 0) {
+                    if(TotalCount > Setting.SearchCount) {
                         var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
                         var preList = Enumerable.Range(1, pageCount - 1)
                             .Select((n, i) => new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
@@ -172,10 +172,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         };
                         preList.Insert(0, pageVm);
                         SearchItems.InitializeRange(preList);
+                    } else if(TotalCount > 0) {
+                        var pageVm = new SmileSearchPageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
+                            LoadState = LoadState.Loaded,
+                        };
+                        SearchItems.InitializeRange(new[] { pageVm });
                     }
                 }
-                //var index = vm.Index / Setting.SearchCount;
-                //SearchItems[index] = vm;
                 SelectedVideoInformationItems = vm.VideoInformationItems;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

@@ -54,7 +54,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region variable
 
-        SmileVideoVideoThumbnailLoad _videoThumbnailLoad;
+        LoadState _thumbnailLoadState;
+        LoadState _informationLoadState;
+
         BitmapSource _thumbnailImage;
 
         bool? _isEconomyMode;
@@ -65,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Mediation = mediation;
             Number = number;
-            VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.None;
+            ThumbnailLoadState = LoadState.None;
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)
@@ -100,7 +102,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        Mediation Mediation { get; set; }
+        Mediation Mediation { get; }
+
+        SmileVideoSettingModel Setting { get; set; }
 
         SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
         FileInfo IndividualVideoSettingFile { get; set; }
@@ -119,12 +123,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoVideoInformationSource VideoInformationSource { get; private set; }
 
-        public SmileVideoVideoThumbnailLoad VideoThumbnailLoad
+        public LoadState ThumbnailLoadState
         {
-            get { return this._videoThumbnailLoad; }
+            get { return this._thumbnailLoadState; }
             set
             {
-                if(SetVariableValue(ref this._videoThumbnailLoad, value)) {
+                if(SetVariableValue(ref this._thumbnailLoadState, value)) {
+                    CallOnPropertyChange(nameof(ThumbnailImage));
+                }
+            }
+        }
+
+        public LoadState InformationLoadState
+        {
+            get { return this._informationLoadState; }
+            set
+            {
+                if(SetVariableValue(ref this._informationLoadState, value)) {
                     CallOnPropertyChange(nameof(ThumbnailImage));
                 }
             }
@@ -134,8 +149,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return VideoInformationSource == SmileVideoVideoInformationSource.Search;
+                return VideoInformationSource != SmileVideoVideoInformationSource.Search;
             }
+        }
+
+        public bool IsLoadVideoTime
+        {
+            get { return Setting.LoadVideoTime; }
         }
 
         #region 生データから取得
@@ -249,7 +269,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Ranking:
-                        return RawValueUtility.ConvertInteger(RankingDetail.ViewCounter);
+                        return SmileVideoRankingUtility.ConvertInteger(RankingDetail.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.ViewCounter);
@@ -268,7 +288,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.CommentNum);
 
                     case SmileVideoVideoInformationSource.Ranking:
-                        return RawValueUtility.ConvertInteger(RankingDetail.CommentNum);
+                        return SmileVideoRankingUtility.ConvertInteger(RankingDetail.CommentNum);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.CommentCounter);
@@ -288,7 +308,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Ranking:
-                        return RawValueUtility.ConvertInteger(RankingDetail.MylistCounter);
+                        return SmileVideoRankingUtility.ConvertInteger(RankingDetail.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.MylistCounter);
@@ -429,21 +449,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoThumbnailLoad) {
-                    case SmileVideoVideoThumbnailLoad.None:
+                switch(ThumbnailLoadState) {
+                    case LoadState.None:
                         return null;
 
-                    case SmileVideoVideoThumbnailLoad.ImageChecking:
+                    case LoadState.Preparation:
                         return null;
 
-                    case SmileVideoVideoThumbnailLoad.ImageLoadingFromWeb:
-                    case SmileVideoVideoThumbnailLoad.ImageLoadingFromStorage:
+                    case LoadState.Loading:
                         return null;
 
-                    case SmileVideoVideoThumbnailLoad.Completed:
+                    case LoadState.Loaded:
                         return this._thumbnailImage;
 
-                    case SmileVideoVideoThumbnailLoad.Failure:
+                    case LoadState.Failure:
                         return null;
 
                     default:
@@ -537,6 +556,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 CacheDirectory = Directory.CreateDirectory(cachedDirPath);
             }
 
+            var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            Setting = (SmileVideoSettingModel)resSetting.Result;
+
             IndividualVideoSettingFile = new FileInfo(Path.Combine(CacheDirectory.FullName, Constants.SmileVideoIndividualVideoSettingName));
             if(IndividualVideoSettingFile.Exists && IndividualVideoSettingFile.Length <= Constants.MinimumJsonFileSize) {
                 IndividualVideoSetting = SerializeUtility.LoadJsonDataFromFile<SmileVideoIndividualVideoSettingModel>(IndividualVideoSettingFile.FullName);
@@ -590,28 +612,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(binary != null) {
                 using(var stream = new MemoryStream(binary)) {
                     GetImage(stream);
-                    VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Completed;
+                    ThumbnailLoadState = LoadState.Loaded;
                 }
             } else {
-                VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Failure;
+                ThumbnailLoadState = LoadState.Failure;
             }
             await Task.CompletedTask;
         }
 
         public async Task LoadThumbnaiImageAsync(CacheSpan cacheSpan)
         {
-            VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageChecking;
+            ThumbnailLoadState = LoadState.Preparation;
 
             var cachedFilePath = Path.Combine(CacheDirectory.FullName, VideoId + ".png");
             if(File.Exists(cachedFilePath)) {
                 var fileInfo = new FileInfo(cachedFilePath);
                 if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumPngFileSize <= fileInfo.Length) {
 
-                    VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.ImageLoadingFromStorage;
+                    ThumbnailLoadState = LoadState.Loading;
 
                     using(var stream = new FileStream(cachedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                         GetImage(stream);
-                        VideoThumbnailLoad = SmileVideoVideoThumbnailLoad.Completed;
+                        ThumbnailLoadState = LoadState.Loaded;
                         return;
                     }
                 }
@@ -619,7 +641,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             await LoadThumbnaiImageAsync_Impl();
 
-            if(VideoThumbnailLoad == SmileVideoVideoThumbnailLoad.Completed) {
+            if(ThumbnailLoadState == LoadState.Loaded) {
                 // キャッシュ構築
                 // TODO: 別スレッドで所有うんぬん
                 var frame = BitmapFrame.Create(this._thumbnailImage);
