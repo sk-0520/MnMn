@@ -23,7 +23,6 @@
 
     <Menu Grid.Row="0">
       <MenuItem Header="ACV" Command="{Binding Temp_OpenSmilePlayerCommand}" Width="300" />
-      <MenuItem Header="FIND" Command="{Binding Temp_FindCommand}" Width="300" />
     </Menu>
 
     <StatusBar Grid.Row="2">

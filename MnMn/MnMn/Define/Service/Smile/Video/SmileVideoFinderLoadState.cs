@@ -44,10 +44,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// </summary>
         InformationLoading,
         /// <summary>
-        /// サムネイル取得中。
-        /// </summary>
-        ImageLoading,
-        /// <summary>
         /// 完了。
         /// </summary>
         Completed,

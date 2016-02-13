@@ -508,7 +508,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var response = mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var dirInfo = (DirectoryInfo)response.Result;
-            var cachedDirPath = Path.Combine(dirInfo.FullName, videoId);
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId);
             if(!Directory.Exists(cachedDirPath)) {
                 Directory.CreateDirectory(cachedDirPath);
             }
@@ -549,7 +549,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var dirInfo = (DirectoryInfo)response.Result;
             // 未調査だけど VideoId が null の可能性あり！
-            var cachedDirPath = Path.Combine(dirInfo.FullName, VideoId);
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, VideoId);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
             } else {

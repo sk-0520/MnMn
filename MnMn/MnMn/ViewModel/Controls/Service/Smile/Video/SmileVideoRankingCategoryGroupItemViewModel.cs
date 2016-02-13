@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoInformationItems.Refresh();
 
                 Task.Run(() => {
-                    FinderLoadState = SmileVideoFinderLoadState.ImageLoading;
+                    FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
                     var loader = new SmileVideoInformationLoader(VideoInformationList);
                     loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 }).ContinueWith(t => {

@@ -103,11 +103,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Task.Run(() => {
                     FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
                     var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    return loader.LoadInformationAsync(thumbCacheSpan);
-                }).ContinueWith(async _ => {
-                    FinderLoadState = SmileVideoFinderLoadState.ImageLoading;
-                    var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    await loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                    var infoTask  =loader.LoadInformationAsync(thumbCacheSpan);
+                    var imageTasl = loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                    return Task.WhenAll(infoTask, imageTasl);
                 }).ContinueWith(_ => {
                     FinderLoadState = SmileVideoFinderLoadState.Completed;
                     NowLoading = false;
