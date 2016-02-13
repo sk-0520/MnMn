@@ -14,17 +14,13 @@
   mc:Ignorable="d"
 >
   <Window.Resources>
-    <Storyboard x:Key="Storyboard1"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
   </Window.Resources>
-  <Window.Triggers>
-    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-      <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
-    </EventTrigger>
-  </Window.Triggers>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
@@ -82,53 +78,60 @@
       
     </Grid>
 
-    <TabControl Grid.Row="2" TabStripPlacement="Bottom">
-      <TabItem Header="movie">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="4" />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
+    <TabControl Grid.Row="2" TabStripPlacement="Left" Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TabItem Header="movie">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="4" />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-          <StackPanel Grid.Column="0">
-            <Image Width="80" Height="60" Source="{Binding ThumbnailImage}" />
-          </StackPanel>
+            <StackPanel Grid.Column="0">
+              <Image Width="80" Height="60" Source="{Binding ThumbnailImage}" />
+            </StackPanel>
 
-          <Grid Grid.Column="2">
-            <WrapPanel Orientation="Horizontal">
-              <TextBlock>tag1</TextBlock>
-              <TextBlock>tag1</TextBlock>
-              <TextBlock>tag2</TextBlock>
-              <TextBlock>tag3</TextBlock>
-              <TextBlock>tag4</TextBlock>
-              <TextBlock>tag5</TextBlock>
-              <TextBlock>tag6</TextBlock>
-              <TextBlock>tag7</TextBlock>
-            </WrapPanel>
+            <GridSplitter Grid.Row="1" />
+
+            <Grid Grid.Column="2">
+              <WrapPanel Orientation="Horizontal">
+                <TextBlock>tag1</TextBlock>
+                <TextBlock>tag1</TextBlock>
+                <TextBlock>tag2</TextBlock>
+                <TextBlock>tag3</TextBlock>
+                <TextBlock>tag4</TextBlock>
+                <TextBlock>tag5</TextBlock>
+                <TextBlock>tag6</TextBlock>
+                <TextBlock>tag7</TextBlock>
+              </WrapPanel>
+            </Grid>
           </Grid>
-        </Grid>
-      </TabItem>
-      <TabItem Header="relation">
-      </TabItem>
-      <TabItem Header="market">
-      </TabItem>
-    </TabControl>
+        </TabItem>
+        <TabItem Header="relation">
+        </TabItem>
+        <TabItem Header="market">
+        </TabItem>
+      </TabControl>
 
-    <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="327">
-      <TextBlock>[info</TextBlock>
-      <TextBlock Text="{Binding InformationLoadState}" />
-      <TextBlock>,image</TextBlock>
-      <TextBlock Text="{Binding ThumbnailLoadState}" />
-      <TextBlock>,comment</TextBlock>
-      <TextBlock Text="{Binding CommentLoadState}" />
-      <TextBlock>,video</TextBlock>
-      <TextBlock Text="{Binding VideoLoadState}" />
-      <TextBlock>]</TextBlock>
-      <TextBlock>datetime</TextBlock>
-      <TextBlock>play</TextBlock>
-      <TextBlock>mylist</TextBlock>
-    </StackPanel>
+    <StatusBar Grid.Row="3" >
+      <ToggleButton x:Name="switchInformation" Content="info" IsChecked="True" />
+      <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
+        <TextBlock>[</TextBlock>
+        <TextBlock>info</TextBlock>
+        <TextBlock Text="{Binding InformationLoadState}" />
+        <TextBlock>,image</TextBlock>
+        <TextBlock Text="{Binding ThumbnailLoadState}" />
+        <TextBlock>,comment</TextBlock>
+        <TextBlock Text="{Binding CommentLoadState}" />
+        <TextBlock>,video</TextBlock>
+        <TextBlock Text="{Binding VideoLoadState}" />
+        <TextBlock>]</TextBlock>
+        <TextBlock>datetime</TextBlock>
+        <TextBlock>play</TextBlock>
+        <TextBlock>mylist</TextBlock>
+      </StackPanel>
+    </StatusBar>
+
 
 
   </Grid>
