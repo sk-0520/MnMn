@@ -39,14 +39,10 @@
         <ColumnDefinition />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-
-      <Viewbox
-        Grid.Row="0"
-        Grid.Column="0"
-        ClipToBounds="True"
-      >
+      
+      <Viewbox ClipToBounds="True">
         <Grid>
-          <vlc_wpf:VlcPlayer x:Name="player" />
+          <vlc_wpf:VlcPlayer x:Name="player"/>
           <Canvas x:Name="normalCommentArea" />
           <Canvas x:Name="contributorCommentArea" />
         </Grid>

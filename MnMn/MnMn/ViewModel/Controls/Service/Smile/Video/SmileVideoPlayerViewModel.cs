@@ -207,11 +207,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void FireShowComment()
         {
-            Debug.WriteLine("{0} - {1}", PrevTime, PlayTime);
+            Debug.WriteLine($"{PrevTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             var commentArea = new Size(
-                NormalCommentArea.ActualWidth,
-                NormalCommentArea.ActualHeight
+                Player.ActualWidth,
+                Player.ActualHeight
             );
             var list = NormalCommentList.ToArray();
             foreach(var commentViewModel in list.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
@@ -270,12 +270,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 NormalCommentShowList.Add(data);
 
                 var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevTime.TotalMilliseconds;
-                var diffPosition = starTime / NormalCommentArea.ActualWidth;
+                var diffPosition = starTime / commentArea.Width;
 
-                animation.From = NormalCommentArea.ActualWidth + diffPosition;
+
+                animation.From = commentArea.Width + diffPosition;
                 animation.To = - box.ActualWidth;
                 animation.Duration = new Duration(Setting.ShowTime);
-
+                
                 EventDisposer< EventHandler> ev = null;
                 animation.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
                     NormalCommentArea.Children.Remove(box);
