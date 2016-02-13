@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api

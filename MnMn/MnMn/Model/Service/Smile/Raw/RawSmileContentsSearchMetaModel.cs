@@ -21,16 +21,17 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using Newtonsoft.Json;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    [DataContract]
-    public class RawSmileContentsSearchModel: ModelBase
+    public class RawSmileContentsSearchMetaModel: ModelBase
     {
-        [DataMember(Name = "meta")]
-        public RawSmileContentsSearchMetaModel Meta { get; set; } = new RawSmileContentsSearchMetaModel();
-
-        [DataMember(Name = "data")]
-        public CollectionModel<RawSmileContentsSearchItemModel> Data { get; set; } = new CollectionModel<RawSmileContentsSearchItemModel>();
+        [DataMember(Name = "status")]
+        public string Status { get; set; }
+        [DataMember(Name = "totalCount")]
+        public string TotalCount { get; set; }
+        [DataMember(Name = "id")]
+        public string Id { get; set; }
     }
 }

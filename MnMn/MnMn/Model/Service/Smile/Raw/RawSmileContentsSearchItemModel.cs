@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using Newtonsoft.Json;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
     public class RawSmileContentsSearchItemModel: ModelBase
     {

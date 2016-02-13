@@ -135,9 +135,9 @@
     <Compile Include="Model\MappingModel.cs" />
     <Compile Include="Model\MappingResult.cs" />
     <Compile Include="Model\MappingsModel.cs" />
-    <Compile Include="Model\Service\Smile\RawSmileContentsSearchItemModel.cs" />
-    <Compile Include="Model\Service\Smile\RawSmileContentsSearchMetaModel.cs" />
-    <Compile Include="Model\Service\Smile\RawSmileContentsSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketModel.cs" />
