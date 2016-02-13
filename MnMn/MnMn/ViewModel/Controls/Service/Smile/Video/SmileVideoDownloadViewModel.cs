@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformationViewModel.VideoId, VideoInformationViewModel.WatchUrl);
             VideoInformationViewModel.SetGetflvModel(rawVideoGetflvModel);
 
-            var path = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetflvFileName);
+            var path = Path.Combine(DownloadDirectory.FullName, FileNameUtility.CreateFileName(VideoInformationViewModel.VideoId, "getflv", "xml"));
             SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
 
             OnLoadGetflvEnd();
@@ -265,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Preparation;
 
-            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheMsgFileName);
+            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, FileNameUtility.CreateFileName(VideoInformationViewModel.VideoId, "msg", "xml"));
             if(File.Exists(cacheFilePath)) {
                 var fileInfo = new FileInfo(cacheFilePath);
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
@@ -335,6 +335,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoFile = videoFile;
             VideoLoadedSize = VideoTotalSize = VideoFile.Length;
             VideoLoadState = LoadState.Loaded;
+
+            // TODO: HTMLがあること前提
+            VideoInformationViewModel.LoadLocalPageHtmlAsync().Wait();
+
             OnLoadVideoEnd();
         }
 
@@ -487,6 +491,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(e.DownloadStartType == DownloadStartType.Range) {
                 DonwloadStartPosition = e.RangeHeadPosition;
             }
+            var donwloader = (SmileVideoDownloader)sender;
+            VideoInformationViewModel.SetPageHtmlAsync(donwloader.PageHtml, true).Wait();
 
             OnDownloadStart(sender, e);
         }

@@ -127,9 +127,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static string GetFileName(string videoId, SmileVideoMovieType movieType, bool isEconomyMode)
         {
             var ext = GetFileExtension(movieType);
-            var eco = isEconomyMode ? "-" + EconomyFileSuffix : string.Empty;
-
-            return $"{videoId}{eco}.{ext}";
+            if(isEconomyMode) {
+                return FileNameUtility.CreateFileName(videoId, EconomyFileSuffix, ext);
+            } else {
+                return FileNameUtility.CreateFileName(videoId, ext);
+            }
         }
 
         public static bool isScrapingMovie(string videoId)

@@ -190,13 +190,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(InformationLoadState) {
-                    case LoadState.Loaded:
-                        return VideoInformationViewModel.Description;
-
-                    default:
-                        return null;
+                if(VideoInformationViewModel?.PageHtmlLoadState == LoadState.Loaded) {
+                    return VideoInformationViewModel.PageDescription;
                 }
+
+                return null;
             }
         }
 
@@ -361,6 +359,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region SmileVideoDownloadViewModel
+
+        protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
+        {
+            CallOnPropertyChange(nameof(Description));
+
+            base.OnDownloadStart(sender, e);
+        }
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
         {

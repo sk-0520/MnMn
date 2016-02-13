@@ -123,6 +123,7 @@
     <Compile Include="Logic\Service\Smile\Api\ContentsSearch.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
+    <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />

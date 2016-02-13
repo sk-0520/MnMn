@@ -43,6 +43,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -58,6 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         LoadState _thumbnailLoadState;
         LoadState _informationLoadState;
+        LoadState _pageHtmlLoadState;
 
         BitmapSource _thumbnailImage;
 
@@ -125,6 +127,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public int Number { get; private set; }
 
+
+        public string PageHtml { get; private set; }
+
+        public string PageDescription { get; private set; }
+
         public SmileVideoVideoInformationSource VideoInformationSource { get; private set; }
 
         public LoadState ThumbnailLoadState
@@ -148,6 +155,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
+
+        public LoadState PageHtmlLoadState
+        {
+            get { return this._pageHtmlLoadState; }
+            set { SetVariableValue(ref this._pageHtmlLoadState, value); }
+        }
+
+        
 
         public bool HasLength
         {
@@ -554,6 +569,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        static string GetCacheFileName(string videoId, string roll, string extension)
+        {
+            return FileNameUtility.CreateFileName(videoId, roll, extension);
+        }
+
+        string GetCacheFileName(string roll, string extension)
+        {
+            CheckUtility.EnforceNotNullAndNotEmpty(roll);
+            return FileNameUtility.CreateFileName(VideoId, roll, extension);
+        }
+        string GetCacheFileName(string extension)
+        {
+            return FileNameUtility.CreateFileName(VideoId, extension);
+        }
+
         static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
         {
             var response = mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
@@ -564,7 +594,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
-            var cachedThumbFilePath = Path.Combine(cachedDirPath, Constants.SmileVideoCacheGetthumbinfoFileName);
+            var cachedThumbFilePath = Path.Combine(cachedDirPath, GetCacheFileName(videoId, "thumb", "xml"));
             if(File.Exists(cachedThumbFilePath)) {
                 var fileInfo = new FileInfo(cachedThumbFilePath);
                 if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
@@ -598,7 +628,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var dirInfo = (DirectoryInfo)response.Result;
-            // 未調査だけど VideoId が null の可能性あり！
             var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, VideoId);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
@@ -609,7 +638,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
 
-            IndividualVideoSettingFile = new FileInfo(Path.Combine(CacheDirectory.FullName, Constants.SmileVideoIndividualVideoSettingName));
+            IndividualVideoSettingFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("setting", "json")));
             if(IndividualVideoSettingFile.Exists && IndividualVideoSettingFile.Length <= Constants.MinimumJsonFileSize) {
                 IndividualVideoSetting = SerializeUtility.LoadJsonDataFromFile<SmileVideoIndividualVideoSettingModel>(IndividualVideoSettingFile.FullName);
             } else {
@@ -674,7 +703,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ThumbnailLoadState = LoadState.Preparation;
 
-            var cachedFilePath = Path.Combine(CacheDirectory.FullName, VideoId + ".png");
+            var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
             if(File.Exists(cachedFilePath)) {
                 var fileInfo = new FileInfo(cachedFilePath);
                 if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumPngFileSize <= fileInfo.Length) {
@@ -720,6 +749,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 nameof(HasLength),
             };
             CallOnPropertyChange(propertyNames);
+        }
+
+        public Task SetPageHtmlAsync(string html, bool isSave)
+        {
+            PageHtmlLoadState = LoadState.Loading;
+
+            var document = new HtmlDocument();
+            return Task.Run(() => {
+                PageHtml = html;
+                document.LoadHtml(html);
+                //document.DocumentNode.SelectSingleNode("@")
+                var description = document.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+                PageDescription = description.InnerHtml;
+
+            }).ContinueWith(task => {
+                PageHtmlLoadState = LoadState.Loaded;
+            }).ContinueWith(task => {
+                if(isSave) {
+                    var filePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html"));
+                    File.WriteAllText(filePath, PageHtml);
+                }
+            });
+        }
+
+        /// <summary>
+        /// <para>通信はしない！</para>
+        /// </summary>
+        public Task LoadLocalPageHtmlAsync()
+        {
+            PageHtmlLoadState = LoadState.Preparation;
+
+            var file = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
+            if(file.Exists && Constants.MinimumHtmlFileSize <= file.Length) {
+                using(var stream = file.OpenText()) {
+                    var html = stream.ReadToEnd();
+                    return SetPageHtmlAsync(html, false);
+                }
+            } else {
+                PageHtmlLoadState = LoadState.None;
+                return Task.CompletedTask;
+            }
         }
 
         public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)

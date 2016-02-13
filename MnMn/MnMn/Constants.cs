@@ -49,55 +49,56 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 最小XMLファイルサイズ。
         /// </summary>
-        public static long MinimumXmlFileSize => "<x/>".Length;
+        public static long MinimumXmlFileSize { get; } = "<x/>".Length;
         /// <summary>
         /// 最小PNGファイルサイズ。
         /// <para>http://yosiopp.net/archives/225</para>
         /// </summary>
-        public static long MinimumPngFileSize => 67;
+        public static long MinimumPngFileSize { get; } = 67;
         /// <summary>
         /// 最小Jsonファイルサイズ。
         /// </summary>
-        public static long MinimumJsonFileSize => "{}".Length;
+        public static long MinimumJsonFileSize { get; } = "{}".Length;
+        /// <summary>
+        /// 最小HTMLサイズ。
+        /// <para>http://qiita.com/wakaba@github/items/ec36c9d67707d8fb4395</para>
+        /// </summary>
+        public static long MinimumHtmlFileSize { get; } = "<!DOCTYPE html><title></title>h".Length;
 
         public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
 
-        public static string ServiceName => "service";
-        public static string ServiceSmileName => "smile";
-        public static string ServiceSmileVideoName => "video";
+        public static string ServiceName { get; } = "service";
+        public static string ServiceSmileName { get; } = "smile";
+        public static string ServiceSmileVideoName { get; } = "video";
 
-        public static string DefineName => "define";
+        public static string DefineName { get; } = "define";
 
-        public static string EtcDirectoryPath => Path.Combine(AssemblyParentDirectoryPath, "etc");
+        public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyParentDirectoryPath, "etc");
 
-        public static string DefineDirectoryPath => Path.Combine(EtcDirectoryPath, DefineName);
+        public static string DefineDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, DefineName);
 
-        public static string DefineServiceDirectoryPath => Path.Combine(DefineDirectoryPath, ServiceName);
+        public static string DefineServiceDirectoryPath { get; } = Path.Combine(DefineDirectoryPath, ServiceName);
 
-        public static string DefineSmileDirectoryPath => Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
+        public static string DefineSmileDirectoryPath { get; } = Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
 
-        public static string SmileUriListPath => Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
-        public static string SmileUriParametersListPath => Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
-        public static string SmileRequestParametersListPath => Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
-        public static string SmileRequestMappingsListPath => Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
+        public static string SmileUriListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
+        public static string SmileUriParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
+        public static string SmileRequestParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
+        public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
 
-        public static string DefineSmileVideoDirectoryPath => Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
+        public static string DefineSmileVideoDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
 
-        public static string SmileVideoUriListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
-        public static string SmileVideoUriParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
-        public static string SmileVideoRequestParametersListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
-        public static string SmileVideoRequestMappingsListPath => Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
+        public static string SmileVideoUriListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
+        public static string SmileVideoUriParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
+        public static string SmileVideoRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
+        public static string SmileVideoRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
 
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
         public static string SmileVideoSearchPath => Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
 
         public static string SmileVideoCacheVideosDirectoryName => "videos";
-        public static string SmileVideoCacheGetthumbinfoFileName => "thumb.xml";
-        public static string SmileVideoCacheGetflvFileName => "getflv.xml";
-        public static string SmileVideoCacheMsgFileName => "msg.xml";
-        public static string SmileVideoIndividualVideoSettingName => "setting.json";
 
         public static double CommentFontSize => System.Windows.SystemFonts.MessageFontSize * 2;
         public static string CommentFontFamily => System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value;
