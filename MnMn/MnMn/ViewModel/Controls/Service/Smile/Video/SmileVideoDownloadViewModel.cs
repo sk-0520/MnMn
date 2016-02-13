@@ -353,7 +353,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
-            var commentTask = LoadMsgAsync(session, Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result));
+            var commentTask = LoadMsgAsync(session, Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
 
             // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(DownloadDirectory != null);

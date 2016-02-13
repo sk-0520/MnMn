@@ -18,10 +18,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        double _left;
-        double _top;
-        double _width;
-        double _height;
+        bool _isSelected;
 
         #endregion
 
@@ -34,27 +31,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
-
-        public double Left
-        {
-            get { return this._left; }
-            set { SetVariableValue(ref this._left, value); }
-        }
-        public double Top
-        {
-            get { return this._top; }
-            set { SetVariableValue(ref this._top, value); }
-        }
-        public double Width
-        {
-            get { return this._width; }
-            set { SetVariableValue(ref this._width, value); }
-        }
-        public double Height
-        {
-            get { return this._height; }
-            set { SetVariableValue(ref this._height, value); }
-        }
 
         public int Score
         {
@@ -133,6 +109,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return new SolidColorBrush(GetShadowColor(GetForeColor()));
             }
+        }
+
+        public bool IsSelected
+        {
+            get { return this._isSelected; }
+            set { SetVariableValue(ref this._isSelected, value); }
         }
 
 

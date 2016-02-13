@@ -50,6 +50,7 @@ using System.Windows.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using System.Globalization;
 using System.Windows.Media.Effects;
+using System.ComponentModel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -88,11 +89,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         TimeSpan _totalTime;
         TimeSpan _playTime;
 
+        SmileVideoCommentViewModel _selectedComment;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            CommentItems = CollectionViewSource.GetDefaultView(CommentList);
+            CommentItems.Filter = FilterItems;
+        }
 
         #region property
 
@@ -103,11 +109,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //Slider VideoSilder { get; set; }
         Canvas NormalCommentArea { get; set; }
         Canvas ContributorCommentArea { get; set; }
-        
+        ListView CommentView { get; set; }
+
+
         Navigationbar Navigationbar { get; set; }
 
-        public CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
-        public CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        public ICollectionView CommentItems { get; private set; }
+        CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
         public bool ChangingVideoPosition { get; set; }
         public Point SeekbarMouseDownPosition { get; set; }
@@ -160,6 +170,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         TimeSpan PrevTime { get; set; }
 
+        public SmileVideoCommentViewModel SelectedComment
+        {
+            get { return this._selectedComment; }
+            set { SetVariableValue(ref this._selectedComment, value); }
+        }
+
+
         #endregion
 
         #region function
@@ -171,6 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             NormalCommentArea = view.normalCommentArea;
             ContributorCommentArea = view.contributorCommentArea;
             Navigationbar = view.seekbar;
+            CommentView = view.commentView;
 
             // 初期設定
             Player.Volume = Volume;
@@ -290,6 +308,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        void ScrollComment()
+        {
+            var nowTimelineItem = CommentItems
+                .Cast<SmileVideoCommentViewModel>()
+                .FirstOrDefault(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)
+            ;
+            if(nowTimelineItem != null) {
+                CommentView.ScrollIntoView(nowTimelineItem);
+            }
+        }
+
+        bool FilterItems(object o)
+        {
+            var item = (SmileVideoCommentViewModel)o;
+
+            return true;
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -324,11 +360,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .GroupBy(c => c.No)
                 .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
                 .OrderBy(c => c.ElapsedTime)
-                .ToArray()
             ;
+            CommentList.InitializeRange(comments);
 
-            NormalCommentList.InitializeRange(comments.Where(c => !c.IsContributor));
-            ContributorCommentList.InitializeRange(comments.Where(c => c.IsContributor));
+            NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsContributor));
+            ContributorCommentList.InitializeRange(CommentList.Where(c => c.IsContributor));
             
             return base.LoadCommentAsync(rawMsgPacket);
         }
@@ -360,6 +396,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
                 FireShowComment();
+                ScrollComment();
                 PrevTime = PlayTime;
             }
         }

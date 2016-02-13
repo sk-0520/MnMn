@@ -35,7 +35,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        ICollectionView _VideoInformationItems;
         bool _nowLoading;
         SmileVideoInformationViewModel _selectedVideoInformation;
         SmileVideoFinderLoadState _finderLoadState;
