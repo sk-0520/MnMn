@@ -91,6 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoCommentViewModel _selectedComment;
 
+        LoadState _tagLoadState;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -119,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
+        public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
+
         public bool ChangingVideoPosition { get; set; }
         public Point SeekbarMouseDownPosition { get; set; }
         public bool SeekbarThumbMoving { get; set; }
@@ -127,6 +131,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
 
         List<CommentData> NormalCommentShowList { get; } = new List<CommentData>();
+
+        public LoadState TagLoadState
+        {
+            get { return this._tagLoadState; }
+            set { SetVariableValue(ref this._tagLoadState, value); }
+        }
 
         public bool CanVideoPlay
         {
@@ -326,6 +336,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return true;
         }
 
+        Task LoadTagsAsync()
+        {
+            TagLoadState = LoadState.Preparation;
+            TagItems.InitializeRange(VideoInformationViewModel.TagList);
+
+            return Task.CompletedTask;
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -372,6 +390,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override void OnLoadGetthumbinfoEnd()
         {
             TotalTime = VideoInformationViewModel.Length;
+            LoadTagsAsync();
+
             base.OnLoadGetthumbinfoEnd();
         }
 

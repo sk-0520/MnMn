@@ -65,7 +65,7 @@
                   </ItemContainerTemplate>
                 </GridViewColumn.CellTemplate>
               </GridViewColumn>
-              
+
               <GridViewColumn>
                 <GridViewColumn.HeaderTemplate>
                   <ItemContainerTemplate>
@@ -115,56 +115,69 @@
       <Grid Grid.Row="2" Grid.Column="0">
         <TextBox></TextBox>
       </Grid>
-      
+
     </Grid>
 
     <TabControl Grid.Row="2" TabStripPlacement="Left" Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <TabItem Header="movie">
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="4" />
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+      <TabItem Header="movie">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-              <Image Width="80" Height="60" Source="{Binding ThumbnailImage}" />
-            </StackPanel>
+          <StackPanel Grid.Column="0">
+            <Image Width="80" Height="60" Source="{Binding ThumbnailImage}" />
+          </StackPanel>
 
-            <GridSplitter Grid.Row="1" />
+          <GridSplitter Grid.Row="1" />
 
-            <Grid Grid.Column="2">
-              <WrapPanel Orientation="Horizontal">
-                <TextBlock>tag1</TextBlock>
-                <TextBlock>tag1</TextBlock>
-                <TextBlock>tag2</TextBlock>
-                <TextBlock>tag3</TextBlock>
-                <TextBlock>tag4</TextBlock>
-                <TextBlock>tag5</TextBlock>
-                <TextBlock>tag6</TextBlock>
-                <TextBlock>tag7</TextBlock>
-              </WrapPanel>
+          <Grid Grid.Column="2">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0" Text="tag:" />
+              <ItemsControl Grid.Column="1" ItemsSource="{Binding TagItems}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding TagName}" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
             </Grid>
+
           </Grid>
-        </TabItem>
-        <TabItem Header="relation">
-        </TabItem>
-        <TabItem Header="market">
-        </TabItem>
-      </TabControl>
+        </Grid>
+      </TabItem>
+      <TabItem Header="relation">
+      </TabItem>
+      <TabItem Header="market">
+      </TabItem>
+    </TabControl>
 
     <StatusBar Grid.Row="3" >
       <ToggleButton x:Name="switchInformation" Content="info" IsChecked="True" />
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
         <TextBlock>[</TextBlock>
-        <TextBlock>info</TextBlock>
+        <TextBlock>info:</TextBlock>
         <TextBlock Text="{Binding InformationLoadState}" />
-        <TextBlock>,image</TextBlock>
+        <TextBlock>,image:</TextBlock>
         <TextBlock Text="{Binding ThumbnailLoadState}" />
-        <TextBlock>,comment</TextBlock>
+        <TextBlock>,comment:</TextBlock>
         <TextBlock Text="{Binding CommentLoadState}" />
-        <TextBlock>,video</TextBlock>
+        <TextBlock>,video:</TextBlock>
         <TextBlock Text="{Binding VideoLoadState}" />
+        <TextBlock>]</TextBlock>
+        <TextBlock>,tag:</TextBlock>
+        <TextBlock Text="{Binding TagLoadState}" />
         <TextBlock>]</TextBlock>
         <TextBlock>datetime</TextBlock>
         <TextBlock>play</TextBlock>

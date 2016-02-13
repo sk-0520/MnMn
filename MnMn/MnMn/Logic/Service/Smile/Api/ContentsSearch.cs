@@ -67,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
         string ToOrderByString(OrderBy orderBy)
         {
             var map = new Dictionary<OrderBy, string>() {
-                { OrderBy.Asc, "-" },
-                { OrderBy.Desc, "+" },
+                { OrderBy.Ascending, "-" },
+                { OrderBy.Descending, "+" },
             };
 
             return map[orderBy];

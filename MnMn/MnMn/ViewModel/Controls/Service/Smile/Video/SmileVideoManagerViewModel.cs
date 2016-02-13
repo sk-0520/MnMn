@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Define.Service.Smile.SmileContentsSearchField.MylistCounter,
                 Define.Service.Smile.SmileContentsSearchField.StartTime,
                 },
-                Library.SharedLibrary.Define.OrderBy.Asc, 
+                Library.SharedLibrary.Define.OrderBy.Ascending, 
                 0, 
                 100
             ).ContinueWith(task => {

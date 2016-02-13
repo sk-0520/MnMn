@@ -28,6 +28,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -60,6 +61,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         BitmapSource _thumbnailImage;
 
         bool? _isEconomyMode;
+
+        CollectionModel<SmileVideoTagViewModel> _tagList;
 
         #endregion
 
@@ -337,6 +340,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool Embeddable { get { return SmileVideoGetthumbinfoUtility.IsEmbeddable(Thumb.Embeddable); } }
         public bool LivePlay { get { return SmileVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
         public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
+
+        public CollectionModel<SmileVideoTagViewModel> TagList
+        {
+            get
+            {
+                if(this._tagList == null) {
+                    switch(VideoInformationSource) {
+                        case SmileVideoVideoInformationSource.Getthumbinfo: {
+                                // TODO: 言語未考慮
+                                this._tagList = new CollectionModel<SmileVideoTagViewModel>();
+                                var tagItems = Thumb.Tags.FirstOrDefault();
+                                if(tagItems != null) {
+                                    var list = tagItems.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
+                                    this._tagList.InitializeRange(list);
+                                }
+                            }
+                            break;
+
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+
+                return this._tagList;
+            }
+        }
 
         #region Getflv
 
