@@ -346,7 +346,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 ThrowHasNotGetflv();
 
-                return !string.IsNullOrWhiteSpace(Getflv.Error);
+                return !string.IsNullOrWhiteSpace(Getflv.Error) || string.IsNullOrWhiteSpace(Getflv.MovieServerUrl);
             }
         }
 
