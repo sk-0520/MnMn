@@ -51,6 +51,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using System.Globalization;
 using System.Windows.Media.Effects;
 using System.ComponentModel;
+using System.Windows.Documents;
+using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -84,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isVideoPlayng;
 
         float _videoPosition;
-        int _volume=100;
+        int _volume = 100;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -112,6 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Canvas NormalCommentArea { get; set; }
         Canvas ContributorCommentArea { get; set; }
         ListView CommentView { get; set; }
+        FlowDocumentScrollViewer DocumentDescription { get; set; }
 
 
         Navigationbar Navigationbar { get; set; }
@@ -159,7 +162,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public int Volume
         {
             get { return this._volume; }
-            set { if(SetVariableValue(ref this._volume, value)) {
+            set
+            {
+                if(SetVariableValue(ref this._volume, value)) {
                     if(Player != null) {
                         Player.Volume = this._volume;
                     }
@@ -190,11 +195,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                if(VideoInformationViewModel?.PageHtmlLoadState == LoadState.Loaded) {
-                    return VideoInformationViewModel.PageDescription;
+                if(VideoInformation?.PageHtmlLoadState == LoadState.Loaded) {
+                    return VideoInformation.PageDescription;
                 }
 
                 return null;
+            }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand OpenLinkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                    }
+                );
             }
         }
 
@@ -210,6 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ContributorCommentArea = view.contributorCommentArea;
             Navigationbar = view.seekbar;
             CommentView = view.commentView;
+            DocumentDescription = view.documentDescription;
 
             // 初期設定
             Player.Volume = Volume;
@@ -313,17 +335,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
 
                 animation.From = commentArea.Width + diffPosition;
-                animation.To = - box.ActualWidth;
+                animation.To = -box.ActualWidth;
                 animation.Duration = new Duration(Setting.ShowTime);
-                
-                EventDisposer< EventHandler> ev = null;
+
+                EventDisposer<EventHandler> ev = null;
                 animation.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
                     NormalCommentArea.Children.Remove(box);
                     NormalCommentShowList.Remove(data);
                     ev.Dispose();
-                    box =  null;
+                    box = null;
                     ev = null;
-                }, h => NormalCommentArea.Dispatcher.BeginInvoke(new Action(() =>  animation.Completed -= h)), out ev);
+                }, h => NormalCommentArea.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
 
                 box.BeginAnimation(Canvas.LeftProperty, animation);
             }
@@ -350,10 +372,103 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Task LoadTagsAsync()
         {
             TagLoadState = LoadState.Preparation;
-            
-            TagItems.InitializeRange(VideoInformationViewModel.TagList);
+
+            TagItems.InitializeRange(VideoInformation.TagList);
 
             return Task.CompletedTask;
+        }
+
+        Inline CreateDescriptionInline(HtmlNode node)
+        {
+            switch(node.NodeType) {
+                case HtmlNodeType.Text: {
+                        var text = new Run(node.InnerText);
+                        return text;
+                    }
+
+                case HtmlNodeType.Element:
+                    if(node.Name == "br") {
+                        return new LineBreak();
+                    } else if(node.Name == "a") {
+                        var text = new Run(node.InnerText);
+                        var link = new Hyperlink(text);
+                        link.Command = OpenLinkCommand;
+                        link.CommandParameter = node.GetAttributeValue("href", string.Empty);
+                        return link;
+                    } else if(node.Name == "font") {
+                        var text = new Run(node.InnerText);
+                        var colorCode = node.GetAttributeValue("color", "#000000");
+                        var color = (Color)ColorConverter.ConvertFromString(colorCode);
+                        text.Foreground = new SolidColorBrush() {
+                            Color = color,
+                        };
+                        return text;
+                    } else {
+                        var text = new Run("*" + node.OuterHtml + "*");
+                        return text;
+                    }
+                    throw new NotImplementedException();
+
+                default:
+                    return new Run(string.Empty);
+            }
+        }
+
+        IEnumerable<HtmlNode> ChompBreak(IEnumerable<HtmlNode> ndoes)
+        {
+            return ndoes
+                .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
+                .Reverse()
+                .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
+                .Reverse()
+            ;
+        }
+
+        Paragraph CreateDescriptionParagraph(IEnumerable<HtmlNode> paragraphNodes)
+        {
+            var p = new Paragraph();
+
+            foreach(var node in ChompBreak(paragraphNodes)) {
+                var inline = CreateDescriptionInline(node);
+                p.Inlines.Add(inline);
+            }
+
+            return p;
+        }
+
+        void MakeDescription()
+        {
+            DocumentDescription.Dispatcher.Invoke(() => {
+                var document = new FlowDocument();
+
+                var html = new HtmlDocument() {
+                    OptionAutoCloseOnEnd = true,
+                };
+                html.LoadHtml(VideoInformation.PageDescription);
+
+                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n,i) => new { Node = n, Index = i }).ToArray();
+                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n,i) => new { Node = n.Node, Index = n.Index, BreakIndex = i}).ToArray();
+                var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
+                if(paragraphPointList.Any()) {
+                    var head = 0;
+                    foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
+                        var tail = point.Index;
+                        var nodes = nodeIndexList.Skip(head).Take(tail- head);
+                        var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
+                        document.Blocks.Add(p);
+                        head = tail + 1;
+                    }
+                } else {
+                    var p = CreateDescriptionParagraph(nodeIndexList.Select(ni => ni.Node));
+                    document.Blocks.Add(p);
+                }
+
+                document.FontSize = DocumentDescription.FontSize;
+                document.FontFamily = DocumentDescription.FontFamily;
+                document.FontStretch = DocumentDescription.FontStretch;
+
+                DocumentDescription.Document = document;
+            });
         }
 
         #endregion
@@ -362,7 +477,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
-            CallOnPropertyChange(nameof(Description));
+            MakeDescription();
 
             base.OnDownloadStart(sender, e);
         }
@@ -383,6 +498,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnLoadVideoEnd()
         {
+            if(VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+                MakeDescription();
+            }
+
             // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
             if(!CanVideoPlay) {
                 AutoPlay(VideoFile);
@@ -402,7 +521,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsContributor));
             ContributorCommentList.InitializeRange(CommentList.Where(c => c.IsContributor));
-            
+
             return base.LoadCommentAsync(rawMsgPacket);
         }
 
@@ -410,7 +529,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             CallOnPropertyChange(nameof(Description));
 
-            TotalTime = VideoInformationViewModel.Length;
+            TotalTime = VideoInformation.Length;
             LoadTagsAsync();
 
             base.OnLoadGetthumbinfoEnd();

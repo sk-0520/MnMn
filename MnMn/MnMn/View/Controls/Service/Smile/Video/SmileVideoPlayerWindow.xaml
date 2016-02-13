@@ -22,6 +22,7 @@
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="100" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
@@ -30,7 +31,7 @@
     </Menu>
 
     <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->
-    <Grid Grid.Row="1">
+    <Grid Grid.Row="1"  VerticalAlignment="Stretch">
       <Grid.RowDefinitions>
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
@@ -118,7 +119,19 @@
 
     </Grid>
 
-    <TabControl Grid.Row="2" TabStripPlacement="Left" Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}">
+    <GridSplitter
+      Grid.Row="2" 
+      Height="4" 
+      VerticalAlignment="Stretch" 
+      HorizontalAlignment="Stretch" 
+      Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+    />
+    
+    <TabControl 
+      Grid.Row="3" 
+      TabStripPlacement="Left" 
+      Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+    >
       <TabItem Header="movie">
         <Grid>
           <Grid.ColumnDefinitions>
@@ -128,13 +141,17 @@
           </Grid.ColumnDefinitions>
 
           <StackPanel Grid.Column="0">
-            <Image Width="80" Height="60" Source="{Binding ThumbnailImage}" />
+            <Image Width="100" Height="80" Source="{Binding ThumbnailImage}" />
           </StackPanel>
 
-          <GridSplitter Grid.Row="1" />
+          <GridSplitter Grid.Column="1" />
 
-          <StackPanel Orientation="Vertical" Grid.Column="2">
-            <Grid>
+          <Grid Grid.Row="1"  Grid.Column="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -148,13 +165,23 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <TextBlock Text="{Binding TagName}" />
+                    <TextBlock Text="{Binding TagName}" FontSize="10" />
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
             </Grid>
-            <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Description}" />
-          </StackPanel>
+            <Grid Grid.Row="1">
+              <FlowDocumentScrollViewer
+                x:Name="documentDescription"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+              >
+                <FlowDocument
+                  FontSize="11.5"
+                />
+              </FlowDocumentScrollViewer>
+            </Grid>
+          </Grid>
         </Grid>
       </TabItem>
       <TabItem Header="relation">
@@ -163,7 +190,7 @@
       </TabItem>
     </TabControl>
 
-    <StatusBar Grid.Row="3" >
+    <StatusBar Grid.Row="4" VerticalAlignment="Bottom" >
       <ToggleButton x:Name="switchInformation" Content="info" IsChecked="True" />
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
         <TextBlock>[</TextBlock>
