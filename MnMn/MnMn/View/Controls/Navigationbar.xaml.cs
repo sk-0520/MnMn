@@ -360,6 +360,85 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsReplayCheckedProperty
+
+        public static readonly DependencyProperty IsReplayCheckedProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsReplayCheckedProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsReplayCheckedChanged))
+        );
+
+        private static void OnIsReplayCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.IsReplayChecked = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsReplayChecked
+        {
+            get { return (bool)GetValue(IsReplayCheckedProperty); }
+            set { SetValue(IsReplayCheckedProperty, value); }
+        }
+
+        #endregion
+
+        #region ReplayCommand
+
+        #region ReplayCommandProperty
+
+        public static readonly DependencyProperty ReplayCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ReplayCommandProperty)),
+            typeof(ICommand),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnReplayCommandChanged))
+        );
+
+        private static void OnReplayCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.ReplayCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand ReplayCommand
+        {
+            get { return GetValue(ReplayCommandProperty) as ICommand; }
+            set { SetValue(ReplayCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region ReplayCommandParameterProperty
+
+        public static readonly DependencyProperty ReplayCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ReplayCommandParameterProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnReplayCommandParameterChanged))
+        );
+
+        private static void OnReplayCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.ReplayCommandParameter = e.NewValue;
+            }
+        }
+
+        public object ReplayCommandParameter
+        {
+            get { return GetValue(ReplayCommandParameterProperty); }
+            set { SetValue(ReplayCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
         #region MuteCommand
 
         #region MuteCommandProperty
@@ -411,6 +490,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         }
 
         #endregion
+
+        #endregion
+
+        #region ExstendsContentProperty
+
+        public static readonly DependencyProperty ExstendsContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ExstendsContentProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnExstendsContentChanged))
+        );
+
+        private static void OnExstendsContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.ExstendsContent = e.NewValue;
+            }
+        }
+
+        public object ExstendsContent
+        {
+            get { return GetValue(ExstendsContentProperty); }
+            set { SetValue(ExstendsContentProperty, value); }
+        }
 
         #endregion
 

@@ -95,20 +95,35 @@
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
       </Grid.ColumnDefinitions>
-      <Button
+      <ToggleButton
         Grid.Column="0"
+        IsEnabled="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        IsChecked="{Binding IsReplayChecked, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        Command="{Binding ReplayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        CommandParameter="{Binding ReplayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      >
+        リ
+      </ToggleButton>
+      <Button
+        Grid.Column="1"
         Command="{Binding MuteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
         CommandParameter="{Binding MuteCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
       >
         音
       </Button>
       <Slider 
-        Grid.Column="1" 
+        Grid.Column="2" 
         Width="80" 
         Minimum="0" 
         Maximum="100" 
         Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      />
+      <ContentControl
+        Grid.Column="3" 
+        Content="{Binding ExstendsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
     </Grid>
 

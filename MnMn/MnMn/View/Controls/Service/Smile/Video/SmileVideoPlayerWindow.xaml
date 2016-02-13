@@ -110,7 +110,13 @@
           Volume="{Binding Volume}"
           PlayTime="{Binding PlayTime}"
           TotalTime="{Binding TotalTime}"
-        />
+        >
+          <app_view_controls:Navigationbar.ExstendsContent>
+            <StackPanel Orientation="Horizontal">
+              <ToggleButton Content="msg" />
+            </StackPanel>
+          </app_view_controls:Navigationbar.ExstendsContent>
+        </app_view_controls:Navigationbar>
       </Grid>
 
       <Grid Grid.Row="2" Grid.Column="0">
