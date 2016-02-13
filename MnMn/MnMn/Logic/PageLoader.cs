@@ -277,6 +277,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
             }
         }
+
+        private void Count(Func<object, bool> p)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region DisposeFinalizeBase
