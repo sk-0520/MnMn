@@ -457,8 +457,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(VideoInformationViewModel.VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
                 await VideoInformationViewModel.LoadInformationAsync(thumbCacheSpan);
             }
-            OnLoadGetthumbinfoEnd();
             InformationLoadState = LoadState.Loaded;
+            OnLoadGetthumbinfoEnd();
 
             var noSessionTask = LoadDataWithoutSessionAsync(imageCacheSpan);
             var sessionTask = LoadDataWithSessionAsync();

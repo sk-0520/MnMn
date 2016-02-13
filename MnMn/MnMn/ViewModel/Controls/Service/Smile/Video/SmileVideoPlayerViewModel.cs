@@ -186,6 +186,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedComment, value); }
         }
 
+        public string Description
+        {
+            get
+            {
+                switch(InformationLoadState) {
+                    case LoadState.Loaded:
+                        return VideoInformationViewModel.Description;
+
+                    default:
+                        return null;
+                }
+            }
+        }
 
         #endregion
 
@@ -339,6 +352,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Task LoadTagsAsync()
         {
             TagLoadState = LoadState.Preparation;
+            
             TagItems.InitializeRange(VideoInformationViewModel.TagList);
 
             return Task.CompletedTask;
@@ -389,6 +403,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnLoadGetthumbinfoEnd()
         {
+            CallOnPropertyChange(nameof(Description));
+
             TotalTime = VideoInformationViewModel.Length;
             LoadTagsAsync();
 

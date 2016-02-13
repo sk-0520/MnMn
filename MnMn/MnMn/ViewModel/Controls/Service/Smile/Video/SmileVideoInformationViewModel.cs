@@ -203,6 +203,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string Description
+        {
+            get
+            {
+                switch(VideoInformationSource) {
+                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                        return Thumb.Description;
+
+                    case SmileVideoVideoInformationSource.Ranking:
+                        return RankingDetail.Description ?? Ranking.Description;
+
+                    case SmileVideoVideoInformationSource.Search:
+                        return Search.Description;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
         public Uri ThumbnailUri {
             get
             {

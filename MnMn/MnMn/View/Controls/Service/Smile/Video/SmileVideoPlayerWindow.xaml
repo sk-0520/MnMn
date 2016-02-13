@@ -133,7 +133,7 @@
 
           <GridSplitter Grid.Row="1" />
 
-          <Grid Grid.Column="2">
+          <StackPanel Orientation="Vertical" Grid.Column="2">
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -153,8 +153,8 @@
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
             </Grid>
-
-          </Grid>
+            <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Description}" />
+          </StackPanel>
         </Grid>
       </TabItem>
       <TabItem Header="relation">
