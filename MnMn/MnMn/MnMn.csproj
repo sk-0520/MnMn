@@ -163,6 +163,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchGroupViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
+    <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
+      <DependentUpon>LoadStateNavigator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
       <DependentUpon>Navigationbar.xaml</DependentUpon>
     </Compile>
@@ -176,6 +179,10 @@
       <DependentUpon>SmileVideoSearchManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Page Include="View\Controls\LoadStateNavigator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Navigationbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

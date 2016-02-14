@@ -6,7 +6,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
   
-  xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 >
   <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
@@ -62,6 +62,7 @@
               </TextBlock.Style>
             </TextBlock>
             <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+            <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Width="4" Height="4" />
           </Grid>
         </ItemContainerTemplate>
       </GridViewColumn.CellTemplate>
