@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -60,9 +61,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._selectedItem; }
             set
             {
+                var prevItem = this._selectedItem;
                 if(SetVariableValue(ref this._selectedItem, value)) {
-                    if(this._selectedItem.CanLoad && this._selectedItem.FinderLoadState != SmileVideoFinderLoadState.Completed) {
-                        this._selectedItem.LoadDefaultCacheAsync().ConfigureAwait(true);
+                    if(prevItem != null && this._selectedItem.CanLoad) {
+                        this._selectedItem.LoadDefaultCacheAsync();
                     }
                 }
             }
@@ -80,7 +82,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
-            SelectedItem = ItemsList.First();
+            var target = ItemsList.First();
+            target.LoadDefaultCacheAsync().ContinueWith(task => {
+                SelectedItem = target;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion

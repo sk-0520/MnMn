@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
             LoginState = LoginState.In;
             using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
-                page.StopHeaderCheck = true;
+                page.HeaderCheckOnly = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.User;
                 page.ReplaceRequestParameters["pass"] = UserAccount.Password;
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             }
 
             using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
-                page.StopHeaderCheck = true;
+                page.HeaderCheckOnly = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
                 };
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             }
 
             using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
-                page.StopHeaderCheck = true;
+                page.HeaderCheckOnly = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
                         .FirstOrDefault(h => h.Key == "x-niconico-authflag")

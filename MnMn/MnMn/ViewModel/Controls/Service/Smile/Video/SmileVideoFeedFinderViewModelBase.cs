@@ -26,13 +26,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public HttpUserAgentHost UserAgentHost { get; } = new HttpUserAgentHost();
 
+        #endregion
+
+        #region command
+
         public ICommand ReloadCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
+                        LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                     }
                 );
             }
@@ -49,22 +53,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
             NowLoading = true;
 
-            var feedModel = await RestrictUtility.Block(async () => {
-                using(var page = CreatePageLoader()) {
-                    var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                    if(!feedResult.IsSuccess) {
-                        FinderLoadState = SmileVideoFinderLoadState.Failure;
-                        return null;
+            FeedSmileVideoModel feedModel = null;
+
+            using(var page = CreatePageLoader()) {
+                var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                if(!feedResult.IsSuccess) {
+                    FinderLoadState = SmileVideoFinderLoadState.Failure;
+                } else {
+                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
+                        feedModel = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
                     }
 
-                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
-                    return RestrictUtility.Block(() => {
-                        using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
-                            return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
-                        }
-                    });
                 }
-            });
+
+            }
+
             if(feedModel == null) {
                 NowLoading = false;
                 FinderLoadState = SmileVideoFinderLoadState.Failure;

@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// 
         /// </summary>
-        public bool StopHeaderCheck { get; set; }
+        public bool HeaderCheckOnly { get; set; }
         /// <summary>
         /// ヘッダ調査。
         /// </summary>
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             var method = new Dictionary<Define.PageLoaderMethod, Func<Task<HttpResponseMessage>>>() {
                 { Define.PageLoaderMethod.Get, () => {
-                    if(StopHeaderCheck) {
+                    if(HeaderCheckOnly) {
                         return HttpUserAgent.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead);
                     } else {
                         return HttpUserAgent.GetAsync(Uri);
@@ -253,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             CallExitFailure();
                             return CheckResultModel.Failure<string>(judge.ToString());
                         }
-                        if(StopHeaderCheck) {
+                        if(HeaderCheckOnly) {
                             CallExitSuccess();
                             return CheckResultModel.Success(judge.ToString());
                         }
@@ -263,7 +263,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         CallExitFailure();
                         return CheckResultModel.Failure<string>(check.ToString());
                     }
-                    if(StopHeaderCheck) {
+                    if(HeaderCheckOnly) {
                         CallExitSuccess();
                         return CheckResultModel.Success(check.ToString());
                     }
@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(!IsDisposed) {
                 if(OwnershipUA) {
-                    HttpUserAgent.CancelPendingRequests();
+                    //HttpUserAgent.CancelPendingRequests();
                     HttpUserAgent.Dispose();
                 }
                 HttpUserAgent = null;
