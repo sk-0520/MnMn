@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -207,7 +208,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(CanLoad) {
                 if(NowLoading) {
+                    Debug.WriteLine("CANCEL!");
                     CancelLoading.Cancel(true);
+                    Debug.WriteLine(";-)");
                 }
 
                 return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null);

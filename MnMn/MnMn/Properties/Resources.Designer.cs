@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   c に類似しているローカライズされた文字列を検索します。
+        ///   ホットリスト に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title {
             get {
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   a に類似しているローカライズされた文字列を検索します。
+        ///   新着投稿動画 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title {
             get {
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   b に類似しているローカライズされた文字列を検索します。
+        ///   新着コメント動画 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_NewArrivals_Recent_Title {
             get {

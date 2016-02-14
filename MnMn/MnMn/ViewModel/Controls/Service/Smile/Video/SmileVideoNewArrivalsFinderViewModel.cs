@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override PageLoader CreatePageLoader()
         {
-            var page = new PageLoader(Mediation, new HttpUserAgentHost(), Key, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediation, UserAgentHost, Key, ServiceType.SmileVideo);
             page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
 
             return page;

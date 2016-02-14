@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }).ContinueWith(t => {
                     //VideoInformationItems.Refresh();
                     FinderLoadState = SmileVideoFinderLoadState.Completed;
-                    NowLoading = true;
+                    NowLoading = false;
                     // return Task.CompletedTask;
                 }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());

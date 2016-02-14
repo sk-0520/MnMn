@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title" xml:space="preserve">
-    <value>c</value>
+    <value>ホットリスト</value>
   </data>
   <data name="String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title" xml:space="preserve">
-    <value>a</value>
+    <value>新着投稿動画</value>
   </data>
   <data name="String_Service_Smile_SmileVideo_NewArrivals_Recent_Title" xml:space="preserve">
-    <value>b</value>
+    <value>新着コメント動画</value>
   </data>
 </root>
