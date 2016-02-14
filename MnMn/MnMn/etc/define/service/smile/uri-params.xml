@@ -3,4 +3,15 @@
 	<param key="video-session-login">
 		<item key="site" value="niconico" />
 	</param>
+	<param key="smile-contents-search">
+		<item key="service" value="${service}" />
+		<item key="q" value="${query}" />
+		<item key="targets" value="${targets}" />
+		<item key="fields" value="${fields}" />
+		<item key="filters" value="${filters}" force="true"  />
+		<item key="_sort" value="${sort}" encode="uri" />
+		<item key="_offset" value="${offset}" />
+		<item key="_limit" value="${limit}" />
+		<item key="_context" value="${context}" />
+	</param>
 </parameters>

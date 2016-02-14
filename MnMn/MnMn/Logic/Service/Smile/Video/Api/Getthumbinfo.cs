@@ -43,10 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoThumbResponseModel>(stream);
         }
 
-        async Task<RawSmileVideoThumbResponseModel> GetAsync_Impl(PageScraping page, string videoId)
+        async Task<RawSmileVideoThumbResponseModel> GetAsync_Impl(PageLoader page, string videoId)
         {
             page.ReplaceUriParameters["video-id"] = videoId;
-            var plainXml = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+            var plainXml = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
                 var result = Load(stream);
                 return result;
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId)
         {
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
                 return await GetAsync_Impl(page, videoId);
             }
         }

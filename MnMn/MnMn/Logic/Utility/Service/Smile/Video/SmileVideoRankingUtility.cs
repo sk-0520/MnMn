@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static string GetVideoId(FeedSmileVideoRankingItemModel item)
+        public static string GetVideoId(FeedSmileVideoItemModel item)
         {
             return item.Link.Split('/').Last();
         }
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         static string HtmlNodeToString(HtmlNode node)
         {
-            return node.InnerHtml;
+            return node?.InnerHtml ?? string.Empty;
         }
 
         /// <summary>
@@ -68,9 +68,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// </summary>
         /// <param name="rawDescription"></param>
         /// <returns>動画ID, タイトル以外の情報を設定したデータ。</returns>
-        public static RawSmileVideoRankingDetailModel ConvertRawDescription(string rawDescription)
+        public static RawSmileVideoFeedDetailModel ConvertRawDescription(string rawDescription)
         {
             // HTMLの書式に合わせておく
+            // NOTE: 検索実装時にわかったけど合わせる必要なさげ
             var html = "<html><body>" + rawDescription + "</body></html>";
 
             var doc = new HtmlDocument() {
@@ -86,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var resCounter = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-res']");
             var mylist = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-mylist']");
 
-            var result = new RawSmileVideoRankingDetailModel() {
+            var result = new RawSmileVideoFeedDetailModel() {
                 FirstRetrieve = HtmlNodeToString(date),
                 Description = HtmlNodeToString(description),
                 CommentNum = HtmlNodeToString(resCounter),
@@ -97,6 +98,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             };
 
             return result;
+        }
+
+        public static int ConvertInteger(string s)
+        {
+            if(s.Any(c => c == ',')) {
+                s = string.Concat(s.Where(c => c != ','));
+            }
+
+            return RawValueUtility.ConvertInteger(s);
         }
 
         #endregion

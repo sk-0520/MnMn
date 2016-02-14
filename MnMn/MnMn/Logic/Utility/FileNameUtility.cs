@@ -19,12 +19,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
-    public enum HttpMethod
+    public static class FileNameUtility
     {
-        Post,
-        Get,
+        static string CreateFileName_Impl(string name, string roll, string extension)
+        {
+            return $"{name}{(roll == null ? string.Empty : "-" + roll)}.{extension}";
+        }
+        public static string CreateFileName(string name, string roll, string extension)
+        {
+            CheckUtility.EnforceNotNullAndNotEmpty(roll);
+            return CreateFileName_Impl(name, roll, extension);
+        }
+        public static string CreateFileName(string name, string extension)
+        {
+            return CreateFileName_Impl(name, null, extension);
+        }
     }
 }

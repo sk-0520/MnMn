@@ -19,10 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    public class FeedSmileVideoRankingChannelModel: Rss2ChannelModelBase<FeedSmileVideoRankingItemModel, FeedSmileVideoRankingGuidModel>
-    { }
+    public static class SmileVideoSnapshotUtility
+    {
+    }
 }

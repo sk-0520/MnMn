@@ -48,22 +48,20 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PInvoke, Version=1.0.5851.26985, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.5\lib\net46\PInvoke.dll</HintPath>
+    <Reference Include="PInvoke, Version=1.0.5887.14264, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.6\lib\net46\PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SharedLibrary, Version=0.1.5866.34076, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.18\lib\net46\SharedLibrary.dll</HintPath>
+    <Reference Include="SharedLibrary, Version=0.1.5887.14366, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.21\lib\net46\SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -82,14 +80,13 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="xZune.Vlc, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\xZune.Vlc.16.01.17\lib\net45\x86\xZune.Vlc.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="xZune.Vlc.Wpf, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\xZune.Vlc.Wpf.16.01.17\lib\net45\x86\xZune.Vlc.Wpf.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +106,11 @@
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Define\MappingContentTrim.cs" />
     <Compile Include="Define\MappingItemType.cs" />
+    <Compile Include="Define\ParameterEncode.cs" />
     <Compile Include="Define\ParameterType.cs" />
+    <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
+    <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
+    <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
@@ -119,32 +120,69 @@
     <Compile Include="Logic\Service\ApiBase.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Msg.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getthreadkey.cs" />
+    <Compile Include="Logic\Service\Smile\Api\ContentsSearch.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
+    <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
+    <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\MappingItemBracketModel.cs" />
+    <Compile Include="Model\MappingItemNodeBase.cs" />
+    <Compile Include="Model\MappingItemCustomModel.cs" />
     <Compile Include="Model\MappingItemModel.cs" />
     <Compile Include="Model\MappingContentModel.cs" />
     <Compile Include="Model\MappingModel.cs" />
+    <Compile Include="Model\MappingResult.cs" />
     <Compile Include="Model\MappingsModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThreadModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\SmileSearchPageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoHotlistFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchGroupViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
+    <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
+      <DependentUpon>LoadStateNavigator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
       <DependentUpon>Navigationbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoNewArrivalsManager.xaml.cs">
+      <DependentUpon>SmileVideoNewArrivalsManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml.cs">
       <DependentUpon>SmileVideoPlayerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml.cs">
+      <DependentUpon>SmileVideoSearchManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Page Include="View\Controls\LoadStateNavigator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Navigationbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,7 +191,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\Service\Smile\Video\SmileVideoRankingContextElements.xaml">
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoNewArrivalsManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoRankingContext.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -176,15 +218,14 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Define\Delegate\JudgeResponsePageScraping.cs" />
     <Compile Include="Define\Delegate\CreateHttpUserAgent.cs" />
-    <Compile Include="Define\HttpMethods.cs" />
+    <Compile Include="Define\PageLoaderMethod.cs" />
     <Compile Include="Define\LoginState.cs" />
     <Compile Include="Define\NameType.cs" />
     <Compile Include="Define\Service\Smile\SmileMediationKey.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoMovieType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoMediationKey.cs" />
-    <Compile Include="Define\Service\Smile\Video\SmileVideoRankingLoad.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoFinderLoadState.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoThumbType.cs" />
-    <Compile Include="Define\Service\Smile\Video\SmileVideoVideoThumbnailLoad.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoVideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
@@ -200,7 +241,7 @@
     <Compile Include="Logic\Attribute\NameAttributeUtility.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getflv.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getthumbinfo.cs" />
-    <Compile Include="Logic\PageScraping.cs" />
+    <Compile Include="Logic\PageLoader.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />
     <Compile Include="Logic\Service\Smile\SmileMediation.cs" />
@@ -222,12 +263,12 @@
     <Compile Include="Model\Service\Smile\Video\SmileVideoRankingModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetflvModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileUserAccountModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingChannelModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingGuidModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoChannelModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoErrorModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRankingDetailModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoFeedDetailModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoThumbModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoTagListModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoTagItemModel.cs" />
@@ -243,7 +284,7 @@
     <Compile Include="Model\UrisModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoRankingCategoryItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoRankingCategoryGroupItemViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSessionViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileManagerViewModel.cs" />
@@ -255,8 +296,8 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml.cs">
       <DependentUpon>SmileVideoManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingContextElements.xaml.cs">
-      <DependentUpon>SmileVideoRankingContextElements.xaml</DependentUpon>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingContext.xaml.cs">
+      <DependentUpon>SmileVideoRankingContext.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingManager.xaml.cs">
       <DependentUpon>SmileVideoRankingManager.xaml</DependentUpon>
@@ -265,6 +306,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\Service\Smile\Video\VideoListDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -287,7 +332,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="etc\define\service\smile\video\request-mapping.xml">
+    <Content Include="etc\define\service\smile\request-mappings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\request-mappings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
@@ -299,16 +347,19 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
+    <Folder Include="Logic\Service\Smile\Video\HalfBakedApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\request-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\video\ranking.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -316,8 +367,12 @@
     <Content Include="etc\define\service\smile\video\request-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\define\service\smile\video\search.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\service\smile\video\uri-list.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="etc\define\service\smile\video\uri-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

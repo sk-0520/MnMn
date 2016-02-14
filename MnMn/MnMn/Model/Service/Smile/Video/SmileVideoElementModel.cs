@@ -29,7 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     /// <summary>
-    /// ランキング要素。
+    /// 要素。
     /// </summary>
     [Serializable]
     public class SmileVideoElementModel: ModelBase, IDeepClone
@@ -37,13 +37,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         #region property
 
         /// <summary>
-        /// ランキング要素の検索キー。
+        /// 要素の検索キー。
         /// </summary>
         [XmlAttribute("key")]
         [IsDeepClone]
         public string Key { get; set; }
         /// <summary>
-        /// ランキング要素タイトル。
+        /// 要素タイトル。
         /// </summary>
         [XmlArray("words"), XmlArrayItem("word")]
         [IsDeepClone]

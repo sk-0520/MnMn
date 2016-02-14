@@ -34,12 +34,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     /// <summary>
     /// ページ取得からあれこれ解析まで一通り頑張る人。
-    /// <para>名前似てるけどウェブスクレイピングを明示的に行う処理ではない、名前思いつかなかった。</para>
     /// <para>こまごま public だけど基本的に GetTextAsync のみで使い捨て。</para>
     /// </summary>
-    public class PageScraping: DisposeFinalizeBase
+    public class PageLoader: DisposeFinalizeBase
     {
-        public PageScraping(Mediation mediation, ICreateHttpUserAgent userAgentCreator, string key, ServiceType serviceType)
+        public PageLoader(Mediation mediation, ICreateHttpUserAgent userAgentCreator, string key, ServiceType serviceType)
         {
             Mediation = mediation;
             HttpUserAgent = userAgentCreator.CreateHttpUserAgent();
@@ -48,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             OwnershipUA = true;
         }
 
-        public PageScraping(Mediation mediation, HttpUserAgentHost host, string key, ServiceType serviceType)
+        public PageLoader(Mediation mediation, HttpUserAgentHost host, string key, ServiceType serviceType)
         {
             Mediation = mediation;
             HttpUserAgent = host.Client;
@@ -119,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// 
         /// </summary>
-        public bool StopHeaderCheck { get; set; }
+        public bool HeaderCheckOnly { get; set; }
         /// <summary>
         /// ヘッダ調査。
         /// </summary>
@@ -150,6 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }, 
                 uri => uri
             );
+            Debug.WriteLine($"{nameof(Uri)}-> {Uri}");
         }
 
         protected void MakeRequestParameter()
@@ -164,11 +164,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     break;
 
                 case ParameterType.Mapping: {
-                        var rawContent = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
-                        var convertedContent = Mediation.ConvertRequestMapping(rawContent, ServiceType);
+                        var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
+                        var convertedContent = Mediation.ConvertRequestMapping(mappingResult.Result, ServiceType);
                         Debug.WriteLine("request param");
                         Debug.WriteLine(convertedContent);
                         MappingContent = new StringContent(convertedContent);
+                        if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
+                            MappingContent.Headers.ContentType = new MediaTypeHeaderValue(mappingResult.ContentType);
+                        }
                     }
                     break;
 
@@ -177,17 +180,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected Func<Task<HttpResponseMessage>> GetExecutor(Define.HttpMethod httpMethod)
+        protected Func<Task<HttpResponseMessage>> GetExecutor(Define.PageLoaderMethod httpMethod)
         {
-            var method = new Dictionary<Define.HttpMethod, Func<Task<HttpResponseMessage>>>() {
-                { Define.HttpMethod.Get, () => {
-                    if(StopHeaderCheck) {
+            var method = new Dictionary<Define.PageLoaderMethod, Func<Task<HttpResponseMessage>>>() {
+                { Define.PageLoaderMethod.Get, () => {
+                    if(HeaderCheckOnly) {
                         return HttpUserAgent.GetAsync(Uri, HttpCompletionOption.ResponseHeadersRead);
                     } else {
                         return HttpUserAgent.GetAsync(Uri);
                     }
                 } },
-                { Define.HttpMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
+                { Define.PageLoaderMethod.Post, () => ParameterType == ParameterType.Plain ? HttpUserAgent.PostAsync(Uri, PlainContent): HttpUserAgent.PostAsync(Uri, MappingContent) },
             };
 
             return method[httpMethod];
@@ -213,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// 一連の処理を自動化してテキストデータを返す。
         /// </summary>
         /// <returns></returns>
-        public async Task<CheckResultModel<string>> GetResponseTextAsync(Define.HttpMethod httpMethod)
+        public async Task<CheckResultModel<string>> GetResponseTextAsync(Define.PageLoaderMethod httpMethod)
         {
             try {
                 MakeUri();
@@ -231,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             }
                         } else {
                             CallExitFailure();
-                            return CheckResultModel.Failure<string>(response.IsSuccessStatusCode.ToString());
+                            return CheckResultModel.Failure<string>(response.ToString());
                         }
                     }
 
@@ -250,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             CallExitFailure();
                             return CheckResultModel.Failure<string>(judge.ToString());
                         }
-                        if(StopHeaderCheck) {
+                        if(HeaderCheckOnly) {
                             CallExitSuccess();
                             return CheckResultModel.Success(judge.ToString());
                         }
@@ -260,7 +263,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         CallExitFailure();
                         return CheckResultModel.Failure<string>(check.ToString());
                     }
-                    if(StopHeaderCheck) {
+                    if(HeaderCheckOnly) {
                         CallExitSuccess();
                         return CheckResultModel.Success(check.ToString());
                     }
@@ -275,6 +278,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
             }
         }
+
+        private void Count(Func<object, bool> p)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region DisposeFinalizeBase
@@ -282,8 +290,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                HttpUserAgent.CancelPendingRequests();
                 if(OwnershipUA) {
+                    //HttpUserAgent.CancelPendingRequests();
                     HttpUserAgent.Dispose();
                 }
                 HttpUserAgent = null;

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
@@ -28,9 +29,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// </summary>
     public class MainSettingModel: SettingModelBase
     {
+        #region property
+
         /// <summary>
         /// キャッシュディレクトリ。
         /// </summary>
         public string CacheDirectoryPath { get; set; }
+
+        #region service
+
+        public SmileSettingModel ServiceSmileSetting { get; set; } = new SmileSettingModel();
+
+        #endregion
+
+        #endregion
     }
 }

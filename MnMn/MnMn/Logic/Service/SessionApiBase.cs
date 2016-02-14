@@ -35,10 +35,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
         #region property
 
         public SessionViewModelBase SessionBase { get; }
-        /// <summary>
-        /// この期間内であればログイン済みと判断する。
-        /// </summary>
-        public CacheSpan CacheSpan { get; }
 
         #endregion
 
@@ -47,9 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
         protected async Task LoginIfNotLoginAsync()
         {
             if(SessionSupport) {
-                if(!await SessionBase.CheckLoginAsync()) {
-                    await SessionBase.LoginAsync();
-                }
+                await SessionBase.LoginIfNotLoginAsync();
             }
         }
 

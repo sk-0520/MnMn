@@ -1,34 +1,222 @@
-﻿<ResourceDictionary 
+﻿<!--
+  パス固定。
+-->
+<ResourceDictionary 
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+  
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 >
-  <!--
-    パス固定。
-  -->
+  <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+
   <GridView x:Key="VideoListView">
-    <GridViewColumn Header="num" DisplayMemberBinding="{Binding Number}" />
+    <!-- 順序 -->
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <TextBlock Text="No." />
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <TextBlock Width="40" TextAlignment="Right" Text="{Binding Number}" />
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
+
+    <!-- サムネイル -->
     <GridViewColumn>
       <GridViewColumn.HeaderTemplate>
         <ItemContainerTemplate>
           <StackPanel>
-            <Label>test</Label>
-            <Button>asd</Button>
-            <TextBox>789</TextBox>
+            <TextBlock Text="サムネイル" />
           </StackPanel>
         </ItemContainerTemplate>
       </GridViewColumn.HeaderTemplate>
       <GridViewColumn.CellTemplate>
         <ItemContainerTemplate>
-          <Label>123</Label>
+          <Grid Width="78" Height="60">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="None">
+                      <Setter Property="Text" Value="未処理" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Preparation">
+                      <Setter Property="Text" Value="準備中" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Loading">
+                      <Setter Property="Text" Value="読込中" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Loaded">
+                      <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Failure">
+                      <Setter Property="Text" Value="読込失敗" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+            <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
+            <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Width="4" Height="4" />
+          </Grid>
         </ItemContainerTemplate>
       </GridViewColumn.CellTemplate>
     </GridViewColumn>
-    
+
+    <!-- 情報 -->
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <TextBlock Text="情報" />
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <Grid Width="120">
+            <Grid.Resources>
+              <Style x:Key="header" TargetType="TextBlock"/>
+              <Style x:Key="value" TargetType="TextBlock">
+                <Setter Property="TextAlignment" Value="Right" />
+              </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="再生数" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ViewCounter, Mode=OneWay, StringFormat=N0}" Style="{StaticResource value}" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="マイリスト" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MylistCounter, Mode=OneWay, StringFormat=N0}" Style="{StaticResource value}" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="コメント" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CommentCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource value}" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="時間" />
+            <TextBlock Grid.Row="3" Grid.Column="1">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource value}">
+                  <Style.Triggers>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="--:--" />
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
+                        <Condition Binding="{Binding HasLength}" Value="True" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </MultiDataTrigger>
+                    
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="True" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="None" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="未処理" />
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Preparation" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="準備中" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding HasLength}" Value="False" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Loading" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="読込中" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                        <Condition Binding="{Binding InformationLoadState}" Value="Failure" />
+                      </MultiDataTrigger.Conditions>
+                      <Setter Property="Text" Value="読込失敗" />
+                    </MultiDataTrigger>
+
+                    <!--<DataTrigger Binding="{Binding HasLength}" Value="True">
+                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding HasLength}" Value="False">
+                      <Setter Property="Text" Value="-i-:-i-" />
+                    </DataTrigger>-->
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+          </Grid>
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
+
+    <!-- タイトル -->
+    <GridViewColumn>
+      <GridViewColumn.HeaderTemplate>
+        <ItemContainerTemplate>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="タイトル" />
+            <TextBox Grid.Column="1" Width="200" Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Column="2"  IsChecked="{Binding IsBlacklist}" Content="除外" />
+          </Grid>
+        </ItemContainerTemplate>
+      </GridViewColumn.HeaderTemplate>
+      <GridViewColumn.CellTemplate>
+        <ItemContainerTemplate>
+          <TextBlock Text="{Binding Title}" />
+        </ItemContainerTemplate>
+      </GridViewColumn.CellTemplate>
+    </GridViewColumn>
+
+    <!-- ステータス -->
     <GridViewColumn>
       <GridViewColumn.HeaderTemplate>
         <ItemContainerTemplate>
           <StackPanel>
-            <Label>status</Label>
+            <TextBlock Text="ステータス" />
           </StackPanel>
         </ItemContainerTemplate>
       </GridViewColumn.HeaderTemplate>
@@ -39,38 +227,5 @@
       </GridViewColumn.CellTemplate>
     </GridViewColumn>
 
-    <GridViewColumn>
-      <GridViewColumn.HeaderTemplate>
-        <ItemContainerTemplate>
-          <StackPanel>
-            <Label>thumbnail</Label>
-          </StackPanel>
-        </ItemContainerTemplate>
-      </GridViewColumn.HeaderTemplate>
-      <GridViewColumn.CellTemplate>
-        <ItemContainerTemplate>
-          <StackPanel>
-            <TextBlock Text="{Binding VideoThumbnailLoad}" />
-            <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
-
-          </StackPanel>
-        </ItemContainerTemplate>
-      </GridViewColumn.CellTemplate>
-    </GridViewColumn>
-
-    <GridViewColumn>
-      <GridViewColumn.HeaderTemplate>
-        <ItemContainerTemplate>
-          <StackPanel>
-            <Label>title</Label>
-          </StackPanel>
-        </ItemContainerTemplate>
-      </GridViewColumn.HeaderTemplate>
-      <GridViewColumn.CellTemplate>
-        <ItemContainerTemplate>
-          <TextBlock Text="{Binding Title}" />
-        </ItemContainerTemplate>
-      </GridViewColumn.CellTemplate>
-    </GridViewColumn>
   </GridView>
 </ResourceDictionary>

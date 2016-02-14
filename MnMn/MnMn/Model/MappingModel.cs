@@ -34,6 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("key")]
         public string Key { get; set; }
 
+        [XmlAttribute("content-type")]
+        public string ContentType { get; set; }
+
         /// <summary>
         /// マッピング項目。
         /// </summary>

@@ -1,0 +1,148 @@
+﻿<!--
+  呼び出し元から DataContext を設定して使用。
+-->
+<UserControl 
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoSearchManager"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  mc:Ignorable="d" 
+  d:DesignHeight="300" d:DesignWidth="300"
+>
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/Service/Smile/Video/VideoListDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <ComboBox 
+        DisplayMemberPath="CurrentWord" 
+        ItemsSource="{Binding MethodItems}" 
+        SelectedItem="{Binding SelectedMethod}"
+      />
+      <!-- だっせぇ！ -->
+      <ComboBox 
+        DisplayMemberPath="CurrentWord" 
+        ItemsSource="{Binding SortItems}" 
+        SelectedItem="{Binding SelectedSort}"
+      />
+      <ComboBox 
+        DisplayMemberPath="CurrentWord" 
+        ItemsSource="{Binding TypeItems}" 
+        SelectedItem="{Binding SelectedType}"
+      />
+
+      <ComboBox IsEditable="True" Text="{Binding InputQuery}" />
+
+      <Button Command="{Binding SearchCommand}">search</Button>
+    </StackPanel>
+
+    <TabControl 
+      Grid.Row="1" 
+      ItemsSource="{Binding SearchGroups}"
+      SelectedItem="{Binding SelectedSearchGroup}"
+    >
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <StackPanel Grid.Row="0">
+                <TextBlock Text="{Binding Query}" />
+                <TextBlock Text="{Binding Type.CurrentWord}" />
+              </StackPanel>
+              <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
+            </Grid>
+            <ComboBox 
+              DisplayMemberPath="CurrentWord" 
+              ItemsSource="{Binding MethodItems}" 
+              SelectedItem="{Binding SelectedMethod}"
+            />
+            <ComboBox 
+              DisplayMemberPath="CurrentWord" 
+              ItemsSource="{Binding SortItems}" 
+              SelectedItem="{Binding SelectedSort}"
+            />
+            <Button
+              Content="reload"
+              Command="{Binding ReloadSearchCommand}"
+              IsEnabled="{Binding CanLoad}"
+            />
+          </StackPanel>
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+      <TabControl.ContentTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListView 
+              x:Name="finder"
+              Grid.Row="0" 
+              View="{StaticResource VideoListView}"
+              ItemsSource="{Binding SelectedVideoInformationItems}" 
+              SelectedItem="{Binding SelectedVideoInformation}"
+            >
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                  <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" CommandParameter="{Binding}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </ListView>
+
+            <Grid Grid.Row="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0">
+                <Run>けっか</Run>
+                <Run Text="{Binding TotalCount}" />
+              </TextBlock>
+
+              <ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Button
+                      Content="{Binding PageNumber }"
+                      Command="{Binding DataContext.PageChangeCommand, ElementName=finder}"
+                      CommandParameter="{Binding }"
+                    />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Grid>
+            <!--<ListBox ItemsSource="{Binding GroupPageItems}">
+              
+            </ListBox>-->
+            
+          </Grid>
+        </DataTemplate>
+      </TabControl.ContentTemplate>
+
+    </TabControl>
+
+  </Grid>
+</UserControl>

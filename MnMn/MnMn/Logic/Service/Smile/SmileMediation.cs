@@ -32,13 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 {
     public class SmileMediation: MediationCustomBase
     {
-        public SmileMediation(Mediation mediation)
-            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath, null)
+        public SmileMediation(Mediation mediation, SmileSettingModel setting)
+            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath)
         {
-            VideoMediation = new SmileVideoMediation(Mediation);
+            Setting = setting;
+
+            VideoMediation = new SmileVideoMediation(Mediation, Setting.VideoSetting);
         }
 
         #region property
+
+        SmileSettingModel Setting { get; set; }
 
         /// <summary>
         /// ニコニコ動画関係。
@@ -139,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:

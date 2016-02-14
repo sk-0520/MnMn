@@ -28,7 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoRankingManagerViewModel: ViewModelBase
+    public class SmileVideoRankingManagerViewModel: SmileVideoManagerViewModelBase
     {
         #region variable
 
@@ -37,14 +37,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoElementModel _selectedCategory;
 
-        SmileVideoRankingCategoryItemViewModel _selectedRankingCategory;
+        SmileVideoRankingCategoryGroupItemViewModel _selectedRankingCategory;
 
         #endregion
 
         public SmileVideoRankingManagerViewModel(Mediation mediation, SmileVideoRankingModel rankingModel)
+            : base(mediation)
         {
-            Mediation = mediation;
-
             RankingModel = rankingModel;
             CategoryItems = new CollectionModel<SmileVideoElementModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
@@ -53,8 +52,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         SmileVideoRankingModel RankingModel { get; set; }
 
@@ -79,13 +76,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public IList<SmileVideoElementModel> CategoryItems { get; private set; }
 
-        public SmileVideoRankingCategoryItemViewModel SelectedRankingCategory
+        public SmileVideoRankingCategoryGroupItemViewModel SelectedRankingCategory
         {
             get { return this._selectedRankingCategory; }
             set { SetVariableValue(ref this._selectedRankingCategory, value); }
         }
 
-        public CollectionModel<SmileVideoRankingCategoryItemViewModel> RankingCategoryItems { get; set; } = new CollectionModel<SmileVideoRankingCategoryItemViewModel>();
+        public CollectionModel<SmileVideoRankingCategoryGroupItemViewModel> RankingCategoryGroupItems { get; set; } = new CollectionModel<SmileVideoRankingCategoryGroupItemViewModel>();
 
         #endregion
 
@@ -101,16 +98,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
 
-                        // すでに存在する場合はそのタブへ遷移
+                        // 存在する場合は該当タブへ遷移
                         var selectViewModel = RestrictUtility.IsNotNull(
-                            RankingCategoryItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key),
+                            RankingCategoryGroupItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key),
                             viewModel => {
                                 viewModel.SetContextElements(nowPeriod, nowTarget);
                                 return viewModel;
                             },
                             () => {
-                                var viewModel = new SmileVideoRankingCategoryItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
-                                RankingCategoryItems.Insert(0, viewModel);
+                                var viewModel = new SmileVideoRankingCategoryGroupItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
+                                RankingCategoryGroupItems.Insert(0, viewModel);
                                 return viewModel;
                             }
                         );
@@ -136,6 +133,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         yield return c;
                     }
                 }
+            }
+        }
+
+        #endregion
+
+        #region SmileVideoManagerViewModelBase
+
+        protected override void ShowView()
+        {
+            base.ShowView();
+
+            if(!RankingCategoryGroupItems.Any()) {
+                GetRankingCategoryCommand.Execute(null);
             }
         }
 

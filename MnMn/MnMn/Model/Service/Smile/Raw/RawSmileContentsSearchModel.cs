@@ -17,14 +17,20 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    [Serializable, XmlRoot("rss")]
-    public class FeedSmileVideoRankingModel: Rss2ModelBase<FeedSmileVideoRankingChannelModel, FeedSmileVideoRankingItemModel, FeedSmileVideoRankingGuidModel>
-    { }
+    [DataContract]
+    public class RawSmileContentsSearchModel: ModelBase
+    {
+        [DataMember(Name = "meta")]
+        public RawSmileContentsSearchMetaModel Meta { get; set; } = new RawSmileContentsSearchMetaModel();
+
+        [DataMember(Name = "data")]
+        public CollectionModel<RawSmileContentsSearchItemModel> Data { get; set; } = new CollectionModel<RawSmileContentsSearchItemModel>();
+    }
 }

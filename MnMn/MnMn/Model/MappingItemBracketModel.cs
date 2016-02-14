@@ -24,13 +24,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public class MappingItemBracketModel:ModelBase
+    public class MappingItemBracketModel: MappingItemNodeBase
     {
-        [XmlAttribute("target")]
-        public string Target { get; set; }
+        #region
+
         [XmlAttribute("open")]
         public string Open { get; set; }
+
         [XmlAttribute("close")]
         public string Close { get; set; }
+
+        #endregion
     }
 }

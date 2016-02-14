@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<search service="video" max-index="1600" max-count="100">
+	<!-- 検索 -->
+	<method>
+		<element key="viewCounter">
+			<words>
+				<word lang="ja-JP" value="再生数" />
+			</words>
+		</element>
+		<element key="mylistCounter">
+			<words>
+				<word lang="ja-JP" value="マイリスト数" />
+			</words>
+		</element>
+		<element key="commentCounter">
+			<words>
+				<word lang="ja-JP" value="コメント数" />
+			</words>
+		</element>
+		<element key="startTime">
+			<words>
+				<word lang="ja-JP" value="投稿時間" />
+			</words>
+		</element>
+	</method>
+	<!-- ソート -->
+	<sort>
+		<element key="-">
+			<words>
+				<word lang="ja-JP" value="昇順" />
+			</words>
+		</element>
+		<element key="+">
+			<words>
+				<word lang="ja-JP" value="降順" />
+			</words>
+		</element>
+	</sort>
+	<!-- タグ・キーワード -->
+	<type>
+		<element key="tagsExact">
+			<words>
+				<word lang="ja-JP" value="タグ" />
+			</words>
+		</element>
+		<element key="title,description,tags">
+			<words>
+				<word lang="ja-JP" value="キーワード" />
+			</words>
+		</element>
+	</type>
+	<result>
+		<field>contentId</field>
+		<field>title</field>
+		<field>description</field>
+		<field>tags</field>
+		<field>categoryTags</field>
+		<field>viewCounter</field>
+		<field>mylistCounter</field>
+		<field>commentCounter</field>
+		<field>startTime</field>
+		<field>thumbnailUrl</field>
+	</result>
+</search>

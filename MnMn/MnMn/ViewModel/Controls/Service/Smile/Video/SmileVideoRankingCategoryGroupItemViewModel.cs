@@ -34,49 +34,37 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoRankingCategoryItemViewModel: ViewModelBase
+    public class SmileVideoRankingCategoryGroupItemViewModel: SmileVideoFeedFinderViewModelBase
     {
         #region variable
 
         SmileVideoElementModel _selectedPeriod;
         SmileVideoElementModel _selectedTarget;
 
-        SmileVideoRankingLoad _rankingLoad;
-
-        SmileVideoInformationViewModel _selectedVideoInformation;
-
-        bool _nowLoading;
 
         #endregion
 
-        public SmileVideoRankingCategoryItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
+        public SmileVideoRankingCategoryGroupItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
+            : base(mediation)
         {
-            Mediation = mediation;
-
             PeriodItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Periods.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
             TargetItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Targets.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
 
             SetContextElements(period, target);
             Category = category;
-
-            VideoInformationList = new CollectionModel<SmileVideoInformationViewModel>();
-            VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
-
-        CancellationTokenSource CancelLoading { get; set;  }
 
         public IEnumerable<SmileVideoElementModel> PeriodItems { get; private set; }
         public IEnumerable<SmileVideoElementModel> TargetItems { get; private set; }
@@ -94,64 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoElementModel Category { get; private set; }
 
-        public SmileVideoRankingLoad RankingLoad
-        {
-            get { return this._rankingLoad; }
-            set
-            {
-                if(SetVariableValue(ref this._rankingLoad, value)) {
-                    var propertyNames = new[] {
-                        nameof(CanLoad),
-                        nameof(NowLoading),
-                    };
-                    CallOnPropertyChange(propertyNames);
-                }
-            }
-        }
-
-        CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; set; }
-
-        ICollectionView _VideoInformationItems;
-        public ICollectionView VideoInformationItems
-        {
-            get { return this._VideoInformationItems; }
-            private set { SetVariableValue(ref this._VideoInformationItems, value); }
-        }
-
         public string CategoryName => Category.CurrentWord;
-
-        public bool CanLoad
-        {
-            get
-            {
-                var loadSkips = new[] { SmileVideoRankingLoad.RankingListLoading, SmileVideoRankingLoad.RankingListChecking };
-                return !loadSkips.Any(l => l == RankingLoad);
-            }
-        }
-
-        public bool NowLoading
-        {
-            get { return this._nowLoading; }
-            set { SetVariableValue(ref this._nowLoading, value); }
-        }
-
-        public SmileVideoInformationViewModel SelectedVideoInformation
-        {
-            get { return this._selectedVideoInformation; }
-            set { SetVariableValue(ref this._selectedVideoInformation, value); }
-        }
-
-        public async void OpenPlayer(SmileVideoInformationViewModel videoInformation)
-        {
-            var vm = new SmileVideoPlayerViewModel(Mediation);
-            var window = new SmileVideoPlayerWindow() {
-                DataContext = vm,
-            };
-            vm.SetView(window);
-            window.Show();
-
-            await vm.LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-        }
 
         #endregion
 
@@ -161,23 +92,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return CreateCommand(
-                    o => {
-                        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
-                    }
-                );
-            }
-        }
-
-        public ICommand OpenVideoCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        OpenPlayer(SelectedVideoInformation);
-                    }
-                );
+                //return CreateCommand(
+                //    o => {
+                //        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
+                //    }
+                //);
+                return ReloadCommand;
             }
         }
 
@@ -185,25 +105,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        /*
         async Task LoadRankingAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
-            RankingLoad = SmileVideoRankingLoad.RankingListLoading;
+            FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
             NowLoading = true;
             var rankingFeedModel = await RestrictUtility.Block(async () => {
                 using(var host = new HttpUserAgentHost())
-                using(var page = new PageScraping(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
+                using(var page = new PageLoader(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
                     page.ReplaceUriParameters["target"] = SelectedTarget.Key;
                     page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
                     page.ReplaceUriParameters["category"] = Category.Key;
                     page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
 
-                    var rankingXmlResult = await page.GetResponseTextAsync(HttpMethod.Get);
+                    var rankingXmlResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                     if(!rankingXmlResult.IsSuccess) {
-                        RankingLoad = SmileVideoRankingLoad.Failure;
+                        FinderLoadState = SmileVideoFinderLoadState.Failure;
                         return null;
                     }
 
-                    RankingLoad = SmileVideoRankingLoad.RankingListChecking;
+                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
 
                     return RestrictUtility.Block(() => {
                         using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
@@ -214,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
             if(rankingFeedModel == null) {
                 NowLoading = false;
-                RankingLoad = SmileVideoRankingLoad.Failure;
+                FinderLoadState = SmileVideoFinderLoadState.Failure;
                 return;
             }
 
@@ -232,49 +153,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoInformationItems.Refresh();
 
                 Task.Run(() => {
-                    RankingLoad = SmileVideoRankingLoad.ImageLoading;
-
-                    Parallel.ForEach(VideoInformationList.ToArray(), item => {
-                        var count = 0;
-                        var max = 3;
-                        var wait = TimeSpan.FromSeconds(1);
-                        while(count++ <= max) {
-                            cancel.Token.ThrowIfCancellationRequested();
-                            try {
-                                var t = item.LoadImageAsync(imageCacheSpan);
-                                t.Wait();
-                                break;
-                            } catch(Exception ex) {
-                                Debug.WriteLine($"{item}: {ex}");
-                                if(cancel.IsCancellationRequested) {
-                                    break;
-                                } else {
-                                    Thread.Sleep(wait);
-                                    continue;
-                                }
-                            }
-                        }
-                    });
+                    FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
+                    var loader = new SmileVideoInformationLoader(VideoInformationList);
+                    loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 }).ContinueWith(t => {
                     //VideoInformationItems.Refresh();
-                    RankingLoad = SmileVideoRankingLoad.Completed;
+                    FinderLoadState = SmileVideoFinderLoadState.Completed;
                     NowLoading = true;
-                   // return Task.CompletedTask;
+                    // return Task.CompletedTask;
                 }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+        */
 
         public Task LoadRankingAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
-            if(CanLoad) {
-                if(NowLoading) {
-                    CancelLoading.Cancel(true);
-                }
+            //if(CanLoad) {
+            //    if(NowLoading) {
+            //        CancelLoading.Cancel(true);
+            //    }
 
-                return LoadRankingAsync_Impl(thumbCacheSpan, imageCacheSpan);
-            } else {
-                return Task.CompletedTask;
-            }
+            //    return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan);
+            //} else {
+            //    return Task.CompletedTask;
+            //}
+            return LoadAsync(thumbCacheSpan, imageCacheSpan);
         }
 
         SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
@@ -292,24 +195,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SelectedTarget = GetContextElemetFromChangeElement(TargetItems, target);
         }
 
-        void DisposeCancelLoading()
-        {
-            if(CancelLoading != null) {
-                CancelLoading.Dispose();
-                CancelLoading = null;
-            }
-        }
-
         #endregion
 
-        #region ViewModelBase
+        #region SmileVideoFeedFinderViewModelBase
 
-        protected override void Dispose(bool disposing)
+        protected override PageLoader CreatePageLoader()
         {
-            if(!IsDisposed) {
-                DisposeCancelLoading();
-            }
-            base.Dispose(disposing);
+            var page = new PageLoader(Mediation, UserAgentHost, SmileVideoMediationKey.ranking, ServiceType.SmileVideo);
+
+            page.ReplaceUriParameters["target"] = SelectedTarget.Key;
+            page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
+            page.ReplaceUriParameters["category"] = Category.Key;
+            page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+
+            return page;
         }
 
         #endregion

@@ -20,36 +20,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    /// <summary>
-    /// ランキングの読込状態。
-    /// </summary>
-    public enum SmileVideoRankingLoad
+    public enum SmileContentsSearchType
     {
         /// <summary>
-        /// 読み込んでない。
+        /// タグ検索。
         /// </summary>
-        None,
+        Tag,
         /// <summary>
-        /// ランキングリスト取得中。
+        /// キーワード検索。
         /// </summary>
-        RankingListLoading,
-        /// <summary>
-        /// ランキングリストチェック中。
-        /// </summary>
-        RankingListChecking,
-        /// <summary>
-        /// サムネイル取得中。
-        /// </summary>
-        ImageLoading,
-        /// <summary>
-        /// 完了。
-        /// </summary>
-        Completed,
-        /// <summary>
-        /// 失敗。
-        /// </summary>
-        Failure,
+        Keyword,
     }
 }

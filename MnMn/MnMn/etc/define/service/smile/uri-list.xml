@@ -3,4 +3,7 @@
 	<item key="video-session-login" uri="https://secure.nicovideo.jp/secure/login" param="Query" />
 	<item key="video-session-logout" uri="https://secure.nicovideo.jp/secure/logout" param="None" />
 	<item key="video-session-check" uri="http://www.nicovideo.jp/rss" param="None" />
+	
+	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="Query" />
+	
 </uri>

@@ -21,6 +21,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -169,16 +170,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
 
+        string ToParameterEncodeTypeString(string s, ParameterEncode encodeType)
+        {
+            switch(encodeType) {
+                case ParameterEncode.None:
+                    return s;
+
+                case ParameterEncode.Uri:
+                    return HttpUtility.UrlEncode(s);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
-            var val = ReplaceString(pair.Value, replaceMap);
+            var val = ToParameterEncodeTypeString(ReplaceString(pair.Value, replaceMap), pair.Encode);
+            if(pair.Force && string.IsNullOrEmpty(val)) {
+                return string.Empty;
+            }
 
             switch(type) {
                 case UriParameterType.Query:
                     if(pair.HasKey) {
-                        var key = ReplaceString(pair.Key, replaceMap);
+                        var key = ToParameterEncodeTypeString(ReplaceString(pair.Key, replaceMap), pair.Encode);
                         return $"{key}={val}";
                     } else {
                         return val;
@@ -188,10 +206,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return val;
 
                 case UriParameterType.PreSuffixes: {
-                        var key = ReplaceString(pair.Key, replaceMap);
-                        var pre = ReplaceString(pair.Prefix, replaceMap);
-                        var bond = ReplaceString(pair.Bond, replaceMap);
-                        var suf = ReplaceString(pair.Suffix, replaceMap);
+                        var key = ToParameterEncodeTypeString(ReplaceString(pair.Key, replaceMap), pair.Encode);
+                        var pre = ToParameterEncodeTypeString(ReplaceString(pair.Prefix, replaceMap), pair.Encode);
+                        var bond = ToParameterEncodeTypeString(ReplaceString(pair.Bond, replaceMap), pair.Encode);
+                        var suf = ToParameterEncodeTypeString(ReplaceString(pair.Suffix, replaceMap), pair.Encode);
                         return $"{pre}{key}{bond}{val}{suf}";
                     }
 
@@ -211,6 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 .FirstOrDefault(up => up.Key == uriItem.Key)
                 ?.Items
                 ?.Select(p => ToUriParameterString(p, uriItem.UriParameterType, replaceMap))
+                ?.Where(s => !string.IsNullOrEmpty(s))
             ;
             if(convertedParams == null) {
                 return uri;
@@ -247,9 +266,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ;
         }
 
-        protected string ToMappingBranket(string s, string target, IEnumerable<MappingItemBracketModel> list)
+        protected string BuildMapping(string s, string target, MappingItemModel item)
         {
-            var bracket = list.FirstOrDefault(b => b.Target == target);
+            var bracket = item.Brackets.FirstOrDefault(b => b.Target == target);
             if(bracket == null) {
                 return s;
             }
@@ -262,13 +281,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             switch(item.Type) {
                 case MappingItemType.Simple:
-                    return $"{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
+                    return $"{BuildMapping(value, MappingItemModel.targetValue, item)}";
 
                 case MappingItemType.Pair: {
                         var name = ReplaceString(item.Name, replaceMap);
                         var bond = ReplaceString(item.Bond, replaceMap);
                         
-                        return $"{ToMappingBranket(name, MappingItemModel.targetName, item.Brackets)}{ToMappingBranket(bond, MappingItemModel.targetBond, item.Brackets)}{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
+                        return $"{BuildMapping(name, MappingItemModel.targetName, item)}{BuildMapping(bond, MappingItemModel.targetBond, item)}{BuildMapping(value, MappingItemModel.targetValue, item)}";
                     }
 
                 case MappingItemType.ForcePair: {
@@ -279,7 +298,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             var fail = ReplaceString(item.Failure, replaceMap);
                             return fail;
                         }
-                        return $"{ToMappingBranket(name, MappingItemModel.targetName, item.Brackets)}{ToMappingBranket(bond, MappingItemModel.targetBond, item.Brackets)}{ToMappingBranket(value, MappingItemModel.targetValue, item.Brackets)}";
+                        return $"{BuildMapping(name, MappingItemModel.targetName, item)}{BuildMapping(bond, MappingItemModel.targetBond, item)}{BuildMapping(value, MappingItemModel.targetValue, item)}";
                     }
 
                 default:
@@ -287,13 +306,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected string GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected MappingResult GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
+            var result = new MappingResult();
             var mapping = RequestMappingList.Mappings
                 .FirstOrDefault(up => up.Key == key)
             ;
             if(mapping == null) {
-                return string.Empty;
+                result.Result = string.Empty;
+                return result;
+            }
+
+            if(!string.IsNullOrWhiteSpace(mapping.ContentType)) {
+                result.ContentType = mapping.ContentType;
             }
 
             var mappingParams = mapping.Items
@@ -311,10 +336,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             };
             var trimedContent = trimMap[mapping.Content.Trim](replacedContent);
             if(mapping.Content.Oneline) {
-                return string.Join(string.Empty, trimedContent.SplitLines());
+                result.Result = string.Join(string.Empty, trimedContent.SplitLines());
+            }else {
+                result.Result = trimedContent;
             }
 
-            return trimedContent;
+            return result;
         }
 
         #endregion
@@ -353,7 +380,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

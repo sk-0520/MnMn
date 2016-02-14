@@ -32,8 +32,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// </summary>
         Getthumbinfo,
         /// <summary>
-        /// ランキングから取得。
+        /// フィードから取得。
         /// </summary>
-        Ranking,
+        Feed,
+        /// <summary>
+        /// 検索から取得。
+        /// </summary>
+        Search,
     }
 }

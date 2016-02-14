@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
     /// チャンネルのコンテンツ情報。
     /// </summary>
     public class Rss2ItemModelBase<TRss2GuidModel>: ModelBase
-        where TRss2GuidModel: Rss2GuidModel
+        where TRss2GuidModel: Rss2GuidModel, new()
     {
         #region property
 
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
         [XmlElement("link")]
         public string Link { get; set; }
         [XmlElement("guid")]
-        public TRss2GuidModel Guid { get; set; }
+        public TRss2GuidModel Guid { get; set; } = new TRss2GuidModel();
         [XmlIgnore, IgnoreDataMember]
         public DateTime PubDate { get; set; }
         [XmlElement("pubDate")]

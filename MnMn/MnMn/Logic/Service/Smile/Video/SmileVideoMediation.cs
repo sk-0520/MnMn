@@ -26,20 +26,27 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoMediation: MediationCustomBase
     {
-        public SmileVideoMediation(Mediation mediation)
+        public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel  setting)
             :base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
+            Setting = setting;
+
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
+            Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
         }
 
         #region property
 
-        SmileVideoRankingModel Ranking { get; set; }
+        SmileVideoSettingModel Setting { get; }
+
+        SmileVideoRankingModel Ranking { get; }
+        SmileVideoSearchModel Search { get; }
 
         #endregion
 
@@ -50,6 +57,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             switch(request.RequestKind) {
                 case RequestKind.RankingDefine:
                     return new ResponseModel(request, Ranking);
+
+                case RequestKind.SearchDefine:
+                    return new ResponseModel(request, Search);
+
+                case RequestKind.Setting:
+                    return new ResponseModel(request, Setting);
  
                 default:
                     throw new NotImplementedException();
@@ -61,6 +74,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             switch(inputKey) {
                 case SmileVideoMediationKey.inputEconomyMode:
                     outputValue = SmileVideoGetflvUtility.isEconomyMode((string)inputValue);
+                    return true;
+
+                case SmileVideoMediationKey.inputScrapingVideo:
+                    outputValue = SmileVideoGetthumbinfoUtility.isScrapingMovie((string)inputValue);
                     return true;
 
                 default:
@@ -109,7 +126,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestParameter_Impl(key, replaceMap, serviceType);
         }
 
-        public override string GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);

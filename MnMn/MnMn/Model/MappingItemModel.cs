@@ -29,9 +29,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     public class MappingItemModel: ModelBase
     {
         #region define
+
         public const string targetName = "name";
         public const string targetBond = "bond";
         public const string targetValue = "value";
+
         #endregion
 
         #region property
@@ -56,6 +58,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         [XmlElement("bracket")]
         public CollectionModel<MappingItemBracketModel> Brackets { get; set; } = new CollectionModel<MappingItemBracketModel>();
+        [XmlElement("custom")]
+        public CollectionModel<MappingItemCustomModel> Customs { get; set; } = new CollectionModel<MappingItemCustomModel>();
 
         /// <summary>
         /// キーが存在するか。

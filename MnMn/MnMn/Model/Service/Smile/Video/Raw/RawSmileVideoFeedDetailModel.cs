@@ -19,36 +19,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public enum SmileVideoVideoThumbnailLoad
+    public class RawSmileVideoFeedDetailModel:ModelBase
     {
         /// <summary>
-        /// 読み込んでない。
+        /// 動画ID。
         /// </summary>
-        None,
+        public string VideoId { get; set; }
         /// <summary>
-        /// サムネイルチェック中。
+        /// タイトル。
         /// </summary>
-        ImageChecking,
+        public string Title { get; set; }
         /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>WEB</para>
+        /// 紹介文。
         /// </summary>
-        ImageLoadingFromWeb,
+        public string Description { get; set; }
         /// <summary>
-        /// サムネイル読み込み中。
-        /// <para>ファイル</para>
+        /// サムネイルURL。
         /// </summary>
-        ImageLoadingFromStorage,
+        public string ThumbnailUrl { get; set; }
         /// <summary>
-        /// 完了。
+        /// 長さ。
+        /// <para>mmm:ss形式</para>
         /// </summary>
-        Completed,
+        public string Length { get; set; }
         /// <summary>
-        /// 失敗。
+        /// 投稿日時。
         /// </summary>
-        Failure,
+        public string FirstRetrieve { get; set; }
+        /// <summary>
+        /// 再生数。
+        /// </summary>
+        public string ViewCounter { get; set; }
+        /// <summary>
+        /// コメント数
+        /// </summary>
+        public string CommentNum { get; set; }
+        /// <summary>
+        /// マイリスト数
+        /// </summary>
+        public string MylistCounter { get; set; }
+
     }
 }

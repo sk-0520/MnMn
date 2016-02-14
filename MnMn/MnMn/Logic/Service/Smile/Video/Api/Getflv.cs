@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -30,6 +31,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 {
@@ -47,29 +50,73 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         #region function
 
-        public async Task<RawSmileVideoGetflvModel> GetAsync(Uri uri)
+        public static RawSmileVideoGetflvModel Load(string rawWwwFormData)
         {
-            await LoginIfNotLoginAsync();
+            return RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(rawWwwFormData);
+        }
 
-            using(var page = new PageScraping(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, Define.ServiceType.SmileVideo)) {
+        async Task<RawSmileVideoGetflvModel> GetScrapingAsync(Uri uri)
+        {
+            //var re = await GetNormalAsync(uri);
+            // WEBから取得してみる
+            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                var document = new HtmlDocument();
+                document.LoadHtml(response.Result);
+                var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
+                var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
 
-                var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
-                var result = RawValueUtility.ConvertNameModelFromWWWFormData< RawSmileVideoGetflvModel>(response.Result);
+                var json = JObject.Parse(watchApiDataText);
+                var flashvars = json.SelectToken("flashvars");
+                var flvInfo = flashvars.SelectToken("flvInfo");
+                var rawFlvText = flvInfo.ToString();
+                var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
+                var result = Load(convertedFlvText);
+
                 return result;
             }
         }
 
-        public Task<RawSmileVideoGetflvModel> GetAsync(string videoId)
+        async Task<RawSmileVideoGetflvModel> GetNormalAsync(Uri uri)
         {
-            var map = new StringsModel() {
-                { "video-id", videoId },
-            };
-            var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
-            var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.SmileVideo);
-            var uri = new Uri(convertedUri);
-            return GetAsync(uri);
+            using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
+                page.ForceUri = uri;
+
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
+                var result = Load(response.Result);
+                return result;
+            }
         }
+
+        public bool IsScrapingPattern(string videoId)
+        {
+            object resultIsWeb;
+            if(Mediation.ConvertValue(out resultIsWeb, typeof(bool), SmileVideoMediationKey.inputScrapingVideo, videoId, typeof(string), ServiceType.SmileVideo)) {
+                var result = (bool)resultIsWeb;
+                return result;
+            } else {
+                throw new NotSupportedException(videoId);
+            }
+        }
+
+        public async Task<RawSmileVideoGetflvModel> GetAsync(string videoId, Uri watchUri)
+        {
+            await LoginIfNotLoginAsync();
+
+            if(IsScrapingPattern(videoId)) {
+                return await GetScrapingAsync(watchUri);
+            } else {
+                var map = new StringsModel() {
+                    { "video-id", videoId },
+                };
+                var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
+                var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.SmileVideo);
+                var uri = new Uri(convertedUri);
+                return await GetNormalAsync(uri);
+            }
+        }
+
 
         #endregion
     }

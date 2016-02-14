@@ -19,14 +19,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     public class SmileVideoSettingModel: SettingModelBase
     {
+        #region property
+
         /// <summary>
         /// 自動再生を行うか。
         /// </summary>
-        public bool AutoPlay { get; set; }
+        public bool AutoPlay { get; set; } = false;
+        /// <summary>
+        /// フォント種別。
+        /// </summary>
+        public string FontFamily { get; set; } = Constants.CommentFontFamily;
+        /// <summary>
+        /// フォントサイズ。
+        /// </summary>
+        public double FontSize { get; set; } = Constants.CommentFontSize;
+        /// <summary>
+        /// フォント透明度。
+        /// </summary>
+        public double FontAlpha { get; set; } = Constants.CommentFontAlpha;
+        /// <summary>
+        /// コメント表示時間。
+        /// </summary>
+        public TimeSpan ShowTime { get; set; } = Constants.CommentShowTime;
+
+        /// <summary>
+        /// 動画検索で一度に取得する数。
+        /// </summary>
+        public int SearchCount { get; set; } = Constants.SmileVideoSearchCount;
+
+        /// <summary>
+        /// 動画の長さを取得するか。
+        /// <para>※元データが長さを持っていない場合に使用。</para>
+        /// </summary>
+        public bool LoadVideoTime { get; set; } = Constants.SmileVideoLoadVideoTime;
+
+        #endregion
     }
 }

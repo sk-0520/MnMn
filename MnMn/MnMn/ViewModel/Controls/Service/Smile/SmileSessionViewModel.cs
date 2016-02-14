@@ -66,8 +66,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             }
 
             LoginState = LoginState.In;
-            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
-                page.StopHeaderCheck = true;
+            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
+                page.HeaderCheckOnly = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.User;
                 page.ReplaceRequestParameters["pass"] = UserAccount.Password;
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                     return CheckModel.Failure();
                 };
 
-                await page.GetResponseTextAsync(Define.HttpMethod.Post);
+                await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
             }
             return;
         }
@@ -108,12 +108,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return;
             }
 
-            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
-                page.StopHeaderCheck = true;
+            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogout, ServiceType.Smile)) {
+                page.HeaderCheckOnly = true;
                 page.ExitProcess = () => {
                     LoginState = LoginState.None;
                 };
-                await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
             }
         }
 
@@ -123,8 +123,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 return false;
             }
 
-            using(var page = new PageScraping(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
-                page.StopHeaderCheck = true;
+            using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoCheck, ServiceType.Smile)) {
+                page.HeaderCheckOnly = true;
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
                         .FirstOrDefault(h => h.Key == "x-niconico-authflag")
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
                     return CheckModel.Failure();
                 };
-                var result = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                var result = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 return result.IsSuccess;
             }
 

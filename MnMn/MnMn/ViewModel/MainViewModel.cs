@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region command
 
+        [Obsolete]
         public ICommand Temp_OpenSmilePlayerCommand
         {
             get
@@ -58,6 +59,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 return CreateCommand(
                     o => {
                         SmileManager.VideoManager.Temp_OpenPlayer("sm15218544");
+                    }
+                );
+            }
+        }
+        [Obsolete]
+        public ICommand Temp_FindCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        SmileManager.VideoManager.Temp_Find("sm15218544");
+
                     }
                 );
             }

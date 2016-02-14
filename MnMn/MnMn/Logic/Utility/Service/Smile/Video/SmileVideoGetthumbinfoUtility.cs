@@ -49,11 +49,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static TimeSpan ConvertTimeSpan(string s)
         {
-            var result = RawValueUtility.ConvertTimeSpan(s);
-            if(result != RawValueUtility.UnknownTimeSpan) {
-                return result;
-            }
-
             // mmm:ss形式を考慮
             var values = s.Split(':');
             if(values.Length != 2) {
@@ -132,9 +127,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static string GetFileName(string videoId, SmileVideoMovieType movieType, bool isEconomyMode)
         {
             var ext = GetFileExtension(movieType);
-            var eco = isEconomyMode ? "-" + EconomyFileSuffix : string.Empty;
+            if(isEconomyMode) {
+                return FileNameUtility.CreateFileName(videoId, EconomyFileSuffix, ext);
+            } else {
+                return FileNameUtility.CreateFileName(videoId, ext);
+            }
+        }
 
-            return $"{videoId}{eco}.{ext}";
+        public static bool isScrapingMovie(string videoId)
+        {
+            return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
         }
 
         #endregion

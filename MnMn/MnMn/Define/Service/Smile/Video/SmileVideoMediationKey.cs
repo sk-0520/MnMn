@@ -28,10 +28,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string ranking = "video-ranking";
         public const string getflvNormal = "video-getflv-normal";
         public const string getflvSwf = "video-getflv-swf";
-        public const string getflvOfficial = "video-getflv-official";
+        public const string getflvScraping = "video-getflv-scraping";
         public const string getthreadkey = "video-getthreadkey";
         public const string msg = "video-msg";
+        public const string newarrival = "video-newarrival";
+        public const string recent = "video-recent";
+        public const string hotlist = "video-hotlist";
 
         public const string inputEconomyMode = "getflv-economy-mode";
+        public const string inputScrapingVideo = "getthumbinfo-scraping-video";
     }
 }

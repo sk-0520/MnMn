@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Uri ReferrerUri { get; }
         public TimeSpan WatchToMovieWaitTime {get;set;} = Constants.ServiceSmileVideoWatchToMovieWaitTime;
 
+        public string PageHtml { get; private set; }
+
         #endregion
 
         #region SmileVideoDownloader
@@ -52,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
                 var t = UserAgent.GetStringAsync(ReferrerUri);
                 t.Wait();
+                PageHtml = t.Result;
                 cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
                 IfUsingSetRangeHeader();

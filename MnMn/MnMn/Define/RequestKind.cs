@@ -36,12 +36,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         RankingDefine,
         /// <summary>
-        /// ランキングデータ。
+        /// 検索定義オブジェクト。
         /// </summary>
-        RankingList,
+        SearchDefine,
         /// <summary>
         /// キャッシュ用ディレクトリパス。
         /// </summary>
         CacheDirectory,
+        /// <summary>
+        /// 基本設定データ。
+        /// </summary>
+        Setting,
     }
 }

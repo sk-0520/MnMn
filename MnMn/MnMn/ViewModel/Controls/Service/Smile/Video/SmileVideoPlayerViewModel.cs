@@ -47,27 +47,70 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using System.Globalization;
+using System.Windows.Media.Effects;
+using System.ComponentModel;
+using System.Windows.Documents;
+using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel
     {
+        #region define
+
+        static readonly Size BaseSize_4x3 = new Size(640, 480);
+        static readonly Size BaseSize_16x9 = new Size(512, 384);
+
+        class CommentData
+        {
+            public CommentData(FrameworkElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
+            {
+                Element = element;
+                ViewModel = viewModel;
+                Animation = animation;
+            }
+
+            #region property
+
+            public FrameworkElement Element { get; }
+            public SmileVideoCommentViewModel ViewModel { get; }
+            public AnimationTimeline Animation { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region variable
 
         bool _canVideoPlay;
         bool _isVideoPlayng;
 
         float _videoPosition;
-        int _volume=100;
+        int _volume = 100;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
+
+        SmileVideoCommentViewModel _selectedComment;
+
+        LoadState _tagLoadState;
+
+        double _videoWidth;
+        double _videoHeight;
+        double _baseWidth;
+        double _baseHeight;
 
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            CommentItems = CollectionViewSource.GetDefaultView(CommentList);
+            CommentItems.Filter = FilterItems;
+        }
 
         #region property
 
@@ -78,11 +121,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //Slider VideoSilder { get; set; }
         Canvas NormalCommentArea { get; set; }
         Canvas ContributorCommentArea { get; set; }
-        
+        ListView CommentView { get; set; }
+        FlowDocumentScrollViewer DocumentDescription { get; set; }
+
+        bool IsFirstPlay { get; set; } = true;
         Navigationbar Navigationbar { get; set; }
 
-        public CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
-        public CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        public ICollectionView CommentItems { get; private set; }
+        CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+
+        public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
         public bool ChangingVideoPosition { get; set; }
         public Point SeekbarMouseDownPosition { get; set; }
@@ -90,6 +140,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool IsDead { get; set; }
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
+
+        List<CommentData> NormalCommentShowList { get; } = new List<CommentData>();
+
+        public LoadState TagLoadState
+        {
+            get { return this._tagLoadState; }
+            set { SetVariableValue(ref this._tagLoadState, value); }
+        }
 
         public bool CanVideoPlay
         {
@@ -112,7 +170,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public int Volume
         {
             get { return this._volume; }
-            set { if(SetVariableValue(ref this._volume, value)) {
+            set
+            {
+                if(SetVariableValue(ref this._volume, value)) {
                     if(Player != null) {
                         Player.Volume = this._volume;
                     }
@@ -133,6 +193,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         TimeSpan PrevTime { get; set; }
 
+        public SmileVideoCommentViewModel SelectedComment
+        {
+            get { return this._selectedComment; }
+            set { SetVariableValue(ref this._selectedComment, value); }
+        }
+
+        public double VideoWidth
+        {
+            get { return this._videoWidth; }
+            set { SetVariableValue(ref this._videoWidth, value); }
+        }
+        public double VideoHeight
+        {
+            get { return this._videoHeight; }
+            set { SetVariableValue(ref this._videoHeight, value); }
+        }
+
+        public double BaseWidth
+        {
+            get { return this._baseWidth; }
+            set { SetVariableValue(ref this._baseWidth, value); }
+        }
+        public double BaseHeight
+        {
+            get { return this._baseHeight; }
+            set { SetVariableValue(ref this._baseHeight, value); }
+        }
+
+        public string Description
+        {
+            get
+            {
+                if(VideoInformation?.PageHtmlLoadState == LoadState.Loaded) {
+                    return VideoInformation.PageDescription;
+                }
+
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand OpenLinkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -144,6 +260,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             NormalCommentArea = view.normalCommentArea;
             ContributorCommentArea = view.contributorCommentArea;
             Navigationbar = view.seekbar;
+            CommentView = view.commentView;
+            DocumentDescription = view.documentDescription;
 
             // 初期設定
             Player.Volume = Volume;
@@ -154,12 +272,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
-        void AutoPlay(FileInfo fileInfo)
+        static int GCD(int a, int b)
+        {
+            int Remainder;
+
+            while(b != 0) {
+                Remainder = a % b;
+                a = b;
+                b = Remainder;
+            }
+
+            return a;
+        }
+
+        void SetVideoDataInformation()
+        {
+            VideoWidth = Player.VlcMediaPlayer.PixelWidth;
+            VideoHeight = Player.VlcMediaPlayer.PixelHeight;
+
+            // コメントエリアのサイズ設定
+            // TODO: 暫定実装。きちんと取得してなんかうまいことしないと余白ができる
+            if(VideoWidth <= BaseSize_16x9.Width) {
+                BaseWidth = BaseSize_16x9.Width;
+            } else if(VideoWidth <= BaseSize_4x3.Width) {
+                BaseWidth = BaseSize_4x3.Width;
+            } else {
+                BaseWidth = BaseSize_16x9.Width;
+            }
+
+            if(VideoHeight <= BaseSize_16x9.Height) {
+                BaseHeight = BaseSize_16x9.Height;
+            } else if(VideoWidth <= BaseSize_4x3.Height) {
+                BaseHeight = BaseSize_4x3.Height;
+            } else if(BaseSize_4x3.Height <= VideoWidth) {
+                BaseHeight = BaseSize_4x3.Height;
+            } else {
+                BaseHeight = BaseSize_16x9.Height;
+            }
+
+
+        }
+
+        void SetMedia()
         {
             Player.LoadMedia(VideoFile.FullName);
-            Player.Play();
+        }
 
-            CanVideoPlay = true;
+        void AutoPlay(FileInfo fileInfo)
+        {
+            SetMedia();
+            VideoPlay();
+                CanVideoPlay = true;
+        }
+
+        void VideoPlay()
+        {
+            Player.Play();
         }
 
         void MoveVideoPostion(float targetPosition)
@@ -180,37 +348,227 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void FireShowComment()
         {
-            Debug.WriteLine("{0} - {1}", PrevTime, PlayTime);
-            foreach(var comment in NormalCommentList.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)) {
-                var label = new Label();
-                label.DataContext = comment;
-                label.Content = comment.Content;
-                NormalCommentArea.Children.Add(label);
+            Debug.WriteLine($"{PrevTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
+
+            var commentArea = new Size(
+                Player.ActualWidth,
+                Player.ActualHeight
+            );
+            var list = NormalCommentList.ToArray();
+            foreach(var commentViewModel in list.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
+                var ft = new FormattedText(
+                    commentViewModel.Content,
+                    CultureInfo.GetCultureInfo(Constants.CurrentLanguageCode),
+                    FlowDirection.LeftToRight,
+                    new Typeface(Setting.FontFamily),
+                    Setting.FontSize,
+                    commentViewModel.Foreground
+                );
+                var geometry = ft.BuildGeometry(new Point());
+                var drawing = new GeometryDrawing(null, new Pen(Brushes.Red, 2), geometry);
+                var box = new Label();
+                box.BeginInit();
+                box.Foreground = commentViewModel.Foreground;
+                box.FontFamily = new FontFamily(Setting.FontFamily);
+                box.FontSize = Setting.FontSize;
+                box.Opacity = Setting.FontAlpha;
+                box.Content = commentViewModel.Content;
+                box.Effect = new DropShadowEffect() {
+                    Color = commentViewModel.GetShadowColor(commentViewModel.GetForeColor()),
+                    Direction = 315,
+                    BlurRadius = 2,
+                    ShadowDepth = 2,
+                    Opacity = 0.8,
+                    RenderingBias = RenderingBias.Performance,
+                };
+                box.EndInit();
+
+                NormalCommentArea.Children.Add(box);
                 NormalCommentArea.UpdateLayout();
-                Canvas.SetLeft(label, NormalCommentArea.ActualWidth);
+
+                Canvas.SetLeft(box, NormalCommentArea.ActualWidth);
+
+                // 今あるコメントから安全圏を走査
+                var lastData = NormalCommentShowList
+                    .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
+                    .OrderBy(i => Canvas.GetTop(i.Element))
+                    .LastOrDefault()
+                ;
+                if(lastData != null) {
+                    var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
+                    if(commentArea.Height < nextY + box.ActualHeight) {
+                        Canvas.SetTop(box, 0);
+                    } else {
+                        Canvas.SetTop(box, nextY);
+                    }
+                } else {
+                    Canvas.SetTop(box, 0);
+                }
+
+
                 var animation = new DoubleAnimation();
-                animation.From = NormalCommentArea.ActualWidth;
-                animation.To = -label.ActualWidth;
-                animation.Duration = new Duration(TimeSpan.FromSeconds(3));
-                animation.Completed += Animation_Completed;
-                label.BeginAnimation(Canvas.LeftProperty, animation);
+                var data = new CommentData(box, commentViewModel, animation);
+                NormalCommentShowList.Add(data);
+
+                var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevTime.TotalMilliseconds;
+                var diffPosition = starTime / commentArea.Width;
+
+
+                animation.From = commentArea.Width + diffPosition;
+                animation.To = -box.ActualWidth;
+                animation.Duration = new Duration(Setting.ShowTime);
+
+                EventDisposer<EventHandler> ev = null;
+                animation.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                    NormalCommentArea.Children.Remove(box);
+                    NormalCommentShowList.Remove(data);
+                    ev.Dispose();
+                    box = null;
+                    ev = null;
+                }, h => NormalCommentArea.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+
+                box.BeginAnimation(Canvas.LeftProperty, animation);
             }
         }
 
-        private void Animation_Completed(object sender, EventArgs e)
+        void ScrollComment()
         {
+            var nowTimelineItem = CommentItems
+                .Cast<SmileVideoCommentViewModel>()
+                .FirstOrDefault(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)
+            ;
+            if(nowTimelineItem != null) {
+                CommentView.ScrollIntoView(nowTimelineItem);
+            }
+        }
+
+        bool FilterItems(object o)
+        {
+            var item = (SmileVideoCommentViewModel)o;
+
+            return true;
+        }
+
+        Task LoadTagsAsync()
+        {
+            TagLoadState = LoadState.Preparation;
+
+            TagItems.InitializeRange(VideoInformation.TagList);
+
+            return Task.CompletedTask;
+        }
+
+        Inline CreateDescriptionInline(HtmlNode node)
+        {
+            switch(node.NodeType) {
+                case HtmlNodeType.Text: {
+                        var text = new Run(node.InnerText);
+                        return text;
+                    }
+
+                case HtmlNodeType.Element:
+                    if(node.Name == "br") {
+                        return new LineBreak();
+                    } else if(node.Name == "a") {
+                        var text = new Run(node.InnerText);
+                        var link = new Hyperlink(text);
+                        link.Command = OpenLinkCommand;
+                        link.CommandParameter = node.GetAttributeValue("href", string.Empty);
+                        return link;
+                    } else if(node.Name == "font") {
+                        var text = new Run(node.InnerText);
+                        var colorCode = node.GetAttributeValue("color", "#000000");
+                        var color = (Color)ColorConverter.ConvertFromString(colorCode);
+                        text.Foreground = new SolidColorBrush() {
+                            Color = color,
+                        };
+                        return text;
+                    } else {
+                        var text = new Run("*" + node.OuterHtml + "*");
+                        return text;
+                    }
+                    throw new NotImplementedException();
+
+                default:
+                    return new Run(string.Empty);
+            }
+        }
+
+        IEnumerable<HtmlNode> ChompBreak(IEnumerable<HtmlNode> ndoes)
+        {
+            return ndoes
+                .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
+                .Reverse()
+                .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
+                .Reverse()
+            ;
+        }
+
+        Paragraph CreateDescriptionParagraph(IEnumerable<HtmlNode> paragraphNodes)
+        {
+            var p = new Paragraph();
+
+            foreach(var node in ChompBreak(paragraphNodes)) {
+                var inline = CreateDescriptionInline(node);
+                p.Inlines.Add(inline);
+            }
+
+            return p;
+        }
+
+        void MakeDescription()
+        {
+            DocumentDescription.Dispatcher.Invoke(() => {
+                var document = new FlowDocument();
+
+                var html = new HtmlDocument() {
+                    OptionAutoCloseOnEnd = true,
+                };
+                html.LoadHtml(VideoInformation.PageDescription);
+
+                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n,i) => new { Node = n, Index = i }).ToArray();
+                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n,i) => new { Node = n.Node, Index = n.Index, BreakIndex = i}).ToArray();
+                var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
+                if(paragraphPointList.Length > 1) {
+                    var head = 0;
+                    foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
+                        var tail = point.Index;
+                        var nodes = nodeIndexList.Skip(head).Take(tail- head);
+                        var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
+                        document.Blocks.Add(p);
+                        head = tail + 1;
+                    }
+                } else {
+                    var p = CreateDescriptionParagraph(nodeIndexList.Select(ni => ni.Node));
+                    document.Blocks.Add(p);
+                }
+
+                document.FontSize = DocumentDescription.FontSize;
+                document.FontFamily = DocumentDescription.FontFamily;
+                document.FontStretch = DocumentDescription.FontStretch;
+
+                DocumentDescription.Document = document;
+            });
         }
 
         #endregion
 
         #region SmileVideoDownloadViewModel
 
+        protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
+        {
+            MakeDescription();
+
+            base.OnDownloadStart(sender, e);
+        }
+
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
         {
             if(!CanVideoPlay) {
                 // とりあえず待って
                 var fi = new FileInfo(VideoFile.FullName);
-                if(fi.Length > VideoPlayLowestSize) {
+                CanVideoPlay = fi.Length > VideoPlayLowestSize;
+                if(CanVideoPlay) {
                     AutoPlay(fi);
                 }
             }
@@ -221,6 +579,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnLoadVideoEnd()
         {
+            if(VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+                MakeDescription();
+            }
+
             // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
             if(!CanVideoPlay) {
                 AutoPlay(VideoFile);
@@ -231,17 +593,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
-            var comments = rawMsgPacket.Chat.Select(c => new SmileVideoCommentViewModel(c)).OrderBy(c => c.ElapsedTime).ToArray();
+            var comments = rawMsgPacket.Chat
+                .GroupBy(c => c.No)
+                .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
+                .OrderBy(c => c.ElapsedTime)
+            ;
+            CommentList.InitializeRange(comments);
 
-            NormalCommentList.InitializeRange(comments.Where(c => !c.IsContributor));
-            ContributorCommentList.InitializeRange(comments.Where(c => c.IsContributor));
-            
+            NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsContributor));
+            ContributorCommentList.InitializeRange(CommentList.Where(c => c.IsContributor));
+
             return base.LoadCommentAsync(rawMsgPacket);
         }
 
         protected override void OnLoadGetthumbinfoEnd()
         {
-            TotalTime = VideoInformationViewModel.Length;
+            CallOnPropertyChange(nameof(Description));
+
+            TotalTime = VideoInformation.Length;
+            LoadTagsAsync();
+
             base.OnLoadGetthumbinfoEnd();
         }
 
@@ -263,9 +634,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
+                if(IsFirstPlay) {
+                    SetVideoDataInformation();
+                    IsFirstPlay = false;
+                }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
                 FireShowComment();
+                ScrollComment();
                 PrevTime = PlayTime;
             }
         }

@@ -42,9 +42,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
 
         public async Task<RawSmileVideoGetthreadkeyModel> GetAsync(string threadId)
         {
-            using(var page = new PageScraping(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["thread-id"] = threadId;
-                var response = await page.GetResponseTextAsync(Define.HttpMethod.Get);
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(!response.IsSuccess) {
                     return null;
                 }

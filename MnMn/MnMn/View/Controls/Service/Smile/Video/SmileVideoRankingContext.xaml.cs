@@ -19,11 +19,11 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
-    /// SmileVideoRankingContextElements.xaml の相互作用ロジック
+    /// SmileVideoRankingContext.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileVideoRankingContextElements: UserControl
+    public partial class SmileVideoRankingContext: UserControl
     {
-        public SmileVideoRankingContextElements()
+        public SmileVideoRankingContext()
         {
             InitializeComponent();
         }
@@ -33,13 +33,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         public static readonly DependencyProperty SelectedPeriodProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedPeriodProperty)),
             typeof(SmileVideoElementModel),
-            typeof(SmileVideoRankingContextElements),
+            typeof(SmileVideoRankingContext),
             new FrameworkPropertyMetadata(default(SmileVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedPeriodChanged))
         );
 
         private static void OnSelectedPeriodChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as SmileVideoRankingContextElements;
+            var control = d as SmileVideoRankingContext;
             if(control != null) {
                 control.SelectedPeriod = e.NewValue as SmileVideoElementModel;
             }
@@ -58,13 +58,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         public static readonly DependencyProperty SelectedTargetProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedTargetProperty)),
             typeof(SmileVideoElementModel),
-            typeof(SmileVideoRankingContextElements),
+            typeof(SmileVideoRankingContext),
             new FrameworkPropertyMetadata(default(SmileVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedTargetChanged))
         );
 
         private static void OnSelectedTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as SmileVideoRankingContextElements;
+            var control = d as SmileVideoRankingContext;
             if(control != null) {
                 control.SelectedTarget = e.NewValue as SmileVideoElementModel;
             }
@@ -83,13 +83,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         public static readonly DependencyProperty PeriodItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(PeriodItemsSourceProperty)),
             typeof(ObservableCollection<SmileVideoElementModel>),
-            typeof(SmileVideoRankingContextElements),
+            typeof(SmileVideoRankingContext),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPeriodItemsSourceChanged))
         );
 
         private static void OnPeriodItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<SmileVideoRankingContextElements>(d, control => {
+            CastUtility.AsAction<SmileVideoRankingContext>(d, control => {
                 control.PeriodItemsSource = e.NewValue as ObservableCollection<SmileVideoElementModel>;
             });
         }
@@ -107,13 +107,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         public static readonly DependencyProperty TargetItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(TargetItemsSourceProperty)),
             typeof(ObservableCollection<SmileVideoElementModel>),
-            typeof(SmileVideoRankingContextElements),
+            typeof(SmileVideoRankingContext),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTargetItemsSourceChanged))
         );
 
         private static void OnTargetItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<SmileVideoRankingContextElements>(d, control => {
+            CastUtility.AsAction<SmileVideoRankingContext>(d, control => {
                 control.TargetItemsSource = e.NewValue as ObservableCollection<SmileVideoElementModel>;
             });
         }

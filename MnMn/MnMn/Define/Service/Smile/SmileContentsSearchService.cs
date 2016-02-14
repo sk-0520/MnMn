@@ -19,49 +19,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    public class RawSmileVideoRankingDetailModel:ModelBase
+    /// <summary>
+    /// 検索対象のサービス。
+    /// </summary>
+    public enum SmileContentsSearchService
     {
         /// <summary>
-        /// 動画ID。
+        /// 動画。
         /// </summary>
-        public string VideoId { get; set; }
+        Video,
         /// <summary>
-        /// タイトル。
+        /// 生放送。
         /// </summary>
-        public string Title { get; set; }
+        Live,
         /// <summary>
-        /// 紹介文。
+        /// 静画(イラスト)。
         /// </summary>
-        public string Description { get; set; }
+        Illust,
         /// <summary>
-        /// サムネイルURL。
+        /// 静画(マンガ)。
         /// </summary>
-        public string ThumbnailUrl { get; set; }
+        Manga,
         /// <summary>
-        /// 長さ。
-        /// <para>mmm:ss形式</para>
+        /// 静画(書籍)。
         /// </summary>
-        public string Length { get; set; }
+        Book,
         /// <summary>
-        /// 投稿日時。
+        /// チャンネル。
         /// </summary>
-        public string FirstRetrieve { get; set; }
+        Channel,
         /// <summary>
-        /// 再生数。
+        /// ブロマガ記事(著名人)。
         /// </summary>
-        public string ViewCounter { get; set; }
+        ChannelArticle,
         /// <summary>
-        /// コメント数
+        /// ニュース。
         /// </summary>
-        public string CommentNum { get; set; }
-        /// <summary>
-        /// マイリスト数
-        /// </summary>
-        public string MylistCounter { get; set; }
-
+        News,
     }
 }
