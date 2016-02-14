@@ -141,6 +141,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public virtual ICommand ReloadCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -182,6 +194,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected abstract PageLoader CreatePageLoader();
+
+        protected abstract Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
+
+        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            return LoadAsync(thumbCacheSpan, imageCacheSpan, null);
+        }
+
+        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            if(CanLoad) {
+                if(NowLoading) {
+                    CancelLoading.Cancel(true);
+                }
+
+                return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null);
+            } else {
+                return Task.CompletedTask;
+            }
+        }
+
+        public Task LoadDefaultCacheAsync()
+        {
+            return LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
 
         #endregion
 

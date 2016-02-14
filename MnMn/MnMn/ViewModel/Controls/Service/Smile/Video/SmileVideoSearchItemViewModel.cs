@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        public async Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
             NowLoading = true;
@@ -111,6 +111,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     NowLoading = false;
                 }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.Current);
             });
+        }
+
+        protected override PageLoader CreatePageLoader()
+        {
+            throw new NotSupportedException();
         }
 
         #endregion

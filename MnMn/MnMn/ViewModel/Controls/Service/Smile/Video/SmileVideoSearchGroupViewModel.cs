@@ -204,8 +204,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
         }
 
-        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
+        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
+            var isReload =(bool)extends;
+
             SmileVideoElementModel nowMethod;
             SmileVideoElementModel nowSort;
             if(isReload) {
@@ -244,6 +246,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
+        {
+            return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, isReload);
+        }
+
+        public new Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            throw new NotSupportedException();
+        }
+
+
         #endregion
 
         #region SmileVideoFinderViewModelBase
@@ -258,6 +271,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 return SelectedPage.ViewModel.CanLoad;
             }
+        }
+
+        protected override PageLoader CreatePageLoader()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

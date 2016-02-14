@@ -30,25 +30,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        public ICommand ReloadCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
-                    }
-                );
-            }
-        }
-
         #endregion
 
         #region function
 
-        protected abstract PageLoader CreatePageLoader();
-
-        protected async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
             NowLoading = true;
@@ -98,24 +84,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
-        }
-
-        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            if(CanLoad) {
-                if(NowLoading) {
-                    CancelLoading.Cancel(true);
-                }
-
-                return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan);
-            } else {
-                return Task.CompletedTask;
-            }
-        }
-
-        public Task LoadDefaultCacheAsync()
-        {
-            return LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
         #endregion
