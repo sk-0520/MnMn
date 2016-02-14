@@ -45,7 +45,7 @@
 
       <!--<vlc_wpf:VlcPlayer x:Name="player"/>-->
       <Viewbox ClipToBounds="True">
-        <Grid Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" >
+        <Grid>
           <vlc_wpf:VlcPlayer x:Name="player"/>
           <Canvas x:Name="normalCommentArea" />
           <Canvas x:Name="contributorCommentArea" />
