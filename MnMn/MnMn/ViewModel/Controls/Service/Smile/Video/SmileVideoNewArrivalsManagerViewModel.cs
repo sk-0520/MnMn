@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._selectedItem, value)) {
-                    if(this._selectedItem.CanLoad) {
+                    if(this._selectedItem.CanLoad && this._selectedItem.FinderLoadState != SmileVideoFinderLoadState.Completed) {
                         this._selectedItem.LoadDefaultCacheAsync().ConfigureAwait(true);
                     }
                 }
