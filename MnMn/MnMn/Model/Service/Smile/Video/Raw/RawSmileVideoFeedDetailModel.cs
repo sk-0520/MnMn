@@ -23,7 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoRankingDetailModel:ModelBase
+    public class RawSmileVideoFeedDetailModel:ModelBase
     {
         /// <summary>
         /// 動画ID。

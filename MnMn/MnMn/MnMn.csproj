@@ -152,8 +152,11 @@
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSearchPageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchGroupViewModel.cs" />
@@ -161,6 +164,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
       <DependentUpon>Navigationbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoNewArrivalsManager.xaml.cs">
+      <DependentUpon>SmileVideoNewArrivalsManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml.cs">
       <DependentUpon>SmileVideoPlayerWindow.xaml</DependentUpon>
@@ -174,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoNewArrivalsManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,12 +255,12 @@
     <Compile Include="Model\Service\Smile\Video\SmileVideoRankingModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetflvModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileUserAccountModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingChannelModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\Feed\RankingRss2\FeedSmileVideoRankingGuidModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoChannelModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\Feed\FeedSmileVideoGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoErrorModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRankingDetailModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoFeedDetailModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoThumbModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoTagListModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoTagItemModel.cs" />

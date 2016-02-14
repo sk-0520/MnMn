@@ -149,6 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }, 
                 uri => uri
             );
+            Debug.WriteLine($"{nameof(Uri)}-> {Uri}");
         }
 
         protected void MakeRequestParameter()
@@ -289,8 +290,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                HttpUserAgent.CancelPendingRequests();
                 if(OwnershipUA) {
+                    HttpUserAgent.CancelPendingRequests();
                     HttpUserAgent.Dispose();
                 }
                 HttpUserAgent = null;

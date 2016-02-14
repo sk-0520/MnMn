@@ -59,5 +59,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   c に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   a に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   b に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_NewArrivals_Recent_Title {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_NewArrivals_Recent_Title", resourceCulture);
+            }
+        }
     }
 }

@@ -114,7 +114,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual bool CanLoad { get; }
+        public virtual bool CanLoad {
+            get
+            {
+                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
+                return !loadSkips.Any(l => l == FinderLoadState);
+            }
+        }
 
         #endregion
 

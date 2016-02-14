@@ -114,18 +114,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #endregion
-
-        #region SmileVideoFinderViewModelBase
-
-        public override bool CanLoad
-        {
-            get
-            {
-                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
-                return !loadSkips.Any(l => l == FinderLoadState);
-            }
-        }
-
-        #endregion
     }
 }

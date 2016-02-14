@@ -44,7 +44,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool Visible
         {
             get { return this._visible; }
-            set { SetVariableValue(ref this._visible, value); }
+            set
+            {
+                if(SetVariableValue(ref this._visible, value)) {
+                    if(this._visible) {
+                        ShowView();
+                    } else {
+                        HideView();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        protected virtual void ShowView()
+        {
+
+        }
+
+        protected virtual void HideView()
+        {
+
         }
 
         #endregion

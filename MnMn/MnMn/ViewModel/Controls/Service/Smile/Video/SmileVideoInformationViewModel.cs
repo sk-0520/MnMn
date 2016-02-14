@@ -40,7 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using HtmlAgilityPack;
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoRankingItemModel ranking, int number)
+        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel ranking, int number)
             : this(mediation, number)
         {
             Ranking = ranking;
@@ -116,10 +116,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         FileInfo IndividualVideoSettingFile { get; set; }
 
         RawSmileVideoThumbModel Thumb { get; set; }
-        FeedSmileVideoRankingItemModel Ranking { get; set; }
+        FeedSmileVideoItemModel Ranking { get; set; }
         RawSmileContentsSearchItemModel Search { get; }
 
-        RawSmileVideoRankingDetailModel RankingDetail { get; set; }
+        RawSmileVideoFeedDetailModel RankingDetail { get; set; }
 
         RawSmileVideoGetflvModel Getflv { get; set; }
 

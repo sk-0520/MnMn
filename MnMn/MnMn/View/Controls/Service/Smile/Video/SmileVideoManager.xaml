@@ -26,13 +26,13 @@
       <Button>home</Button>
       <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding SearchManager}">search</Button>
       <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding RankingManager}">ranking</Button>
-      <Button>new</Button>
-      <Button>hotlist</Button>
+      <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding NewArrivalsManager}">NewArrivals</Button>
     </StackPanel>
 
     <Grid Grid.Column="2">
       <app_controls_service_smile_video:SmileVideoSearchManager DataContext="{Binding SearchManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
       <app_controls_service_smile_video:SmileVideoRankingManager DataContext="{Binding RankingManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+      <app_controls_service_smile_video:SmileVideoNewArrivalsManager DataContext="{Binding NewArrivalsManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 
   </Grid>

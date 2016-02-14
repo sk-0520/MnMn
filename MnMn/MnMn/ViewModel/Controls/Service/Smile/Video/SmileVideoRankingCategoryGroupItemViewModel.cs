@@ -39,12 +39,12 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoRankingCategoryGroupItemViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoRankingCategoryGroupItemViewModel: SmileVideoFeedFinderViewModelBase
     {
         #region variable
 
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         public SmileVideoRankingCategoryGroupItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
-            :base(mediation)
+            : base(mediation)
         {
             PeriodItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Periods.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
             TargetItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Targets.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
@@ -92,11 +92,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return CreateCommand(
-                    o => {
-                        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
-                    }
-                );
+                //return CreateCommand(
+                //    o => {
+                //        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
+                //    }
+                //);
+                return ReloadCommand;
             }
         }
 
@@ -104,6 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        /*
         async Task LoadRankingAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
@@ -158,22 +160,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     //VideoInformationItems.Refresh();
                     FinderLoadState = SmileVideoFinderLoadState.Completed;
                     NowLoading = true;
-                   // return Task.CompletedTask;
+                    // return Task.CompletedTask;
                 }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+        */
 
         public Task LoadRankingAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
-            if(CanLoad) {
-                if(NowLoading) {
-                    CancelLoading.Cancel(true);
-                }
+            //if(CanLoad) {
+            //    if(NowLoading) {
+            //        CancelLoading.Cancel(true);
+            //    }
 
-                return LoadRankingAsync_Impl(thumbCacheSpan, imageCacheSpan);
-            } else {
-                return Task.CompletedTask;
-            }
+            //    return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan);
+            //} else {
+            //    return Task.CompletedTask;
+            //}
+            return LoadAsync(thumbCacheSpan, imageCacheSpan);
         }
 
         SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
@@ -193,15 +197,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        #region ViewModelBase
+        #region SmileVideoFeedFinderViewModelBase
 
-        public override bool CanLoad
+        protected override PageLoader CreatePageLoader()
         {
-            get
-            {
-                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
-                return !loadSkips.Any(l => l == FinderLoadState);
-            }
+            var page = new PageLoader(Mediation, UserAgentHost, SmileVideoMediationKey.ranking, ServiceType.SmileVideo);
+
+            page.ReplaceUriParameters["target"] = SelectedTarget.Key;
+            page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
+            page.ReplaceUriParameters["category"] = Category.Key;
+            page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+
+            return page;
         }
 
         #endregion

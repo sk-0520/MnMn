@@ -19,10 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed.RankingRss2
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
-    public class FeedSmileVideoRankingItemModel: Rss2ItemModelBase<FeedSmileVideoRankingGuidModel>
+    [Serializable, XmlRoot("rss")]
+    public class FeedSmileVideoModel: Rss2ModelBase<FeedSmileVideoChannelModel, FeedSmileVideoItemModel, FeedSmileVideoGuidModel>
     { }
 }

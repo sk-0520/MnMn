@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var searchModel = (SmileVideoSearchModel)searchResponse.Result;
             SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel, Setting);
 
+            NewArrivalsManager = new SmileVideoNewArrivalsManagerViewModel(Mediation);
+
             SwitchViewCommand.Execute(ManagerItems.First());
         }
 
@@ -71,7 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoRankingManagerViewModel RankingManager { get;  }
         public SmileVideoSearchManagerViewModel SearchManager { get; }
-        public IEnumerable<SmileVideoManagerViewModelBase> ManagerItems => new SmileVideoManagerViewModelBase[] { SearchManager, RankingManager };
+        public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
+        public IEnumerable<SmileVideoManagerViewModelBase> ManagerItems => new SmileVideoManagerViewModelBase[] { SearchManager, RankingManager, NewArrivalsManager };
 
         public SmileVideoManagerViewModelBase SelectedManager
         {
