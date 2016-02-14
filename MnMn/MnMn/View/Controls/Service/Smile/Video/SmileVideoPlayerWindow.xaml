@@ -42,10 +42,12 @@
         <ColumnDefinition Width="3*" />
       </Grid.ColumnDefinitions>
 
+
+      <!--<vlc_wpf:VlcPlayer x:Name="player"/>-->
       <Viewbox ClipToBounds="True">
-        <Grid>
+        <Grid Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" >
           <vlc_wpf:VlcPlayer x:Name="player"/>
-          <Canvas x:Name="normalCommentArea" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" />
+          <Canvas x:Name="normalCommentArea" />
           <Canvas x:Name="contributorCommentArea" />
         </Grid>
       </Viewbox>
@@ -208,13 +210,24 @@
         <TextBlock Text="{Binding CommentLoadState}" />
         <TextBlock>,video:</TextBlock>
         <TextBlock Text="{Binding VideoLoadState}" />
-        <TextBlock>]</TextBlock>
         <TextBlock>,tag:</TextBlock>
         <TextBlock Text="{Binding TagLoadState}" />
-        <TextBlock>]</TextBlock>
         <TextBlock>datetime</TextBlock>
         <TextBlock>play</TextBlock>
         <TextBlock>mylist</TextBlock>
+        <TextBlock>
+          <Run>,size</Run>
+          <Run Text="{Binding VideoWidth}" />
+          <Run>x</Run>
+          <Run Text="{Binding VideoHeight}" />
+        </TextBlock>
+        <TextBlock>
+          <Run>,base</Run>
+          <Run Text="{Binding BaseWidth}" />
+          <Run>x</Run>
+          <Run Text="{Binding BaseHeight}" />
+        </TextBlock>
+        <TextBlock>]</TextBlock>
       </StackPanel>
     </StatusBar>
 

@@ -291,20 +291,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoHeight = Player.VlcMediaPlayer.PixelHeight;
 
             // コメントエリアのサイズ設定
-            if((VideoWidth % BaseSize_16x9.Width) == 0) {
+            // TODO: 暫定実装。きちんと取得してなんかうまいことしないと余白ができる
+            if(VideoWidth <= BaseSize_16x9.Width) {
                 BaseWidth = BaseSize_16x9.Width;
-            } else if(BaseSize_4x3.Width <= VideoWidth) {
+            } else if(VideoWidth <= BaseSize_4x3.Width) {
                 BaseWidth = BaseSize_4x3.Width;
             } else {
-                BaseWidth = VideoWidth;
+                BaseWidth = BaseSize_16x9.Width;
             }
-            if((VideoHeight % BaseSize_16x9.Height) == 0) {
+
+            if(VideoHeight <= BaseSize_16x9.Height) {
                 BaseHeight = BaseSize_16x9.Height;
-            } else if(BaseSize_4x3.Height <= VideoHeight) {
+            } else if(VideoWidth <= BaseSize_4x3.Height) {
+                BaseHeight = BaseSize_4x3.Height;
+            } else if(BaseSize_4x3.Height <= VideoWidth) {
                 BaseHeight = BaseSize_4x3.Height;
             } else {
-                BaseHeight = VideoHeight;
+                BaseHeight = BaseSize_16x9.Height;
             }
+
 
         }
 
@@ -317,6 +322,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             SetMedia();
             VideoPlay();
+                CanVideoPlay = true;
         }
 
         void VideoPlay()
