@@ -71,6 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static RawSmileVideoFeedDetailModel ConvertRawDescription(string rawDescription)
         {
             // HTMLの書式に合わせておく
+            // NOTE: 検索実装時にわかったけど合わせる必要なさげ
             var html = "<html><body>" + rawDescription + "</body></html>";
 
             var doc = new HtmlDocument() {

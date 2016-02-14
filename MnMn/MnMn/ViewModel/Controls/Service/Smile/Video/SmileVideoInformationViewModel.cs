@@ -97,12 +97,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel ranking, int number)
             : this(mediation, number)
         {
-            Ranking = ranking;
-            RankingDetail = SmileVideoRankingUtility.ConvertRawDescription(Ranking.Description);
-            RankingDetail.VideoId = SmileVideoRankingUtility.GetVideoId(Ranking);
-            RankingDetail.Title = SmileVideoRankingUtility.GetTitle(Ranking.Title);
+            Feed = ranking;
+            FeedDetail = SmileVideoRankingUtility.ConvertRawDescription(Feed.Description);
+            FeedDetail.VideoId = SmileVideoRankingUtility.GetVideoId(Feed);
+            FeedDetail.Title = SmileVideoRankingUtility.GetTitle(Feed.Title);
 
-            VideoInformationSource = SmileVideoVideoInformationSource.Ranking;
+            VideoInformationSource = SmileVideoVideoInformationSource.Feed;
             Initialize();
         }
 
@@ -116,10 +116,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         FileInfo IndividualVideoSettingFile { get; set; }
 
         RawSmileVideoThumbModel Thumb { get; set; }
-        FeedSmileVideoItemModel Ranking { get; set; }
+        FeedSmileVideoItemModel Feed { get; set; }
         RawSmileContentsSearchItemModel Search { get; }
 
-        RawSmileVideoFeedDetailModel RankingDetail { get; set; }
+        RawSmileVideoFeedDetailModel FeedDetail { get; set; }
 
         RawSmileVideoGetflvModel Getflv { get; set; }
 
@@ -187,8 +187,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return Thumb.VideoId;
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return RankingDetail.VideoId;
+                    case SmileVideoVideoInformationSource.Feed:
+                        return FeedDetail.VideoId;
 
                     case SmileVideoVideoInformationSource.Search:
                         return Search.ContentId;
@@ -207,8 +207,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return Thumb.Title;
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return RankingDetail.Title ?? Ranking.Title;
+                    case SmileVideoVideoInformationSource.Feed:
+                        return FeedDetail.Title ?? Feed.Title;
 
                     case SmileVideoVideoInformationSource.Search:
                         return Search.Title;
@@ -227,8 +227,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return Thumb.Description;
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return RankingDetail.Description ?? Ranking.Description;
+                    case SmileVideoVideoInformationSource.Feed:
+                        return FeedDetail.Description ?? Feed.Description;
 
                     case SmileVideoVideoInformationSource.Search:
                         return Search.Description;
@@ -246,8 +246,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertUri(Thumb.ThumbnailUrl);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return RawValueUtility.ConvertUri(RankingDetail.ThumbnailUrl);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return RawValueUtility.ConvertUri(FeedDetail.ThumbnailUrl);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertUri(Search.ThumbnailUrl);
@@ -266,8 +266,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertDateTime(Thumb.FirstRetrieve);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return RawValueUtility.ConvertDateTime(RankingDetail.FirstRetrieve);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return RawValueUtility.ConvertDateTime(FeedDetail.FirstRetrieve);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertDateTime(Search.StartTime);
@@ -286,8 +286,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(RankingDetail.Length);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(FeedDetail.Length);
 
                     case SmileVideoVideoInformationSource.Search:
                     default:
@@ -307,8 +307,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.ViewCounter);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return SmileVideoRankingUtility.ConvertInteger(RankingDetail.ViewCounter);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return SmileVideoRankingUtility.ConvertInteger(FeedDetail.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.ViewCounter);
@@ -326,8 +326,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.CommentNum);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return SmileVideoRankingUtility.ConvertInteger(RankingDetail.CommentNum);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return SmileVideoRankingUtility.ConvertInteger(FeedDetail.CommentNum);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.CommentCounter);
@@ -346,8 +346,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.MylistCounter);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return SmileVideoRankingUtility.ConvertInteger(RankingDetail.MylistCounter);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return SmileVideoRankingUtility.ConvertInteger(FeedDetail.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.MylistCounter);
@@ -364,8 +364,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertUri(Thumb.WatchUrl);
 
-                    case SmileVideoVideoInformationSource.Ranking:
-                        return RawValueUtility.ConvertUri(Ranking.Link);
+                    case SmileVideoVideoInformationSource.Feed:
+                        return RawValueUtility.ConvertUri(Feed.Link);
 
                     default:
                         throw new NotImplementedException();
