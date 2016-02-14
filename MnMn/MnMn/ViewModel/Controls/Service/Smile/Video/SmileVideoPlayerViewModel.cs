@@ -58,7 +58,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel
     {
-        #region
+        #region define
+
+        static readonly Size BaseSize_4x3 = new Size(640, 480);
+        static readonly Size BaseSize_16x9 = new Size(512, 384);
 
         class CommentData
         {
@@ -95,6 +98,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         LoadState _tagLoadState;
 
+        double _videoWidth;
+        double _videoHeight;
+        double _baseWidth;
+        double _baseHeight;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -116,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
-
+        bool IsFirstPlay { get; set; } = true;
         Navigationbar Navigationbar { get; set; }
 
         public ICollectionView CommentItems { get; private set; }
@@ -191,6 +199,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedComment, value); }
         }
 
+        public double VideoWidth
+        {
+            get { return this._videoWidth; }
+            set { SetVariableValue(ref this._videoWidth, value); }
+        }
+        public double VideoHeight
+        {
+            get { return this._videoHeight; }
+            set { SetVariableValue(ref this._videoHeight, value); }
+        }
+
+        public double BaseWidth
+        {
+            get { return this._baseWidth; }
+            set { SetVariableValue(ref this._baseWidth, value); }
+        }
+        public double BaseHeight
+        {
+            get { return this._baseHeight; }
+            set { SetVariableValue(ref this._baseHeight, value); }
+        }
+
         public string Description
         {
             get
@@ -242,12 +272,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
-        void AutoPlay(FileInfo fileInfo)
+        static int GCD(int a, int b)
+        {
+            int Remainder;
+
+            while(b != 0) {
+                Remainder = a % b;
+                a = b;
+                b = Remainder;
+            }
+
+            return a;
+        }
+
+        void SetVideoDataInformation()
+        {
+            VideoWidth = Player.VlcMediaPlayer.PixelWidth;
+            VideoHeight = Player.VlcMediaPlayer.PixelHeight;
+
+            // コメントエリアのサイズ設定
+            if((VideoWidth % BaseSize_16x9.Width) == 0) {
+                BaseWidth = BaseSize_16x9.Width;
+            } else if(BaseSize_4x3.Width <= VideoWidth) {
+                BaseWidth = BaseSize_4x3.Width;
+            } else {
+                BaseWidth = VideoWidth;
+            }
+            if((VideoHeight % BaseSize_16x9.Height) == 0) {
+                BaseHeight = BaseSize_16x9.Height;
+            } else if(BaseSize_4x3.Height <= VideoHeight) {
+                BaseHeight = BaseSize_4x3.Height;
+            } else {
+                BaseHeight = VideoHeight;
+            }
+
+        }
+
+        void SetMedia()
         {
             Player.LoadMedia(VideoFile.FullName);
-            Player.Play();
+        }
 
-            CanVideoPlay = true;
+        void AutoPlay(FileInfo fileInfo)
+        {
+            SetMedia();
+            VideoPlay();
+        }
+
+        void VideoPlay()
+        {
+            Player.Play();
         }
 
         void MoveVideoPostion(float targetPosition)
@@ -487,7 +561,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(!CanVideoPlay) {
                 // とりあえず待って
                 var fi = new FileInfo(VideoFile.FullName);
-                if(fi.Length > VideoPlayLowestSize) {
+                CanVideoPlay = fi.Length > VideoPlayLowestSize;
+                if(CanVideoPlay) {
                     AutoPlay(fi);
                 }
             }
@@ -553,6 +628,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
+                if(IsFirstPlay) {
+                    SetVideoDataInformation();
+                    IsFirstPlay = false;
+                }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
                 FireShowComment();
