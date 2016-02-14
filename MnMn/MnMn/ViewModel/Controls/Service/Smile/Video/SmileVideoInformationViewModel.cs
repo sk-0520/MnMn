@@ -669,9 +669,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         ImageSource GetImage(Stream stream)
         {
-            var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-            FreezableUtility.SafeFreeze(image);
-            return this._thumbnailImage = image;
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                FreezableUtility.SafeFreeze(image);
+                this._thumbnailImage = image;
+            }));
+            return this._thumbnailImage;
         }
 
         async Task LoadThumbnaiImageAsync_Impl()
@@ -720,16 +723,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             await LoadThumbnaiImageAsync_Impl();
 
-            if(ThumbnailLoadState == LoadState.Loaded) {
+            if(ThumbnailLoadState == LoadState.Loaded && this._thumbnailImage != null) {
                 // キャッシュ構築
                 // TODO: 別スレッドで所有うんぬん
-                var frame = BitmapFrame.Create(this._thumbnailImage);
-                var encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(frame);
-                FileUtility.MakeFileParentDirectory(cachedFilePath);
-                using(var stream = new FileStream(cachedFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                    encoder.Save(stream);
-                }
+                await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                    var frame = BitmapFrame.Create(this._thumbnailImage);
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(frame);
+                    FileUtility.MakeFileParentDirectory(cachedFilePath);
+                    using(var stream = new FileStream(cachedFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+                        encoder.Save(stream);
+                    }
+                }));
             }
         }
 

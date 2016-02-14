@@ -137,5 +137,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #endregion
+
+        #region SmileVideoManagerViewModelBase
+
+        protected override void ShowView()
+        {
+            base.ShowView();
+
+            if(!RankingCategoryGroupItems.Any()) {
+                GetRankingCategoryCommand.Execute(null);
+            }
+        }
+
+        #endregion
     }
 }
