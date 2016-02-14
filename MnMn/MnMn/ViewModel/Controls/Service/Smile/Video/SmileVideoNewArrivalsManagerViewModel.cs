@@ -40,12 +40,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.newarrival);
             Recent = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.recent);
-            Hotlist = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.hotlist);
+            Hotlist = new SmileVideoHotlistFinderViewModel(Mediation, SmileVideoMediationKey.hotlist);
 
             ItemsList = new CollectionModel<SmileVideoNewArrivalsFinderViewModel>(new[] {
+                Hotlist,
                 NewArrival,
                 Recent,
-                Hotlist
             });
         }
 

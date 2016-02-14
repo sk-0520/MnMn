@@ -30,15 +30,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
     /// </summary>
     [Serializable, XmlRoot("rss")]
     public class Rss2ModelBase<TRss2ChannelModel, TRss2ItemModel, TRss2GuidModel>: FeedModelBase
-        where TRss2ChannelModel: Rss2ChannelModelBase<TRss2ItemModel, TRss2GuidModel>
-        where TRss2ItemModel : Rss2ItemModelBase<TRss2GuidModel>
-        where TRss2GuidModel : Rss2GuidModel
+        where TRss2ChannelModel: Rss2ChannelModelBase<TRss2ItemModel, TRss2GuidModel>, new()
+        where TRss2ItemModel : Rss2ItemModelBase<TRss2GuidModel>, new()
+        where TRss2GuidModel : Rss2GuidModel, new()
     {
         [XmlAttribute("version")]
         public string Version { get; set; }
 
         [XmlElement("channel")]
-        public TRss2ChannelModel Channel { get; set; }
+        public TRss2ChannelModel Channel { get; set; } = new TRss2ChannelModel();
     }
 
     [Serializable, XmlRoot("rss")]

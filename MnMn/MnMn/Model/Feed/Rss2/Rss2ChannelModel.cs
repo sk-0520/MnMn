@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
     /// </summary>
     public class Rss2ChannelModelBase<TRss2ItemModel,TRss2GuidModel>: ModelBase
         where TRss2ItemModel: Rss2ItemModelBase<TRss2GuidModel>
-        where TRss2GuidModel: Rss2GuidModel
+        where TRss2GuidModel: Rss2GuidModel, new()
     {
         [XmlElement("title")]
         public string Title { get; set; }

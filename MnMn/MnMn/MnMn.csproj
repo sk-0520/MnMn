@@ -155,6 +155,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoHotlistFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />

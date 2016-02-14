@@ -4,7 +4,7 @@
 	
 	<item key="video-newarrival" uri="http://www.nicovideo.jp/newarrival" param="Query" />
 	<item key="video-recent" uri="http://www.nicovideo.jp/recent" param="Query" />
-	<item key="video-hotlist" uri="http://www.nicovideo.jp/hotlist" param="Query" />
+	<item key="video-hotlist" uri="http://www.nicovideo.jp/hotlist" param="None" />
 	
 	<item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="Hierarchy" />
 	<item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="Hierarchy" />
