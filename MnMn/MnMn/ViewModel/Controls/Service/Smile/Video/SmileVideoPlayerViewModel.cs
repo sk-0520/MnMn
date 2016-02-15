@@ -292,6 +292,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             // コメントエリアのサイズ設定
             // TODO: 暫定実装。きちんと取得してなんかうまいことしないと余白ができる
+            //       private GetScaleTransformとかで頑張れそうだけどnuget上がってない;_;
             if(VideoWidth <= BaseSize_16x9.Width) {
                 BaseWidth = BaseSize_16x9.Width;
             } else if(VideoWidth <= BaseSize_4x3.Width) {
