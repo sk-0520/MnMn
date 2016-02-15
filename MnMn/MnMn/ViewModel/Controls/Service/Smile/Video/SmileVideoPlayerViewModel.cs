@@ -269,6 +269,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // あれこれイベント
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
+            Player.SizeChanged += Player_SizeChanged;
             Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
@@ -291,27 +292,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoHeight = Player.VlcMediaPlayer.PixelHeight;
 
             // コメントエリアのサイズ設定
-            // TODO: 暫定実装。きちんと取得してなんかうまいことしないと余白ができる
-            //       private GetScaleTransformとかで頑張れそうだけどnuget上がってない;_;
-            if(VideoWidth <= BaseSize_16x9.Width) {
-                BaseWidth = BaseSize_16x9.Width;
-            } else if(VideoWidth <= BaseSize_4x3.Width) {
-                BaseWidth = BaseSize_4x3.Width;
-            } else {
-                BaseWidth = BaseSize_16x9.Width;
-            }
-
-            if(VideoHeight <= BaseSize_16x9.Height) {
-                BaseHeight = BaseSize_16x9.Height;
-            } else if(VideoWidth <= BaseSize_4x3.Height) {
-                BaseHeight = BaseSize_4x3.Height;
-            } else if(BaseSize_4x3.Height <= VideoWidth) {
-                BaseHeight = BaseSize_4x3.Height;
-            } else {
-                BaseHeight = BaseSize_16x9.Height;
-            }
-
-
+            ChangeBaseSize();
         }
 
         void SetMedia()
@@ -355,7 +336,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Player.ActualWidth,
                 Player.ActualHeight
             );
-            var list = NormalCommentList.ToArray();
+            var list = NormalCommentList.Take(0).ToArray();
             foreach(var commentViewModel in list.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
                 var ft = new FormattedText(
                     commentViewModel.Content,
@@ -552,6 +533,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        void ChangeBaseSize()
+        {
+            if(VideoHeight <= 0 || VideoWidth <= 0) {
+                BaseWidth = Player.ActualHeight;
+                BaseHeight = Player.ActualWidth;
+                return;
+            }
+            var playerAspect = Player.ActualHeight / Player.ActualWidth;
+            var videoAspect = VideoHeight / VideoWidth;
+
+            if(videoAspect < playerAspect) {
+                Debug.WriteLine("P");
+                BaseWidth = Player.ActualWidth;
+                BaseHeight = VideoWidth;
+            } else {
+                Debug.WriteLine("V");
+                if(Player.ActualHeight < VideoHeight) {
+                Debug.WriteLine("VP");
+                    BaseWidth = VideoWidth * playerAspect;
+                } else {
+                    BaseWidth = VideoWidth * playerAspect;
+                }
+                BaseHeight = Player.ActualHeight;
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -684,6 +691,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             ChangingVideoPosition = false;
             SeekbarThumbMoving = false;
+        }
+
+        private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ChangeBaseSize();
         }
     }
 }

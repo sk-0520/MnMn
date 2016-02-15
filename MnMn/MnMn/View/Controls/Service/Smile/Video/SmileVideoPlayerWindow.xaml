@@ -42,11 +42,11 @@
         <ColumnDefinition Width="3*" />
       </Grid.ColumnDefinitions>
 
-
-      <!--<vlc_wpf:VlcPlayer x:Name="player"/>-->
+      <vlc_wpf:VlcPlayer x:Name="player" />
+      <Border Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" BorderBrush="Red" BorderThickness="1" />
       <Viewbox ClipToBounds="True">
         <Grid>
-          <vlc_wpf:VlcPlayer x:Name="player"/>
+          <!--<vlc_wpf:VlcPlayer x:Name="player"/>-->
           <Canvas x:Name="normalCommentArea" />
           <Canvas x:Name="contributorCommentArea" />
         </Grid>
