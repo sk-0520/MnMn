@@ -43,14 +43,15 @@
       </Grid.ColumnDefinitions>
 
       <vlc_wpf:VlcPlayer x:Name="player" />
-      <Border Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" BorderBrush="Red" BorderThickness="1" />
-      <Viewbox ClipToBounds="True">
-        <Grid>
-          <!--<vlc_wpf:VlcPlayer x:Name="player"/>-->
-          <Canvas x:Name="normalCommentArea" />
-          <Canvas x:Name="contributorCommentArea" />
-        </Grid>
-      </Viewbox>
+
+      <Border BorderBrush="Lime" BorderThickness="1"  Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
+        <Viewbox ClipToBounds="False" Stretch="UniformToFill">
+          <Grid Width="640" Height="386">
+            <Canvas x:Name="normalCommentArea" />
+            <Canvas x:Name="contributorCommentArea" />
+          </Grid>
+        </Viewbox>
+      </Border>
 
       <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
         <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
@@ -134,7 +135,7 @@
       HorizontalAlignment="Stretch" 
       Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
     />
-    
+
     <TabControl 
       Grid.Row="3" 
       TabStripPlacement="Left" 
@@ -212,14 +213,17 @@
         <TextBlock Text="{Binding VideoLoadState}" />
         <TextBlock>,tag:</TextBlock>
         <TextBlock Text="{Binding TagLoadState}" />
-        <TextBlock>datetime</TextBlock>
-        <TextBlock>play</TextBlock>
-        <TextBlock>mylist</TextBlock>
         <TextBlock>
           <Run>,size</Run>
-          <Run Text="{Binding VideoWidth}" />
+          <Run Text="{Binding RealVideoWidth}" />
           <Run>x</Run>
-          <Run Text="{Binding VideoHeight}" />
+          <Run Text="{Binding RealVideoHeight}" />
+        </TextBlock>
+        <TextBlock>
+          <Run>,player</Run>
+          <Run Text="{Binding ActualWidth, ElementName=player, Mode=OneWay}" />
+          <Run>x</Run>
+          <Run Text="{Binding ActualHeight, ElementName=player, Mode=OneWay}" />
         </TextBlock>
         <TextBlock>
           <Run>,base</Run>
@@ -227,6 +231,9 @@
           <Run>x</Run>
           <Run Text="{Binding BaseHeight}" />
         </TextBlock>
+        <TextBlock>,datetime</TextBlock>
+        <TextBlock>,play</TextBlock>
+        <TextBlock>,mylist</TextBlock>
         <TextBlock>]</TextBlock>
       </StackPanel>
     </StatusBar>

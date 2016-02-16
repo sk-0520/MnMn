@@ -53,6 +53,7 @@ using System.Windows.Media.Effects;
 using System.ComponentModel;
 using System.Windows.Documents;
 using HtmlAgilityPack;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -98,8 +99,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         LoadState _tagLoadState;
 
-        double _videoWidth;
-        double _videoHeight;
+        double _realVideoWidth;
+        double _realVideoHeight;
         double _baseWidth;
         double _baseHeight;
 
@@ -124,8 +125,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
-        bool IsFirstPlay { get; set; } = true;
         Navigationbar Navigationbar { get; set; }
+
+        bool IsFirstPlay { get; set; } = true;
 
         public ICollectionView CommentItems { get; private set; }
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -199,15 +201,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedComment, value); }
         }
 
-        public double VideoWidth
+        Size VisualVideoSize { get; set; }
+
+        public double RealVideoWidth
         {
-            get { return this._videoWidth; }
-            set { SetVariableValue(ref this._videoWidth, value); }
+            get { return this._realVideoWidth; }
+            set { SetVariableValue(ref this._realVideoWidth, value); }
         }
-        public double VideoHeight
+        public double RealVideoHeight
         {
-            get { return this._videoHeight; }
-            set { SetVariableValue(ref this._videoHeight, value); }
+            get { return this._realVideoHeight; }
+            set { SetVariableValue(ref this._realVideoHeight, value); }
         }
 
         public double BaseWidth
@@ -267,29 +271,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player.Volume = Volume;
 
             // あれこれイベント
+            View.Loaded += View_Loaded;
             View.Closed += View_Closed;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
-        static int GCD(int a, int b)
-        {
-            int Remainder;
-
-            while(b != 0) {
-                Remainder = a % b;
-                a = b;
-                b = Remainder;
-            }
-
-            return a;
-        }
-
         void SetVideoDataInformation()
         {
-            VideoWidth = Player.VlcMediaPlayer.PixelWidth;
-            VideoHeight = Player.VlcMediaPlayer.PixelHeight;
+            RealVideoWidth = Player.VlcMediaPlayer.PixelWidth;
+            RealVideoHeight = Player.VlcMediaPlayer.PixelHeight;
 
             // コメントエリアのサイズ設定
             ChangeBaseSize();
@@ -333,10 +325,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Debug.WriteLine($"{PrevTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             var commentArea = new Size(
-                Player.ActualWidth,
-                Player.ActualHeight
+                NormalCommentArea.ActualWidth,
+                NormalCommentArea.ActualHeight
             );
-            var list = NormalCommentList.Take(0).ToArray();
+            var list = NormalCommentList.ToArray();
             foreach(var commentViewModel in list.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
                 var ft = new FormattedText(
                     commentViewModel.Content,
@@ -346,8 +338,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     Setting.FontSize,
                     commentViewModel.Foreground
                 );
-                var geometry = ft.BuildGeometry(new Point());
-                var drawing = new GeometryDrawing(null, new Pen(Brushes.Red, 2), geometry);
+                //var geometry = ft.BuildGeometry(new Point());
+                //var drawing = new GeometryDrawing(null, new Pen(Brushes.Red, 2), geometry);
                 var box = new Label();
                 box.BeginInit();
                 box.Foreground = commentViewModel.Foreground;
@@ -535,28 +527,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void ChangeBaseSize()
         {
-            if(VideoHeight <= 0 || VideoWidth <= 0) {
+            if(RealVideoHeight <= 0 || RealVideoWidth <= 0) {
                 BaseWidth = Player.ActualHeight;
                 BaseHeight = Player.ActualWidth;
                 return;
+            } else if(IsFirstPlay) {
+                var desktopScale = UIUtility.GetDpiScale(Player);
+                VisualVideoSize = new Size(
+                    RealVideoWidth * desktopScale.X,
+                    RealVideoHeight * desktopScale.Y
+                );
             }
-            var playerAspect = Player.ActualHeight / Player.ActualWidth;
-            var videoAspect = VideoHeight / VideoWidth;
 
-            if(videoAspect < playerAspect) {
-                Debug.WriteLine("P");
-                BaseWidth = Player.ActualWidth;
-                BaseHeight = VideoWidth;
-            } else {
-                Debug.WriteLine("V");
-                if(Player.ActualHeight < VideoHeight) {
-                Debug.WriteLine("VP");
-                    BaseWidth = VideoWidth * playerAspect;
-                } else {
-                    BaseWidth = VideoWidth * playerAspect;
-                }
-                BaseHeight = Player.ActualHeight;
-            }
+            var scale = new Point(
+                Player.ActualWidth / VisualVideoSize.Width,
+                Player.ActualHeight / VisualVideoSize.Height
+            );
+            var baseScale = Math.Min(scale.X, scale.Y);
+
+            BaseWidth = VisualVideoSize.Width * baseScale;
+            BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
         #endregion
@@ -626,11 +616,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
+        void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_Loaded;
+        }
+
         private void View_Closed(object sender, EventArgs e)
         {
-            Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-            Player.PositionChanged -= Player_PositionChanged;
+            View.Loaded -= View_Loaded;
             View.Closed -= View_Closed;
+            Player.PositionChanged -= Player_PositionChanged;
+            Player.SizeChanged -= Player_SizeChanged;
+            Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
 
             IsDead = true;
 
