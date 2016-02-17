@@ -42,7 +42,7 @@
         </Style>
       </Rectangle.Resources>
     </Rectangle>
-    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding  ShowStateText, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}">
       <TextBlock.Style>
         <Style TargetType="TextBlock">
           <Style.Triggers>

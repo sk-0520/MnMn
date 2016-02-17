@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region SmileVideoNewArrivalsFinderViewModel
 
+        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
+
         protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
@@ -142,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             await Task.Run(() => {
                 return feedModel.Channel.Items
                     .AsParallel()
-                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1))
+                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.All))
                 ;
             }).ContinueWith(task => {
                 var cancel = CancelLoading = new CancellationTokenSource();

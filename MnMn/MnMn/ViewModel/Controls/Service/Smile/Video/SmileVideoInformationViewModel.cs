@@ -69,24 +69,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        SmileVideoInformationViewModel(Mediation mediation, int number)
+        SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
         {
             Mediation = mediation;
             Number = number;
             ThumbnailLoadState = LoadState.None;
+            InformationFlags = informationFlags;
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileVideoThumbModel thumb, int number)
-            : this(mediation, number)
+            : this(mediation, number, SmileVideoInformationFlags.All)
         {
             Thumb = thumb;
 
             VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+            InformationLoadState = LoadState.Loaded;
+
             Initialize();
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileContentsSearchItemModel search, int number)
-            : this(mediation, number)
+            : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter| SmileVideoInformationFlags.ViewCounter)
         {
             Search = search;
 
@@ -94,8 +97,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel ranking, int number)
-            : this(mediation, number)
+        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel ranking, int number, SmileVideoInformationFlags informationFlags)
+            : this(mediation, number, informationFlags)
         {
             Feed = ranking;
             FeedDetail = SmileVideoRankingUtility.ConvertRawDescription(Feed.Description);
@@ -109,8 +112,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         Mediation Mediation { get; }
-
         SmileVideoSettingModel Setting { get; set; }
+        SmileVideoInformationFlags InformationFlags { get; }
+        public bool NeedLoadInformationFlag { get { return InformationFlags != SmileVideoInformationFlags.All; } }
 
         SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
         FileInfo IndividualVideoSettingFile { get; set; }
@@ -147,13 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public LoadState InformationLoadState
         {
-            get {
-                if(VideoInformationSource == SmileVideoVideoInformationSource.Search) {
-                    return this._informationLoadState;
-                } else {
-                    return LoadState.Loaded;
-                }
-            }
+            get { return this._informationLoadState; }
             set
             {
                 if(SetVariableValue(ref this._informationLoadState, value)) {
@@ -168,20 +166,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._pageHtmlLoadState, value); }
         }
 
-        
+        public bool HasLength { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.Length); } }
+        public bool HasViewConter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.ViewCounter); } }
+        public bool HasCommentCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.CommentCounter); } }
+        public bool HasMylistCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.MylistCounter); } }
 
-        public bool HasLength
-        {
-            get
-            {
-                return VideoInformationSource != SmileVideoVideoInformationSource.Search;
-            }
-        }
-
-        public bool IsLoadVideoInformation
-        {
-            get { return Setting.LoadVideoTime; }
-        }
+        public bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
 
         #region 生データから取得
 
@@ -324,7 +314,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-        public int CommentCount
+        public int CommentCounter
         {
             get
             {

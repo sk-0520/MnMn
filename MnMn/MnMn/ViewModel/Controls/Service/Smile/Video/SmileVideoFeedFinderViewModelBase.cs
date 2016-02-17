@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             : base(mediation)
         { }
 
+        protected virtual bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
+        protected abstract SmileVideoInformationFlags InformationFlags { get; }
+
         #region property
 
         public HttpUserAgentHost UserAgentHost { get; } = new HttpUserAgentHost();
@@ -50,7 +53,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
                         feedModel = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
                     }
-
                 }
 
             }
@@ -64,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             await Task.Run(() => {
                 return feedModel.Channel.Items
                     .AsParallel()
-                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1))
+                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags))
                 ;
             }).ContinueWith(task => {
                 var cancel = CancelLoading = new CancellationTokenSource();
@@ -75,7 +77,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Task.Run(() => {
                     FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
                     var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    return loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                    var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                    var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
+                    return Task.WhenAll(infoTask, infoTask);
                 }).ContinueWith(t => {
                     //VideoInformationItems.Refresh();
                     FinderLoadState = SmileVideoFinderLoadState.Completed;

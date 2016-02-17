@@ -111,6 +111,7 @@
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoInformationFlags.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="Logic\CacheSpan.cs" />

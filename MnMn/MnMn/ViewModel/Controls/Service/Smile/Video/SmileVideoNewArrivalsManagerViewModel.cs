@@ -38,6 +38,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel(Mediation mediation)
             : base(mediation)
         {
+
+
             NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.newarrival);
             Recent = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.recent);
             Hotlist = new SmileVideoHotlistFinderViewModel(Mediation, SmileVideoMediationKey.hotlist);

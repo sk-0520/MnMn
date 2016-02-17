@@ -26,8 +26,11 @@ using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
@@ -49,6 +52,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Mediation = mediation;
 
+            var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
+            Setting = (SmileVideoSettingModel)settingResult.Result;
+
             VideoInformationList = new CollectionModel<SmileVideoInformationViewModel>();
             VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
             VideoInformationItems.Filter = FilterItems;
@@ -58,6 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected Mediation Mediation { get; set; }
         protected CancellationTokenSource CancelLoading { get; set; }
+        protected SmileVideoSettingModel Setting { get; }
 
         protected CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; }
 

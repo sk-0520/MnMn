@@ -47,7 +47,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             : base(mediation)
         {
             SearchModel = searchModel;
-            Setting = setting;
 
             SelectedMethod = MethodItems.First();
             SelectedSort = SortItems.First();
@@ -58,7 +57,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSearchModel SearchModel { get; }
-        SmileVideoSettingModel Setting { get; }
 
         public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
         public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
@@ -117,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             return viewModel;
                         },
                         () => {
-                            var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, Setting, nowMethod, nowSort, nowType, nowQuery);
+                            var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, nowMethod, nowSort, nowType, nowQuery);
                             SearchGroups.Insert(0, viewModel);
                             return viewModel;
                         }

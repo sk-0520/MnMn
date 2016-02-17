@@ -199,6 +199,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region SmileVideoFeedFinderViewModelBase
 
+        protected override bool IsLoadVideoInformation => false;
+        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
+
         protected override PageLoader CreatePageLoader()
         {
             var page = new PageLoader(Mediation, UserAgentHost, SmileVideoMediationKey.ranking, ServiceType.SmileVideo);

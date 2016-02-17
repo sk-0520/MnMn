@@ -50,13 +50,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoSettingModel setting, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query)
+        public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query)
             : base(mediation)
         {
             SearchModel = searchModel;
             Query = query;
             Type = type;
-            Setting = setting;
 
             SetContextElements(method, sort);
         }
@@ -64,7 +63,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSearchModel SearchModel { get; }
-        SmileVideoSettingModel Setting { get; }
 
         public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
         public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;

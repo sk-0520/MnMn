@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region SmileVideoFeedFinderViewModelBase
 
+        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
+
         protected override PageLoader CreatePageLoader()
         {
             var page = new PageLoader(Mediation, UserAgentHost, Key, ServiceType.SmileVideo);

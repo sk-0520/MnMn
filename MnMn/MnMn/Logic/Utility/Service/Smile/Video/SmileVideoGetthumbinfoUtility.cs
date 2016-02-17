@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static TimeSpan ConvertTimeSpan(string s)
         {
             // mmm:ss形式を考慮
-            var values = s.Split(':');
+            var values = s?.Split(':') ?? new string[0];
             if(values.Length != 2) {
                 return RawValueUtility.UnknownTimeSpan;
             }
