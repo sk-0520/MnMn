@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             // あれこれイベント
             View.Loaded += View_Loaded;
-            View.Closed += View_Closed;
+            View.Closing += View_Closing;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
@@ -621,19 +621,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             View.Loaded -= View_Loaded;
         }
 
-        private void View_Closed(object sender, EventArgs e)
+        private void View_Closing(object sender, CancelEventArgs e)
         {
             View.Loaded -= View_Loaded;
-            View.Closed -= View_Closed;
+            View.Closing -= View_Closing;
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
             Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
 
             IsDead = true;
 
-            if(Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
-                Player.BeginStop();
-            }
+            this.Player.Dispose();
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)
