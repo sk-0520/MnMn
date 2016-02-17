@@ -717,6 +717,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
 
+            ThumbnailLoadState = LoadState.Loading;
             await LoadThumbnaiImageAsync_Impl();
 
             if(ThumbnailLoadState == LoadState.Loaded && this._thumbnailImage != null) {
