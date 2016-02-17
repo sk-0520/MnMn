@@ -8,36 +8,38 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <UserControl.Resources>
-    <Style TargetType="UserControl">
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loaded">
-          <Setter Property="Visibility" Value="{Binding LoadedToVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        </DataTrigger>
-      </Style.Triggers>
-    </Style>
-  </UserControl.Resources>
-  <Ellipse>
-    <Ellipse.Resources>
-      <Style TargetType="Ellipse">
-        <Style.Triggers>
-          <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">
-            <Setter Property="Fill" Value="Gray" />
-          </DataTrigger>
-          <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Preparation">
-            <Setter Property="Fill" Value="Orange" />
-          </DataTrigger>
-          <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loading">
-            <Setter Property="Fill" Value="Yellow" />
-          </DataTrigger>
-          <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loaded">
-            <Setter Property="Fill" Value="Lime" />
-          </DataTrigger>
-          <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Failure">
-            <Setter Property="Fill" Value="Red" />
-          </DataTrigger>
-        </Style.Triggers>
-      </Style>
-    </Ellipse.Resources>
-  </Ellipse>
+  <Grid>
+    <Rectangle x:Name="PART_Marker">
+      <Rectangle.Resources>
+        <Style TargetType="Rectangle">
+          
+          <Setter Property="Fill" Value="Gray" />
+          
+          <Setter Property="RadiusX" Value="5" />
+          <Setter Property="RadiusY" Value="5" />
+          
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">
+              <Setter Property="Fill" Value="Gray" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Preparation">
+              <Setter Property="Fill" Value="Orange" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loading">
+              <Setter Property="Fill" Value="Yellow" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loaded">
+              <Setter Property="Fill" Value="Lime" />
+              <Setter Property="Visibility" Value="{Binding LoadedToVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Failure">
+              <Setter Property="Fill" Value="Red" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Rectangle.Resources>
+    </Rectangle>
+
+
+  </Grid>
 </UserControl>

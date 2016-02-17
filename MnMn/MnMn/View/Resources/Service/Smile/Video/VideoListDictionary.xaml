@@ -38,6 +38,7 @@
       <GridViewColumn.CellTemplate>
         <ItemContainerTemplate>
           <Grid Width="78" Height="60">
+            <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}"  />
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
               <TextBlock.Style>
                 <Style TargetType="TextBlock">
@@ -62,7 +63,6 @@
               </TextBlock.Style>
             </TextBlock>
             <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
-            <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Width="4" Height="4" />
           </Grid>
         </ItemContainerTemplate>
       </GridViewColumn.CellTemplate>
@@ -105,84 +105,88 @@
             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CommentCount, Mode=OneWay, StringFormat=N0}" Style="{StaticResource value}" />
 
             <TextBlock Grid.Row="3" Grid.Column="0" Text="時間" />
-            <TextBlock Grid.Row="3" Grid.Column="1">
-              <TextBlock.Style>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource value}">
-                  <Style.Triggers>
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
-                        <Condition Binding="{Binding HasLength}" Value="False" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="--:--" />
-                    </MultiDataTrigger>
+            <DockPanel  Grid.Row="3" Grid.Column="1" >
+              <app_view_controls:LoadStateNavigator Grid.Row="3" Grid.Column="1" Width="16" HorizontalAlignment="Left" LoadState="{Binding InformationLoadState}" />
+              <TextBlock>
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock" BasedOn="{StaticResource value}">
+                    <Style.Triggers>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
+                          <Condition Binding="{Binding HasLength}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="--:--" />
+                      </MultiDataTrigger>
 
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
-                        <Condition Binding="{Binding HasLength}" Value="True" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                    </MultiDataTrigger>
-                    
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
-                        <Condition Binding="{Binding HasLength}" Value="True" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                    </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="False" />
+                          <Condition Binding="{Binding HasLength}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                      </MultiDataTrigger>
 
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
-                        <Condition Binding="{Binding HasLength}" Value="False" />
-                        <Condition Binding="{Binding InformationLoadState}" Value="None" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="未処理" />
-                    </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                          <Condition Binding="{Binding HasLength}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                      </MultiDataTrigger>
 
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
-                        <Condition Binding="{Binding HasLength}" Value="False" />
-                        <Condition Binding="{Binding InformationLoadState}" Value="Preparation" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="準備中" />
-                    </MultiDataTrigger>
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
-                        <Condition Binding="{Binding HasLength}" Value="False" />
-                        <Condition Binding="{Binding InformationLoadState}" Value="Loading" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="読込中" />
-                    </MultiDataTrigger>
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
-                        <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                    </MultiDataTrigger>
-                    <MultiDataTrigger>
-                      <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
-                        <Condition Binding="{Binding InformationLoadState}" Value="Failure" />
-                      </MultiDataTrigger.Conditions>
-                      <Setter Property="Text" Value="読込失敗" />
-                    </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                          <Condition Binding="{Binding HasLength}" Value="False" />
+                          <Condition Binding="{Binding InformationLoadState}" Value="None" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="未処理" />
+                      </MultiDataTrigger>
 
-                    <!--<DataTrigger Binding="{Binding HasLength}" Value="True">
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                          <Condition Binding="{Binding HasLength}" Value="False" />
+                          <Condition Binding="{Binding InformationLoadState}" Value="Preparation" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="準備中" />
+                      </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                          <Condition Binding="{Binding HasLength}" Value="False" />
+                          <Condition Binding="{Binding InformationLoadState}" Value="Loading" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="読込中" />
+                      </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                          <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                      </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding IsLoadVideoInformation}" Value="True" />
+                          <Condition Binding="{Binding InformationLoadState}" Value="Failure" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="読込失敗" />
+                      </MultiDataTrigger>
+
+                      <!--<DataTrigger Binding="{Binding HasLength}" Value="True">
                       <Setter Property="Text" Value="{Binding Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding HasLength}" Value="False">
                       <Setter Property="Text" Value="-i-:-i-" />
                     </DataTrigger>-->
-                  </Style.Triggers>
-                </Style>
-              </TextBlock.Style>
-            </TextBlock>
+                    </Style.Triggers>
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
+                
+            </DockPanel>
           </Grid>
         </ItemContainerTemplate>
       </GridViewColumn.CellTemplate>

@@ -147,7 +147,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public LoadState InformationLoadState
         {
-            get { return this._informationLoadState; }
+            get {
+                if(VideoInformationSource == SmileVideoVideoInformationSource.Search) {
+                    return this._informationLoadState;
+                } else {
+                    return LoadState.Loaded;
+                }
+            }
             set
             {
                 if(SetVariableValue(ref this._informationLoadState, value)) {
@@ -752,6 +758,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var propertyNames = new[] {
                 nameof(Length),
                 nameof(HasLength),
+                nameof(InformationLoadState),
             };
             CallOnPropertyChange(propertyNames);
         }
