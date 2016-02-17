@@ -77,6 +77,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region ShowStateTextProperty
+
+        public static readonly DependencyProperty ShowStateTextProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(ShowStateTextProperty)),
+            typeof(bool),
+            typeof(LoadStateNavigator),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnShowStateTextChanged))
+        );
+
+        private static void OnShowStateTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as LoadStateNavigator;
+            if(control != null) {
+                control.ShowStateText = (bool)e.NewValue;
+            }
+        }
+
+        public bool ShowStateText
+        {
+            get { return (bool)GetValue(ShowStateTextProperty); }
+            set { SetValue(ShowStateTextProperty, value); }
+        }
+
+        #endregion
+
         #region SpeedProperty
 
         public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register(

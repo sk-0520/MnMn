@@ -8,6 +8,9 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+  </UserControl.Resources>
   <Grid>
     <Rectangle x:Name="PART_Marker">
       <Rectangle.Resources>
@@ -39,7 +42,29 @@
         </Style>
       </Rectangle.Resources>
     </Rectangle>
-
-
+    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+      <TextBlock.Style>
+        <Style TargetType="TextBlock">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">
+              <Setter Property="Text" Value="未処理" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Preparation">
+              <Setter Property="Text" Value="準備中" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loading">
+              <Setter Property="Text" Value="読込中" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Loaded">
+              <Setter Property="Text" Value="読込完了" />
+              <Setter Property="Visibility" Value="{Binding LoadedToVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Failure">
+              <Setter Property="Text" Value="読込失敗" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </TextBlock.Style>
+    </TextBlock>
   </Grid>
 </UserControl>

@@ -38,30 +38,7 @@
       <GridViewColumn.CellTemplate>
         <ItemContainerTemplate>
           <Grid Width="78" Height="60">
-            <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}"  />
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
-              <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="None">
-                      <Setter Property="Text" Value="未処理" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Preparation">
-                      <Setter Property="Text" Value="準備中" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Loading">
-                      <Setter Property="Text" Value="読込中" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Loaded">
-                      <Setter Property="Visibility" Value="Collapsed" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ThumbnailLoadState}" Value="Failure">
-                      <Setter Property="Text" Value="読込失敗" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </TextBlock.Style>
-            </TextBlock>
+            <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
             <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
           </Grid>
         </ItemContainerTemplate>
