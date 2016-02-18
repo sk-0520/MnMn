@@ -128,6 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Navigationbar Navigationbar { get; set; }
 
         bool IsFirstPlay { get; set; } = true;
+        bool MakedDescription { get; set; } = false;
 
         public ICollectionView CommentItems { get; private set; }
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -278,6 +279,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             View.Closing += View_Closing;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
+            Player.LengthChanged += Player_LengthChanged;
             Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
@@ -496,6 +498,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void MakeDescription()
         {
+            MakedDescription = true;
+
             DocumentDescription.Dispatcher.Invoke(() => {
                 //var document = new FlowDocument();
                 var document = DocumentDescription.Document;
@@ -560,7 +564,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
-            MakeDescription();
+            if(!MakedDescription) {
+                MakeDescription();
+            }
 
             base.OnDownloadStart(sender, e);
         }
@@ -569,6 +575,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(!CanVideoPlay) {
                 // とりあえず待って
+                VideoFile.Refresh();
                 CanVideoPlay = VideoFile.Length > VideoPlayLowestSize;
                 if(CanVideoPlay) {
                     StartIfAutoPlay();
@@ -581,13 +588,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnLoadVideoEnd()
         {
-            if(VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+            if(!MakedDescription && VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
                 MakeDescription();
             }
 
             // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
-            CanVideoPlay = true;
-            StartIfAutoPlay();
+            if(!CanVideoPlay) {
+                CanVideoPlay = true;
+                StartIfAutoPlay();
+            }
 
             base.OnLoadVideoEnd();
         }
@@ -699,5 +708,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ChangeBaseSize();
         }
+
+        private void Player_LengthChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine(e);
+        }
+
     }
 }

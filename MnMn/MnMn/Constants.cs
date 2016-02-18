@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan CommentShowTime => TimeSpan.FromSeconds(3);
 
         public static int SmileVideoSearchCount => 100;
+        public static bool SmileVideoAutoPlay => true;
         public static bool SmileVideoLoadVideoInformation => true;
 
         public static string CurrentLanguageCode => "ja-JP";

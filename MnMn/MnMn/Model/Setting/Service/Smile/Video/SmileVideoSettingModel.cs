@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 自動再生を行うか。
         /// </summary>
-        public bool AutoPlay { get; set; } = false;
+        public bool AutoPlay { get; set; } = Constants.SmileVideoAutoPlay;
         /// <summary>
         /// フォント種別。
         /// </summary>
