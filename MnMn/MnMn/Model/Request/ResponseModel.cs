@@ -8,11 +8,11 @@ the Free Software Foundation, either version 3 of the License, or
 
 MnMn is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
+along with MnMn.  If not, see<http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
@@ -20,23 +20,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
-    public class RequestModel: ModelBase
+    public class ResponseModel: ModelBase
     {
-        public RequestModel(RequestKind requestKind, ServiceType serviceType)
+        public ResponseModel(RequestModel request, object result)
         {
-            RequestKind = requestKind;
-            ServiceType = serviceType;
+            Request = request;
+            Result = result;
         }
 
         #region property
 
-        public RequestKind RequestKind { get; private set; }
+        public RequestModel Request { get; private set; }
 
-        public ServiceType ServiceType { get; private set; }
+        public object Result { get; private set; }
 
         #endregion
     }

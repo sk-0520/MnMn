@@ -280,8 +280,8 @@
     <Compile Include="Model\ParameterItemModel.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Model\StringsModel.cs" />
-    <Compile Include="Model\RequestModel.cs" />
-    <Compile Include="Model\ResponseModel.cs" />
+    <Compile Include="Model\Request\RequestModel.cs" />
+    <Compile Include="Model\Request\ResponseModel.cs" />
     <Compile Include="Model\Setting\SettingModelBase.cs" />
     <Compile Include="Model\UriItemModel.cs" />
     <Compile Include="Model\ParametersModel.cs" />

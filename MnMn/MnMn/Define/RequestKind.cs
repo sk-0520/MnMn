@@ -47,5 +47,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 基本設定データ。
         /// </summary>
         Setting,
+        /// <summary>
+        /// 表示要素へのアクセス。
+        /// </summary>
+        ShowView,
+        /// <summary>
+        /// 表示要素の破棄。
+        /// </summary>
+        HideView,
     }
 }
