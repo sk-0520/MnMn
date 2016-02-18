@@ -134,21 +134,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        public ICommand OpenVideoCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var item = SelectedVideoInformation;
-                        if(item != null) {
-                            OpenPlayer(item);
-                        }
-                    }
-                );
-            }
-        }
-
         public virtual ICommand ReloadCommand
         {
             get

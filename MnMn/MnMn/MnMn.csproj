@@ -318,10 +318,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Resources\Service\Smile\Video\VideoListDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -356,6 +352,7 @@
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
     <Folder Include="Logic\Service\Smile\Video\HalfBakedApi\" />
+    <Folder Include="View\Resources\Service\Smile\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">
