@@ -631,7 +631,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             IsDead = true;
 
-            this.Player.Dispose();
+            if(this.Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
+                this.Player.BeginStop();
+            }
+
+            //this.Player.Dispose();
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)
