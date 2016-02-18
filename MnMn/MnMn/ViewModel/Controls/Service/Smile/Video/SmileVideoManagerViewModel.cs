@@ -113,57 +113,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        public async void Temp_OpenPlayer(string videoId)
-        {
-            var vm = new SmileVideoPlayerViewModel(Mediation);
-            var window = new SmileVideoPlayerWindow() {
-                DataContext = vm,
-            };
-            vm.SetView(window);
-            window.Show();
-
-            await vm.LoadAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-        }
-
-        public void Temp_Find(string videoId)
-        {
-            var ss = new ContentsSearch(Mediation);
-            ss.GetAsnc(
-                Define.Service.Smile.SmileContentsSearchService.Video, 
-                "ACV", 
-                Define.Service.Smile.SmileContentsSearchType.Tag, 
-                Define.Service.Smile.SmileContentsSearchField.ViewCounter,
-                new [] {
-                Define.Service.Smile.SmileContentsSearchField.ContentId,
-                Define.Service.Smile.SmileContentsSearchField.Title,
-                Define.Service.Smile.SmileContentsSearchField.Description,
-                Define.Service.Smile.SmileContentsSearchField.StartTime,
-                Define.Service.Smile.SmileContentsSearchField.Tags,
-                Define.Service.Smile.SmileContentsSearchField.CategoryTags,
-                Define.Service.Smile.SmileContentsSearchField.CommentCounter,
-                Define.Service.Smile.SmileContentsSearchField.ViewCounter,
-                Define.Service.Smile.SmileContentsSearchField.MylistCounter,
-                Define.Service.Smile.SmileContentsSearchField.StartTime,
-                },
-                Library.SharedLibrary.Define.OrderBy.Ascending, 
-                0, 
-                100
-            ).ContinueWith(task => {
-            });
-        }
-
-        public async void OpenPlayer(string videoId)
-        {
-            var vm = new SmileVideoPlayerViewModel(Mediation);
-            var window = new SmileVideoPlayerWindow() {
-                DataContext = vm,
-            };
-            vm.SetView(window);
-            window.Show();
-
-            await vm.LoadAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-        }
-
         #endregion
     }
 }

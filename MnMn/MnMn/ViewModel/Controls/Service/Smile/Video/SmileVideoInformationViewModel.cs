@@ -825,10 +825,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DataContext = vm,
             };
             vm.SetView(window);
-            window.ShowActivated = true;
-            var windowTask = window.Dispatcher.BeginInvoke(new Action(() => {
-                window.Show();
-            }));
+
+            Mediation.Request(new ShowViewRequest(RequestKind.ShowView, ServiceType.SmileVideo, window, ShowViewState.Foreground));
 
             await vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }

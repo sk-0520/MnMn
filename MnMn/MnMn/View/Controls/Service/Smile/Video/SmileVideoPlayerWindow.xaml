@@ -187,7 +187,7 @@
               >
                 <FlowDocument
                   FontSize="11.5"
-                  PagePadding="10, 2, 10, 10"
+                  PagePadding="10, 2, 10, 0"
                 />
               </FlowDocumentScrollViewer>
             </Grid>

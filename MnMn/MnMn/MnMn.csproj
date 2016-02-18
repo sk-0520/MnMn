@@ -113,6 +113,7 @@
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoInformationFlags.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
+    <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
     <Compile Include="Logic\Downloader.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Model\MappingModel.cs" />
     <Compile Include="Model\MappingResult.cs" />
     <Compile Include="Model\MappingsModel.cs" />
+    <Compile Include="Model\Request\ShowViewRequest.cs" />
+    <Compile Include="Model\Request\ViewRequestModelBase.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -99,6 +100,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        private ResponseModel Request_ShowView(ShowViewRequest request)
+        {
+            var window = request.View as Window;
+            if(window != null) {
+                window.ShowActivated = request.ShowViewState == ShowViewState.Foreground;
+                if(window.ShowActivated) {
+                    var windowTask = window.Dispatcher.BeginInvoke(new Action(() => {
+                        window.Show();
+                    }));
+                    return new ResponseModel(request, windowTask);
+                } else {
+                    return new ResponseModel(request, null);
+                }
+            }
+
+            throw new NotImplementedException();
+        }
 
         #endregion
 
@@ -112,6 +130,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 return Request_CacheDirectory_Impl(request);
             }
 
+            if(request.RequestKind == RequestKind.ShowView) {
+                return Request_ShowView((ShowViewRequest)request);
+            }
+
             switch(request.ServiceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
@@ -122,7 +144,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     throw new NotImplementedException();
             }
         }
-
 
         public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {

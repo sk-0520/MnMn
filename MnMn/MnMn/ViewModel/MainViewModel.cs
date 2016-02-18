@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
@@ -58,20 +59,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             {
                 return CreateCommand(
                     o => {
-                        SmileManager.VideoManager.Temp_OpenPlayer("sm15218544");
-                    }
-                );
-            }
-        }
-        [Obsolete]
-        public ICommand Temp_FindCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        SmileManager.VideoManager.Temp_Find("sm15218544");
-
+                        SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, "sm15218544", Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(task => {
+                            task.Result.OpenPlayerAsync();
+                        }, TaskScheduler.FromCurrentSynchronizationContext());
+                        
                     }
                 );
             }
