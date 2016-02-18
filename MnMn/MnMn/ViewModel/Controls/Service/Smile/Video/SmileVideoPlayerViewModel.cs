@@ -151,6 +151,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._tagLoadState, value); }
         }
 
+        /// <summary>
+        /// 再生可能なサイズまでデータを読み込んだか。
+        /// </summary>
         public bool CanVideoPlay
         {
             get { return this._canVideoPlay; }
@@ -292,11 +295,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player.LoadMedia(VideoFile.FullName);
         }
 
-        void AutoPlay(FileInfo fileInfo)
+        void StartIfAutoPlay()
         {
-            SetMedia();
-            VideoPlay();
-                CanVideoPlay = true;
+            if(Setting.AutoPlay) {
+                SetMedia();
+                VideoPlay();
+            }
         }
 
         void VideoPlay()
@@ -565,10 +569,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(!CanVideoPlay) {
                 // とりあえず待って
-                var fi = new FileInfo(VideoFile.FullName);
-                CanVideoPlay = fi.Length > VideoPlayLowestSize;
+                CanVideoPlay = VideoFile.Length > VideoPlayLowestSize;
                 if(CanVideoPlay) {
-                    AutoPlay(fi);
+                    StartIfAutoPlay();
                 }
             }
             e.Cancel = IsDead;
@@ -583,9 +586,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
-            if(!CanVideoPlay) {
-                AutoPlay(VideoFile);
-            }
+            CanVideoPlay = true;
+            StartIfAutoPlay();
 
             base.OnLoadVideoEnd();
         }
