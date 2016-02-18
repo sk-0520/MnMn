@@ -76,18 +76,7 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <ListView 
-            Grid.Row="1" 
-            View="{StaticResource VideoListView}"
-            ItemsSource="{Binding VideoInformationItems}"
-            SelectedItem="{Binding SelectedVideoInformation}"
-          >
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="MouseDoubleClick">
-                <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" CommandParameter="{Binding}"/>
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
-          </ListView>
+          <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}" />
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>

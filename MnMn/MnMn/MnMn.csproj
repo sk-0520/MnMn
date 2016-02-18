@@ -179,6 +179,9 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml.cs">
       <DependentUpon>SmileVideoSearchManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoFinderControl.xaml.cs">
+      <DependentUpon>SmileVideoFinderControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Page Include="View\Controls\LoadStateNavigator.xaml">
       <SubType>Designer</SubType>
@@ -308,6 +311,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoFinderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
