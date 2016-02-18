@@ -6,8 +6,8 @@
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   Title="MainWindow" 
-  Height="347.692" 
-  Width="692.872"
+  Height="420" 
+  Width="760"
   ResizeMode="CanResizeWithGrip"
   
   DataContext="{StaticResource MainViewModel}"

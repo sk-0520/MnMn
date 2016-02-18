@@ -493,7 +493,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void MakeDescription()
         {
             DocumentDescription.Dispatcher.Invoke(() => {
-                var document = new FlowDocument();
+                //var document = new FlowDocument();
+                var document = DocumentDescription.Document;
 
                 var html = new HtmlDocument() {
                     OptionAutoCloseOnEnd = true,
@@ -520,8 +521,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 document.FontSize = DocumentDescription.FontSize;
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
-
-                DocumentDescription.Document = document;
+                
+                //DocumentDescription.Document = document;
             });
         }
 

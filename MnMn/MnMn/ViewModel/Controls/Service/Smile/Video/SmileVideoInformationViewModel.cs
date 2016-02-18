@@ -824,7 +824,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DataContext = vm,
             };
             vm.SetView(window);
-            window.Show();
+            window.ShowActivated = true;
+            var windowTask = window.Dispatcher.BeginInvoke(new Action(() => {
+                window.Show();
+            }));
 
             await vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }

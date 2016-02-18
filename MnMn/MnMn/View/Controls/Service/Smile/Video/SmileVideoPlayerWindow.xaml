@@ -8,8 +8,8 @@
   ResizeMode="CanResizeWithGrip"
         
   Title="VideoPlayerWindow" 
-  Width="720"
-  Height="520"
+  Width="780"
+  Height="540"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
@@ -22,7 +22,7 @@
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
-      <RowDefinition Height="100" />
+      <RowDefinition Height="120" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
@@ -187,6 +187,7 @@
               >
                 <FlowDocument
                   FontSize="11.5"
+                  PagePadding="10, 2, 10, 10"
                 />
               </FlowDocumentScrollViewer>
             </Grid>
