@@ -100,15 +100,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public ICollectionView SelectedVideoInformationItems
+        public override ICollectionView VideoInformationItems
         {
-            get {
+            get
+            {
                 if(SelectedPage == null) {
-                    return null;
+                    //return null;
+                    return base.VideoInformationItems;
                 }
-                return SelectedPage.ViewModel.VideoInformationItems; }
-            //set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
+                return SelectedPage.ViewModel.VideoInformationItems;
         }
+    }
+
+        //public ICollectionView SelectedVideoInformationItems
+        //{
+        //    get {
+        //        if(SelectedPage == null) {
+        //            return null;
+        //        }
+        //        return SelectedPage.ViewModel.VideoInformationItems; }
+        //    //set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
+        //}
 
         public int TotalCount
         {
@@ -171,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         static IEnumerable<string> ChangePagePropertyNames => new[] {
-            nameof(SelectedVideoInformationItems),
+            nameof(VideoInformationItems),
             nameof(FinderLoadState),
             nameof(CanLoad),
             nameof(NowLoading),

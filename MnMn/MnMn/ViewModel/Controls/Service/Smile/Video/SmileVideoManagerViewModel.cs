@@ -75,8 +75,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoSearchManagerViewModel SearchManager { get; }
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public IEnumerable<SmileVideoManagerViewModelBase> ManagerItems => new SmileVideoManagerViewModelBase[] {
-            RankingManager,
             SearchManager,
+            RankingManager,
             NewArrivalsManager,
         };
 
