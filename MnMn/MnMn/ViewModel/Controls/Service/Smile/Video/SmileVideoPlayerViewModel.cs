@@ -54,10 +54,11 @@ using System.ComponentModel;
 using System.Windows.Documents;
 using HtmlAgilityPack;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView
     {
         #region define
 
@@ -260,28 +261,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region function
-
-        internal void SetView(SmileVideoPlayerWindow view)
-        {
-            View = view;
-            Player = view.player;//.MediaPlayer;
-            NormalCommentArea = view.normalCommentArea;
-            ContributorCommentArea = view.contributorCommentArea;
-            Navigationbar = view.seekbar;
-            CommentView = view.commentView;
-            DocumentDescription = view.documentDescription;
-
-            // 初期設定
-            Player.Volume = Volume;
-
-            // あれこれイベント
-            View.Loaded += View_Loaded;
-            View.Closing += View_Closing;
-            Player.PositionChanged += Player_PositionChanged;
-            Player.SizeChanged += Player_SizeChanged;
-            Player.LengthChanged += Player_LengthChanged;
-            Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
-        }
 
         void SetVideoDataInformation()
         {
@@ -628,6 +607,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
+        #region
+        public void SetView(FrameworkElement view)
+        {
+            var playerView = (SmileVideoPlayerWindow)view;
+
+            View = playerView;
+            Player = playerView.player;//.MediaPlayer;
+            NormalCommentArea = playerView.normalCommentArea;
+            ContributorCommentArea = playerView.contributorCommentArea;
+            Navigationbar = playerView.seekbar;
+            CommentView = playerView.commentView;
+            DocumentDescription = playerView.documentDescription;
+
+            // 初期設定
+            Player.Volume = Volume;
+
+            // あれこれイベント
+            View.Loaded += View_Loaded;
+            View.Closing += View_Closing;
+            Player.PositionChanged += Player_PositionChanged;
+            Player.SizeChanged += Player_SizeChanged;
+            Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+        }
+
+        #endregion
+
         void View_Loaded(object sender, RoutedEventArgs e)
         {
             View.Loaded -= View_Loaded;
@@ -708,11 +713,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ChangeBaseSize();
         }
-
-        private void Player_LengthChanged(object sender, EventArgs e)
-        {
-            Debug.WriteLine(e);
-        }
-
     }
 }

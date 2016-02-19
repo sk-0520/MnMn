@@ -20,14 +20,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
-    public class ShowViewRequest: ViewRequestModelBase
+    public class ShowViewRequestModel: ViewRequestModelBase
     {
-        public ShowViewRequest(RequestKind requestKind, ServiceType serviceType, FrameworkElement view, ShowViewState showViewState)
-            :base(requestKind, serviceType, view)
+        public ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, ViewModelBase viewModel, ShowViewState showViewState)
+            :base(requestKind, serviceType, viewModel)
         {
             ShowViewState = showViewState;
         }

@@ -20,6 +20,9 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -28,6 +31,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
@@ -188,6 +193,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
                     throw new NotImplementedException();
             }
+        }
+
+        internal override FrameworkElement RequestShowView(ShowViewRequestModel request)
+        {
+            CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileVideo);
+
+            var player = request.ViewModel as SmileVideoPlayerViewModel;
+            if(player != null) {
+                var window = new SmileVideoPlayerWindow() {
+                    DataContext = player,
+                };
+                return window;
+            }
+
+            throw new NotImplementedException();
         }
 
         #endregion

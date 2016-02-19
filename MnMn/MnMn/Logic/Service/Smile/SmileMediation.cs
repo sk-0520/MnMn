@@ -21,6 +21,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
@@ -261,6 +263,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+
+        internal override FrameworkElement RequestShowView(ShowViewRequestModel request)
+        {
+            switch(request.ServiceType) {
+                case ServiceType.Smile:
+                    throw new NotImplementedException();
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.RequestShowView(request);
+
+                default:
                     throw new NotImplementedException();
             }
         }

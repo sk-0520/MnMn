@@ -27,6 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -100,9 +101,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        private ResponseModel Request_ShowView(ShowViewRequest request)
+        private ResponseModel Request_ShowView(ShowViewRequestModel request)
         {
-            var window = request.View as Window;
+            var view = RestrictUtility.Block(() => {
+                switch(request.ServiceType) {
+                    case ServiceType.Smile:
+                    case ServiceType.SmileVideo:
+                        return Smile.RequestShowView(request);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            });
+
+            CastUtility.AsAction<ISetView>(request.ViewModel, viewModel => {
+                viewModel.SetView(view);
+            });
+
+            var window = view as Window;
             if(window != null) {
                 window.ShowActivated = request.ShowViewState == ShowViewState.Foreground;
                 if(window.ShowActivated) {
@@ -131,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             if(request.RequestKind == RequestKind.ShowView) {
-                return Request_ShowView((ShowViewRequest)request);
+                return Request_ShowView((ShowViewRequestModel)request);
             }
 
             switch(request.ServiceType) {

@@ -821,12 +821,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public async void OpenPlayerAsync()
         {
             var vm = new SmileVideoPlayerViewModel(Mediation);
-            var window = new SmileVideoPlayerWindow() {
-                DataContext = vm,
-            };
-            vm.SetView(window);
-
-            Mediation.Request(new ShowViewRequest(RequestKind.ShowView, ServiceType.SmileVideo, window, ShowViewState.Foreground));
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
             await vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }

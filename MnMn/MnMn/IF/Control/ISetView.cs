@@ -8,11 +8,11 @@ the Free Software Foundation, either version 3 of the License, or
 
 MnMn is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with MnMn.  If not, see<http://www.gnu.org/licenses/>.
+along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
@@ -20,23 +20,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
+namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
 {
-    public abstract class ViewRequestModelBase: RequestModel
+    public interface ISetView
     {
-        public ViewRequestModelBase(RequestKind requestKind, ServiceType serviceType, ViewModelBase viewModel)
-            :base(requestKind, serviceType)
-        {
-            ViewModel = viewModel;
-        }
-
-        #region property
-
-        public ViewModelBase ViewModel { get; }
-
-        #endregion
+        void SetView(FrameworkElement view);
     }
 }
