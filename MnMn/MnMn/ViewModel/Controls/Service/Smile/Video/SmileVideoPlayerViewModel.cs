@@ -55,6 +55,7 @@ using System.Windows.Documents;
 using HtmlAgilityPack;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using xZune.Vlc.Wpf;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -119,17 +120,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Mediation Mediation { get; set; }
 
         SmileVideoPlayerWindow View { get; set; }
-        xZune.Vlc.Wpf.VlcPlayer Player { get; set; }
-        //Slider VideoSilder { get; set; }
+        VlcPlayer Player { get; set; }
+        Navigationbar Navigationbar { get; set; }
         Canvas NormalCommentArea { get; set; }
         Canvas ContributorCommentArea { get; set; }
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
-        Navigationbar Navigationbar { get; set; }
-
+        /// <summary>
+        /// 初回再生か。
+        /// </summary>
         bool IsFirstPlay { get; set; } = true;
-        bool MakedDescription { get; set; } = false;
+
+        /// <summary>
+        /// 投降者コメントが構築されたか。
+        /// </summary>
+        bool IsMakedDescription { get; set; } = false;
 
         public ICollectionView CommentItems { get; private set; }
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -138,11 +144,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
+        /// <summary>
+        /// 動画再生位置を変更中か。
+        /// </summary>
         public bool ChangingVideoPosition { get; set; }
+        /// <summary>
+        /// シークバー押下時のカーソル位置。
+        /// </summary>
         public Point SeekbarMouseDownPosition { get; set; }
+        /// <summary>
+        /// シークバーの現在地が移動中か。
+        /// </summary>
         public bool SeekbarThumbMoving { get; set; }
-
-        bool IsDead { get; set; }
+        /// <summary>
+        /// ビューが閉じられたか。
+        /// </summary>
+        bool IsViewClosed { get; set; }
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
 
         List<CommentData> NormalCommentShowList { get; } = new List<CommentData>();
@@ -162,18 +179,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._canVideoPlay, value); }
         }
 
+        /// <summary>
+        /// 動画再生中か。
+        /// </summary>
         public bool IsVideoPlayng
         {
             get { return this._isVideoPlayng; }
             set { SetVariableValue(ref this._isVideoPlayng, value); }
         }
 
+        /// <summary>
+        /// 動画再生位置。
+        /// </summary>
         public float VideoPosition
         {
             get { return this._videoPosition; }
             set { SetVariableValue(ref this._videoPosition, value); }
         }
 
+        /// <summary>
+        /// 動画音声。
+        /// </summary>
         public int Volume
         {
             get { return this._volume; }
@@ -187,18 +213,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// 動画の再生中時間。
+        /// </summary>
         public TimeSpan PlayTime
         {
             get { return this._playTime; }
             set { SetVariableValue(ref this._playTime, value); }
         }
+
+        /// <summary>
+        /// 動画の長さ。
+        /// </summary>
         public TimeSpan TotalTime
         {
             get { return this._totalTime; }
             set { SetVariableValue(ref this._totalTime, value); }
         }
 
-        TimeSpan PrevTime { get; set; }
+        /// <summary>
+        /// 前回再生時間。
+        /// </summary>
+        TimeSpan PrevPlayedTime { get; set; }
 
         public SmileVideoCommentViewModel SelectedComment
         {
@@ -230,17 +266,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._baseHeight, value); }
         }
 
-        public string Description
-        {
-            get
-            {
-                if(VideoInformation?.PageHtmlLoadState == LoadState.Loaded) {
-                    return VideoInformation.PageDescription;
-                }
+        //public string Description
+        //{
+        //    get
+        //    {
+        //        if(VideoInformation?.PageHtmlLoadState == LoadState.Loaded) {
+        //            return VideoInformation.PageDescription;
+        //        }
 
-                return null;
-            }
-        }
+        //        return null;
+        //    }
+        //}
 
         #endregion
 
@@ -307,14 +343,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void FireShowComment()
         {
-            Debug.WriteLine($"{PrevTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
+            Debug.WriteLine($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             var commentArea = new Size(
                 NormalCommentArea.ActualWidth,
                 NormalCommentArea.ActualHeight
             );
             var list = NormalCommentList.ToArray();
-            foreach(var commentViewModel in list.Where(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
+            foreach(var commentViewModel in list.Where(c => PrevPlayedTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
                 var ft = new FormattedText(
                     commentViewModel.Content,
                     CultureInfo.GetCultureInfo(Constants.CurrentLanguageCode),
@@ -369,7 +405,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var data = new CommentData(box, commentViewModel, animation);
                 NormalCommentShowList.Add(data);
 
-                var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevTime.TotalMilliseconds;
+                var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevPlayedTime.TotalMilliseconds;
                 var diffPosition = starTime / commentArea.Width;
 
 
@@ -394,7 +430,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var nowTimelineItem = CommentItems
                 .Cast<SmileVideoCommentViewModel>()
-                .FirstOrDefault(c => PrevTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)
+                .FirstOrDefault(c => PrevPlayedTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)
             ;
             if(nowTimelineItem != null) {
                 CommentView.ScrollIntoView(nowTimelineItem);
@@ -477,7 +513,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void MakeDescription()
         {
-            MakedDescription = true;
+            IsMakedDescription = true;
 
             DocumentDescription.Dispatcher.Invoke(() => {
                 //var document = new FlowDocument();
@@ -543,7 +579,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
-            if(!MakedDescription) {
+            if(!IsMakedDescription) {
                 MakeDescription();
             }
 
@@ -560,14 +596,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     StartIfAutoPlay();
                 }
             }
-            e.Cancel = IsDead;
+            e.Cancel = IsViewClosed;
 
             base.OnDownloading(sender, e);
         }
 
         protected override void OnLoadVideoEnd()
         {
-            if(!MakedDescription && VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+            if(!IsMakedDescription && VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
                 MakeDescription();
             }
 
@@ -597,8 +633,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override void OnLoadGetthumbinfoEnd()
         {
-            CallOnPropertyChange(nameof(Description));
-
             TotalTime = VideoInformation.Length;
             LoadTagsAsync();
 
@@ -607,7 +641,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        #region
+        #region ISetView
+
         public void SetView(FrameworkElement view)
         {
             var playerView = (SmileVideoPlayerWindow)view;
@@ -646,7 +681,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player.SizeChanged -= Player_SizeChanged;
             Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
 
-            IsDead = true;
+            IsViewClosed = true;
 
             if(this.Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
                 this.Player.BeginStop();
@@ -666,7 +701,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 PlayTime = Player.Time;
                 FireShowComment();
                 ScrollComment();
-                PrevTime = PlayTime;
+                PrevPlayedTime = PlayTime;
             }
         }
 
