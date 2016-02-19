@@ -113,6 +113,9 @@
           Volume="{Binding Volume}"
           PlayTime="{Binding PlayTime}"
           TotalTime="{Binding TotalTime}"
+          PlayerState="{Binding PlayerState}"
+          PlayCommand="{Binding PlayCommand}"
+          StopCommand="{Binding StopCommand}"
         >
           <app_view_controls:Navigationbar.ExstendsContent>
             <StackPanel Orientation="Horizontal">
@@ -204,6 +207,9 @@
       <ToggleButton x:Name="switchInformation" Content="info" IsChecked="True" />
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
         <TextBlock>[</TextBlock>
+        <TextBlock Text="{Binding PlayerState}"></TextBlock>
+        <TextBlock>,</TextBlock>
+        
         <TextBlock>info:</TextBlock>
         <TextBlock Text="{Binding InformationLoadState}" />
         <TextBlock>,image:</TextBlock>

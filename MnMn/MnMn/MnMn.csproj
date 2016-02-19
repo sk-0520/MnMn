@@ -108,6 +108,7 @@
     <Compile Include="Define\MappingItemType.cs" />
     <Compile Include="Define\ParameterEncode.cs" />
     <Compile Include="Define\ParameterType.cs" />
+    <Compile Include="Define\PlayerState.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />

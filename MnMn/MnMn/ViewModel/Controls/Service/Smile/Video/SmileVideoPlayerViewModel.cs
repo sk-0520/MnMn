@@ -106,6 +106,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         double _baseWidth;
         double _baseHeight;
 
+        PlayerState _playerState;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -278,6 +280,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    }
         //}
 
+        public PlayerState PlayerState
+        {
+            get { return this._playerState; }
+            set{ SetVariableValue(ref this._playerState, value); }
+        }
+
+
+
         #endregion
 
         #region command
@@ -289,6 +299,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => {
 
+                    }
+                );
+            }
+        }
+
+        public ICommand PlayCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        switch(PlayerState) {
+                            case PlayerState.Stop:
+                                Player.Play();
+                                return;
+
+                            case PlayerState.Playing:
+                                Player.PauseOrResume();
+                                return;
+
+                            case PlayerState.Pause:
+                                Player.PauseOrResume();
+                                return;
+
+                            default:
+                                break;
+                        }
+                    }
+                );
+            }
+        }
+
+        public ICommand StopCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        Player.BeginStop();
                     }
                 );
             }
@@ -663,7 +712,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             View.Closing += View_Closing;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
-            Navigationbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+            Player.StateChanged += Player_StateChanged;
+            Navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
         }
 
         #endregion
@@ -679,15 +729,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             View.Closing -= View_Closing;
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
+            Player.StateChanged -= Player_StateChanged;
             Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
 
             IsViewClosed = true;
 
-            if(this.Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
-                this.Player.BeginStop();
+            if(Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
+                Player.BeginStop();
             }
-
-            //this.Player.Dispose();
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)
@@ -748,5 +797,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ChangeBaseSize();
         }
+
+        private void Player_StateChanged(object sender, xZune.Vlc.ObjectEventArgs<xZune.Vlc.Interop.Media.MediaState> e)
+        {
+            // 開いてる最中は気にしない
+            if(e.Value == xZune.Vlc.Interop.Media.MediaState.Opening) {
+                return;
+            }
+
+            Debug.WriteLine(e.Value);
+            switch(e.Value) {
+                case xZune.Vlc.Interop.Media.MediaState.Playing:
+                    PlayerState = PlayerState.Playing;
+                    return;
+
+                case xZune.Vlc.Interop.Media.MediaState.Stopped:
+                    PlayerState = PlayerState.Stop;
+                    return;
+
+                case xZune.Vlc.Interop.Media.MediaState.Paused:
+                    PlayerState = PlayerState.Pause;
+                    return;
+
+                default:
+                    break;
+            }
+
+        }
+
     }
 }

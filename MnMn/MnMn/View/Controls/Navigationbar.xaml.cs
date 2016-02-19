@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -252,6 +253,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsReplayCheckedProperty
+
+        public static readonly DependencyProperty IsReplayCheckedProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsReplayCheckedProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsReplayCheckedChanged))
+        );
+
+        private static void OnIsReplayCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.IsReplayChecked = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsReplayChecked
+        {
+            get { return (bool)GetValue(IsReplayCheckedProperty); }
+            set { SetValue(IsReplayCheckedProperty, value); }
+        }
+
+        #endregion
+
+        #region PlayerStateProperty
+
+        public static readonly DependencyProperty PlayerStateProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(PlayerStateProperty)),
+            typeof(PlayerState),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(default(PlayerState), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPlayerStateChanged))
+        );
+
+        private static void OnPlayerStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.PlayerState = (PlayerState)e.NewValue;
+            }
+        }
+
+        public PlayerState PlayerState
+        {
+            get { return (PlayerState)GetValue(PlayerStateProperty); }
+            set { SetValue(PlayerStateProperty, value); }
+        }
+
+        #endregion
+
         #region PlayCommand
 
         #region PlayCommandProperty
@@ -357,31 +408,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         }
 
         #endregion
-
-        #endregion
-
-        #region IsReplayCheckedProperty
-
-        public static readonly DependencyProperty IsReplayCheckedProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(IsReplayCheckedProperty)),
-            typeof(bool),
-            typeof(Navigationbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsReplayCheckedChanged))
-        );
-
-        private static void OnIsReplayCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Navigationbar;
-            if(control != null) {
-                control.IsReplayChecked = (bool)e.NewValue;
-            }
-        }
-
-        public bool IsReplayChecked
-        {
-            get { return (bool)GetValue(IsReplayCheckedProperty); }
-            set { SetValue(IsReplayCheckedProperty, value); }
-        }
 
         #endregion
 
