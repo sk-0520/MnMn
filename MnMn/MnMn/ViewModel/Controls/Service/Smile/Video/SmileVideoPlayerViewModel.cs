@@ -107,6 +107,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         double _baseHeight;
 
         PlayerState _playerState;
+        bool _isbuffering;
+
+        bool _replayVideo;
 
         #endregion
 
@@ -133,6 +136,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 初回再生か。
         /// </summary>
         bool IsFirstPlay { get; set; } = true;
+
+        bool UserOperationStop { get; set; } = false;
 
         /// <summary>
         /// 投降者コメントが構築されたか。
@@ -286,8 +291,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set{ SetVariableValue(ref this._playerState, value); }
         }
 
-
-
+        public bool Isbuffering
+        {
+            get { return this._isbuffering; }
+            set { SetVariableValue(ref this._isbuffering, value); }
+        }
+        public bool ReplayVideo
+        {
+            get { return this._replayVideo; }
+            set { SetVariableValue(ref this._replayVideo, value); }
+        }
+        
         #endregion
 
         #region command
@@ -320,7 +334,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 return;
 
                             case PlayerState.Pause:
-                                Player.PauseOrResume();
+                                if(Isbuffering) {
+                                    SetMedia();
+                                    Player.Position = VideoPosition;
+                                    VideoPlay();
+                                } else {
+                                    Player.PauseOrResume();
+                                }
                                 return;
 
                             default:
@@ -337,8 +357,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        Player.BeginStop();
-                    }
+                        UserOperationStop = true;
+                        Player.BeginStop(new Action(() => {
+                            UserOperationStop = false;
+                        }));
+            }
                 );
             }
         }
@@ -809,15 +832,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             switch(e.Value) {
                 case xZune.Vlc.Interop.Media.MediaState.Playing:
                     PlayerState = PlayerState.Playing;
-                    return;
+                    break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Stopped:
-                    PlayerState = PlayerState.Stop;
-                    return;
+                    if(Isbuffering) {
+                        PlayerState = PlayerState.Pause;
+                    } else {
+                        if(ReplayVideo && !UserOperationStop) {
+                            VideoPosition = 0;
+                            PrevPlayedTime = TimeSpan.MinValue;
+                            Player.Play();
+                        } else {
+                            PlayerState = PlayerState.Stop;
+                            VideoPosition = 0;
+                            PrevPlayedTime = TimeSpan.MinValue;
+                        }
+                    }
+                    break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Paused:
                     PlayerState = PlayerState.Pause;
-                    return;
+                    break;
+
+                case xZune.Vlc.Interop.Media.MediaState.Ended:
+                    if(PlayTime != PrevPlayedTime) {
+                        // 終わってない
+                        Isbuffering = true;
+                    }
+                    break;
 
                 default:
                     break;

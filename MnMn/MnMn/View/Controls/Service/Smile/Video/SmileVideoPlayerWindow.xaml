@@ -116,6 +116,7 @@
           PlayerState="{Binding PlayerState}"
           PlayCommand="{Binding PlayCommand}"
           StopCommand="{Binding StopCommand}"
+          IsReplayChecked="{Binding ReplayVideo}"
         >
           <app_view_controls:Navigationbar.ExstendsContent>
             <StackPanel Orientation="Horizontal">
