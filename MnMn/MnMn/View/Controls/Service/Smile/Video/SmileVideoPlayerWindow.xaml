@@ -117,6 +117,7 @@
           PlayCommand="{Binding PlayCommand}"
           StopCommand="{Binding StopCommand}"
           IsReplayChecked="{Binding ReplayVideo}"
+          IsMute="{Binding IsMute}"
         >
           <app_view_controls:Navigationbar.ExstendsContent>
             <StackPanel Orientation="Horizontal">

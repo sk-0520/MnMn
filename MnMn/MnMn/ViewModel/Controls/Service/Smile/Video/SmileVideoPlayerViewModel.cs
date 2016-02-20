@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         float _videoPosition;
         int _volume = 100;
+        bool _isMute = false;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -213,9 +214,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._volume, value)) {
-                    if(Player != null) {
-                        Player.Volume = this._volume;
-                    }
+                    Player.Volume = this._volume;
+                }
+            }
+        }
+
+        public bool IsMute
+        {
+            get { return this._isMute; }
+            set
+            {
+                if(SetVariableValue(ref this._isMute, value)) {
+                    Player.IsMute = this._isMute;
                 }
             }
         }
