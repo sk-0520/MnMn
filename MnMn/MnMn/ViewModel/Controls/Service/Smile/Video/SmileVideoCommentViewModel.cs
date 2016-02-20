@@ -32,6 +32,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             : base(model)
         {
             Setting = setting;
+
+            var commands = Commands.ToArray();
+
+            var foreColor = SmileVideoCommentUtility.GetForeColor(commands, UserKind == SmileVideoUserKind.Premium);
+            Foreground = new SolidColorBrush(foreColor);
+            FreezableUtility.SafeFreeze(Foreground);
+            Shadow = MediaUtility.GetAutoColor(foreColor);
+
+            switch(SmileVideoCommentUtility.GetFontSize(commands)) {
+                case SmileVideoCommentSize.Medium:
+                    FontSize = Setting.FontSize;
+                    break;
+                case SmileVideoCommentSize.Small:
+                    FontSize = Setting.FontSize * 0.5;
+                    break;
+                case SmileVideoCommentSize.Big:
+                    FontSize = Setting.FontSize * 2;
+                    break;
+            }
+
+            Vertical = SmileVideoCommentUtility.GetVerticalAlign(commands);
         }
 
         #region property
@@ -80,7 +101,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string Command { get { return Model.Mail ?? string.Empty; ; } }
+        public IEnumerable<string> Commands
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(Model.Mail)) {
+                    return Enumerable.Empty<string>();
+                }
+
+                return Model.Mail.Split(null);
+            }
+        }
 
         public string Content { get { return Model.Content ?? string.Empty; } }
 
@@ -97,25 +128,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return RawValueUtility.ConvertBoolean(Model.Fork); }
         }
 
-        public double FontSize { get { return Setting.FontSize; } }
+        public double FontSize { get; }
 
         public string FontFamily { get { return Setting.FontFamily; } }
 
-        public Brush Foreground
-        {
-            get
-            {
-                return new SolidColorBrush(GetForeColor());
-            }
-        }
+        public Brush Foreground { get; }
+        public Color Shadow { get; }
 
-        public Brush Shadow
-        {
-            get
-            {
-                return new SolidColorBrush(GetShadowColor(GetForeColor()));
-            }
-        }
+        public SmileVideoCommentVertical Vertical { get; }
 
         public bool IsSelected
         {
@@ -132,16 +152,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region function
-
-        public Color GetForeColor()
-        {
-            return Colors.White;
-        }
-
-        public Color GetShadowColor(Color foreColor)
-        {
-            return MediaUtility.GetAutoColor(foreColor);
-        }
 
         #endregion
     }

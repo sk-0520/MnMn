@@ -459,7 +459,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     box.Opacity = setting.FontAlpha;
                     box.Content = commentViewModel.Content;
                     box.Effect = new DropShadowEffect() {
-                        Color = commentViewModel.GetShadowColor(commentViewModel.GetForeColor()),
+                        Color = commentViewModel.Shadow,
                         Direction = 315,
                         BlurRadius = 2,
                         ShadowDepth = 2,
@@ -476,15 +476,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Canvas.SetLeft(box, commentParentElement.ActualWidth);
 
                 // 今あるコメントから安全圏を走査
-                var lastData = showingCommentList
+                var nowData = showingCommentList
                     .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
                     .OrderBy(i => Canvas.GetTop(i.Element))
-                    .LastOrDefault()
+                    .ToList()
                 ;
+                var lastData = nowData.LastOrDefault();
                 if(lastData != null) {
                     var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
                     if(commentArea.Height < nextY + box.ActualHeight) {
-                        Canvas.SetTop(box, 0);
+                        double usingY = -1;
+                        // これ以上下げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
+                        var lineData = nowData
+                            .GroupBy(i => Canvas.GetTop(i.Element))
+                            .OrderBy(line => line.Key)
+                        ;
+                        // 自身の高さの倍数で見ていく
+                        var myHeight = box.ActualHeight;
+                        for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
+                            var line = lineData.FirstOrDefault(ls => ls.Key == y);
+                            if(line == null) {
+                                // 他のデータなさそうなので入れる。
+                                usingY = y;
+                                break;
+                            }
+                        }
+                        if(usingY == -1) {
+                            usingY = lineData
+                                .OrderBy(line => line.Count())
+                                .First()
+                                .Key
+                            ;
+                        }
+
+                        Debug.WriteLine(usingY);
+                        Canvas.SetTop(box, usingY);
                     } else {
                         Canvas.SetTop(box, nextY);
                     }
