@@ -44,14 +44,14 @@
 
       <vlc_wpf:VlcPlayer x:Name="player" />
 
-      <Border BorderBrush="Lime" BorderThickness="1"  Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
-        <Viewbox ClipToBounds="False" Stretch="UniformToFill">
+      <!--<Border BorderBrush="Lime" BorderThickness="1"  Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">-->
+      <Viewbox ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
           <Grid Width="640" Height="386">
             <Canvas x:Name="normalCommentArea" />
             <Canvas x:Name="contributorCommentArea" />
           </Grid>
         </Viewbox>
-      </Border>
+      <!--</Border>-->
 
       <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
         <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">

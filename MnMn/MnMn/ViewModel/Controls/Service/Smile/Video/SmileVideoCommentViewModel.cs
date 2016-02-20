@@ -45,10 +45,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     FontSize = Setting.FontSize;
                     break;
                 case SmileVideoCommentSize.Small:
-                    FontSize = Setting.FontSize * 0.5;
+                    FontSize = Setting.FontSize * 0.8;
                     break;
                 case SmileVideoCommentSize.Big:
-                    FontSize = Setting.FontSize * 2;
+                    FontSize = Setting.FontSize * 1.2;
                     break;
             }
 

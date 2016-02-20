@@ -32,14 +32,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             var map = new Dictionary<string, SmileVideoCommentVertical>() {
                 { "naka", SmileVideoCommentVertical.Normal },
-                { "ue", SmileVideoCommentVertical.Bottom },
-                { "shita", SmileVideoCommentVertical.Top },
+                { "ue", SmileVideoCommentVertical.Top },
+                { "shita", SmileVideoCommentVertical.Bottom },
             };
 
             foreach(var command in commands) {
                 foreach(var pair in map) {
                     SmileVideoCommentVertical resultValue;
-                    if(map.TryGetValue(pair.Key, out resultValue)) {
+                    if(map.TryGetValue(command, out resultValue)) {
                         return resultValue;
                     }
                 }
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             foreach(var command in commands) {
                 foreach(var pair in map) {
                     SmileVideoCommentSize resultValue;
-                    if(map.TryGetValue(pair.Key, out resultValue)) {
+                    if(map.TryGetValue(command, out resultValue)) {
                         return resultValue;
                     }
                 }

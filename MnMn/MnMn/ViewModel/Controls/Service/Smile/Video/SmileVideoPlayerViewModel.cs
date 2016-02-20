@@ -439,6 +439,265 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player.Position = setPosition;
         }
 
+        static FrameworkElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
+        {
+            var element = new Label();
+            using(Initializer.BeginInitialize(element)) {
+                element.Foreground = commentViewModel.Foreground;
+                element.FontFamily = new FontFamily(setting.FontFamily);
+                element.FontSize = commentViewModel.FontSize;
+                element.Opacity = setting.FontAlpha;
+                element.Content = commentViewModel.Content;
+                element.Effect = new DropShadowEffect() {
+                    Color = commentViewModel.Shadow,
+                    Direction = 315,
+                    BlurRadius = 2,
+                    ShadowDepth = 2,
+                    Opacity = 0.8,
+                    RenderingBias = RenderingBias.Performance,
+                };
+            }
+
+            if(commentViewModel.Vertical != SmileVideoCommentVertical.Normal) {
+                element.Width = commentArea.Width;
+                element.HorizontalContentAlignment = HorizontalAlignment.Center;
+            }
+
+            return element;
+        }
+
+        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            // 今あるコメントから安全圏を走査
+            var nowData = showingCommentList
+                .Where(i => i.ViewModel.Vertical == SmileVideoCommentVertical.Normal)
+                .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
+                .OrderBy(i => Canvas.GetTop(i.Element))
+                .ToArray()
+            ;
+            var lastData = nowData.LastOrDefault();
+            if(lastData != null) {
+                var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
+                if(commentArea.Height < nextY + element.ActualHeight) {
+                    double usingY = -1;
+                    // これ以上下げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
+                    var lineData = nowData
+                        .GroupBy(i => Canvas.GetTop(i.Element))
+                        .OrderBy(line => line.Key)
+                    ;
+                    // 自身の高さの倍数で見ていく
+                    var myHeight = element.ActualHeight;
+                    for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
+                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
+                        if(line == null) {
+                            // 他のデータなさそうなので入れる。
+                            usingY = y;
+                            break;
+                        }
+                    }
+                    if(usingY == -1) {
+                        usingY = lineData
+                            .OrderBy(line => line.Count())
+                            .First()
+                            .Key
+                        ;
+                    }
+
+                    Debug.WriteLine(usingY);
+                    Canvas.SetTop(element, usingY);
+                } else {
+                    Canvas.SetTop(element, nextY);
+                }
+            } else {
+                Canvas.SetTop(element, 0);
+            }
+            Canvas.SetLeft(element, commentArea.Width);
+        }
+
+        /// <summary>
+        /// TODO: top,bottomは共存できる。はず。
+        /// </summary>
+        /// <param name="commentViewModel"></param>
+        /// <param name="element"></param>
+        /// <param name="commentArea"></param>
+        /// <param name="showingCommentList"></param>
+        /// <param name="setting"></param>
+        static void SetTopCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            // 今あるコメントから安全圏を走査
+            var nowData = showingCommentList
+                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
+                .OrderBy(i => Canvas.GetTop(i.Element))
+                .ToArray()
+            ;
+            var lastData = nowData.LastOrDefault();
+            if(lastData != null) {
+                var nextY = Canvas.GetTop(lastData.Element) - element.ActualHeight;
+                if(nextY < 0) {
+                    double usingY = -1;
+                    // これ以上上げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
+                    var lineData = nowData
+                        .GroupBy(i => Canvas.GetTop(i.Element))
+                        .OrderBy(line => line.Key)
+                    ;
+                    // 自身の高さの倍数で見ていく
+                    var myHeight = element.ActualHeight;
+                    for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
+                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
+                        if(line == null) {
+                            // 他のデータなさそうなので入れる。
+                            usingY = y;
+                            break;
+                        }
+                    }
+                    if(usingY == -1) {
+                        usingY = lineData
+                            .OrderBy(line => line.Count())
+                            .First()
+                            .Key
+                        ;
+                    }
+
+                    Debug.WriteLine(usingY);
+                    Canvas.SetTop(element, usingY);
+                } else {
+                    Canvas.SetTop(element, nextY);
+                }
+            } else {
+                Canvas.SetTop(element, 0);
+            }
+
+            Canvas.SetLeft(element, 0);
+            CastUtility.AsAction<Label>(element, label => {
+                label.Width = commentArea.Width;
+                label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            });
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commentViewModel"></param>
+        /// <param name="element"></param>
+        /// <param name="commentArea"></param>
+        /// <param name="showingCommentList"></param>
+        /// <param name="setting"></param>
+        static void SetBottomCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            // 今あるコメントから安全圏を走査
+            var nowData = showingCommentList
+                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
+                .OrderByDescending(i => Canvas.GetTop(i.Element))
+                .ToArray()
+            ;
+            var lastData = nowData.LastOrDefault();
+            if(lastData != null) {
+                var nextY = Canvas.GetTop(lastData.Element) - element.ActualHeight;
+                if(nextY < 0) {
+                    double usingY = -1;
+                    // これ以上上げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
+                    var lineData = nowData
+                        .GroupBy(i => Canvas.GetTop(i.Element))
+                        .OrderByDescending(line => line.Key)
+                    ;
+                    // 自身の高さの倍数で見ていく
+                    var myHeight = element.ActualHeight;
+                    for(var y = commentArea.Height - myHeight; 0 < y; y -= myHeight) {
+                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
+                        if(line == null) {
+                            // 他のデータなさそうなので入れる。
+                            usingY = y;
+                            break;
+                        }
+                    }
+                    if(usingY == -1) {
+                        usingY = lineData
+                            .OrderByDescending(line => line.Count())
+                            .First()
+                            .Key
+                        ;
+                    }
+
+                    Debug.WriteLine(usingY);
+                    Canvas.SetTop(element, usingY);
+                } else {
+                    Canvas.SetTop(element, nextY);
+                }
+            } else {
+                Canvas.SetTop(element, commentArea.Height - element.ActualHeight);
+            }
+
+            Canvas.SetLeft(element, 0);
+            CastUtility.AsAction<Label>(element, label => {
+                label.Width = commentArea.Width;
+                label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            });
+
+        }
+
+        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            switch(commentViewModel.Vertical) {
+                case SmileVideoCommentVertical.Normal:
+                    SetMarqueeCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                case SmileVideoCommentVertical.Top:
+                    SetTopCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                case SmileVideoCommentVertical.Bottom:
+                    SetBottomCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        static AnimationTimeline CreateMarqueeCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            var animation = new DoubleAnimation();
+            var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
+            var diffPosition = starTime / commentArea.Width;
+
+            animation.From = commentArea.Width + diffPosition;
+            animation.To = -element.ActualWidth;
+            animation.Duration = new Duration(showTime);
+
+            return animation;
+        }
+
+        static AnimationTimeline CreateTopBottomCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            var animation = new DoubleAnimation();
+            //var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
+            //var diffPosition = starTime / commentArea.Width;
+
+            // アニメーションさせる必要ないけど停止や移動なんかを考えるとIFとしてアニメーションの方が楽
+            animation.From = animation.To = 0;
+            animation.Duration = new Duration(showTime);
+
+            return animation;
+        }
+
+
+        static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            switch(commentViewModel.Vertical) {
+                case SmileVideoCommentVertical.Normal:
+                    return CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+
+                case SmileVideoCommentVertical.Top:
+                case SmileVideoCommentVertical.Bottom:
+                    return CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         static void FireShowComment_Impl(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
         {
             var commentArea = new Size(
@@ -450,97 +709,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // 現在時間から-1秒したものを表示対象とする
             var correctionTime = TimeSpan.FromSeconds(1);
             foreach(var commentViewModel in list.Where(c => prevTime <= (c.ElapsedTime - correctionTime) && (c.ElapsedTime - correctionTime) <= nowTime).ToArray()) {
-                
-                var box = new Label();
-                using(Initializer.BeginInitialize(box)) {
-                    box.Foreground = commentViewModel.Foreground;
-                    box.FontFamily = new FontFamily(setting.FontFamily);
-                    box.FontSize = commentViewModel.FontSize;
-                    box.Opacity = setting.FontAlpha;
-                    box.Content = commentViewModel.Content;
-                    box.Effect = new DropShadowEffect() {
-                        Color = commentViewModel.Shadow,
-                        Direction = 315,
-                        BlurRadius = 2,
-                        ShadowDepth = 2,
-                        Opacity = 0.8,
-                        RenderingBias = RenderingBias.Performance,
-                    };
-                }
+
+                var element = CreateCommentElement(commentViewModel, commentArea, setting);
 
                 commentViewModel.NowShowing = true;
 
-                commentParentElement.Children.Add(box);
+                commentParentElement.Children.Add(element);
                 commentParentElement.UpdateLayout();
 
-                Canvas.SetLeft(box, commentParentElement.ActualWidth);
-
-                // 今あるコメントから安全圏を走査
-                var nowData = showingCommentList
-                    .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
-                    .OrderBy(i => Canvas.GetTop(i.Element))
-                    .ToList()
-                ;
-                var lastData = nowData.LastOrDefault();
-                if(lastData != null) {
-                    var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
-                    if(commentArea.Height < nextY + box.ActualHeight) {
-                        double usingY = -1;
-                        // これ以上下げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
-                        var lineData = nowData
-                            .GroupBy(i => Canvas.GetTop(i.Element))
-                            .OrderBy(line => line.Key)
-                        ;
-                        // 自身の高さの倍数で見ていく
-                        var myHeight = box.ActualHeight;
-                        for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
-                            var line = lineData.FirstOrDefault(ls => ls.Key == y);
-                            if(line == null) {
-                                // 他のデータなさそうなので入れる。
-                                usingY = y;
-                                break;
-                            }
-                        }
-                        if(usingY == -1) {
-                            usingY = lineData
-                                .OrderBy(line => line.Count())
-                                .First()
-                                .Key
-                            ;
-                        }
-
-                        Debug.WriteLine(usingY);
-                        Canvas.SetTop(box, usingY);
-                    } else {
-                        Canvas.SetTop(box, nextY);
-                    }
-                } else {
-                    Canvas.SetTop(box, 0);
-                }
+                SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
 
                 // アニメーション設定
-                var animation = new DoubleAnimation();
-                var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds - correctionTime.TotalMilliseconds;
-                var diffPosition = starTime / commentArea.Width;
+                var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.ShowTime + correctionTime);
 
-                animation.From = commentArea.Width + diffPosition;
-                animation.To = -box.ActualWidth;
-                animation.Duration = new Duration(setting.ShowTime + correctionTime);
-
-                var data = new CommentData(box, commentViewModel, animation);
+                var data = new CommentData(element, commentViewModel, animation);
                 showingCommentList.Add(data);
 
                 EventDisposer<EventHandler> ev = null;
                 data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
-                    commentParentElement.Children.Remove(box);
+                    commentParentElement.Children.Remove(element);
                     showingCommentList.Remove(data);
                     data.ViewModel.NowShowing = false;
                     ev.Dispose();
-                    box = null;
+                    element = null;
                     ev = null;
                 }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
 
-                box.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+                element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
             }
         }
 
