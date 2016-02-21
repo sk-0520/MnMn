@@ -44,6 +44,7 @@ using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Data;
@@ -60,6 +61,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -503,142 +505,75 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return element;
         }
 
-        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoSettingModel setting)
         {
+            var isAsc = orderBy == OrderBy.Ascending;
             // 空いている部分に放り込む
             var lineList = showingCommentList
-                .Where(i => i.ViewModel.Vertical == SmileVideoCommentVertical.Normal)
+                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
                 .GroupBy(i => (int)Canvas.GetTop(i.Element))
-                .OrderBy(g => g.Key)
+                .IfOrderByAsc(g => g.Key, isAsc)
                 .ToArray()
             ;
-            if(lineList.Any()) {
-                var usingY = -1;
-                var myHeight = (int)element.ActualHeight;
-                Debug.WriteLine(myHeight);
-                var start = 0;
-                var last = commentArea.Height - myHeight;
-                for(var y = start; y < last; ) {
-                    var dupLines = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
-                    if(dupLines == null) {
-                        // 誰もいなければ入れる
-                        usingY = y;
-                        break;
-                    } else {
-                        // 誰かいる場合はその末尾に入れられるか
-                        var lastComment = dupLines.FirstOrDefault(l => commentArea.Width < Canvas.GetLeft(l.Element) + l.Element.ActualWidth);
-                        if(lastComment == null) {
-                            usingY = y;
-                            break;
-                        }
 
-                        // 現在コメント行の最大の高さを加算して次行を検索
-                        y += (int)lastComment.Element.ActualHeight;
-                    }
-                }
-                if(usingY == -1) {
-                    usingY = lineList
-                        .OrderBy(line => line.Count())
-                        .FirstOrDefault()
-                        ?.Key ?? 0
-                    ;
-                }
-                Canvas.SetTop(element, usingY);
+            var myHeight = (int)element.ActualHeight;
+            var start = isAsc ? 0 : (int)commentArea.Height - myHeight;
+            var last = isAsc ? (int)commentArea.Height - myHeight : 0;
 
-            } else {
-                Canvas.SetTop(element, 0);
+            if(lineList.Length == 0) {
+                // コメントない
+                return start;
             }
 
+            for(var y = start; isAsc ? y < last: last < y;) {
+                var dupLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+                if(dupLine == null) {
+                    // 誰もいなければ入れる
+                    return y;
+                } else {
+                    // 横方向の重なりを考慮
+                    if(calculationWidth) {
+                        // 誰かいる場合はその末尾に入れられるか
+                        var lastComment = dupLine.FirstOrDefault(l => commentArea.Width < Canvas.GetLeft(l.Element) + l.Element.ActualWidth);
+                        if(lastComment == null) {
+                            return y;
+                        }
+                    }
 
+                    // 現在コメント行の最大の高さを加算して次行を検索
+                    var plusValue = (int)dupLine.Max(l => l.Element.ActualHeight);
+                    if(isAsc) {
+                        y += plusValue;
+                    } else {
+                        y -= plusValue;
+                    }
+                }
+            }
+
+            // 全走査して安全そうなところがなければ一番少なそうなところに設定する
+            var compromiseY = lineList
+                .OrderBy(line => line.Count())
+                .FirstOrDefault()
+                ?.Key ?? 0
+            ;
+            return compromiseY;
+        }
+
+        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Ascending, true, setting);
+            Canvas.SetTop(element, y);
             Canvas.SetLeft(element, commentArea.Width);
         }
 
-        /// <summary>
-        /// TODO: top,bottomは共存できる。はず。
-        /// </summary>
-        /// <param name="commentViewModel"></param>
-        /// <param name="element"></param>
-        /// <param name="commentArea"></param>
-        /// <param name="showingCommentList"></param>
-        /// <param name="setting"></param>
-        static void SetTopCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        static void SetStaticCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, OrderBy orderBy, SmileVideoSettingModel setting)
         {
-            // 今あるコメントから安全圏を走査
-            var nowData = showingCommentList
-                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
-                        .GroupBy(i => Canvas.GetTop(i.Element))
-                        .OrderBy(line => line.Key)
-                .ToArray()
-            ;
-            double usingY = -1;
-            var myHeight = element.ActualHeight;
-            for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
-                var line = nowData.FirstOrDefault(ls => ls.Key == y);
-                if(line == null) {
-                    // 他のデータなさそうなので入れる。
-                    usingY = y;
-                    break;
-                }
-            }
-            if(usingY == -1) {
-                usingY = nowData
-                    .OrderBy(line => line.Count())
-                    .First()
-                    .Key
-                ;
-            }
-
-            Canvas.SetTop(element, usingY);
+            var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, orderBy, false, setting);
+            Canvas.SetTop(element, y);
             Canvas.SetLeft(element, 0);
-
             element.Width = commentArea.Width;
-
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="commentViewModel"></param>
-        /// <param name="element"></param>
-        /// <param name="commentArea"></param>
-        /// <param name="showingCommentList"></param>
-        /// <param name="setting"></param>
-        static void SetBottomCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
-        {
-            // 今あるコメントから安全圏を走査
-            var nowData = showingCommentList
-                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
-                .GroupBy(i => Canvas.GetTop(i.Element))
-                .OrderByDescending(i => i.Key)
-                .ToArray()
-            ;
-            double usingY = -1;
-
-            var myHeight = element.ActualHeight;
-            for(var y = commentArea.Height - myHeight; 0 < y; y -= myHeight) {
-                var line = nowData.FirstOrDefault(ls => ls.Key == y);
-                if(line == null) {
-                    // 他のデータなさそうなので入れる。
-                    usingY = y;
-                    break;
-                }
-            }
-            if(usingY == -1) {
-                usingY = nowData
-                    .OrderByDescending(line => line.Count())
-                    .First()
-                    .Key
-                ;
-            }
-
-            Canvas.SetTop(element, usingY);
-            Canvas.SetLeft(element, 0);
-
-            element.Width = commentArea.Width;
-
-
-        }
-
+        
         static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
         {
             switch(commentViewModel.Vertical) {
@@ -647,11 +582,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     break;
 
                 case SmileVideoCommentVertical.Top:
-                    SetTopCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    SetStaticCommentPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Ascending, setting);
                     break;
 
                 case SmileVideoCommentVertical.Bottom:
-                    SetBottomCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    SetStaticCommentPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Descending, setting);
                     break;
 
                 default:
