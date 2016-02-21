@@ -42,6 +42,9 @@
 			<words>
 				<word lang="ja-JP" value="タグ" />
 			</words>
+			<extends>
+				<extend>isTag</extend>
+			</extends>
 		</element>
 		<element key="title,description,tags">
 			<words>

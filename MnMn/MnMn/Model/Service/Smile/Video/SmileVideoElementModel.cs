@@ -49,6 +49,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         [IsDeepClone]
         public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
 
+        /// <summary>
+        /// 拡張データ。
+        /// <para>使用側で責任を持つ。</para>
+        /// </summary>
+        [XmlArray("extends"), XmlArrayItem("extend")]
+        [IsDeepClone]
+        public CollectionModel<string> Extends { get; set; } = new CollectionModel<string>();
+
         public string CurrentWord {
             get
             {
