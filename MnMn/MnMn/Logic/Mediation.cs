@@ -23,8 +23,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
@@ -32,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -61,7 +64,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// ニコニコ関係。
         /// </summary>
-        SmileMediation Smile { get; set; }
+        internal SmileMediation Smile { get; private set; }
+
+        internal ApplicationManagerPackModel ManagerPack { get; private set; }
 
         #endregion
 
@@ -103,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         private ResponseModel Request_ShowView(ShowViewRequestModel request)
         {
-            var view = RestrictUtility.Block(() => {
+            var result = RestrictUtility.Block(() => {
                 switch(request.ServiceType) {
                     case ServiceType.Smile:
                     case ServiceType.SmileVideo:
@@ -114,24 +119,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
             });
 
-            CastUtility.AsAction<ISetView>(request.ViewModel, viewModel => {
-                viewModel.SetView(view);
-            });
+            var uiElement = result as FrameworkElement;
+            if(uiElement != null) {
+                CastUtility.AsAction<ISetView>(request.ViewModel, vm => {
+                    vm.SetView(uiElement);
+                });
+                var window = result as Window;
+                if(window != null) {
+                    window.ShowActivated = request.ShowViewState == ShowViewState.Foreground;
+                    if(window.ShowActivated) {
+                        var windowTask = window.Dispatcher.BeginInvoke(new Action(() => {
+                            window.Show();
+                        }));
+                        return new ResponseModel(request, windowTask);
+                    } else {
+                        return new ResponseModel(request, null);
+                    }
+                }
+            }
+            var viewModel = result as ViewModelBase;
+            if(viewModel != null) {
+                // コントロール側はうまいことがんばる
+                switch(request.ServiceType) {
+                    case ServiceType.SmileVideo:
+                        Smile.ManagerPack.VideoManager.SelectedManager = viewModel as SmileVideoManagerViewModelBase;
+                        return new ResponseModel(request, null);
 
-            var window = view as Window;
-            if(window != null) {
-                window.ShowActivated = request.ShowViewState == ShowViewState.Foreground;
-                if(window.ShowActivated) {
-                    var windowTask = window.Dispatcher.BeginInvoke(new Action(() => {
-                        window.Show();
-                    }));
-                    return new ResponseModel(request, windowTask);
-                } else {
-                    return new ResponseModel(request, null);
+                    default:
+                        throw new NotImplementedException();
                 }
             }
 
             throw new NotImplementedException();
+        }
+
+        public void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
+        {
+            switch(serviceType) {
+                case ServiceType.Application:
+                    ManagerPack = (ApplicationManagerPackModel)managerPack;
+                    break;
+
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                    Smile.SetManager(serviceType, managerPack);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

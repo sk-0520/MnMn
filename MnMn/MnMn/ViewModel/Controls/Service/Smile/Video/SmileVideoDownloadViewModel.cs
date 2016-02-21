@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        Mediation Mediation { get; set; }
+        protected Mediation Mediation { get; }
 
         protected SmileVideoSettingModel Setting { get; }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -26,7 +27,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        internal abstract FrameworkElement RequestShowView(ShowViewRequestModel reque);
+        internal abstract object RequestShowView(ShowViewRequestModel reque);
+
+        internal abstract void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack);
 
         #endregion
     }

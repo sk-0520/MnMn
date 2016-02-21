@@ -19,22 +19,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
-    /// <summary>
-    /// 対象サービス種別。
-    /// </summary>
-    public enum ServiceType
+    public class SmileVideoSearchSettingResultModel
     {
-        Application,
-        /// <summary>
-        /// ニコニコ。
-        /// </summary>
-        Smile,
-        /// <summary>
-        /// ニコニコ動画。
-        /// </summary>
-        SmileVideo,
+        public SmileVideoSearchSettingResultModel(SmileVideoElementModel method, SmileVideoElementModel sort)
+        {
+            Method = method;
+            Sort = sort;
+        }
+
+        #region property
+
+        public SmileVideoElementModel Method {get;}
+        public SmileVideoElementModel Sort { get;}
+
+        #endregion
     }
 }

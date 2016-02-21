@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -54,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
 
+        internal SmileVideoManagerPackModel ManagerPack { get; private set; }
+
         #endregion
 
         #region function
@@ -69,7 +72,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 case RequestKind.Setting:
                     return new ResponseModel(request, Setting);
- 
+
+                case RequestKind.SearchSetting:
+                    return new ResponseModel(request, new SmileVideoSearchSettingResultModel(ManagerPack.SearchManager.SelectedMethod, ManagerPack.SearchManager.SelectedSort));
+
                 default:
                     throw new NotImplementedException();
             }
@@ -95,6 +101,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         #endregion
 
         #region MediationBase
+
+        internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
+        {
+            CheckUtility.Enforce(serviceType == ServiceType.SmileVideo);
+
+            ManagerPack = (SmileVideoManagerPackModel)managerPack;
+        }
 
         public override ResponseModel Request(RequestModel request)
         {
@@ -195,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
         }
 
-        internal override FrameworkElement RequestShowView(ShowViewRequestModel request)
+        internal override object RequestShowView(ShowViewRequestModel request)
         {
             CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileVideo);
 
@@ -205,6 +218,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     DataContext = player,
                 };
                 return window;
+            } else {
+                var finder = request.ViewModel as SmileVideoSearchGroupViewModel;
+                if(finder != null) {
+                    //TODO: 外部メソッド化した方が幸せになれる
+                    ManagerPack.SearchManager.SelectedMethod = finder.SelectedMethod;
+                    ManagerPack.SearchManager.SelectedSort = finder.SelectedSort;
+                    ManagerPack.SearchManager.SelectedType = finder.Type;
+                    ManagerPack.SearchManager.InputQuery = finder.Query;
+                    if(ManagerPack.SearchManager.SearchCommand.CanExecute(null)) {
+                        ManagerPack.SearchManager.SearchCommand.Execute(null);
+                    }
+                    return ManagerPack.SearchManager;
+                }
             }
 
             throw new NotImplementedException();

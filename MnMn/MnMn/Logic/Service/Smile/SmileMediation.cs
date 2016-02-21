@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -50,9 +51,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         /// <summary>
         /// ニコニコ動画関係。
         /// </summary>
-        SmileVideoMediation VideoMediation { get; set; }
+        internal SmileVideoMediation VideoMediation { get; private set; }
 
         SmileSessionViewModel Session { get; set; }
+
+        internal SmileManagerPackModel ManagerPack { get; private set; }
 
         #endregion
 
@@ -85,6 +88,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         #endregion
 
         #region MediationBase
+
+        internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
+        {
+          switch(serviceType) {
+                case ServiceType.Smile:
+                    ManagerPack = (SmileManagerPackModel)managerPack;
+                    break;
+
+                case ServiceType.SmileVideo:
+                    VideoMediation.SetManager(serviceType, managerPack);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         public override ResponseModel Request(RequestModel request)
         {
@@ -268,7 +287,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         }
 
 
-        internal override FrameworkElement RequestShowView(ShowViewRequestModel request)
+        internal override object RequestShowView(ShowViewRequestModel request)
         {
             switch(request.ServiceType) {
                 case ServiceType.Smile:

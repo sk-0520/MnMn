@@ -55,5 +55,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 表示要素の破棄。
         /// </summary>
         HideView,
+        /// <summary>
+        /// 検索条件。
+        /// </summary>
+        SearchSetting,
     }
 }

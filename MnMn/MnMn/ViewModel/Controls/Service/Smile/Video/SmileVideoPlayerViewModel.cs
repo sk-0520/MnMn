@@ -57,6 +57,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using xZune.Vlc.Wpf;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -125,8 +128,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         SmileVideoPlayerWindow View { get; set; }
         VlcPlayer Player { get; set; }
@@ -382,6 +383,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Player.BeginStop(new Action(() => {
                             UserOperationStop = false;
                         }));
+                    }
+                );
+            }
+        }
+
+        public ICommand SearchTagCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var tagViewModel = (SmileVideoTagViewModel)o;
+
+                        //var searchItemViewModel = new SmileVideoSearchGroupViewModel(Mediation, )
+                        //tagViewModel.TagName
+                        var searchSettingResponce = Mediation.Request(new RequestModel(RequestKind.SearchSetting, ServiceType.SmileVideo));
+                        var searchSettingResult = (SmileVideoSearchSettingResultModel)searchSettingResponce.Result;
+
+                        var searchDefineResponce = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
+                        var searchDefineResult = (SmileVideoSearchModel)searchDefineResponce.Result;
+
+                        var serchViewModel = new SmileVideoSearchGroupViewModel(Mediation, searchDefineResult, searchSettingResult.Method, searchSettingResult.Sort, searchDefineResult.GetTagTypeElement(), tagViewModel.TagName);
+                        Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, serchViewModel, ShowViewState.Foreground));
                     }
                 );
             }
