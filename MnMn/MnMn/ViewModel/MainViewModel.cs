@@ -21,7 +21,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -38,6 +40,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Mediation = new Mediation(Setting);
             
             SmileManager = new SmileManagerViewModel(Mediation);
+
+            Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(SmileManager));
         }
 
         #region property

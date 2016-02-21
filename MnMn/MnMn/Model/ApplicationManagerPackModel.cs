@@ -19,22 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    /// <summary>
-    /// 対象サービス種別。
-    /// </summary>
-    public enum ServiceType
+    public class ApplicationManagerPackModel: ManagerPackModelBase
     {
-        Application,
-        /// <summary>
-        /// ニコニコ。
-        /// </summary>
-        Smile,
-        /// <summary>
-        /// ニコニコ動画。
-        /// </summary>
-        SmileVideo,
+        public ApplicationManagerPackModel(SmileManagerViewModel smileManager)
+        {
+            SmileManager = smileManager;
+        }
+
+        #region
+
+        public SmileManagerViewModel SmileManager { get; }
+
+        #endregion
     }
 }

@@ -203,6 +203,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsMuteProperty
+
+        public static readonly DependencyProperty IsMuteProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsMuteProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsMuteChanged))
+        );
+
+        private static void OnIsMuteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.IsMute = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsMute
+        {
+            get { return (bool)GetValue(IsMuteProperty); }
+            set { SetValue(IsMuteProperty, value); }
+        }
+
+        #endregion
+
         #region TotalTimeProperty
 
         public static readonly DependencyProperty TotalTimeProperty = DependencyProperty.Register(
@@ -459,60 +484,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get { return GetValue(ReplayCommandParameterProperty); }
             set { SetValue(ReplayCommandParameterProperty, value); }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region MuteCommand
-
-        #region MuteCommandProperty
-
-        public static readonly DependencyProperty MuteCommandProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(MuteCommandProperty)),
-            typeof(ICommand),
-            typeof(Navigationbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnMuteCommandChanged))
-        );
-
-        private static void OnMuteCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Navigationbar;
-            if(control != null) {
-                control.MuteCommand = e.NewValue as ICommand;
-            }
-        }
-
-        public ICommand MuteCommand
-        {
-            get { return GetValue(MuteCommandProperty) as ICommand; }
-            set { SetValue(MuteCommandProperty, value); }
-        }
-
-        #endregion
-
-        #region MuteCommandParameterProperty
-
-        public static readonly DependencyProperty MuteCommandParameterProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(MuteCommandParameterProperty)),
-            typeof(object),
-            typeof(Navigationbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnMuteCommandParameterChanged))
-        );
-
-        private static void OnMuteCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Navigationbar;
-            if(control != null) {
-                control.MuteCommandParameter = e.NewValue;
-            }
-        }
-
-        public object MuteCommandParameter
-        {
-            get { return GetValue(MuteCommandParameterProperty); }
-            set { SetValue(MuteCommandParameterProperty, value); }
         }
 
         #endregion

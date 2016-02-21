@@ -20,21 +20,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
-    /// <summary>
-    /// 対象サービス種別。
-    /// </summary>
-    public enum ServiceType
+    public enum SmileVideoCommentVertical
     {
-        Application,
         /// <summary>
-        /// ニコニコ。
+        /// 通常。
         /// </summary>
-        Smile,
+        Normal,
         /// <summary>
-        /// ニコニコ動画。
+        /// 上。
         /// </summary>
-        SmileVideo,
+        Top,
+        /// <summary>
+        /// 下。
+        /// </summary>
+        Bottom,
     }
 }

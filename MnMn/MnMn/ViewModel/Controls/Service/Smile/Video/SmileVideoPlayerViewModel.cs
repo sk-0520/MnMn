@@ -56,6 +56,10 @@ using HtmlAgilityPack;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using xZune.Vlc.Wpf;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -73,6 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Element = element;
                 ViewModel = viewModel;
                 Animation = animation;
+                Clock = Animation.CreateClock();
             }
 
             #region property
@@ -80,6 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             public FrameworkElement Element { get; }
             public SmileVideoCommentViewModel ViewModel { get; }
             public AnimationTimeline Animation { get; }
+            public AnimationClock Clock { get; }
 
             #endregion
         }
@@ -93,6 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         float _videoPosition;
         int _volume = 100;
+        bool _isMute = false;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -107,6 +114,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         double _baseHeight;
 
         PlayerState _playerState;
+        bool _isBuffering;
+
+        bool _replayVideo;
 
         #endregion
 
@@ -119,8 +129,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        Mediation Mediation { get; set; }
-
         SmileVideoPlayerWindow View { get; set; }
         VlcPlayer Player { get; set; }
         Navigationbar Navigationbar { get; set; }
@@ -129,10 +137,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
+        public string VideoId
+        {
+            get { return VideoInformation.VideoId; }
+        }
+
         /// <summary>
         /// 初回再生か。
         /// </summary>
         bool IsFirstPlay { get; set; } = true;
+
+        bool UserOperationStop { get; set; } = false;
 
         /// <summary>
         /// 投降者コメントが構築されたか。
@@ -143,6 +158,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+
+        List<CommentData> ShowingCommentList { get; } = new List<CommentData>();
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
@@ -157,14 +174,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// シークバーの現在地が移動中か。
         /// </summary>
-        public bool SeekbarThumbMoving { get; set; }
+        public bool MovingSeekbarThumb { get; set; }
         /// <summary>
         /// ビューが閉じられたか。
         /// </summary>
         bool IsViewClosed { get; set; }
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
 
-        List<CommentData> NormalCommentShowList { get; } = new List<CommentData>();
 
         public LoadState TagLoadState
         {
@@ -208,9 +224,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._volume, value)) {
-                    if(Player != null) {
-                        Player.Volume = this._volume;
-                    }
+                    Player.Volume = this._volume;
+                }
+            }
+        }
+
+        public bool IsMute
+        {
+            get { return this._isMute; }
+            set
+            {
+                if(SetVariableValue(ref this._isMute, value)) {
+                    Player.IsMute = this._isMute;
                 }
             }
         }
@@ -283,10 +308,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public PlayerState PlayerState
         {
             get { return this._playerState; }
-            set{ SetVariableValue(ref this._playerState, value); }
+            set { SetVariableValue(ref this._playerState, value); }
         }
 
+        public bool IsBuffering
+        {
+            get { return this._isBuffering; }
+            set { SetVariableValue(ref this._isBuffering, value); }
+        }
+        float BufferingVideoPosition { get; set; }
 
+        public bool ReplayVideo
+        {
+            get { return this._replayVideo; }
+            set { SetVariableValue(ref this._replayVideo, value); }
+        }
+
+        public string UserNickname
+        {
+            get { return VideoInformation.UserNickname; }
+        }
 
         #endregion
 
@@ -320,7 +361,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 return;
 
                             case PlayerState.Pause:
-                                Player.PauseOrResume();
+                                if(IsBuffering) {
+                                    SetMedia();
+                                    Player.Position = VideoPosition;
+                                    VideoPlay();
+                                } else {
+                                    Player.PauseOrResume();
+                                }
                                 return;
 
                             default:
@@ -337,7 +384,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        Player.BeginStop();
+                        UserOperationStop = true;
+                        Player.BeginStop(new Action(() => {
+                            UserOperationStop = false;
+                        }));
+                    }
+                );
+            }
+        }
+
+        public ICommand SearchTagCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var tagViewModel = (SmileVideoTagViewModel)o;
+
+                        //var searchItemViewModel = new SmileVideoSearchGroupViewModel(Mediation, )
+                        //tagViewModel.TagName
+                        var searchSettingResponce = Mediation.Request(new RequestModel(RequestKind.SearchSetting, ServiceType.SmileVideo));
+                        var searchSettingResult = (SmileVideoSearchSettingResultModel)searchSettingResponce.Result;
+
+                        var searchDefineResponce = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
+                        var searchDefineResult = (SmileVideoSearchModel)searchDefineResponce.Result;
+
+                        var serchViewModel = new SmileVideoSearchGroupViewModel(Mediation, searchDefineResult, searchSettingResult.Method, searchSettingResult.Sort, searchDefineResult.GetTagTypeElement(), tagViewModel.TagName);
+                        Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, serchViewModel, ShowViewState.Foreground));
+                    }
+                );
+            }
+        }
+
+        public ICommand OpenCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(VideoInformation.CacheDirectory.Exists) {
+                            Process.Start(VideoInformation.CacheDirectory.FullName);
+                        }
                     }
                 );
             }
@@ -374,6 +461,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Player.Play();
         }
 
+        void ClearComment()
+        {
+            foreach(var data in ShowingCommentList) {
+                data.Clock.Controller.SkipToFill();
+                data.Clock.Controller.Remove();
+            }
+            ShowingCommentList.Clear();
+        }
+
         void MoveVideoPostion(float targetPosition)
         {
             float setPosition = targetPosition;
@@ -386,96 +482,290 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     setPosition = (float)percentLoaded;
                 }
             }
+            ClearComment();
 
             Player.Position = setPosition;
+            PrevPlayedTime = Player.Time;
         }
 
-        void FireShowComment()
+        static FrameworkElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
         {
-            Debug.WriteLine($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
-
-            var commentArea = new Size(
-                NormalCommentArea.ActualWidth,
-                NormalCommentArea.ActualHeight
-            );
-            var list = NormalCommentList.ToArray();
-            foreach(var commentViewModel in list.Where(c => PrevPlayedTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime).ToArray()) {
-                var ft = new FormattedText(
-                    commentViewModel.Content,
-                    CultureInfo.GetCultureInfo(Constants.CurrentLanguageCode),
-                    FlowDirection.LeftToRight,
-                    new Typeface(Setting.FontFamily),
-                    Setting.FontSize,
-                    commentViewModel.Foreground
-                );
-                //var geometry = ft.BuildGeometry(new Point());
-                //var drawing = new GeometryDrawing(null, new Pen(Brushes.Red, 2), geometry);
-                var box = new Label();
-                box.BeginInit();
-                box.Foreground = commentViewModel.Foreground;
-                box.FontFamily = new FontFamily(Setting.FontFamily);
-                box.FontSize = Setting.FontSize;
-                box.Opacity = Setting.FontAlpha;
-                box.Content = commentViewModel.Content;
-                box.Effect = new DropShadowEffect() {
-                    Color = commentViewModel.GetShadowColor(commentViewModel.GetForeColor()),
+            var element = new Label();
+            using(Initializer.BeginInitialize(element)) {
+                element.Foreground = commentViewModel.Foreground;
+                element.FontFamily = new FontFamily(setting.FontFamily);
+                element.FontSize = commentViewModel.FontSize;
+                element.Opacity = setting.FontAlpha;
+                element.Content = commentViewModel.Content;
+                element.Effect = new DropShadowEffect() {
+                    Color = commentViewModel.Shadow,
                     Direction = 315,
                     BlurRadius = 2,
                     ShadowDepth = 2,
                     Opacity = 0.8,
                     RenderingBias = RenderingBias.Performance,
                 };
-                box.EndInit();
+            }
 
-                NormalCommentArea.Children.Add(box);
-                NormalCommentArea.UpdateLayout();
+            if(commentViewModel.Vertical != SmileVideoCommentVertical.Normal) {
+                element.Width = commentArea.Width;
+                element.HorizontalContentAlignment = HorizontalAlignment.Center;
+            }
 
-                Canvas.SetLeft(box, NormalCommentArea.ActualWidth);
+            return element;
+        }
 
-                // 今あるコメントから安全圏を走査
-                var lastData = NormalCommentShowList
-                    .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
-                    .OrderBy(i => Canvas.GetTop(i.Element))
-                    .LastOrDefault()
-                ;
-                if(lastData != null) {
-                    var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
-                    if(commentArea.Height < nextY + box.ActualHeight) {
-                        Canvas.SetTop(box, 0);
-                    } else {
-                        Canvas.SetTop(box, nextY);
+        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            // 今あるコメントから安全圏を走査
+            var nowData = showingCommentList
+                .Where(i => i.ViewModel.Vertical == SmileVideoCommentVertical.Normal)
+                .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
+                .OrderBy(i => Canvas.GetTop(i.Element))
+                .ToArray()
+            ;
+            var lastData = nowData.LastOrDefault();
+            if(lastData != null) {
+                var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
+                if(commentArea.Height < nextY + element.ActualHeight) {
+                    double usingY = -1;
+                    // これ以上下げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
+                    var lineData = nowData
+                        .GroupBy(i => Canvas.GetTop(i.Element))
+                        .OrderBy(line => line.Key)
+                    ;
+                    // 自身の高さの倍数で見ていく
+                    var myHeight = element.ActualHeight;
+                    for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
+                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
+                        if(line == null) {
+                            // 他のデータなさそうなので入れる。
+                            usingY = y;
+                            break;
+                        }
                     }
+                    if(usingY == -1) {
+                        usingY = lineData
+                            .OrderBy(line => line.Count())
+                            .First()
+                            .Key
+                        ;
+                    }
+
+                    Debug.WriteLine(usingY);
+                    Canvas.SetTop(element, usingY);
                 } else {
-                    Canvas.SetTop(box, 0);
+                    Canvas.SetTop(element, nextY);
                 }
+            } else {
+                Canvas.SetTop(element, 0);
+            }
+            Canvas.SetLeft(element, commentArea.Width);
+        }
 
+        /// <summary>
+        /// TODO: top,bottomは共存できる。はず。
+        /// </summary>
+        /// <param name="commentViewModel"></param>
+        /// <param name="element"></param>
+        /// <param name="commentArea"></param>
+        /// <param name="showingCommentList"></param>
+        /// <param name="setting"></param>
+        static void SetTopCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            // 今あるコメントから安全圏を走査
+            var nowData = showingCommentList
+                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
+                        .GroupBy(i => Canvas.GetTop(i.Element))
+                        .OrderBy(line => line.Key)
+                .ToArray()
+            ;
+            double usingY = -1;
+            var myHeight = element.ActualHeight;
+            for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
+                var line = nowData.FirstOrDefault(ls => ls.Key == y);
+                if(line == null) {
+                    // 他のデータなさそうなので入れる。
+                    usingY = y;
+                    break;
+                }
+            }
+            if(usingY == -1) {
+                usingY = nowData
+                    .OrderBy(line => line.Count())
+                    .First()
+                    .Key
+                ;
+            }
 
-                var animation = new DoubleAnimation();
-                var data = new CommentData(box, commentViewModel, animation);
-                NormalCommentShowList.Add(data);
+            Canvas.SetTop(element, usingY);
+            Canvas.SetLeft(element, 0);
 
-                var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - PrevPlayedTime.TotalMilliseconds;
-                var diffPosition = starTime / commentArea.Width;
+            CastUtility.AsAction<Label>(element, label => {
+                label.Width = commentArea.Width;
+                label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            });
 
+        }
 
-                animation.From = commentArea.Width + diffPosition;
-                animation.To = -box.ActualWidth;
-                animation.Duration = new Duration(Setting.ShowTime);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commentViewModel"></param>
+        /// <param name="element"></param>
+        /// <param name="commentArea"></param>
+        /// <param name="showingCommentList"></param>
+        /// <param name="setting"></param>
+        static void SetBottomCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            // 今あるコメントから安全圏を走査
+            var nowData = showingCommentList
+                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
+                .GroupBy(i => Canvas.GetTop(i.Element))
+                .OrderByDescending(i => i.Key)
+                .ToArray()
+            ;
+            double usingY = -1;
 
-                EventDisposer<EventHandler> ev = null;
-                animation.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
-                    NormalCommentArea.Children.Remove(box);
-                    NormalCommentShowList.Remove(data);
-                    ev.Dispose();
-                    box = null;
-                    ev = null;
-                }, h => NormalCommentArea.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+            var myHeight = element.ActualHeight;
+            for(var y = commentArea.Height - myHeight; 0 < y; y -= myHeight) {
+                var line = nowData.FirstOrDefault(ls => ls.Key == y);
+                if(line == null) {
+                    // 他のデータなさそうなので入れる。
+                    usingY = y;
+                    break;
+                }
+            }
+            if(usingY == -1) {
+                usingY = nowData
+                    .OrderByDescending(line => line.Count())
+                    .First()
+                    .Key
+                ;
+            }
 
-                box.BeginAnimation(Canvas.LeftProperty, animation);
+            Canvas.SetTop(element, usingY);
+            Canvas.SetLeft(element, 0);
+
+            CastUtility.AsAction<Label>(element, label => {
+                label.Width = commentArea.Width;
+                label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            });
+
+        }
+
+        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            switch(commentViewModel.Vertical) {
+                case SmileVideoCommentVertical.Normal:
+                    SetMarqueeCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                case SmileVideoCommentVertical.Top:
+                    SetTopCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                case SmileVideoCommentVertical.Bottom:
+                    SetBottomCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                default:
+                    break;
             }
         }
 
-        void ScrollComment()
+        static AnimationTimeline CreateMarqueeCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            var animation = new DoubleAnimation();
+            var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
+            var diffPosition = starTime / commentArea.Width;
+
+            animation.From = commentArea.Width + diffPosition;
+            animation.To = -element.ActualWidth;
+            animation.Duration = new Duration(showTime);
+
+            return animation;
+        }
+
+        static AnimationTimeline CreateTopBottomCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            var animation = new DoubleAnimation();
+            //var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
+            //var diffPosition = starTime / commentArea.Width;
+
+            // アニメーションさせる必要ないけど停止や移動なんかを考えるとIFとしてアニメーションの方が楽
+            animation.From = animation.To = 0;
+            animation.Duration = new Duration(showTime);
+
+            return animation;
+        }
+
+
+        static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            switch(commentViewModel.Vertical) {
+                case SmileVideoCommentVertical.Normal:
+                    return CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+
+                case SmileVideoCommentVertical.Top:
+                case SmileVideoCommentVertical.Bottom:
+                    return CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        static void FireShowComment_Impl(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        {
+            var commentArea = new Size(
+               commentParentElement.ActualWidth,
+               commentParentElement.ActualHeight
+            );
+
+            var list = commentViewModelList.ToArray();
+            // 現在時間から-1秒したものを表示対象とする
+            var correctionTime = TimeSpan.FromSeconds(1);
+            foreach(var commentViewModel in list.Where(c => prevTime <= (c.ElapsedTime - correctionTime) && (c.ElapsedTime - correctionTime) <= nowTime).ToArray()) {
+
+                var element = CreateCommentElement(commentViewModel, commentArea, setting);
+
+                commentViewModel.NowShowing = true;
+
+                commentParentElement.Children.Add(element);
+                commentParentElement.UpdateLayout();
+
+                SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+
+                // アニメーション設定
+                var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.ShowTime + correctionTime);
+
+                var data = new CommentData(element, commentViewModel, animation);
+                showingCommentList.Add(data);
+
+                EventDisposer<EventHandler> ev = null;
+                data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                    commentParentElement.Children.Remove(element);
+                    showingCommentList.Remove(data);
+                    data.ViewModel.NowShowing = false;
+                    ev.Dispose();
+                    element = null;
+                    ev = null;
+                }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+
+                element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+            }
+        }
+
+        void FireShowComment()
+        {
+            Debug.WriteLine($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
+
+            FireShowComment_Impl(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
+            FireShowComment_Impl(ContributorCommentArea, PrevPlayedTime, PlayTime, ContributorCommentList, ShowingCommentList, Setting);
+        }
+
+        void ScrollCommentList()
         {
             var nowTimelineItem = CommentItems
                 .Cast<SmileVideoCommentViewModel>()
@@ -498,6 +788,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             TagLoadState = LoadState.Preparation;
 
             TagItems.InitializeRange(VideoInformation.TagList);
+
+            TagLoadState = LoadState.Loaded;
 
             return Task.CompletedTask;
         }
@@ -573,14 +865,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 };
                 html.LoadHtml(VideoInformation.PageDescription);
 
-                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n,i) => new { Node = n, Index = i }).ToArray();
-                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n,i) => new { Node = n.Node, Index = n.Index, BreakIndex = i}).ToArray();
+                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n, i) => new { Node = n, Index = i }).ToArray();
+                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n, i) => new { Node = n.Node, Index = n.Index, BreakIndex = i }).ToArray();
                 var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
                 if(paragraphPointList.Length > 1) {
                     var head = 0;
                     foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
                         var tail = point.Index;
-                        var nodes = nodeIndexList.Skip(head).Take(tail- head);
+                        var nodes = nodeIndexList.Skip(head).Take(tail - head);
                         var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
                         document.Blocks.Add(p);
                         head = tail + 1;
@@ -593,7 +885,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 document.FontSize = DocumentDescription.FontSize;
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
-                
+
                 //DocumentDescription.Document = document;
             });
         }
@@ -668,7 +960,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
             var comments = rawMsgPacket.Chat
-                .GroupBy(c => c.No)
+                .GroupBy(c => new { c.No, c.Fork })
                 .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
                 .OrderBy(c => c.ElapsedTime)
             ;
@@ -749,7 +1041,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
                 FireShowComment();
-                ScrollComment();
+                ScrollCommentList();
                 PrevPlayedTime = PlayTime;
             }
         }
@@ -768,7 +1060,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
         {
-            SeekbarThumbMoving = true;
+            MovingSeekbarThumb = true;
         }
 
         private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -780,7 +1072,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             float nextPosition;
 
-            if(!SeekbarThumbMoving) {
+            if(!MovingSeekbarThumb) {
                 var pos = e.GetPosition(Navigationbar.seekbar);
                 nextPosition = (float)(pos.X / Navigationbar.seekbar.ActualWidth);
             } else {
@@ -790,7 +1082,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             MoveVideoPostion(nextPosition);
 
             ChangingVideoPosition = false;
-            SeekbarThumbMoving = false;
+            MovingSeekbarThumb = false;
         }
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -808,16 +1100,53 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Debug.WriteLine(e.Value);
             switch(e.Value) {
                 case xZune.Vlc.Interop.Media.MediaState.Playing:
+                    var prevState = PlayerState;
                     PlayerState = PlayerState.Playing;
-                    return;
+                    if(prevState == PlayerState.Pause) {
+                        foreach(var data in ShowingCommentList) {
+                            data.Clock.Controller.Resume();
+                        }
+                    }
+                    break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Stopped:
-                    PlayerState = PlayerState.Stop;
-                    return;
+                    if(IsBuffering) {
+                        Debug.WriteLine("buffering wait");
+                        PlayerState = PlayerState.Pause;
+                        Player.Position = BufferingVideoPosition;
+                        foreach(var data in ShowingCommentList) {
+                            data.Clock.Controller.Pause();
+                        }
+                    } else {
+                        if(ReplayVideo && !UserOperationStop) {
+                            Debug.WriteLine("replay");
+                            VideoPosition = 0;
+                            PrevPlayedTime = TimeSpan.Zero;
+                            ClearComment();
+                            Player.Play();
+                        } else {
+                            Debug.WriteLine("stop");
+                            PlayerState = PlayerState.Stop;
+                            VideoPosition = 0;
+                            PrevPlayedTime = TimeSpan.Zero;
+                        }
+                    }
+                    break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Paused:
                     PlayerState = PlayerState.Pause;
-                    return;
+                    foreach(var data in ShowingCommentList) {
+                        data.Clock.Controller.Pause();
+                    }
+                    break;
+
+                case xZune.Vlc.Interop.Media.MediaState.Ended:
+                    if(PlayTime != PrevPlayedTime) {
+                        // 終わってない
+                        IsBuffering = true;
+                        BufferingVideoPosition = VideoPosition;
+                    }
+                    break;
 
                 default:
                     break;

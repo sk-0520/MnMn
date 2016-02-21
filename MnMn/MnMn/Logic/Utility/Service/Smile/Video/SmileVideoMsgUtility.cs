@@ -38,6 +38,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static SmileVideoUserKind ConvertUserKind(string s)
         {
+            if(s == null) {
+                return SmileVideoUserKind.Noraml;
+            }
+
             var map = new Dictionary<string, SmileVideoUserKind>() {
                 { "0", SmileVideoUserKind.Noraml },
                 { "1", SmileVideoUserKind.Premium },

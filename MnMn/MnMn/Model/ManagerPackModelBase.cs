@@ -20,21 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    /// <summary>
-    /// 対象サービス種別。
-    /// </summary>
-    public enum ServiceType
-    {
-        Application,
-        /// <summary>
-        /// ニコニコ。
-        /// </summary>
-        Smile,
-        /// <summary>
-        /// ニコニコ動画。
-        /// </summary>
-        SmileVideo,
-    }
+    public class ManagerPackModelBase
+    { }
 }

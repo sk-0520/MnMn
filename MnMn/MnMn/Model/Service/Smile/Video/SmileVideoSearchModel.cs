@@ -47,6 +47,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         public int MaximumCount { get; set; }
 
         #endregion
+
+        #region function
+
+        /// <summary>
+        /// ださい。
+        /// </summary>
+        /// <returns></returns>
+        public SmileVideoElementModel GetTagTypeElement()
+        {
+            return Type.First(e => e.Key == "tagsExact");
+        }
+
+        #endregion
     }
 }
 
