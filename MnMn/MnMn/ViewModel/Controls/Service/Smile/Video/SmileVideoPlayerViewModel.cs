@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         class CommentData
         {
-            public CommentData(FrameworkElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
+            public CommentData(SmileVideoCommentElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
             {
                 Element = element;
                 ViewModel = viewModel;
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             #region property
 
-            public FrameworkElement Element { get; }
+            public SmileVideoCommentElement Element { get; }
             public SmileVideoCommentViewModel ViewModel { get; }
             public AnimationTimeline Animation { get; }
             public AnimationClock Clock { get; }
@@ -489,28 +489,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             PrevPlayedTime = Player.Time;
         }
 
-        static FrameworkElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
+        static SmileVideoCommentElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
         {
-            var element = new Label();
+            var element = new SmileVideoCommentElement();
             using(Initializer.BeginInitialize(element)) {
-                element.Foreground = commentViewModel.Foreground;
-                element.FontFamily = new FontFamily(setting.FontFamily);
-                element.FontSize = commentViewModel.FontSize;
-                element.Opacity = setting.FontAlpha;
-                element.Content = commentViewModel.Content;
-                element.Effect = new DropShadowEffect() {
-                    Color = commentViewModel.Shadow,
-                    Direction = 315,
-                    BlurRadius = 2,
-                    ShadowDepth = 2,
-                    Opacity = 0.8,
-                    RenderingBias = RenderingBias.Performance,
-                };
+                element.DataContext = commentViewModel;
             }
 
             if(commentViewModel.Vertical != SmileVideoCommentVertical.Normal) {
                 element.Width = commentArea.Width;
-                element.HorizontalContentAlignment = HorizontalAlignment.Center;
             }
 
             return element;
@@ -602,10 +589,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Canvas.SetTop(element, usingY);
             Canvas.SetLeft(element, 0);
 
-            CastUtility.AsAction<Label>(element, label => {
-                label.Width = commentArea.Width;
-                label.HorizontalContentAlignment = HorizontalAlignment.Center;
-            });
+            element.Width = commentArea.Width;
 
         }
 
@@ -648,10 +632,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Canvas.SetTop(element, usingY);
             Canvas.SetLeft(element, 0);
 
-            CastUtility.AsAction<Label>(element, label => {
-                label.Width = commentArea.Width;
-                label.HorizontalContentAlignment = HorizontalAlignment.Center;
-            });
+            element.Width = commentArea.Width;
+
 
         }
 

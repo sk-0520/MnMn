@@ -151,6 +151,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Brush Foreground { get; }
         public Color Shadow { get; }
 
+        public double Opacity { get { return Setting.FontAlpha; } }
+
         public SmileVideoCommentVertical Vertical { get; }
 
         public bool IsSelected
