@@ -108,6 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int SmileVideoSearchCount => 100;
         public static bool SmileVideoAutoPlay => true;
         public static bool SmileVideoLoadVideoInformation => true;
+        public static int SmileVideoCommentShowCount => 0;
 
         public static string CurrentLanguageCode => "ja-JP";
 

@@ -646,34 +646,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
             var correctionTime = TimeSpan.FromSeconds(1);
-            foreach(var commentViewModel in list.Where(c => prevTime <= (c.ElapsedTime - correctionTime) && (c.ElapsedTime - correctionTime) <= nowTime).ToArray()) {
+            var newComments = list
+                .Where(c => prevTime <= (c.ElapsedTime - correctionTime) && (c.ElapsedTime - correctionTime) <= nowTime)
+                .ToArray()
+            ;
+            if(newComments.Any()) {
+                foreach(var commentViewModel in newComments) {
+                    var element = CreateCommentElement(commentViewModel, commentArea, setting);
 
-                var element = CreateCommentElement(commentViewModel, commentArea, setting);
+                    commentViewModel.NowShowing = true;
 
-                commentViewModel.NowShowing = true;
+                    commentParentElement.Children.Add(element);
+                    commentParentElement.UpdateLayout();
 
-                commentParentElement.Children.Add(element);
-                commentParentElement.UpdateLayout();
+                    SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
 
-                SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    // アニメーション設定
+                    var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.ShowTime + correctionTime);
 
-                // アニメーション設定
-                var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.ShowTime + correctionTime);
+                    var data = new CommentData(element, commentViewModel, animation);
+                    showingCommentList.Add(data);
 
-                var data = new CommentData(element, commentViewModel, animation);
-                showingCommentList.Add(data);
+                    EventDisposer<EventHandler> ev = null;
+                    data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                        commentParentElement.Children.Remove(element);
+                        showingCommentList.Remove(data);
+                        data.ViewModel.NowShowing = false;
+                        ev.Dispose();
+                        element = null;
+                        ev = null;
+                    }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
 
-                EventDisposer<EventHandler> ev = null;
-                data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
-                    commentParentElement.Children.Remove(element);
-                    showingCommentList.Remove(data);
-                    data.ViewModel.NowShowing = false;
-                    ev.Dispose();
-                    element = null;
-                    ev = null;
-                }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
-
-                element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+                    element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+                }
+                // 超過分のコメントを破棄
+                if(0 < setting.CommentShowCount) {
+                    var removeList = showingCommentList
+                        .OrderBy(i => i.ViewModel.ElapsedTime)
+                        .ThenBy(i => i.ViewModel.Number)
+                        .Take(showingCommentList.Count - setting.CommentShowCount)
+                        .ToArray()
+                    ;
+                    foreach(var item in removeList) {
+                        item.Clock.Controller.SkipToFill();
+                    }
+                }
             }
         }
 

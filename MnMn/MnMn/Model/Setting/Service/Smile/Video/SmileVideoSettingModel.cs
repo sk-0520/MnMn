@@ -59,6 +59,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         public bool LoadVideoInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
 
+        /// <summary>
+        /// 画面上に一堂に表示するコメント数
+        /// </summary>
+        public int CommentShowCount { get; set; } = Constants.SmileVideoCommentShowCount;
+
         #endregion
     }
 }
