@@ -505,49 +505,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
         {
-            // 今あるコメントから安全圏を走査
-            var nowData = showingCommentList
+            // 空いている部分に放り込む
+            var lineList = showingCommentList
                 .Where(i => i.ViewModel.Vertical == SmileVideoCommentVertical.Normal)
-                .Where(i => commentArea.Width < Canvas.GetLeft(i.Element) + i.Element.ActualWidth)
-                .OrderBy(i => Canvas.GetTop(i.Element))
+                .GroupBy(i => (int)Canvas.GetTop(i.Element))
+                .OrderBy(g => g.Key)
                 .ToArray()
             ;
-            var lastData = nowData.LastOrDefault();
-            if(lastData != null) {
-                var nextY = Canvas.GetTop(lastData.Element) + lastData.Element.ActualHeight;
-                if(commentArea.Height < nextY + element.ActualHeight) {
-                    double usingY = -1;
-                    // これ以上下げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
-                    var lineData = nowData
-                        .GroupBy(i => Canvas.GetTop(i.Element))
-                        .OrderBy(line => line.Key)
-                    ;
-                    // 自身の高さの倍数で見ていく
-                    var myHeight = element.ActualHeight;
-                    for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
-                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
-                        if(line == null) {
-                            // 他のデータなさそうなので入れる。
+            if(lineList.Any()) {
+                var usingY = -1;
+                var myHeight = (int)element.ActualHeight;
+                Debug.WriteLine(myHeight);
+                var start = 0;
+                var last = commentArea.Height - myHeight;
+                for(var y = start; y < last; ) {
+                    var dupLines = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+                    if(dupLines == null) {
+                        // 誰もいなければ入れる
+                        usingY = y;
+                        break;
+                    } else {
+                        // 誰かいる場合はその末尾に入れられるか
+                        var lastComment = dupLines.FirstOrDefault(l => commentArea.Width < Canvas.GetLeft(l.Element) + l.Element.ActualWidth);
+                        if(lastComment == null) {
                             usingY = y;
                             break;
                         }
-                    }
-                    if(usingY == -1) {
-                        usingY = lineData
-                            .OrderBy(line => line.Count())
-                            .First()
-                            .Key
-                        ;
-                    }
 
-                    Debug.WriteLine(usingY);
-                    Canvas.SetTop(element, usingY);
-                } else {
-                    Canvas.SetTop(element, nextY);
+                        // 現在コメント行の最大の高さを加算して次行を検索
+                        y += (int)lastComment.Element.ActualHeight;
+                    }
                 }
+                if(usingY == -1) {
+                    usingY = lineList
+                        .OrderBy(line => line.Count())
+                        .FirstOrDefault()
+                        ?.Key ?? 0
+                    ;
+                }
+                Canvas.SetTop(element, usingY);
+
             } else {
                 Canvas.SetTop(element, 0);
             }
+
+
             Canvas.SetLeft(element, commentArea.Width);
         }
 
