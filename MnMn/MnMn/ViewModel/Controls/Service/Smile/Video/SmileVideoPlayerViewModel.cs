@@ -1091,6 +1091,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Debug.WriteLine("buffering wait");
                         PlayerState = PlayerState.Pause;
                         Player.Position = BufferingVideoPosition;
+                        foreach(var data in NormalShowCommentList) {
+                            data.Clock.Controller.Pause();
+                        }
                     } else {
                         if(ReplayVideo && !UserOperationStop) {
                             Debug.WriteLine("replay");
