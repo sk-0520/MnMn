@@ -814,10 +814,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     } else if(node.Name == "font") {
                         var text = new Run(node.InnerText);
                         var colorCode = node.GetAttributeValue("color", "#000000");
-                        var color = (Color)ColorConverter.ConvertFromString(colorCode);
-                        text.Foreground = new SolidColorBrush() {
-                            Color = color,
-                        };
+                        try {
+                            var color = (Color)ColorConverter.ConvertFromString(colorCode);
+                            text.Foreground = new SolidColorBrush() {
+                                Color = color,
+                            };
+                        }catch(FormatException ex) {
+                            //TODO: Webブラウザ並みとは言わんけどある程度の補正は必要かも
+                            Debug.WriteLine(ex);
+                        }
                         return text;
                     } else {
                         var text = new Run("*" + node.OuterHtml + "*");

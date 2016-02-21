@@ -20,28 +20,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Request;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
-    public class SmileVideoManagerViewModelBase: ManagerViewModelBase
+    public abstract class ManagerViewModelBase: ViewModelBase
     {
-        public SmileVideoManagerViewModelBase(Mediation mediation)
-            : base(mediation)
+        #region variable
+
+        bool _visible;
+
+        #endregion
+
+        public ManagerViewModelBase(Mediation mediation)
         {
-            var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
-            Setting = (SmileVideoSettingModel)settingResult.Result;
+            Mediation = mediation;
         }
 
         #region property
 
-        protected SmileVideoSettingModel Setting { get; }
+        protected Mediation Mediation { get; set; }
+
+        public bool Visible
+        {
+            get { return this._visible; }
+            set
+            {
+                if(SetVariableValue(ref this._visible, value)) {
+                    if(this._visible) {
+                        ShowView();
+                    } else {
+                        HideView();
+                    }
+                }
+            }
+        }
 
         #endregion
 
+        #region function
+
+        protected virtual void ShowView()
+        { }
+
+        protected virtual void HideView()
+        { }
+
+        #endregion
     }
 }

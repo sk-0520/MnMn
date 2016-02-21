@@ -31,19 +31,17 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 {
-    public class SmileManagerViewModel: ViewModelBase
+    public class SmileManagerViewModel: ManagerViewModelBase
     {
         public SmileManagerViewModel(Mediation mediation)
+            :base(mediation)
         {
-            Mediation = mediation;
             VideoManager = new SmileVideoManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager));
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         public SmileVideoManagerViewModel VideoManager { get; set; }
 

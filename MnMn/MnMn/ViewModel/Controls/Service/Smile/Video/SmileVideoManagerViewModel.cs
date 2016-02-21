@@ -38,7 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoManagerViewModel: ViewModelBase
+    public class SmileVideoManagerViewModel: ManagerViewModelBase
     {
         #region variable
 
@@ -47,9 +47,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         public SmileVideoManagerViewModel(Mediation mediation)
+            : base(mediation)
         {
-            Mediation = mediation;
-
             var settingResponse = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResponse.Result;
 
@@ -69,8 +68,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         SmileVideoSettingModel Setting { get; }
 

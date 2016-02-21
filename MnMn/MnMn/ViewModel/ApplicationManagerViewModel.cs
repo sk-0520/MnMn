@@ -31,9 +31,10 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
-    public class MainViewModel: ViewModelBase
+    public class ApplicationManagerViewModel: ManagerViewModelBase
     {
-        public MainViewModel()
+        public ApplicationManagerViewModel()
+            :base(new Mediation())
         {
             Setting = LoadSetting();
 
@@ -45,8 +46,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
 
         #region property
-
-        Mediation Mediation { get; set; }
 
         MainSettingModel Setting { get; }
 

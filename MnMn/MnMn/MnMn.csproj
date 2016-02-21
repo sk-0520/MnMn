@@ -177,6 +177,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchGroupViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
+    <Compile Include="ViewModel\ManagerViewModelBase.cs" />
     <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
       <DependentUpon>LoadStateNavigator.xaml</DependentUpon>
     </Compile>
@@ -302,7 +303,7 @@
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoRankingCategoryGroupItemViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ApplicationManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSessionViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoRankingManagerViewModel.cs" />
