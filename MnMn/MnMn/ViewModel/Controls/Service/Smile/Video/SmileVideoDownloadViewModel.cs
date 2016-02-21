@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         long _videoLoadedSize = 0;
         long _videoTotalSize = 1;
 
+        bool _isEconomyMode;
+
         #endregion
 
         public SmileVideoDownloadViewModel(Mediation mediation)
@@ -155,6 +157,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return null;
                 }
             }
+        }
+
+        public bool IsEconomyMode
+        {
+            get { return this._isEconomyMode; }
+            set { SetVariableValue(ref this._isEconomyMode, value); }
         }
 
         #endregion
@@ -366,6 +374,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, VideoInformation.SizeHigh);
             if(normalHeadPosition == isDonwloaded) {
                 // ダウンロード済み
+                IsEconomyMode = false;
                 LoadVideoFromCache(normalVideoFile);
                 return;
             }
@@ -373,12 +382,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             long headPosition = 0;
             FileInfo donwloadFile;
             // エコノミーキャッシュが存在しても非エコノミーでダウンロードできるなら新たにファイルを落とす。
-            var isEconomyMode = VideoInformation.IsEconomyMode;
-            if(isEconomyMode) {
+            IsEconomyMode = VideoInformation.IsEconomyMode;
+            if(IsEconomyMode) {
                 var economyVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, VideoInformation.GetVideoFileName(true)));
                 var economyHeadPosition = GetDownloadHeadPosition(economyVideoFile, VideoInformation.SizeLow);
                 if(economyHeadPosition == isDonwloaded) {
                     // エコノミーダウンロード済み
+                    IsEconomyMode = true;
                     LoadVideoFromCache(economyVideoFile);
                     return;
                 }

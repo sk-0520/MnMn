@@ -302,7 +302,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public PlayerState PlayerState
         {
             get { return this._playerState; }
-            set{ SetVariableValue(ref this._playerState, value); }
+            set { SetVariableValue(ref this._playerState, value); }
         }
 
         public bool IsBuffering
@@ -317,7 +317,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._replayVideo; }
             set { SetVariableValue(ref this._replayVideo, value); }
         }
-        
+
+        public string UserNickname
+        {
+            get { return VideoInformation.UserNickname; }
+        }
+
         #endregion
 
         #region command
@@ -377,7 +382,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Player.BeginStop(new Action(() => {
                             UserOperationStop = false;
                         }));
-            }
+                    }
                 );
             }
         }
@@ -527,47 +532,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // 今あるコメントから安全圏を走査
             var nowData = showingCommentList
                 .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
-                .OrderBy(i => Canvas.GetTop(i.Element))
-                .ToArray()
-            ;
-            var lastData = nowData.LastOrDefault();
-            if(lastData != null) {
-                var nextY = Canvas.GetTop(lastData.Element) - element.ActualHeight;
-                if(nextY < 0) {
-                    double usingY = -1;
-                    // これ以上上げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
-                    var lineData = nowData
                         .GroupBy(i => Canvas.GetTop(i.Element))
                         .OrderBy(line => line.Key)
-                    ;
-                    // 自身の高さの倍数で見ていく
-                    var myHeight = element.ActualHeight;
-                    for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
-                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
-                        if(line == null) {
-                            // 他のデータなさそうなので入れる。
-                            usingY = y;
-                            break;
-                        }
-                    }
-                    if(usingY == -1) {
-                        usingY = lineData
-                            .OrderBy(line => line.Count())
-                            .First()
-                            .Key
-                        ;
-                    }
-
-                    Debug.WriteLine(usingY);
-                    Canvas.SetTop(element, usingY);
-                } else {
-                    Canvas.SetTop(element, nextY);
+                .ToArray()
+            ;
+            double usingY = -1;
+            var myHeight = element.ActualHeight;
+            for(var y = 0.0; y < commentArea.Height - myHeight; y += myHeight) {
+                var line = nowData.FirstOrDefault(ls => ls.Key == y);
+                if(line == null) {
+                    // 他のデータなさそうなので入れる。
+                    usingY = y;
+                    break;
                 }
-            } else {
-                Canvas.SetTop(element, 0);
+            }
+            if(usingY == -1) {
+                usingY = nowData
+                    .OrderBy(line => line.Count())
+                    .First()
+                    .Key
+                ;
             }
 
+            Canvas.SetTop(element, usingY);
             Canvas.SetLeft(element, 0);
+
             CastUtility.AsAction<Label>(element, label => {
                 label.Width = commentArea.Width;
                 label.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -588,47 +577,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // 今あるコメントから安全圏を走査
             var nowData = showingCommentList
                 .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
-                .OrderByDescending(i => Canvas.GetTop(i.Element))
+                .GroupBy(i => Canvas.GetTop(i.Element))
+                .OrderByDescending(i => i.Key)
                 .ToArray()
             ;
-            var lastData = nowData.LastOrDefault();
-            if(lastData != null) {
-                var nextY = Canvas.GetTop(lastData.Element) - element.ActualHeight;
-                if(nextY < 0) {
-                    double usingY = -1;
-                    // これ以上上げられない場合は現在の表示されている中で一番使用されてなさそうな部分に放り込む
-                    var lineData = nowData
-                        .GroupBy(i => Canvas.GetTop(i.Element))
-                        .OrderByDescending(line => line.Key)
-                    ;
-                    // 自身の高さの倍数で見ていく
-                    var myHeight = element.ActualHeight;
-                    for(var y = commentArea.Height - myHeight; 0 < y; y -= myHeight) {
-                        var line = lineData.FirstOrDefault(ls => ls.Key == y);
-                        if(line == null) {
-                            // 他のデータなさそうなので入れる。
-                            usingY = y;
-                            break;
-                        }
-                    }
-                    if(usingY == -1) {
-                        usingY = lineData
-                            .OrderByDescending(line => line.Count())
-                            .First()
-                            .Key
-                        ;
-                    }
+            double usingY = -1;
 
-                    Debug.WriteLine(usingY);
-                    Canvas.SetTop(element, usingY);
-                } else {
-                    Canvas.SetTop(element, nextY);
+            var myHeight = element.ActualHeight;
+            for(var y = commentArea.Height - myHeight; 0 < y; y -= myHeight) {
+                var line = nowData.FirstOrDefault(ls => ls.Key == y);
+                if(line == null) {
+                    // 他のデータなさそうなので入れる。
+                    usingY = y;
+                    break;
                 }
-            } else {
-                Canvas.SetTop(element, commentArea.Height - element.ActualHeight);
+            }
+            if(usingY == -1) {
+                usingY = nowData
+                    .OrderByDescending(line => line.Count())
+                    .First()
+                    .Key
+                ;
             }
 
+            Canvas.SetTop(element, usingY);
             Canvas.SetLeft(element, 0);
+
             CastUtility.AsAction<Label>(element, label => {
                 label.Width = commentArea.Width;
                 label.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -844,14 +818,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 };
                 html.LoadHtml(VideoInformation.PageDescription);
 
-                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n,i) => new { Node = n, Index = i }).ToArray();
-                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n,i) => new { Node = n.Node, Index = n.Index, BreakIndex = i}).ToArray();
+                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n, i) => new { Node = n, Index = i }).ToArray();
+                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n, i) => new { Node = n.Node, Index = n.Index, BreakIndex = i }).ToArray();
                 var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
                 if(paragraphPointList.Length > 1) {
                     var head = 0;
                     foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
                         var tail = point.Index;
-                        var nodes = nodeIndexList.Skip(head).Take(tail- head);
+                        var nodes = nodeIndexList.Skip(head).Take(tail - head);
                         var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
                         document.Blocks.Add(p);
                         head = tail + 1;
@@ -864,7 +838,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 document.FontSize = DocumentDescription.FontSize;
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
-                
+
                 //DocumentDescription.Document = document;
             });
         }
@@ -1097,14 +1071,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         if(ReplayVideo && !UserOperationStop) {
                             Debug.WriteLine("replay");
                             VideoPosition = 0;
-                            PrevPlayedTime = TimeSpan.MinValue;
+                            PrevPlayedTime = TimeSpan.Zero;
                             ClearComment();
                             Player.Play();
                         } else {
                             Debug.WriteLine("stop");
                             PlayerState = PlayerState.Stop;
                             VideoPosition = 0;
-                            PrevPlayedTime = TimeSpan.MinValue;
+                            PrevPlayedTime = TimeSpan.Zero;
                         }
                     }
                     break;

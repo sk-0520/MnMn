@@ -156,6 +156,7 @@
 
           <StackPanel Grid.Column="0">
             <Image Width="100" Height="80" Source="{Binding ThumbnailImage}" />
+            <TextBlock Text="{Binding UserNickname}" />
           </StackPanel>
 
           <GridSplitter Grid.Column="1" />
@@ -211,7 +212,9 @@
         <TextBlock>[</TextBlock>
         <TextBlock Text="{Binding PlayerState}"></TextBlock>
         <TextBlock>,</TextBlock>
-        
+        <TextBlock>eco:</TextBlock>
+        <TextBlock Text="{Binding IsEconomyMode}" />
+        <TextBlock>,</TextBlock>
         <TextBlock>info:</TextBlock>
         <TextBlock Text="{Binding InformationLoadState}" />
         <TextBlock>,image:</TextBlock>

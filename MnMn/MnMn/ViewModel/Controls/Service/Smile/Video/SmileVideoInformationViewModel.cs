@@ -400,6 +400,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string UserNickname
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return Thumb.UserNickname;
+            }
+        }
+
         #region Getflv
 
         public bool HasError
