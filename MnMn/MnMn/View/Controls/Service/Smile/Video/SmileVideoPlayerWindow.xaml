@@ -30,7 +30,7 @@
     </Grid.RowDefinitions>
 
     <Menu Grid.Row="0">
-      <MenuItem Header="qwertyuiop" />
+      <MenuItem Header="qwertyuiop" Command="{Binding OpenCacheDirectoryCommand}" />
     </Menu>
 
     <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->

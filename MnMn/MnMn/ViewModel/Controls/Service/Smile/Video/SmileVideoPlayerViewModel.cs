@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
-        List<CommentData> NormalShowCommentList { get; } = new List<CommentData>();
+        List<CommentData> ShowingCommentList { get; } = new List<CommentData>();
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
@@ -411,6 +411,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand OpenCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(VideoInformation.CacheDirectory.Exists) {
+                            Process.Start(VideoInformation.CacheDirectory.FullName);
+                        }
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -444,11 +458,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void ClearComment()
         {
-            foreach(var data in NormalShowCommentList) {
+            foreach(var data in ShowingCommentList) {
                 data.Clock.Controller.SkipToFill();
                 data.Clock.Controller.Remove();
             }
-            NormalShowCommentList.Clear();
+            ShowingCommentList.Clear();
         }
 
         void MoveVideoPostion(float targetPosition)
@@ -466,6 +480,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ClearComment();
 
             Player.Position = setPosition;
+            PrevPlayedTime = Player.Time;
         }
 
         static FrameworkElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
@@ -741,7 +756,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Debug.WriteLine($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
-            FireShowComment_Impl(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, NormalShowCommentList, Setting);
+            FireShowComment_Impl(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
+            FireShowComment_Impl(ContributorCommentArea, PrevPlayedTime, PlayTime, ContributorCommentList, ShowingCommentList, Setting);
         }
 
         void ScrollCommentList()
@@ -767,6 +783,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             TagLoadState = LoadState.Preparation;
 
             TagItems.InitializeRange(VideoInformation.TagList);
+
+            TagLoadState = LoadState.Loaded;
 
             return Task.CompletedTask;
         }
@@ -937,7 +955,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
             var comments = rawMsgPacket.Chat
-                .GroupBy(c => c.No)
+                .GroupBy(c => new { c.No, c.Fork })
                 .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
                 .OrderBy(c => c.ElapsedTime)
             ;
@@ -1080,7 +1098,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var prevState = PlayerState;
                     PlayerState = PlayerState.Playing;
                     if(prevState == PlayerState.Pause) {
-                        foreach(var data in NormalShowCommentList) {
+                        foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Resume();
                         }
                     }
@@ -1091,7 +1109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Debug.WriteLine("buffering wait");
                         PlayerState = PlayerState.Pause;
                         Player.Position = BufferingVideoPosition;
-                        foreach(var data in NormalShowCommentList) {
+                        foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Pause();
                         }
                     } else {
@@ -1112,7 +1130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 case xZune.Vlc.Interop.Media.MediaState.Paused:
                     PlayerState = PlayerState.Pause;
-                    foreach(var data in NormalShowCommentList) {
+                    foreach(var data in ShowingCommentList) {
                         data.Clock.Controller.Pause();
                     }
                     break;

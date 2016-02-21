@@ -48,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         int _totalCount;
         SmileSearchPageViewModel<SmileVideoSearchItemViewModel> _selectedPage;
 
+        bool _notfound;
+
         #endregion
 
         public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query)
@@ -126,6 +128,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._totalCount; }
             set { SetVariableValue(ref this._totalCount, value); }
+        }
+
+        public bool NotFound
+        {
+            get { return this._notfound; }
+            set { SetVariableValue(ref this._notfound, value); }
         }
 
         public override SmileVideoFinderLoadState FinderLoadState
@@ -252,7 +260,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         SearchItems.InitializeRange(new[] { pageVm });
                     }
                 }
-                SelectedPage = SearchItems.First();
+                NotFound = !SearchItems.Any();
+                if(!NotFound) {
+                    SelectedPage = SearchItems.First();
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

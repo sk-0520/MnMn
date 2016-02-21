@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         RawSmileVideoGetflvModel Getflv { get; set; }
 
-        DirectoryInfo CacheDirectory { get; set; }
+        public DirectoryInfo CacheDirectory { get; private set; }
 
         public int Number { get; private set; }
 
