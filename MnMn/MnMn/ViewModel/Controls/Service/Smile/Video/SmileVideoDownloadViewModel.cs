@@ -293,6 +293,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var threadkeyModel = await getThreadkey.GetAsync(
                 VideoInformation.ThreadId
             );
+
+            
             
             var msg = new Msg(Mediation, session);
             var rawMessagePacket = await msg.GetAsync(
@@ -301,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoInformation.ThreadId, 
                 VideoInformation.UserId, 
                 1000, 
-                1, 10, 100, 
+                1, (int)VideoInformation.Length.TotalMinutes, 100, 
                 500, 
                 threadkeyModel
             );

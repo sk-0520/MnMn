@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileVideoCacheVideosDirectoryName => "videos";
 
-        public static double CommentFontSize => System.Windows.SystemFonts.MessageFontSize * 2;
+        public static double CommentFontSize => System.Windows.SystemFonts.MessageFontSize * 1.8;
         public static string CommentFontFamily => System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value;
         public static double CommentFontAlpha => 1;
         public static TimeSpan CommentShowTime => TimeSpan.FromSeconds(3);

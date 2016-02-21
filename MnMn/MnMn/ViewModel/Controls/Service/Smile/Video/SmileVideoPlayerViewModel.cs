@@ -137,6 +137,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
+        public string VideoId
+        {
+            get { return VideoInformation.VideoId; }
+        }
+
         /// <summary>
         /// 初回再生か。
         /// </summary>
