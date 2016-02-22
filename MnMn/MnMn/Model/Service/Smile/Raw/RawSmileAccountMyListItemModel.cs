@@ -25,7 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
     [Serializable, DataContract]
-    public class RawSmileMyListDefaultItemModel: ModelBase
+    public class RawSmileAccountMyListItemModel: ModelBase
     {
         #region proeprty
 
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
         public string Description { get; set; }
 
         [DataMember(Name = "item_data")]
-        public RawSmileMyListDefaultItemDataModel Data { get; set; } = new RawSmileMyListDefaultItemDataModel();
+        public RawSmileAccountMyListDefaultItemDataModel Data { get; set; } = new RawSmileAccountMyListDefaultItemDataModel();
 
         [DataMember(Name = "watch")]
         public string Watch { get; set; }

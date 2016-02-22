@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
         /// とりあえずマイリスト内のアイテムを取得する。
         /// </summary>
         /// <returns></returns>
-        public async Task<RawSmileMyListDefaultModel> GetDefault()
+        public async Task<RawSmileAccountMyListDefaultModel> GetAccountDefaultAsync()
         {
             await LoginIfNotLoginAsync();
 
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
 
                 var rawJson = response.Result;
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
-                    return SerializeUtility.LoadJsonDataFromStream<RawSmileMyListDefaultModel>(stream);
+                    return SerializeUtility.LoadJsonDataFromStream<RawSmileAccountMyListDefaultModel>(stream);
                 }
             }
         }
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
         /// 自身のマイリスト一覧を取得する。
         /// </summary>
         /// <returns></returns>
-        public async Task<RawSmileMyListGroupModel> GetGroup()
+        public async Task<RawSmileAccountMyListGroupModel> GetAccountGroupAsync()
         {
             await LoginIfNotLoginAsync();
 
@@ -65,9 +66,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
 
                 var rawJson = response.Result;
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
-                    return SerializeUtility.LoadJsonDataFromStream<RawSmileMyListGroupModel>(stream);
+                    return SerializeUtility.LoadJsonDataFromStream<RawSmileAccountMyListGroupModel>(stream);
                 }
             }
+        }
+
+        /// <summary>
+        /// 指定未リストIDからがさーっと取得する。
+        /// </summary>
+        /// <param name="myListId"></param>
+        /// <returns></returns>
+        public async Task<FeedSmileVideoModel> GetGroupAsync(string myListId)
+        {
+            await Task.CompletedTask;// dummy
+            throw new NotImplementedException();
         }
 
     }

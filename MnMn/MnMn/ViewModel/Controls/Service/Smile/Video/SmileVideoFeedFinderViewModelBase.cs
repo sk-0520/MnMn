@@ -53,25 +53,58 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        protected IEnumerable<SmileVideoInformationViewModel> ConvertInformationFromChannelItems(IEnumerable<FeedSmileVideoItemModel> channelItems)
+        {
+            return channelItems
+                .AsParallel()
+                .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags))
+            ;
+        }
+
+        protected void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
+        {
+            VideoInformationList.InitializeRange(items);
+            VideoInformationItems.Refresh();
+        }
+
+        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            var cancel = CancelLoading = new CancellationTokenSource();
+            return Task.Run(() => {
+                FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
+                var loader = new SmileVideoInformationLoader(VideoInformationList);
+                var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
+                return Task.WhenAll(infoTask, infoTask);
+            }).ContinueWith(t => {
+                FinderLoadState = SmileVideoFinderLoadState.Completed;
+                NowLoading = false;
+            }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        protected async virtual Task<FeedSmileVideoModel> LoadFeedAsync()
+        {
+            using(var page = CreatePageLoader()) {
+                var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                if(!feedResult.IsSuccess) {
+                    FinderLoadState = SmileVideoFinderLoadState.Failure;
+                    return null;
+                } else {
+                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
+                        return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                    }
+                }
+            }
+        }
+
+
         protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
             NowLoading = true;
 
-            FeedSmileVideoModel feedModel = null;
-
-            using(var page = CreatePageLoader()) {
-                var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                if(!feedResult.IsSuccess) {
-                    FinderLoadState = SmileVideoFinderLoadState.Failure;
-                } else {
-                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
-                        feedModel = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
-                    }
-                }
-
-            }
+            FeedSmileVideoModel feedModel = await LoadFeedAsync();
 
             if(feedModel == null) {
                 NowLoading = false;
@@ -80,28 +113,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             await Task.Run(() => {
-                return feedModel.Channel.Items
-                    .AsParallel()
-                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags))
-                ;
+                return ConvertInformationFromChannelItems(feedModel.Channel.Items);
             }).ContinueWith(task => {
-                var cancel = CancelLoading = new CancellationTokenSource();
-
-                VideoInformationList.InitializeRange(task.Result);
-                VideoInformationItems.Refresh();
-
-                Task.Run(() => {
-                    FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
-                    var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
-                    var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
-                    return Task.WhenAll(infoTask, infoTask);
-                }).ContinueWith(t => {
-                    //VideoInformationItems.Refresh();
-                    FinderLoadState = SmileVideoFinderLoadState.Completed;
-                    NowLoading = false;
-                    // return Task.CompletedTask;
-                }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
+                SetItems(task.Result);
+                LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
         }

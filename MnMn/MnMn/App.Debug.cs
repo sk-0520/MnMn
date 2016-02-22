@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //getthumbinfo();
             //var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
             //mappng();
-            mylist();
+            //mylist();
         }
 
         async void login()
@@ -122,8 +122,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var mylist = new MyList(mediation, session);
             mylist.SessionSupport = true;
-            var def = await mylist.GetDefault();
-            var grp = await mylist.GetGroup();
+            var def = await mylist.GetAccountDefaultAsync();
+            var grp = await mylist.GetAccountGroupAsync();
         }
 
     }

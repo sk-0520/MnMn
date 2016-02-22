@@ -153,11 +153,11 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />
-    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListDefaultItemDataModel.cs" />
-    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListDefaultModel.cs" />
-    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListDefaultItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListGroupItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListDefaultItemDataModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListDefaultModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
@@ -173,6 +173,8 @@
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSearchPageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoAccountMyListDefaultFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
@@ -194,6 +196,9 @@
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoCommentElement.xaml.cs">
       <DependentUpon>SmileVideoCommentElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoMyListManager.xaml.cs">
+      <DependentUpon>SmileVideoMyListManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoNewArrivalsManager.xaml.cs">
       <DependentUpon>SmileVideoNewArrivalsManager.xaml</DependentUpon>
@@ -221,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoMyListManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -34,6 +34,8 @@
       <app_controls_service_smile_video:SmileVideoSearchManager DataContext="{Binding SearchManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
       <app_controls_service_smile_video:SmileVideoRankingManager DataContext="{Binding RankingManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
       <app_controls_service_smile_video:SmileVideoNewArrivalsManager DataContext="{Binding NewArrivalsManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+      <app_controls_service_smile_video:SmileVideoMyListManager DataContext="{Binding MyListManager}" Visibility="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+      
     </Grid>
 
   </Grid>

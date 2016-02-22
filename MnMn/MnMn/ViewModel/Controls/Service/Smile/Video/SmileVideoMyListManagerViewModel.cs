@@ -19,15 +19,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoMyListManagerViewModel: SmileVideoManagerViewModelBase
     {
+        #region variable
+
+
+        #endregion
+
         public SmileVideoMyListManagerViewModel(Mediation mediation)
             : base(mediation)
-        {
-        }
+        { }
+
+        #region property
+
+        CollectionModel<SmileVideoMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+
+        #endregion
+
+        #region function
+
+
+
+        #endregion
+
     }
 }

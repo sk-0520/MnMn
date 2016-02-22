@@ -25,7 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
     [Serializable, DataContract]
-    public class RawSmileMyListDefaultItemDataModel: ModelBase
+    public class RawSmileAccountMyListDefaultItemDataModel: ModelBase
     {
         #region property
 

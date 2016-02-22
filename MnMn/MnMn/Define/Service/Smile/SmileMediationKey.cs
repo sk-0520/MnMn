@@ -30,7 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 
         public const string contentsSearch = "smile-contents-search";
 
-        public const string mylistDefault = "smile-mylist-default";
-        public const string mylistGroup = "smile-mylist-group";
+        public const string mylistDefault = "smile-mylist-account-default";
+        public const string mylistGroup = "smile-mylist-account-group";
+        public const string mylist = "smile-mylist-user";
     }
 }

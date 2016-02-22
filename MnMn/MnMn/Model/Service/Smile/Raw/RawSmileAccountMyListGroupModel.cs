@@ -25,13 +25,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
     [Serializable, DataContract]
-    public class RawSmileMyListDefaultModel: ModelBase
+    public class RawSmileAccountMyListGroupModel: ModelBase
     {
         #region property
 
-        [DataMember(Name = "mylistitem")]
-        public CollectionModel<RawSmileMyListDefaultItemModel> Items { get; set; } = new CollectionModel<RawSmileMyListDefaultItemModel>();
-
+        [DataMember(Name = "mylistgroup")]
+        public CollectionModel<RawSmileAccountMyListGroupItemModel> Groups { get; set; } = new CollectionModel<RawSmileAccountMyListGroupItemModel>();
 
         [DataMember(Name = "status")]
         public string Status { get; set; }

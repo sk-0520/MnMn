@@ -5,6 +5,7 @@
 	</param>
 	<param key="smile-contents-search">
 		<item key="service" value="${service}" />
+		
 		<item key="q" value="${query}" />
 		<item key="targets" value="${targets}" />
 		<item key="fields" value="${fields}" />
@@ -13,5 +14,10 @@
 		<item key="_offset" value="${offset}" />
 		<item key="_limit" value="${limit}" />
 		<item key="_context" value="${context}" />
+	</param>
+	<param key="smile-mylist-user">
+		<item key="mylist-id" value="${mylist-id}" />
+		
+		<item key="rss" value="2.0" />
 	</param>
 </parameters>

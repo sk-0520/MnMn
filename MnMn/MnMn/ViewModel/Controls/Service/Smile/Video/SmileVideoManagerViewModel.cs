@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             Mediation.SetManager(ServiceType.SmileVideo, new SmileVideoManagerPackModel(SearchManager, RankingManager, NewArrivalsManager));
 
-            SwitchViewCommand.Execute(ManagerItems.First());
+            SwitchViewCommand.Execute(ManagerItems.Last());
         }
 
         #region property
@@ -82,6 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SearchManager,
             RankingManager,
             NewArrivalsManager,
+            MyListManager,
         };
 
         public SmileVideoManagerViewModelBase SelectedManager

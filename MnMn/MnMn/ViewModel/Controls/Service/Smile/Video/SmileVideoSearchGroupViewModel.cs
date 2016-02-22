@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override PageLoader CreatePageLoader()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         #endregion
