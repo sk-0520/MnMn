@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
     public class SessionApiBase<TSessionViewModel>: SessionApiBase
         where TSessionViewModel : SessionViewModelBase
     {
-        public SessionApiBase(Mediation mediation, TSessionViewModel sessionBase)
-           : base(mediation, sessionBase)
+        public SessionApiBase(Mediation mediation, TSessionViewModel sessionViewModel)
+           : base(mediation, sessionViewModel)
         {
-            Session = sessionBase;
+            Session = sessionViewModel;
         }
 
         #region property

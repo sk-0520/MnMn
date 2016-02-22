@@ -27,6 +27,7 @@
       <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding SearchManager}">search</Button>
       <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding RankingManager}">ranking</Button>
       <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding NewArrivalsManager}">NewArrivals</Button>
+      <Button Command="{Binding SwitchViewCommand}" CommandParameter="{Binding MyListManager}">mylist</Button>
     </StackPanel>
 
     <Grid Grid.Column="2">

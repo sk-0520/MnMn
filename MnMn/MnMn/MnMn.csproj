@@ -124,6 +124,7 @@
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
+    <Compile Include="Logic\Service\Smile\Api\MyList.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Msg.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getthreadkey.cs" />
     <Compile Include="Logic\Service\Smile\Api\ContentsSearch.cs" />
@@ -152,6 +153,11 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListDefaultItemDataModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListDefaultModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListDefaultItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListGroupItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileMyListGroupModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
@@ -171,6 +177,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoHotlistFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoMyListManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />

@@ -6,4 +6,7 @@
 	
 	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="Query" />
 	
+	<item key="smile-mylist-default" uri="http://www.nicovideo.jp/api/deflist/list" param="None" />
+	<item key="smile-mylist-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
+	
 </uri>

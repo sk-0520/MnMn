@@ -17,20 +17,25 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    internal static class SmileMediationKey
+    [Serializable, DataContract]
+    public class RawSmileMyListDefaultModel: ModelBase
     {
-        public const string videoLogin = "video-session-login";
-        public const string videoLogout = "video-session-logout";
-        public const string videoCheck = "video-session-check";
+        #region property
 
-        public const string contentsSearch = "smile-contents-search";
+        [DataMember(Name = "mylistitem")]
+        public CollectionModel<RawSmileMyListDefaultItemModel> Items { get; set; } = new CollectionModel<RawSmileMyListDefaultItemModel>();
 
-        public const string mylistDefault = "smile-mylist-default";
-        public const string mylistGroup = "smile-mylist-group";
+
+        [DataMember(Name = "status")]
+        public string Status { get; set; }
+
+        #endregion
     }
 }

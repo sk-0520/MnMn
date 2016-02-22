@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -45,7 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //param();
             //getthumbinfo();
             //var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
-            mappng();
+            //mappng();
+            mylist();
         }
 
         async void login()
@@ -103,6 +105,25 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 var s = Encoding.UTF8.GetString(stream.ToArray());
                 Debug.WriteLine(s);
             }
+        }
+
+        async void mylist()
+        {
+            var mediation = new Mediation();
+            var cmd = new CommandLine();
+            var account = cmd.GetValue("smile-login-name");
+            var password = cmd.GetValue("smile-login-pass");
+
+            var model = new SmileUserAccountModel() {
+                User = account,
+                Password = password,
+            };
+            var session = new SmileSessionViewModel(mediation, model);
+
+            var mylist = new MyList(mediation, session);
+            mylist.SessionSupport = true;
+            var def = await mylist.GetDefault();
+            var grp = await mylist.GetGroup();
         }
 
     }

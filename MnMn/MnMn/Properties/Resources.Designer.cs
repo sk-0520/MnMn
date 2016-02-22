@@ -61,6 +61,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   とりあえずマイリスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_MyList_DefaultName {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_MyList_DefaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ホットリスト に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title {

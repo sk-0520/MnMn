@@ -19,18 +19,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    internal static class SmileMediationKey
+    public class SmileVideoMyListManagerViewModel: SmileVideoManagerViewModelBase
     {
-        public const string videoLogin = "video-session-login";
-        public const string videoLogout = "video-session-logout";
-        public const string videoCheck = "video-session-check";
-
-        public const string contentsSearch = "smile-contents-search";
-
-        public const string mylistDefault = "smile-mylist-default";
-        public const string mylistGroup = "smile-mylist-group";
+        public SmileVideoMyListManagerViewModel(Mediation mediation)
+            : base(mediation)
+        {
+        }
     }
 }
