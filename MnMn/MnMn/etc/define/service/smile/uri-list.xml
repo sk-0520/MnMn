@@ -8,5 +8,5 @@
 	
 	<item key="smile-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="None" />
 	<item key="smile-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
-	<item key="smile-mylist-user" uri="http://www.nicovideo.jp/mylist${mylist-id}" param="Query" />
+	<item key="smile-mylist-user" uri="http://www.nicovideo.jp/mylist" param="PreSuffixes" />
 </uri>

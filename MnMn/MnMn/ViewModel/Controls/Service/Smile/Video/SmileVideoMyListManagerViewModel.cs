@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -54,6 +55,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._selectedFinder, value)) {
+                    if(this._selectedFinder != null && this._selectedFinder.CanLoad) {
+                        if(this._selectedFinder.FinderLoadState != SmileVideoFinderLoadState.Completed) {
+                            this._selectedFinder.LoadDefaultCacheAsync();
+                        }
+                    }
                 }
             }
         }
@@ -84,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             // とりあえずマイリスト
             var defaultMyList = new SmileVideoAccountMyListDefaultFinderViewModel(Mediation);
-            var task = defaultMyList.LoadDefaultCacheAsync();
+            //var task = defaultMyList.LoadDefaultCacheAsync();
             list.Add(defaultMyList);
 
             // 自身のマイリスト一覧
@@ -92,15 +98,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var mylist = new MyList(Mediation, session) {
                 SessionSupport = true,
             };
-            var group = await mylist.GetAccountGroupAsync();
-            if(MyListUtility.IsSuccessResponse(group) && group.Groups.Any()) {
-                
+            var accountGroup = await mylist.GetAccountGroupAsync();
+            if(MyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
+                foreach(var group in accountGroup.Groups) {
+                    var finder = new SmileVideoMyListFinderViewModel(Mediation, group);
+                    list.Add(finder);
+                }
             }
 
             AccountMyList.InitializeRange(list);
 
             SelectedFinder = defaultMyList;
-            Debug.WriteLine(group);
+            Debug.WriteLine(accountGroup);
         }
 
         #endregion

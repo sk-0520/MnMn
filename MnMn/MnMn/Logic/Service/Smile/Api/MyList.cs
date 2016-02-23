@@ -78,8 +78,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
         /// <returns></returns>
         public async Task<FeedSmileVideoModel> GetGroupAsync(string myListId)
         {
-            await Task.CompletedTask;// dummy
-            throw new NotImplementedException();
+            await LoginIfNotLoginAsync();
+
+            using(var page = new PageLoader(Mediation, SessionBase, SmileMediationKey.mylist, ServiceType.Smile)) {
+                page.ReplaceUriParameters["mylist-id"] = myListId;
+
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+
+                var rawJson = response.Result;
+                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
+                    return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                }
+            }
         }
 
     }

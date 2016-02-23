@@ -16,8 +16,7 @@
 		<item key="_context" value="${context}" />
 	</param>
 	<param key="smile-mylist-user">
-		<item key="mylist-id" value="${mylist-id}" />
-		
-		<item key="rss" value="2.0" />
+		<item key="" prefix="/" value="${mylist-id}" />
+		<item prefix="?" key="rss" bond="=" value="2.0" />
 	</param>
 </parameters>

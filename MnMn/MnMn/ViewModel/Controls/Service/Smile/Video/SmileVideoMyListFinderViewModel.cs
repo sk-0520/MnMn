@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region SmileVideoFeedFinderViewModelBase
 
-        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
+        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
         protected override PageLoader CreatePageLoader()
         {
