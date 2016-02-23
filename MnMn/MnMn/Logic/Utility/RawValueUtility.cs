@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         delegate bool ConvertTryPaese<T>(string s, out T result);
 
+        static readonly DateTime unixTimeBase = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+
         #endregion
 
         #region property
@@ -120,6 +122,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
 
             return result;
+        }
+        
+        public static DateTime ConvertUnixTime(long unixTime)
+        {
+            return unixTimeBase.AddSeconds(unixTime).ToLocalTime();
+        }
+        public static DateTime ConvertUnixTime(string s)
+        {
+            return ConvertUnixTime(ConvertLong(s));
         }
 
         #endregion

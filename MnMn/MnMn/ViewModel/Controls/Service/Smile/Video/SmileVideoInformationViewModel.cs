@@ -102,9 +102,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             : this(mediation, number, informationFlags)
         {
             Feed = ranking;
-            FeedDetail = SmileVideoRankingUtility.ConvertRawDescription(Feed.Description);
-            FeedDetail.VideoId = SmileVideoRankingUtility.GetVideoId(Feed);
-            FeedDetail.Title = SmileVideoRankingUtility.GetTitle(Feed.Title);
+            FeedDetail = SmileVideoFeedUtility.ConvertRawDescription(Feed.Description);
+            FeedDetail.VideoId = SmileVideoFeedUtility.GetVideoId(Feed);
+            FeedDetail.Title = SmileVideoFeedUtility.GetTitle(Feed.Title);
 
             VideoInformationSource = SmileVideoVideoInformationSource.Feed;
             Initialize();
@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Feed:
-                        return SmileVideoRankingUtility.ConvertInteger(FeedDetail.ViewCounter);
+                        return SmileVideoFeedUtility.ConvertInteger(FeedDetail.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.ViewCounter);
@@ -324,7 +324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.CommentNum);
 
                     case SmileVideoVideoInformationSource.Feed:
-                        return SmileVideoRankingUtility.ConvertInteger(FeedDetail.CommentNum);
+                        return SmileVideoFeedUtility.ConvertInteger(FeedDetail.CommentNum);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.CommentCounter);
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Feed:
-                        return SmileVideoRankingUtility.ConvertInteger(FeedDetail.MylistCounter);
+                        return SmileVideoFeedUtility.ConvertInteger(FeedDetail.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.MylistCounter);

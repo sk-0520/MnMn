@@ -132,6 +132,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\MediationUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\MyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
@@ -290,7 +291,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoMediation.cs" />
     <Compile Include="Logic\HttpUserAgentHost.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetthumbinfoUtility.cs" />
-    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRankingUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFeedUtility.cs" />
     <Compile Include="Logic\Utility\RawValueUtility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />

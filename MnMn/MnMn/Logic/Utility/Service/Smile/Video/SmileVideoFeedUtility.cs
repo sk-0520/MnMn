@@ -25,7 +25,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    public static class SmileVideoRankingUtility
+    public static class SmileVideoFeedUtility
     {
         #region function
 
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         }
 
         /// <summary>
-        /// ランキングの生説明部分から各要素に分解。
+        /// RSS生説明部分から各要素に分解。
         /// </summary>
         /// <param name="rawDescription"></param>
         /// <returns>動画ID, タイトル以外の情報を設定したデータ。</returns>
@@ -100,6 +100,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return result;
         }
 
+        public static string ConvertDescriptionFromFeedDetailModel(RawSmileVideoFeedDetailModel model)
+        {
+            var description = $@"
+                <span class='nico-thumbnail'><img src='{model.ThumbnailUrl}' /></span>
+                <span class='nico-description'>{model.Description}</span>
+                <span class='nico-info-length'>{model.Length}</span>
+                <span class='nico-info-date'>{model.FirstRetrieve}</span>
+                <span class='nico-info-total-view'>{model.ViewCounter}</span>
+                <span class='nico-info-total-res'>{model.CommentNum}</span>
+                <span class='nico-info-total-mylist'>{model.MylistCounter}</span>
+            ";
+
+            return description;
+        }
+
         public static int ConvertInteger(string s)
         {
             if(s.Any(c => c == ',')) {
@@ -107,6 +122,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
 
             return RawValueUtility.ConvertInteger(s);
+        }
+
+        public static string ConvertM3H2TimeFromTimeSpan(TimeSpan time)
+        {
+            return $"{(int)time.TotalMinutes:00}:{(int)time.Seconds: 00}";
         }
 
         #endregion

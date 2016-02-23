@@ -29,6 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
     {
         #region property
 
+        /// <summary>
+        /// マイリストID。
+        /// </summary>
         [DataMember(Name = "id")]
         public string Id { get; set; }
 

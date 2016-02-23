@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -38,17 +39,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoMyListFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoMyListFinderViewModel(Mediation mediation)
+        public SmileVideoMyListFinderViewModel(Mediation mediation, RawSmileAccountMyListGroupItemModel groupModel)
             : base(mediation)
         {
             Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+            GroupModel = groupModel;
         }
 
         #region property
 
-        SmileSessionViewModel Session { get; }
-
-        public string MyListId { get; private set; }
+        protected SmileSessionViewModel Session { get; }
+        RawSmileAccountMyListGroupItemModel GroupModel { get; }
 
         #endregion
 
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var mylist = new MyList(Mediation, Session);
             mylist.SessionSupport = true;
 
-            return mylist.GetGroupAsync(MyListId);
+            return mylist.GetGroupAsync(GroupModel.Id);
         }
 
         #endregion

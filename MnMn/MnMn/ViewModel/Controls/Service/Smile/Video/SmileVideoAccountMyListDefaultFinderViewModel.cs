@@ -26,10 +26,13 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -42,16 +45,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     public class SmileVideoAccountMyListDefaultFinderViewModel: SmileVideoMyListFinderViewModel
     {
         public SmileVideoAccountMyListDefaultFinderViewModel(Mediation mediation)
-            : base(mediation)
+            : base(mediation, null)
         { }
 
         #region property
 
-        SmileSessionViewModel Session { get; set; }
-
         #endregion
 
         #region SmileVideoMyListFinderViewModel
+
+        protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
+        {
+            var myList = new MyList(Mediation, Session) {
+                SessionSupport = true,
+            };
+
+            var defaultGroup = await myList.GetAccountDefaultAsync();
+
+            var feedModel = new FeedSmileVideoModel();
+            feedModel.Channel.Title = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName;
+            foreach(var srcItem in defaultGroup.Items) {
+                var dstItem = new FeedSmileVideoItemModel();
+
+                dstItem.Title = srcItem.Data.Title;
+                // TODO: かっこわるい
+                dstItem.Link = "/" + srcItem.Data.WatchId;
+
+                var detailModel = new RawSmileVideoFeedDetailModel();
+                detailModel.FirstRetrieve = RawValueUtility.ConvertUnixTime(srcItem.Data.UpdateTime).ToString("u");
+                detailModel.Description = srcItem.Description;
+                detailModel.ViewCounter = srcItem.Data.ViewCounter;
+                detailModel.MylistCounter = srcItem.Data.MylistCounter;
+                detailModel.CommentNum = srcItem.Data.NumRes;
+                detailModel.ThumbnailUrl = srcItem.Data.ThumbnailUrl;
+                var lengthSec = RawValueUtility.ConvertLong(srcItem.Data.Length);
+                var lengthTime = TimeSpan.FromSeconds(lengthSec);
+                detailModel.Length = SmileVideoFeedUtility.ConvertM3H2TimeFromTimeSpan(lengthTime);
+
+                dstItem.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
+
+                feedModel.Channel.Items.Add(dstItem);
+            }
+
+            return feedModel;
+        }
 
         #endregion
     }
