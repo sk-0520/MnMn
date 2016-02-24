@@ -28,15 +28,43 @@
       <Expander Grid.Row="0" Header="mylist">
         <DockPanel>
           <ToolBar DockPanel.Dock="Top">
-            <TextBlock>☃☃☃☃</TextBlock>
-            <Button Command="{Binding ReloadAccountMyListCommand}">reload</Button>
+            <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
+            <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
           </ToolBar>
-          <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding AccountMyList}" />
+          <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding AccountMyListItems}" />
         </DockPanel>
       </Expander>
+      
       <Expander Grid.Row="1" Header="usermylist">
-        <Grid>
-        </Grid>
+        <TabControl>
+          <TabItem Header="search">
+            <DockPanel>
+              <ToolBar DockPanel.Dock="Top">
+                <TextBox Text="{Binding InputSearchMyList}" />
+                <Button Command="{Binding SearchUserMyListCommand}">find</Button>
+              </ToolBar>
+              <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding SearchUserMyListItems}" />
+            </DockPanel>
+          </TabItem>
+          <TabItem Header="local">
+            <DockPanel>
+              <ToolBar DockPanel.Dock="Top">
+                <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
+                <Button Command="{Binding RemoveSelectedLocalUserMyListCommand}">remove</Button>
+              </ToolBar>
+              <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding LocalUserMyListItems}" />
+            </DockPanel>
+          </TabItem>
+          <TabItem Header="hist">
+            <DockPanel>
+              <ToolBar DockPanel.Dock="Top">
+                <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
+                <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
+              </ToolBar>
+              <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding HistoryUserMyListItems}" />
+            </DockPanel>
+          </TabItem>
+        </TabControl>
       </Expander>
     </Grid>
 

@@ -16,13 +16,16 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
@@ -38,16 +41,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region variable
 
         SmileVideoMyListFinderViewModel _selectedFinder;
+        string _inputSearchMyList;
 
         #endregion
 
         public SmileVideoMyListManagerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
+            AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
+            LocalUserMyListItems = CollectionViewSource.GetDefaultView(LocalUserMyList);
+            HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
+        }
 
         #region property
 
-        public CollectionModel<SmileVideoMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        SmileSessionViewModel Session { get; }
+
+        CollectionModel<SmileVideoMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        public ICollectionView AccountMyListItems { get; }
+
+        CollectionModel<SmileVideoMyListFinderViewModel> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        public ICollectionView SearchUserMyListItems { get; }
+
+        CollectionModel<SmileVideoMyListFinderViewModel> LocalUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        public ICollectionView LocalUserMyListItems { get; }
+
+        CollectionModel<SmileVideoMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        public ICollectionView HistoryUserMyListItems { get; }
 
         public SmileVideoMyListFinderViewModel SelectedFinder
         {
@@ -64,17 +87,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string InputSearchMyList
+        {
+            get { return this._inputSearchMyList; }
+            set { SetVariableValue(ref this._inputSearchMyList, value); }
+        }
+
         #endregion
 
         #region command
 
-        public ICommand ReloadAccountMyListCommand
+        public ICommand LoadAccountMyListCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
                         LoadAccountMyListAsync().ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        public ICommand SearchUserMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        SearchUserMyListAsync(InputSearchMyList).ConfigureAwait(false);
                     }
                 );
             }
@@ -94,14 +135,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             list.Add(defaultMyList);
 
             // 自身のマイリスト一覧
-            var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-            var mylist = new MyList(Mediation, session) {
+            var mylist = new MyList(Mediation, Session) {
                 SessionSupport = true,
             };
             var accountGroup = await mylist.GetAccountGroupAsync();
             if(MyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
                 foreach(var group in accountGroup.Groups) {
-                    var finder = new SmileVideoMyListFinderViewModel(Mediation, group);
+                    var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, group);
                     list.Add(finder);
                 }
             }
@@ -112,7 +152,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Debug.WriteLine(accountGroup);
         }
 
-        #endregion
+        public async Task SearchUserMyListAsync(string inputSearchMyList)
+        {
+            object outputValue;
+            if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
+                var mylist = new MyList(Mediation, Session) {
+                    SessionSupport = true,
+                };
+                var myListId = (string)outputValue;
+                var group = await mylist.GetGroupAsync(myListId);
 
+                var finder = new SmileVideoMyListFinderViewModel(Mediation, group, myListId, false);
+
+                SearchUserMyList.InitializeRange(new[] { finder });
+            }
+
+            #endregion
+
+        }
     }
 }
