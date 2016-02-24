@@ -37,25 +37,40 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoAccountMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
+    public abstract class SmileVideoMyListFinderViewModelBase: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoAccountMyListFinderViewModel(Mediation mediation, RawSmileAccountMyListGroupItemModel groupModel)
-            : base(mediation, true)
+        public SmileVideoMyListFinderViewModelBase(Mediation mediation, bool isUserMyList)
+            : base(mediation)
         {
-            GroupModel = groupModel;
+            Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            IsUserMyList = isUserMyList;
         }
 
         #region property
 
-        RawSmileAccountMyListGroupItemModel GroupModel { get; }
+        protected SmileSessionViewModel Session { get; }
+        public abstract string MyListId { get; }
+        public bool IsUserMyList {get;}
 
         #endregion
 
-        #region SmileVideoMyListFinderViewModel
-
-        public override string MyListId { get { return GroupModel.Id; } }
+        #region SmileVideoFeedFinderViewModelBase
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
+
+        protected override PageLoader CreatePageLoader()
+        {
+            throw new NotSupportedException();
+        }
+
+        protected override Task<FeedSmileVideoModel> LoadFeedAsync()
+        {
+            var mylist = new MyList(Mediation, Session);
+            mylist.SessionSupport = true;
+
+            return mylist.GetGroupAsync(MyListId);
+        }
 
         #endregion
     }

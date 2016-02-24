@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        SmileVideoMyListFinderViewModel _selectedFinder;
+        SmileVideoMyListFinderViewModelBase _selectedFinder;
         string _inputSearchMyList;
 
         #endregion
@@ -60,19 +60,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileSessionViewModel Session { get; }
 
-        CollectionModel<SmileVideoMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        CollectionModel<SmileVideoMyListFinderViewModelBase> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView AccountMyListItems { get; }
 
-        CollectionModel<SmileVideoMyListFinderViewModel> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        CollectionModel<SmileVideoMyListFinderViewModelBase> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView SearchUserMyListItems { get; }
 
-        CollectionModel<SmileVideoMyListFinderViewModel> LocalUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        CollectionModel<SmileVideoMyListFinderViewModelBase> LocalUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView LocalUserMyListItems { get; }
 
-        CollectionModel<SmileVideoMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModel>();
+        CollectionModel<SmileVideoMyListFinderViewModelBase> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView HistoryUserMyListItems { get; }
 
-        public SmileVideoMyListFinderViewModel SelectedFinder
+        public SmileVideoMyListFinderViewModelBase SelectedFinder
         {
             get { return this._selectedFinder; }
             set
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public async Task LoadAccountMyListAsync()
         {
-            var list = new List<SmileVideoMyListFinderViewModel>();
+            var list = new List<SmileVideoMyListFinderViewModelBase>();
 
             // とりあえずマイリスト
             var defaultMyList = new SmileVideoAccountMyListDefaultFinderViewModel(Mediation);
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var myListId = (string)outputValue;
                 var group = await mylist.GetGroupAsync(myListId);
 
-                var finder = new SmileVideoMyListFinderViewModel(Mediation, group, myListId, false);
+                var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
 
                 SearchUserMyList.InitializeRange(new[] { finder });
             }

@@ -37,43 +37,30 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoMyListFinderViewModel: SmileVideoFeedFinderViewModelBase
+    public class SmileVideoMatchMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileVideoMyListFinderViewModel(Mediation mediation, FeedSmileVideoModel feedModel, string myListId, bool isUserMyList)
-            : base(mediation)
+        public SmileVideoMatchMyListFinderViewModel(Mediation mediation, FeedSmileVideoModel feedModel, string myListId, bool isUserMyList)
+            : base(mediation, isUserMyList)
         {
-            Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-
             FeedModel = feedModel;
             MyListId = myListId;
-            IsUserMyList = isUserMyList;
         }
 
         #region property
 
         FeedSmileVideoModel FeedModel { get; }
 
-        protected SmileSessionViewModel Session { get; }
-        public virtual string MyListId { get; }
-        public bool IsUserMyList {get;}
-
         #endregion
 
         #region SmileVideoFeedFinderViewModelBase
 
-        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
+        public override string MyListId { get; }
 
-        protected override PageLoader CreatePageLoader()
-        {
-            throw new NotSupportedException();
-        }
+        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var mylist = new MyList(Mediation, Session);
-            mylist.SessionSupport = true;
-
-            return mylist.GetGroupAsync(MyListId);
+            return Task.Run(() => FeedModel);
         }
 
         #endregion

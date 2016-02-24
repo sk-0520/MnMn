@@ -40,6 +40,10 @@
           <TabItem Header="search">
             <DockPanel>
               <ToolBar DockPanel.Dock="Top">
+                <TextBlock FontSize="9">
+                  だるい<LineBreak /> 
+                  完全全一致だけ
+                </TextBlock>
                 <TextBox Text="{Binding InputSearchMyList}" />
                 <Button Command="{Binding SearchUserMyListCommand}">find</Button>
               </ToolBar>

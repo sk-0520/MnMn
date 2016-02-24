@@ -104,8 +104,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     (?<MYLIST_ID>
                         \d+
                     )
+                    \s*
+                    $
                 ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase
+                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
             var match = regFormat.Match(s);
             if(match.Success) {

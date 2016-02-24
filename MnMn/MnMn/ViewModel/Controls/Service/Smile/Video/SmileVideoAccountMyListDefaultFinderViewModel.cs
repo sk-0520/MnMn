@@ -42,10 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// とりあえずマイリストのデータ取得用。
     /// <para>なんでこいつだけJsonなん。。。</para>
     /// </summary>
-    public class SmileVideoAccountMyListDefaultFinderViewModel: SmileVideoMyListFinderViewModel
+    public class SmileVideoAccountMyListDefaultFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
         public SmileVideoAccountMyListDefaultFinderViewModel(Mediation mediation)
-            : base(mediation, null, null, false)
+            : base(mediation, false)
         { }
 
         #region property
@@ -53,6 +53,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region SmileVideoMyListFinderViewModel
+
+        public override string MyListId
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
