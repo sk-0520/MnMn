@@ -115,15 +115,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return description;
         }
 
-        public static int ConvertInteger(string s)
-        {
-            if(s.Any(c => c == ',')) {
-                s = string.Concat(s.Where(c => c != ','));
-            }
-
-            return RawValueUtility.ConvertInteger(s);
-        }
-
         public static string ConvertM3H2TimeFromTimeSpan(TimeSpan time)
         {
             return $"{(int)time.TotalMinutes:00}:{(int)time.Seconds: 00}";

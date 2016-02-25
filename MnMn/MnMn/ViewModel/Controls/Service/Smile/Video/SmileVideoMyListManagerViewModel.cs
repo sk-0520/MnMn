@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         SmileVideoMyListFinderViewModelBase _selectedFinder;
         string _inputSearchMyList;
+        PageViewModel<SmileVideoMyListFinderPageViewModel> _selectedPage;
 
         #endregion
 
@@ -65,6 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView SearchUserMyListItems { get; }
+        public CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>> SearchItems { get; } = new CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>>();
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> LocalUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView LocalUserMyListItems { get; }
@@ -91,6 +93,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._inputSearchMyList; }
             set { SetVariableValue(ref this._inputSearchMyList, value); }
+        }
+
+        public PageViewModel<SmileVideoMyListFinderPageViewModel> SelectedPage
+        {
+            get { return this._selectedPage; }
+            set
+            {
+                var oldSelectedPage = this._selectedPage;
+                if(SetVariableValue(ref this._selectedPage, value)) {
+                    SelectedFinder = this._selectedPage.ViewModel.Items.First();
+                    SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
+                }
+            }
         }
 
         #endregion
@@ -121,9 +136,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand SearchUserMyListPageChangeCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var page = o as PageViewModel<SmileVideoMyListFinderPageViewModel>;
+                        var mylist = new MyList(Mediation, Session) {
+                            SessionSupport = true,
+                        };
+                        mylist.SearchPage(page.ViewModel.Query, page.ViewModel.PageNumber).ContinueWith(task => {
+                            page.ViewModel.Items.InitializeRange(task.Result);
+                            SelectedPage = page;
+                            //SearchUserMyList.InitializeRange(page.ViewModel.Items);
+                        }, TaskScheduler.FromCurrentSynchronizationContext());
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
+
+        void ClearSearchUserMyListPage()
+        {
+            SelectedPage = null;
+            SearchItems.Clear();
+        }
+
 
         public async Task LoadAccountMyListAsync()
         {
@@ -156,6 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             object outputValue;
             if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
+                // 完全一致検索
                 var mylist = new MyList(Mediation, Session) {
                     SessionSupport = true,
                 };
@@ -164,11 +207,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
 
+                ClearSearchUserMyListPage();
                 SearchUserMyList.InitializeRange(new[] { finder });
+            } else {
+                // 何かしら検索
+                var mylist = new MyList(Mediation, Session) {
+                    SessionSupport = true,
+                };
+                var finders = await mylist.SearchPage(inputSearchMyList, 1);
+                if(finders.Count > 0) {
+                    var top = finders.First();
+                    var pageCount = top.TotalItemCount / top.PageItemCount;
+                    var list = Enumerable
+                        .Range(1, pageCount)
+                        .Select(i => new SmileVideoMyListFinderPageViewModel(Mediation, i+1, inputSearchMyList))
+                        .ToList()
+                    ;
+                    list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediation, finders, inputSearchMyList));
+                    var pages = list
+                        .Select((vm, i) => new PageViewModel<SmileVideoMyListFinderPageViewModel>(vm, i + 1))
+                    ;
+                    SearchItems.InitializeRange(pages);
+                    SelectedPage = SearchItems.First();
+                    SearchUserMyList.InitializeRange(finders);
+                } else {
+                    ClearSearchUserMyListPage();
+                }
             }
 
-            #endregion
-
         }
+
+        #endregion
     }
 }

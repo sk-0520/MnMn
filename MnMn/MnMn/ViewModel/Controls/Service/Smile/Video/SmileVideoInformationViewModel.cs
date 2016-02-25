@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Feed:
-                        return SmileVideoFeedUtility.ConvertInteger(FeedDetail.ViewCounter);
+                        return RawValueUtility.ConvertInteger(FeedDetail.ViewCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.ViewCounter);
@@ -324,7 +324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.CommentNum);
 
                     case SmileVideoVideoInformationSource.Feed:
-                        return SmileVideoFeedUtility.ConvertInteger(FeedDetail.CommentNum);
+                        return RawValueUtility.ConvertInteger(FeedDetail.CommentNum);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.CommentCounter);
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         return RawValueUtility.ConvertInteger(Thumb.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Feed:
-                        return SmileVideoFeedUtility.ConvertInteger(FeedDetail.MylistCounter);
+                        return RawValueUtility.ConvertInteger(FeedDetail.MylistCounter);
 
                     case SmileVideoVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.MylistCounter);

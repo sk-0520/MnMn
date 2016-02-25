@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected SmileSessionViewModel Session { get; }
         public abstract string MyListId { get; }
+        public abstract string MyListName { get; }
         public bool IsUserMyList {get;}
 
         #endregion

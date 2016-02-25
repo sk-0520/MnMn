@@ -61,11 +61,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static int ConvertInteger(string s)
         {
+            if(s.Any(c => c == ',')) {
+                s = string.Concat(s.Where(c => c != ','));
+            }
+
             return ConvertT(s, int.TryParse, UnknownInteger);
         }
 
         public static long ConvertLong(string s)
         {
+            if(s.Any(c => c == ',')) {
+                s = string.Concat(s.Where(c => c != ','));
+            }
+
             return ConvertT(s, long.TryParse, UnknownLong);
         }
 

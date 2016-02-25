@@ -32,9 +32,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
+        public PageViewModelBase(int pageNumber)
+        {
+            PageNumber = pageNumber;
+        }
+
         #region property
 
-        public virtual int PageNumber { get; }
+        public int PageNumber { get; }
 
         public LoadState LoadState
         {
@@ -47,7 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
     public class PageViewModel: PageViewModelBase
     {
-        public PageViewModel(ViewModelBase viewModelBase)
+        public PageViewModel(ViewModelBase viewModelBase, int pageNumber)
+            : base(pageNumber)
         {
             ViewModelBase = viewModelBase;
         }
@@ -62,8 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     public class PageViewModel<TViewModel>: PageViewModel
         where TViewModel : ViewModelBase
     {
-        public PageViewModel(TViewModel viewModel)
-            : base(viewModel)
+        public PageViewModel(TViewModel viewModel, int pageNumber)
+            : base(viewModel, pageNumber)
         {
             ViewModel = viewModel;
         }

@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public override string MyListName { get { return global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName; } }
+
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var myList = new MyList(Mediation, Session) {
@@ -71,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var defaultGroup = await myList.GetAccountDefaultAsync();
 
             var feedModel = new FeedSmileVideoModel();
-            feedModel.Channel.Title = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName;
+            //feedModel.Channel.Title = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName;
             foreach(var srcItem in defaultGroup.Items) {
                 var dstItem = new FeedSmileVideoItemModel();
 

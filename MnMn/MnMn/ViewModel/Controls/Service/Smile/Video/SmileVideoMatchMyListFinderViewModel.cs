@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region SmileVideoFeedFinderViewModelBase
 
         public override string MyListId { get; }
+        public override string MyListName { get { return FeedModel.Channel.Title; } }
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
