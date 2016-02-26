@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                return SmileVideoMsgUtility.ConvertUnixTime(Model.Date);
+                return RawValueUtility.ConvertUnixTime(Model.Date);
             }
         }
 

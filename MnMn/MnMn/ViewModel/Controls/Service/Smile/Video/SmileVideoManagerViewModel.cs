@@ -62,23 +62,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             NewArrivalsManager = new SmileVideoNewArrivalsManagerViewModel(Mediation);
 
+            MyListManager = new SmileVideoMyListManagerViewModel(Mediation);
+
             Mediation.SetManager(ServiceType.SmileVideo, new SmileVideoManagerPackModel(SearchManager, RankingManager, NewArrivalsManager));
 
-            SwitchViewCommand.Execute(ManagerItems.First());
+            SwitchViewCommand.Execute(ManagerItems.Last());
         }
 
         #region property
 
         SmileVideoSettingModel Setting { get; }
 
-        public SmileVideoRankingManagerViewModel RankingManager { get;  }
+        public SmileVideoRankingManagerViewModel RankingManager { get; }
         public SmileVideoSearchManagerViewModel SearchManager { get; }
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
+        public SmileVideoMyListManagerViewModel MyListManager {get;}
 
         public IEnumerable<SmileVideoManagerViewModelBase> ManagerItems => new SmileVideoManagerViewModelBase[] {
             SearchManager,
             RankingManager,
             NewArrivalsManager,
+            MyListManager,
         };
 
         public SmileVideoManagerViewModelBase SelectedManager

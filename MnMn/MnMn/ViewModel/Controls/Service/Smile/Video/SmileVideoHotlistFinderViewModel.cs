@@ -26,7 +26,9 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using HtmlAgilityPack;
 
@@ -64,55 +66,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 item.Link =  watchElement.GetAttributeValue("href", string.Empty);
                 Debug.WriteLine(item.Title);
 
+                var detailModel = new RawSmileVideoFeedDetailModel();
                 var imageElement = parentElement.SelectSingleNode(".//img[@class='img_std96']");
-                var imageValue = imageElement.GetAttributeValue("src", string.Empty);
+                detailModel.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
 
                 var lengthElement = parentElement.SelectSingleNode(".//*[@class='vinfo_length']");
-                var lengthValue = lengthElement.InnerText;
+                detailModel.Length = lengthElement.InnerText;
 
                 var viewElement = parentElement.SelectSingleNode(".//*[@class='vinfo_view']");
-                var viewValue = viewElement.InnerText;
+                detailModel.ViewCounter = viewElement.InnerText;
 
                 var commentElement = parentElement.SelectSingleNode(".//*[@class='vinfo_res']");
-                var commentValue = commentElement.InnerText;
+                detailModel.CommentNum = commentElement.InnerText;
 
                 var descriptionElement = parentElement.SelectSingleNode(".//*[@class='vinfo_description']");
-                var descriptionValue = descriptionElement.InnerText;
+                detailModel.Description = descriptionElement.InnerText;
 
                 //var dateElement = parentElement.SelectSingleNode(".//*[contains(@class,'thumb_num']");
                 var dateElement = parentElement.SelectNodes(".//p")
                     .FirstOrDefault(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumb_num"))
                     ?.SelectSingleNode("//strong")
                 ;
-                var dateValue = dateElement.InnerText;
+                detailModel.FirstRetrieve = dateElement.InnerText;
 
                 var mylistElement = parentElement.SelectSingleNode(".//*[@class='vinfo_mylist']");
-                var mylistValue = mylistElement.InnerText;
+                detailModel.MylistCounter = mylistElement.InnerText;
 
-                var description = $@"
-                    <span class='nico-thumbnail'><img src='{imageValue}' /></span>
-                    <span class='nico-description'>{descriptionValue}</span>
-                    <span class='nico-info-length'>{lengthValue}</span>
-                    <span class='nico-info-date'>{dateValue}</span>
-                    <span class='nico-info-total-view'>{viewValue}</span>
-                    <span class='nico-info-total-res'>{commentValue}</span>
-                    <span class='nico-info-total-mylist'>{mylistValue}</span>
-                ";
-
-                item.Description = description;
-
-                //var image = doc.DocumentNode.SelectSingleNode("//*[@class='nico-thumbnail']/img");
-                //var description = doc.DocumentNode.SelectSingleNode("//*[@class='nico-description']");
-                //var length = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-length']");
-                //var date = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-date']");
-                //var viewCounter = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-view']");
-                //var resCounter = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-res']");
-                //var mylist = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-mylist']");
-
+                item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
 
                 result.Channel.Items.Add(item);
             }
-
 
             return result;
         }

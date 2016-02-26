@@ -124,6 +124,7 @@
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
+    <Compile Include="Logic\Service\Smile\Api\MyList.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Msg.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\Getthreadkey.cs" />
     <Compile Include="Logic\Service\Smile\Api\ContentsSearch.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\MediationUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\MyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
@@ -152,6 +154,11 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListDefaultItemDataModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListDefaultModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
@@ -164,19 +171,26 @@
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\SmileSearchPageViewModel.cs" />
+    <Compile Include="ViewModel\Controls\PageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoAccountMyListDefaultFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoAccountMyListFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoMatchMyListFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoMyListFinderPageViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoMyListFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoHotlistFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoMyListManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoNewArrivalsManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoPlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchGroupViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSearchMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
     <Compile Include="ViewModel\ManagerViewModelBase.cs" />
     <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
@@ -185,8 +199,14 @@
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
       <DependentUpon>Navigationbar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Pager.xaml.cs">
+      <DependentUpon>Pager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoCommentElement.xaml.cs">
       <DependentUpon>SmileVideoCommentElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoMyListManager.xaml.cs">
+      <DependentUpon>SmileVideoMyListManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoNewArrivalsManager.xaml.cs">
       <DependentUpon>SmileVideoNewArrivalsManager.xaml</DependentUpon>
@@ -209,11 +229,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\Pager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoCommentElement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoMyListManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,7 +302,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoMediation.cs" />
     <Compile Include="Logic\HttpUserAgentHost.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetthumbinfoUtility.cs" />
-    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRankingUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFeedUtility.cs" />
     <Compile Include="Logic\Utility\RawValueUtility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />

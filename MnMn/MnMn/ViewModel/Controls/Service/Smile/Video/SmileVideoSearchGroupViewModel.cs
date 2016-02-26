@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //ICollectionView _selectedVideoInformationItems;
 
         int _totalCount;
-        SmileSearchPageViewModel<SmileVideoSearchItemViewModel> _selectedPage;
+        PageViewModel<SmileVideoSearchItemViewModel> _selectedPage;
 
         bool _notfound;
 
@@ -86,9 +86,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedSort, value); }
         }
 
-        public CollectionModel<SmileSearchPageViewModel<SmileVideoSearchItemViewModel>> SearchItems { get; } = new CollectionModel<SmileSearchPageViewModel<SmileVideoSearchItemViewModel>>();
+        public CollectionModel<PageViewModel<SmileVideoSearchItemViewModel>> SearchItems { get; } = new CollectionModel<PageViewModel<SmileVideoSearchItemViewModel>>();
 
-        public SmileSearchPageViewModel<SmileVideoSearchItemViewModel> SelectedPage
+        public PageViewModel<SmileVideoSearchItemViewModel> SelectedPage
         {
             get { return this._selectedPage; }
             set {
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        var pageVm = (SmileSearchPageViewModel<SmileVideoSearchItemViewModel>)o;
+                        var pageVm = (PageViewModel<SmileVideoSearchItemViewModel>)o;
                         if(pageVm.LoadState != LoadState.Loaded) {
                             var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
                             var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
@@ -245,16 +245,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
                         var preList = Enumerable.Range(1, pageCount - 1)
                             .Select((n, i) => new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
-                            .Select((v, i) => new SmileSearchPageViewModel<SmileVideoSearchItemViewModel>(v, i + 2))
+                            .Select((v, i) => new PageViewModel<SmileVideoSearchItemViewModel>(v, i + 2))
                             .ToList()
                         ;
-                        var pageVm = new SmileSearchPageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
+                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
                             LoadState = LoadState.Loaded,
                         };
                         preList.Insert(0, pageVm);
                         SearchItems.InitializeRange(preList);
                     } else if(TotalCount > 0) {
-                        var pageVm = new SmileSearchPageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
+                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
                             LoadState = LoadState.Loaded,
                         };
                         SearchItems.InitializeRange(new[] { pageVm });
@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override PageLoader CreatePageLoader()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         #endregion

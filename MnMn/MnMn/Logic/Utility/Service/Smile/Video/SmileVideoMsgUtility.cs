@@ -25,17 +25,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
     public static class SmileVideoMsgUtility
     {
-        static readonly DateTime unixTimeBase = new DateTime(1970,1,1,0,0,0,0, System.DateTimeKind.Utc);
-
-        public static DateTime ConvertUnixTime(long unixTime)
-        {
-            return unixTimeBase.AddSeconds(unixTime).ToLocalTime();
-        }
-        public static DateTime ConvertUnixTime(string s)
-        {
-            return ConvertUnixTime(RawValueUtility.ConvertLong(s));
-        }
-
         public static SmileVideoUserKind ConvertUserKind(string s)
         {
             if(s == null) {

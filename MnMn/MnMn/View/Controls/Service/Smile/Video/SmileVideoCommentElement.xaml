@@ -10,7 +10,37 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <Label 
+  <Grid Opacity="{Binding Opacity}">
+    <TextBlock
+      FontSize="{Binding FontSize}"
+      FontFamily="{Binding FontFamily}"
+      Text="{Binding Content}"
+      Opacity="0.8"
+      VerticalAlignment="Stretch"
+      HorizontalAlignment="Center"
+    >
+      <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
+      <TextBlock.Foreground>
+        <SolidColorBrush Color="{Binding Shadow}" />
+      </TextBlock.Foreground>
+      <TextBlock.Effect>
+        <BlurEffect
+          Radius="2"
+          RenderingBias="Performance"
+        />
+      </TextBlock.Effect>
+    </TextBlock>
+    <TextBlock
+      FontSize="{Binding FontSize}"
+      FontFamily="{Binding FontFamily}"
+      Foreground="{Binding Foreground}"
+      Text="{Binding Content}" 
+      VerticalAlignment="Stretch"
+      HorizontalAlignment="Center"
+    />
+
+  </Grid>
+  <!--<Label 
     FontSize="{Binding FontSize}"
     Foreground="{Binding Foreground}"
     FontFamily="{Binding FontFamily}"
@@ -29,5 +59,5 @@
         RenderingBias="Performance"
       />
     </Label.Effect>
-  </Label>
+  </Label>-->
 </UserControl>
