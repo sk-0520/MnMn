@@ -59,6 +59,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             return ClientHandler.CookieContainer.GetCookies(uri)["user_session"].Value;
         }
 
+        #endregion
+
+        #region SessionViewModelBase
+
+        public override TimeSpan RegardLoginTime { get; } = TimeSpan.FromMinutes(30);
+
         public override async Task LoginAsync()
         {
             if(LoginState == LoginState.In || LoginState == LoginState.Check || LoginState == LoginState.Logged) {

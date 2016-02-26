@@ -33,9 +33,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
     /// </summary>
     public abstract class SessionViewModelBase: ViewModelBase, ICreateHttpUserAgent
     {
+        #region define
+
+        static DateTime NotLoginTime { get; } = DateTime.MaxValue;
+
+        #endregion
+
         #region variable
 
         LoginState _loginState;
+
+        DateTime _lastLoginTime = NotLoginTime;
 
         #endregion
 
@@ -62,13 +70,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public LoginState LoginState
         {
             get { return this._loginState; }
-            set { SetVariableValue(ref this._loginState, value); }
+            set
+            {
+                if(SetVariableValue(ref this._loginState, value)) {
+                    if(this._loginState == LoginState.Logged) {
+                        RenewalLastLoginTime();
+                    } else {
+                        LastLoginTime = NotLoginTime;
+                    }
+                }
+            }
         }
 
         /// <summary>
-        /// この期間内であればログイン済みと判断する。
+        /// ログイン時間。
         /// </summary>
-        public　virtual  CacheSpan CacheSpan { get; }
+        public DateTime LastLoginTime
+        {
+            get { return this._lastLoginTime; }
+            private set { SetVariableValue(ref this._lastLoginTime, value); }
+        }
+
+        /// <summary>
+        /// ログイン済みとみなす時間。
+        /// <para>現在時間と最終ログイン時間がこの値未満であれば再ログイン実施。</para>
+        /// </summary>
+        public abstract TimeSpan RegardLoginTime { get; }
 
         #endregion
 
@@ -84,8 +111,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <returns></returns>
         public async Task LoginIfNotLoginAsync()
         {
+            if(LoginState == LoginState.Logged) {
+                if(DateTime.Now - LastLoginTime < RegardLoginTime) {
+                    return;
+                }
+            }
             if(!await CheckLoginAsync()) {
                 await LoginAsync();
+            }
+        }
+
+        public void RenewalLastLoginTime()
+        {
+            if(LoginState == LoginState.Logged) {
+                LastLoginTime = DateTime.Now;
             }
         }
 
