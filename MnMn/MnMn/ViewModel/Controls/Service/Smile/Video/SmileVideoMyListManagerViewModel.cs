@@ -229,6 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     ;
                     SearchItems.InitializeRange(pages);
                     SearchUserMyList.InitializeRange(finders);
+                    SelectedFinder = null;
                     SelectedPage = SearchItems.First();
                 } else {
                     ClearSearchUserMyListPage();
