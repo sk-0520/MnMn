@@ -24,5 +24,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         {
             InitializeComponent();
         }
+
     }
 }

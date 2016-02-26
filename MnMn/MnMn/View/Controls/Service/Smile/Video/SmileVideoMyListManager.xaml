@@ -45,12 +45,28 @@
                 <Button Command="{Binding SearchUserMyListCommand}">find</Button>
               </ToolBar>
               
-              <app_contrls:Pager
+              <!--<app_contrls:Pager
                 DockPanel.Dock="Bottom"
                 PageItems="{Binding SearchItems}"
                 Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-              />
-              
+              />-->
+              <ItemsControl  DockPanel.Dock="Bottom" ItemsSource="{Binding SearchItems}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Button
+                        Content="{Binding PageNumber }"
+                        Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding }"
+                      />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+
               <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding SearchUserMyListItems}" />
 
             </DockPanel>

@@ -89,7 +89,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoSearchGroupViewModel SelectedSearchGroup
         {
             get { return this._selectedSearchGroup; }
-            set { SetVariableValue(ref this._selectedSearchGroup, value); }
+            set {
+                if(SetVariableValue(ref this._selectedSearchGroup, value)) {
+                    if(this._selectedSearchGroup != null) {
+                        //var items = this._selectedSearchGroup.SearchItems;
+                        //this._selectedSearchGroup.SearchItems.InitializeRange(items);
+                    }
+                }
+            }
         }
 
 

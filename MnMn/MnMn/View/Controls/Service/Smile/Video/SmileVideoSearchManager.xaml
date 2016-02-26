@@ -14,6 +14,13 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!--<ResourceDictionary Source="/View/Resources/PagerDictionary.xaml" />-->
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -95,11 +102,27 @@
                   <Run Text="{Binding TotalCount}" />
                 </TextBlock>
 
-                <app_contrls:Pager 
+                <!--<app_contrls:Pager 
                   Grid.Column="2" 
-                  PageItems="{Binding SearchItems, Mode=OneWay}" 
+                  PageItems="{Binding SearchItems, Mode=OneWay}"
                   Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_contrls_service_smile_video:SmileVideoFinderControl}}"
-                />
+                />-->
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Button
+                        Content="{Binding PageNumber }"
+                        Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_contrls_service_smile_video:SmileVideoFinderControl}}"
+                        CommandParameter="{Binding }"
+                      />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
               </Grid>
             </app_contrls_service_smile_video:SmileVideoFinderControl.FooterContent>
           </app_contrls_service_smile_video:SmileVideoFinderControl>

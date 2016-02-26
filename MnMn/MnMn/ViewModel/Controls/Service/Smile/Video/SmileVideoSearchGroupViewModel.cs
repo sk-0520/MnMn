@@ -277,6 +277,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             throw new NotSupportedException();
         }
 
+        public void Refresh()
+        {
+            CallOnPropertyChangeDisplayItem();
+        }
 
         #endregion
 
@@ -297,6 +301,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override PageLoader CreatePageLoader()
         {
             throw new NotSupportedException();
+        }
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            CallOnPropertyChange(nameof(SearchItems));
+
+            base.CallOnPropertyChangeDisplayItem();
         }
 
         #endregion
