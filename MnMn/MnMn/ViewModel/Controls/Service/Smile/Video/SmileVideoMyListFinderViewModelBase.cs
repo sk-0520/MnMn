@@ -52,11 +52,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected SmileSessionViewModel Session { get; }
         public abstract string MyListId { get; }
         public abstract string MyListName { get; }
+        public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
         public bool IsUserMyList {get;}
 
         #endregion
 
         #region SmileVideoFeedFinderViewModelBase
+
+        protected override void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
+        {
+            base.SetItems(items);
+            CallOnPropertyChange(nameof(MyListItemCount));
+        }
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 

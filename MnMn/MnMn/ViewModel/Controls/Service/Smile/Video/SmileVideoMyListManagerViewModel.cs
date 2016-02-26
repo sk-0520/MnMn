@@ -228,8 +228,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         .Select((vm, i) => new PageViewModel<SmileVideoMyListFinderPageViewModel>(vm, i + 1))
                     ;
                     SearchItems.InitializeRange(pages);
-                    SelectedPage = SearchItems.First();
                     SearchUserMyList.InitializeRange(finders);
+                    SelectedPage = SearchItems.First();
                 } else {
                     ClearSearchUserMyListPage();
                 }

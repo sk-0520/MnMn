@@ -13,6 +13,26 @@
 >
   <UserControl.Resources>
     <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <Style x:Key="MyListBox" TargetType="ListBox">
+      <Setter Property="SelectedItem" Value="{Binding DataContext.SelectedFinder, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+      <Setter Property="ItemsPanel">
+        <Setter.Value>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel />
+          </ItemsPanelTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="ItemTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <StackPanel>
+              <TextBlock Text="{Binding MyListName}" />
+              <TextBlock Text="{Binding MyListItemCount}" />
+            </StackPanel>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -32,7 +52,7 @@
             <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
             <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
           </ToolBar>
-          <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding AccountMyListItems}" />
+          <ListBox Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountMyListItems}" />
         </DockPanel>
       </Expander>
       
@@ -67,7 +87,7 @@
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
 
-              <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding SearchUserMyListItems}" />
+              <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding SearchUserMyListItems}" />
 
             </DockPanel>
           </TabItem>
@@ -77,7 +97,7 @@
                 <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
                 <Button Command="{Binding RemoveSelectedLocalUserMyListCommand}">remove</Button>
               </ToolBar>
-              <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding LocalUserMyListItems}" />
+              <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding LocalUserMyListItems}" />
             </DockPanel>
           </TabItem>
           <TabItem Header="hist">
@@ -86,7 +106,7 @@
                 <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
                 <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
               </ToolBar>
-              <ListBox SelectedItem="{Binding SelectedFinder}" ItemsSource="{Binding HistoryUserMyListItems}" />
+              <ListBox ItemsSource="{Binding HistoryUserMyListItems}" />
             </DockPanel>
           </TabItem>
         </TabControl>

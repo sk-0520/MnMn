@@ -29,6 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -131,6 +132,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected virtual bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
+
         #endregion
 
         #region command
@@ -150,6 +153,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region function
+
+        protected virtual void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
+        {
+            VideoInformationList.InitializeRange(items);
+            VideoInformationItems.Refresh();
+        }
+
+        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            var cancel = CancelLoading = new CancellationTokenSource();
+            return Task.Run(() => {
+                FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
+                var loader = new SmileVideoInformationLoader(VideoInformationList);
+                var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
+                var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
+                return Task.WhenAll(infoTask, infoTask);
+            }).ContinueWith(t => {
+                FinderLoadState = SmileVideoFinderLoadState.Completed;
+                NowLoading = false;
+            }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
+        }
 
         public async void OpenPlayer(SmileVideoInformationViewModel videoInformation)
         {

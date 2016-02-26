@@ -38,7 +38,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             : base(mediation)
         { }
 
-        protected virtual bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
         protected abstract SmileVideoInformationFlags InformationFlags { get; }
 
         #region property
@@ -59,27 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .AsParallel()
                 .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags))
             ;
-        }
-
-        protected void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
-        {
-            VideoInformationList.InitializeRange(items);
-            VideoInformationItems.Refresh();
-        }
-
-        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            var cancel = CancelLoading = new CancellationTokenSource();
-            return Task.Run(() => {
-                FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
-                var loader = new SmileVideoInformationLoader(VideoInformationList);
-                var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
-                var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
-                return Task.WhenAll(infoTask, infoTask);
-            }).ContinueWith(t => {
-                FinderLoadState = SmileVideoFinderLoadState.Completed;
-                NowLoading = false;
-            }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected async virtual Task<FeedSmileVideoModel> LoadFeedAsync()

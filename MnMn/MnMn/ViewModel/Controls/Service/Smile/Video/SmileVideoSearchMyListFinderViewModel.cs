@@ -25,18 +25,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoSearchMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileVideoSearchMyListFinderViewModel(Mediation mediation, string myListId, string myListName, string query, int totalItemCount, int pageItemCount)
+        public SmileVideoSearchMyListFinderViewModel(Mediation mediation, string myListId, string myListName, int myListItemCount, string query, int totalItemCount, int pageItemCount)
             : base(mediation, false)
         {
             MyListId = myListId;
             MyListName = myListName;
+            MyListItemCount = myListItemCount;
             Query = query;
             TotalItemCount = totalItemCount;
             PageItemCount = pageItemCount;
         }
 
         #region property
-
 
         public string Query { get; }
         public int TotalItemCount { get; }
@@ -47,6 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region SmileVideoMyListFinderViewModelBase
 
         public override string MyListId { get; }
+        public override int MyListItemCount { get; }
         public override string MyListName { get; }
 
         #endregion

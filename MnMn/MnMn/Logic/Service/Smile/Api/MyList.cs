@@ -139,10 +139,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
                     var mylistElement = headerElement.SelectSingleNode(".//a");
                     var myListName = mylistElement.InnerText;
                     var myListId = mylistElement.Attributes["href"].Value.Split('/').Last();
-                    Debug.WriteLine(myListName);
+                    var myListItemCountElement = headerElement.SelectSingleNode(".//strong");
+                    var myListItemCountSource = myListItemCountElement.InnerText;
+                    var myListItemCountText = string.Concat(myListItemCountSource.TakeWhile(c => char.IsDigit(c)));
+                    var myListItemCount = RawValueUtility.ConvertInteger(myListItemCountText);
                     //var descriptionElement = paragraphElements[1];
 
-                    var finder = new SmileVideoSearchMyListFinderViewModel(Mediation, myListId, myListName, query, totalItemCountValue, showCount);
+                    var finder = new SmileVideoSearchMyListFinderViewModel(Mediation, myListId, myListName, myListItemCount, query, totalItemCountValue, showCount);
                     result.Add(finder);
                 }
 

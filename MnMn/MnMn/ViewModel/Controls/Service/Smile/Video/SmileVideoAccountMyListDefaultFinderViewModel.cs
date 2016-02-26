@@ -61,7 +61,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 throw new NotSupportedException();
             }
         }
-
         public override string MyListName { get { return global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName; } }
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
