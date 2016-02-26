@@ -38,6 +38,9 @@
     <Style TargetType="accordion:Accordion">
       <Setter Property="Background" Value="Transparent" />
     </Style>
+    <Style TargetType="accordion:AccordionItem">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -119,15 +122,15 @@
       </Expander>
     </Grid>-->
 
-    <accordion:Accordion Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="accordion">
+    <accordion:Accordion Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="accordion" SelectionSequence="CollapseBeforeExpand">
       <accordion:Accordion.Resources>
         <Style TargetType="DockPanel">
           <Setter Property="VerticalAlignment" Value="Stretch"/>
           <Setter Property="HorizontalAlignment" Value="Stretch"/>
         </Style>
       </accordion:Accordion.Resources>
-      <accordion:AccordionItem>
-        <DockPanel>
+      <accordion:AccordionItem x:Name="accountMyList">
+        <DockPanel Width="{Binding ActualWidth, ElementName=accountMyList}" Height="{Binding ActualHeight, ElementName=accountMyList}">
           <ToolBar DockPanel.Dock="Top">
             <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
             <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
@@ -135,8 +138,8 @@
           <ListBox Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountMyListItems}" />
         </DockPanel>
       </accordion:AccordionItem>
-      <accordion:AccordionItem>
-        <TabControl VerticalAlignment="Stretch">
+      <accordion:AccordionItem x:Name="userMyList">
+        <TabControl  Width="{Binding ActualWidth, ElementName=userMyList}" Height="{Binding ActualHeight, ElementName=userMyList}">
           <TabItem Header="search">
             <DockPanel>
               <ToolBar DockPanel.Dock="Top">
