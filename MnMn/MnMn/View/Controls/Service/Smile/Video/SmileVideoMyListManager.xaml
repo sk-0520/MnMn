@@ -50,7 +50,7 @@
               <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
               <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
             </ToolBar>
-            <ListBox Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountMyListItems}" />
+            <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedAccountFinder}" ItemsSource="{Binding AccountMyListItems}" />
           </DockPanel>
         </TabItem>
 
@@ -83,7 +83,7 @@
               </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding SearchUserMyListItems}" />
+            <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedSearchFinder}" ItemsSource="{Binding SearchUserMyListItems}" />
 
           </DockPanel>
 
@@ -95,7 +95,7 @@
               <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
               <Button Command="{Binding RemoveSelectedLocalUserMyListCommand}">remove</Button>
             </ToolBar>
-            <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding LocalUserMyListItems}" />
+            <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedLocalFinder}" ItemsSource="{Binding LocalUserMyListItems}" />
           </DockPanel>
         </TabItem>
         
@@ -105,7 +105,7 @@
               <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
               <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
             </ToolBar>
-            <ListBox ItemsSource="{Binding HistoryUserMyListItems}" />
+            <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedHistoryFinder}" ItemsSource="{Binding HistoryUserMyListItems}" />
           </DockPanel>
         </TabItem>
 
@@ -118,7 +118,7 @@
     <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
 
     <Grid Grid.Column="2">
-      <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedFinder}" />
+      <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />
     </Grid>
   </Grid>
 </UserControl>

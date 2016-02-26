@@ -40,7 +40,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        SmileVideoMyListFinderViewModelBase _selectedFinder;
+        SmileVideoMyListFinderViewModelBase _selectedAccountFinder;
+        SmileVideoMyListFinderViewModelBase _selectedLocalFinder;
+        SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
+        SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
+
+        SmileVideoMyListFinderViewModelBase _selectedCurrentFinder;
+
         string _inputSearchMyList;
         PageViewModel<SmileVideoMyListFinderPageViewModel> _selectedPage;
 
@@ -74,20 +80,68 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CollectionModel<SmileVideoMyListFinderViewModelBase> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView HistoryUserMyListItems { get; }
 
-        public SmileVideoMyListFinderViewModelBase SelectedFinder
+        //public SmileVideoMyListFinderViewModelBase SelectedFinder
+        //{
+        //    get { return this._selectedFinder; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._selectedFinder, value)) {
+        //            if(this._selectedFinder != null && this._selectedFinder.CanLoad) {
+        //                if(this._selectedFinder.FinderLoadState != SmileVideoFinderLoadState.Completed) {
+        //                    this._selectedFinder.LoadDefaultCacheAsync();
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        public SmileVideoMyListFinderViewModelBase SelectedAccountFinder
         {
-            get { return this._selectedFinder; }
+            get { return this._selectedAccountFinder; }
             set
             {
-                if(SetVariableValue(ref this._selectedFinder, value)) {
-                    if(this._selectedFinder != null && this._selectedFinder.CanLoad) {
-                        if(this._selectedFinder.FinderLoadState != SmileVideoFinderLoadState.Completed) {
-                            this._selectedFinder.LoadDefaultCacheAsync();
-                        }
-                    }
+                if(SetVariableValue(ref this._selectedAccountFinder, value)) {
+                    ChangedSelectedFinder(this._selectedAccountFinder);
                 }
             }
         }
+        public SmileVideoMyListFinderViewModelBase SelectedLocalFinder
+        {
+            get { return this._selectedLocalFinder; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedLocalFinder, value)) {
+                    ChangedSelectedFinder(this._selectedLocalFinder);
+                }
+            }
+        }
+        public SmileVideoMyListFinderViewModelBase SelectedSearchFinder
+        {
+            get { return this._selectedSearchFinder; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSearchFinder, value)) {
+                    ChangedSelectedFinder(this._selectedSearchFinder);
+                }
+            }
+        }
+        public SmileVideoMyListFinderViewModelBase SelectedHistoryFinder
+        {
+            get { return this._selectedHistoryFinder; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedHistoryFinder, value)) {
+                    ChangedSelectedFinder(this._selectedHistoryFinder);
+                }
+            }
+        }
+
+        public SmileVideoMyListFinderViewModelBase SelectedCurrentFinder
+        {
+            get { return this._selectedCurrentFinder; }
+            set { SetVariableValue(ref this._selectedCurrentFinder, value); }
+        }
+        
+
 
         public string InputSearchMyList
         {
@@ -102,7 +156,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 var oldSelectedPage = this._selectedPage;
                 if(SetVariableValue(ref this._selectedPage, value)) {
-                    SelectedFinder = this._selectedPage.ViewModel.Items.First();
+                    SelectedSearchFinder = this._selectedPage.ViewModel.Items.First();
                     SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
                 }
             }
@@ -166,6 +220,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SearchItems.Clear();
         }
 
+        void ChangedSelectedFinder(SmileVideoMyListFinderViewModelBase selectedFinder)
+        {
+            if(selectedFinder != null && selectedFinder.CanLoad) {
+                if(selectedFinder.FinderLoadState != SmileVideoFinderLoadState.Completed) {
+                    selectedFinder.LoadDefaultCacheAsync();
+                }
+            }
+            SelectedCurrentFinder = selectedFinder;
+        }
 
         public async Task LoadAccountMyListAsync()
         {
@@ -190,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             AccountMyList.InitializeRange(list);
 
-            SelectedFinder = defaultMyList;
+            SelectedAccountFinder = defaultMyList;
             Debug.WriteLine(accountGroup);
         }
 
@@ -229,7 +292,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     ;
                     SearchItems.InitializeRange(pages);
                     SearchUserMyList.InitializeRange(finders);
-                    SelectedFinder = null;
                     SelectedPage = SearchItems.First();
                 } else {
                     ClearSearchUserMyListPage();
