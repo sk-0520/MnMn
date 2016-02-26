@@ -3,8 +3,6 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   
-  xmlns:accordion="clr-namespace:System.Windows.Controls;assembly=Accordion"
-
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
   xmlns:app_contrls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
@@ -35,12 +33,7 @@
         </Setter.Value>
       </Setter>
     </Style>
-    <Style TargetType="accordion:Accordion">
-      <Setter Property="Background" Value="Transparent" />
-    </Style>
-    <Style TargetType="accordion:AccordionItem">
-      <Setter Property="Background" Value="Transparent" />
-    </Style>
+
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -49,151 +42,78 @@
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <!--<Grid Grid.Column="0">
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition />
-      </Grid.RowDefinitions>
+    <Grid Grid.Column="0">
+      <TabControl>
+        <TabItem Header="account">
+          <DockPanel>
+            <ToolBar DockPanel.Dock="Top">
+              <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
+              <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
+            </ToolBar>
+            <ListBox Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountMyListItems}" />
+          </DockPanel>
+        </TabItem>
+
+        <TabItem Header="search">
+          <DockPanel>
+            <ToolBar DockPanel.Dock="Top">
+              <TextBox Text="{Binding InputSearchMyList}" />
+              <Button Command="{Binding SearchUserMyListCommand}">find</Button>
+            </ToolBar>
+
+            <!--<app_contrls:Pager
+              DockPanel.Dock="Bottom"
+              PageItems="{Binding SearchItems}"
+              Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            />-->
+            <ItemsControl  DockPanel.Dock="Bottom" ItemsSource="{Binding SearchItems}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Button
+                      Content="{Binding PageNumber }"
+                      Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                      CommandParameter="{Binding }"
+                    />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding SearchUserMyListItems}" />
+
+          </DockPanel>
+
+      </TabItem>
+
+        <TabItem Header="local">
+          <DockPanel>
+            <ToolBar DockPanel.Dock="Top">
+              <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
+              <Button Command="{Binding RemoveSelectedLocalUserMyListCommand}">remove</Button>
+            </ToolBar>
+            <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding LocalUserMyListItems}" />
+          </DockPanel>
+        </TabItem>
+        
+        <TabItem Header="hist">
+          <DockPanel>
+            <ToolBar DockPanel.Dock="Top">
+              <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
+              <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
+            </ToolBar>
+            <ListBox ItemsSource="{Binding HistoryUserMyListItems}" />
+          </DockPanel>
+        </TabItem>
+
+      </TabControl>
+
       
-      <Expander Grid.Row="0" Header="mylist">
-        <DockPanel>
-          <ToolBar DockPanel.Dock="Top">
-            <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
-            <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
-          </ToolBar>
-          <ListBox Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountMyListItems}" />
-        </DockPanel>
-      </Expander>
-      
-      <Expander Grid.Row="1" Header="usermylist">
-        <TabControl>
-          <TabItem Header="search">
-            <DockPanel>
-              <ToolBar DockPanel.Dock="Top">
-                <TextBox Text="{Binding InputSearchMyList}" />
-                <Button Command="{Binding SearchUserMyListCommand}">find</Button>
-              </ToolBar>
-              
-              --><!--<app_contrls:Pager
-                DockPanel.Dock="Bottom"
-                PageItems="{Binding SearchItems}"
-                Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-              />--><!--
-              <ItemsControl  DockPanel.Dock="Bottom" ItemsSource="{Binding SearchItems}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <Button
-                        Content="{Binding PageNumber }"
-                        Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        CommandParameter="{Binding }"
-                      />
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
+    </Grid>
 
-              <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding SearchUserMyListItems}" />
-
-            </DockPanel>
-          </TabItem>
-          <TabItem Header="local">
-            <DockPanel>
-              <ToolBar DockPanel.Dock="Top">
-                <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
-                <Button Command="{Binding RemoveSelectedLocalUserMyListCommand}">remove</Button>
-              </ToolBar>
-              <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding LocalUserMyListItems}" />
-            </DockPanel>
-          </TabItem>
-          <TabItem Header="hist">
-            <DockPanel>
-              <ToolBar DockPanel.Dock="Top">
-                <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
-                <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
-              </ToolBar>
-              <ListBox ItemsSource="{Binding HistoryUserMyListItems}" />
-            </DockPanel>
-          </TabItem>
-        </TabControl>
-      </Expander>
-    </Grid>-->
-
-    <accordion:Accordion Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="accordion" SelectionSequence="CollapseBeforeExpand">
-      <accordion:Accordion.Resources>
-        <Style TargetType="DockPanel">
-          <Setter Property="VerticalAlignment" Value="Stretch"/>
-          <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        </Style>
-      </accordion:Accordion.Resources>
-      <accordion:AccordionItem x:Name="accountMyList">
-        <DockPanel Width="{Binding ActualWidth, ElementName=accountMyList}" Height="{Binding ActualHeight, ElementName=accountMyList}">
-          <ToolBar DockPanel.Dock="Top">
-            <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
-            <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
-          </ToolBar>
-          <ListBox Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountMyListItems}" />
-        </DockPanel>
-      </accordion:AccordionItem>
-      <accordion:AccordionItem x:Name="userMyList">
-        <TabControl  Width="{Binding ActualWidth, ElementName=userMyList}" Height="{Binding ActualHeight, ElementName=userMyList}">
-          <TabItem Header="search">
-            <DockPanel>
-              <ToolBar DockPanel.Dock="Top">
-                <TextBox Text="{Binding InputSearchMyList}" />
-                <Button Command="{Binding SearchUserMyListCommand}">find</Button>
-              </ToolBar>
-
-              <!--<app_contrls:Pager
-                DockPanel.Dock="Bottom"
-                PageItems="{Binding SearchItems}"
-                Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-              />-->
-              <ItemsControl  DockPanel.Dock="Bottom" ItemsSource="{Binding SearchItems}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <Button
-                        Content="{Binding PageNumber }"
-                        Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        CommandParameter="{Binding }"
-                      />
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-
-              <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding SearchUserMyListItems}" />
-
-            </DockPanel>
-          </TabItem>
-          <TabItem Header="local">
-            <DockPanel>
-              <ToolBar DockPanel.Dock="Top">
-                <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
-                <Button Command="{Binding RemoveSelectedLocalUserMyListCommand}">remove</Button>
-              </ToolBar>
-              <ListBox Style="{StaticResource MyListBox}"  ItemsSource="{Binding LocalUserMyListItems}" />
-            </DockPanel>
-          </TabItem>
-          <TabItem Header="hist">
-            <DockPanel>
-              <ToolBar DockPanel.Dock="Top">
-                <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
-                <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
-              </ToolBar>
-              <ListBox ItemsSource="{Binding HistoryUserMyListItems}" />
-            </DockPanel>
-          </TabItem>
-        </TabControl>
-      </accordion:AccordionItem>
-    </accordion:Accordion>
 
     <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
 
