@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResistResult> AppendDefaultMyListFromVideo(string videoId, string token)
+        public async Task<SmileMyListResistResult> AdditionDefaultMyListFromVideo(string videoId, string token)
         {
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["video-id"] = videoId;

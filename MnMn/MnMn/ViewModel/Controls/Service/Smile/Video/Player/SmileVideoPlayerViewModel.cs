@@ -452,13 +452,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand AppendDefaultMyListCommand
+        public ICommand AdditionDefaultMyListCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        AppendDefaultMyListAsync().ConfigureAwait(false);
+                        AdditionDefaultMyListAsync().ConfigureAwait(false);
                     }
                 );
             }
@@ -887,11 +887,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        async Task AppendDefaultMyListAsync()
+        async Task AdditionDefaultMyListAsync()
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
-            await myList.AppendDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
+            await myList.AdditionDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
         #endregion
