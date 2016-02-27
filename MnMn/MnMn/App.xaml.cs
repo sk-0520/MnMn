@@ -21,6 +21,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using MnMn.View.Controls;
 
@@ -31,6 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
     /// </summary>
     public partial class App: Application
     {
+        App()
+        {
+            SplashWindow = new SplashWindow();
+        }
+
+        #region property
+
+        SplashWindow SplashWindow { get; }
+
+        #endregion
+
         protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -40,13 +52,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #endif
             var viewModel = new ApplicationManagerViewModel();
 
-
+            SplashWindow.Show();
 
             await viewModel.InitializeAsync();
             MainWindow = new MainWindow() {
                 DataContext = viewModel,
             };
             MainWindow.Show();
+            SplashWindow.Close();
         }
     }
 }

@@ -251,6 +251,9 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoFinderControl.xaml.cs">
       <DependentUpon>SmileVideoFinderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Converter\LoadStateIsLoadedConverter.cs" />
     <Compile Include="View\Converter\LoadStateIsNotLoadedConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
@@ -398,6 +401,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\SplashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
