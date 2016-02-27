@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
     public static class SmileVideoMyListUtility
     {

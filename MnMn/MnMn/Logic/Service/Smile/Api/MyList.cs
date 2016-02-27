@@ -167,6 +167,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
                 page.ReplaceRequestParameters["video-id"] = videoId;
                 page.ReplaceRequestParameters["token"] = token;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
+                var result = response.Result;
+
             }
         }
     }

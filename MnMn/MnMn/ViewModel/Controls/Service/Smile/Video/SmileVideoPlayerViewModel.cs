@@ -62,6 +62,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -439,7 +440,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        AppendDefaultMyListAsync();
+                        AppendDefaultMyListAsync().ConfigureAwait(false);
                     }
                 );
             }
@@ -868,9 +869,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        Task AppendDefaultMyListAsync()
+        async Task AppendDefaultMyListAsync()
         {
-            return Task.CompletedTask;
+            var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var myList = new MyList(Mediation, session);
+            await myList.AppendDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
         #endregion

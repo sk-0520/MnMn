@@ -157,7 +157,7 @@
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\MediationUtility.cs" />
-    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMyListUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\SmileVideoMyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
@@ -180,11 +180,11 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchMetaModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileContentsSearchModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileAccountMyListDefaultItemDataModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileAccountMyListDefaultModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileAccountMyListItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileAccountMyListGroupItemModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileAccountMyListGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListDefaultItemDataModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListDefaultModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />

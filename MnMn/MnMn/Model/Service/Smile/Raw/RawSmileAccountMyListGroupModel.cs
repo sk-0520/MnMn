@@ -22,7 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
     [Serializable, DataContract]
     public class RawSmileAccountMyListGroupModel: ModelBase
