@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        SmileVideoManagerViewModelBase _selectedManager;
+        SmileVideoCustomManagerViewModelBase _selectedManager;
 
         #endregion
 
@@ -78,14 +78,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager {get;}
 
-        public IEnumerable<SmileVideoManagerViewModelBase> ManagerItems => new SmileVideoManagerViewModelBase[] {
+        public IEnumerable<SmileVideoCustomManagerViewModelBase> ManagerItems => new SmileVideoCustomManagerViewModelBase[] {
             SearchManager,
             RankingManager,
             NewArrivalsManager,
             MyListManager,
         };
 
-        public SmileVideoManagerViewModelBase SelectedManager
+        public SmileVideoCustomManagerViewModelBase SelectedManager
         {
             get { return this._selectedManager; }
             set {
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 return CreateCommand(o => {
-                    SelectedManager = (SmileVideoManagerViewModelBase)o;
+                    SelectedManager = (SmileVideoCustomManagerViewModelBase)o;
                 });
             }
         }

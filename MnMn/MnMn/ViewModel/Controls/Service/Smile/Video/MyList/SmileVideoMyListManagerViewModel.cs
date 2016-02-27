@@ -38,7 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoMyListManagerViewModel: SmileVideoManagerViewModelBase
+    public class SmileVideoMyListManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
         #region variable
 

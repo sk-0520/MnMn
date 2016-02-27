@@ -28,9 +28,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public abstract class SmileVideoManagerViewModelBase: ManagerViewModelBase
+    public abstract class SmileVideoCustomManagerViewModelBase: ManagerViewModelBase
     {
-        public SmileVideoManagerViewModelBase(Mediation mediation)
+        public SmileVideoCustomManagerViewModelBase(Mediation mediation)
             : base(mediation)
         {
             var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));

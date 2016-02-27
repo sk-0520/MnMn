@@ -27,7 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoNewArrivalsManagerViewModel: SmileVideoManagerViewModelBase
+    public class SmileVideoNewArrivalsManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
         #region variable
 

@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 // コントロール側はうまいことがんばる
                 switch(request.ServiceType) {
                     case ServiceType.SmileVideo:
-                        Smile.ManagerPack.VideoManager.SelectedManager = viewModel as SmileVideoManagerViewModelBase;
+                        Smile.ManagerPack.VideoManager.SelectedManager = viewModel as SmileVideoCustomManagerViewModelBase;
                         return new ResponseModel(request, null);
 
                     default:

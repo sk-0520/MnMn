@@ -29,7 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoSearchManagerViewModel: SmileVideoManagerViewModelBase
+    public class SmileVideoSearchManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
         #region property
 
