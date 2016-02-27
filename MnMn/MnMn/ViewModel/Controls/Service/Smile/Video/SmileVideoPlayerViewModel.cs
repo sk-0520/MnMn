@@ -433,6 +433,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand AppendDefaultMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        AppendDefaultMyListAsync();
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -854,6 +866,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             BaseWidth = VisualVideoSize.Width * baseScale;
             BaseHeight = VisualVideoSize.Height * baseScale;
+        }
+
+        Task AppendDefaultMyListAsync()
+        {
+            return Task.CompletedTask;
         }
 
         #endregion

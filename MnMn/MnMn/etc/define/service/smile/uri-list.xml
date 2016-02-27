@@ -5,9 +5,11 @@
 	<item key="video-session-check" uri="http://www.nicovideo.jp/rss" param="None" />
 	
 	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="Query" />
-	
+
 	<item key="smile-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="None" />
+	<item key="smile-mylist-account-default-add" uri="http://www.nicovideo.jp/api/deflist/add" param="None" />
 	<item key="smile-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
 	<item key="smile-mylist-user" uri="http://www.nicovideo.jp/mylist" param="PreSuffixes" />
 	<item key="smile-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="PreSuffixes" />
+
 </uri>

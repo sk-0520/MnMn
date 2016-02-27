@@ -5,4 +5,9 @@
 		<item key="password" value="${pass}" />
 		<item key="next_url" value="" />
 	</param>
+	<param key="smile-mylist-account-default-add" type="Text">
+		<item key="item_id" value="${video-id}" />
+		<item key="token" value="${token}" />
+		<item key="unwatched" value="0" />
+	</param>
 </parameters>

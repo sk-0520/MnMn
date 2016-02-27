@@ -15,6 +15,7 @@
 		<item key="_limit" value="${limit}" />
 		<item key="_context" value="${context}" />
 	</param>
+	
 	<param key="smile-mylist-user">
 		<item prefix="/" key="" value="${mylist-id}" />
 		<item prefix="?" key="rss" bond="=" value="2.0" />
@@ -26,4 +27,5 @@
 		<item prefix="&amp;" key="sort" bond="=" value="c" />
 		<item prefix="&amp;" key="order" bond="=" value="d" />
 	</param>
+
 </parameters>

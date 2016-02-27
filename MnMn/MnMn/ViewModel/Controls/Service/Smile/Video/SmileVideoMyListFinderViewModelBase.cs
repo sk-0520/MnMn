@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -55,9 +56,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
         public bool IsUserMyList {get;}
 
+        public virtual Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
+
         #endregion
 
-        #region SmileVideoFeedFinderViewModelBase
+            #region SmileVideoFeedFinderViewModelBase
 
         protected override void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
         {

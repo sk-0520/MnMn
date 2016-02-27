@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -157,6 +158,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
                 //} else {
                 //    finder = new SmileVideoSearchMyListFinderViewModel(Mediation);
                 //}
+            }
+        }
+
+        public async Task AppendDefaultMyListFromVideo(string videoId, string token)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultAdd, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["video-id"] = videoId;
+                page.ReplaceRequestParameters["token"] = token;
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
             }
         }
     }

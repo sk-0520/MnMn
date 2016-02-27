@@ -97,6 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
         public static string SmileVideoSearchPath => Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
+        public static string SmileVideoMyListPath => Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
 
         public static string SmileVideoCacheVideosDirectoryName => "videos";
 
@@ -109,6 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SmileVideoAutoPlay => true;
         public static bool SmileVideoLoadVideoInformation => true;
         public static int SmileVideoCommentShowCount => 0;
+        public static Color SmileVideoMyListFolderColor => Colors.SkyBlue;
 
         public static string CurrentLanguageCode => "ja-JP";
 

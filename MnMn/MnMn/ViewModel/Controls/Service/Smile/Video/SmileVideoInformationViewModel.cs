@@ -33,6 +33,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -44,6 +45,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
@@ -136,6 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public string PageHtml { get; private set; }
 
         public string PageDescription { get; private set; }
+        public string PageVideoToken { get; private set; }
 
         public SmileVideoVideoInformationSource VideoInformationSource { get; private set; }
 
@@ -775,6 +778,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 //document.DocumentNode.SelectSingleNode("@")
                 var description = document.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
                 PageDescription = description.InnerHtml;
+
+                var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
+                var flashvars = json.SelectToken("flashvars");
+                PageVideoToken = flashvars.Value<string>("csrfToken");
 
             }).ContinueWith(task => {
                 PageHtmlLoadState = LoadState.Loaded;

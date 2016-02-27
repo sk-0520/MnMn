@@ -29,9 +29,19 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <Menu Grid.Row="0">
-      <MenuItem Header="{Binding VideoId}" Command="{Binding OpenCacheDirectoryCommand}" />
-    </Menu>
+    <ToolBar Grid.Row="0">
+      <Button Command="{Binding OpenCacheDirectoryCommand}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="cache:" />
+          <TextBlock Text="{Binding VideoId}" />
+        </StackPanel>
+      </Button>
+      <Menu>
+        <MenuItem Header="mylist">
+          <MenuItem Header="default add" Command="{Binding AppendDefaultMyListCommand}" />
+        </MenuItem>
+      </Menu>
+    </ToolBar>
 
     <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->
     <Grid Grid.Row="1"  VerticalAlignment="Stretch">

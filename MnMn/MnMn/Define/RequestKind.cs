@@ -40,6 +40,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         SearchDefine,
         /// <summary>
+        /// プレイリスト定義オブジェクト
+        /// </summary>
+        PlayListDefine,
+        /// <summary>
         /// キャッシュ用ディレクトリパス。
         /// </summary>
         CacheDirectory,

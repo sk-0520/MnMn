@@ -162,6 +162,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPIUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\ApplicationManagerPackModel.cs" />
     <Compile Include="Model\ManagerPackModelBase.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThreadModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoManagerPackModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoMyListModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
     <Compile Include="Model\Setting\MainSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
@@ -406,7 +408,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="etc\define\service\smile\video\account-mylist.xml" />
+    <Content Include="etc\define\service\smile\video\mylist.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\service\smile\request-mappings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

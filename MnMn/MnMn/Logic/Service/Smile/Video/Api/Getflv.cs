@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -62,12 +63,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
             using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvScraping, ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                var document = new HtmlDocument();
-                document.LoadHtml(response.Result);
-                var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
-                var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
+                //var document = new HtmlDocument();
+                //document.LoadHtml(response.Result);
+                //var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
+                //var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
 
-                var json = JObject.Parse(watchApiDataText);
+                //var json = JObject.Parse(watchApiDataText);
+                var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(response.Result);
+
                 var flashvars = json.SelectToken("flashvars");
                 var flvInfo = flashvars.SelectToken("flvInfo");
                 var rawFlvText = flvInfo.ToString();

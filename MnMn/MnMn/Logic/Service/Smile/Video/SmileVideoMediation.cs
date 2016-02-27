@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
+            AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
         }
 
         #region property
@@ -54,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
+        SmileVideoMyListModel AccountMyList { get; }
 
         internal SmileVideoManagerPackModel ManagerPack { get; private set; }
 
@@ -69,6 +71,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 case RequestKind.SearchDefine:
                     return new ResponseModel(request, Search);
+
+                case RequestKind.PlayListDefine:
+                    return new ResponseModel(request, AccountMyList);
 
                 case RequestKind.Setting:
                     return new ResponseModel(request, Setting);

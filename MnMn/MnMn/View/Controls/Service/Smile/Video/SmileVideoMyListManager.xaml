@@ -30,6 +30,11 @@
         <Setter.Value>
           <DataTemplate>
             <StackPanel>
+              <Rectangle Width="16" Height="16">
+                <Rectangle.Fill>
+                  <SolidColorBrush Color="{Binding MyListFolderColor}" />
+                </Rectangle.Fill>
+              </Rectangle>
               <TextBlock Text="{Binding MyListName}" />
               <TextBlock>
                 <TextBlock.Style>
