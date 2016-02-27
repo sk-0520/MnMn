@@ -4,8 +4,9 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
-  xmlns:app_contrls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
-  xmlns:app_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_contrls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
@@ -13,6 +14,9 @@
 >
   <UserControl.Resources>
     <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
+    <app_view_converter:LoadStateIsNotLoadedConverter x:Key="LoadStateIsNotLoadedConverter" />
+
     <Style x:Key="MyListBox" TargetType="ListBox">
       <Setter Property="SelectedItem" Value="{Binding DataContext.SelectedFinder, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <Setter Property="ItemsPanel">
@@ -27,7 +31,24 @@
           <DataTemplate>
             <StackPanel>
               <TextBlock Text="{Binding MyListName}" />
-              <TextBlock Text="{Binding MyListItemCount}" />
+              <TextBlock>
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding FinderLoadState, Converter={StaticResource LoadStateIsNotLoadedConverter}}" Value="True"  />
+                          <Condition Binding="{Binding MyListItemCount}" Value="0" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Text" Value="not loaded" />
+                      </MultiDataTrigger>
+                    </Style.Triggers>
+                    <!-- TODO: ただ単に0件もあるので条件が甘い。でもそこまで必須じゃないので後回し -->
+                    <Setter Property="Text" Value="{Binding MyListItemCount}" />
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
+              
             </StackPanel>
           </DataTemplate>
         </Setter.Value>
@@ -61,7 +82,7 @@
               <Button Command="{Binding SearchUserMyListCommand}">find</Button>
             </ToolBar>
 
-            <!--<app_contrls:Pager
+            <!--<app_view_contrls:Pager
               DockPanel.Dock="Bottom"
               PageItems="{Binding SearchItems}"
               Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -118,7 +139,7 @@
     <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
 
     <Grid Grid.Column="2">
-      <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />
+      <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />
     </Grid>
   </Grid>
 </UserControl>

@@ -155,6 +155,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
+    <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\MediationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\MyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
@@ -241,6 +242,8 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoFinderControl.xaml.cs">
       <DependentUpon>SmileVideoFinderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\LoadStateIsLoadedConverter.cs" />
+    <Compile Include="View\Converter\LoadStateIsNotLoadedConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Page Include="View\Controls\LoadStateNavigator.xaml">
       <SubType>Designer</SubType>
