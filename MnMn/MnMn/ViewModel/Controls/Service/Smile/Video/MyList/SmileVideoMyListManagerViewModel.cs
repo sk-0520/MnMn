@@ -168,6 +168,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public ICommand RemoveSelectedAccountMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(SelectedAccountFinder != null) {
+                            RemoveAccountMyList(SelectedAccountFinder).ConfigureAwait(false);
+                        }
+                    }
+                );
+            }
+        }
+
         public ICommand SearchUserMyListCommand
         {
             get
@@ -257,6 +271,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             SelectedAccountFinder = defaultMyList;
             Debug.WriteLine(accountGroup);
+        }
+
+        Task RemoveAccountMyList(SmileVideoMyListFinderViewModelBase accountFinder)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task SearchUserMyListAsync(string inputSearchMyList)
