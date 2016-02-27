@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -164,15 +165,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResistResult> AdditionDefaultMyListFromVideo(string videoId, string token)
+        async Task<SmileMyListResistResult> RequestAdditionMyList(PageLoader page)
         {
-            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultAdd, ServiceType.Smile)) {
-                page.ReplaceRequestParameters["video-id"] = videoId;
-                page.ReplaceRequestParameters["token"] = token;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
                 var result = response.Result;
                 var json = JObject.Parse(result);
-                return SmileMyListUtility.ConvertResistResult(json);
+                var resultStatus = SmileMyListUtility.ConvertResistResultStatus(json);
+                Debug.WriteLine(resultStatus);
+                return resultStatus;
+        }
+
+        public async Task<SmileMyListResistResult> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultVideoAdd, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["video-id"] = videoId;
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestAdditionMyList(page);
+            }
+        }
+
+        public async Task<SmileMyListResistResult> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistVideoAdd, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["mylist-id"] = myListId;
+                page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestAdditionMyList(page);
             }
         }
     }

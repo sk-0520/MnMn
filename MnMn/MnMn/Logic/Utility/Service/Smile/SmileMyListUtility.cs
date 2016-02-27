@@ -33,15 +33,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return string.Compare(rawModel.Status.Trim(), "ok", true) == 0;
         }
 
-        public static SmileMyListResistResult ConvertResistResult(JObject json)
+        public static SmileMyListResistResult ConvertResistResultStatus(JObject json)
         {
-            var status = json.Value<string>("status");
-            SmileMyListResistResult result;
-            if(Enum.TryParse<SmileMyListResistResult>(status, true, out result)) {
-                return result;
-            } else {
-                return SmileMyListResistResult.Unknown;
+            var status = json.SelectToken("status");
+            if(status.Value<string>() == "ok") {
+                return SmileMyListResistResult.Success;
             }
+            var error = json.SelectToken("error");
+            var code = error.Value<string>("code");
+            var map = new Dictionary<string, SmileMyListResistResult>() {
+                { "EXIST", SmileMyListResistResult.Exists },
+            };
+            var pair = map.FirstOrDefault(p => string.Compare(p.Key, code, true) == 0);
+            if(!string.IsNullOrEmpty(pair.Key)) {
+                return pair.Value;
+            }
+
+            return SmileMyListResistResult.Unknown;
         }
     }
 }

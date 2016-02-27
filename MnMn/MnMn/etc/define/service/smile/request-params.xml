@@ -5,8 +5,14 @@
 		<item key="password" value="${pass}" />
 		<item key="next_url" value="" />
 	</param>
-	<param key="smile-mylist-account-default-add" type="Text">
+	<param key="smile-video-mylist-account-default-add" type="Text">
 		<item key="item_id" value="${video-id}" />
+		<item key="token" value="${token}" />
+		<item key="unwatched" value="0" />
+	</param>
+	<param key="smile-video-mylist-account-add" type="Text">
+		<item key="group_id" value="${mylist-id}" />
+		<item key="item_id" value="${thread-id}" />
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
 	</param>

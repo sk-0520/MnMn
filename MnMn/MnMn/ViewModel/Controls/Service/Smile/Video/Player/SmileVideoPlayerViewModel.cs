@@ -65,6 +65,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -888,21 +889,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        Task AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        Task<SmileMyListResistResult> AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var defaultMyListFinder = myListFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder != null) {
-                return AdditionDefaultMyListAsync(defaultMyListFinder);
+                return AdditionAccountDefaultMyListAsync(defaultMyListFinder);
             } else {
-                return Task.CompletedTask;
+                return AdditionAccountMyListAsync(myListFinder);
             }
         }
 
-        Task AdditionDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
+        Task<SmileMyListResistResult> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
-            return myList.AdditionDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
+            return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
+        }
+
+        Task<SmileMyListResistResult> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        {
+            var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
+            return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, VideoInformation.ThreadId, VideoInformation.PageVideoToken);
         }
 
         #endregion
