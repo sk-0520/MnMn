@@ -37,7 +37,19 @@
         </StackPanel>
       </Button>
       <Menu>
-        <MenuItem Header="mylist" ItemsSource="{Binding AccountMyListItems}" />
+        <MenuItem Header="add mylist" ItemsSource="{Binding AccountMyListItems}">
+          <MenuItem.ItemContainerStyle>
+            <Style TargetType="MenuItem">
+              <Setter Property="Command" Value="{Binding DataContext.AdditionMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+              <Setter Property="CommandParameter" Value="{Binding}" />
+            </Style>
+          </MenuItem.ItemContainerStyle>
+          <MenuItem.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding MyListName}" />
+            </DataTemplate>
+          </MenuItem.ItemTemplate>
+        </MenuItem>
       </Menu>
     </ToolBar>
 

@@ -452,13 +452,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand AdditionDefaultMyListCommand
+        public ICommand AdditionMyListCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        AdditionDefaultMyListAsync().ConfigureAwait(false);
+                        var myListFinder = o as SmileVideoMyListFinderViewModelBase;
+                        AdditionMyListAsync(myListFinder).ConfigureAwait(false);
                     }
                 );
             }
@@ -887,11 +888,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        async Task AdditionDefaultMyListAsync()
+        Task AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        {
+            var defaultMyListFinder = myListFinder as SmileVideoAccountMyListDefaultFinderViewModel;
+            if(defaultMyListFinder != null) {
+                return AdditionDefaultMyListAsync(defaultMyListFinder);
+            } else {
+                return Task.CompletedTask;
+            }
+        }
+
+        Task AdditionDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
-            await myList.AdditionDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
+            return myList.AdditionDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
         #endregion
