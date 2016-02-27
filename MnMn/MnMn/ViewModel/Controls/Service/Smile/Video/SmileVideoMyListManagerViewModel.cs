@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -244,7 +245,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 SessionSupport = true,
             };
             var accountGroup = await mylist.GetAccountGroupAsync();
-            if(MyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
+            if(SmileVideoMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
                 foreach(var group in accountGroup.Groups) {
                     var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, group);
                     list.Add(finder);

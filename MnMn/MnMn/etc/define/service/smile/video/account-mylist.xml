@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<account-mylist>
+	<folders>
+		<element key="0">
+			<extends>
+				<extend>#ffcc99</extend>
+			</extends>
+		</element>
+		<element key="1">
+			<extends>
+				<extend>#bdd3ff</extend>
+			</extends>
+		</element>
+		<element key="2">
+			<extends>
+				<extend>#bdcdcd</extend>
+			</extends>
+		</element>
+		<element key="3">
+			<extends>
+				<extend>#7a7f87</extend>
+			</extends>
+		</element>
+		<element key="4">
+			<extends>
+				<extend>#ff0605</extend>
+			</extends>
+		</element>
+		<element key="5">
+			<extends>
+				<extend>#ffa305</extend>
+			</extends>
+		</element>
+		<element key="6">
+			<extends>
+				<extend>#5ad91a</extend>
+			</extends>
+		</element>
+		<element key="7">
+			<extends>
+				<extend>#00cccc</extend>
+			</extends>
+		</element>
+		<element key="8">
+			<extends>
+				<extend>#74b7ff</extend>
+			</extends>
+		</element>
+		<element key="9">
+			<extends>
+				<extend>#9832ff</extend>
+			</extends>
+		</element>
+	</folders>
+</account-mylist>

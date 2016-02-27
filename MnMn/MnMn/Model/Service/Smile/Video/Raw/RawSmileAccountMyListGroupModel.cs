@@ -17,18 +17,24 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public static class MyListUtility
+    [Serializable, DataContract]
+    public class RawSmileAccountMyListGroupModel: ModelBase
     {
-        public static bool IsSuccessResponse(RawSmileAccountMyListGroupModel rawModel)
-        {
-            return string.Compare(rawModel.Status.Trim(), "ok", true) == 0;
-        }
+        #region property
 
+        [DataMember(Name = "mylistgroup")]
+        public CollectionModel<RawSmileAccountMyListGroupItemModel> Groups { get; set; } = new CollectionModel<RawSmileAccountMyListGroupItemModel>();
+
+        [DataMember(Name = "status")]
+        public string Status { get; set; }
+
+        #endregion
     }
 }

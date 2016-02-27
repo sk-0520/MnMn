@@ -22,19 +22,33 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, DataContract]
-    public class RawSmileAccountMyListDefaultModel: ModelBase
+    public class RawSmileAccountMyListItemModel: ModelBase
     {
-        #region property
+        #region proeprty
 
-        [DataMember(Name = "mylistitem")]
-        public CollectionModel<RawSmileAccountMyListItemModel> Items { get; set; } = new CollectionModel<RawSmileAccountMyListItemModel>();
+        [DataMember(Name = "item_type")]
+        public string Type { get; set; }
 
+        [DataMember(Name = "item_id")]
+        public string Id { get; set; }
 
-        [DataMember(Name = "status")]
-        public string Status { get; set; }
+        [DataMember(Name = "description")]
+        public string Description { get; set; }
+
+        [DataMember(Name = "item_data")]
+        public RawSmileAccountMyListDefaultItemDataModel Data { get; set; } = new RawSmileAccountMyListDefaultItemDataModel();
+
+        [DataMember(Name = "watch")]
+        public string Watch { get; set; }
+
+        [DataMember(Name = "create_time")]
+        public string CreateTime { get; set; }
+
+        [DataMember(Name = "update_time")]
+        public string UpdateTime { get; set; }
 
         #endregion
     }

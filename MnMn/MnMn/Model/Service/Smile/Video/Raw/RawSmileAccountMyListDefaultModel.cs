@@ -22,15 +22,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, DataContract]
-    public class RawSmileAccountMyListGroupModel: ModelBase
+    public class RawSmileAccountMyListDefaultModel: ModelBase
     {
         #region property
 
-        [DataMember(Name = "mylistgroup")]
-        public CollectionModel<RawSmileAccountMyListGroupItemModel> Groups { get; set; } = new CollectionModel<RawSmileAccountMyListGroupItemModel>();
+        [DataMember(Name = "mylistitem")]
+        public CollectionModel<RawSmileAccountMyListItemModel> Items { get; set; } = new CollectionModel<RawSmileAccountMyListItemModel>();
+
 
         [DataMember(Name = "status")]
         public string Status { get; set; }

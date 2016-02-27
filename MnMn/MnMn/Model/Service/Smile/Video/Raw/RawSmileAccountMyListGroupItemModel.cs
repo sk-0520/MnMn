@@ -22,33 +22,45 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, DataContract]
-    public class RawSmileAccountMyListItemModel: ModelBase
+    public class RawSmileAccountMyListGroupItemModel: ModelBase
     {
-        #region proeprty
+        #region property
 
-        [DataMember(Name = "item_type")]
-        public string Type { get; set; }
-
-        [DataMember(Name = "item_id")]
+        /// <summary>
+        /// マイリストID。
+        /// </summary>
+        [DataMember(Name = "id")]
         public string Id { get; set; }
+
+        [DataMember(Name = "user_id")]
+        public string UserId { get; set; }
+
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
 
         [DataMember(Name = "description")]
         public string Description { get; set; }
 
-        [DataMember(Name = "item_data")]
-        public RawSmileAccountMyListDefaultItemDataModel Data { get; set; } = new RawSmileAccountMyListDefaultItemDataModel();
+        [DataMember(Name = "public")]
+        public string Public { get; set; }
 
-        [DataMember(Name = "watch")]
-        public string Watch { get; set; }
+        [DataMember(Name = "default_sort")]
+        public string DefaultSort { get; set; }
 
         [DataMember(Name = "create_time")]
         public string CreateTime { get; set; }
 
         [DataMember(Name = "update_time")]
         public string UpdateTime { get; set; }
+
+        [DataMember(Name = "sort_order")]
+        public string SortOder { get; set; }
+
+        [DataMember(Name = "icon_id")]
+        public string IconId { get; set; }
 
         #endregion
     }
