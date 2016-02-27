@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return CreateCommand(
                     o => {
                         var page = o as PageViewModel<SmileVideoMyListFinderPageViewModel>;
-                        var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
+                        var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
                             SessionSupport = true,
                         };
                         mylist.SearchPage(page.ViewModel.Query, page.ViewModel.PageNumber).ContinueWith(task => {
@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             list.Add(defaultMyList);
 
             // 自身のマイリスト一覧
-            var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
                 SessionSupport = true,
             };
             var accountGroup = await mylist.GetAccountGroupAsync();
@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             object outputValue;
             if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
                 // 完全一致検索
-                var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
+                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
                     SessionSupport = true,
                 };
                 var myListId = (string)outputValue;
@@ -276,7 +276,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 SearchUserMyList.InitializeRange(new[] { finder });
             } else {
                 // 何かしら検索
-                var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
+                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
                     SessionSupport = true,
                 };
                 var finders = await mylist.SearchPage(inputSearchMyList, 1);

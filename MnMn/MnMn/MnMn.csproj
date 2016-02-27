@@ -151,10 +151,10 @@
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
-    <Compile Include="Logic\Service\Smile\Api\MyList.cs" />
-    <Compile Include="Logic\Service\Smile\Video\Api\Msg.cs" />
-    <Compile Include="Logic\Service\Smile\Video\Api\Getthreadkey.cs" />
-    <Compile Include="Logic\Service\Smile\Api\ContentsSearch.cs" />
+    <Compile Include="Logic\Service\Smile\Api\V1\MyList.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Msg.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Getthreadkey.cs" />
+    <Compile Include="Logic\Service\Smile\Api\V2\ContentsSearch.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
@@ -325,8 +325,8 @@
     <Compile Include="IF\Control\ITreeNodeItem.cs" />
     <Compile Include="IF\ICommunication.cs" />
     <Compile Include="Logic\Attribute\NameAttributeUtility.cs" />
-    <Compile Include="Logic\Service\Smile\Video\Api\Getflv.cs" />
-    <Compile Include="Logic\Service\Smile\Video\Api\Getthumbinfo.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Getflv.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Getthumbinfo.cs" />
     <Compile Include="Logic\PageLoader.cs" />
     <Compile Include="Logic\Mediation.cs" />
     <Compile Include="Logic\MediationBase.cs" />

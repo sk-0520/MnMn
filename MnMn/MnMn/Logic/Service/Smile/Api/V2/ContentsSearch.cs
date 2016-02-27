@@ -29,7 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using Newtonsoft.Json.Linq;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
 {
     public class ContentsSearch: ApiBase
     {

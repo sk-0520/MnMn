@@ -890,7 +890,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         async Task AppendDefaultMyListAsync()
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-            var myList = new Logic.Service.Smile.Api.MyList(Mediation, session);
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
             await myList.AppendDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 

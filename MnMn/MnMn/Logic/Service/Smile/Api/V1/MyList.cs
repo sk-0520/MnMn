@@ -36,7 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 {
     public class MyList: SessionApiBase<SmileSessionViewModel>
     {

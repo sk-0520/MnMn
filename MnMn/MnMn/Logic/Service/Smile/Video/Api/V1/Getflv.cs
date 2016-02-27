@@ -35,7 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     /// <summary>
     /// NOTE: 気持ち後回し

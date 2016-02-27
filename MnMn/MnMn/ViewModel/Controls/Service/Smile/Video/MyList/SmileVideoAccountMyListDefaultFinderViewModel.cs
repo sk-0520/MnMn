@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var myList = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
                 SessionSupport = true,
             };
 
