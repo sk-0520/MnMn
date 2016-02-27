@@ -90,6 +90,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        public override Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         #endregion
     }
 }

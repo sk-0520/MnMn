@@ -149,6 +149,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public override Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         #endregion
     }
 }

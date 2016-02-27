@@ -16,37 +16,27 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel;
-using MnMn.View.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
-    /// <summary>
-    /// App.xaml の相互作用ロジック
-    /// </summary>
-    public partial class App: Application
+    public class SmileVideoCustomSettingRequestModel: CustomSettingRequestModelBase
     {
-        protected async override void OnStartup(StartupEventArgs e)
+        public SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind customSettingKind)
+            :base(ServiceType.SmileVideo)
         {
-            base.OnStartup(e);
-
-#if DEBUG
-            DoDebug();
-#endif
-            var viewModel = new ApplicationManagerViewModel();
-
-
-
-            await viewModel.InitializeAsync();
-            MainWindow = new MainWindow() {
-                DataContext = viewModel,
-            };
-            MainWindow.Show();
+            CustomSettingKind = customSettingKind;
         }
+
+        #region property
+
+        public SmileVideoCustomSettingKind CustomSettingKind { get; }
+
+        #endregion
     }
 }

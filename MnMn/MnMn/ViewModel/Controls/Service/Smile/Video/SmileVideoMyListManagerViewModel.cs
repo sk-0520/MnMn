@@ -72,6 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView AccountMyListItems { get; }
+        public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListViewer => AccountMyList;
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView SearchUserMyListItems { get; }
@@ -203,6 +204,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        //public async IReadOnlyList<SmileVideoMyListFinderViewModelBase> GetAccountMyList()
+        //{
+        //    if(AccountMyList.Any()) {
+        //        return AccountMyList;
+        //    }
+        //    await LoadAccountMyListAsync();
+        //    //task.ConfigureAwait(false);
+        //    //task.Wait();
+
+        //    return AccountMyList;
+        //}
+
         void ClearSearchUserMyListPage()
         {
             SelectedPage = null;
@@ -233,7 +246,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 SessionSupport = true,
             };
             var accountGroup = await mylist.GetAccountGroupAsync();
-            if(SmileVideoMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
+            if(SmileMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
                 foreach(var group in accountGroup.Groups) {
                     var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, group);
                     list.Add(finder);
@@ -287,6 +300,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
 
+        }
+
+        #endregion
+
+        #region ManagerViewModelBase
+
+        public override Task InitializeAsync()
+        {
+            return LoadAccountMyListAsync();
         }
 
         #endregion

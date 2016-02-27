@@ -60,8 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         HideView,
         /// <summary>
-        /// 検索条件。
+        /// 独自設定。
         /// </summary>
-        SearchSetting,
+        CustomSetting,
     }
 }

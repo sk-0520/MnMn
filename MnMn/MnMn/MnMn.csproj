@@ -133,9 +133,12 @@
     <Compile Include="Define\ParameterEncode.cs" />
     <Compile Include="Define\ParameterType.cs" />
     <Compile Include="Define\PlayerState.cs" />
+    <Compile Include="Define\Service\Smile\SmileCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
+    <Compile Include="Define\Service\Smile\SmileMyListResistResult.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentSize.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentVertical.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoInformationFlags.cs" />
@@ -157,7 +160,7 @@
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\MediationUtility.cs" />
-    <Compile Include="Logic\Utility\Service\Smile\SmileVideoMyListUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\SmileMyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
@@ -174,6 +177,10 @@
     <Compile Include="Model\MappingModel.cs" />
     <Compile Include="Model\MappingResult.cs" />
     <Compile Include="Model\MappingsModel.cs" />
+    <Compile Include="Model\Request\CustomSettingRequestModelBase.cs" />
+    <Compile Include="Model\Request\Service\Smile\SmileCustomSettingRequestModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoCustomSettingRequestModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoAccountMyListSettingResultModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoSearchSettingResultModel.cs" />
     <Compile Include="Model\Request\ShowViewRequestModel.cs" />
     <Compile Include="Model\Request\ViewRequestModelBase.cs" />

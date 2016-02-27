@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         protected virtual void HideView()
         { }
 
+        public abstract Task InitializeAsync();
+
         #endregion
     }
 }

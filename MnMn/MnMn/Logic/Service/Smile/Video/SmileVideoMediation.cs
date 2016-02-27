@@ -63,6 +63,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region function
 
+        ResponseModel Request_CustomSetting(SmileVideoCustomSettingRequestModel request)
+        {
+            switch(request.CustomSettingKind) {
+                case SmileVideoCustomSettingKind.Search:
+                    return new ResponseModel(request, new SmileVideoSearchSettingResultModel(ManagerPack.SearchManager.SelectedMethod, ManagerPack.SearchManager.SelectedSort));
+
+                case SmileVideoCustomSettingKind.MyList:
+                    var list = ManagerPack.MyListManager.AccountMyListViewer;
+                    return new ResponseModel(request, new SmileVideoAccountMyListSettingResultModel(list));
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         ResponseModel Request_Impl(RequestModel request)
         {
             switch(request.RequestKind) {
@@ -78,8 +93,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 case RequestKind.Setting:
                     return new ResponseModel(request, Setting);
 
-                case RequestKind.SearchSetting:
-                    return new ResponseModel(request, new SmileVideoSearchSettingResultModel(ManagerPack.SearchManager.SelectedMethod, ManagerPack.SearchManager.SelectedSort));
+                case RequestKind.CustomSetting:
+                    return Request_CustomSetting((SmileVideoCustomSettingRequestModel)request);
 
                 default:
                     throw new NotImplementedException();

@@ -277,11 +277,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             throw new NotSupportedException();
         }
 
-        public void Refresh()
-        {
-            CallOnPropertyChangeDisplayItem();
-        }
-
         #endregion
 
         #region SmileVideoFinderViewModelBase

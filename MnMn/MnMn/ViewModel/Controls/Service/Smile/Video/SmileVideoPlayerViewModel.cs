@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _replayVideo;
 
+        IReadOnlyList<SmileVideoMyListFinderViewModelBase> _accountMyListItems;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -332,6 +334,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return VideoInformation.UserNickname; }
         }
 
+        public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
+        {
+            get
+            {
+                if(this._accountMyListItems == null) {
+                    var response = Mediation.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.MyList));
+                    var result = (SmileVideoAccountMyListSettingResultModel)response.Result;
+                    this._accountMyListItems = result.AccountMyList;
+                }
+
+                return this._accountMyListItems;
+            }
+        }
+
         #endregion
 
         #region command
@@ -406,7 +422,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                         //var searchItemViewModel = new SmileVideoSearchGroupViewModel(Mediation, )
                         //tagViewModel.TagName
-                        var searchSettingResponce = Mediation.Request(new RequestModel(RequestKind.SearchSetting, ServiceType.SmileVideo));
+                        var searchSettingResponce = Mediation.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Search));
                         var searchSettingResult = (SmileVideoSearchSettingResultModel)searchSettingResponce.Result;
 
                         var searchDefineResponce = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));

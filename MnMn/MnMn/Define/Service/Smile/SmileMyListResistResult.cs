@@ -19,17 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    public static class SmileVideoMyListUtility
+    public enum SmileMyListResistResult
     {
-        public static bool IsSuccessResponse(RawSmileAccountMyListGroupModel rawModel)
-        {
-            return string.Compare(rawModel.Status.Trim(), "ok", true) == 0;
-        }
-
+        Unknown,
+        Failure,
+        Success,
+        Exists,
     }
 }

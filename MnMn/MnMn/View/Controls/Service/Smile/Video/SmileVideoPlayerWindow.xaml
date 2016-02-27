@@ -37,9 +37,7 @@
         </StackPanel>
       </Button>
       <Menu>
-        <MenuItem Header="mylist">
-          <MenuItem Header="default add" Command="{Binding AppendDefaultMyListCommand}" />
-        </MenuItem>
+        <MenuItem Header="mylist" ItemsSource="{Binding AccountMyListItems}" />
       </Menu>
     </ToolBar>
 

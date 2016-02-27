@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             MyListManager = new SmileVideoMyListManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.SmileVideo, new SmileVideoManagerPackModel(SearchManager, RankingManager, NewArrivalsManager));
+            Mediation.SetManager(ServiceType.SmileVideo, new SmileVideoManagerPackModel(SearchManager, RankingManager, NewArrivalsManager, MyListManager));
 
             SwitchViewCommand.Execute(ManagerItems.Last());
         }
@@ -118,5 +118,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region function
 
         #endregion
+
+        public override Task InitializeAsync()
+        {
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
+        }
     }
 }

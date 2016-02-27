@@ -81,5 +81,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
 
         #endregion
+
+        #region ManagerViewModelBase
+
+        public async override Task InitializeAsync()
+        {
+            await SmileManager.InitializeAsync();
+        }
+
+        #endregion
+
     }
 }

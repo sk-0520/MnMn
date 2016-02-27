@@ -25,15 +25,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     public class SmileVideoManagerPackModel: ManagerPackModelBase
     {
-        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager)
+        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager)
         {
             RankingManager = rankingManager;
             SearchManager = searchManager;
             NewArrivalsManager = newArrivalsManager;
+            MyListManager = myListManager;
         }
 
         public SmileVideoRankingManagerViewModel RankingManager { get; }
         public SmileVideoSearchManagerViewModel SearchManager { get; }
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
+        public SmileVideoMyListManagerViewModel MyListManager { get; }
     }
 }

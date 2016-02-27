@@ -26,12 +26,14 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
 {
@@ -161,14 +163,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api
             }
         }
 
-        public async Task AppendDefaultMyListFromVideo(string videoId, string token)
+        public async Task<SmileMyListResistResult> AppendDefaultMyListFromVideo(string videoId, string token)
         {
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["video-id"] = videoId;
                 page.ReplaceRequestParameters["token"] = token;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
                 var result = response.Result;
-
+                var json = JObject.Parse(result);
+                return SmileMyListUtility.ConvertResistResult(json);
             }
         }
     }

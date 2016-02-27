@@ -28,7 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoManagerViewModelBase: ManagerViewModelBase
+    public abstract class SmileVideoManagerViewModelBase: ManagerViewModelBase
     {
         public SmileVideoManagerViewModelBase(Mediation mediation)
             : base(mediation)
