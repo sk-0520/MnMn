@@ -36,7 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 {
     /// <summary>
     /// とりあえずマイリストのデータ取得用。
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var myList = new MyList(Mediation, Session) {
+            var myList = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
                 SessionSupport = true,
             };
 

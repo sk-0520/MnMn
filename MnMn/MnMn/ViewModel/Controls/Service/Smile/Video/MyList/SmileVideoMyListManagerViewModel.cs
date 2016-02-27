@@ -36,7 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 {
     public class SmileVideoMyListManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => {
                         var page = o as PageViewModel<SmileVideoMyListFinderPageViewModel>;
-                        var mylist = new MyList(Mediation, Session) {
+                        var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
                             SessionSupport = true,
                         };
                         mylist.SearchPage(page.ViewModel.Query, page.ViewModel.PageNumber).ContinueWith(task => {
@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             list.Add(defaultMyList);
 
             // 自身のマイリスト一覧
-            var mylist = new MyList(Mediation, Session) {
+            var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
                 SessionSupport = true,
             };
             var accountGroup = await mylist.GetAccountGroupAsync();
@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             object outputValue;
             if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
                 // 完全一致検索
-                var mylist = new MyList(Mediation, Session) {
+                var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
                     SessionSupport = true,
                 };
                 var myListId = (string)outputValue;
@@ -276,7 +276,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 SearchUserMyList.InitializeRange(new[] { finder });
             } else {
                 // 何かしら検索
-                var mylist = new MyList(Mediation, Session) {
+                var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session) {
                     SessionSupport = true,
                 };
                 var finders = await mylist.SearchPage(inputSearchMyList, 1);

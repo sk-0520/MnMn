@@ -21,7 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 {
     public class SmileVideoSearchMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {

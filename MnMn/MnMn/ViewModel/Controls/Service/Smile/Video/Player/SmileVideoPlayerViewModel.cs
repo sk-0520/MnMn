@@ -63,8 +63,10 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
     public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView
     {
@@ -888,7 +890,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         async Task AppendDefaultMyListAsync()
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-            var myList = new MyList(Mediation, session);
+            var myList = new Logic.Service.Smile.Api.MyList(Mediation, session);
             await myList.AppendDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 

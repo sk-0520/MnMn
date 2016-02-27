@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {

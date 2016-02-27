@@ -34,6 +34,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {

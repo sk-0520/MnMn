@@ -36,7 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 {
     public abstract class SmileVideoMyListFinderViewModelBase: SmileVideoFeedFinderViewModelBase
     {
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var mylist = new MyList(Mediation, Session);
+            var mylist = new Logic.Service.Smile.Api.MyList(Mediation, Session);
             mylist.SessionSupport = true;
 
             return mylist.GetGroupAsync(MyListId);
