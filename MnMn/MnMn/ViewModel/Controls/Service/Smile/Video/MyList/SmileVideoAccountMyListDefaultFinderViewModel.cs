@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public override string MyListName { get { return global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName; } }
 
         public override string MyListFolderId { get { return string.Empty; } }
+        public override string MyListSort { get { return string.Empty; } }
 
         public override Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
 

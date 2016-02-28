@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         DefinedElementModel _editingMyListFolderIdElement;
         bool _editingMyListIsPublic;
         string _editingMyListDescription;
-        string _editingMyListSort;
+        DefinedElementModel _editingMyListSortElement;
 
         bool _isEditing;
 
@@ -77,6 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public virtual string MyListFolderId { get { return GroupModel.IconId; } }
 
+        public virtual string MyListSort { get { return GroupModel.DefaultSort; } }
+
         public string EditingMyListName
         {
             get { return this._editingMyListName; }
@@ -97,10 +99,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             get { return this._editingMyListDescription; }
             set { IsEditing = SetVariableValue(ref this._editingMyListDescription, value); }
         }
-        public string EditingMyListSort
+        public DefinedElementModel EditingMyListSortElement
         {
-            get { return this._editingMyListSort; }
-            set { IsEditing = SetVariableValue(ref this._editingMyListSort, value); }
+            get { return this._editingMyListSortElement; }
+            set { IsEditing = SetVariableValue(ref this._editingMyListSortElement, value); }
         }
 
         public bool IsEditing
@@ -140,9 +142,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             if(GroupModel != null) {
                 EditingMyListName = MyListName;
                 EditingMyListFolderIdElement = MyList.Folder.First(f => f.Key == MyListFolderId);
-                EditingMyListIsPublic = RawValueUtility.ConvertBoolean(GroupModel.Public);
+                EditingMyListIsPublic = IsPublic;
                 EditingMyListDescription = GroupModel.Description;
-                EditingMyListSort = GroupModel.DefaultSort;
+                EditingMyListSortElement = MyList.Sort.First(f => f.Key == MyListSort);
                 IsEditing = false;
             }
         }

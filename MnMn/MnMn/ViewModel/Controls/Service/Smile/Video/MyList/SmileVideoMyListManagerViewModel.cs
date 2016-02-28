@@ -155,13 +155,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
-        public IReadOnlyList<DefinedElementModel> FolderIdColors
-        {
-            get
-            {
-                return MyList.Folder;
-            }
-        }
+        public IReadOnlyList<DefinedElementModel> FolderIdColors => MyList.Folder;
+        public IReadOnlyList<DefinedElementModel> Sorts => MyList.Sort;
+
         #endregion
 
         #region command
@@ -375,7 +371,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 myListGroup.MyListId, 
                 myListGroup.EditingMyListFolderIdElement.Key, 
                 myListGroup.EditingMyListName, 
-                myListGroup.EditingMyListSort,
+                myListGroup.EditingMyListSortElement.Key,
                 myListGroup.EditingMyListDescription, 
                 myListGroup.EditingMyListIsPublic
             );
