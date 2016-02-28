@@ -372,7 +372,6 @@
     <Compile Include="Model\ParametersModel.cs" />
     <Compile Include="Model\UrisModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
-    <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Ranking\SmileVideoRankingCategoryGroupItemViewModel.cs" />
     <Compile Include="ViewModel\ApplicationManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSessionViewModel.cs" />

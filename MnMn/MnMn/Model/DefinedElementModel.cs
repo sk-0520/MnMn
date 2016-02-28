@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region variable
 
+        StringsModel _words;
         StringsModel _extends;
 
         #endregion
@@ -55,7 +56,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [XmlArray("words"), XmlArrayItem("word")]
         [IsDeepClone]
-        public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
+        public CollectionModel<DefinedKeyValuePairModel> _Words { get; set; } = new CollectionModel<DefinedKeyValuePairModel>();
+
+        /// <summary>
+        /// 要素表記文言。
+        /// </summary>
+        [IgnoreDataMember, XmlIgnore]
+        public IReadOnlyDictionary<string, string> Words
+        {
+            get
+            {
+                if(this._words == null) {
+                    var map = _Words.ToDictionary(
+                        p => p.Key,
+                        p => p.Value
+                    );
+                    this._words = new StringsModel(map);
+                }
+
+                return this._words;
+            }
+        }
 
         [XmlArray("extends"), XmlArrayItem("extend")]
         [IsDeepClone]
@@ -90,12 +111,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         {
             get
             {
-                var word = Words.FirstOrDefault(w => w.Language == Constants.CurrentLanguageCode);
-                if(word != null) {
-                    return word.Value;
+                string resultValue;
+                if(Words.TryGetValue(Constants.CurrentLanguageCode, out resultValue)) {
+                    return resultValue;
                 }
-                
-                return Words.FirstOrDefault()?.Value ?? Key;
+
+                var firstValue = Words.Values.First();
+                return string.IsNullOrEmpty(firstValue) ? Key: firstValue;
             }
         }
 

@@ -5,27 +5,27 @@
 	<periods>
 		<element key="hourly">
 			<words>
-				<word lang="ja-jp" value="毎時" />
+				<word key="ja-jp" value="毎時" />
 			</words>
 		</element>
 		<element key="daily">
 			<words>
-				<word lang="ja-jp" value="デイリー" />
+				<word key="ja-jp" value="デイリー" />
 			</words>
 		</element>
 		<element key="weekly">
 			<words>
-				<word lang="ja-jp" value="週間" />
+				<word key="ja-jp" value="週間" />
 			</words>
 		</element>
 		<element key="monthly">
 			<words>
-				<word lang="ja-jp" value="月刊" />
+				<word key="ja-jp" value="月刊" />
 			</words>
 		</element>
 		<element key="total">
 			<words>
-				<word lang="ja-jp" value="合計" />
+				<word key="ja-jp" value="合計" />
 			</words>
 		</element>
 	</periods>
@@ -34,22 +34,22 @@
 	<targets>
 		<element key="res">
 			<words>
-				<word lang="ja-jp" value="コメント" />
+				<word key="ja-jp" value="コメント" />
 			</words>
 		</element>
 		<element key="view">
 			<words>
-				<word lang="ja-jp" value="再生数" />
+				<word key="ja-jp" value="再生数" />
 			</words>
 		</element>
 		<element key="fav">
 			<words>
-				<word lang="ja-jp" value="総合" />
+				<word key="ja-jp" value="総合" />
 			</words>
 		</element>
 		<element key="mylist">
 			<words>
-				<word lang="ja-jp" value="マイリスト" />
+				<word key="ja-jp" value="マイリスト" />
 			</words>
 		</element>
 	</targets>
@@ -58,44 +58,44 @@
 	<categories>
 		<element key="all">
 			<words>
-				<word lang="ja-jp" value="カテゴリ合算" />
+				<word key="ja-jp" value="カテゴリ合算" />
 			</words>
 		</element>
 	</categories>
 	<categories>
 		<element key="g_ent2">
 			<words>
-				<word lang="ja-jp" value="エンタメ・音楽" />
+				<word key="ja-jp" value="エンタメ・音楽" />
 			</words>
 		</element>
 		<element key="ent">
 			<words>
-				<word lang="ja-jp" value="エンターテイメント" />
+				<word key="ja-jp" value="エンターテイメント" />
 			</words>
 		</element>
 		<element key="music">
 			<words>
-				<word lang="ja-jp" value="音楽" />
+				<word key="ja-jp" value="音楽" />
 			</words>
 		</element>
 		<element key="sing">
 			<words>
-				<word lang="ja-jp" value="歌ってみた" />
+				<word key="ja-jp" value="歌ってみた" />
 			</words>
 		</element>
 		<element key="dance">
 			<words>
-				<word lang="ja-jp" value="ダンス" />
+				<word key="ja-jp" value="ダンス" />
 			</words>
 		</element>
 		<element key="vocaloid">
 			<words>
-				<word lang="ja-jp" value="VOCALOID" />
+				<word key="ja-jp" value="VOCALOID" />
 			</words>
 		</element>
 		<element key="nicoindies">
 			<words>
-				<word lang="ja-jp" value="ニコニコインディーズ" />
+				<word key="ja-jp" value="ニコニコインディーズ" />
 			</words>
 		</element>
 	</categories>
