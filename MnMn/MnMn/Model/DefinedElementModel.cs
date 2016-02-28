@@ -42,8 +42,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("key")]
         [IsDeepClone]
         public string Key { get; set; }
+
         /// <summary>
-        /// 要素タイトル。
+        /// 要素表記文言。
         /// </summary>
         [XmlArray("words"), XmlArrayItem("word")]
         [IsDeepClone]

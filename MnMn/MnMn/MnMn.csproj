@@ -168,6 +168,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPIUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\ApplicationManagerPackModel.cs" />
+    <Compile Include="Model\DefinedKeyValuePairModel.cs" />
     <Compile Include="Model\ManagerPackModelBase.cs" />
     <Compile Include="Model\MappingItemBracketModel.cs" />
     <Compile Include="Model\MappingItemNodeBase.cs" />
