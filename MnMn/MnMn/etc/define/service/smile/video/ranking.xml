@@ -56,48 +56,48 @@
 	
 	<!-- カテゴリ -->
 	<categories>
-		<category key="all">
+		<element key="all">
 			<words>
 				<word lang="ja-JP" value="カテゴリ合算" />
 			</words>
-		</category>
+		</element>
 	</categories>
 	<categories>
-		<category key="g_ent2">
+		<element key="g_ent2">
 			<words>
 				<word lang="ja-JP" value="エンタメ・音楽" />
 			</words>
-		</category>
-		<category key="ent">
+		</element>
+		<element key="ent">
 			<words>
 				<word lang="ja-JP" value="エンターテイメント" />
 			</words>
-		</category>
-		<category key="music">
+		</element>
+		<element key="music">
 			<words>
 				<word lang="ja-JP" value="音楽" />
 			</words>
-		</category>
-		<category key="sing">
+		</element>
+		<element key="sing">
 			<words>
 				<word lang="ja-JP" value="歌ってみた" />
 			</words>
-		</category>
-		<category key="dance">
+		</element>
+		<element key="dance">
 			<words>
 				<word lang="ja-JP" value="ダンス" />
 			</words>
-		</category>
-		<category key="vocaloid">
+		</element>
+		<element key="vocaloid">
 			<words>
 				<word lang="ja-JP" value="VOCALOID" />
 			</words>
-		</category>
-		<category key="nicoindies">
+		</element>
+		<element key="nicoindies">
 			<words>
 				<word lang="ja-JP" value="ニコニコインディーズ" />
 			</words>
-		</category>
+		</element>
 	</categories>
 
 	
