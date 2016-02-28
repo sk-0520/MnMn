@@ -137,11 +137,20 @@
                 <ComboBox Grid.Row="1" Grid.Column="1" DisplayMemberPath="DisplayText" ItemsSource="{Binding Sorts}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListSortElement}" />
 
                 <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="memo" >
-                  <TextBox Text="{Binding SelectedAccountFinder.EditingMyListDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                  <TextBox 
+                    AcceptsReturn="True"
+                    Text="{Binding SelectedAccountFinder.EditingMyListDescription, UpdateSourceTrigger=PropertyChanged}"
+                  />
                 </GroupBox>
 
-                <Button Grid.Row="3" Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
-                <Button Grid.Row="3" Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
+                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+                  <Button Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
+                  <Button Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
+                </Grid>
 
               </Grid>
             </Expander>
