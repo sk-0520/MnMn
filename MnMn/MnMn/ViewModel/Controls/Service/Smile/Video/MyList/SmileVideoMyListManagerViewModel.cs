@@ -174,6 +174,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public ICommand CreateAccountMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        //var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, );
+                    }
+                );
+            }
+        }
+
         public ICommand RemoveSelectedAccountMyListCommand
         {
             get

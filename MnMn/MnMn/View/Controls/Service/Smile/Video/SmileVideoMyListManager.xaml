@@ -96,6 +96,7 @@
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
+              <Button Command="{Binding CreateAccountMyListCommand}">create</Button>
               <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
             </ToolBar>
             <Expander DockPanel.Dock="Bottom" Header="edit" Visibility="{Binding SelectedAccountFinder.CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}">
