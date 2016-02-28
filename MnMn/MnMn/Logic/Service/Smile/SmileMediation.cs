@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:

@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <parameters>
-	<param key="video-session-login" type="Text">
+	<param key="video-session-login">
 		<item key="mail_tel" value="${user}" />
 		<item key="password" value="${pass}" />
 		<item key="next_url" value="" />
 	</param>
-	<param key="smile-video-mylist-account-default-add" type="Text">
+	<param key="smile-video-mylist-account-default-add">
 		<item key="item_id" value="${video-id}" />
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
 	</param>
-	<param key="smile-video-mylist-account-add" type="Text">
+	<param key="smile-video-mylist-account-add">
 		<item key="group_id" value="${mylist-id}" />
 		<item key="item_id" value="${thread-id}" />
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
 	</param>
-	<param key="smile-video-mylist-account-group-del" type="Text">
+	<param key="smile-video-mylist-account-group-del">
 		<item key="group_id" value="${mylist-id}" />
 		<item key="token" value="${token}" />
 	</param>
-	<param key="smile-video-mylist-account-group-update" type="Text">
+	<param key="smile-video-mylist-account-group-update">
 		<item key="group_id" value="${mylist-id}" />
 		<item key="token" value="${token}" />
 		<item key="name" value="${name}" />

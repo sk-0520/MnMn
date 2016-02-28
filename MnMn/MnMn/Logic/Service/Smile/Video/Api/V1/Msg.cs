@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         public async Task<RawSmileVideoMsgPacketModel> GetAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, Define.ServiceType.SmileVideo)) {
-                page.ParameterType = ParameterType.Mapping;
+                //page.ParameterType = ParameterType.Mapping;
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["user-id"] = userId;

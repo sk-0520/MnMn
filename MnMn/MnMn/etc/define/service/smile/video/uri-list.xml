@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <uri>
-	<item key="video-ranking" uri="http://www.nicovideo.jp/ranking" param="PreSuffixes" />
+	<item key="video-ranking" uri="http://www.nicovideo.jp/ranking" param="ps-fix" request-type="plain" />
 	
-	<item key="video-newarrival" uri="http://www.nicovideo.jp/newarrival" param="Query" />
-	<item key="video-recent" uri="http://www.nicovideo.jp/recent" param="Query" />
-	<item key="video-hotlist" uri="http://www.nicovideo.jp/hotlist" param="None" />
+	<item key="video-newarrival" uri="http://www.nicovideo.jp/newarrival" param="query" />
+	<item key="video-recent" uri="http://www.nicovideo.jp/recent" param="query" />
+	<item key="video-hotlist" uri="http://www.nicovideo.jp/hotlist" param="none" />
 	
-	<item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="Hierarchy" />
-	<item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="Hierarchy" />
-	<item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="PreSuffixes" />
+	<item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="hierarchy" />
+	<item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="hierarchy" />
+	<item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="ps-fix" />
 	
-	<item key="video-getthreadkey" uri="http://flapi.nicovideo.jp/api/getthreadkey" param="Query" />
+	<item key="video-getthreadkey" uri="http://flapi.nicovideo.jp/api/getthreadkey" param="query" />
 	
-	<item key="video-msg" uri="${msg-uri}" param="None" />
+	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
 	
-	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="None" />
+	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
 </uri>
 

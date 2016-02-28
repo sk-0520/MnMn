@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// リクエストパラメータに使用する形式。
         /// </summary>
-        public ParameterType ParameterType { get; set; } = ParameterType.Plain;
+        public ParameterType ParameterType { get; private set; }
 
         /// <summary>
         /// URI構築処理を用いず指定URIの仕様を強制する。
@@ -141,15 +141,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void MakeUri()
         {
+            var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
+            ParameterType = rawUri.RequestParameterType;
             Uri = RestrictUtility.IsNull(
                 ForceUri, () => {
-                    var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
-                    var convertedUri = Mediation.ConvertUri(rawUri, ServiceType);
+                    var convertedUri = Mediation.ConvertUri(rawUri.Uri, ServiceType);
                     return new Uri(convertedUri);
                 }, 
                 uri => uri
             );
-            Debug.WriteLine($"{nameof(Uri)}-> {Uri}");
+            Debug.WriteLine($"{nameof(Uri)}-> {Uri}, {nameof(rawUri.RequestParameterType)} -> {rawUri.RequestParameterType}");
         }
 
         protected void MakeRequestParameter()

@@ -19,15 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public enum ParameterType
+    public class UriResultModel: ModelBase
     {
-        [XmlEnum("plain")]
-        Plain,
-        [XmlEnum("mapping")]
-        Mapping,
+        public string Uri { get; set; }
+        public ParameterType RequestParameterType { get; set; } = ParameterType.Plain;
     }
 }

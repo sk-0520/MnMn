@@ -20,11 +20,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IGetUri
     {
-        string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
+        UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

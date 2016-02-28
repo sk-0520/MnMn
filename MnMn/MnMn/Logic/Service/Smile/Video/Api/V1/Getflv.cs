@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                     { "video-id", videoId },
                 };
                 var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
-                var convertedUri = Mediation.ConvertUri(srcUri, Define.ServiceType.SmileVideo);
+                var convertedUri = Mediation.ConvertUri(srcUri.Uri, Define.ServiceType.SmileVideo);
                 var uri = new Uri(convertedUri);
                 return await GetNormalAsync(uri);
             }

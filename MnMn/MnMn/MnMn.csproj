@@ -176,7 +176,7 @@
     <Compile Include="Model\MappingItemModel.cs" />
     <Compile Include="Model\MappingContentModel.cs" />
     <Compile Include="Model\MappingModel.cs" />
-    <Compile Include="Model\MappingResult.cs" />
+    <Compile Include="Model\MappingResultModel.cs" />
     <Compile Include="Model\MappingsModel.cs" />
     <Compile Include="Model\Request\CustomSettingRequestModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\SmileCustomSettingRequestModel.cs" />
@@ -206,6 +206,7 @@
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
+    <Compile Include="Model\UriResultModel.cs" />
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />

@@ -219,11 +219,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected string GetFormatedUri(UriItemModel uriItem, IReadOnlyDictionary<string, string> replaceMap)
+        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IReadOnlyDictionary<string, string> replaceMap)
         {
-            var uri = ReplaceString(uriItem.Uri, replaceMap).Trim();
+            var result = new UriResultModel() {
+                Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
+                RequestParameterType = uriItem.RequestParameterType,
+            };
             if(uriItem.UriParameterType == UriParameterType.None) {
-                return uri;
+                return result;
             }
 
             var convertedParams = UriParameterList.Parameters
@@ -233,25 +236,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ?.Where(s => !string.IsNullOrEmpty(s))
             ;
             if(convertedParams == null) {
-                return uri;
+                return result;
             }
 
             switch(uriItem.UriParameterType) {
                 case UriParameterType.Query:
-                    return $"{uri}?{string.Join("&", convertedParams)}";
+                    result.Uri = $"{result.Uri}?{string.Join("&", convertedParams)}";
+                    break;
 
                 case UriParameterType.Hierarchy:
-                    return $"{uri}/{string.Join("/", convertedParams)}";
+                    result.Uri = $"{result.Uri}/{string.Join("/", convertedParams)}";
+                    break;
 
                 case UriParameterType.PreSuffixes:
-                    return $"{uri}{string.Join(string.Empty, convertedParams)}";
+                    result.Uri = $"{result.Uri}{string.Join(string.Empty, convertedParams)}";
+                    break;
 
                 default:
                     throw new NotImplementedException();
             }
+
+            return result;
         }
 
-        protected string GetUri_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType) => GetFormatedUri(GetUriItem(key), replaceMap);
+        protected UriResultModel GetUri_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType) => GetFormatedUri(GetUriItem(key), replaceMap);
 
         protected IDictionary<string, string> GetRequestParameter_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
@@ -307,9 +315,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected MappingResult GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected MappingResultModel GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            var result = new MappingResult();
+            var result = new MappingResultModel();
             var mapping = RequestMappingList.Mappings
                 .FirstOrDefault(up => up.Key == key)
             ;
@@ -358,7 +366,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetUri
 
-        public virtual string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -381,7 +389,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

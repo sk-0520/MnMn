@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <uri>
-	<item key="video-session-login" uri="https://secure.nicovideo.jp/secure/login" param="Query" />
-	<item key="video-session-logout" uri="https://secure.nicovideo.jp/secure/logout" param="None" />
-	<item key="video-session-check" uri="http://www.nicovideo.jp/rss" param="None" />
+	<item key="video-session-login" uri="https://secure.nicovideo.jp/secure/login" param="query" />
+	<item key="video-session-logout" uri="https://secure.nicovideo.jp/secure/logout" param="none" />
+	<item key="video-session-check" uri="http://www.nicovideo.jp/rss" param="none" />
 	
-	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="Query" />
+	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="query" />
 
-	<item key="smile-video-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="None" />
-	<item key="smile-video-mylist-account-default-add" uri="http://www.nicovideo.jp/api/deflist/add" param="None" />
-	<item key="smile-video-mylist-account-add" uri="http://www.nicovideo.jp/api/mylist/add" param="None" />
+	<item key="smile-video-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="none" />
+	<item key="smile-video-mylist-account-default-add" uri="http://www.nicovideo.jp/api/deflist/add" param="none" />
+	<item key="smile-video-mylist-account-add" uri="http://www.nicovideo.jp/api/mylist/add" param="none" />
 	
-	<item key="smile-video-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
-	<item key="smile-video-mylist-account-group-token" uri="http://www.nicovideo.jp/my/mylist/#" param="Hierarchy" />
-	<item key="smile-video-mylist-account-group-del" uri="http://www.nicovideo.jp/api/mylistgroup/delete" param="None" />
-	<item key="smile-video-mylist-account-group-update" uri="http://www.nicovideo.jp/api/mylistgroup/update" param="None" />
+	<item key="smile-video-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="none" />
+	<item key="smile-video-mylist-account-group-token" uri="http://www.nicovideo.jp/my/mylist/#" param="hierarchy" />
+	<item key="smile-video-mylist-account-group-del" uri="http://www.nicovideo.jp/api/mylistgroup/delete" param="none" />
+	<item key="smile-video-mylist-account-group-update" uri="http://www.nicovideo.jp/api/mylistgroup/update" param="none" />
 	
-	<item key="smile-video-mylist-user" uri="http://www.nicovideo.jp/mylist" param="PreSuffixes" />
-	<item key="smile-video-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="PreSuffixes" />
+	<item key="smile-video-mylist-user" uri="http://www.nicovideo.jp/mylist" param="ps-fix" />
+	<item key="smile-video-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="ps-fix" />
 
 </uri>

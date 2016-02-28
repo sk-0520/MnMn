@@ -19,15 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public enum ParameterType
+    public class MappingResultModel: ModelBase
     {
-        [XmlEnum("plain")]
-        Plain,
-        [XmlEnum("mapping")]
-        Mapping,
+        public string ContentType { get; set; }
+        public StringsModel Header { get; } = new StringsModel();
+        public string Result { get; set; }
     }
 }

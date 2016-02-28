@@ -49,6 +49,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("param")]
         public UriParameterType UriParameterType { get; set; }
 
+        /// <summary>
+        /// 要求時のパラメータ種別。
+        /// </summary>
+        [XmlAttribute("request-type")]
+        public ParameterType RequestParameterType { get; set; }
+
         #endregion
     }
 }

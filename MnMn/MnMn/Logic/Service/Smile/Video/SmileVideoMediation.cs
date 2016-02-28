@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return Request_Impl(request);
         }
 
-        public override string GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestParameter_Impl(key, replaceMap, serviceType);
         }
 
-        public override MappingResult GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);

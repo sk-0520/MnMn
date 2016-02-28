@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -30,19 +31,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// パラメータなし。
         /// </summary>
+        [XmlEnum("none")]
         None,
         /// <summary>
         /// 末尾に ? を付与して & で結合していく。
         /// </summary>
+        [XmlEnum("query")]
         Query,
         /// <summary>
         /// 末尾に / を付与して / で結合していく。
         /// <para>値のみ使用される。</para>
         /// </summary>
+        [XmlEnum("hierarchy")]
         Hierarchy,
         /// <summary>
         /// 独自の接頭辞と接尾辞、接続部を用いて結合。
         /// </summary>
+        [XmlEnum("ps-fix")]
         PreSuffixes,
     }
 }
