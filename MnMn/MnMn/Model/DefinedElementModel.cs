@@ -29,7 +29,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
-    /// 要素。
+    /// 要素定義。
+    /// <para>記述の正しい外部設定が用いられる前提のデータ定義を持ち運ぶ。</para>
     /// </summary>
     [Serializable]
     public class DefinedElementModel: ModelBase, IDeepClone
@@ -81,15 +82,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
             }
         }
 
-        public string CurrentWord {
+        #endregion
+
+        #region ModelBase
+
+        public override string DisplayText
+        {
             get
             {
                 var word = Words.FirstOrDefault(w => w.Language == Constants.CurrentLanguageCode);
                 if(word != null) {
                     return word.Value;
                 }
-
-                return Key;
+                
+                return Words.FirstOrDefault()?.Value ?? Key;
             }
         }
 

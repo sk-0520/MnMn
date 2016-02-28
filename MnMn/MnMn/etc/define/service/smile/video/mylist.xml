@@ -55,92 +55,92 @@
 	<sort>
 				<element key="">
 			<words>
-				<word lang="ja-JP" value="登録が古い順" />
+				<word lang="ja-jp" value="登録が古い順" />
 			</words>
 		</element>
 		<element key="1">
 			<words>
-				<word lang="ja-JP" value="登録が新しい順" />
+				<word lang="ja-jp" value="登録が新しい順" />
 			</words>
 		</element>
 		<element key="2">
 			<words>
-				<word lang="ja-JP" value="メモ昇順" />
+				<word lang="ja-jp" value="メモ昇順" />
 			</words>
 		</element>
 		<element key="3">
 			<words>
-				<word lang="ja-JP" value="メモ降順" />
+				<word lang="ja-jp" value="メモ降順" />
 			</words>
 		</element>
 		<element key="4">
 			<words>
-				<word lang="ja-JP" value="タイトル昇順" />
+				<word lang="ja-jp" value="タイトル昇順" />
 			</words>
 		</element>
 		<element key="5">
 			<words>
-				<word lang="ja-JP" value="タイトル降順" />
+				<word lang="ja-jp" value="タイトル降順" />
 			</words>
 		</element>
 		<element key="6">
 			<words>
-				<word lang="ja-JP" value="投稿が新しい順" />
+				<word lang="ja-jp" value="投稿が新しい順" />
 			</words>
 		</element>
 		<element key="7">
 			<words>
-				<word lang="ja-JP" value="投稿が古い順" />
+				<word lang="ja-jp" value="投稿が古い順" />
 			</words>
 		</element>
 		<element key="8">
 			<words>
-				<word lang="ja-JP" value="再生が多い順" />
+				<word lang="ja-jp" value="再生が多い順" />
 			</words>
 		</element>
 		<element key="9">
 			<words>
-				<word lang="ja-JP" value="再生が少ない順" />
+				<word lang="ja-jp" value="再生が少ない順" />
 			</words>
 		</element>
 		<element key="10">
 			<words>
-				<word lang="ja-JP" value="コメントが新しい順" />
+				<word lang="ja-jp" value="コメントが新しい順" />
 			</words>
 		</element>
 		<element key="11">
 			<words>
-				<word lang="ja-JP" value="コメントが古い順" />
+				<word lang="ja-jp" value="コメントが古い順" />
 			</words>
 		</element>
 		<element key="12">
 			<words>
-				<word lang="ja-JP" value="コメントが多い順" />
+				<word lang="ja-jp" value="コメントが多い順" />
 			</words>
 		</element>
 		<element key="13">
 			<words>
-				<word lang="ja-JP" value="コメントが少ない順" />
+				<word lang="ja-jp" value="コメントが少ない順" />
 			</words>
 		</element>
 		<element key="14">
 			<words>
-				<word lang="ja-JP" value="マイリスト登録が多い順" />
+				<word lang="ja-jp" value="マイリスト登録が多い順" />
 			</words>
 		</element>
 		<element key="15">
 			<words>
-				<word lang="ja-JP" value="マイリスト登録が少ない順" />
+				<word lang="ja-jp" value="マイリスト登録が少ない順" />
 			</words>
 		</element>
 		<element key="16">
 			<words>
-				<word lang="ja-JP" value="時間が長い順" />
+				<word lang="ja-jp" value="時間が長い順" />
 			</words>
 		</element>
 		<element key="17">
 			<words>
-				<word lang="ja-JP" value="時間が短い順" />
+				<word lang="ja-jp" value="時間が短い順" />
 			</words>
 		</element>
 	</sort>

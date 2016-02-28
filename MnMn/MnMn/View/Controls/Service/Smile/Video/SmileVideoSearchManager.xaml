@@ -29,18 +29,18 @@
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
       <ComboBox 
-        DisplayMemberPath="CurrentWord" 
+        DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding MethodItems}" 
         SelectedItem="{Binding SelectedMethod}"
       />
       <!-- だっせぇ！ -->
       <ComboBox 
-        DisplayMemberPath="CurrentWord" 
+        DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding SortItems}" 
         SelectedItem="{Binding SelectedSort}"
       />
       <ComboBox 
-        DisplayMemberPath="CurrentWord" 
+        DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding TypeItems}" 
         SelectedItem="{Binding SelectedType}"
       />
@@ -65,17 +65,17 @@
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0">
                 <TextBlock Text="{Binding Query}" />
-                <TextBlock Text="{Binding Type.CurrentWord}" />
+                <TextBlock Text="{Binding Type.DisplayText}" />
               </StackPanel>
               <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
             </Grid>
             <ComboBox 
-              DisplayMemberPath="CurrentWord" 
+              DisplayMemberPath="DisplayText" 
               ItemsSource="{Binding MethodItems}" 
               SelectedItem="{Binding SelectedMethod}"
             />
             <ComboBox 
-              DisplayMemberPath="CurrentWord" 
+              DisplayMemberPath="DisplayText" 
               ItemsSource="{Binding SortItems}" 
               SelectedItem="{Binding SelectedSort}"
             />

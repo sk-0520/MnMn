@@ -28,7 +28,7 @@
         SelectedPeriod="{Binding SelectedPeriod}"
       />
       <ComboBox 
-        DisplayMemberPath="CurrentWord" 
+        DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding CategoryItems}"
         SelectedItem="{Binding SelectedCategory}"
       />

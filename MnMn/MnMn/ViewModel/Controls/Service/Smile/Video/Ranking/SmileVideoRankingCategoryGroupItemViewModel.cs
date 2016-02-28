@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         public DefinedElementModel Category { get; private set; }
 
-        public string CategoryName => Category.CurrentWord;
+        public string CategoryName => Category.DisplayText;
 
         #endregion
 

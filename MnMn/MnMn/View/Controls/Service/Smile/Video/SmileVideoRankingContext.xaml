@@ -9,12 +9,12 @@
 >
   <StackPanel Orientation="Horizontal">
     <ComboBox
-      DisplayMemberPath="CurrentWord"
+      DisplayMemberPath="DisplayText"
       ItemsSource="{Binding PeriodItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
       SelectedItem="{Binding SelectedPeriod, RelativeSource={RelativeSource AncestorType=UserControl}}"
     />
     <ComboBox
-      DisplayMemberPath="CurrentWord"
+      DisplayMemberPath="DisplayText"
       ItemsSource="{Binding TargetItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
       SelectedItem="{Binding SelectedTarget, RelativeSource={RelativeSource AncestorType=UserControl}}"
     />

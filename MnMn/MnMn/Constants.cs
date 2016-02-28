@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int SmileVideoCommentShowCount => 0;
         public static Color SmileVideoMyListFolderColor => Colors.SkyBlue;
 
-        public static string CurrentLanguageCode => "ja-JP";
+        public static string CurrentLanguageCode => "ja-jp";
 
         /// <summary>
         /// 設定ディレクトリパス。

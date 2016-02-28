@@ -134,7 +134,7 @@
                 </Grid>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="sort" />
-                <ComboBox Grid.Row="1" Grid.Column="1" DisplayMemberPath="CurrentWord" ItemsSource="{Binding Sorts}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListSortElement}" />
+                <ComboBox Grid.Row="1" Grid.Column="1" DisplayMemberPath="DisplayText" ItemsSource="{Binding Sorts}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListSortElement}" />
 
                 <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="memo" >
                   <TextBox Text="{Binding SelectedAccountFinder.EditingMyListDescription, UpdateSourceTrigger=PropertyChanged}"/>
