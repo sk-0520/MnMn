@@ -11,7 +11,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     [Serializable, XmlRoot("mylist")]
     public class SmileVideoMyListModel: ModelBase
     {
-        [XmlArray("folders"), XmlArrayItem("element")]
-        public CollectionModel<SmileVideoElementModel> Folders { get; set; } = new CollectionModel<SmileVideoElementModel>();
+        [XmlArray("folder"), XmlArrayItem("element")]
+        public CollectionModel<SmileVideoElementModel> Folder { get; set; } = new CollectionModel<SmileVideoElementModel>();
+
+        [XmlArray("sort"), XmlArrayItem("element")]
+        public CollectionModel<SmileVideoElementModel> Sort { get; set; } = new CollectionModel<SmileVideoElementModel>();
     }
 }

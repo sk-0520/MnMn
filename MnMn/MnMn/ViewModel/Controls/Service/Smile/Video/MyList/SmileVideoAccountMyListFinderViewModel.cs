@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             if(GroupModel != null) {
                 EditingMyListName = MyListName;
-                EditingMyListFolderIdElement = MyList.Folders.First(f => f.Key == MyListFolderId);
+                EditingMyListFolderIdElement = MyList.Folder.First(f => f.Key == MyListFolderId);
                 EditingMyListIsPublic = RawValueUtility.ConvertBoolean(GroupModel.Public);
                 EditingMyListDescription = GroupModel.Description;
                 EditingMyListSort = GroupModel.DefaultSort;
@@ -160,8 +160,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             get
             {
                 var colorElement = RestrictUtility.IsNull(
-                    MyList.Folders.FirstOrDefault(s => s.Key == MyListFolderId),
-                    () => MyList.Folders.First(),
+                    MyList.Folder.FirstOrDefault(s => s.Key == MyListFolderId),
+                    () => MyList.Folder.First(),
                     fe => fe
                 );
                 var colors = SmileMyListUtility.GetColorsFromExtends(colorElement.Extends);

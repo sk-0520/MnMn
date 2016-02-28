@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return MyList.Folders;
+                return MyList.Folder;
             }
         }
         #endregion
