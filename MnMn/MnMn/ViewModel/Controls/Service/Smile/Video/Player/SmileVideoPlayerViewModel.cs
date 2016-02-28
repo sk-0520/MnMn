@@ -431,7 +431,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         var searchDefineResponce = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
                         var searchDefineResult = (SmileVideoSearchModel)searchDefineResponce.Result;
 
-                        var tagElement = searchDefineResult.Type.First(e => e.Extends.Any(w => string.Compare(w, "isTag") == 0));
+                        var tagElement = searchDefineResult.Type.First(e => e.Extends.Any(w => w.Key == "tag" && RawValueUtility.ConvertBoolean(w.Value)));
+
                         var serchViewModel = new SmileVideoSearchGroupViewModel(Mediation, searchDefineResult, searchSettingResult.Method, searchSettingResult.Sort, tagElement, tagViewModel.TagName);
                         Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, serchViewModel, ShowViewState.Foreground));
                     }

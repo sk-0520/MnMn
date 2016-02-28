@@ -3,52 +3,52 @@
 	<folder>
 		<element key="0">
 			<extends>
-				<extend>color: #ffcc99</extend>
+				<extend key="color" value="#ffcc99" />
 			</extends>
 		</element>
 		<element key="1">
 			<extends>
-				<extend>color: #bdd3ff</extend>
+				<extend key="color" value="#bdd3ff" />
 			</extends>
 		</element>
 		<element key="2">
 			<extends>
-				<extend>color: #bdcdcd</extend>
+				<extend key="color" value="#bdcdcd" />
 			</extends>
 		</element>
 		<element key="3">
 			<extends>
-				<extend>color: #7a7f87</extend>
+				<extend key="color" value="#7a7f87" />
 			</extends>
 		</element>
 		<element key="4">
 			<extends>
-				<extend>color: #ff0605</extend>
+				<extend key="color" value="#ff0605" />
 			</extends>
 		</element>
 		<element key="5">
 			<extends>
-				<extend>color: #ffa305</extend>
+				<extend key="color" value="#ffa305" />
 			</extends>
 		</element>
 		<element key="6">
 			<extends>
-				<extend>color: #5ad91a</extend>
+				<extend key="color" value="#5ad91a" />
 			</extends>
 		</element>
 		<element key="7">
 			<extends>
-				<extend>color: #00cccc</extend>
+				<extend key="color" value="#00cccc" />
 			</extends>
 		</element>
 		<element key="8">
 			<extends>
-				<extend>color: #74b7ff</extend>
+				<extend key="color" value="#74b7ff" />
 			</extends>
 		</element>
 		<element key="9">
 			<extends>
-				<extend>color: #9832ff</extend>
+				<extend key="color" value="#9832ff" />
 			</extends>
 		</element>
 	</folder>

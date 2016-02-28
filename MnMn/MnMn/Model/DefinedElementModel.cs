@@ -34,6 +34,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     [Serializable]
     public class DefinedElementModel: ModelBase, IDeepClone
     {
+        #region variable
+
+        StringsModel _extends;
+
+        #endregion
+
         #region property
 
         /// <summary>
@@ -50,13 +56,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [IsDeepClone]
         public CollectionModel<WordModel> Words { get; set; } = new CollectionModel<WordModel>();
 
+        [XmlArray("extends"), XmlArrayItem("extend")]
+        [IsDeepClone]
+        public CollectionModel<DefinedKeyValuePairModel> _Extends { get; set; } = new CollectionModel<DefinedKeyValuePairModel>();
+
         /// <summary>
         /// 拡張データ。
         /// <para>使用側で責任を持つ。</para>
         /// </summary>
-        [XmlArray("extends"), XmlArrayItem("extend")]
-        [IsDeepClone]
-        public CollectionModel<string> Extends { get; set; } = new CollectionModel<string>();
+        [IgnoreDataMember, XmlIgnore]
+        public IReadOnlyDictionary<string, string> Extends
+        {
+            get
+            {
+                if(this._extends == null) {
+                    var map = _Extends.ToDictionary(
+                        p => p.Key,
+                        p => p.Value
+                    );
+                    this._extends = new StringsModel(map);
+                }
+
+                return this._extends;
+            }
+        }
 
         public string CurrentWord {
             get

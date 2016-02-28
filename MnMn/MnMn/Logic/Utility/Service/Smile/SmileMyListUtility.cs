@@ -55,11 +55,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return SmileMyListResult.Unknown;
         }
 
-        public static IEnumerable<Color> GetColorsFromExtends(IEnumerable<string> extends)
+        public static IEnumerable<Color> GetColorsFromExtends(IReadOnlyDictionary<string, string> extends)
         {
             var colorCodes = extends
-                .Where(s => s.Trim().StartsWith("color:"))
-                .Select(s => s.Split(':').Last())
+                .Where(p => p.Key == "color")
+                .Select(p => p.Value)
             ;
 
             foreach(var colorCode in colorCodes) {
