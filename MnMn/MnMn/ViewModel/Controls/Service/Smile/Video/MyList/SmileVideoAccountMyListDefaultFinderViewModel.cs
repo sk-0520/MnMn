@@ -55,14 +55,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region SmileVideoMyListFinderViewModel
 
-        public override string MyListId
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        public override string MyListId { get; } = null;
         public override bool CanEdit { get; } = false;
+        public override bool IsPublic { get; } = false;
 
         public override string MyListName { get { return global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName; } }
 

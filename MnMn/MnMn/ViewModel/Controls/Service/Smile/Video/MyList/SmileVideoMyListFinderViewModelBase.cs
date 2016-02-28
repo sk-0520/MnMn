@@ -40,12 +40,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public abstract class SmileVideoMyListFinderViewModelBase: SmileVideoFeedFinderViewModelBase
     {
-        public SmileVideoMyListFinderViewModelBase(Mediation mediation, bool isUserMyList)
+        public SmileVideoMyListFinderViewModelBase(Mediation mediation, bool isAccountMyList)
             : base(mediation)
         {
             Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            IsUserMyList = isUserMyList;
+            IsAccountMyList = isAccountMyList;
         }
 
         #region property
@@ -54,7 +54,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public abstract string MyListId { get; }
         public abstract string MyListName { get; }
         public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
-        public bool IsUserMyList {get;}
+        public bool IsAccountMyList {get; }
+
+        public virtual bool IsPublic { get; } = false;
+        public virtual bool CanEdit { get; } = false;
 
         public virtual Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
 

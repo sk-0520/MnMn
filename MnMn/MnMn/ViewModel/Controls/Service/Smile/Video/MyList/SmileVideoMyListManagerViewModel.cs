@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 return CreateCommand(
                     o => {
-                        LoadAccountMyListAsync().ConfigureAwait(false);
+                        LoadAccountMyListAsync(null).ConfigureAwait(false);
                     }
                 );
             }
@@ -284,7 +284,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             return mylist;
         }
 
-        public async Task LoadAccountMyListAsync()
+        public async Task LoadAccountMyListAsync(string firstSelectedMyListId)
         {
             var list = new List<SmileVideoAccountMyListFinderViewModel>();
 
@@ -307,7 +307,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             AccountMyList.InitializeRange(list);
 
-            SelectedAccountFinder = defaultMyList;
+            SelectedAccountFinder = list.FirstOrDefault(i => i.MyListId == firstSelectedMyListId) ?? defaultMyList;
             Debug.WriteLine(accountGroup);
         }
 
@@ -366,11 +366,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         }
 
-        Task SaveEditMyListAsync(SmileVideoAccountMyListFinderViewModel myListGroup)
+        async Task SaveEditMyListAsync(SmileVideoAccountMyListFinderViewModel myListGroup)
         {
             var myList = GetMyListApi();
 
-            return myList.UpdateAccountGroupAsync(
+            await myList.UpdateAccountGroupAsync(
                 myListGroup.MyListId, 
                 myListGroup.EditingMyListFolderIdElement.Key, 
                 myListGroup.EditingMyListName, 
@@ -378,6 +378,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 myListGroup.EditingMyListDescription, 
                 myListGroup.EditingMyListIsPublic
             );
+            await LoadAccountMyListAsync(myListGroup.MyListId);
         }
 
         #endregion
@@ -386,7 +387,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override Task InitializeAsync()
         {
-            return LoadAccountMyListAsync();
+            return LoadAccountMyListAsync(null);
         }
 
         #endregion

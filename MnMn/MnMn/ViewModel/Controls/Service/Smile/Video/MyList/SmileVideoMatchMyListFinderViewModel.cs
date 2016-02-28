@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoMatchMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileVideoMatchMyListFinderViewModel(Mediation mediation, FeedSmileVideoModel feedModel, string myListId, bool isUserMyList)
-            : base(mediation, isUserMyList)
+        public SmileVideoMatchMyListFinderViewModel(Mediation mediation, FeedSmileVideoModel feedModel, string myListId, bool isAccountMyList)
+            : base(mediation, isAccountMyList)
         {
             FeedModel = feedModel;
             MyListId = myListId;

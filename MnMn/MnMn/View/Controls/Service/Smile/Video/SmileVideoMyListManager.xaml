@@ -15,7 +15,7 @@
 >
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    
+
     <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
     <app_view_converter:LoadStateIsNotLoadedConverter x:Key="LoadStateIsNotLoadedConverter" />
@@ -58,7 +58,24 @@
                   </Style>
                 </TextBlock.Style>
               </TextBlock>
-              
+              <TextBlock Visibility="{Binding IsAccountMyList, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Run Text="type:" />
+                <Run>
+                  <Run.Style>
+                    <Style TargetType="Run">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsPublic}" Value="True">
+                          <Setter Property="Text" Value="public" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPublic}" Value="False">
+                          <Setter Property="Text" Value="private" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Run.Style>
+                </Run>
+              </TextBlock>
+
             </StackPanel>
           </DataTemplate>
         </Setter.Value>
@@ -94,10 +111,10 @@
                   <ColumnDefinition />
                   <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="name" />
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAccountFinder.EditingMyListName}" />
-                
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAccountFinder.EditingMyListName, UpdateSourceTrigger=PropertyChanged}" />
+
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="icon" />
                 <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FolderIdColors}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListFolderIdElement}" >
                   <ComboBox.ItemTemplate>
@@ -115,11 +132,11 @@
                 <CheckBox Grid.Row="2" Grid.Column="1" Content="public" IsChecked="{Binding SelectedAccountFinder.EditingMyListIsPublic}"/>
 
                 <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >
-                  <TextBox Text="{Binding SelectedAccountFinder.EditingMyListDescription}"/>
+                  <TextBox Text="{Binding SelectedAccountFinder.EditingMyListDescription, UpdateSourceTrigger=PropertyChanged}"/>
                 </GroupBox>
 
-                <Button Grid.Row="4" Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" />
-                <Button Grid.Row="4" Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" />
+                <Button Grid.Row="4" Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
+                <Button Grid.Row="4" Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
 
               </Grid>
             </Expander>
@@ -160,7 +177,7 @@
 
           </DockPanel>
 
-      </TabItem>
+        </TabItem>
 
         <TabItem Header="local">
           <DockPanel>
@@ -171,7 +188,7 @@
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedLocalFinder}" ItemsSource="{Binding LocalUserMyListItems}" />
           </DockPanel>
         </TabItem>
-        
+
         <TabItem Header="hist">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
@@ -184,7 +201,7 @@
 
       </TabControl>
 
-      
+
     </Grid>
 
 
