@@ -105,42 +105,43 @@
                   <RowDefinition />
                   <RowDefinition />
                   <RowDefinition />
-                  <RowDefinition />
-                  <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition />
-                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="name" />
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAccountFinder.EditingMyListName, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid Grid.Row="0" Grid.Column="1" >
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <TextBox Grid.Column="0" Text="{Binding SelectedAccountFinder.EditingMyListName, UpdateSourceTrigger=PropertyChanged}" />
+                  <ComboBox Grid.Column="1" ItemsSource="{Binding FolderIdColors}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListFolderIdElement}" >
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <Rectangle Height="16" Width="16">
+                          <Rectangle.Fill>
+                            <SolidColorBrush Color="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}}" />
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                  <CheckBox Grid.Column="2" Content="public" IsChecked="{Binding SelectedAccountFinder.EditingMyListIsPublic}"/>
+                </Grid>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="type" />
-                <CheckBox Grid.Row="1" Grid.Column="1" Content="public" IsChecked="{Binding SelectedAccountFinder.EditingMyListIsPublic}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="sort" />
+                <ComboBox Grid.Row="1" Grid.Column="1" DisplayMemberPath="CurrentWord" ItemsSource="{Binding Sorts}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListSortElement}" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="icon" />
-                <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding FolderIdColors}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListFolderIdElement}" >
-                  <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                      <Rectangle Height="16" Width="16">
-                        <Rectangle.Fill>
-                          <SolidColorBrush Color="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}}" />
-                        </Rectangle.Fill>
-                      </Rectangle>
-                    </DataTemplate>
-                  </ComboBox.ItemTemplate>
-                </ComboBox>
-
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="sort" />
-                <ComboBox Grid.Row="3" Grid.Column="1" DisplayMemberPath="CurrentWord" ItemsSource="{Binding Sorts}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListSortElement}" />
-
-                <GroupBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" >
+                <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="memo" >
                   <TextBox Text="{Binding SelectedAccountFinder.EditingMyListDescription, UpdateSourceTrigger=PropertyChanged}"/>
                 </GroupBox>
 
-                <Button Grid.Row="5" Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
-                <Button Grid.Row="5" Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
+                <Button Grid.Row="3" Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
+                <Button Grid.Row="3" Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
 
               </Grid>
             </Expander>
