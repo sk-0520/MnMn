@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _replayVideo;
 
-        IReadOnlyList<SmileVideoMyListFinderViewModelBase> _accountMyListItems;
+        IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
 
         #endregion
 

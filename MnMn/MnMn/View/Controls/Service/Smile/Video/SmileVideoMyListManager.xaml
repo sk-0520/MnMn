@@ -13,6 +13,8 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    
     <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
     <app_view_converter:LoadStateIsNotLoadedConverter x:Key="LoadStateIsNotLoadedConverter" />
@@ -76,6 +78,38 @@
               <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
               <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
             </ToolBar>
+            <Expander DockPanel.Dock="Bottom" Header="edit" Visibility="{Binding SelectedAccountFinder.CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition />
+                  <RowDefinition />
+                  <RowDefinition />
+                  <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="name" />
+                <TextBox Grid.Row="0" Grid.Column="1" />
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="icon" />
+                <ComboBox Grid.Row="1" Grid.Column="1" />
+                
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="private" />
+                <CheckBox Grid.Row="2" Grid.Column="1" Content=""/>
+
+                <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >
+                  <TextBox />
+                </GroupBox>
+
+                <Button Grid.Row="4" Grid.Column="0" Content="save" />
+                <Button Grid.Row="4" Grid.Column="1" Content="cancel" />
+
+              </Grid>
+            </Expander>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedAccountFinder}" ItemsSource="{Binding AccountMyListItems}" />
           </DockPanel>
         </TabItem>

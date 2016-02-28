@@ -53,11 +53,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region property
 
+        public virtual bool CanEdit { get; } = true;
+
         RawSmileAccountMyListGroupItemModel GroupModel { get; }
 
         SmileVideoMyListModel MyList { get; }
 
-        public string MyListFolderId { get { return GroupModel.IconId; } }
+        public virtual string MyListFolderId { get { return GroupModel.IconId; } }
+
         public override Color MyListFolderColor {
             get
             {

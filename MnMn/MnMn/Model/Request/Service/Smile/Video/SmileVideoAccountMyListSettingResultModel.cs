@@ -27,14 +27,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
     public class SmileVideoAccountMyListSettingResultModel
     {
-        public SmileVideoAccountMyListSettingResultModel(IReadOnlyList<SmileVideoMyListFinderViewModelBase> accountMyListViewer)
+        public SmileVideoAccountMyListSettingResultModel(IReadOnlyList<SmileVideoAccountMyListFinderViewModel> accountMyListViewer)
         {
             AccountMyList = accountMyListViewer;
         }
 
         #region property
 
-        public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyList { get; }
+        public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; }
 
         #endregion
     }

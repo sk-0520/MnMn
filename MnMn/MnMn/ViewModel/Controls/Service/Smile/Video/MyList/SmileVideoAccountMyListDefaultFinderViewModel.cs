@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -42,10 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
     /// とりあえずマイリストのデータ取得用。
     /// <para>なんでこいつだけJsonなん。。。</para>
     /// </summary>
-    public class SmileVideoAccountMyListDefaultFinderViewModel: SmileVideoMyListFinderViewModelBase
+    public class SmileVideoAccountMyListDefaultFinderViewModel: SmileVideoAccountMyListFinderViewModel
     {
         public SmileVideoAccountMyListDefaultFinderViewModel(Mediation mediation)
-            : base(mediation, false)
+            : base(mediation, null)
         { }
 
         #region property
@@ -61,7 +62,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 throw new NotSupportedException();
             }
         }
+        public override bool CanEdit { get; } = false;
+
         public override string MyListName { get { return global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName; } }
+
+        public override string MyListFolderId { get { return string.Empty; } }
+
+        public override Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {

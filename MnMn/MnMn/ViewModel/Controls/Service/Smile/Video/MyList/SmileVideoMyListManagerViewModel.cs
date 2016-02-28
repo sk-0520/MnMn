@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
     {
         #region variable
 
-        SmileVideoMyListFinderViewModelBase _selectedAccountFinder;
+        SmileVideoAccountMyListFinderViewModel _selectedAccountFinder;
         SmileVideoMyListFinderViewModelBase _selectedLocalFinder;
         SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         SmileSessionViewModel Session { get; }
 
-        CollectionModel<SmileVideoMyListFinderViewModelBase> AccountMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
+        CollectionModel<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoAccountMyListFinderViewModel>();
         public ICollectionView AccountMyListItems { get; }
-        public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListViewer => AccountMyList;
+        public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyListViewer => AccountMyList;
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView SearchUserMyListItems { get; }
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         CollectionModel<SmileVideoMyListFinderViewModelBase> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView HistoryUserMyListItems { get; }
 
-        public SmileVideoMyListFinderViewModelBase SelectedAccountFinder
+        public SmileVideoAccountMyListFinderViewModel SelectedAccountFinder
         {
             get { return this._selectedAccountFinder; }
             set
@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public async Task LoadAccountMyListAsync()
         {
-            var list = new List<SmileVideoMyListFinderViewModelBase>();
+            var list = new List<SmileVideoAccountMyListFinderViewModel>();
 
             // とりあえずマイリスト
             var defaultMyList = new SmileVideoAccountMyListDefaultFinderViewModel(Mediation);
@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             Debug.WriteLine(accountGroup);
         }
 
-        async Task  RemoveAccountMyList(SmileVideoMyListFinderViewModelBase accountFinder)
+        async Task  RemoveAccountMyList(SmileVideoAccountMyListFinderViewModel accountFinder)
         {
             var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder!= null) {
@@ -290,9 +290,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return;
             }
 
-            var accountMyListFinder = (SmileVideoAccountMyListFinderViewModel)accountFinder;
             var myList = GetMyListApi();
-            await myList.DeleteAccountGroupAsync(accountMyListFinder.MyListId);
+            await myList.DeleteAccountGroupAsync(accountFinder.MyListId);
         }
 
         public async Task SearchUserMyListAsync(string inputSearchMyList)

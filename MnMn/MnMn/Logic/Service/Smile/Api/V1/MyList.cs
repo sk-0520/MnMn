@@ -168,12 +168,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
         async Task<SmileMyListResult> RequestPost(PageLoader page)
         {
-                var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
-                var result = response.Result;
-                var json = JObject.Parse(result);
-                var resultStatus = SmileMyListUtility.ConvertResultStatus(json);
-                Debug.WriteLine(resultStatus);
-                return resultStatus;
+            var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
+            var result = response.Result;
+            var json = JObject.Parse(result);
+            var resultStatus = SmileMyListUtility.ConvertResultStatus(json);
+            Debug.WriteLine(resultStatus);
+            return resultStatus;
         }
 
         public async Task<SmileMyListResult> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
