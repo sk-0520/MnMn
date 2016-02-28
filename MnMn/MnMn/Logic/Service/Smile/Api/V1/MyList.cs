@@ -250,20 +250,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task DeleteAccountGroupAsync(string myListId)
+        public async Task<SmileMyListResult> DeleteAccountGroupAsync(string myListId)
         {
             await LoginIfNotLoginAsync();
 
             var token = await GetAccountGroupToken(myListId);
             if(token == null) {
                 Debug.WriteLine("group token is null");
-                return;
+                return SmileMyListResult.Failure;
             }
-            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupDel, ServiceType.Smile)) {
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupDelete, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["token"] = token;
 
-                await RequestPost(page);
+                return await RequestPost(page);
+            }
+        }
+
+        public async Task<SmileMyListResult> UpdateAccountGroupAsync(string myListId, string myListFolderId, string myListName, string myListSort, string myListDescription, bool isPublic)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await GetAccountGroupToken(myListId);
+            if(token == null) {
+                Debug.WriteLine("group token is null");
+                return SmileMyListResult.Failure;
+            }
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupUpdate, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["mylist-id"] = myListId;
+                page.ReplaceRequestParameters["token"] = token;
+                page.ReplaceRequestParameters["name"] = myListName;
+                page.ReplaceRequestParameters["description"] = myListDescription;
+                page.ReplaceRequestParameters["public"] = isPublic ? "1" : "0";
+                page.ReplaceRequestParameters["sort"] = myListSort;
+                page.ReplaceRequestParameters["folder-id"] = myListFolderId;
+
+                return await RequestPost(page);
             }
         }
     }

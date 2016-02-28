@@ -16,9 +16,11 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -51,6 +53,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
 
             return SmileMyListResult.Unknown;
+        }
+
+        public static IEnumerable<Color> GetColorsFromExtends(IEnumerable<string> extends)
+        {
+            var colorCodes = extends
+                .Where(s => s.Trim().StartsWith("color:"))
+                .Select(s => s.Split(':').Last())
+            ;
+
+            foreach(var colorCode in colorCodes) {
+                yield return (Color)ColorConverter.ConvertFromString(colorCode);
+            }
         }
     }
 }

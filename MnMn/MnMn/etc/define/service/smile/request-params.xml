@@ -20,4 +20,13 @@
 		<item key="group_id" value="${mylist-id}" />
 		<item key="token" value="${token}" />
 	</param>
+	<param key="smile-video-mylist-account-group-update" type="Text">
+		<item key="group_id" value="${mylist-id}" />
+		<item key="token" value="${token}" />
+		<item key="name" value="${name}" />
+		<item key="description" value="${description}" />
+		<item key="public" value="${public}" />
+		<item key="default_sort" value="${sort}" />
+		<item key="icon_id" value="${folder-id}" />
+	</param>
 </parameters>

@@ -13,6 +13,7 @@
 	<item key="smile-video-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
 	<item key="smile-video-mylist-account-group-token" uri="http://www.nicovideo.jp/my/mylist/#" param="Hierarchy" />
 	<item key="smile-video-mylist-account-group-del" uri="http://www.nicovideo.jp/api/mylistgroup/delete" param="None" />
+	<item key="smile-video-mylist-account-group-update" uri="http://www.nicovideo.jp/api/mylistgroup/update" param="None" />
 	
 	<item key="smile-video-mylist-user" uri="http://www.nicovideo.jp/mylist" param="PreSuffixes" />
 	<item key="smile-video-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="PreSuffixes" />

@@ -6,6 +6,7 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
   xmlns:app_view_contrls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
   xmlns:app_view_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -18,6 +19,8 @@
     <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
     <app_view_converter:LoadStateIsNotLoadedConverter x:Key="LoadStateIsNotLoadedConverter" />
+    <app_view_converter_service_smile_video:MyLIstFolderIdToIdConverter x:Key="MyLIstFolderIdToIdConverter" />
+    <app_view_converter_service_smile_video:MyLIstFolderIdToColorConverter x:Key="MyLIstFolderIdToColorConverter" />
 
     <Style x:Key="MyListBox" TargetType="ListBox">
       <Setter Property="SelectedItem" Value="{Binding DataContext.SelectedFinder, RelativeSource={RelativeSource AncestorType=UserControl}}" />
@@ -93,20 +96,30 @@
                 </Grid.ColumnDefinitions>
                 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="name" />
-                <TextBox Grid.Row="0" Grid.Column="1" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAccountFinder.EditingMyListName}" />
                 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="icon" />
-                <ComboBox Grid.Row="1" Grid.Column="1" />
-                
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="private" />
-                <CheckBox Grid.Row="2" Grid.Column="1" Content=""/>
+                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FolderIdColors}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListFolderIdElement}" >
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <Rectangle Height="16" Width="16">
+                        <Rectangle.Fill>
+                          <SolidColorBrush Color="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}}" />
+                        </Rectangle.Fill>
+                      </Rectangle>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="type" />
+                <CheckBox Grid.Row="2" Grid.Column="1" Content="public" IsChecked="{Binding SelectedAccountFinder.EditingMyListIsPublic}"/>
 
                 <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" >
-                  <TextBox />
+                  <TextBox Text="{Binding SelectedAccountFinder.EditingMyListDescription}"/>
                 </GroupBox>
 
-                <Button Grid.Row="4" Grid.Column="0" Content="save" />
-                <Button Grid.Row="4" Grid.Column="1" Content="cancel" />
+                <Button Grid.Row="4" Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" />
+                <Button Grid.Row="4" Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" />
 
               </Grid>
             </Expander>

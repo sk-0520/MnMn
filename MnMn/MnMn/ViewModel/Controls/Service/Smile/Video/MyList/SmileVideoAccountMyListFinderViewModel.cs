@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
@@ -43,12 +44,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 {
     public class SmileVideoAccountMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
+        #region variable
+
+        string _editingMyListName;
+        SmileVideoElementModel _editingMyListFolderIdElement;
+        bool _editingMyListIsPublic;
+        string _editingMyListDescription;
+        string _editingMyListSort;
+
+        #endregion
+
         public SmileVideoAccountMyListFinderViewModel(Mediation mediation, RawSmileAccountMyListGroupItemModel groupModel)
             : base(mediation, true)
         {
             GroupModel = groupModel;
 
             MyList = MediationUtility.GetResultFromRequestResponse<SmileVideoMyListModel>(Mediation, new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
+
+            if(GroupModel != null) {
+                ResetEditingValue();
+            }
         }
 
         #region property
@@ -61,23 +76,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public virtual string MyListFolderId { get { return GroupModel.IconId; } }
 
-        public override Color MyListFolderColor {
+        public string EditingMyListName
+        {
+            get { return this._editingMyListName; }
+            set { SetVariableValue(ref this._editingMyListName, value); }
+        }
+        public SmileVideoElementModel EditingMyListFolderIdElement
+        {
+            get { return this._editingMyListFolderIdElement; }
+            set { SetVariableValue(ref this._editingMyListFolderIdElement, value); }
+        }
+        public bool EditingMyListIsPublic
+        {
+            get { return this._editingMyListIsPublic; }
+            set { SetVariableValue(ref this._editingMyListIsPublic, value); }
+        }
+        public string EditingMyListDescription
+        {
+            get { return this._editingMyListDescription; }
+            set { SetVariableValue(ref this._editingMyListDescription, value); }
+        }
+        public string EditingMyListSort
+        {
+            get { return this._editingMyListSort; }
+            set { SetVariableValue(ref this._editingMyListSort, value); }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand CancelEditCommand
+        {
             get
             {
-                var colorElement = RestrictUtility.IsNull(
-                    MyList.Folders.FirstOrDefault(s => s.Key == MyListFolderId),
-                    () => MyList.Folders.First(),
-                    fe => fe
-                );
-                foreach(var colorCode in colorElement.Extends.Where(s => s.Trim().StartsWith("color:")).Select(s => s.Split(':')).Last()) {
-                    try {
-                        return (Color)ColorConverter.ConvertFromString(colorCode);
-                    } catch(Exception ex) {
-                        Debug.WriteLine(ex);
+                return CreateCommand(
+                    o => {
+                        ResetEditingValue();
                     }
-                }
-                return Colors.Silver;
+                );
             }
+        }
+
+
+        #endregion
+
+        #region function
+
+        void ResetEditingValue()
+        {
+            EditingMyListName = MyListName;
+            EditingMyListFolderIdElement = MyList.Folders.First(f => f.Key == MyListFolderId);
+            EditingMyListIsPublic = RawValueUtility.ConvertBoolean(GroupModel.Public);
+            EditingMyListDescription = GroupModel.Description;
+            EditingMyListSort = GroupModel.DefaultSort;
+            ResetChangeFlag();
         }
 
         #endregion
@@ -86,6 +139,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override string MyListId { get { return GroupModel.Id; } }
         public override string MyListName { get { return GroupModel.Name; } }
+
+        public override Color MyListFolderColor
+        {
+            get
+            {
+                var colorElement = RestrictUtility.IsNull(
+                    MyList.Folders.FirstOrDefault(s => s.Key == MyListFolderId),
+                    () => MyList.Folders.First(),
+                    fe => fe
+                );
+                var colors = SmileMyListUtility.GetColorsFromExtends(colorElement.Extends);
+                if(colors.Any()) {
+                    return colors.First();
+                }
+
+                return Colors.Silver;
+            }
+        }
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 

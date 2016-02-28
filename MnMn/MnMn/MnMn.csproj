@@ -256,6 +256,8 @@
     </Compile>
     <Compile Include="View\Converter\LoadStateIsLoadedConverter.cs" />
     <Compile Include="View\Converter\LoadStateIsNotLoadedConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Page Include="View\Controls\LoadStateNavigator.xaml">
       <SubType>Designer</SubType>

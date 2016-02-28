@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
@@ -58,17 +59,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             : base(mediation)
         {
             Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+            MyList = MediationUtility.GetResultFromRequestResponse<SmileVideoMyListModel>(Mediation, new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
             LocalUserMyListItems = CollectionViewSource.GetDefaultView(LocalUserMyList);
             HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
-
         }
 
         #region property
 
         SmileSessionViewModel Session { get; }
+        SmileVideoMyListModel MyList { get; }
 
         CollectionModel<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoAccountMyListFinderViewModel>();
         public ICollectionView AccountMyListItems { get; }
@@ -152,6 +154,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public IReadOnlyList<SmileVideoElementModel> FolderIdColors
+        {
+            get
+            {
+                return MyList.Folders;
+            }
+        }
         #endregion
 
         #region command
@@ -214,6 +223,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public ICommand SaveEditCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var finder = o as SmileVideoAccountMyListFinderViewModel;
+                        if(finder.CanEdit) {
+                            SaveEditMyListAsync(finder).ConfigureAwait(false);
+                        }
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -246,6 +270,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             SelectedCurrentFinder = selectedFinder;
         }
 
+        /// <summary>
+        /// 糖衣構文みたいなもん。
+        /// <para>名前空間とクラス名がかぶってしんどいぜ。</para>
+        /// </summary>
+        /// <returns></returns>
         Logic.Service.Smile.Api.V1.MyList GetMyListApi()
         {
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
@@ -335,6 +364,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
 
+        }
+
+        Task SaveEditMyListAsync(SmileVideoAccountMyListFinderViewModel myListGroup)
+        {
+            var myList = GetMyListApi();
+
+            return myList.UpdateAccountGroupAsync(
+                myListGroup.MyListId, 
+                myListGroup.EditingMyListFolderIdElement.Key, 
+                myListGroup.EditingMyListName, 
+                myListGroup.EditingMyListSort,
+                myListGroup.EditingMyListDescription, 
+                myListGroup.EditingMyListIsPublic
+            );
         }
 
         #endregion
