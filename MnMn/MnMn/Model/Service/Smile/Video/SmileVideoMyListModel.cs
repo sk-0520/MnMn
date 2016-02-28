@@ -12,9 +12,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     public class SmileVideoMyListModel: ModelBase
     {
         [XmlArray("folder"), XmlArrayItem("element")]
-        public CollectionModel<SmileVideoElementModel> Folder { get; set; } = new CollectionModel<SmileVideoElementModel>();
+        public CollectionModel<DefinedElementModel> Folder { get; set; } = new CollectionModel<DefinedElementModel>();
 
         [XmlArray("sort"), XmlArrayItem("element")]
-        public CollectionModel<SmileVideoElementModel> Sort { get; set; } = new CollectionModel<SmileVideoElementModel>();
+        public CollectionModel<DefinedElementModel> Sort { get; set; } = new CollectionModel<DefinedElementModel>();
     }
 }

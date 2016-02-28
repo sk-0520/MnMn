@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var element = value as SmileVideoElementModel;
+            var element = value as DefinedElementModel;
             if(element != null) {
                 return element.Key;
             }

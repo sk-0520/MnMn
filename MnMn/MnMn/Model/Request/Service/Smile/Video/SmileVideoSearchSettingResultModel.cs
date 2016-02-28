@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
     public class SmileVideoSearchSettingResultModel
     {
-        public SmileVideoSearchSettingResultModel(SmileVideoElementModel method, SmileVideoElementModel sort)
+        public SmileVideoSearchSettingResultModel(DefinedElementModel method, DefinedElementModel sort)
         {
             Method = method;
             Sort = sort;
@@ -33,8 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 
         #region property
 
-        public SmileVideoElementModel Method {get;}
-        public SmileVideoElementModel Sort { get;}
+        public DefinedElementModel Method {get;}
+        public DefinedElementModel Sort { get;}
 
         #endregion
     }

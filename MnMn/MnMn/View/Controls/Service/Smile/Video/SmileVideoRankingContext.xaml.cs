@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
@@ -32,22 +33,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
         public static readonly DependencyProperty SelectedPeriodProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedPeriodProperty)),
-            typeof(SmileVideoElementModel),
+            typeof(DefinedElementModel),
             typeof(SmileVideoRankingContext),
-            new FrameworkPropertyMetadata(default(SmileVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedPeriodChanged))
+            new FrameworkPropertyMetadata(default(DefinedElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedPeriodChanged))
         );
 
         private static void OnSelectedPeriodChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as SmileVideoRankingContext;
             if(control != null) {
-                control.SelectedPeriod = e.NewValue as SmileVideoElementModel;
+                control.SelectedPeriod = e.NewValue as DefinedElementModel;
             }
         }
 
-        public SmileVideoElementModel SelectedPeriod
+        public DefinedElementModel SelectedPeriod
         {
-            get { return GetValue(SelectedPeriodProperty) as SmileVideoElementModel; }
+            get { return GetValue(SelectedPeriodProperty) as DefinedElementModel; }
             set { SetValue(SelectedPeriodProperty, value); }
         }
 
@@ -57,22 +58,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
         public static readonly DependencyProperty SelectedTargetProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedTargetProperty)),
-            typeof(SmileVideoElementModel),
+            typeof(DefinedElementModel),
             typeof(SmileVideoRankingContext),
-            new FrameworkPropertyMetadata(default(SmileVideoElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedTargetChanged))
+            new FrameworkPropertyMetadata(default(DefinedElementModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedTargetChanged))
         );
 
         private static void OnSelectedTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as SmileVideoRankingContext;
             if(control != null) {
-                control.SelectedTarget = e.NewValue as SmileVideoElementModel;
+                control.SelectedTarget = e.NewValue as DefinedElementModel;
             }
         }
 
-        public SmileVideoElementModel SelectedTarget
+        public DefinedElementModel SelectedTarget
         {
-            get { return GetValue(SelectedTargetProperty) as SmileVideoElementModel; }
+            get { return GetValue(SelectedTargetProperty) as DefinedElementModel; }
             set { SetValue(SelectedTargetProperty, value); }
         }
 
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
         public static readonly DependencyProperty PeriodItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(PeriodItemsSourceProperty)),
-            typeof(ObservableCollection<SmileVideoElementModel>),
+            typeof(ObservableCollection<DefinedElementModel>),
             typeof(SmileVideoRankingContext),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPeriodItemsSourceChanged))
         );
@@ -90,13 +91,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         private static void OnPeriodItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CastUtility.AsAction<SmileVideoRankingContext>(d, control => {
-                control.PeriodItemsSource = e.NewValue as ObservableCollection<SmileVideoElementModel>;
+                control.PeriodItemsSource = e.NewValue as ObservableCollection<DefinedElementModel>;
             });
         }
 
-        public ObservableCollection<SmileVideoElementModel> PeriodItemsSource
+        public ObservableCollection<DefinedElementModel> PeriodItemsSource
         {
-            get { return GetValue(PeriodItemsSourceProperty) as ObservableCollection<SmileVideoElementModel>; }
+            get { return GetValue(PeriodItemsSourceProperty) as ObservableCollection<DefinedElementModel>; }
             set { SetValue(PeriodItemsSourceProperty, value); }
         }
 
@@ -106,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
         public static readonly DependencyProperty TargetItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(TargetItemsSourceProperty)),
-            typeof(ObservableCollection<SmileVideoElementModel>),
+            typeof(ObservableCollection<DefinedElementModel>),
             typeof(SmileVideoRankingContext),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTargetItemsSourceChanged))
         );
@@ -114,13 +115,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         private static void OnTargetItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CastUtility.AsAction<SmileVideoRankingContext>(d, control => {
-                control.TargetItemsSource = e.NewValue as ObservableCollection<SmileVideoElementModel>;
+                control.TargetItemsSource = e.NewValue as ObservableCollection<DefinedElementModel>;
             });
         }
 
-        public ObservableCollection<SmileVideoElementModel> TargetItemsSource
+        public ObservableCollection<DefinedElementModel> TargetItemsSource
         {
-            get { return GetValue(TargetItemsSourceProperty) as ObservableCollection<SmileVideoElementModel>; }
+            get { return GetValue(TargetItemsSourceProperty) as ObservableCollection<DefinedElementModel>; }
             set { SetValue(TargetItemsSourceProperty, value); }
         }
 

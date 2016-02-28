@@ -347,7 +347,7 @@
     <Compile Include="Model\Feed\FeedModelBase.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoCategoryGroupModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoRankingGroupModel.cs" />
-    <Compile Include="Model\Service\Smile\Video\SmileVideoElementModel.cs" />
+    <Compile Include="Model\DefinedElementModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoRankingModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetflvModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileUserAccountModel.cs" />

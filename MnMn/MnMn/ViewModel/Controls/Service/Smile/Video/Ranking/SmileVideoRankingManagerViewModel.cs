@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking
@@ -32,10 +33,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
     {
         #region variable
 
-        SmileVideoElementModel _selectedPeriod;
-        SmileVideoElementModel _selectedTarget;
+        DefinedElementModel _selectedPeriod;
+        DefinedElementModel _selectedTarget;
 
-        SmileVideoElementModel _selectedCategory;
+        DefinedElementModel _selectedCategory;
 
         SmileVideoRankingCategoryGroupItemViewModel _selectedRankingCategory;
 
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             : base(mediation)
         {
             RankingModel = rankingModel;
-            CategoryItems = new CollectionModel<SmileVideoElementModel>(GetLinearRankingElementList(RankingModel.Items));
+            CategoryItems = new CollectionModel<DefinedElementModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
             SelectedTarget = TargetItems.First();
             SelectedCategory = CategoryItems.First();
@@ -55,26 +56,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         SmileVideoRankingModel RankingModel { get; set; }
 
-        public IList<SmileVideoElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
-        public IList<SmileVideoElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
+        public IList<DefinedElementModel> PeriodItems { get { return RankingModel.Periods.Items; } }
+        public IList<DefinedElementModel> TargetItems { get { return RankingModel.Targets.Items; } }
 
-        public SmileVideoElementModel SelectedPeriod
+        public DefinedElementModel SelectedPeriod
         {
             get { return this._selectedPeriod; }
             set { SetVariableValue(ref this._selectedPeriod, value); }
         }
-        public SmileVideoElementModel SelectedTarget
+        public DefinedElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
             set { SetVariableValue(ref this._selectedTarget, value); }
         }
-        public SmileVideoElementModel SelectedCategory
+        public DefinedElementModel SelectedCategory
         {
             get { return this._selectedCategory; }
             set { SetVariableValue(ref this._selectedCategory, value); }
         }
 
-        public IList<SmileVideoElementModel> CategoryItems { get; private set; }
+        public IList<DefinedElementModel> CategoryItems { get; private set; }
 
         public SmileVideoRankingCategoryGroupItemViewModel SelectedRankingCategory
         {
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region function
 
-        IEnumerable<SmileVideoElementModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
+        IEnumerable<DefinedElementModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
         {
             foreach(var item in items) {
                 if(item.IsSingleCategory) {

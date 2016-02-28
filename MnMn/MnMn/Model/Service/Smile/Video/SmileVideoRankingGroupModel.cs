@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         /// カテゴリ一覧。
         /// </summary>
         [XmlElement("element")]
-        public CollectionModel<SmileVideoElementModel> Items { get; set; } = new CollectionModel<SmileVideoElementModel>();
+        public CollectionModel<DefinedElementModel> Items { get; set; } = new CollectionModel<DefinedElementModel>();
 
         #endregion
     }

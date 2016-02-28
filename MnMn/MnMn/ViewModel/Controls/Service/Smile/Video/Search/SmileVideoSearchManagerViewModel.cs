@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
@@ -33,9 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
     {
         #region property
 
-        SmileVideoElementModel _selectedMethod;
-        SmileVideoElementModel _selectedSort;
-        SmileVideoElementModel _selectedType;
+        DefinedElementModel _selectedMethod;
+        DefinedElementModel _selectedSort;
+        DefinedElementModel _selectedType;
 
         string _inputQuery = "ACV";
 
@@ -58,23 +59,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
-        public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
-        public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
-        public IList<SmileVideoElementModel> TypeItems => SearchModel.Type;
+        public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
+        public IList<DefinedElementModel> SortItems => SearchModel.Sort;
+        public IList<DefinedElementModel> TypeItems => SearchModel.Type;
 
         public CollectionModel<SmileVideoSearchGroupViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupViewModel>();
 
-        public SmileVideoElementModel SelectedMethod
+        public DefinedElementModel SelectedMethod
         {
             get { return this._selectedMethod; }
             set { SetVariableValue(ref this._selectedMethod, value); }
         }
-        public SmileVideoElementModel SelectedSort
+        public DefinedElementModel SelectedSort
         {
             get { return this._selectedSort; }
             set { SetVariableValue(ref this._selectedSort, value); }
         }
-        public SmileVideoElementModel SelectedType
+        public DefinedElementModel SelectedType
         {
             get { return this._selectedType; }
             set { SetVariableValue(ref this._selectedType, value); }

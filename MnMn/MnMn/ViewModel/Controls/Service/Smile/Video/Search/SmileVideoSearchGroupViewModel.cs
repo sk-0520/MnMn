@@ -28,6 +28,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
@@ -40,8 +41,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
     {
         #region variable
 
-        SmileVideoElementModel _selectedMethod;
-        SmileVideoElementModel _selectedSort;
+        DefinedElementModel _selectedMethod;
+        DefinedElementModel _selectedSort;
 
         //ICollectionView _selectedVideoInformationItems;
 
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoElementModel method, SmileVideoElementModel sort, SmileVideoElementModel type, string query)
+        public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
             : base(mediation)
         {
             SearchModel = searchModel;
@@ -66,21 +67,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
-        public IList<SmileVideoElementModel> MethodItems => SearchModel.Methods;
-        public IList<SmileVideoElementModel> SortItems => SearchModel.Sort;
+        public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
+        public IList<DefinedElementModel> SortItems => SearchModel.Sort;
 
         public string Query { get; }
-        public SmileVideoElementModel Type { get; }
+        public DefinedElementModel Type { get; }
 
-        public SmileVideoElementModel LoadingMethod { get; private set; }
-        public SmileVideoElementModel LoadingSort { get; private set; }
+        public DefinedElementModel LoadingMethod { get; private set; }
+        public DefinedElementModel LoadingSort { get; private set; }
 
-        public SmileVideoElementModel SelectedMethod
+        public DefinedElementModel SelectedMethod
         {
             get { return this._selectedMethod; }
             set { SetVariableValue(ref this._selectedMethod, value); }
         }
-        public SmileVideoElementModel SelectedSort
+        public DefinedElementModel SelectedSort
         {
             get { return this._selectedSort; }
             set { SetVariableValue(ref this._selectedSort, value); }
@@ -207,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             CallOnPropertyChange(ChangePagePropertyNames);
         }
 
-        SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
+        DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
         {
             if(items.Any(i => i == element)) {
                 return element;
@@ -216,7 +217,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public void SetContextElements(SmileVideoElementModel method, SmileVideoElementModel sort)
+        public void SetContextElements(DefinedElementModel method, DefinedElementModel sort)
         {
             LoadingMethod = SelectedMethod = GetContextElemetFromChangeElement(MethodItems, method);
             LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
@@ -226,8 +227,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var isReload =(bool)extends;
 
-            SmileVideoElementModel nowMethod;
-            SmileVideoElementModel nowSort;
+            DefinedElementModel nowMethod;
+            DefinedElementModel nowSort;
             if(isReload) {
                 nowMethod = SelectedMethod;
                 nowSort = SelectedSort;

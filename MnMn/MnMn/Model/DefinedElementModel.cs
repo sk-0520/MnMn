@@ -26,13 +26,13 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     /// <summary>
     /// 要素。
     /// </summary>
     [Serializable]
-    public class SmileVideoElementModel: ModelBase, IDeepClone
+    public class DefinedElementModel: ModelBase, IDeepClone
     {
         #region property
 
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 
         public IDeepClone DeepClone()
         {
-            return DeepCloneUtility.Copy<SmileVideoElementModel>(this);
+            return DeepCloneUtility.Copy<DefinedElementModel>(this);
         }
 
         #endregion

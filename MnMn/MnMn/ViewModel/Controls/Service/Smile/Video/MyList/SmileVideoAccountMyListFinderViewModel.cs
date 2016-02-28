@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         #region variable
 
         string _editingMyListName;
-        SmileVideoElementModel _editingMyListFolderIdElement;
+        DefinedElementModel _editingMyListFolderIdElement;
         bool _editingMyListIsPublic;
         string _editingMyListDescription;
         string _editingMyListSort;
@@ -81,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             get { return this._editingMyListName; }
             set { IsEditing = SetVariableValue(ref this._editingMyListName, value); }
         }
-        public SmileVideoElementModel EditingMyListFolderIdElement
+        public DefinedElementModel EditingMyListFolderIdElement
         {
             get { return this._editingMyListFolderIdElement; }
             set { IsEditing = SetVariableValue(ref this._editingMyListFolderIdElement, value); }

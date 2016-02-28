@@ -48,17 +48,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
     {
         #region variable
 
-        SmileVideoElementModel _selectedPeriod;
-        SmileVideoElementModel _selectedTarget;
+        DefinedElementModel _selectedPeriod;
+        DefinedElementModel _selectedTarget;
 
 
         #endregion
 
-        public SmileVideoRankingCategoryGroupItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, SmileVideoElementModel period, SmileVideoElementModel target, SmileVideoElementModel category)
+        public SmileVideoRankingCategoryGroupItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
             : base(mediation)
         {
-            PeriodItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Periods.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
-            TargetItems = new CollectionModel<SmileVideoElementModel>(rankingModel.Targets.Items.Select(i => (SmileVideoElementModel)i.DeepClone()));
+            PeriodItems = new CollectionModel<DefinedElementModel>(rankingModel.Periods.Items.Select(i => (DefinedElementModel)i.DeepClone()));
+            TargetItems = new CollectionModel<DefinedElementModel>(rankingModel.Targets.Items.Select(i => (DefinedElementModel)i.DeepClone()));
 
             SetContextElements(period, target);
             Category = category;
@@ -66,21 +66,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region property
 
-        public IEnumerable<SmileVideoElementModel> PeriodItems { get; private set; }
-        public IEnumerable<SmileVideoElementModel> TargetItems { get; private set; }
+        public IEnumerable<DefinedElementModel> PeriodItems { get; private set; }
+        public IEnumerable<DefinedElementModel> TargetItems { get; private set; }
 
-        public SmileVideoElementModel SelectedPeriod
+        public DefinedElementModel SelectedPeriod
         {
             get { return this._selectedPeriod; }
             set { SetVariableValue(ref this._selectedPeriod, value); }
         }
-        public SmileVideoElementModel SelectedTarget
+        public DefinedElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
             set { SetVariableValue(ref this._selectedTarget, value); }
         }
 
-        public SmileVideoElementModel Category { get; private set; }
+        public DefinedElementModel Category { get; private set; }
 
         public string CategoryName => Category.CurrentWord;
 
@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             return LoadAsync(thumbCacheSpan, imageCacheSpan);
         }
 
-        SmileVideoElementModel GetContextElemetFromChangeElement(IEnumerable<SmileVideoElementModel> items, SmileVideoElementModel element)
+        DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
         {
             if(items.Any(i => i == element)) {
                 return element;
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
-        public void SetContextElements(SmileVideoElementModel period, SmileVideoElementModel target)
+        public void SetContextElements(DefinedElementModel period, DefinedElementModel target)
         {
             SelectedPeriod = GetContextElemetFromChangeElement(PeriodItems, period);
             SelectedTarget = GetContextElemetFromChangeElement(TargetItems, target);
