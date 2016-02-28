@@ -30,12 +30,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 
         public const string contentsSearch = "smile-contents-search";
 
-        public const string mylistDefault = "smile-mylist-account-default";
+        public const string mylistDefault = "smile-video-mylist-account-default";
         public const string mylistDefaultVideoAdd = "smile-video-mylist-account-default-add";
         public const string mylistVideoAdd = "smile-video-mylist-account-add";
-        public const string mylistGroup = "smile-mylist-account-group";
-        public const string mylist = "smile-mylist-user";
-        public const string mylistSearch = "smile-mylist-search";
+        public const string mylistGroup = "smile-video-mylist-account-group";
+        public const string mylistGroupToken = "smile-video-mylist-account-group-token";
+        public const string mylistGroupDel = "smile-video-mylist-account-group-del";
+        public const string mylist = "smile-video-mylist-user";
+        public const string mylistSearch = "smile-video-mylist-search";
 
         public const string inputIsVideoId = "convert-is-video-id";
         public const string inputGetMyListId = "convert-is-mylist-id";

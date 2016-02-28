@@ -22,11 +22,12 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    public enum SmileMyListResistResult
+    public enum SmileMyListResult
     {
         Unknown,
         Failure,
-        Success,
         Exists,
+        ParameterError,
+        Success,
     }
 }

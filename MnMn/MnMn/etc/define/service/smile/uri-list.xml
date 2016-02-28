@@ -6,11 +6,15 @@
 	
 	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="Query" />
 
-	<item key="smile-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="None" />
+	<item key="smile-video-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="None" />
 	<item key="smile-video-mylist-account-default-add" uri="http://www.nicovideo.jp/api/deflist/add" param="None" />
 	<item key="smile-video-mylist-account-add" uri="http://www.nicovideo.jp/api/mylist/add" param="None" />
-	<item key="smile-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
-	<item key="smile-mylist-user" uri="http://www.nicovideo.jp/mylist" param="PreSuffixes" />
-	<item key="smile-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="PreSuffixes" />
+	
+	<item key="smile-video-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="None" />
+	<item key="smile-video-mylist-account-group-token" uri="http://www.nicovideo.jp/my/mylist/#" param="Hierarchy" />
+	<item key="smile-video-mylist-account-group-del" uri="http://www.nicovideo.jp/api/mylistgroup/delete" param="None" />
+	
+	<item key="smile-video-mylist-user" uri="http://www.nicovideo.jp/mylist" param="PreSuffixes" />
+	<item key="smile-video-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="PreSuffixes" />
 
 </uri>

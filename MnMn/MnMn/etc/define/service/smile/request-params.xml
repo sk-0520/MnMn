@@ -16,4 +16,8 @@
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
 	</param>
+	<param key="smile-video-mylist-account-group-del" type="Text">
+		<item key="group_id" value="${mylist-id}" />
+		<item key="token" value="${token}" />
+	</param>
 </parameters>

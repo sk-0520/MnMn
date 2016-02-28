@@ -137,7 +137,7 @@
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
-    <Compile Include="Define\Service\Smile\SmileMyListResistResult.cs" />
+    <Compile Include="Define\Service\Smile\SmileMyListResult.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentSize.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentVertical.cs" />

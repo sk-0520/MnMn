@@ -889,7 +889,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        Task<SmileMyListResistResult> AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        Task<SmileMyListResult> AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var defaultMyListFinder = myListFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder != null) {
@@ -899,14 +899,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        Task<SmileMyListResistResult> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
+        Task<SmileMyListResult> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
             return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
-        Task<SmileMyListResistResult> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        Task<SmileMyListResult> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);

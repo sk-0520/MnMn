@@ -246,6 +246,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             SelectedCurrentFinder = selectedFinder;
         }
 
+        Logic.Service.Smile.Api.V1.MyList GetMyListApi()
+        {
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session) {
+                SessionSupport = true,
+            };
+
+            return mylist;
+        }
+
         public async Task LoadAccountMyListAsync()
         {
             var list = new List<SmileVideoMyListFinderViewModelBase>();
@@ -273,9 +282,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             Debug.WriteLine(accountGroup);
         }
 
-        Task RemoveAccountMyList(SmileVideoMyListFinderViewModelBase accountFinder)
+        async Task  RemoveAccountMyList(SmileVideoMyListFinderViewModelBase accountFinder)
         {
-            throw new NotImplementedException();
+            var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
+            if(defaultMyListFinder!= null) {
+                // とりあえずマイリストは削除できない
+                return;
+            }
+
+            var accountMyListFinder = (SmileVideoAccountMyListFinderViewModel)accountFinder;
+            var myList = GetMyListApi();
+            await myList.DeleteAccountGroupAsync(accountMyListFinder.MyListId);
         }
 
         public async Task SearchUserMyListAsync(string inputSearchMyList)

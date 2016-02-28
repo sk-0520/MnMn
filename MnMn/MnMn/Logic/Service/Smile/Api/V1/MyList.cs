@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -165,34 +166,104 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        async Task<SmileMyListResistResult> RequestAdditionMyList(PageLoader page)
+        async Task<SmileMyListResult> RequestPost(PageLoader page)
         {
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
                 var result = response.Result;
                 var json = JObject.Parse(result);
-                var resultStatus = SmileMyListUtility.ConvertResistResultStatus(json);
+                var resultStatus = SmileMyListUtility.ConvertResultStatus(json);
                 Debug.WriteLine(resultStatus);
                 return resultStatus;
         }
 
-        public async Task<SmileMyListResistResult> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
+        public async Task<SmileMyListResult> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
         {
+            await LoginIfNotLoginAsync();
+
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultVideoAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["video-id"] = videoId;
                 page.ReplaceRequestParameters["token"] = token;
 
-                return await RequestAdditionMyList(page);
+                return await RequestPost(page);
             }
         }
 
-        public async Task<SmileMyListResistResult> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
+        public async Task<SmileMyListResult> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
         {
+            await LoginIfNotLoginAsync();
+
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistVideoAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["token"] = token;
 
-                return await RequestAdditionMyList(page);
+                return await RequestPost(page);
+            }
+        }
+
+        async Task<string> GetAccountGroupToken(string myListId)
+        {
+            await LoginIfNotLoginAsync();
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupToken, ServiceType.Smile)) {
+                page.ReplaceUriParameters["mylist-id"] = myListId;
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                var htmlSource = response.Result;
+
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(htmlSource);
+
+                var regToken = new Regex(
+                    @"
+                    NicoAPI
+                    \s*
+                    \.
+                    \s*
+                    token
+                    \s*
+                    =
+                    \s*
+                    (\""|')
+                    (?<TOKEN>
+                        (.+)
+                    )
+                    (\""|')
+                    ",
+                    RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+                );
+
+                var tokenElement = htmlDocument.DocumentNode.Descendants()
+                    .Where(n => n.Name == "script")
+                    .Select(e => e.InnerText)
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .First(s => regToken.IsMatch(s))
+                ;
+
+                if(tokenElement == null) {
+                    return null;
+                }
+
+                var match = regToken.Match(tokenElement);
+                var token = match.Groups["TOKEN"];
+
+                return token.Value;
+            }
+        }
+
+        public async Task DeleteAccountGroupAsync(string myListId)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await GetAccountGroupToken(myListId);
+            if(token == null) {
+                Debug.WriteLine("group token is null");
+                return;
+            }
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupDel, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["mylist-id"] = myListId;
+                page.ReplaceRequestParameters["token"] = token;
+
+                await RequestPost(page);
             }
         }
     }
