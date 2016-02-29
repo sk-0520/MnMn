@@ -15,5 +15,7 @@
 	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
 	
 	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
+
+	<item key="video-history" uri="http://www.nicovideo.jp/my/history" />
 </uri>
 

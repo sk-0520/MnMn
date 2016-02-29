@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking;
@@ -68,8 +69,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             MyListManager = new SmileVideoMyListManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.SmileVideo, new SmileVideoManagerPackModel(SearchManager, RankingManager, NewArrivalsManager, MyListManager));
+            HistoryManager = new SmileVideoHistoryManagerViewModel(Mediation);
 
+            Mediation.SetManager(
+                ServiceType.SmileVideo, 
+                new SmileVideoManagerPackModel(
+                    SearchManager, 
+                    RankingManager, 
+                    NewArrivalsManager, 
+                    MyListManager,
+                    HistoryManager
+                )
+            );
+
+            // TODO:開発用のものを設定
             SwitchViewCommand.Execute(ManagerItems.Last());
         }
 
@@ -81,12 +94,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoSearchManagerViewModel SearchManager { get; }
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager {get;}
+        public SmileVideoHistoryManagerViewModel HistoryManager {get;}
 
         public IEnumerable<SmileVideoCustomManagerViewModelBase> ManagerItems => new SmileVideoCustomManagerViewModelBase[] {
             SearchManager,
             RankingManager,
             NewArrivalsManager,
             MyListManager,
+            HistoryManager,
         };
 
         public SmileVideoCustomManagerViewModelBase SelectedManager

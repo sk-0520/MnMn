@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking;
@@ -29,17 +30,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     public class SmileVideoManagerPackModel: ManagerPackModelBase
     {
-        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager)
+        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager)
         {
             RankingManager = rankingManager;
             SearchManager = searchManager;
             NewArrivalsManager = newArrivalsManager;
             MyListManager = myListManager;
+            HistoryManager = historyManager;
         }
 
         public SmileVideoRankingManagerViewModel RankingManager { get; }
         public SmileVideoSearchManagerViewModel SearchManager { get; }
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager { get; }
+        public SmileVideoHistoryManagerViewModel HistoryManager { get; }
     }
 }
