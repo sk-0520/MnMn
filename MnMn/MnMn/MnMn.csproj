@@ -162,6 +162,7 @@
     <Compile Include="Logic\Utility\MediationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFinderLoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />
@@ -258,6 +259,8 @@
     </Compile>
     <Compile Include="View\Converter\LoadStateIsLoadedConverter.cs" />
     <Compile Include="View\Converter\LoadStateIsNotLoadedConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\FinderLoadStateIsCompletedConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\FinderLoadStateIsNotCompletedConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
