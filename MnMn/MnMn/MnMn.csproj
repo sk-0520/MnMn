@@ -211,6 +211,8 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
     <Compile Include="Model\UriResultModel.cs" />
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryFinderViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoAccountHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />

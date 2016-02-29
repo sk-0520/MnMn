@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
                 var watchElement = parentElement.SelectSingleNode(".//a[@class='watch']");
                 item.Title = watchElement.InnerText;
                 item.Link =  watchElement.GetAttributeValue("href", string.Empty);
-                Debug.WriteLine(item.Title);
+                //Debug.WriteLine(item.Title);
 
                 var detailModel = new RawSmileVideoFeedDetailModel();
                 var imageElement = parentElement.SelectSingleNode(".//img[@class='img_std96']");

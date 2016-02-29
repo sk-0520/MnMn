@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string newarrival = "video-newarrival";
         public const string recent = "video-recent";
         public const string hotlist = "video-hotlist";
+        public const string history = "video-history";
 
         public const string inputEconomyMode = "getflv-economy-mode";
         public const string inputScrapingVideo = "getthumbinfo-scraping-video";

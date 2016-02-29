@@ -16,47 +16,52 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History
 {
-    public class SmileVideoNewArrivalsManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoHistoryManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
         #region variable
 
-        SmileVideoNewArrivalsFinderViewModel _selectedItem;
+        SmileVideoFinderViewModelBase _selectedItem;
 
         #endregion
 
-        public SmileVideoNewArrivalsManagerViewModel(Mediation mediation)
+        public SmileVideoHistoryManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.newarrival);
-            Recent = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.recent);
-            Hotlist = new SmileVideoHotlistFinderViewModel(Mediation, SmileVideoMediationKey.hotlist);
+            Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            ItemsList = new CollectionModel<SmileVideoNewArrivalsFinderViewModel>(new[] {
-                NewArrival,
-                Recent,
-                Hotlist,
-            });
+            AccountHistory = new SmileVideoAccountHistoryFinderViewModel(Mediation);
+
+            ItemsList = new CollectionModel<SmileVideoFinderViewModelBase>() {
+                AccountHistory,
+            };
         }
 
-        #region property
+        #region
 
-        SmileVideoNewArrivalsFinderViewModel NewArrival { get; }
-        SmileVideoNewArrivalsFinderViewModel Recent { get; }
-        SmileVideoNewArrivalsFinderViewModel Hotlist { get; }
+        SmileSessionViewModel Session { get; }
 
-        public CollectionModel<SmileVideoNewArrivalsFinderViewModel> ItemsList { get; }
-        public SmileVideoNewArrivalsFinderViewModel SelectedItem
+        //LoadPageHtmlDocument
+        public SmileVideoAccountHistoryFinderViewModel AccountHistory { get; }
+
+        #endregion
+
+        #region function
+
+        public CollectionModel<SmileVideoFinderViewModelBase> ItemsList { get; }
+
+        public SmileVideoFinderViewModelBase SelectedItem
         {
             get { return this._selectedItem; }
             set
@@ -72,7 +77,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         #endregion
 
-        #region SmileVideoManagerViewModelBase
+        #region SmileVideoCustomManagerViewModelBase
+
+        public override Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         protected override void ShowView()
         {
@@ -86,11 +96,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             target.LoadDefaultCacheAsync().ContinueWith(task => {
                 SelectedItem = target;
             }, TaskScheduler.FromCurrentSynchronizationContext());
-        }
-
-        public override Task InitializeAsync()
-        {
-            return Task.CompletedTask;
         }
 
         #endregion

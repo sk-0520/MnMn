@@ -81,9 +81,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     HistoryManager
                 )
             );
-
-            // TODO:開発用のものを設定
-            SwitchViewCommand.Execute(ManagerItems.Last());
         }
 
         #region property
@@ -140,7 +137,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(task => {
+                // TODO:開発用のものを設定
+                SwitchViewCommand.Execute(ManagerItems.Last());
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

@@ -120,6 +120,9 @@
   <data name="String_Service_Smile_MyList_DefaultName" xml:space="preserve">
     <value>とりあえずマイリスト</value>
   </data>
+  <data name="String_Service_Smile_SmileVideo_History_AccountHistory_Title" xml:space="preserve">
+    <value>アカウント</value>
+  </data>
   <data name="String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title" xml:space="preserve">
     <value>ホットリスト</value>
   </data>
