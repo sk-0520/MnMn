@@ -16,5 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 
         [XmlArray("sort"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> Sort { get; set; } = new CollectionModel<DefinedElementModel>();
+
+        [XmlElement("create-group-name")]
+        public DefinedElementModel CreateGroupName { get; set; } = new DefinedElementModel();
     }
 }

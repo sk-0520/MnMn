@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
@@ -180,7 +181,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 return CreateCommand(
                     o => {
-                        //var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, );
+                        CreateAccountMyListAsync().ConfigureAwait(false);
                     }
                 );
             }
@@ -193,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return CreateCommand(
                     o => {
                         if(SelectedAccountFinder != null) {
-                            RemoveAccountMyList(SelectedAccountFinder).ConfigureAwait(false);
+                            RemoveAccountMyListAsync(SelectedAccountFinder).ConfigureAwait(false);
                         }
                     }
                 );
@@ -251,18 +252,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region function
 
-        //public async IReadOnlyList<SmileVideoMyListFinderViewModelBase> GetAccountMyList()
-        //{
-        //    if(AccountMyList.Any()) {
-        //        return AccountMyList;
-        //    }
-        //    await LoadAccountMyListAsync();
-        //    //task.ConfigureAwait(false);
-        //    //task.Wait();
-
-        //    return AccountMyList;
-        //}
-
         void ClearSearchUserMyListPage()
         {
             SelectedPage = null;
@@ -308,7 +297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             };
             var accountGroup = await mylist.GetAccountGroupAsync();
             if(SmileMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
-                foreach(var group in accountGroup.Groups) {
+                foreach(var group in accountGroup.Groups.OrderByDescending(g => RawValueUtility.ConvertInteger(g.SortOder))) {
                     var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, group);
                     list.Add(finder);
                 }
@@ -320,7 +309,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             Debug.WriteLine(accountGroup);
         }
 
-        async Task  RemoveAccountMyList(SmileVideoAccountMyListFinderViewModel accountFinder)
+        async Task CreateAccountMyListAsync()
+        {
+            var myListIds = AccountMyList.Select(i => i.MyListId);
+            var newMyListName = TextUtility.ToUniqueDefault(MyList.CreateGroupName.DisplayText, AccountMyList.Select(i => i.MyListName));
+
+            var myList = GetMyListApi();
+
+            var result = await myList.CreateAccountGroupAsync(newMyListName);
+            if(result.Result == SmileMyListResult.Success) {
+                var myListId = SmileMyListUtility.GetMyListId(result);
+                await LoadAccountMyListAsync(myListId);
+            }
+        }
+
+        async Task  RemoveAccountMyListAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
         {
             var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder!= null) {
@@ -330,6 +333,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             var myList = GetMyListApi();
             await myList.DeleteAccountGroupAsync(accountFinder.MyListId);
+            await LoadAccountMyListAsync(null);
         }
 
         public async Task SearchUserMyListAsync(string inputSearchMyList)

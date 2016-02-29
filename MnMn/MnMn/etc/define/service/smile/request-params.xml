@@ -16,8 +16,13 @@
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
 	</param>
-	<param key="smile-video-mylist-account-group-del">
+	<param key="smile-video-mylist-account-group-delete">
 		<item key="group_id" value="${mylist-id}" />
+		<item key="token" value="${token}" />
+	</param>
+	<param key="smile-video-mylist-account-group-create">
+		<item key="default_sort" value="1" />
+		<item key="name" value="${name}" />
 		<item key="token" value="${token}" />
 	</param>
 	<param key="smile-video-mylist-account-group-update">

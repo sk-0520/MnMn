@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -166,17 +167,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        async Task<SmileMyListResult> RequestPost(PageLoader page)
+        async Task<SmileMyListResultModel> RequestPost(PageLoader page)
         {
             var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
             var result = response.Result;
             var json = JObject.Parse(result);
             var resultStatus = SmileMyListUtility.ConvertResultStatus(json);
             Debug.WriteLine(resultStatus);
-            return resultStatus;
+            return new SmileMyListResultModel(resultStatus, json);
         }
 
-        public async Task<SmileMyListResult> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
+        public async Task<SmileMyListResultModel> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
         {
             await LoginIfNotLoginAsync();
 
@@ -188,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResult> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
+        public async Task<SmileMyListResultModel> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
         {
             await LoginIfNotLoginAsync();
 
@@ -250,14 +251,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResult> DeleteAccountGroupAsync(string myListId)
+        public async Task<SmileMyListResultModel> CreateAccountGroupAsync(string myListName)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await GetAccountGroupToken(null);
+            if(token == null) {
+                Debug.WriteLine("group token is null");
+                return new SmileMyListResultModel(SmileMyListResult.Failure);
+            }
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupCreate, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["name"] = myListName;
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestPost(page);
+            }
+        }
+
+        public async Task<SmileMyListResultModel> DeleteAccountGroupAsync(string myListId)
         {
             await LoginIfNotLoginAsync();
 
             var token = await GetAccountGroupToken(myListId);
             if(token == null) {
                 Debug.WriteLine("group token is null");
-                return SmileMyListResult.Failure;
+                return new SmileMyListResultModel(SmileMyListResult.Failure);
             }
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupDelete, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
@@ -267,14 +286,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResult> UpdateAccountGroupAsync(string myListId, string myListFolderId, string myListName, string myListSort, string myListDescription, bool isPublic)
+        public async Task<SmileMyListResultModel> UpdateAccountGroupAsync(string myListId, string myListFolderId, string myListName, string myListSort, string myListDescription, bool isPublic)
         {
             await LoginIfNotLoginAsync();
 
             var token = await GetAccountGroupToken(myListId);
             if(token == null) {
                 Debug.WriteLine("group token is null");
-                return SmileMyListResult.Failure;
+                return new SmileMyListResultModel(SmileMyListResult.Failure);
             }
 
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupUpdate, ServiceType.Smile)) {

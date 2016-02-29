@@ -21,7 +21,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using Newtonsoft.Json.Linq;
@@ -53,6 +55,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
 
             return SmileMyListResult.Unknown;
+        }
+
+        public static string GetMyListId(SmileMyListResultModel resultModel)
+        {
+            CheckUtility.Enforce(resultModel.Result == SmileMyListResult.Success);
+            return resultModel.Json.GetValue("id").Value<string>();
         }
 
         public static IEnumerable<Color> GetColorsFromExtends(IReadOnlyDictionary<string, string> extends)

@@ -20,16 +20,13 @@
 		<item prefix="/" key="" value="${mylist-id}" />
 		<item prefix="?" key="rss" bond="=" value="2.0" />
 	</param>
+	
 	<param key="smile-video-mylist-search">
 		<item key="" value="/" />
 		<item key="" value="${query}" encode="uri" />
 		<item prefix="?" key="page" bond="=" value="${page}" />
 		<item prefix="&amp;" key="sort" bond="=" value="c" />
 		<item prefix="&amp;" key="order" bond="=" value="d" />
-	</param>
-
-	<param key="smile-video-mylist-account-group-token">
-		<item key="" value="${mylist-id}" />
 	</param>
 
 </parameters>

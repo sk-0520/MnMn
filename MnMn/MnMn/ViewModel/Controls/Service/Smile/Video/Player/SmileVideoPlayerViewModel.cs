@@ -66,6 +66,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -890,7 +891,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        Task<SmileMyListResult> AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        Task<SmileMyListResultModel> AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var defaultMyListFinder = myListFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder != null) {
@@ -900,14 +901,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        Task<SmileMyListResult> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
+        Task<SmileMyListResultModel> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
             return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
-        Task<SmileMyListResult> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        Task<SmileMyListResultModel> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);

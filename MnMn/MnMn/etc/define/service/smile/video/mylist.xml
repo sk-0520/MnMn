@@ -144,4 +144,9 @@
 			</words>
 		</element>
 	</sort>
+	<create-group-name>
+		<words>
+			<word key="ja-jp" value="新しいマイリスト" />
+		</words>
+	</create-group-name>
 </mylist>
