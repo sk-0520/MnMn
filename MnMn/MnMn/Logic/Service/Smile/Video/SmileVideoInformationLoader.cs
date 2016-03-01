@@ -43,7 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
         {
-            return Task.Run(() => {
+            var tasks = new List<Task>();
+            //return Task.Run(() => {
 
                 //var option = new ParallelOptions() {
                 //    MaxDegreeOfParallelism = 2,
@@ -58,7 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         Cancel.Token.ThrowIfCancellationRequested();
 
                         try {
-                            item.LoadThumbnaiImageAsync(imageCacheSpan).Wait();
+                            var task = item.LoadThumbnaiImageAsync(imageCacheSpan);
+                        tasks.Add(task);
                             break;
                         } catch(Exception ex) {
                             Debug.WriteLine($"{item}: {ex}");
@@ -72,7 +74,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     }
                     //});
                 }
-            });
+            //});
+            return Task.WhenAll(tasks);
         }
 
         public Task LoadInformationAsync(CacheSpan cacheSpan)
