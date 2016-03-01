@@ -73,6 +73,7 @@
                   </Run.Style>
                 </Run>
               </TextBlock>
+              <TextBlock Text="{Binding FinderLoadState}" />
 
             </StackPanel>
           </DataTemplate>

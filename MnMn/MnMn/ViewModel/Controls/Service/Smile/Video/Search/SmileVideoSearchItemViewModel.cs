@@ -99,19 +99,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return list;
             }).ContinueWith(task => {
                 var list = task.Result;
-                VideoInformationList.InitializeRange(list);
+                //VideoInformationList.InitializeRange(list);
+                SetItems(list);
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
-                var cancel = CancelLoading = new CancellationTokenSource();
-                Task.Run(() => {
+                //var cancel = CancelLoading = new CancellationTokenSource();
+                /*
+                return Task.Run(() => {
                     FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
                     var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    var infoTask  =loader.LoadInformationAsync(thumbCacheSpan);
+                    var infoTask = loader.LoadInformationAsync(thumbCacheSpan);
                     var imageTasl = loader.LoadThumbnaiImageAsync(imageCacheSpan);
                     return Task.WhenAll(infoTask, imageTasl);
                 }).ContinueWith(_ => {
                     FinderLoadState = SmileVideoFinderLoadState.Completed;
                     NowLoading = false;
-                }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.Current);
+                }, CancelLoading.Token, TaskContinuationOptions.LongRunning, TaskScheduler.Current);
+                */
             });
         }
 

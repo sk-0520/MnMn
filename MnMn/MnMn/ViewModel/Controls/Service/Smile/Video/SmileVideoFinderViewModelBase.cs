@@ -232,7 +232,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 CancelLoading = new CancellationTokenSource();
 
-                return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null);
+                return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null).ContinueWith(task => {
+                    return LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
+                });
             } else {
                 return Task.CompletedTask;
             }

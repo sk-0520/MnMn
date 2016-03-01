@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //}, CancelLoading.Token, TaskContinuationOptions.DenyChildAttach, TaskScheduler.Current);
             var items = ConvertInformationFromChannelItems(feedModel.Channel.Items);
             SetItems(items);
-            await LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
+            //await LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
         }
 
         #endregion
