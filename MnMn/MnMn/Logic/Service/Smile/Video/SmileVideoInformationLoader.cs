@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     var wait = TimeSpan.FromSeconds(1);
                     while(count++ <= max) {
                         Cancel.Token.ThrowIfCancellationRequested();
+
                         try {
                             var t = item.LoadThumbnaiImageAsync(imageCacheSpan);
                             t.Wait();
@@ -72,6 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             return Task.Run(() => {
                 Parallel.ForEach(List, item => {
+                    Cancel.Token.ThrowIfCancellationRequested();
+
                     item.LoadInformationAsync(cacheSpan).Wait();
                 });
             });
