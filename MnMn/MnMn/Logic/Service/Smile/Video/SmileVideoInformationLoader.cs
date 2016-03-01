@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     {
         public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> list)
         {
-            List = list;
+            List = list.ToArray();
         }
 
         #region property
@@ -44,7 +44,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
         {
             return Task.Run(() => {
-                Parallel.ForEach(List.ToArray(), item => {
+
+                //var option = new ParallelOptions() {
+                //    MaxDegreeOfParallelism = 2,
+                //};
+
+                //Parallel.ForEach(List, option, item => {
+                foreach(var item in List) {
                     var count = 0;
                     var max = 3;
                     var wait = TimeSpan.FromSeconds(1);
@@ -52,8 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         Cancel.Token.ThrowIfCancellationRequested();
 
                         try {
-                            var t = item.LoadThumbnaiImageAsync(imageCacheSpan);
-                            t.Wait();
+                            item.LoadThumbnaiImageAsync(imageCacheSpan).Wait();
                             break;
                         } catch(Exception ex) {
                             Debug.WriteLine($"{item}: {ex}");
@@ -65,18 +70,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                             }
                         }
                     }
-                });
+                    //});
+                }
             });
         }
 
         public Task LoadInformationAsync(CacheSpan cacheSpan)
         {
             return Task.Run(() => {
-                Parallel.ForEach(List, item => {
+                //Parallel.ForEach(List, item => {
+                foreach(var item in List) {
                     Cancel.Token.ThrowIfCancellationRequested();
 
                     item.LoadInformationAsync(cacheSpan).Wait();
-                });
+                }
+                //});
             });
         }
 

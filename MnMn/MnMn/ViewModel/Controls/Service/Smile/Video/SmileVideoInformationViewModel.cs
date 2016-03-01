@@ -698,6 +698,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Debug.WriteLine($"img -> {uri}");
                         return await userAgent.Client.GetByteArrayAsync(uri);
                     } catch(HttpRequestException ex) {
+                        Debug.WriteLine($"error img -> {uri}");
                         Debug.WriteLine(ex);
                         return null;
                     }
