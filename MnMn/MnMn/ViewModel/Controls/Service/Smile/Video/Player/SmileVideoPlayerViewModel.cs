@@ -904,14 +904,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Task<SmileMyListResultModel> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
         Task<SmileMyListResultModel> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation, session);
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, VideoInformation.ThreadId, VideoInformation.PageVideoToken);
         }
 

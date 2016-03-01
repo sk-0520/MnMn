@@ -200,8 +200,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadGetflvStart();
 
             // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
-            var getflv = new Getflv(Mediation, session);
-            getflv.SessionSupport = true;
+            var getflv = new Getflv(Mediation);
+
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformation.VideoId, VideoInformation.WatchUrl);
             VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
@@ -297,7 +297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             
             
-            var msg = new Msg(Mediation, session);
+            var msg = new Msg(Mediation);
             var rawMessagePacket = await msg.GetAsync(
                 VideoInformation.MessageServerUrl,
                 //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,

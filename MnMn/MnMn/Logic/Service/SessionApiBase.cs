@@ -20,21 +20,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 {
     public abstract class SessionApiBase: ApiBase
     {
-        public SessionApiBase(Mediation mediation, SessionViewModelBase sessionBase)
+        public SessionApiBase(Mediation mediation, ServiceType sessionServiceType)
             : base(mediation)
         {
-            SessionBase = sessionBase;
+            SessionServiceType = sessionServiceType;
+            SessionBase = MediationUtility.GetResultFromRequestResponse<SessionViewModelBase>(Mediation, new RequestModel(RequestKind.Session, SessionServiceType));
         }
 
         #region property
 
         public SessionViewModelBase SessionBase { get; }
+
+        public ServiceType SessionServiceType { get; }
 
         #endregion
 
@@ -48,15 +54,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
         }
 
         #endregion
+
+        #region ApiBase
+
+        public override bool SessionSupport { get; set; } = true;
+
+        #endregion
     }
 
     public class SessionApiBase<TSessionViewModel>: SessionApiBase
         where TSessionViewModel : SessionViewModelBase
     {
-        public SessionApiBase(Mediation mediation, TSessionViewModel sessionViewModel)
-           : base(mediation, sessionViewModel)
+        public SessionApiBase(Mediation mediation, ServiceType sessionServiceType)
+           : base(mediation, sessionServiceType)
         {
-            Session = sessionViewModel;
+            Session = (TSessionViewModel)SessionBase;
         }
 
         #region property

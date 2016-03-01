@@ -122,8 +122,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             };
             var session = new SmileSessionViewModel(mediation, model);
 
-            var mylist = new MyList(mediation, session);
-            mylist.SessionSupport = true;
+            var mylist = new MyList(mediation);
+            
             var def = await mylist.GetAccountDefaultAsync();
             var grp = await mylist.GetAccountGroupAsync();
         }

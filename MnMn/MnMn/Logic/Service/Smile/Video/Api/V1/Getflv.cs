@@ -42,8 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Getflv: SessionApiBase
     {
-        public Getflv(Mediation mediation, SmileSessionViewModel session)
-            : base(mediation, session)
+        public Getflv(Mediation mediation)
+            : base(mediation, ServiceType.Smile)
         { }
 
         #region property
