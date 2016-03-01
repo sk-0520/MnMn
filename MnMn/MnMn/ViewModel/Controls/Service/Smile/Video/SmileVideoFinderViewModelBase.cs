@@ -163,7 +163,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
-            var cancel = CancelLoading = new CancellationTokenSource();
             return Task.Run(() => {
                 FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
                 var loader = new SmileVideoInformationLoader(VideoInformationList);
@@ -173,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }).ContinueWith(t => {
                 FinderLoadState = SmileVideoFinderLoadState.Completed;
                 NowLoading = false;
-            }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
         }
 
         public async void OpenPlayer(SmileVideoInformationViewModel videoInformation)
@@ -230,6 +229,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     CancelLoading.Cancel(true);
                     Debug.WriteLine(";-)");
                 }
+
+                CancelLoading = new CancellationTokenSource();
 
                 return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null);
             } else {

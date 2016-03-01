@@ -94,8 +94,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return ConvertInformationFromChannelItems(feedModel.Channel.Items);
             }).ContinueWith(task => {
                 SetItems(task.Result);
+            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
                 LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }, CancelLoading.Token, TaskContinuationOptions.DenyChildAttach, TaskScheduler.Current);
 
         }
 
