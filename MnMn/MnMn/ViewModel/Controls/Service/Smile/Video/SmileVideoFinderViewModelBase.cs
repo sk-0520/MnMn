@@ -175,17 +175,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
         }
 
-        public async void OpenPlayer(SmileVideoInformationViewModel videoInformation)
-        {
-            var vm = new SmileVideoPlayerViewModel(Mediation);
-            var window = new SmileVideoPlayerWindow() {
-                DataContext = vm,
-            };
-            vm.SetView(window);
-            window.Show();
+        //public async void OpenPlayer(SmileVideoInformationViewModel videoInformation)
+        //{
+        //    var vm = new SmileVideoPlayerViewModel(Mediation);
+        //    var window = new SmileVideoPlayerWindow() {
+        //        DataContext = vm,
+        //    };
+        //    vm.SetView(window);
+        //    window.Show();
 
-            await vm.LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-        }
+        //    await vm.LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        //}
 
         protected void DisposeCancelLoading()
         {
