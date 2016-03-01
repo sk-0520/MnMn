@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
                 return Task.WhenAll(infoTask, infoTask);
-            }).ContinueWith(t => {
+            }, CancelLoading.Token).ContinueWith(t => {
                 FinderLoadState = SmileVideoFinderLoadState.Completed;
                 NowLoading = false;
             }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null).ContinueWith(task => {
                     return LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
-                });
+                }, CancelLoading.Token);
             } else {
                 return Task.CompletedTask;
             }
