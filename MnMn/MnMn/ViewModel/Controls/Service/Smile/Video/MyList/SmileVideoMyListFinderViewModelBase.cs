@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation, Session);
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             mylist.SessionSupport = true;
 
             return mylist.GetGroupAsync(MyListId);

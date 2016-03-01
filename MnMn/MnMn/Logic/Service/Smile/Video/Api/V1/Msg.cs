@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     /// </summary>
     public class Msg: SessionApiBase<SmileSessionViewModel>
     {
-        public Msg(Mediation mediation, SmileSessionViewModel session)
-            : base(mediation, session)
+        public Msg(Mediation mediation)
+            : base(mediation, ServiceType.Smile)
         { }
 
         #region function

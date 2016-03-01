@@ -33,8 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class History: SessionApiBase<SmileSessionViewModel>
     {
-        public History(Mediation mediation, SmileSessionViewModel session)
-            : base(mediation, session)
+        public History(Mediation mediation)
+            : base(mediation, ServiceType.Smile)
         { }
 
         public async Task<HtmlDocument> LoadPageHtmlDocument()
