@@ -695,6 +695,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var binary = await RestrictUtility.Block(async () => {
                 using(var userAgent = new HttpUserAgentHost()) {
                     try {
+                        Debug.WriteLine($"img -> {uri}");
                         return await userAgent.Client.GetByteArrayAsync(uri);
                     } catch(HttpRequestException ex) {
                         Debug.WriteLine(ex);
