@@ -197,6 +197,8 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\SmileMyListResultModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoAccountHistoryItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoAccountHistoryModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketModel.cs" />

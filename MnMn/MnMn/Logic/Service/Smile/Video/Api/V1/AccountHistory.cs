@@ -16,9 +16,11 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -108,6 +110,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// API使用。
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RawSmileVideoAccountHistoryModel> LoadHistoryAsync()
+        {
+            await LoginIfNotLoginAsync();
+
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyApi, ServiceType.SmileVideo)) {
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                if(!response.IsSuccess) {
+                    return null;
+                }
+
+                var rawJson = response.Result;
+                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
+                    return SerializeUtility.LoadJsonDataFromStream<RawSmileVideoAccountHistoryModel>(stream);
+                }
+            }
         }
     }
 }

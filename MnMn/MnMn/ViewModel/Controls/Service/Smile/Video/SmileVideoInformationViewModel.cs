@@ -102,10 +102,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Initialize();
         }
 
-        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel ranking, int number, SmileVideoInformationFlags informationFlags)
+        public SmileVideoInformationViewModel(Mediation mediation, FeedSmileVideoItemModel feed, int number, SmileVideoInformationFlags informationFlags)
             : this(mediation, number, informationFlags)
         {
-            Feed = ranking;
+            Feed = feed;
             FeedDetail = SmileVideoFeedUtility.ConvertRawDescription(Feed.Description);
             FeedDetail.VideoId = SmileVideoFeedUtility.GetVideoId(Feed);
             FeedDetail.Title = SmileVideoFeedUtility.GetTitle(Feed.Title);
