@@ -31,9 +31,9 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
-    public class AccountHistory: SessionApiBase<SmileSessionViewModel>
+    public class History: SessionApiBase<SmileSessionViewModel>
     {
-        public AccountHistory(Mediation mediation, SmileSessionViewModel session)
+        public History(Mediation mediation, SmileSessionViewModel session)
             : base(mediation, session)
         { }
 

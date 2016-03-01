@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         // ぶっちゃけAPI使うよりこっちの方が総通信数は少ないから使いたいけどHTML腐り過ぎてて使いたくない相反する思い。
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var history = new AccountHistory(Mediation, Session);
+            var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation, this.Session);
             history.SessionSupport = true;
 
             var htmlDocument = await history.LoadPageHtmlDocument();
