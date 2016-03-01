@@ -155,7 +155,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Msg.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Getthreadkey.cs" />
     <Compile Include="Logic\Service\Smile\Api\V2\ContentsSearch.cs" />
-    <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\AccountHistory.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\AccountHistory.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
@@ -458,6 +458,7 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
+    <Folder Include="Logic\Service\Smile\Video\HalfBakedApi\" />
     <Folder Include="View\Resources\Service\Smile\Video\" />
   </ItemGroup>
   <ItemGroup>

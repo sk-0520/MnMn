@@ -27,7 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     public class AccountHistory: SessionApiBase<SmileSessionViewModel>
     {
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.history, ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyPage, ServiceType.SmileVideo)) {
                 var result = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!result.IsSuccess) {
                     return null;
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
             }
         }
 
-        public FeedSmileVideoModel ConvertFeedModel(HtmlDocument htmlDocument)
+        public FeedSmileVideoModel ConvertFeedModelFromPageHtml(HtmlDocument htmlDocument)
         {
             var result = new FeedSmileVideoModel();
 

@@ -16,6 +16,7 @@
 	
 	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
 
-	<item key="video-history" uri="http://www.nicovideo.jp/my/history" />
+	<item key="video-history-page" uri="http://www.nicovideo.jp/my/history" />
+	<item key="video-history-api" uri="http://www.nicovideo.jp/api/videoviewhistory/list" />
 </uri>
 

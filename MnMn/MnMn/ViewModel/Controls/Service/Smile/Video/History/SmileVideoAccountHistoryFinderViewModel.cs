@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
     public class SmileVideoAccountHistoryFinderViewModel: SmileVideoHistoryFinderViewModelBase
     {
         public SmileVideoAccountHistoryFinderViewModel(Mediation mediation)
-            : base(mediation, SmileVideoMediationKey.history)
+            : base(mediation, SmileVideoMediationKey.historyPage)
         {
             Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
 
-            var feedModel =  history.ConvertFeedModel(htmlDocument);
+            var feedModel =  history.ConvertFeedModelFromPageHtml(htmlDocument);
             return feedModel;
         }
 
