@@ -52,7 +52,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
-            history.SessionSupport = true;
 
             var htmlDocument = await history.LoadPageHtmlDocument();
             if(htmlDocument == null) {

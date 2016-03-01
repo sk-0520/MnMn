@@ -54,6 +54,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
         }
 
         #endregion
+
+        #region ApiBase
+
+        public override bool SessionSupport { get; set; } = true;
+
+        #endregion
     }
 
     public class SessionApiBase<TSessionViewModel>: SessionApiBase

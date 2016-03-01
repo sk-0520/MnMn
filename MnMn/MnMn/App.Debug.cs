@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var session = new SmileSessionViewModel(mediation, model);
 
             var mylist = new MyList(mediation);
-            mylist.SessionSupport = true;
+            
             var def = await mylist.GetAccountDefaultAsync();
             var grp = await mylist.GetAccountGroupAsync();
         }

@@ -32,12 +32,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
 
         #region property
 
-        protected Mediation Mediation { get; private set; }
+        protected Mediation Mediation { get; }
 
         /// <summary>
         /// セッション操作を行うか。
         /// </summary>
-        public virtual bool SessionSupport { get; set; }
+        public virtual bool SessionSupport
+        {
+            get { return false; }
+            set { throw new NotSupportedException(); }
+        }
 
         protected HttpUserAgentHost HttpUserAgentHost { get; set; } = new HttpUserAgentHost();
 

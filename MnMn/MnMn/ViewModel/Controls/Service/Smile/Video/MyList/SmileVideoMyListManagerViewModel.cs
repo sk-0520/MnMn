@@ -220,9 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return CreateCommand(
                     o => {
                         var page = o as PageViewModel<SmileVideoMyListFinderPageViewModel>;
-                        var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation) {
-                            SessionSupport = true,
-                        };
+                        var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
                         mylist.SearchPage(page.ViewModel.Query, page.ViewModel.PageNumber).ContinueWith(task => {
                             page.ViewModel.Items.InitializeRange(task.Result);
                             SelectedPage = page;
@@ -275,9 +273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         /// <returns></returns>
         Logic.Service.Smile.Api.V1.MyList GetMyListApi()
         {
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation) {
-                SessionSupport = true,
-            };
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
 
             return mylist;
         }
@@ -292,9 +288,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             list.Add(defaultMyList);
 
             // 自身のマイリスト一覧
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation) {
-                SessionSupport = true,
-            };
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             var accountGroup = await mylist.GetAccountGroupAsync();
             if(SmileMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
                 foreach(var group in accountGroup.Groups.OrderByDescending(g => RawValueUtility.ConvertInteger(g.SortOder))) {
@@ -341,9 +335,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             object outputValue;
             if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
                 // 完全一致検索
-                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation) {
-                    SessionSupport = true,
-                };
+                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
                 var myListId = (string)outputValue;
                 var group = await mylist.GetGroupAsync(myListId);
 
@@ -353,9 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 SearchUserMyList.InitializeRange(new[] { finder });
             } else {
                 // 何かしら検索
-                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation) {
-                    SessionSupport = true,
-                };
+                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
                 var finders = await mylist.SearchPage(inputSearchMyList, 1);
                 if(finders.Count > 0) {
                     var top = finders.First();

@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
             var getflv = new Getflv(Mediation);
-            getflv.SessionSupport = true;
+
             var rawVideoGetflvModel = await getflv.GetAsync(VideoInformation.VideoId, VideoInformation.WatchUrl);
             VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
