@@ -77,12 +77,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region SmileVideoFinderViewModelBase
 
-        protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
             NowLoading = true;
+
             var search = new ContentsSearch(Mediation);
-            await search.GetAsnc(
+
+            return search.GetAsnc(
                 SearchModel.Service,
                 Query,
                 Type.Key,
