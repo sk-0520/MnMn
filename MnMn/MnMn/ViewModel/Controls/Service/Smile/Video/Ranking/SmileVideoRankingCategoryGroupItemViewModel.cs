@@ -202,16 +202,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         protected override bool IsLoadVideoInformation => false;
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
 
+        //protected override PageLoader CreatePageLoader()
+        //{
+        //    var page = new PageLoader(Mediation, UserAgentHost, SmileVideoMediationKey.ranking, ServiceType.SmileVideo);
+
+        //    page.ReplaceUriParameters["target"] = SelectedTarget.Key;
+        //    page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
+        //    page.ReplaceUriParameters["category"] = Category.Key;
+        //    page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+
+        //    return page;
+        //}
+
         protected override PageLoader CreatePageLoader()
         {
-            var page = new PageLoader(Mediation, UserAgentHost, SmileVideoMediationKey.ranking, ServiceType.SmileVideo);
+            throw new NotSupportedException();
+        }
 
-            page.ReplaceUriParameters["target"] = SelectedTarget.Key;
-            page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
-            page.ReplaceUriParameters["category"] = Category.Key;
-            page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
-
-            return page;
+        protected override Task<FeedSmileVideoModel> LoadFeedAsync()
+        {
+            var ranking = new Logic.Service.Smile.Video.Api.V1.Ranking(Mediation);
+            return ranking.LoadAsync(SelectedTarget.Key, SelectedPeriod.Key, Category.Key);
         }
 
         #endregion
