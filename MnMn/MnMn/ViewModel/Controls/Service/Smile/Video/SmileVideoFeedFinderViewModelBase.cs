@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
-        public HttpUserAgentHost UserAgentHost { get; } = new HttpUserAgentHost();
+        //public HttpUserAgentHost UserAgentHost { get; } = new HttpUserAgentHost();
 
         #endregion
 
