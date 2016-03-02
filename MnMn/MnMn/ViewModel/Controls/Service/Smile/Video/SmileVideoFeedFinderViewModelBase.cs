@@ -80,9 +80,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
-            NowLoading = true;
-
             FeedSmileVideoModel feedModel = await LoadFeedAsync();
 
             if(feedModel == null) {

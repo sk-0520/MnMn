@@ -225,6 +225,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     Debug.WriteLine(";-)");
                 }
 
+                FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
+                NowLoading = true;
+
                 CancelLoading = new CancellationTokenSource();
 
                 return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null).ContinueWith(task => {

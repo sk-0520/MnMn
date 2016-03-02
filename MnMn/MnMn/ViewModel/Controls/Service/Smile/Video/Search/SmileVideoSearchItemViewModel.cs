@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
-            NowLoading = true;
+            //FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
+            //NowLoading = true;
 
             var search = new ContentsSearch(Mediation);
 
