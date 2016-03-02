@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public ParameterType ParameterType { get; private set; }
 
         /// <summary>
-        /// URI構築処理を用いず指定URIの仕様を強制する。
+        /// URI構築処理を用いず指定URIの使用を強制する。
         /// </summary>
         public Uri ForceUri { get; set; }
 
@@ -129,14 +129,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        void CallExitSuccess()
+        void OnExitProcess()
         {
-
+            if(ExitProcess != null) {
+                ExitProcess();
+            }
         }
 
-        void CallExitFailure()
+        void OnExitSuccess()
         {
+            if(ExitSuccess != null) {
+                ExitSuccess();
+            }
+        }
 
+        void OnExitFailure()
+        {
+            if(ExitFailure != null) {
+                ExitFailure();
+            }
         }
 
         protected void MakeUri()
@@ -230,11 +241,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         if(JudgeFailureStatusCode != null) {
                             var judge = JudgeFailureStatusCode(response);
                             if(!judge.IsSuccess) {
-                                CallExitFailure();
+                                OnExitFailure();
                                 return CheckResultModel.Failure<string>(judge.ToString());
                             }
                         } else {
-                            CallExitFailure();
+                            OnExitFailure();
                             return CheckResultModel.Failure<string>(response.ToString());
                         }
                     }
@@ -242,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     if(JudgeSuccessStatusCode != null) {
                         var judge = JudgeSuccessStatusCode(response);
                         if(!judge.IsSuccess) {
-                            CallExitFailure();
+                            OnExitFailure();
                             return CheckResultModel.Failure<string>(judge.ToString());
                         }
                     }
@@ -251,32 +262,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     if(JudgeCheckResponseHeaders != null) {
                         var judge = JudgeCheckResponseHeaders(response);
                         if(!judge.IsSuccess) {
-                            CallExitFailure();
+                            OnExitFailure();
                             return CheckResultModel.Failure<string>(judge.ToString());
                         }
                         if(HeaderCheckOnly) {
-                            CallExitSuccess();
+                            OnExitSuccess();
                             return CheckResultModel.Success(judge.ToString());
                         }
                     }
                     var check = CheckResponseHeaders(response);
                     if(!check.IsSuccess) {
-                        CallExitFailure();
+                        OnExitFailure();
                         return CheckResultModel.Failure<string>(check.ToString());
                     }
                     if(HeaderCheckOnly) {
-                        CallExitSuccess();
+                        OnExitSuccess();
                         return CheckResultModel.Success(check.ToString());
                     }
 
                     var text = await GetTextAsync(response);
-                    CallExitSuccess();
+                    OnExitSuccess();
                     return CheckResultModel.Success(text);
                 }
             } finally {
-                if(ExitProcess != null) {
-                    ExitProcess();
-                }
+                OnExitProcess();
             }
         }
 
