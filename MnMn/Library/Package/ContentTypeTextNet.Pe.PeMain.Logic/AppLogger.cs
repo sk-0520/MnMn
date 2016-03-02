@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             LoggerConfig.EnabledAll = true;
             LoggerConfig.PutsDebug = true;
             //LoggerConfig.PutsConsole = true;
+            LoggerConfig.PutsCustom = true;
         }
 
         #region property

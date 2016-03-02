@@ -250,7 +250,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         }
                         OnLoadVideoEnd();
                     } catch(Exception ex) {
-                        Debug.WriteLine(ex);
+                        Mediation.Logger.Error(ex);
                         VideoLoadState = LoadState.Failure;
                     } finally {
                         downloader.DownloadStart -= Downloader_DownloadStart;
@@ -518,7 +518,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
-            Debug.WriteLine($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
+            Mediation.Logger.Trace($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
 
             OnDownloading(sender, e);
         }
@@ -528,7 +528,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             int retry = Constants.ServiceSmileVideoDownloadingErrorRetryCount;
 
             e.Cancel = retry < e.Counter;
-            Debug.WriteLine(e.Exception);
+            Mediation.Logger.Error(e.Exception);
 
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;

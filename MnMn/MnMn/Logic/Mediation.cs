@@ -47,12 +47,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         public Mediation()
         {
-            Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
-            //Logger.LoggerConfig.EnabledAll = true;
-            //Logger.LoggerConfig.PutsDebug = true;
-            //Logger.LoggerConfig.PutsConsole = true;
-            Logger.Information("start!");
-
             // 二重生成だけど気にしない
             Setting = new MainSettingModel();
 
@@ -62,6 +56,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Mediation(MainSettingModel mainSettingModel)
             : this()
         {
+            Logger = new Pe.PeMain.Logic.AppLogger();
+            Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
+            
+            Logger.LoggerConfig.EnabledAll = true;
+            Logger.LoggerConfig.PutsDebug = true;
+            Logger.LoggerConfig.PutsConsole = true;
+            Logger.Information("start!");
+
             Setting = mainSettingModel;
         }
 
@@ -76,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
 
-        public ILogger Logger { get; } = new Pe.PeMain.Logic.AppLogger();
+        public ILogger Logger { get; }
 
         #endregion
 
