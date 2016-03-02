@@ -21,21 +21,21 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class HttpUserAgentHost: DisposeFinalizeBase
+    public class HttpUserAgentHost: DisposeFinalizeBase, ICreateHttpUserAgent
     {
         public HttpUserAgentHost()
-        {
-            Handler = new HttpClientHandler();
-            Client = new HttpClient(Handler);
-        }
+        { }
 
         #region property
 
-        public HttpClientHandler Handler { get; private set;  }
-        public HttpClient Client { get; private set; }
+        /// <summary>
+        /// HttpClient用ハンドラ。
+        /// </summary>
+        protected HttpClientHandler ClientHandler { get; private set; } = new HttpClientHandler();
 
         #endregion
 
@@ -44,15 +44,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(Client != null) {
-                    Client.Dispose();
-                    Client = null;
-                    Handler = null;
+                if(ClientHandler != null) {
+                    ClientHandler.Dispose();
+                    ClientHandler = null;
                 }
             }
             base.Dispose(disposing);
         }
 
         #endregion
+
+        #region ICreateHttpUserAgent
+
+        public HttpClient CreateHttpUserAgent()
+        {
+            return new HttpClient(ClientHandler, false);
+        }
+
+        #endregion
+
     }
 }

@@ -693,10 +693,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var uri = ThumbnailUri;
 
             var binary = await RestrictUtility.Block(async () => {
-                using(var userAgent = new HttpUserAgentHost()) {
+                using(var userAgentHost = new HttpUserAgentHost())
+                using(var userAgent = userAgentHost.CreateHttpUserAgent()) {
                     try {
                         Debug.WriteLine($"img -> {uri}");
-                        return await userAgent.Client.GetByteArrayAsync(uri);
+                        return await userAgent.GetByteArrayAsync(uri);
                     } catch(HttpRequestException ex) {
                         Debug.WriteLine($"error img -> {uri}");
                         Debug.WriteLine(ex);
