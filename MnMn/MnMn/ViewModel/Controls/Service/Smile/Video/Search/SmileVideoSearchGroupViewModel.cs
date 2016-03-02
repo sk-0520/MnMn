@@ -294,12 +294,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        protected override void CallOnPropertyChangeDisplayItem()
-        {
-            CallOnPropertyChange(nameof(SearchItems));
+        //protected override void CallOnPropertyChangeDisplayItem()
+        //{
+        //    CallOnPropertyChange(nameof(SearchItems));
 
-            base.CallOnPropertyChangeDisplayItem();
-        }
+        //    base.CallOnPropertyChangeDisplayItem();
+        //}
 
         #endregion
 
