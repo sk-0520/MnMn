@@ -24,6 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals
 {
@@ -62,12 +63,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
+        //protected override PageLoader CreatePageLoader()
+        //{
+        //    var page = new PageLoader(Mediation, UserAgentHost, Key, ServiceType.SmileVideo);
+        //    page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+
+        //    return page;
+        //}
         protected override PageLoader CreatePageLoader()
         {
-            var page = new PageLoader(Mediation, UserAgentHost, Key, ServiceType.SmileVideo);
-            page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+            throw new NotSupportedException();
+        }
 
-            return page;
+        protected override Task<FeedSmileVideoModel> LoadFeedAsync()
+        {
+            var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediation);
+
+            switch(Key) {
+                case SmileVideoMediationKey.newarrival:
+                    return newArrival.LoadNewVideoAsync();
+
+                case SmileVideoMediationKey.recent:
+                    return newArrival.LoadNewCommentAsync();
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion
