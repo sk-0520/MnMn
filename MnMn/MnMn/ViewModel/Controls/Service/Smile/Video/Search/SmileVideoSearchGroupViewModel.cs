@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public ICommand ReloadSearchCommand
+        public override ICommand ReloadCommand
         {
             get
             {

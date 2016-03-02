@@ -110,33 +110,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get
             {
                 return CreateCommand(o => {
-                    var nowMethod = SelectedMethod;
-                    var nowSort = SelectedSort;
-                    var nowType = SelectedType;
-                    var nowQuery = InputQuery;
-
-                    // 存在する場合は該当タブへ遷移
-                    var selectViewModel = RestrictUtility.IsNotNull(
-                        SearchGroups.FirstOrDefault(i => i.Query == nowQuery && i.Type.Key == nowType.Key),
-                        viewModel => {
-                            viewModel.SetContextElements(nowMethod, nowSort);
-                            return viewModel;
-                        },
-                        () => {
-                            var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, nowMethod, nowSort, nowType, nowQuery);
-                            SearchGroups.Insert(0, viewModel);
-                            return viewModel;
-                        }
-                    );
-                    selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(task => {
-                        SelectedSearchGroup = selectViewModel;
-                    });
+                    LoadSearchAsync().ConfigureAwait(false);
                 });
             }
         }
 
         #endregion
-        
+
+        #region function
+
+        public Task LoadSearchAsync()
+        {
+            var nowMethod = SelectedMethod;
+            var nowSort = SelectedSort;
+            var nowType = SelectedType;
+            var nowQuery = InputQuery;
+
+            return LoadSearchAsync(nowMethod, nowSort, nowType, nowQuery);
+        }
+        Task LoadSearchAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
+        {
+            // 存在する場合は該当タブへ遷移
+            var selectViewModel = RestrictUtility.IsNotNull(
+                SearchGroups.FirstOrDefault(i => i.Query == query && i.Type.Key == type.Key),
+                viewModel => {
+                    viewModel.SetContextElements(method, sort);
+                    return viewModel;
+                },
+                () => {
+                    var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, method, sort, type, query);
+                    SearchGroups.Insert(0, viewModel);
+                    return viewModel;
+                }
+            );
+            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(task => {
+                SelectedSearchGroup = selectViewModel;
+            });
+        }
+
+        #endregion
+
         #region ManagerViewModelBase
 
         public override Task InitializeAsync()

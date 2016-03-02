@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        #region function
+        #region SmileVideoFinderViewModelBase
 
         protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
@@ -101,7 +101,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 var list = task.Result;
                 //VideoInformationList.InitializeRange(list);
                 SetItems(list);
-            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+            //}, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
                 //var cancel = CancelLoading = new CancellationTokenSource();
                 /*
                 return Task.Run(() => {
@@ -115,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     NowLoading = false;
                 }, CancelLoading.Token, TaskContinuationOptions.LongRunning, TaskScheduler.Current);
                 */
-            });
+            //});
         }
 
         protected override PageLoader CreatePageLoader()

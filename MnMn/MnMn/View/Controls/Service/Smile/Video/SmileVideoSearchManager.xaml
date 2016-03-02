@@ -81,7 +81,7 @@
             />
             <Button
               Content="reload"
-              Command="{Binding ReloadSearchCommand}"
+              Command="{Binding ReloadCommand}"
               IsEnabled="{Binding CanLoad}"
             />
           </StackPanel>
