@@ -24,7 +24,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -45,6 +47,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         public Mediation()
         {
+            Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
+            Logger.LoggerConfig.EnabledAll = true;
+            Logger.LoggerConfig.PutsDebug = true;
+            Logger.LoggerConfig.PutsConsole = true;
+            Logger.Information("start!");
+
             // 二重生成だけど気にしない
             Setting = new MainSettingModel();
 
@@ -67,6 +75,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         internal SmileMediation Smile { get; private set; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
+
+        public ILogger Logger { get; } = new Logger();
 
         #endregion
 
