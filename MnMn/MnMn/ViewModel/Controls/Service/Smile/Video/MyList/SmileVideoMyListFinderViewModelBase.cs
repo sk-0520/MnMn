@@ -73,11 +73,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
-        protected override PageLoader CreatePageLoader()
-        {
-            throw new NotSupportedException();
-        }
-
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);

@@ -60,22 +60,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ;
         }
 
-        protected async virtual Task<FeedSmileVideoModel> LoadFeedAsync()
-        {
-            using(var page = CreatePageLoader()) {
-                var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                if(!feedResult.IsSuccess) {
-                    FinderLoadState = SmileVideoFinderLoadState.Failure;
-                    return null;
-                } else {
-                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
-                        return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
-                    }
-                }
-            }
-        }
+        //protected async virtual Task<FeedSmileVideoModel> LoadFeedAsync()
+        //{
+        //    using(var page = CreatePageLoader()) {
+        //        var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+        //        if(!feedResult.IsSuccess) {
+        //            FinderLoadState = SmileVideoFinderLoadState.Failure;
+        //            return null;
+        //        } else {
+        //            FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+        //            using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
+        //                return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+        //            }
+        //        }
+        //    }
+        //}
 
+        protected abstract Task<FeedSmileVideoModel> LoadFeedAsync();
 
         protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {

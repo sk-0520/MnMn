@@ -294,11 +294,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        protected override PageLoader CreatePageLoader()
-        {
-            throw new NotSupportedException();
-        }
-
         protected override void CallOnPropertyChangeDisplayItem()
         {
             CallOnPropertyChange(nameof(SearchItems));

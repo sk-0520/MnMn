@@ -30,11 +30,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoFeedFinderViewModelBase
 
-        protected override PageLoader CreatePageLoader()
-        {
-            throw new NotSupportedException();
-        }
-
         #endregion
     }
 }

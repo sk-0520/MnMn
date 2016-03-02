@@ -43,11 +43,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         //protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
-        protected override PageLoader CreatePageLoader()
-        {
-            throw new NotSupportedException();
-        }
-
         // ぶっちゃけAPI使うよりこっちの方が総通信数は少ないから使いたいけどHTML腐り過ぎてて使いたくない相反する思い。
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {

@@ -214,11 +214,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         //    return page;
         //}
 
-        protected override PageLoader CreatePageLoader()
-        {
-            throw new NotSupportedException();
-        }
-
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var ranking = new Logic.Service.Smile.Video.Api.V1.Ranking(Mediation);

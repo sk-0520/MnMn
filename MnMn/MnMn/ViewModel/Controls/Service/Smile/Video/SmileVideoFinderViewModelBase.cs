@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        protected abstract PageLoader CreatePageLoader();
+        //protected abstract PageLoader CreatePageLoader();
 
         protected abstract Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
 
