@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -45,60 +46,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         #region function
 
-        FeedSmileVideoModel ConvertHotlistHtmlToFeedModel(string rawHtml)
-        {
-            var result = new FeedSmileVideoModel();
+        //FeedSmileVideoModel ConvertHotlistHtmlToFeedModel(string rawHtml)
+        //{
+        //    var result = new FeedSmileVideoModel();
 
-            var html = new HtmlDocument() {
-                OptionAutoCloseOnEnd = true,
-            };
-            html.LoadHtml(rawHtml);
+        //    var html = new HtmlDocument() {
+        //        OptionAutoCloseOnEnd = true,
+        //    };
+        //    html.LoadHtml(rawHtml);
 
-            // 各ブロックごとに分割
-            var blockElements = html.DocumentNode.SelectNodes("//*[@class='thumb_col_1']");
-            foreach(var element in blockElements) {
-                var item = new FeedSmileVideoItemModel();
+        //    // 各ブロックごとに分割
+        //    var blockElements = html.DocumentNode.SelectNodes("//*[@class='thumb_col_1']");
+        //    foreach(var element in blockElements) {
+        //        var item = new FeedSmileVideoItemModel();
 
-                var parentElement = element.SelectSingleNode(".//tr");
+        //        var parentElement = element.SelectSingleNode(".//tr");
 
-                var watchElement = parentElement.SelectSingleNode(".//a[@class='watch']");
-                item.Title = watchElement.InnerText;
-                item.Link =  watchElement.GetAttributeValue("href", string.Empty);
-                //Debug.WriteLine(item.Title);
+        //        var watchElement = parentElement.SelectSingleNode(".//a[@class='watch']");
+        //        item.Title = watchElement.InnerText;
+        //        item.Link =  watchElement.GetAttributeValue("href", string.Empty);
+        //        //Debug.WriteLine(item.Title);
 
-                var detailModel = new RawSmileVideoFeedDetailModel();
-                var imageElement = parentElement.SelectSingleNode(".//img[@class='img_std96']");
-                detailModel.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
+        //        var detailModel = new RawSmileVideoFeedDetailModel();
+        //        var imageElement = parentElement.SelectSingleNode(".//img[@class='img_std96']");
+        //        detailModel.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
 
-                var lengthElement = parentElement.SelectSingleNode(".//*[@class='vinfo_length']");
-                detailModel.Length = lengthElement.InnerText;
+        //        var lengthElement = parentElement.SelectSingleNode(".//*[@class='vinfo_length']");
+        //        detailModel.Length = lengthElement.InnerText;
 
-                var viewElement = parentElement.SelectSingleNode(".//*[@class='vinfo_view']");
-                detailModel.ViewCounter = viewElement.InnerText;
+        //        var viewElement = parentElement.SelectSingleNode(".//*[@class='vinfo_view']");
+        //        detailModel.ViewCounter = viewElement.InnerText;
 
-                var commentElement = parentElement.SelectSingleNode(".//*[@class='vinfo_res']");
-                detailModel.CommentNum = commentElement.InnerText;
+        //        var commentElement = parentElement.SelectSingleNode(".//*[@class='vinfo_res']");
+        //        detailModel.CommentNum = commentElement.InnerText;
 
-                var descriptionElement = parentElement.SelectSingleNode(".//*[@class='vinfo_description']");
-                detailModel.Description = descriptionElement.InnerText;
+        //        var descriptionElement = parentElement.SelectSingleNode(".//*[@class='vinfo_description']");
+        //        detailModel.Description = descriptionElement.InnerText;
 
-                //var dateElement = parentElement.SelectSingleNode(".//*[contains(@class,'thumb_num']");
-                var dateElement = parentElement.SelectNodes(".//p")
-                    .FirstOrDefault(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumb_num"))
-                    ?.SelectSingleNode("//strong")
-                ;
-                detailModel.FirstRetrieve = dateElement.InnerText;
+        //        //var dateElement = parentElement.SelectSingleNode(".//*[contains(@class,'thumb_num']");
+        //        var dateElement = parentElement.SelectNodes(".//p")
+        //            .FirstOrDefault(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumb_num"))
+        //            ?.SelectSingleNode("//strong")
+        //        ;
+        //        detailModel.FirstRetrieve = dateElement.InnerText;
 
-                var mylistElement = parentElement.SelectSingleNode(".//*[@class='vinfo_mylist']");
-                detailModel.MylistCounter = mylistElement.InnerText;
+        //        var mylistElement = parentElement.SelectSingleNode(".//*[@class='vinfo_mylist']");
+        //        detailModel.MylistCounter = mylistElement.InnerText;
 
-                item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
+        //        item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
 
-                result.Channel.Items.Add(item);
-            }
+        //        result.Channel.Items.Add(item);
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         #endregion
 
@@ -109,19 +110,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            string rawHtml;
-            using(var page = CreatePageLoader()) {
-                var pageResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                if(!pageResult.IsSuccess) {
-                    FinderLoadState = SmileVideoFinderLoadState.Failure;
-                    return null;
-                }
-                rawHtml = pageResult.Result;
+            //string rawHtml;
+            //using(var page = CreatePageLoader()) {
+            //    var pageResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+            //    if(!pageResult.IsSuccess) {
+            //        FinderLoadState = SmileVideoFinderLoadState.Failure;
+            //        return null;
+            //    }
+            //    rawHtml = pageResult.Result;
+            //}
+
+            //FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+            //var feedModel = ConvertHotlistHtmlToFeedModel(rawHtml);
+
+            //return feedModel;
+            var hotList = new HotList(Mediation);
+
+            var htmlDocument = await hotList.LoadPageHtmlDocument();
+            if(htmlDocument == null) {
+                FinderLoadState = SmileVideoFinderLoadState.Failure;
+                return null;
             }
 
             FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
-            var feedModel = ConvertHotlistHtmlToFeedModel(rawHtml);
 
+            var feedModel = hotList.ConvertFeedModelFromPageHtml(htmlDocument);
             return feedModel;
         }
 

@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -31,11 +32,38 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
-    public class History: SessionApiBase<SmileSessionViewModel>
+    public class History: SessionApiBase<SmileSessionViewModel>, IScrapingPageHtmlToFeedApi
     {
         public History(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         { }
+
+        #region function
+
+        /// <summary>
+        /// API使用。
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RawSmileVideoAccountHistoryModel> LoadHistoryAsync()
+        {
+            await LoginIfNotLoginAsync();
+
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyApi, ServiceType.SmileVideo)) {
+                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+                if(!response.IsSuccess) {
+                    return null;
+                }
+
+                var rawJson = response.Result;
+                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
+                    return SerializeUtility.LoadJsonDataFromStream<RawSmileVideoAccountHistoryModel>(stream);
+                }
+            }
+        }
+
+        #endregion
+
+        #region IScrapingPageHtmlToFeedApi
 
         public async Task<HtmlDocument> LoadPageHtmlDocument()
         {
@@ -112,25 +140,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return result;
         }
 
-        /// <summary>
-        /// API使用。
-        /// </summary>
-        /// <returns></returns>
-        public async Task<RawSmileVideoAccountHistoryModel> LoadHistoryAsync()
-        {
-            await LoginIfNotLoginAsync();
-
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyApi, ServiceType.SmileVideo)) {
-                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                if(!response.IsSuccess) {
-                    return null;
-                }
-
-                var rawJson = response.Result;
-                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
-                    return SerializeUtility.LoadJsonDataFromStream<RawSmileVideoAccountHistoryModel>(stream);
-                }
-            }
-        }
+        #endregion
     }
 }
