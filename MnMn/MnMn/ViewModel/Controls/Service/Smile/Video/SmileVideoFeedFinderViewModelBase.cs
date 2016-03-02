@@ -78,26 +78,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected abstract Task<FeedSmileVideoModel> LoadFeedAsync();
 
-        protected override async Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            FeedSmileVideoModel feedModel = await LoadFeedAsync();
-
-            if(feedModel == null) {
-                NowLoading = false;
-                FinderLoadState = SmileVideoFinderLoadState.Failure;
-                return;
-            }
-
-            //await Task.Run(() => {
-            //    return ConvertInformationFromChannelItems(feedModel.Channel.Items);
-            //}).ContinueWith(task => {
-            //    SetItems(task.Result);
-            //}, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
-            //    LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
-            //}, CancelLoading.Token, TaskContinuationOptions.DenyChildAttach, TaskScheduler.Current);
-            var items = ConvertInformationFromChannelItems(feedModel.Channel.Items);
-            SetItems(items);
-            //await LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
+            return LoadFeedAsync().ContinueWith(task => {
+                var feedModel = task.Result;
+                if(feedModel == null) {
+                    NowLoading = false;
+                    FinderLoadState = SmileVideoFinderLoadState.Failure;
+                    return null;
+                } else {
+                    return ConvertInformationFromChannelItems(feedModel.Channel.Items);
+                }
+            }).ContinueWith(task => {
+                var items = task.Result;
+                if(items != null) {
+                    SetItems(items);
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion
