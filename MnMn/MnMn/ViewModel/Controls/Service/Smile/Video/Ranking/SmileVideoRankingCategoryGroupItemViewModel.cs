@@ -166,19 +166,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         }
         */
 
-        public Task LoadRankingAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            //if(CanLoad) {
-            //    if(NowLoading) {
-            //        CancelLoading.Cancel(true);
-            //    }
+        //public Task LoadRankingAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        //{
+        //    //if(CanLoad) {
+        //    //    if(NowLoading) {
+        //    //        CancelLoading.Cancel(true);
+        //    //    }
 
-            //    return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan);
-            //} else {
-            //    return Task.CompletedTask;
-            //}
-            return LoadAsync(thumbCacheSpan, imageCacheSpan);
-        }
+        //    //    return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan);
+        //    //} else {
+        //    //    return Task.CompletedTask;
+        //    //}
+        //    return LoadAsync(thumbCacheSpan, imageCacheSpan);
+        //}
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
         {

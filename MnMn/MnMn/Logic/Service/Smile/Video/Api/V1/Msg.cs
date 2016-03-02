@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 }
                 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
-                Debug.WriteLine(rawMessage.Result);
+                //Debug.WriteLine(rawMessage.Result);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawMessage.Result))) {
                     var result = Load(stream);
                     return result;

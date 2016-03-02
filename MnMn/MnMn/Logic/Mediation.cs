@@ -48,9 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Mediation()
         {
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
-            Logger.LoggerConfig.EnabledAll = true;
-            Logger.LoggerConfig.PutsDebug = true;
-            Logger.LoggerConfig.PutsConsole = true;
+            //Logger.LoggerConfig.EnabledAll = true;
+            //Logger.LoggerConfig.PutsDebug = true;
+            //Logger.LoggerConfig.PutsConsole = true;
             Logger.Information("start!");
 
             // 二重生成だけど気にしない
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
 
-        public ILogger Logger { get; } = new Logger();
+        public ILogger Logger { get; } = new Pe.PeMain.Logic.AppLogger();
 
         #endregion
 

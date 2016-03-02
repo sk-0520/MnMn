@@ -58,7 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResult.Result;
 
-            VideoInformationList = new CollectionModel<SmileVideoInformationViewModel>();
             VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
             VideoInformationItems.Filter = FilterItems;
         }
@@ -69,13 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected CancellationTokenSource CancelLoading { get; set; }
         protected SmileVideoSettingModel Setting { get; }
 
-        protected CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; }
-        
+        protected CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; } = new CollectionModel<SmileVideoInformationViewModel>();
+
         public virtual ICollectionView VideoInformationItems { get; }
-        //{
-        //    get { return this._VideoInformationItems; }
-        //    private set { SetVariableValue(ref this._VideoInformationItems, value); }
-        //}
 
         public virtual bool NowLoading
         {
@@ -145,7 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        LoadDefaultCacheAsync().ConfigureAwait(false);
                     }
                 );
             }

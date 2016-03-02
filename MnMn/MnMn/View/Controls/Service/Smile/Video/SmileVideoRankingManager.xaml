@@ -34,7 +34,7 @@
       />
       <Button
         Content="get"
-        Command="{Binding GetRankingCategoryCommand}"
+        Command="{Binding LoadRankingCategoryCommand}"
       />
     </StackPanel>
 

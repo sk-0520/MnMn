@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region command
 
-        public ICommand GetRankingCategoryCommand
+        public ICommand LoadRankingCategoryCommand
         {
             get
             {
@@ -99,22 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
 
-                        // 存在する場合は該当タブへ遷移
-                        var selectViewModel = RestrictUtility.IsNotNull(
-                            RankingCategoryGroupItems.FirstOrDefault(i => i.Category.Key == nowCategory.Key),
-                            viewModel => {
-                                viewModel.SetContextElements(nowPeriod, nowTarget);
-                                return viewModel;
-                            },
-                            () => {
-                                var viewModel = new SmileVideoRankingCategoryGroupItemViewModel(Mediation, RankingModel, nowPeriod, nowTarget, nowCategory);
-                                RankingCategoryGroupItems.Insert(0, viewModel);
-                                return viewModel;
-                            }
-                        );
-                        selectViewModel.LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(task => {
-                            SelectedRankingCategory = selectViewModel;
-                        }, TaskScheduler.FromCurrentSynchronizationContext());
+                        LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory).ConfigureAwait(false);
                     }
                 );
             }
@@ -137,6 +122,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
+        public Task LoadRankingCategoryAsync()
+        {
+            var nowPeriod = SelectedPeriod;
+            var nowTarget = SelectedTarget;
+            var nowCategory = SelectedCategory;
+
+            return LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory);
+        }
+
+        Task LoadRankingCategoryAsync(DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
+        {
+            // 存在する場合は該当タブへ遷移
+            var selectViewModel = RestrictUtility.IsNotNull(
+                RankingCategoryGroupItems.FirstOrDefault(i => i.Category.Key == category.Key),
+                viewModel => {
+                    viewModel.SetContextElements(period, target);
+                    return viewModel;
+                },
+                () => {
+                    var viewModel = new SmileVideoRankingCategoryGroupItemViewModel(Mediation, RankingModel, period, target, category);
+                    RankingCategoryGroupItems.Insert(0, viewModel);
+                    return viewModel;
+                }
+            );
+
+            return selectViewModel.LoadDefaultCacheAsync().ContinueWith(task => {
+                SelectedRankingCategory = selectViewModel;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
         #endregion
 
         #region SmileVideoManagerViewModelBase
@@ -146,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             base.ShowView();
 
             if(!RankingCategoryGroupItems.Any()) {
-                GetRankingCategoryCommand.Execute(null);
+                LoadRankingCategoryAsync();
             }
         }
 
