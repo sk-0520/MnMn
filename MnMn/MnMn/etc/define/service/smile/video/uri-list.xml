@@ -8,6 +8,8 @@
 	
 	<item key="video-getthumbinfo" uri="http://ext.nicovideo.jp/api/getthumbinfo" param="hierarchy" />
 	<item key="video-getflv-normal" uri="http://flapi.nicovideo.jp/api/getflv" param="hierarchy" />
+	<!--video-getflv-scrapingとvideo-msgの統一されてなさよ-->
+	<item key="video-getflv-scraping" uri="" param="none" />
 	<item key="video-getflv-swf" uri="http://flapi.nicovideo.jp/api/getflv" param="ps-fix" />
 	
 	<item key="video-getthreadkey" uri="http://flapi.nicovideo.jp/api/getthreadkey" param="query" />

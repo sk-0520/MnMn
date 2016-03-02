@@ -62,7 +62,7 @@
             />
             <Button
               Content="reload"
-              Command="{Binding ReloadCategoryCommand}"
+              Command="{Binding ReloadCommand}"
               IsEnabled="{Binding CanLoad}"
             />
           </StackPanel>

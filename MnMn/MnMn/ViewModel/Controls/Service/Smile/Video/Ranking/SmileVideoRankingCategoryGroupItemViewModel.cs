@@ -88,18 +88,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region command
 
-        public ICommand ReloadCategoryCommand
-        {
-            get
-            {
-                //return CreateCommand(
-                //    o => {
-                //        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
-                //    }
-                //);
-                return ReloadCommand;
-            }
-        }
+        //public ICommand ReloadCategoryCommand
+        //{
+        //    get
+        //    {
+        //        //return CreateCommand(
+        //        //    o => {
+        //        //        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
+        //        //    }
+        //        //);
+        //        return ReloadCommand;
+        //    }
+        //}
 
         #endregion
 

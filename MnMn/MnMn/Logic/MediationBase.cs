@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        protected UriItemModel GetUriItem(string key) => UriList.Items.First(ui => ui.Key == key);
+        protected UriItemModel GetUriItem(string key) => UriList.Items.FirstOrDefault(ui => ui.Key == key);
 
         string ToParameterEncodeTypeString(string s, ParameterEncode encodeType)
         {
@@ -259,7 +259,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected UriResultModel GetUri_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType) => GetFormatedUri(GetUriItem(key), replaceMap);
+        protected UriResultModel GetUri_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            var uriItem = GetUriItem(key);
+            if(uriItem != null) {
+                return GetFormatedUri(uriItem, replaceMap);
+            } else {
+                return null;
+            }
+        }
 
         protected IDictionary<string, string> GetRequestParameter_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
