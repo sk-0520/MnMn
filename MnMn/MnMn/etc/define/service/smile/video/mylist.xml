@@ -149,4 +149,9 @@
 			<word key="ja-jp" value="新しいマイリスト" />
 		</words>
 	</create-group-name>
+	<default-mylist-name>
+		<words>
+			<word key="ja-jp" value="とりあえずマイリスト" />
+		</words>
+	</default-mylist-name>
 </mylist>

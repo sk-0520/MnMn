@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         RawSmileAccountMyListGroupItemModel GroupModel { get; }
 
-        SmileVideoMyListModel MyList { get; }
+        protected SmileVideoMyListModel MyList { get; }
 
         public virtual string MyListFolderId { get { return GroupModel.IconId; } }
 

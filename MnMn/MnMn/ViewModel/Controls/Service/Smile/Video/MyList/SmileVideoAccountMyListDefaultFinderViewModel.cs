@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public override bool CanEdit { get; } = false;
         public override bool IsPublic { get; } = false;
 
-        public override string MyListName { get { return global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName; } }
+        public override string MyListName { get { return MyList.DefaultMyListName.DisplayText; } }
 
         public override string MyListFolderId { get { return string.Empty; } }
         public override string MyListSort { get { return string.Empty; } }

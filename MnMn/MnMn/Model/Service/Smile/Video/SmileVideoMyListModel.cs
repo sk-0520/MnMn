@@ -19,5 +19,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 
         [XmlElement("create-group-name")]
         public DefinedElementModel CreateGroupName { get; set; } = new DefinedElementModel();
+
+        [XmlElement("default-mylist-name")]
+        public DefinedElementModel DefaultMyListName { get; set; } = new DefinedElementModel();
     }
 }
