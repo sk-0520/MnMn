@@ -731,7 +731,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void FireShowComment()
         {
-            Debug.WriteLine($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
+            Mediation.Logger.Trace($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             FireShowComment_Impl(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
             FireShowComment_Impl(ContributorCommentArea, PrevPlayedTime, PlayTime, ContributorCommentList, ShowingCommentList, Setting);
@@ -793,7 +793,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             };
                         }catch(FormatException ex) {
                             //TODO: Webブラウザ並みとは言わんけどある程度の補正は必要かも
-                            Debug.WriteLine(ex);
+                            Mediation.Logger.Warning(ex);
                         }
                         return text;
                     } else {
@@ -1099,7 +1099,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            Debug.WriteLine(e.Value);
+            Mediation.Logger.Debug($"{e.Value}");
             switch(e.Value) {
                 case xZune.Vlc.Interop.Media.MediaState.Playing:
                     var prevState = PlayerState;
@@ -1113,7 +1113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 case xZune.Vlc.Interop.Media.MediaState.Stopped:
                     if(IsBuffering) {
-                        Debug.WriteLine("buffering wait");
+                        Mediation.Logger.Debug("buffering wait");
                         PlayerState = PlayerState.Pause;
                         Player.Position = BufferingVideoPosition;
                         foreach(var data in ShowingCommentList) {
@@ -1121,13 +1121,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         }
                     } else {
                         if(ReplayVideo && !UserOperationStop) {
-                            Debug.WriteLine("replay");
+                            Mediation.Logger.Debug("replay");
                             VideoPosition = 0;
                             PrevPlayedTime = TimeSpan.Zero;
                             ClearComment();
                             Player.Play();
                         } else {
-                            Debug.WriteLine("stop");
+                            Mediation.Logger.Debug("stop");
                             PlayerState = PlayerState.Stop;
                             VideoPosition = 0;
                             PrevPlayedTime = TimeSpan.Zero;
