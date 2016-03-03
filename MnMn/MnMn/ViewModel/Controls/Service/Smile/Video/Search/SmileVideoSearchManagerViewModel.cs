@@ -128,6 +128,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             return LoadSearchAsync(nowMethod, nowSort, nowType, nowQuery);
         }
+
+        public Task LoadSearchAsync(SmileVideoSearchGroupViewModel searchGroup)
+        {
+            return LoadSearchAsync(searchGroup.SelectedMethod, searchGroup.SelectedSort, searchGroup.Type, searchGroup.Query);
+        }
+
         Task LoadSearchAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
         {
             // 存在する場合は該当タブへ遷移

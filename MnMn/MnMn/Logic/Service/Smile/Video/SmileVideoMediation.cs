@@ -243,14 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             } else {
                 var finder = request.ViewModel as SmileVideoSearchGroupViewModel;
                 if(finder != null) {
-                    //TODO: 外部メソッド化した方が幸せになれる
-                    ManagerPack.SearchManager.SelectedMethod = finder.SelectedMethod;
-                    ManagerPack.SearchManager.SelectedSort = finder.SelectedSort;
-                    ManagerPack.SearchManager.SelectedType = finder.Type;
-                    ManagerPack.SearchManager.InputQuery = finder.Query;
-                    if(ManagerPack.SearchManager.SearchCommand.CanExecute(null)) {
-                        ManagerPack.SearchManager.SearchCommand.Execute(null);
-                    }
+                    ManagerPack.SearchManager.LoadSearchAsync(finder).ConfigureAwait(false);
                     return ManagerPack.SearchManager;
                 }
             }

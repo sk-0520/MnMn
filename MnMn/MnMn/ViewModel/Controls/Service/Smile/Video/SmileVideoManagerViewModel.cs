@@ -99,16 +99,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        public ICommand SwitchViewCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    SelectedManager = (SmileVideoCustomManagerViewModelBase)o;
-                });
-            }
-        }
-
         #endregion
 
         #region function
@@ -119,7 +109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(task => {
                 // TODO:開発用のものを設定
-                SwitchViewCommand.Execute(ManagerItems.Last());
+                SelectedManager = ManagerItems.Last();
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
