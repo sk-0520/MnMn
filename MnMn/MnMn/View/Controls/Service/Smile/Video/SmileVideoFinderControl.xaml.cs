@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
             DependencyPropertyUtility.GetName(nameof(CheckableProperty)),
             typeof(bool),
             typeof(SmileVideoFinderControl),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnFCheckableChanged))
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnFCheckableChanged))
         );
 
         private static void OnFCheckableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -244,7 +244,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     TotalCount = vm.TotalCount;
                     if(TotalCount > Setting.SearchCount) {
                         var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
-                        var preList = Enumerable.Range(1, pageCount - 1)
+                        var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1: 0;
+                        var preList = Enumerable.Range(1, pageCount - correctionPage)
                             .Select((n, i) => new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemViewModel>(v, i + 2))
                             .ToList()

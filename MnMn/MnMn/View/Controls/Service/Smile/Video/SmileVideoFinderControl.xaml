@@ -44,7 +44,7 @@
             </i:Interaction.Triggers>
 
             <DockPanel>
-              <CheckBox Width="30" DockPanel.Dock="Left" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}">
+              <CheckBox DockPanel.Dock="Left" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}">
                 <TextBlock Text="{Binding Number}" />
               </CheckBox>
 
