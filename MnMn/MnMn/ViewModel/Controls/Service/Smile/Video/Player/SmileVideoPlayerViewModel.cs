@@ -1061,7 +1061,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             TotalTime = TimeSpan.Zero;
             SelectedComment = null;
             if(View != null) {
-                if(Player != null && Player.State != xZune.Vlc.Interop.Media.MediaState.Playing) {
+                if(Player != null && Player.State != xZune.Vlc.Interop.Media.MediaState.Playing && Player.State != xZune.Vlc.Interop.Media.MediaState.Paused) {
                     // https://github.com/higankanshi/xZune.Vlc/issues/80
                     Player.VlcMediaPlayer.Media = null;
                 }
