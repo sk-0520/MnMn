@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         #region property
 
         SmileSessionViewModel Session { get; }
+        RawSmileVideoAccountHistoryModel AccountHistoryModel { get; set; }
 
         #endregion
 
@@ -59,7 +60,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             var feedModel = history.ConvertFeedModelFromPageHtml(htmlDocument);
             return feedModel;
         }
- 
+
+        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            return base.LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(_ => {
+                if(FinderLoadState == SmileVideoFinderLoadState.Failure) {
+                    return Task.CompletedTask;
+                }
+
+                var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
+                return history.LoadHistoryAsync().ContinueWith(task => {
+                    AccountHistoryModel = task.Result;
+                }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+            });
+        }
+
         #endregion
     }
 }
