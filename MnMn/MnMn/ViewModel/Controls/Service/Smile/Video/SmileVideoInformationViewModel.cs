@@ -688,27 +688,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return this._thumbnailImage;
         }
 
-        async Task LoadThumbnaiImageAsync_Impl()
+        async Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
         {
             var uri = ThumbnailUri;
 
             var binary = await RestrictUtility.Block(async () => {
-                using(var userAgentHost = new HttpUserAgentHost())
-                using(var userAgent = userAgentHost.CreateHttpUserAgent()) {
-                    try {
-                        Debug.WriteLine($"img -> {uri}");
-                        return await userAgent.GetByteArrayAsync(uri);
-                    } catch(HttpRequestException ex) {
-                        Debug.WriteLine($"error img -> {uri}");
-                        Debug.WriteLine(ex);
-                        return null;
-                    }
+                try {
+                    Mediation.Logger.Trace($"img -> {uri}");
+                    return await client.GetByteArrayAsync(uri);
+                } catch(HttpRequestException ex) {
+                    Mediation.Logger.Error($"error img -> {uri}");
+                    Mediation.Logger.Warning(ex);
+                    return null;
                 }
             });
+
             if(binary != null) {
                 using(var stream = new MemoryStream(binary)) {
                     GetImage(stream);
                     ThumbnailLoadState = LoadState.Loaded;
+                }
+                if(this._thumbnailImage != null) {
+                    // キャッシュ構築
+                    // TODO: 別スレッドで所有うんぬん
+                    await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                        var frame = BitmapFrame.Create(this._thumbnailImage);
+                        var encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(frame);
+                        FileUtility.MakeFileParentDirectory(savePath);
+                        using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+                            encoder.Save(stream);
+                        }
+                    }));
                 }
             } else {
                 ThumbnailLoadState = LoadState.Failure;
@@ -736,20 +747,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             ThumbnailLoadState = LoadState.Loading;
-            await LoadThumbnaiImageAsync_Impl();
-
-            if(ThumbnailLoadState == LoadState.Loaded && this._thumbnailImage != null) {
-                // キャッシュ構築
-                // TODO: 別スレッドで所有うんぬん
-                await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    var frame = BitmapFrame.Create(this._thumbnailImage);
-                    var encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(frame);
-                    FileUtility.MakeFileParentDirectory(cachedFilePath);
-                    using(var stream = new FileStream(cachedFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                        encoder.Save(stream);
-                    }
-                }));
+            using(var client = new HttpClient()) {
+                await LoadThumbnaiImageAsync_Impl(cachedFilePath, client);
             }
         }
 
