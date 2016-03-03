@@ -29,9 +29,9 @@
       <TextBox>test</TextBox>
     </StatusBar>
 
-    <TabControl Grid.Row="1" TabStripPlacement="Left">
+    <TabControl Grid.Row="1" TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
       <TabItem Header="2525 video" DataContext="{Binding SmileManager}">
-        <app_view_controls_service_smile:SmileManager DataContext="{Binding}" />
+        <app_view_controls_service_smile:SmileManager />
       </TabItem>
       <TabItem Header="SETTING">
       </TabItem>
