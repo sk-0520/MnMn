@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile
 {
     /// <summary>
-    /// SmileVideoManager.xaml の相互作用ロジック
+    /// SmileManager.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileVideoVideoManager: UserControl
+    public partial class SmileManager: UserControl
     {
-        public SmileVideoVideoManager()
+        public SmileManager()
         {
             InitializeComponent();
         }
