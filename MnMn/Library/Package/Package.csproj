@@ -102,6 +102,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentTypeTextNet.Pe.PeMain.Logic\AppLogger.cs" />
+    <Compile Include="HTMLConverter\HtmlCssParser.cs" />
+    <Compile Include="HTMLConverter\HtmlFromXamlConverter.cs" />
+    <Compile Include="HTMLConverter\HtmlLexicalAnalyzer.cs" />
+    <Compile Include="HTMLConverter\HtmlParser.cs" />
+    <Compile Include="HTMLConverter\HtmlSchema.cs" />
+    <Compile Include="HTMLConverter\HtmlTokenType.cs" />
+    <Compile Include="HTMLConverter\HtmlToXamlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -67,6 +67,8 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using HTMLConverter;
+using System.Windows.Markup;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -784,105 +786,140 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return Task.CompletedTask;
         }
 
-        Inline CreateDescriptionInline(HtmlNode node)
-        {
-            switch(node.NodeType) {
-                case HtmlNodeType.Text: {
-                        var text = new Run(node.InnerText);
-                        return text;
-                    }
+        //Inline CreateDescriptionInline(HtmlNode node)
+        //{
+        //    switch(node.NodeType) {
+        //        case HtmlNodeType.Text: {
+        //                var text = new Run(node.InnerText);
+        //                return text;
+        //            }
 
-                case HtmlNodeType.Element:
-                    if(node.Name == "br") {
-                        return new LineBreak();
-                    } else if(node.Name == "a") {
-                        var text = new Run(node.InnerText);
-                        var link = new Hyperlink(text);
-                        link.Command = OpenLinkCommand;
-                        link.CommandParameter = node.GetAttributeValue("href", string.Empty);
-                        return link;
-                    } else if(node.Name == "font") {
-                        var text = new Run(node.InnerText);
-                        var colorCode = node.GetAttributeValue("color", "#000000");
-                        try {
-                            var color = (Color)ColorConverter.ConvertFromString(colorCode);
-                            text.Foreground = new SolidColorBrush() {
-                                Color = color,
-                            };
-                        }catch(FormatException ex) {
-                            //TODO: Webブラウザ並みとは言わんけどある程度の補正は必要かも
-                            Mediation.Logger.Warning(ex);
-                        }
-                        return text;
-                    } else {
-                        var text = new Run("*" + node.OuterHtml + "*");
-                        return text;
-                    }
-                    throw new NotImplementedException();
+        //        case HtmlNodeType.Element:
+        //            if(node.Name == "br") {
+        //                return new LineBreak();
+        //            } else if(node.Name == "a") {
+        //                var text = new Run(node.InnerText);
+        //                var link = new Hyperlink(text);
+        //                link.Command = OpenLinkCommand;
+        //                link.CommandParameter = node.GetAttributeValue("href", string.Empty);
+        //                return link;
+        //            } else if(node.Name == "font") {
+        //                var text = new Run(node.InnerText);
+        //                var colorCode = node.GetAttributeValue("color", "#000000");
+        //                try {
+        //                    var color = (Color)ColorConverter.ConvertFromString(colorCode);
+        //                    text.Foreground = new SolidColorBrush() {
+        //                        Color = color,
+        //                    };
+        //                }catch(FormatException ex) {
+        //                    //TODO: Webブラウザ並みとは言わんけどある程度の補正は必要かも
+        //                    Mediation.Logger.Warning(ex);
+        //                }
+        //                return text;
+        //            } else {
+        //                var text = new Run("*" + node.OuterHtml + "*");
+        //                return text;
+        //            }
+        //            throw new NotImplementedException();
 
-                default:
-                    return new Run(string.Empty);
-            }
-        }
+        //        default:
+        //            return new Run(string.Empty);
+        //    }
+        //}
 
-        IEnumerable<HtmlNode> ChompBreak(IEnumerable<HtmlNode> ndoes)
-        {
-            return ndoes
-                .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
-                .Reverse()
-                .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
-                .Reverse()
-            ;
-        }
+        //IEnumerable<HtmlNode> ChompBreak(IEnumerable<HtmlNode> ndoes)
+        //{
+        //    return ndoes
+        //        .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
+        //        .Reverse()
+        //        .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
+        //        .Reverse()
+        //    ;
+        //}
 
-        Paragraph CreateDescriptionParagraph(IEnumerable<HtmlNode> paragraphNodes)
-        {
-            var p = new Paragraph();
+        //Paragraph CreateDescriptionParagraph(IEnumerable<HtmlNode> paragraphNodes)
+        //{
+        //    var p = new Paragraph();
 
-            foreach(var node in ChompBreak(paragraphNodes)) {
-                var inline = CreateDescriptionInline(node);
-                p.Inlines.Add(inline);
-            }
+        //    foreach(var node in ChompBreak(paragraphNodes)) {
+        //        var inline = CreateDescriptionInline(node);
+        //        p.Inlines.Add(inline);
+        //    }
 
-            return p;
-        }
+        //    return p;
+        //}
+
+        //void MakeDescription()
+        //{
+        //    IsMakedDescription = true;
+
+        //    DocumentDescription.Dispatcher.Invoke(() => {
+        //        //var document = new FlowDocument();
+        //        var document = DocumentDescription.Document;
+        //        document.Blocks.Clear();
+
+        //        var html = new HtmlDocument() {
+        //            OptionAutoCloseOnEnd = true,
+        //        };
+        //        html.LoadHtml(VideoInformation.PageDescription);
+
+        //        var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n, i) => new { Node = n, Index = i }).ToArray();
+        //        var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n, i) => new { Node = n.Node, Index = n.Index, BreakIndex = i }).ToArray();
+        //        var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
+        //        if(paragraphPointList.Length > 1) {
+        //            var head = 0;
+        //            foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
+        //                var tail = point.Index;
+        //                var nodes = nodeIndexList.Skip(head).Take(tail - head);
+        //                var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
+        //                document.Blocks.Add(p);
+        //                head = tail + 1;
+        //            }
+        //        } else {
+        //            var p = CreateDescriptionParagraph(nodeIndexList.Select(ni => ni.Node));
+        //            document.Blocks.Add(p);
+        //        }
+
+        //        document.FontSize = DocumentDescription.FontSize;
+        //        document.FontFamily = DocumentDescription.FontFamily;
+        //        document.FontStretch = DocumentDescription.FontStretch;
+
+        //        //DocumentDescription.Document = document;
+        //    });
+        //}
 
         void MakeDescription()
         {
             IsMakedDescription = true;
 
             DocumentDescription.Dispatcher.Invoke(() => {
-                //var document = new FlowDocument();
                 var document = DocumentDescription.Document;
+
                 document.Blocks.Clear();
 
-                var html = new HtmlDocument() {
-                    OptionAutoCloseOnEnd = true,
-                };
-                html.LoadHtml(VideoInformation.PageDescription);
-
-                var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n, i) => new { Node = n, Index = i }).ToArray();
-                var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n, i) => new { Node = n.Node, Index = n.Index, BreakIndex = i }).ToArray();
-                var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
-                if(paragraphPointList.Length > 1) {
-                    var head = 0;
-                    foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
-                        var tail = point.Index;
-                        var nodes = nodeIndexList.Skip(head).Take(tail - head);
-                        var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
-                        document.Blocks.Add(p);
-                        head = tail + 1;
+                var xamlFlowDocument = HtmlToXamlConverter.ConvertHtmlToXaml(VideoInformation.PageDescription, true);
+#if DEBUG
+                var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
+                using(var s = File.CreateText(h)) {
+                    s.Write(VideoInformation.PageDescription);
+                }
+                foreach(var ext in new[] {"xml","xaml" }) {
+                    var x = Path.Combine(DownloadDirectory.FullName, $"description.{ext}");
+                    using(var s = File.CreateText(x)) {
+                        s.Write(xamlFlowDocument);
                     }
-                } else {
-                    var p = CreateDescriptionParagraph(nodeIndexList.Select(ni => ni.Node));
-                    document.Blocks.Add(p);
+                }
+#endif
+
+                using(var stringReader = new StringReader(xamlFlowDocument))
+                using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
+                    var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
+                    document.Blocks.AddRange(flowDocument.Blocks.ToArray());
                 }
 
                 document.FontSize = DocumentDescription.FontSize;
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
-
-                //DocumentDescription.Document = document;
             });
         }
 
