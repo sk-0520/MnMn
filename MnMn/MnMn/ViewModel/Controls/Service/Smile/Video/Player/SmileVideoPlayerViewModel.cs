@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _baseHeight;
 
         PlayerState _playerState;
-        bool _isBuffering;
+        bool _isBufferingStop;
 
         bool _replayVideo;
 
@@ -189,6 +189,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         bool IsViewClosed { get; set; }
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
+
+        public CollectionModel<SmileVideoInformationViewModel> PlayListItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
 
 
         public LoadState TagLoadState
@@ -320,10 +322,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._playerState, value); }
         }
 
-        public bool IsBuffering
+        /// <summary>
+        /// 読込中で停止しているか。
+        /// </summary>
+        public bool IsBufferingStop
         {
-            get { return this._isBuffering; }
-            set { SetVariableValue(ref this._isBuffering, value); }
+            get { return this._isBufferingStop; }
+            set { SetVariableValue(ref this._isBufferingStop, value); }
         }
         float BufferingVideoPosition { get; set; }
 
@@ -384,7 +389,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 return;
 
                             case PlayerState.Pause:
-                                if(IsBuffering) {
+                                if(IsBufferingStop) {
                                     SetMedia();
                                     Player.Position = VideoPosition;
                                     VideoPlay();
@@ -463,6 +468,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         var myListFinder = o as SmileVideoMyListFinderViewModelBase;
                         AdditionMyListAsync(myListFinder).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        public ICommand LoadSelectVideoItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var selectVideoInformation = o as SmileVideoInformationViewModel;
+                        LoadAsync(selectVideoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                     }
                 );
             }
@@ -836,6 +854,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             DocumentDescription.Dispatcher.Invoke(() => {
                 //var document = new FlowDocument();
                 var document = DocumentDescription.Document;
+                document.Blocks.Clear();
 
                 var html = new HtmlDocument() {
                     OptionAutoCloseOnEnd = true,
@@ -938,21 +957,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     StartIfAutoPlay();
                 }
             }
-            e.Cancel = IsViewClosed;
+            e.Cancel = IsViewClosed || IsProcessCancel ;
 
             base.OnDownloading(sender, e);
         }
 
         protected override void OnLoadVideoEnd()
         {
-            if(!IsMakedDescription && VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
-                MakeDescription();
-            }
+            if(!IsProcessCancel) {
+                if(!IsMakedDescription && VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+                    MakeDescription();
+                }
 
-            // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
-            if(!CanVideoPlay) {
-                CanVideoPlay = true;
-                StartIfAutoPlay();
+                // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
+                if(!CanVideoPlay) {
+                    CanVideoPlay = true;
+                    StartIfAutoPlay();
+                }
             }
 
             base.OnLoadVideoEnd();
@@ -975,11 +996,63 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnLoadGetthumbinfoEnd()
         {
+            if(!PlayListItems.Any()) {
+                PlayListItems.Add(VideoInformation);
+            }
+
             TotalTime = VideoInformation.Length;
 
             LoadTagsAsync();
 
             base.OnLoadGetthumbinfoEnd();
+        }
+
+        protected override void InitializeStatus()
+        {
+            base.InitializeStatus();
+            IsFirstPlay = true;
+            VideoPosition = 0;
+            PrevPlayedTime = TimeSpan.Zero;
+            IsBufferingStop = false;
+            UserOperationStop = false;
+            IsMakedDescription = false;
+            ChangingVideoPosition = false;
+            MovingSeekbarThumb = false;
+            CanVideoPlay = false;
+            IsVideoPlayng = false;
+            PlayTime = TimeSpan.Zero;
+            TotalTime = TimeSpan.Zero;
+            SelectedComment = null;
+            if(View != null) {
+                if(Player != null && Player.State != xZune.Vlc.Interop.Media.MediaState.Playing) {
+                    // https://github.com/higankanshi/xZune.Vlc/issues/80
+                    Player.VlcMediaPlayer.Media = null;
+                }
+                View.Dispatcher.Invoke(() => {
+                    CommentList.Clear();
+                    NormalCommentList.Clear();
+                    ContributorCommentList.Clear();
+                    ClearComment();
+                });
+            }
+        }
+
+        protected override Task StopPrevProcessAsync()
+        {
+            var processTask = base.StopPrevProcessAsync();
+            var playerTask = Task.CompletedTask;
+            if(Player!= null) {
+                if(Player.State != xZune.Vlc.Interop.Media.MediaState.Stopped) {
+                    playerTask = Task.Run(() => {
+                        var sleepTime = TimeSpan.FromMilliseconds(500);
+                        Thread.Sleep(sleepTime);
+                        Player.Stop();
+                        InitializeStatus();
+                    });
+                };
+            }
+
+            return Task.WhenAll(processTask, playerTask);
         }
 
         #endregion
@@ -1099,7 +1172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            Mediation.Logger.Debug($"{e.Value}");
+            Mediation.Logger.Debug($"{e.Value}, pos: {VideoPosition}, time: {PlayTime} / {Player.Length}");
             switch(e.Value) {
                 case xZune.Vlc.Interop.Media.MediaState.Playing:
                     var prevState = PlayerState;
@@ -1112,7 +1185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Stopped:
-                    if(IsBuffering) {
+                    if(IsBufferingStop) {
                         Mediation.Logger.Debug("buffering wait");
                         PlayerState = PlayerState.Pause;
                         Player.Position = BufferingVideoPosition;
@@ -1130,6 +1203,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             Mediation.Logger.Debug("stop");
                             PlayerState = PlayerState.Stop;
                             VideoPosition = 0;
+                            if(UserOperationStop) {
+                                ClearComment();
+                            }
                             PrevPlayedTime = TimeSpan.Zero;
                         }
                     }
@@ -1143,9 +1219,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Ended:
-                    if(PlayTime != PrevPlayedTime) {
+                    if(VideoLoadState == LoadState.Loading) {
                         // 終わってない
-                        IsBuffering = true;
+                        IsBufferingStop = true;
                         BufferingVideoPosition = VideoPosition;
                     }
                     break;

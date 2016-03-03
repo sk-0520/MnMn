@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
@@ -53,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region define
 
         const long isDonwloaded = -1;
+        const long initVideoLoadSize = 0;
+        const long initVideoTotalSize = 1;
 
         #endregion
 
@@ -65,10 +69,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         CacheState _cacheState;
 
-        long _videoLoadedSize = 0;
-        long _videoTotalSize = 1;
+        long _videoLoadedSize = initVideoLoadSize;
+        long _videoTotalSize = initVideoTotalSize;
 
         bool _isEconomyMode;
+
+        bool _isProcessCancel;
 
         #endregion
 
@@ -166,6 +172,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._isEconomyMode, value); }
         }
 
+        public bool IsProcessCancel
+        {
+            get { return this._isProcessCancel; }
+            set { SetVariableValue(ref this._isProcessCancel, value); }
+        }
+
         #endregion
 
         #region function
@@ -229,7 +241,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
-                var fileMode = downloader.UsingRangeDonwload ? FileMode.Append: FileMode.Create;
+                var fileMode = downloader.UsingRangeDonwload ? FileMode.Append : FileMode.Create;
                 using(VideoStream = new FileStream(VideoFile.FullName, fileMode, FileAccess.Write, FileShare.Read)) {
                     try {
                         downloader.DownloadStart += Downloader_DownloadStart;
@@ -241,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             VideoLoadState = LoadState.Loaded;
                             if(VideoInformation.IsEconomyMode) {
                                 VideoInformation.LoadedEconomyVideo = true;
-                            }else {
+                            } else {
                                 VideoInformation.LoadedNormalVideo = true;
                             }
                             VideoInformation.SaveSetting();
@@ -295,17 +307,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoInformation.ThreadId
             );
 
-            
-            
+
+
             var msg = new Msg(Mediation);
             var rawMessagePacket = await msg.GetAsync(
                 VideoInformation.MessageServerUrl,
                 //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
-                VideoInformation.ThreadId, 
-                VideoInformation.UserId, 
-                1000, 
-                1, (int)VideoInformation.Length.TotalMinutes, 100, 
-                500, 
+                VideoInformation.ThreadId,
+                VideoInformation.UserId,
+                1000,
+                1, (int)VideoInformation.Length.TotalMinutes, 100,
+                500,
                 threadkeyModel
             );
 
@@ -458,8 +470,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             await LoadAsync(VideoInformation, thumbCacheSpan, imageCacheSpan);
         }
 
+        protected virtual void InitializeStatus()
+        {
+            VideoLoadedSize = initVideoLoadSize;
+            VideoTotalSize = initVideoTotalSize;
+            VideoLoadState = LoadState.None;
+            InformationLoadState = LoadState.None;
+            ThumbnailLoadState = LoadState.None;
+            CommentLoadState = LoadState.None;
+            IsProcessCancel = false;
+        }
+
+        protected virtual Task StopPrevProcessAsync()
+        {
+            // ぐっちゃぐちゃ
+            var wait = new EventWaitHandle(false, EventResetMode.AutoReset);
+            PropertyChangedEventHandler changedEvent = null;
+
+            changedEvent = (sender, e) => {
+                if(e.PropertyName == nameof(VideoLoadState)) {
+                    PropertyChanged -= changedEvent;
+                    wait.Set();
+                }
+            };
+            PropertyChanged += changedEvent;
+
+            var prevState = VideoLoadState;
+            IsProcessCancel = true;
+            if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
+                return Task.Run(() => {
+                    // TODO: 即値
+                    var waitTime = TimeSpan.FromSeconds(5);
+                    wait.WaitOne();
+                    wait.Dispose();
+                    PropertyChanged -= changedEvent;
+                    InitializeStatus();
+
+                });
+            } else {
+                wait.Dispose();
+                PropertyChanged -= changedEvent;
+                InitializeStatus();
+                return Task.CompletedTask;
+            }
+        }
+
+
         public async Task LoadAsync(SmileVideoInformationViewModel videoInformation, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
+                await StopPrevProcessAsync();
+
             OnLoadStart();
 
             InformationLoadState = LoadState.Loading;
@@ -521,6 +581,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Logger.Trace($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
 
             OnDownloading(sender, e);
+            e.Cancel = IsProcessCancel;
         }
 
         private void Downloader_DownloadingError(object sender, DownloadingErrorEventArgs e)

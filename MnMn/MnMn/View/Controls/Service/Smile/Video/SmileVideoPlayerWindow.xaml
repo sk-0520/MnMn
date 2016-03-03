@@ -51,6 +51,21 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
+      <Menu>
+        <MenuItem Header="play list" ItemsSource="{Binding PlayListItems}">
+          <MenuItem.ItemContainerStyle>
+            <Style TargetType="MenuItem">
+              <Setter Property="Command" Value="{Binding DataContext.LoadSelectVideoItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+              <Setter Property="CommandParameter" Value="{Binding}" />
+            </Style>
+          </MenuItem.ItemContainerStyle>
+          <MenuItem.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Title}" />
+            </DataTemplate>
+          </MenuItem.ItemTemplate>
+        </MenuItem>
+      </Menu>
     </ToolBar>
 
     <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->
