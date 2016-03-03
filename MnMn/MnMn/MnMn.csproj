@@ -145,6 +145,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
+    <Compile Include="IF\Control\ICheckable.cs" />
     <Compile Include="IF\Control\ISetView.cs" />
     <Compile Include="IF\ILoadPageHtml.cs" />
     <Compile Include="IF\Service\Smile\Video\IScrapingPageHtmlToFeedApi.cs" />
@@ -406,7 +407,6 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
-    <Compile Include="ViewModel\Controls\TreeNodeItemViewModelBase.cs" />
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingContext.xaml.cs">
       <DependentUpon>SmileVideoRankingContext.xaml</DependentUpon>
     </Compile>

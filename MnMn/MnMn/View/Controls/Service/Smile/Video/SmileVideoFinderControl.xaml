@@ -21,6 +21,7 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
@@ -29,7 +30,7 @@
 
     <ListBox 
       x:Name="PART_List" 
-      Grid.Row="1" 
+      Grid.Row="2" 
       ItemsSource="{Binding VideoInformationItems}"
       SelectedItem="{Binding SelectedVideoInformation}"
     >
@@ -43,7 +44,9 @@
             </i:Interaction.Triggers>
 
             <DockPanel>
-              <TextBlock Grid.Column="0" Text="{Binding Number}" DockPanel.Dock="Left" />
+              <CheckBox Width="30" DockPanel.Dock="Left" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}">
+                <TextBlock Text="{Binding Number}" />
+              </CheckBox>
 
               <Grid Width="78" Height="60" DockPanel.Dock="Left" >
                 <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
@@ -420,7 +423,7 @@
       </ListBox.ItemTemplate>
     </ListBox>
 
-    <ContentControl x:Name="PART_Footer" Grid.Row="2" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     
   </Grid>
 </UserControl>

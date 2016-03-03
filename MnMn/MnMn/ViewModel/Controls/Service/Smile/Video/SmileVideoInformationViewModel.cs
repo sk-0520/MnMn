@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
@@ -52,7 +53,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoInformationViewModel: ViewModelBase
+    public class SmileVideoInformationViewModel: ViewModelBase, ICheckable
     {
         #region define
 
@@ -71,6 +72,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool? _isEconomyMode;
 
         CollectionModel<SmileVideoTagViewModel> _tagList;
+
+        bool? _isChecked = false;
 
         #endregion
 
@@ -844,6 +847,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
             await vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
+        #endregion
+
+        #region ICheckable
+
+        public bool? IsChecked
+        {
+            get { return this._isChecked; }
+            set { SetVariableValue(ref this._isChecked, value); }
         }
 
         #endregion

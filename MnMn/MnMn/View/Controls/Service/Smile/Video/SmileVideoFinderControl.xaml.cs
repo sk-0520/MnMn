@@ -76,5 +76,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
         #endregion
 
+        #region CheckableProperty
+
+        public static readonly DependencyProperty CheckableProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(CheckableProperty)),
+            typeof(bool),
+            typeof(SmileVideoFinderControl),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnFCheckableChanged))
+        );
+
+        private static void OnFCheckableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as SmileVideoFinderControl;
+            if(control != null) {
+                control.Checkable = (bool)e.NewValue;
+            }
+        }
+
+        public bool Checkable
+        {
+            get { return (bool)GetValue(CheckableProperty); }
+            set { SetValue(CheckableProperty, value); }
+        }
+
+        #endregion
     }
 }
