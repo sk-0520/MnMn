@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             var search = new ContentsSearch(Mediation);
 
-            return search.GetAsnc(
+            return search.SearchAsync(
                 SearchModel.Service,
                 Query,
                 Type.Key,

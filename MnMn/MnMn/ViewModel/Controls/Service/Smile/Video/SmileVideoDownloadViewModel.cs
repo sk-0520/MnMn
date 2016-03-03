@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
             var getflv = new Getflv(Mediation);
 
-            var rawVideoGetflvModel = await getflv.GetAsync(VideoInformation.VideoId, VideoInformation.WatchUrl);
+            var rawVideoGetflvModel = await getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl);
             VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
             var path = Path.Combine(DownloadDirectory.FullName, FileNameUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));
@@ -281,7 +281,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
                     CommentLoadState = LoadState.Loading;
                     using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        var result = Msg.Load(stream);
+                        var result = Msg.ConvertFromRawData(stream);
                         OnLoadMsgEnd();
                         return result;
                     }
@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             CommentLoadState = LoadState.Loading;
 
             var getThreadkey = new Getthreadkey(Mediation);
-            var threadkeyModel = await getThreadkey.GetAsync(
+            var threadkeyModel = await getThreadkey.LoadAsync(
                 VideoInformation.ThreadId
             );
 

@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public async Task<RawSmileVideoGetthreadkeyModel> GetAsync(string threadId)
+        public async Task<RawSmileVideoGetthreadkeyModel> LoadAsync(string threadId)
         {
             using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["thread-id"] = threadId;

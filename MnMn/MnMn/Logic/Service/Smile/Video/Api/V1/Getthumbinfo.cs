@@ -38,25 +38,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoThumbResponseModel Load(Stream stream)
+        public static RawSmileVideoThumbResponseModel ConvertFromRawData(Stream stream)
         {
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoThumbResponseModel>(stream);
         }
 
-        async Task<RawSmileVideoThumbResponseModel> GetAsync_Impl(PageLoader page, string videoId)
+        async Task<RawSmileVideoThumbResponseModel> LoadAsync_Impl(PageLoader page, string videoId)
         {
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
-                var result = Load(stream);
+                var result = ConvertFromRawData(stream);
                 return result;
             }
         }
 
-        public async Task<RawSmileVideoThumbResponseModel> GetAsync(string videoId)
+        public async Task<RawSmileVideoThumbResponseModel> LoadAsync(string videoId)
         {
             using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
-                return await GetAsync_Impl(page, videoId);
+                return await LoadAsync_Impl(page, videoId);
             }
         }
 

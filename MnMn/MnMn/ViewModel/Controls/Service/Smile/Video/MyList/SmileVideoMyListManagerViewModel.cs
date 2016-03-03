@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             // 自身のマイリスト一覧
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-            var accountGroup = await mylist.GetAccountGroupAsync();
+            var accountGroup = await mylist.LoadAccountGroupAsync();
             if(SmileMyListUtility.IsSuccessResponse(accountGroup) && accountGroup.Groups.Any()) {
                 foreach(var group in accountGroup.Groups.OrderByDescending(g => RawValueUtility.ConvertInteger(g.SortOder))) {
                     var finder = new SmileVideoAccountMyListFinderViewModel(Mediation, group);
@@ -337,7 +337,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 // 完全一致検索
                 var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
                 var myListId = (string)outputValue;
-                var group = await mylist.GetGroupAsync(myListId);
+                var group = await mylist.LoadGroupAsync(myListId);
 
                 var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
 

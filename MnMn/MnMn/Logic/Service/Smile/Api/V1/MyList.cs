@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         /// とりあえずマイリスト内のアイテムを取得する。
         /// </summary>
         /// <returns></returns>
-        public async Task<RawSmileAccountMyListDefaultModel> GetAccountDefaultAsync()
+        public async Task<RawSmileAccountMyListDefaultModel> LoadAccountDefaultAsync()
         {
             await LoginIfNotLoginAsync();
 
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         /// 自身のマイリスト一覧を取得する。
         /// </summary>
         /// <returns></returns>
-        public async Task<RawSmileAccountMyListGroupModel> GetAccountGroupAsync()
+        public async Task<RawSmileAccountMyListGroupModel> LoadAccountGroupAsync()
         {
             await LoginIfNotLoginAsync();
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         /// </summary>
         /// <param name="myListId"></param>
         /// <returns></returns>
-        public async Task<FeedSmileVideoModel> GetGroupAsync(string myListId)
+        public async Task<FeedSmileVideoModel> LoadGroupAsync(string myListId)
         {
             await LoginIfNotLoginAsync();
 
@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        async Task<string> GetAccountGroupToken(string myListId)
+        async Task<string> LoadAccountGroupToken(string myListId)
         {
             await LoginIfNotLoginAsync();
 
@@ -255,7 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            var token = await GetAccountGroupToken(null);
+            var token = await LoadAccountGroupToken(null);
             if(token == null) {
                 Debug.WriteLine("group token is null");
                 return new SmileMyListResultModel(SmileMyListResult.Failure);
@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            var token = await GetAccountGroupToken(myListId);
+            var token = await LoadAccountGroupToken(myListId);
             if(token == null) {
                 Debug.WriteLine("group token is null");
                 return new SmileMyListResultModel(SmileMyListResult.Failure);
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            var token = await GetAccountGroupToken(myListId);
+            var token = await LoadAccountGroupToken(myListId);
             if(token == null) {
                 Debug.WriteLine("group token is null");
                 return new SmileMyListResultModel(SmileMyListResult.Failure);

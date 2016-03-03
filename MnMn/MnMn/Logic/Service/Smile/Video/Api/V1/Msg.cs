@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoMsgPacketModel Load(Stream stream)
+        public static RawSmileVideoMsgPacketModel ConvertFromRawData(Stream stream)
         {
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketModel>(stream);
         }
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawMessage.Result))) {
-                    var result = Load(stream);
+                    var result = ConvertFromRawData(stream);
                     return result;
                 }
             }

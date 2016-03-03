@@ -610,13 +610,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var fileInfo = new FileInfo(cachedThumbFilePath);
                 if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
                     using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        rawGetthumbinfo = Getthumbinfo.Load(stream);
+                        rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
                     }
                 }
             }
             if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
                 var getthumbinfo = new Getthumbinfo(mediation);
-                rawGetthumbinfo = await getthumbinfo.GetAsync(videoId);
+                rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
             }
 
             // キャッシュ構築

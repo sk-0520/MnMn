@@ -85,8 +85,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         async void getthumbinfo()
         {
             var gt = new Getthumbinfo(new Mediation());
-            var a = await gt.GetAsync("sm9");
-            var b = await gt.GetAsync("sm9");
+            var a = await gt.LoadAsync("sm9");
+            var b = await gt.LoadAsync("sm9");
         }
 
         void mappng()
@@ -124,8 +124,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             var mylist = new MyList(mediation);
             
-            var def = await mylist.GetAccountDefaultAsync();
-            var grp = await mylist.GetAccountGroupAsync();
+            var def = await mylist.LoadAccountDefaultAsync();
+            var grp = await mylist.LoadAccountGroupAsync();
         }
 
     }

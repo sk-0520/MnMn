@@ -51,12 +51,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoGetflvModel Load(string rawWwwFormData)
+        public static RawSmileVideoGetflvModel ConvertFromRawData(string rawWwwFormData)
         {
             return RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(rawWwwFormData);
         }
 
-        async Task<RawSmileVideoGetflvModel> GetScrapingAsync(Uri uri)
+        async Task<RawSmileVideoGetflvModel> LoadScrapingAsync(Uri uri)
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
@@ -75,19 +75,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var flvInfo = flashvars.SelectToken("flvInfo");
                 var rawFlvText = flvInfo.ToString();
                 var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
-                var result = Load(convertedFlvText);
+                var result = ConvertFromRawData(convertedFlvText);
 
                 return result;
             }
         }
 
-        async Task<RawSmileVideoGetflvModel> GetNormalAsync(Uri uri)
+        async Task<RawSmileVideoGetflvModel> LoadNormalAsync(Uri uri)
         {
             using(var page = new PageLoader(Mediation, SessionBase, SmileVideoMediationKey.getflvNormal, ServiceType.SmileVideo)) {
                 page.ForceUri = uri;
 
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
-                var result = Load(response.Result);
+                var result = ConvertFromRawData(response.Result);
                 return result;
             }
         }
@@ -103,12 +103,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<RawSmileVideoGetflvModel> GetAsync(string videoId, Uri watchUri)
+        public async Task<RawSmileVideoGetflvModel> LoadAsync(string videoId, Uri watchUri)
         {
             await LoginIfNotLoginAsync();
 
             if(IsScrapingPattern(videoId)) {
-                return await GetScrapingAsync(watchUri);
+                return await LoadScrapingAsync(watchUri);
             } else {
                 var map = new StringsModel() {
                     { "video-id", videoId },
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
                 var convertedUri = Mediation.ConvertUri(srcUri.Uri, Define.ServiceType.SmileVideo);
                 var uri = new Uri(convertedUri);
-                return await GetNormalAsync(uri);
+                return await LoadNormalAsync(uri);
             }
         }
 

@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
 
-            return mylist.GetGroupAsync(MyListId);
+            return mylist.LoadGroupAsync(MyListId);
         }
 
         #endregion

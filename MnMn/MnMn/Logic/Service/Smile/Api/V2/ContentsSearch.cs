@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
             : base(mediation)
         { }
 
+        [Obsolete]
         string ToContentsSearchServiceString(SmileContentsSearchService searchService)
         {
             var map = new Dictionary<SmileContentsSearchService, string>() {
@@ -53,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
             return map[searchService];
         }
 
+        [Obsolete]
         string ToSmileContentsSearchTypeString(SmileContentsSearchType searchType)
         {
             var map = new Dictionary<SmileContentsSearchType, string[]>() {
@@ -65,6 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
             return result;
         }
 
+        [Obsolete]
         string ToOrderByString(OrderBy orderBy)
         {
             var map = new Dictionary<OrderBy, string>() {
@@ -75,6 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
             return map[orderBy];
         }
 
+        [Obsolete]
         string ToSmileContentsSearchFieldString(SmileContentsSearchField searchField)
         {
             var map = new Dictionary<SmileContentsSearchField, string>() {
@@ -96,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
             return map[searchField];
         }
 
-        public async Task<RawSmileContentsSearchModel> GetAsnc(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
+        public async Task<RawSmileContentsSearchModel> SearchAsync(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
@@ -116,10 +120,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
                 }
             }
         }
-        public Task<RawSmileContentsSearchModel> GetAsnc(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
+        [Obsolete]
+        public Task<RawSmileContentsSearchModel> SearchAsync(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
-            return GetAsnc(
+            return SearchAsync(
                 ToContentsSearchServiceString(searchService),
                 query,
                 ToSmileContentsSearchTypeString(searchType),

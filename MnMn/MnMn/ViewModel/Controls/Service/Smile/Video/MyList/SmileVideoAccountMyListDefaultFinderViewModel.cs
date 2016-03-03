@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
 
-            var defaultGroup = await myList.GetAccountDefaultAsync();
+            var defaultGroup = await myList.LoadAccountDefaultAsync();
 
             var feedModel = new FeedSmileVideoModel();
             //feedModel.Channel.Title = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName;
