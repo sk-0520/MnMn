@@ -45,12 +45,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoManagerViewModel: ManagerViewModelBase
     {
-        #region variable
-
-        SmileVideoCustomManagerViewModelBase _selectedManager;
-
-        #endregion
-
         public SmileVideoManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -100,20 +94,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             MyListManager,
             HistoryManager,
         };
-
-        public SmileVideoCustomManagerViewModelBase SelectedManager
-        {
-            get { return this._selectedManager; }
-            set {
-                if(SetVariableValue(ref this._selectedManager, value)) {
-                    foreach(var item in ManagerItems.Where(i => i.Visible)) {
-                        item.Visible = false;
-                    }
-                    SelectedManager.Visible = true;
-                }
-            }
-        }
-
 
         #endregion
 

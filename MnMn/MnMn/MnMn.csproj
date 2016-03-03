@@ -248,6 +248,9 @@
     <Compile Include="View\Controls\Navigationbar.xaml.cs">
       <DependentUpon>Navigationbar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Service\Smile\SmileManager.xaml.cs">
+      <DependentUpon>SmileManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoCommentElement.xaml.cs">
       <DependentUpon>SmileVideoCommentElement.xaml</DependentUpon>
     </Compile>
@@ -287,15 +290,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\Service\Smile\SmileManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoCommentElement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoHistoryManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -404,9 +407,6 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoInformationViewModel.cs" />
     <Compile Include="ViewModel\SessionViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\TreeNodeItemViewModelBase.cs" />
-    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoManager.xaml.cs">
-      <DependentUpon>SmileVideoManager.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoRankingContext.xaml.cs">
       <DependentUpon>SmileVideoRankingContext.xaml</DependentUpon>
     </Compile>

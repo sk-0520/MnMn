@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #region variable
 
         bool _visible;
+        ManagerViewModelBase _selectedManager;
 
         #endregion
 
@@ -40,6 +41,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #region property
 
         protected Mediation Mediation { get; set; }
+
+        public ManagerViewModelBase SelectedManager
+        {
+            get { return this._selectedManager; }
+            set {
+                var prevSelectedManager = this._selectedManager;
+                if(SetVariableValue(ref this._selectedManager, value)) {
+                    if(this._selectedManager != null) {
+                        this._selectedManager.ShowView();
+                    }
+                    if(prevSelectedManager != null) {
+                        prevSelectedManager.HideView();
+                    }
+                }
+            }
+        }
 
         public bool Visible
         {
