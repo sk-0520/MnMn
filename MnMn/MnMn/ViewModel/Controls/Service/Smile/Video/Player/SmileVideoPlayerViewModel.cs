@@ -69,6 +69,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using HTMLConverter;
 using System.Windows.Markup;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -892,26 +893,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             IsMakedDescription = true;
 
+            var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, VideoInformation.DescriptionHtml);
+#if DEBUG
+            var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
+            using(var s = File.CreateText(h)) {
+                s.Write(VideoInformation.DescriptionHtml);
+            }
+            foreach(var ext in new[] { "xml", "xaml" }) {
+                var x = Path.Combine(DownloadDirectory.FullName, $"description.{ext}");
+                using(var s = File.CreateText(x)) {
+                    s.Write(flowDocumentSource);
+                }
+            }
+#endif
+
             DocumentDescription.Dispatcher.Invoke(() => {
                 var document = DocumentDescription.Document;
 
                 document.Blocks.Clear();
-
-                var xamlFlowDocument = HtmlToXamlConverter.ConvertHtmlToXaml(VideoInformation.PageDescription, true);
-#if DEBUG
-                var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
-                using(var s = File.CreateText(h)) {
-                    s.Write(VideoInformation.PageDescription);
-                }
-                foreach(var ext in new[] {"xml","xaml" }) {
-                    var x = Path.Combine(DownloadDirectory.FullName, $"description.{ext}");
-                    using(var s = File.CreateText(x)) {
-                        s.Write(xamlFlowDocument);
-                    }
-                }
-#endif
-
-                using(var stringReader = new StringReader(xamlFlowDocument))
+                
+                using(var stringReader = new StringReader(flowDocumentSource))
                 using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
                     var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
                     document.Blocks.AddRange(flowDocument.Blocks.ToArray());
@@ -959,14 +960,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         Task<SmileMyListResultModel> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
-            var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
         Task<SmileMyListResultModel> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
-            var session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
+            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, VideoInformation.ThreadId, VideoInformation.PageVideoToken);
         }

@@ -151,6 +151,7 @@
     <Compile Include="IF\Service\Smile\Video\IScrapingPageHtmlToFeedApi.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
     <Compile Include="Logic\Downloader.cs" />
+    <Compile Include="Logic\Extensions\ICommunicationExtensions.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
@@ -166,9 +167,10 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
-    <Compile Include="Logic\Utility\MediationUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\SmileIdUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFinderLoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />

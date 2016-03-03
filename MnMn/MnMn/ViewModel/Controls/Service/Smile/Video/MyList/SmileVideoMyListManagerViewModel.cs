@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
@@ -60,8 +61,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public SmileVideoMyListManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            Session = MediationUtility.GetResultFromRequestResponse<SmileSessionViewModel>(Mediation, new RequestModel(RequestKind.Session, ServiceType.Smile));
-            MyList = MediationUtility.GetResultFromRequestResponse<SmileVideoMyListModel>(Mediation, new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
+            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);

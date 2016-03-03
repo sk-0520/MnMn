@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public string PageHtml { get; private set; }
 
-        public string PageDescription { get; private set; }
+        public string DescriptionHtml { get; private set; }
         public string PageVideoToken { get; private set; }
 
         public SmileVideoVideoInformationSource VideoInformationSource { get; private set; }
@@ -784,7 +784,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 document.LoadHtml(html);
                 //document.DocumentNode.SelectSingleNode("@")
                 var description = document.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                PageDescription = description.InnerHtml;
+                DescriptionHtml = description.InnerHtml;
 
                 var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
                 var flashvars = json.SelectToken("flashvars");

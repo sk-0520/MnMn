@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
@@ -124,6 +125,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             switch(inputKey) {
                 case SmileMediationKey.inputGetMyListId:
                     return ConvertValue_GetMyListId(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
+
+                case SmileMediationKey.inputIsScrapingVideoId:
+                    outputValue = SmileIdUtility.IsScrapingVideoId((string)inputValue);
+                    return true;
+
 
                 default:
                     outputValue = null;

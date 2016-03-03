@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service
             : base(mediation)
         {
             SessionServiceType = sessionServiceType;
-            SessionBase = MediationUtility.GetResultFromRequestResponse<SessionViewModelBase>(Mediation, new RequestModel(RequestKind.Session, SessionServiceType));
+            SessionBase = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, SessionServiceType));
         }
 
         #region property

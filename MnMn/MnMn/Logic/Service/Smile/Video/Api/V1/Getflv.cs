@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -92,10 +93,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public bool IsScrapingPattern(string videoId)
+        bool IsScrapingPattern(string videoId)
         {
             object resultIsWeb;
-            if(Mediation.ConvertValue(out resultIsWeb, typeof(bool), SmileVideoMediationKey.inputScrapingVideo, videoId, typeof(string), ServiceType.SmileVideo)) {
+            if(Mediation.ConvertValue(out resultIsWeb, typeof(bool), SmileMediationKey.inputIsScrapingVideoId, videoId, typeof(string), ServiceType.Smile)) {
                 var result = (bool)resultIsWeb;
                 return result;
             } else {

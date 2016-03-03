@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 This file is part of MnMn.
 
 MnMn is free software: you can redistribute it and/or modify
@@ -20,15 +19,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
 {
-    public static class MediationUtility
+    public static class ICommunicationExtensions
     {
-        public static TResult GetResultFromRequestResponse<TResult>(Mediation mediation, RequestModel request)
+        /// <summary>
+        /// ICommunication.RequestからRequestModel.Resultを取得する糖衣。
+        /// </summary>
+        /// <typeparam name="TResult">キャスト可能であること前提。</typeparam>
+        /// <param name="communication"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static TResult GetResultFromRequest<TResult>(this ICommunication communication, RequestModel request)
         {
-            var responce = mediation.Request(request);
+            var responce = communication.Request(request);
             var result = (TResult)responce.Result;
 
             return result;
