@@ -29,11 +29,13 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
 
@@ -230,17 +232,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileVideo);
 
-            var player = request.ViewModel as SmileVideoPlayerViewModel;
-            if(player != null) {
-                var window = new SmileVideoPlayerWindow() {
-                    DataContext = player,
-                };
-                return window;
+            if(request.ParameterIsViewModel) {
+                var player = request.Parameter as SmileVideoPlayerViewModel;
+                if(player != null) {
+                    var window = new SmileVideoPlayerWindow() {
+                        DataContext = player,
+                    };
+                    return window;
+                }
             } else {
-                var finder = request.ViewModel as SmileVideoSearchGroupViewModel;
+                var finder = request.Parameter as SmileVideoSearchParameterModel;
                 if(finder != null) {
-                    ManagerPack.SearchManager.LoadSearchAsync(finder).ConfigureAwait(false);
+                    ManagerPack.SearchManager.LoadSearchFromParameterAsync(finder).ConfigureAwait(false);
                     return ManagerPack.SearchManager;
+                } else {
+                    var mylist = request.Parameter as SmileVideoSearchMyListFinderViewModel;
                 }
             }
 

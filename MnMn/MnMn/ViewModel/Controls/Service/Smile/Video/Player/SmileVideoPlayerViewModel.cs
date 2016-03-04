@@ -71,6 +71,7 @@ using HTMLConverter;
 using System.Windows.Markup;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -439,18 +440,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         var tagViewModel = (SmileVideoTagViewModel)o;
 
-                        //var searchItemViewModel = new SmileVideoSearchGroupViewModel(Mediation, )
-                        //tagViewModel.TagName
-                        var searchSettingResponce = Mediation.Request(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.Search));
-                        var searchSettingResult = (SmileVideoSearchSettingResultModel)searchSettingResponce.Result;
-
-                        var searchDefineResponce = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
-                        var searchDefineResult = (SmileVideoSearchModel)searchDefineResponce.Result;
-
-                        var tagElement = searchDefineResult.Type.First(e => e.Extends.Any(w => w.Key == "tag" && RawValueUtility.ConvertBoolean(w.Value)));
-
-                        var serchViewModel = new SmileVideoSearchGroupViewModel(Mediation, searchDefineResult, searchSettingResult.Method, searchSettingResult.Sort, tagElement, tagViewModel.TagName);
-                        Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, serchViewModel, ShowViewState.Foreground));
+                        SearchTag(tagViewModel);
                     }
                 );
             }
@@ -983,6 +973,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, VideoInformation.ThreadId, VideoInformation.PageVideoToken);
         }
 
+        void SearchTag(SmileVideoTagViewModel tagViewModel)
+        {
+            var parameter = new SmileVideoSearchParameterModel() {
+                MethodIsTag = true,
+                Query = tagViewModel.TagName,
+            };
+
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+        }
+
+        void OpenWebLink(string link)
+        {
+            try {
+                Process.Start(link);
+            } catch(Exception ex) {
+                Mediation.Logger.Warning(ex);
+            }
+        }
+
+        void OpenVideoLink(string videoId)
+        {
+            throw new NotImplementedException();
+        }
+
+        void OpenMyListLink(string myListId)
+        {
+            //var mylist = new SmileVideoSearchMyListFinderViewModel(Mediation, myListId)
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1140,7 +1159,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                throw new NotImplementedException();
+                return CreateCommand(
+                    o => {
+                        var link = o as string;
+                        OpenWebLink(link);
+                    }
+                );
             }
         }
 
@@ -1148,7 +1172,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                throw new NotImplementedException();
+                return CreateCommand(
+                    o => {
+                        var videoId = o as string;
+                        OpenVideoLink(videoId);
+                    }
+                );
             }
         }
 
@@ -1156,12 +1185,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                throw new NotImplementedException();
+                return CreateCommand(
+                    o => {
+                        var myListId = o as string;
+                        OpenMyListLink(myListId);
+                    }
+                );
             }
         }
 
         #endregion
 
+        #region event
 
         void View_Loaded(object sender, RoutedEventArgs e)
         {
@@ -1308,8 +1343,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 default:
                     break;
             }
-
         }
 
+        #endregion
     }
 }

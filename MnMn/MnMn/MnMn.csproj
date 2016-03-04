@@ -164,6 +164,7 @@
     <Compile Include="IF\Control\ICheckable.cs" />
     <Compile Include="IF\Control\ISetView.cs" />
     <Compile Include="IF\ILoadPageHtml.cs" />
+    <Compile Include="IF\Request\IShowRequestParameter.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoScrapingPageHtmlToFeedApi.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoDescription.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Model\MappingsModel.cs" />
     <Compile Include="Model\Request\CustomSettingRequestModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\SmileCustomSettingRequestModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoSearchParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoCustomSettingRequestModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoAccountMyListSettingResultModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoSearchSettingResultModel.cs" />
@@ -484,6 +486,7 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
+    <Folder Include="Model\Service\Smile\Video\ShowRequest\" />
     <Folder Include="View\Resources\Service\Smile\Video\" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
@@ -129,9 +131,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             return LoadSearchAsync(nowMethod, nowSort, nowType, nowQuery);
         }
 
-        public Task LoadSearchAsync(SmileVideoSearchGroupViewModel searchGroup)
+        public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
         {
-            return LoadSearchAsync(searchGroup.SelectedMethod, searchGroup.SelectedSort, searchGroup.Type, searchGroup.Query);
+            var key = parameter.MethodIsTag ? "tag" : "keyword";
+            var tagElement = SearchModel.Type.First(e => e.Extends.Any(w => w.Key == key && RawValueUtility.ConvertBoolean(w.Value)));
+
+            var nowMethod = SelectedMethod;
+            var nowSort = SelectedSort;
+            var nowType = SelectedType;
+
+            return LoadSearchAsync(nowMethod, nowSort, nowType, parameter.Query);
         }
 
         Task LoadSearchAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)

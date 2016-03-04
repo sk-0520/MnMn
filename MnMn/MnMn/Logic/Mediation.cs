@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             var uiElement = result as FrameworkElement;
             if(uiElement != null) {
-                CastUtility.AsAction<ISetView>(request.ViewModel, vm => {
+                CastUtility.AsAction<ISetView>(request.Parameter, vm => {
                     vm.SetView(uiElement);
                 });
                 var window = result as Window;

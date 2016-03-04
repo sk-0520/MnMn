@@ -27,15 +27,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
     public abstract class ViewRequestModelBase: RequestModel
     {
-        public ViewRequestModelBase(RequestKind requestKind, ServiceType serviceType, ViewModelBase viewModel)
+        public ViewRequestModelBase(RequestKind requestKind, ServiceType serviceType, object parameter)
             :base(requestKind, serviceType)
         {
-            ViewModel = viewModel;
+            Parameter = parameter;
         }
 
         #region property
 
-        public ViewModelBase ViewModel { get; }
+        public object Parameter { get; }
 
         #endregion
     }

@@ -49,6 +49,9 @@
 		<element key="title,description,tags">
 			<words>
 				<word key="ja-jp" value="キーワード" />
+			<extends>
+				<extend key="keyword" value="true" />
+			</extends>
 			</words>
 		</element>
 	</type>

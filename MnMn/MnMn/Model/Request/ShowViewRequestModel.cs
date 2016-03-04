@@ -22,20 +22,35 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
     public class ShowViewRequestModel: ViewRequestModelBase
     {
-        public ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, ViewModelBase viewModel, ShowViewState showViewState)
-            :base(requestKind, serviceType, viewModel)
+        ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, object parameter, ShowViewState showViewState)
+            : base(requestKind, serviceType, parameter)
         {
             ShowViewState = showViewState;
+        }
+
+        public ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, ViewModelBase viewModelParameter, ShowViewState showViewState)
+            : base(requestKind, serviceType, viewModelParameter)
+        {
+            ParameterIsViewModel = true;
+        }
+
+        public ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, IShowRequestParameter showRequestParameter, ShowViewState showViewState)
+            : base(requestKind, serviceType, showRequestParameter)
+        {
+            ParameterIsViewModel = false;
         }
 
         #region property
 
         public ShowViewState ShowViewState { get; }
+
+        public bool ParameterIsViewModel { get; }
 
         #endregion
     }
