@@ -404,6 +404,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             ClearSearchUserMyListPage();
             SearchUserMyList.InitializeRange(new[] { finder });
+            if(SearchUserMyList.Any()) {
+                SelectedSearchFinder = SearchUserMyList.First();
+            }
         }
 
         async Task SearchUserMyListFromKeywordAsync(string query)
