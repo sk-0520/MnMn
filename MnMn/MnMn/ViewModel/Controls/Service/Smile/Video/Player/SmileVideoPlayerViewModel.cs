@@ -993,9 +993,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void OpenVideoLink(string videoId)
+        Task OpenVideoLinkAsync(string videoId)
         {
-            throw new NotImplementedException();
+            var cancel = new CancellationTokenSource();
+            return SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(task => {
+                var videoInformation = task.Result;
+                return LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+            }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         void OpenMyListLink(string myListId)
@@ -1181,7 +1185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var videoId = o as string;
-                        OpenVideoLink(videoId);
+                        OpenVideoLinkAsync(videoId).ConfigureAwait(false);
                     }
                 );
             }
