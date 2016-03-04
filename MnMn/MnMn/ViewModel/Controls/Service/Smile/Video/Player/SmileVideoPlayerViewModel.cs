@@ -72,6 +72,7 @@ using System.Windows.Markup;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -999,7 +1000,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void OpenMyListLink(string myListId)
         {
-            //var mylist = new SmileVideoSearchMyListFinderViewModel(Mediation, myListId)
+            var parameter = new SmileVideoSearchMyListParameterModel() {
+                Query = myListId,
+                QueryType = SmileVideoSearchMyListQueryType.MyListId,
+            };
+
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
         }
 
         #endregion

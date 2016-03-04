@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.IF.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
@@ -38,12 +37,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
             : base(requestKind, serviceType, viewModelParameter)
         {
             ParameterIsViewModel = true;
+            ViewModel = viewModelParameter;
         }
 
-        public ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, IShowRequestParameter showRequestParameter, ShowViewState showViewState)
+        public ShowViewRequestModel(RequestKind requestKind, ServiceType serviceType, ShowParameterModelBase showRequestParameter, ShowViewState showViewState)
             : base(requestKind, serviceType, showRequestParameter)
         {
             ParameterIsViewModel = false;
+            ShowRequestParameter = showRequestParameter;
         }
 
         #region property
@@ -51,6 +52,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
         public ShowViewState ShowViewState { get; }
 
         public bool ParameterIsViewModel { get; }
+
+        public ViewModelBase ViewModel { get;}
+        public ShowParameterModelBase ShowRequestParameter { get; }
 
         #endregion
     }

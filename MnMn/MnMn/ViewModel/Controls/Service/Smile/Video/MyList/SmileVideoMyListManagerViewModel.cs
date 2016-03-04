@@ -21,6 +21,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -29,6 +31,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
@@ -37,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -50,6 +55,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         SmileVideoMyListFinderViewModelBase _selectedLocalFinder;
         SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
+
+        bool _isSelectedAccount;
+        bool _isSelectedSearch;
+        bool _isSelectedLocal;
+        bool _isSelectedHistory;
 
         SmileVideoMyListFinderViewModelBase _selectedCurrentFinder;
 
@@ -88,6 +98,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView HistoryUserMyListItems { get; }
+
+        public bool IsSelectedAccount
+        {
+            get { return this._isSelectedAccount; }
+            set { SetVariableValue(ref this._isSelectedAccount, value); }
+        }
+        public bool IsSelectedSearch
+        {
+            get { return this._isSelectedSearch; }
+            set { SetVariableValue(ref this._isSelectedSearch, value); }
+        }
+        public bool IsSelectedLocal
+        {
+            get { return this._isSelectedLocal; }
+            set { SetVariableValue(ref this._isSelectedLocal, value); }
+        }
+        public bool IsSelectedHistory
+        {
+            get { return this._isSelectedHistory; }
+            set { SetVariableValue(ref this._isSelectedHistory, value); }
+        }
 
         public SmileVideoAccountMyListFinderViewModel SelectedAccountFinder
         {
@@ -279,7 +310,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             return mylist;
         }
 
-        public async Task LoadAccountMyListAsync(string firstSelectedMyListId)
+        void SelecteTabItem(string name)
+        {
+            //SelectedTabItem
+        }
+
+        async Task LoadAccountMyListAsync(string firstSelectedMyListId)
         {
             var list = new List<SmileVideoAccountMyListFinderViewModel>();
 
@@ -331,43 +367,67 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             await LoadAccountMyListAsync(null);
         }
 
-        public async Task SearchUserMyListAsync(string inputSearchMyList)
+        public Task SearchUserMyListFromParameterAsync(SmileVideoSearchMyListParameterModel parameter)
+        {
+            switch(parameter.QueryType) {
+                case SmileVideoSearchMyListQueryType.MyListId:
+                    return SearchUserMyListFromIdAsync(parameter.Query);
+
+                case SmileVideoSearchMyListQueryType.Keyword:
+                    return SearchUserMyListFromKeywordAsync(parameter.Query);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        Task SearchUserMyListAsync(string inputSearchMyList)
         {
             object outputValue;
             if(Mediation.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, inputSearchMyList, inputSearchMyList.GetType(), ServiceType.Smile)) {
                 // 完全一致検索
-                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
                 var myListId = (string)outputValue;
-                var group = await mylist.LoadGroupAsync(myListId);
-
-                var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
-
-                ClearSearchUserMyListPage();
-                SearchUserMyList.InitializeRange(new[] { finder });
+                return SearchUserMyListFromIdAsync(myListId);
             } else {
                 // 何かしら検索
-                var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-                var finders = await mylist.SearchPage(inputSearchMyList, 1);
-                if(finders.Count > 0) {
-                    var top = finders.First();
-                    var pageCount = top.TotalItemCount / top.PageItemCount;
-                    var list = Enumerable
-                        .Range(1, pageCount)
-                        .Select(i => new SmileVideoMyListFinderPageViewModel(Mediation, i+1, inputSearchMyList))
-                        .ToList()
-                    ;
-                    list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediation, finders, inputSearchMyList));
-                    var pages = list
-                        .Select((vm, i) => new PageViewModel<SmileVideoMyListFinderPageViewModel>(vm, i + 1))
-                    ;
-                    SearchItems.InitializeRange(pages);
-                    SearchUserMyList.InitializeRange(finders);
-                    SelectedPage = SearchItems.First();
-                } else {
-                    ClearSearchUserMyListPage();
-                }
+                return SearchUserMyListFromKeywordAsync(inputSearchMyList);
             }
 
+        }
+
+        async Task SearchUserMyListFromIdAsync(string myListId)
+        {
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var group = await mylist.LoadGroupAsync(myListId);
+
+            var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
+
+            ClearSearchUserMyListPage();
+            SearchUserMyList.InitializeRange(new[] { finder });
+        }
+
+        async Task SearchUserMyListFromKeywordAsync(string query)
+        {
+            var mylist = GetMyListApi();
+            var finders = await mylist.SearchPage(query, 1);
+            if(finders.Count > 0) {
+                var top = finders.First();
+                var pageCount = top.TotalItemCount / top.PageItemCount;
+                var list = Enumerable
+                    .Range(1, pageCount)
+                    .Select(i => new SmileVideoMyListFinderPageViewModel(Mediation, i + 1, query))
+                    .ToList()
+                ;
+                list.Insert(0, new SmileVideoMyListFinderPageViewModel(Mediation, finders, query));
+                var pages = list
+                    .Select((vm, i) => new PageViewModel<SmileVideoMyListFinderPageViewModel>(vm, i + 1))
+                ;
+                SearchItems.InitializeRange(pages);
+                SearchUserMyList.InitializeRange(finders);
+                SelectedPage = SearchItems.First();
+            } else {
+                ClearSearchUserMyListPage();
+            }
         }
 
         async Task SaveEditMyListAsync(SmileVideoAccountMyListFinderViewModel myListGroup)

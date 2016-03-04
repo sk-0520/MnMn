@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -233,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileVideo);
 
             if(request.ParameterIsViewModel) {
-                var player = request.Parameter as SmileVideoPlayerViewModel;
+                var player = request.ViewModel as SmileVideoPlayerViewModel;
                 if(player != null) {
                     var window = new SmileVideoPlayerWindow() {
                         DataContext = player,
@@ -241,12 +242,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return window;
                 }
             } else {
-                var finder = request.Parameter as SmileVideoSearchParameterModel;
+                var finder = request.ShowRequestParameter as SmileVideoSearchParameterModel;
                 if(finder != null) {
                     ManagerPack.SearchManager.LoadSearchFromParameterAsync(finder).ConfigureAwait(false);
                     return ManagerPack.SearchManager;
                 } else {
-                    var mylist = request.Parameter as SmileVideoSearchMyListFinderViewModel;
+                    var mylist = request.ShowRequestParameter as SmileVideoSearchMyListParameterModel;
+                    if(mylist != null) {
+                        ManagerPack.MyListManager.SearchUserMyListFromParameterAsync(mylist).ConfigureAwait(false);
+                        ManagerPack.MyListManager.IsSelectedAccount = false;
+                        ManagerPack.MyListManager.IsSelectedLocal = false;
+                        ManagerPack.MyListManager.IsSelectedHistory = false;
+                        ManagerPack.MyListManager.IsSelectedSearch = true;
+                        return ManagerPack.MyListManager;
+                    }
                 }
             }
 

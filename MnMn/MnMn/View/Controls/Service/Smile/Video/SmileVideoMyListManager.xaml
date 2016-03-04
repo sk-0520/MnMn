@@ -93,8 +93,9 @@
     </Grid.ColumnDefinitions>
 
     <Grid Grid.Column="0">
+      <!-- 各データコンテキストは選択用で下位はUserControlのデータコンテキストを参照する -->
       <TabControl>
-        <TabItem Header="account">
+        <TabItem x:Name="viewAccount" Header="account" IsSelected="{Binding IsSelectedAccount}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
@@ -161,7 +162,7 @@
           </DockPanel>
         </TabItem>
 
-        <TabItem Header="search">
+        <TabItem x:Name="viewSearch" Header="search" IsSelected="{Binding IsSelectedSearch}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <TextBox Text="{Binding InputSearchMyList}" />
@@ -193,10 +194,9 @@
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedSearchFinder}" ItemsSource="{Binding SearchUserMyListItems}" />
 
           </DockPanel>
-
         </TabItem>
 
-        <TabItem Header="local">
+        <TabItem x:Name="viewLocal" Header="local" IsSelected="{Binding IsSelectedLocal}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <Button Command="{Binding LoadLocalUserMyListCommand}">load</Button>
@@ -206,7 +206,7 @@
           </DockPanel>
         </TabItem>
 
-        <TabItem Header="hist">
+        <TabItem x:Name="viewHistory" Header="hist" IsSelected="{Binding IsSelectedHistory}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
