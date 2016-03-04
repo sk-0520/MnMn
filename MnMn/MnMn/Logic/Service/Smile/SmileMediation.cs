@@ -95,9 +95,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     outputValue = SmileIdUtility.IsScrapingVideoId((string)inputValue);
                     return true;
 
-                case SmileMediationKey.inputIsVideoId:
-                    outputValue = SmileIdUtility.IsVideoId((string)inputValue);
-                    return true;
+                case SmileMediationKey.inputGetVideoId: {
+                        var s = SmileIdUtility.GetVideoId(inputValue as string);
+                        outputValue = s;
+                        return outputValue != null;
+                    }
 
                 case SmileMediationKey.inputGetMyListId: {
                         var s = SmileIdUtility.GetMyListId(inputValue as string);

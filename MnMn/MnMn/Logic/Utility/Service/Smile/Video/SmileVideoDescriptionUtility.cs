@@ -22,6 +22,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
 using HTMLConverter;
 
@@ -39,9 +41,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         #endregion
 
-        static string MakeLink(string key, string uri, string text)
+        static string MakeLink(string key, string link, string text)
         {
-            var parameter = $"{key}:{uri}";
+            var parameter = $"{key}:{link}";
             var linkElementSource = $@"
                 <Hyperlink CommandParameter='{parameter}'>
                     <TextBlock Text='{text}' />
@@ -95,9 +97,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return replacedSource;
         }
 
+        static string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)
+        {
+            var regTarget = new Regex(
+                @"
+                    (?<OPEN>
+                        <Run>
+                    )
+                        (?<TARGET>
+                            .+?
+                        )
+                    (?<CLOSE>
+                        </Run>
+                    )
+                ",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+           );
+
+            var replacedSource = regTarget.Replace(flowDocumentSource, func);
+
+            return replacedSource;
+        }
+
         static string ConvertLinkFromMyList(IConvertCompatibility convertCompatibility, string flowDocumentSource)
         {
-            return null;
+            var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
+                var target = m.Groups["TARGET"].Value;
+                object outputValue;
+                if(convertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, target, typeof(string), ServiceType.Smile)) {
+                    var link = (string)outputValue;
+                    return MakeLink(linkKeyMyList, link, target);
+                } else {
+                    return m.Groups[0].Value;
+                }
+            });
+
+            return replacedSource;
         }
 
         /// <summary>
@@ -109,9 +144,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             var flowDocumentSource = HtmlToXamlConverter.ConvertHtmlToXaml(htmlSource, true);
 
-            flowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
+            var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
+            convertedFlowDocumentSource = ConvertLinkFromMyList(convertCompatibility, convertedFlowDocumentSource);
 
-            return flowDocumentSource;
+
+            return convertedFlowDocumentSource;
         }
     }
 }

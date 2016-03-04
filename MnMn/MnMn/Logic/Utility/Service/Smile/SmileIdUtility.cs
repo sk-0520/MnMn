@@ -39,14 +39,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
         }
 
-        public static object IsVideoId(string inputValue)
+        /// <summary>
+        /// 文字列中から動画IDを取得する。
+        /// </summary>
+        /// <param name="inputValue"></param>
+        /// <returns>null: とれんかった</returns>
+        public static string GetVideoId(string inputValue)
         {
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(inputValue)) {
+                return null;
+            }
+
+            var regFormat = new Regex(
+                $@"
+                    (
+                        watch
+                        \/
+                    )?
+                    (?<VIDEO_ID>
+                        \w*\d+
+                    )
+                    \s*
+                    $
+                ",
+                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
+            );
+            var match = regFormat.Match(inputValue);
+            if(match.Success) {
+                return match.Groups["VIDEO_ID"].Value;
+            } else {
+                return null;
+            }
         }
 
-        public static string GetMyListId(string s)
+        /// <summary>
+        /// 文字列中からマイリストIDを取得する。
+        /// </summary>
+        /// <param name="inputValue"></param>
+        /// <returns>null: とれんかった</returns>
+        public static string GetMyListId(string inputValue)
         {
-            if(string.IsNullOrWhiteSpace(s)) {
+            if(string.IsNullOrWhiteSpace(inputValue)) {
                 return null;
             }
 
@@ -55,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                     (
                         mylist
                         \/
-                    )?
+                    )
                     (?<MYLIST_ID>
                         \d+
                     )
@@ -64,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 ",
                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
-            var match = regFormat.Match(s);
+            var match = regFormat.Match(inputValue);
             if(match.Success) {
                 return match.Groups["MYLIST_ID"].Value;
             } else {

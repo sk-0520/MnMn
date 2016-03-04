@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string mylistSearch = "smile-video-mylist-search";
 
         public const string inputIsScrapingVideoId = "convert-is-scraping-video-id";
-        public const string inputIsVideoId = "convert-is-video-id";
+        public const string inputGetVideoId = "convert-get-video-id";
         public const string inputGetMyListId = "convert-get-mylist-id";
     }
 }
