@@ -80,7 +80,7 @@
         <ColumnDefinition Width="3*" />
       </Grid.ColumnDefinitions>
 
-      <vlc_wpf:VlcPlayer x:Name="player" />
+      <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing" />
 
       <!--<Border BorderBrush="Lime" BorderThickness="1"  Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">-->
       <Viewbox ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">

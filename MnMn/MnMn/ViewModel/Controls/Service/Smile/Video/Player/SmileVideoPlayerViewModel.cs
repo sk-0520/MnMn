@@ -385,7 +385,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         switch(PlayerState) {
                             case PlayerState.Stop:
-                                Player.Play();
+                                if(Player.State != xZune.Vlc.Interop.Media.MediaState.Stopped) {
+                                    Player.BeginStop(() => {
+                                        Player.Play();
+                                    });
+                                } else {
+                                    Player.Play();
+                                }
                                 return;
 
                             case PlayerState.Playing:
@@ -1257,30 +1263,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Stopped:
-                    if(IsBufferingStop) {
-                        Mediation.Logger.Debug("buffering wait");
-                        PlayerState = PlayerState.Pause;
-                        Player.Position = BufferingVideoPosition;
-                        foreach(var data in ShowingCommentList) {
-                            data.Clock.Controller.Pause();
-                        }
-                    } else {
-                        if(ReplayVideo && !UserOperationStop) {
-                            Mediation.Logger.Debug("replay");
-                            VideoPosition = 0;
-                            PrevPlayedTime = TimeSpan.Zero;
-                            ClearComment();
-                            Player.Play();
-                        } else {
-                            Mediation.Logger.Debug("stop");
-                            PlayerState = PlayerState.Stop;
-                            VideoPosition = 0;
-                            if(UserOperationStop) {
-                                ClearComment();
-                            }
-                            PrevPlayedTime = TimeSpan.Zero;
-                        }
-                    }
+                    Mediation.Logger.Debug("stop");
+                    PlayerState = PlayerState.Stop;
+                    VideoPosition = 0;
+                    ClearComment();
+                    PrevPlayedTime = TimeSpan.Zero;
                     break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Paused:
@@ -1295,6 +1282,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         // 終わってない
                         IsBufferingStop = true;
                         BufferingVideoPosition = VideoPosition;
+                    } else if(IsBufferingStop) {
+                        Mediation.Logger.Debug("buffering wait");
+                        PlayerState = PlayerState.Pause;
+                        Player.Position = BufferingVideoPosition;
+                        foreach(var data in ShowingCommentList) {
+                            data.Clock.Controller.Pause();
+                        }
+                    } else if(ReplayVideo && !UserOperationStop) {
+                        Mediation.Logger.Debug("replay");
+                        Player.BeginStop(() => {
+                            Player.Dispatcher.Invoke(() => {
+                                Player.Play();
+                            });
+                        });
+                    } else {
+                        //PlayerState = PlayerState.Stop;
+                        //VideoPosition = 0;
+                        //ClearComment();
+                        //PrevPlayedTime = TimeSpan.Zero;
+                        Player.BeginStop();
                     }
                     break;
 
