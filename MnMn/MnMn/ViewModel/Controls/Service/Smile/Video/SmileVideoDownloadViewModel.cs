@@ -581,7 +581,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Logger.Trace($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
 
             OnDownloading(sender, e);
-            e.Cancel = IsProcessCancel;
+            e.Cancel |= IsProcessCancel;
         }
 
         private void Downloader_DownloadingError(object sender, DownloadingErrorEventArgs e)

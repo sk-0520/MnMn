@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
@@ -36,6 +37,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         public static bool IsScrapingVideoId(string videoId)
         {
             return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static object IsVideoId(string inputValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string GetMyListId(string s)
+        {
+            if(string.IsNullOrWhiteSpace(s)) {
+                return null;
+            }
+
+            var regFormat = new Regex(
+                $@"
+                    (
+                        mylist
+                        \/
+                    )?
+                    (?<MYLIST_ID>
+                        \d+
+                    )
+                    \s*
+                    $
+                ",
+                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
+            );
+            var match = regFormat.Match(s);
+            if(match.Success) {
+                return match.Groups["MYLIST_ID"].Value;
+            } else {
+                return null;
+            }
         }
     }
 }

@@ -18,14 +18,88 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
 using HTMLConverter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    public static class SmileVideoDescriptionUtility
+    internal static class SmileVideoDescriptionUtility
     {
+        #region define
+
+        const string skipDomainPath = "schemas.microsoft.com/winfx/2006/xaml/presentation";
+
+        public const string linkKeyHttp = "http";
+        public const string linkKeyVideo = "video";
+        public const string linkKeyMyList = "mylist";
+
+        #endregion
+
+        static string MakeLink(string key, string uri, string text)
+        {
+            var parameter = $"{key}:{uri}";
+            var linkElementSource = $@"
+                <Hyperlink CommandParameter='{parameter}'>
+                    <TextBlock Text='{text}' />
+                </Hyperlink>
+            "
+                .SplitLines()
+                .Select(s => s.Trim())
+            ;
+
+            return string.Join(string.Empty, linkElementSource);
+        }
+
+        static string ConvertLinkFromPlainText(string flowDocumentSource)
+        {
+            var regLink = new Regex(
+                @"
+                (?<SCHEME>
+                    h?
+                    ttp
+                    s?
+                    ://
+                )
+                (?<DOMAIN_PATH>
+                    [
+                        \w \. \- \( \)
+                        / _ # $ % &
+                    ]*
+                )
+                ",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            );
+
+            var replacedSource = regLink.Replace(flowDocumentSource, m => {
+                var domainPath = m.Groups["DOMAIN_PATH"].Value;
+                if(domainPath.StartsWith(skipDomainPath)) {
+                    return m.Groups[0].Value;
+                }
+
+                var scheme = m.Groups["SCHEME"].Value;
+                if(scheme[0] != 'h') {
+                    scheme = "h" + scheme;
+                }
+
+                var linkUri = scheme + domainPath;
+
+                var linkElementSource = MakeLink(linkKeyHttp, linkUri, m.Groups[0].Value);
+
+                return linkElementSource;
+            });
+
+            return replacedSource;
+        }
+
+        static string ConvertLinkFromMyList(IConvertCompatibility convertCompatibility, string flowDocumentSource)
+        {
+            return null;
+        }
+
         /// <summary>
         /// 動画説明をそれっぽくXAMLの生データから変換。
         /// </summary>
@@ -33,8 +107,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <returns></returns>
         public static string ConvertFlowDocumentFromHtml(IConvertCompatibility convertCompatibility, string htmlSource)
         {
-            //convertCompatibility.ConvertValue
             var flowDocumentSource = HtmlToXamlConverter.ConvertHtmlToXaml(htmlSource, true);
+
+            flowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
+
             return flowDocumentSource;
         }
     }

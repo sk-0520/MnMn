@@ -88,47 +88,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             return new ResponseModel(request, Session);
         }
 
-        bool ConvertValue_GetMyListId(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
-        {
-            var s = inputValue as string;
-            if(string.IsNullOrWhiteSpace(s)) {
-                outputValue = null;
-                return false;
-            }
-
-            var regFormat = new Regex(
-                $@"
-                    (
-                        mylist
-                        \/
-                    )?
-                    (?<MYLIST_ID>
-                        \d+
-                    )
-                    \s*
-                    $
-                ",
-                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
-            );
-            var match = regFormat.Match(s);
-            if(match.Success) {
-                outputValue = match.Groups["MYLIST_ID"].Value;
-                return true;
-            } else {
-                outputValue = null;
-                return false;
-            }
-        }
-
         bool ConvertValue_Impl(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             switch(inputKey) {
-                case SmileMediationKey.inputGetMyListId:
-                    return ConvertValue_GetMyListId(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
-
                 case SmileMediationKey.inputIsScrapingVideoId:
                     outputValue = SmileIdUtility.IsScrapingVideoId((string)inputValue);
                     return true;
+
+                case SmileMediationKey.inputIsVideoId:
+                    outputValue = SmileIdUtility.IsVideoId((string)inputValue);
+                    return true;
+
+                case SmileMediationKey.inputGetMyListId: {
+                        var s = SmileIdUtility.GetMyListId(inputValue as string);
+                        outputValue = s;
+                        return outputValue != null;
+                    }
+
 
 
                 default:
