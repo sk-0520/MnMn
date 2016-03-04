@@ -29,7 +29,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
 {
-    public class HotList: ApiBase, IScrapingPageHtmlToFeedApi
+    public class HotList: ApiBase, ISmileVideoScrapingPageHtmlToFeedApi
     {
         public HotList(Mediation mediation)
             : base(mediation)

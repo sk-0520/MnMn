@@ -32,7 +32,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
-    public class History: SessionApiBase<SmileSessionViewModel>, IScrapingPageHtmlToFeedApi
+    public class History: SessionApiBase<SmileSessionViewModel>, ISmileVideoScrapingPageHtmlToFeedApi
     {
         public History(Mediation mediation)
             : base(mediation, ServiceType.Smile)

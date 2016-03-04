@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
     /// <summary>
     /// ページをガリガリするAPI。
     /// </summary>
-    public interface IScrapingPageHtmlToFeedApi: ILoadPageHtml
+    public interface ISmileVideoScrapingPageHtmlToFeedApi: ILoadPageHtml
     {
         FeedSmileVideoModel ConvertFeedModelFromPageHtml(HtmlDocument htmlDocument);
     }

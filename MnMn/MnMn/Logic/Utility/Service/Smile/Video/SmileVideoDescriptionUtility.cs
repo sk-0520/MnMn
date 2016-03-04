@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
+using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using HTMLConverter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
@@ -35,17 +36,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         const string skipDomainPath = "schemas.microsoft.com/winfx/2006/xaml/presentation";
 
-        public const string linkKeyHttp = "http";
-        public const string linkKeyVideo = "video";
-        public const string linkKeyMyList = "mylist";
-
         #endregion
 
-        static string MakeLink(string key, string link, string text)
+        static string MakeLink(string link, string text, string commandName)
         {
-            var parameter = $"{key}:{link}";
             var linkElementSource = $@"
-                <Hyperlink CommandParameter='{parameter}'>
+                <Hyperlink Command='{{Binding {commandName}}}' CommandParameter='{link}'>
                     <TextBlock Text='{text}' />
                 </Hyperlink>
             "
@@ -89,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                 var linkUri = scheme + domainPath;
 
-                var linkElementSource = MakeLink(linkKeyHttp, linkUri, m.Groups[0].Value);
+                var linkElementSource = MakeLink(linkUri, m.Groups[0].Value, nameof(ISmileVideoDescription.OpenWebLinkCommand));
 
                 return linkElementSource;
             });
@@ -126,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 object outputValue;
                 if(convertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, target, typeof(string), ServiceType.Smile)) {
                     var link = (string)outputValue;
-                    return MakeLink(linkKeyMyList, link, target);
+                    return MakeLink(link, target, nameof(ISmileVideoDescription.OpenMyListLinkCommand));
                 } else {
                     return m.Groups[0].Value;
                 }
@@ -142,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 object outputValue;
                 if(convertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, target, typeof(string), ServiceType.Smile)) {
                     var link = (string)outputValue;
-                    return MakeLink(linkKeyVideo, link, target);
+                    return MakeLink(link, target, nameof(ISmileVideoDescription.OpenVideoLinkCommand));
                 } else {
                     return m.Groups[0].Value;
                 }

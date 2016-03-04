@@ -70,10 +70,11 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using HTMLConverter;
 using System.Windows.Markup;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription
     {
         #region define
 
@@ -531,6 +532,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void MoveVideoPostion(float targetPosition)
         {
+            Mediation.Logger.Debug(targetPosition.ToString());
+
             float setPosition = targetPosition;
 
             if(targetPosition <= 0) {
@@ -543,7 +546,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             ClearComment();
 
+            Mediation.Logger.Debug(setPosition.ToString());
             Player.Position = setPosition;
+            Mediation.Logger.Debug(Player.Position.ToString());
             PrevPlayedTime = Player.Time;
         }
 
@@ -1122,6 +1127,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         #endregion
+
+        #region ISmileVideoDescription
+
+        public ICommand OpenWebLinkCommand
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ICommand OpenVideoLinkCommand
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ICommand OpenMyListLinkCommand
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
 
         void View_Loaded(object sender, RoutedEventArgs e)
         {
