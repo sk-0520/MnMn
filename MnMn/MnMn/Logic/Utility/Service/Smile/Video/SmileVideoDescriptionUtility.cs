@@ -135,6 +135,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return replacedSource;
         }
 
+        static string ConvertLinkFromVideoId(IConvertCompatibility convertCompatibility, string flowDocumentSource)
+        {
+            var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
+                var target = m.Groups["TARGET"].Value;
+                object outputValue;
+                if(convertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, target, typeof(string), ServiceType.Smile)) {
+                    var link = (string)outputValue;
+                    return MakeLink(linkKeyVideo, link, target);
+                } else {
+                    return m.Groups[0].Value;
+                }
+            });
+
+            return replacedSource;
+        }
+
         /// <summary>
         /// 動画説明をそれっぽくXAMLの生データから変換。
         /// </summary>
@@ -146,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromMyList(convertCompatibility, convertedFlowDocumentSource);
-
+            convertedFlowDocumentSource = ConvertLinkFromVideoId(convertCompatibility, convertedFlowDocumentSource);
 
             return convertedFlowDocumentSource;
         }

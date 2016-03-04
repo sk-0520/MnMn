@@ -57,7 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                         \/
                     )?
                     (?<VIDEO_ID>
-                        \w*\d+
+                        (sm|nm|so) # 他にもあるっぽいけど別段困らない
+                        \d+
                     )
                     \s*
                     $
