@@ -38,6 +38,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
                 return CreateCommand(
                     o => {
                         RemoveCheckedItemsAsync().ContinueWith(_ => {
+                            var sleepTime = TimeSpan.FromMilliseconds(500);
+                            System.Threading.Thread.Sleep(sleepTime);
+                        }).ContinueWith(_ => {
                             return LoadDefaultCacheAsync();
                         }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
                     }

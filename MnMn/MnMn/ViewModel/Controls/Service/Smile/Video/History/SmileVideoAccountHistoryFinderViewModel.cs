@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -76,20 +77,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             });
         }
 
-        protected override async Task RemoveCheckedItemsAsync()
+        protected override Task RemoveCheckedItemsAsync()
         {
             var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
             if(!VideoInformationList.Any(v => v.IsChecked.GetValueOrDefault())) {
-                return;
+                return Task.CompletedTask;
             }
 
-            var removeItems = VideoInformationList
-                .Where(v => v.IsChecked.GetValueOrDefault())
-                .ToArray()
-            ;
-            foreach(var removeItem in removeItems) {
-                await history.RemoveVideoAsync(removeItem.VideoId);
-            }
+            return history.LoadHistoryAsync().ContinueWith(async task => {
+                var model = task.Result;
+                var removeItems = VideoInformationList
+                    .Where(v => v.IsChecked.GetValueOrDefault())
+                    .ToArray()
+                ;
+                foreach(var removeItem in removeItems) {
+                    var sleepTime = TimeSpan.FromMilliseconds(250);
+                    Thread.Sleep(sleepTime);
+                    await history.RemoveVideoAsync(model, removeItem.VideoId);
+                }
+            }, TaskContinuationOptions.AttachedToParent);
         }
 
         #endregion

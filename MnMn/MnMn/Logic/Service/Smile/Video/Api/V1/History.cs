@@ -61,11 +61,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task RemoveVideoAsync(string videoId)
+        public async Task RemoveVideoAsync(RawSmileVideoAccountHistoryModel model, string videoId)
         {
-            var model = await LoadHistoryAsync();
+            await LoginIfNotLoginAsync();
+
             // 動画IDと実際の視聴データのIDは異なる(公式とかとか)
             var map = model.History.ToDictionary(h => h.VideoId, h => h.ItemId);
+
             string targetId;
             if(map.TryGetValue(videoId, out targetId)) {
                 using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.historyRemove, ServiceType.SmileVideo)) {
