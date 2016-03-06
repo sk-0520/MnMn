@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -25,6 +26,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         string Key { get; }
         public string Title { get; }
+
+        #endregion
+
+        #region command
+
+        public ICommand RemoveCheckedItemsCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        RemoveCheckedItemsAsync().ContinueWith(_ => {
+                            return LoadDefaultCacheAsync();
+                        }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        protected abstract Task RemoveCheckedItemsAsync();
 
         #endregion
 

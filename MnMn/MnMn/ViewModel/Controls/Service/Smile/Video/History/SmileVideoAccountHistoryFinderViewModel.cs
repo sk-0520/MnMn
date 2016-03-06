@@ -76,6 +76,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             });
         }
 
+        protected override async Task RemoveCheckedItemsAsync()
+        {
+            var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
+            if(!VideoInformationList.Any(v => v.IsChecked.GetValueOrDefault())) {
+                return;
+            }
+
+            var removeItems = VideoInformationList
+                .Where(v => v.IsChecked.GetValueOrDefault())
+                .ToArray()
+            ;
+            foreach(var removeItem in removeItems) {
+                await history.RemoveVideoAsync(removeItem.VideoId);
+            }
+        }
+
         #endregion
     }
 }

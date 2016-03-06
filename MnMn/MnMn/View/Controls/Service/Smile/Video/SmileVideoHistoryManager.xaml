@@ -38,7 +38,13 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}" />
+          <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}">
+            <app_contrls_service_smile_video:SmileVideoFinderControl.FooterContent>
+              <Border>
+                <Button Command="{Binding RemoveCheckedItemsCommand}">チェック項目を削除</Button>
+              </Border>
+            </app_contrls_service_smile_video:SmileVideoFinderControl.FooterContent>
+          </app_contrls_service_smile_video:SmileVideoFinderControl>
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>

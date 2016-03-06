@@ -1,3 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <parameters>
+	<param key="video-history-remove">
+		<item key="mode" value="delete" />
+		<item key="video_id" value="${video-id}" />
+		<item key="token" value="${token}" />
+		<item key="innerPage" value="1" />
+	</param>
 </parameters>

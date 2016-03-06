@@ -20,5 +20,6 @@
 
 	<item key="video-history-page" uri="http://www.nicovideo.jp/my/history" />
 	<item key="video-history-api" uri="http://www.nicovideo.jp/api/videoviewhistory/list" />
+	<item key="video-history-remove" uri="http://www.nicovideo.jp/my/history" />
 </uri>
 

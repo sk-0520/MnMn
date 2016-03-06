@@ -49,13 +49,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             };
         }
 
-        #region
+        #region property
 
         SmileSessionViewModel Session { get; }
 
         //LoadPageHtmlDocument
         public SmileVideoAccountHistoryFinderViewModel AccountHistory { get; }
 
+        #endregion
+
+        #region command
         #endregion
 
         #region function
