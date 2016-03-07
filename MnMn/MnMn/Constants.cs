@@ -106,11 +106,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double CommentFontAlpha => 1;
         public static TimeSpan CommentShowTime => TimeSpan.FromSeconds(3);
 
-        public static int SmileVideoSearchCount => 100;
-        public static bool SmileVideoAutoPlay => true;
-        public static bool SmileVideoLoadVideoInformation => true;
-        public static int SmileVideoCommentShowCount => 0;
-        public static Color SmileVideoMyListFolderColor => Colors.SkyBlue;
+        public static int SmileVideoSearchCount { get; } = 100;
+        public static bool SmileVideoAutoPlay { get; } = true;
+        public static bool SmileVideoLoadVideoInformation { get; } = true;
+        public static int SmileVideoPlayerDisplayCommentCount { get; } = 0;
+        public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
+        public static bool SmileVideoPlayerShowDetailArea { get; } = true;
+        public static bool SmileVideoPlayerShowCommentArea { get; } = true;
+        public static bool PlayerVisibleComment { get; } = true;
 
         public static string CurrentLanguageCode => "ja-jp";
 

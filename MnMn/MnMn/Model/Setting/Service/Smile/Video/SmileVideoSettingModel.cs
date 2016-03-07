@@ -60,9 +60,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool LoadVideoInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
 
         /// <summary>
-        /// 画面上に一堂に表示するコメント数
+        /// 画面上に一度に表示するコメント数。
+        /// <para>0で全件。</para>
         /// </summary>
-        public int CommentShowCount { get; set; } = Constants.SmileVideoCommentShowCount;
+        public int PlayerDisplayCommentCount { get; set; } = Constants.SmileVideoPlayerDisplayCommentCount;
+
+        /// <summary>
+        /// プレイヤーの動画情報欄を表示するか。
+        /// </summary>
+        public bool PlayerShowDetailArea { get; set; } = Constants.SmileVideoPlayerShowDetailArea;
+
+        /// <summary>
+        /// プレイヤーのコメント欄を表示するか。
+        /// </summary>
+        public bool PlayerShowCommentArea { get; set; } = Constants.SmileVideoPlayerShowCommentArea;
+
+        public bool PlayerVisibleComment { get; set; } = Constants.PlayerVisibleComment;
 
         #endregion
     }

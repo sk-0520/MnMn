@@ -65,11 +65,11 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
-      <ToggleButton x:Name="switchComment" Content="comment" IsChecked="True" />
+      <ToggleButton x:Name="switchComment" Content="comment" IsChecked="{Binding PlayerShowCommentArea}" />
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom" >
-      <ToggleButton x:Name="switchInformation" Content="info" IsChecked="True" />
+      <ToggleButton x:Name="switchInformation" Content="info" IsChecked="{Binding PlayerShowDetailArea}" />
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
         <TextBlock>[</TextBlock>
         <TextBlock Text="{Binding PlayerState}"></TextBlock>
@@ -182,7 +182,7 @@
             >
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
-                  <ToggleButton Content="msg" />
+                  <ToggleButton Content="msg" IsChecked="{Binding PlayerVisibleComment}" />
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>

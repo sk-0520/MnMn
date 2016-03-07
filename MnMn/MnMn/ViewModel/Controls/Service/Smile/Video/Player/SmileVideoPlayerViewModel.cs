@@ -152,6 +152,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
+        public bool PlayerShowDetailArea
+        {
+            get { return Setting.PlayerShowDetailArea; }
+            set { SetPropertyValue(Setting, value); }
+        }
+
+        public bool PlayerShowCommentArea
+        {
+            get { return Setting.PlayerShowCommentArea; }
+            set { SetPropertyValue(Setting, value); }
+        }
+
+        public bool PlayerVisibleComment
+        {
+            get { return Setting.PlayerVisibleComment; }
+            set { SetPropertyValue(Setting, value); }
+        }
+        
+
         public string VideoId
         {
             get { return VideoInformation.VideoId; }
@@ -738,11 +757,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
                 }
                 // 超過分のコメントを破棄
-                if(0 < setting.CommentShowCount) {
+                if(0 < setting.PlayerDisplayCommentCount) {
                     var removeList = showingCommentList
                         .OrderBy(i => i.ViewModel.ElapsedTime)
                         .ThenBy(i => i.ViewModel.Number)
-                        .Take(showingCommentList.Count - setting.CommentShowCount)
+                        .Take(showingCommentList.Count - setting.PlayerDisplayCommentCount)
                         .ToArray()
                     ;
                     foreach(var item in removeList) {
