@@ -75,7 +75,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         public bool PlayerShowCommentArea { get; set; } = Constants.SmileVideoPlayerShowCommentArea;
 
+        /// <summary>
+        /// コメントを表示するか。
+        /// </summary>
         public bool PlayerVisibleComment { get; set; } = Constants.PlayerVisibleComment;
+
+        /// <summary>
+        /// リプレイ再生するか。
+        /// </summary>
+        public bool PlayerReplayVideo { get; set; } = false;
+
+        /// <summary>
+        /// 再生音声。
+        /// </summary>
+        public int PlayerVolume { get; set; } = 100;
+
+        /// <summary>
+        /// ミュート。
+        /// </summary>
+        public bool PlayerIsMute { get; set; } = false;
 
         #endregion
     }

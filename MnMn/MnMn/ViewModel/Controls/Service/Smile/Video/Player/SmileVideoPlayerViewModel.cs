@@ -107,12 +107,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region variable
 
+
         bool _canVideoPlay;
         bool _isVideoPlayng;
 
         float _videoPosition;
-        int _volume = 100;
-        bool _isMute = false;
+        float _prevStateChangedPosition = 0;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -128,8 +128,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         PlayerState _playerState;
         bool _isBufferingStop;
-
-        bool _replayVideo;
 
         IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
 
@@ -256,22 +254,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public int Volume
         {
-            get { return this._volume; }
+            get { return Setting.PlayerVolume; }
             set
             {
-                if(SetVariableValue(ref this._volume, value)) {
-                    Player.Volume = this._volume;
+                if(SetPropertyValue(Setting, value, nameof(Setting.PlayerVolume))) {
+                    Player.Volume = Setting.PlayerVolume;
                 }
             }
         }
 
         public bool IsMute
         {
-            get { return this._isMute; }
+            get { return Setting.PlayerIsMute; }
             set
             {
-                if(SetVariableValue(ref this._isMute, value)) {
-                    Player.IsMute = this._isMute;
+                if(SetPropertyValue(Setting, value, nameof(Setting.PlayerIsMute))) {
+                    Player.IsMute = Setting.PlayerIsMute;
                 }
             }
         }
@@ -359,8 +357,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool ReplayVideo
         {
-            get { return this._replayVideo; }
-            set { SetVariableValue(ref this._replayVideo, value); }
+            get { return Setting.PlayerReplayVideo; }
+            set { SetPropertyValue(Setting, value, nameof(Setting.PlayerReplayVideo)); }
         }
 
         public string UserNickname
@@ -534,6 +532,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void VideoPlay()
         {
+            Player.IsMute = IsMute;
+            Player.Volume = Volume;
             Player.Play();
         }
 
@@ -746,12 +746,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                     EventDisposer<EventHandler> ev = null;
                     data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
-                        commentParentElement.Children.Remove(element);
+                        if(element != null) {
+                            commentParentElement.Children.Remove(element);
+                        }
+                        element = null;
+
+                        if(ev != null) {
+                            ev.Dispose();
+                        }
+                        ev = null;
+
                         showingCommentList.Remove(data);
                         data.ViewModel.NowShowing = false;
-                        ev.Dispose();
-                        element = null;
-                        ev = null;
+
                     }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
 
                     element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
@@ -1313,6 +1320,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(e.Value == xZune.Vlc.Interop.Media.MediaState.Opening) {
                 return;
             }
+            if(this._prevStateChangedPosition == VideoPosition) {
+                return;
+            }
+            this._prevStateChangedPosition = VideoPosition;
 
             Mediation.Logger.Debug($"{e.Value}, pos: {VideoPosition}, time: {PlayTime} / {Player.Length}");
             switch(e.Value) {
