@@ -170,9 +170,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         async Task<SmileJsonResultModel> RequestPost(PageLoader page)
         {
             var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
-            var result = response.Result;
-            var json = JObject.Parse(result);
-            return new SmileJsonResultModel(json);
+            var resultJson = response.Result;
+            var json = JObject.Parse(resultJson);
+            var result = new SmileJsonResultModel(json);
+            Mediation.Logger.Debug(result.Status.ToString());
+            return result;
         }
 
         public async Task<SmileJsonResultModel> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
@@ -198,6 +200,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
                 return await RequestPost(page);
             }
+        }
+
+        public async Task<SmileJsonResultModel> RemoveAccountDefaultMyListFromVideo(IEnumerable<string> itemIdList)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await LoadAccountGroupToken(null);
+            if(token == null) {
+                return SmileJsonResultModel.FailureLoadToken();
+            }
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultVideoDelete, ServiceType.Smile)) {
+                var ms = new MultiStrings(itemIdList);
+                page.ReplaceRequestParameters["item-id"] = ms.ToString();
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestPost(page);
+            }
+
         }
 
         async Task<string> LoadAccountGroupToken(string myListId)

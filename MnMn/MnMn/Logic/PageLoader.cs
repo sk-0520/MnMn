@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }, 
                 uri => uri
             );
-            Debug.WriteLine($"{nameof(Uri)}-> {Uri}, {nameof(rawUri.RequestParameterType)} -> {rawUri.RequestParameterType}");
+            Mediation.Logger.Trace($"{nameof(Uri)}-> {Uri}, {nameof(rawUri.RequestParameterType)} -> {rawUri.RequestParameterType}");
         }
 
         protected void MakeRequestParameter()
@@ -169,7 +169,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(ParameterType) {
                 case ParameterType.Plain: {
                         var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
-                        var convertedContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)rawContent, ServiceType);
+                        var singleContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)rawContent, ServiceType);
+                        var multiContents = singleContent
+                            .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
+                            .ToArray()
+                        ;
+                        var hasMultiValue = multiContents.Any();
+                        if(hasMultiValue) {
+                            foreach(var key in multiContents.Select(p => p.Key)) {
+                                singleContent.Remove(key);
+                            }
+                        }
+                        var convertedContent = singleContent.ToList();
+                        if(hasMultiValue) {
+                            foreach(var pair in multiContents) {
+                                var ms = new MultiStrings(pair.Value);
+                                var pairs = ms.Values.Select(s => new KeyValuePair<string, string>(pair.Key, s));
+                                convertedContent.AddRange(pairs);
+                            }
+                        }
                         var content = new FormUrlEncodedContent(convertedContent);
                         PlainContent = content;
                     }
@@ -178,8 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ParameterType.Mapping: {
                         var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
                         var convertedContent = Mediation.ConvertRequestMapping(mappingResult.Result, ServiceType);
-                        Debug.WriteLine("request param");
-                        Debug.WriteLine(convertedContent);
+                        Mediation.Logger.Trace("request param", convertedContent);
                         MappingContent = new StringContent(convertedContent);
                         if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
                             MappingContent.Headers.ContentType = new MediaTypeHeaderValue(mappingResult.ContentType);

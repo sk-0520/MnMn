@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -233,6 +234,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public ICommand RemoveCheckedAccountMyListVideoCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(SelectedAccountFinder != null) {
+                            RemoveAccountMyListVideoAsync(SelectedAccountFinder).ConfigureAwait(false);
+                        }
+                    }
+                );
+            }
+        }
+
         public ICommand SearchUserMyListCommand
         {
             get
@@ -365,6 +380,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
             await myList.DeleteAccountGroupAsync(accountFinder.MyListId);
             await LoadAccountMyListAsync(null);
+        }
+
+        async Task RemoveAccountMyListVideoAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
+        {
+            var videoIdList = accountFinder.VideoInformationViewer
+                .Where(v => v.IsChecked.GetValueOrDefault())
+                .Select(v => v.VideoId)
+                .ToArray()
+            ;
+            if(videoIdList.Length == 0) {
+                return;
+            }
+            var myList = GetMyListApi();
+            
+            var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
+            if(defaultMyListFinder != null) {
+                var model = await myList.LoadAccountDefaultAsync();
+                var map = model.Items.ToDictionary(i => i.Data.VideoId, i => i.Id);
+                var itemIdList = videoIdList.Select(s => map[s]);
+                await myList.RemoveAccountDefaultMyListFromVideo(itemIdList);
+            } else {
+
+            }
         }
 
         public Task SearchUserMyListFromParameterAsync(SmileVideoSearchMyListParameterModel parameter)

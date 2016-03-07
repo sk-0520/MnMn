@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         #region define 
 
-        const char defaultSeparator = '\u001A';
+        public const char defaultSeparator = '\u001A';
 
         #endregion
 
@@ -41,18 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Values.InitializeRange(strings);
         }
 
-        public MultiStrings(string s, char separator)
-            : this(s.Split(separator))
-        {
-            Separator = separator;
-        }
         public MultiStrings(string s)
-            :this(s, defaultSeparator)
+            : this(s.Split(defaultSeparator))
         { }
 
-        #region property
 
-        public char Separator { get; set; } = defaultSeparator;
+        #region property
 
         public CollectionModel<string> Values { get; } = new CollectionModel<string>();
 
@@ -62,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public override string ToString()
         {
-            return string.Join(new string(Separator, 1), Values);
+            return string.Join(new string(defaultSeparator, 1), Values);
         }
 
         #endregion
