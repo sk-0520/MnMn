@@ -64,8 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 )
                 (?<DOMAIN_PATH>
                     [
-                        \w \. \- \( \)
-                        / _ # $ % &
+                        \w \. \- \( \) \?
+                        / _ # $ % & =
                     ]*
                 )
                 ",
@@ -147,6 +147,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return replacedSource;
         }
 
+        static string ConvertSafeXaml(string flowDocumentSource)
+        {
+            var reg = new Regex(
+                @"
+                <Run(?<STYLE>\s+.+?)>
+                    (?<VALUE>.*?)
+                </Run>
+                ",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            );
+            return reg.Replace(flowDocumentSource, "<TextBlock${STYLE}>${VALUE}</TextBlock>");
+        }
+
         /// <summary>
         /// 動画説明をそれっぽくXAMLの生データから変換。
         /// </summary>
@@ -159,6 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromMyList(convertCompatibility, convertedFlowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromVideoId(convertCompatibility, convertedFlowDocumentSource);
+            convertedFlowDocumentSource = ConvertSafeXaml(convertedFlowDocumentSource);
 
             return convertedFlowDocumentSource;
         }

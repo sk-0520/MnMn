@@ -328,9 +328,9 @@
                 FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
               >
                   <FlowDocument
-                  FontSize="11.5"
-                  PagePadding="10, 2, 10, 0"
-                />
+                    FontSize="11.5"
+                    PagePadding="10, 2, 10, 0"
+                  />
                 </FlowDocumentScrollViewer>
               </Grid>
             </Grid>
