@@ -22,6 +22,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -93,9 +94,9 @@
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition Width="4" />
-      <ColumnDefinition />
+      <ColumnDefinition Width="35*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="65*" />
     </Grid.ColumnDefinitions>
 
     <Grid Grid.Column="0">
@@ -230,7 +231,7 @@
     </Grid>
 
 
-    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultHorizonGridSplitter}" />
 
     <Grid Grid.Column="2">
       <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />

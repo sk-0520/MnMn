@@ -17,13 +17,19 @@
   mc:Ignorable="d"
 >
   <Window.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+    </ResourceDictionary>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
+      <RowDefinition />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="120" />
       <RowDefinition Height="Auto" />
@@ -77,13 +83,14 @@
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="7*" />
+        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="3*" />
       </Grid.ColumnDefinitions>
 
-      <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing" />
+      <vlc_wpf:VlcPlayer x:Name="player" Grid.Row="0" Grid.Column="0" EndBehavior="Nothing" />
 
       <!--<Border BorderBrush="Lime" BorderThickness="1"  Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">-->
-      <Viewbox ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
+      <Viewbox Grid.Row="0" Grid.Column="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
         <Grid Width="640" Height="386">
           <Canvas x:Name="normalCommentArea" />
           <Canvas x:Name="contributorCommentArea" />
@@ -91,7 +98,9 @@
       </Viewbox>
       <!--</Border>-->
 
-      <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+      <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+
+      <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
         <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
           <ListView.View>
             <GridView>
@@ -174,8 +183,7 @@
     <GridSplitter
       Grid.Row="2" 
       Height="4" 
-      VerticalAlignment="Stretch" 
-      HorizontalAlignment="Stretch" 
+      Style="{StaticResource DefaultHorizonGridSplitter}"
       Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
     />
 
