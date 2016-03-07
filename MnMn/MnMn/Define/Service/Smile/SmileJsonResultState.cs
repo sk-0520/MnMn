@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 {
-    public enum SmileMyListResult
+    public enum SmileJsonResultState
     {
         Unknown,
         Failure,

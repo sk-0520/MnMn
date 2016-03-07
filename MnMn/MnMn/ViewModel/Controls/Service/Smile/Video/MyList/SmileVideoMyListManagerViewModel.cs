@@ -348,7 +348,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
 
             var result = await myList.CreateAccountGroupAsync(newMyListName);
-            if(result.Result == SmileMyListResult.Success) {
+            if(result.IsSuccess) {
                 var myListId = SmileMyListUtility.GetMyListId(result);
                 await LoadAccountMyListAsync(myListId);
             }
