@@ -26,16 +26,9 @@
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
     </ResourceDictionary>
   </Window.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="120" />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
+  <DockPanel>
 
-    <ToolBar Grid.Row="0">
+    <ToolBar DockPanel.Dock="Top">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="cache:" />
@@ -72,210 +65,10 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
+      <ToggleButton x:Name="switchComment" Content="comment" IsChecked="True" />
     </ToolBar>
 
-    <!--<vlc_wpf:VlcControl x:Name="player" Grid.Row="1" />-->
-    <Grid Grid.Row="1"  VerticalAlignment="Stretch">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="7*" />
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="3*" />
-      </Grid.ColumnDefinitions>
-
-      <vlc_wpf:VlcPlayer x:Name="player" Grid.Row="0" Grid.Column="0" EndBehavior="Nothing" />
-
-      <!--<Border BorderBrush="Lime" BorderThickness="1"  Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">-->
-      <Viewbox Grid.Row="0" Grid.Column="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
-        <Grid Width="640" Height="386">
-          <Canvas x:Name="normalCommentArea" />
-          <Canvas x:Name="contributorCommentArea" />
-        </Grid>
-      </Viewbox>
-      <!--</Border>-->
-
-      <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
-
-      <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
-        <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
-          <ListView.View>
-            <GridView>
-              <GridViewColumn>
-                <GridViewColumn.HeaderTemplate>
-                  <ItemContainerTemplate>
-                    <TextBlock Text="time" />
-                  </ItemContainerTemplate>
-                </GridViewColumn.HeaderTemplate>
-                <GridViewColumn.CellTemplate>
-                  <ItemContainerTemplate>
-                    <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                  </ItemContainerTemplate>
-                </GridViewColumn.CellTemplate>
-              </GridViewColumn>
-
-              <GridViewColumn>
-                <GridViewColumn.HeaderTemplate>
-                  <ItemContainerTemplate>
-                    <TextBlock Text="comment" />
-                  </ItemContainerTemplate>
-                </GridViewColumn.HeaderTemplate>
-                <GridViewColumn.CellTemplate>
-                  <ItemContainerTemplate>
-                    <TextBlock Text="{Binding Content}" />
-                  </ItemContainerTemplate>
-                </GridViewColumn.CellTemplate>
-              </GridViewColumn>
-
-              <GridViewColumn>
-                <GridViewColumn.HeaderTemplate>
-                  <ItemContainerTemplate>
-                    <TextBlock Text="timestamp" />
-                  </ItemContainerTemplate>
-                </GridViewColumn.HeaderTemplate>
-                <GridViewColumn.CellTemplate>
-                  <ItemContainerTemplate>
-                    <TextBlock Text="{Binding Timestamp}" />
-                  </ItemContainerTemplate>
-                </GridViewColumn.CellTemplate>
-              </GridViewColumn>
-            </GridView>
-          </ListView.View>
-        </ListView>
-      </Grid>
-
-      <Grid Grid.Row="1" Grid.Column="0">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <app_view_controls:Navigationbar
-          x:Name="seekbar"
-          Grid.Row="0"
-          VideoPosition="{Binding VideoPosition}"
-          VideoLoadedSize="{Binding VideoLoadedSize}"
-          VideoTotalSize="{Binding VideoTotalSize}"
-          Volume="{Binding Volume}"
-          PlayTime="{Binding PlayTime}"
-          TotalTime="{Binding TotalTime}"
-          PlayerState="{Binding PlayerState}"
-          PlayCommand="{Binding PlayCommand}"
-          StopCommand="{Binding StopCommand}"
-          IsReplayChecked="{Binding ReplayVideo}"
-          IsMute="{Binding IsMute}"
-        >
-          <app_view_controls:Navigationbar.ExstendsContent>
-            <StackPanel Orientation="Horizontal">
-              <ToggleButton Content="msg" />
-            </StackPanel>
-          </app_view_controls:Navigationbar.ExstendsContent>
-        </app_view_controls:Navigationbar>
-      </Grid>
-
-      <Grid Grid.Row="2" Grid.Column="0">
-        <TextBox></TextBox>
-      </Grid>
-
-    </Grid>
-
-    <GridSplitter
-      Grid.Row="2" 
-      Height="4" 
-      Style="{StaticResource DefaultHorizonGridSplitter}"
-      Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
-    />
-
-    <TabControl 
-      Grid.Row="3" 
-      TabStripPlacement="Left" 
-      Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
-    >
-      <TabItem Header="movie">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="4" />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-
-          <StackPanel Grid.Column="0">
-            <Image Width="100" Height="80" Source="{Binding ThumbnailImage}" />
-
-            <!--<TextBlock Text="{Binding UserNickname}" />-->
-            <Grid>
-              <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
-              <TextBlock>
-                <TextBlock.Resources>
-                  <Style TargetType="TextBlock">
-                    <Style.Triggers>
-                      <DataTrigger Binding="{Binding InformationLoadState}" Value="Loaded">
-                        <Setter Property="Text" Value="{Binding UserNickname}" />
-                      </DataTrigger>
-                    </Style.Triggers>
-                  </Style>
-                </TextBlock.Resources>
-              </TextBlock>
-            </Grid>
-
-          </StackPanel>
-
-          <GridSplitter Grid.Column="1" />
-
-          <Grid Grid.Row="1"  Grid.Column="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
-              <TextBlock Grid.Column="0" Text="tag:" />
-              <ItemsControl Grid.Column="1" ItemsSource="{Binding TagItems}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock FontSize="10">
-                      <Hyperlink 
-                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding}"
-                      >
-                        <Run Text="{Binding TagName, Mode=OneWay}" />
-                      </Hyperlink>
-                    </TextBlock>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </Grid>
-            <Grid Grid.Row="1">
-              <FlowDocumentScrollViewer
-                x:Name="documentDescription"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
-              >
-                <FlowDocument
-                  FontSize="11.5"
-                  PagePadding="10, 2, 10, 0"
-                />
-              </FlowDocumentScrollViewer>
-            </Grid>
-          </Grid>
-        </Grid>
-      </TabItem>
-      <TabItem Header="relation">
-      </TabItem>
-      <TabItem Header="market">
-      </TabItem>
-    </TabControl>
-
-    <StatusBar Grid.Row="4" VerticalAlignment="Bottom" >
+    <StatusBar DockPanel.Dock="Bottom" >
       <ToggleButton x:Name="switchInformation" Content="info" IsChecked="True" />
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
         <TextBlock>[</TextBlock>
@@ -319,7 +112,235 @@
       </StackPanel>
     </StatusBar>
 
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"  />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="120" />
+      </Grid.RowDefinitions>
 
+      <Grid Grid.Row="0"  VerticalAlignment="Stretch">
+        <Grid.Style>
+          <Style>
+            <Setter Property="Grid.RowSpan" Value="1" />
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsChecked, ElementName=switchInformation}" Value="False">
+                <Setter Property="Grid.RowSpan" Value="3" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Grid.Style>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="7*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
 
-  </Grid>
+        <Grid Grid.Column="0">
+          <Grid.Style>
+            <Style>
+              <Setter Property="Grid.ColumnSpan" Value="1" />
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, ElementName=switchComment}" Value="False">
+                  <Setter Property="Grid.ColumnSpan" Value="3" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Grid.Style>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <vlc_wpf:VlcPlayer x:Name="player" Grid.Row="0" EndBehavior="Nothing" />
+
+          <Viewbox Grid.Row="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}">
+            <Grid Width="640" Height="386">
+              <Canvas x:Name="normalCommentArea" />
+              <Canvas x:Name="contributorCommentArea" />
+            </Grid>
+          </Viewbox>
+
+          <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <app_view_controls:Navigationbar
+              x:Name="seekbar"
+              Grid.Row="0"
+              VideoPosition="{Binding VideoPosition}"
+              VideoLoadedSize="{Binding VideoLoadedSize}"
+              VideoTotalSize="{Binding VideoTotalSize}"
+              Volume="{Binding Volume}"
+              PlayTime="{Binding PlayTime}"
+              TotalTime="{Binding TotalTime}"
+              PlayerState="{Binding PlayerState}"
+              PlayCommand="{Binding PlayCommand}"
+              StopCommand="{Binding StopCommand}"
+              IsReplayChecked="{Binding ReplayVideo}"
+              IsMute="{Binding IsMute}"
+            >
+              <app_view_controls:Navigationbar.ExstendsContent>
+                <StackPanel Orientation="Horizontal">
+                  <ToggleButton Content="msg" />
+                </StackPanel>
+              </app_view_controls:Navigationbar.ExstendsContent>
+            </app_view_controls:Navigationbar>
+          </Grid>
+
+          <Grid Grid.Row="2">
+            <TextBox></TextBox>
+          </Grid>
+        </Grid>
+
+        <GridSplitter 
+          Grid.Row="0" Grid.Column="1" 
+          Style="{StaticResource DefaultVericalGridSplitter}" 
+          Visibility="{Binding IsChecked, ElementName=switchComment, Converter={StaticResource BooleanToVisibilityConverter}}"
+        />
+
+        <Grid Grid.Row="0" Grid.Column="2" Visibility="{Binding IsChecked, ElementName=switchComment, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn>
+                  <GridViewColumn.HeaderTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="time" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.HeaderTemplate>
+                  <GridViewColumn.CellTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn>
+                  <GridViewColumn.HeaderTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="comment" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.HeaderTemplate>
+                  <GridViewColumn.CellTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="{Binding Content}" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn>
+                  <GridViewColumn.HeaderTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="timestamp" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.HeaderTemplate>
+                  <GridViewColumn.CellTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="{Binding Timestamp}" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </Grid>
+      </Grid>
+
+      <GridSplitter
+        Grid.Row="1" 
+        Height="4" 
+        Style="{StaticResource DefaultHorizonGridSplitter}"
+        Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+      />
+
+      <TabControl
+        Grid.Row="2" 
+        TabStripPlacement="Left" 
+        Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+      >
+        <TabItem Header="movie">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="4" />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+              <Image Width="100" Height="80" Source="{Binding ThumbnailImage}" />
+
+              <!--<TextBlock Text="{Binding UserNickname}" />-->
+              <Grid>
+                <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
+                <TextBlock>
+                  <TextBlock.Resources>
+                    <Style TargetType="TextBlock">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding InformationLoadState}" Value="Loaded">
+                          <Setter Property="Text" Value="{Binding UserNickname}" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBlock.Resources>
+                </TextBlock>
+              </Grid>
+
+            </StackPanel>
+
+            <GridSplitter Grid.Column="1" />
+
+            <Grid Grid.Row="1"  Grid.Column="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="tag:" />
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding TagItems}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock FontSize="10">
+                      <Hyperlink 
+                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="{Binding}"
+                      >
+                        <Run Text="{Binding TagName, Mode=OneWay}" />
+                      </Hyperlink>
+                      </TextBlock>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </Grid>
+              <Grid Grid.Row="1">
+                <FlowDocumentScrollViewer
+                x:Name="documentDescription"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+              >
+                  <FlowDocument
+                  FontSize="11.5"
+                  PagePadding="10, 2, 10, 0"
+                />
+                </FlowDocumentScrollViewer>
+              </Grid>
+            </Grid>
+          </Grid>
+        </TabItem>
+        <TabItem Header="relation">
+        </TabItem>
+        <TabItem Header="market">
+        </TabItem>
+      </TabControl>
+    </Grid>
+  </DockPanel>
 </Window>
