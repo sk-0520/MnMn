@@ -72,6 +72,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("encode")]
         public ParameterEncode Encode { get; set; }
 
+        [XmlAttribute("multi")]
+        public bool IsMulti { get; set; }
+
         /// <summary>
         /// キーが存在するか。
         /// </summary>

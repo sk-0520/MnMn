@@ -58,6 +58,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// マイリストで使用するアイテムIDを取得。
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static string GetItemId(FeedSmileVideoItemModel item)
+        {
+            var guid = item.Guid;
+            return guid.Uri.Split('/').Last();
+        }
+
         static string HtmlNodeToString(HtmlNode node)
         {
             return node?.InnerHtml ?? string.Empty;

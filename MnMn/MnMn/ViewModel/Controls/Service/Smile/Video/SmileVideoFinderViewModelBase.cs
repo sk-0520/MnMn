@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected SmileVideoSettingModel Setting { get; }
 
         protected CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; } = new CollectionModel<SmileVideoInformationViewModel>();
+        public IReadOnlyList<SmileVideoInformationViewModel> VideoInformationViewer => VideoInformationList;
 
         public virtual ICollectionView VideoInformationItems { get; }
 

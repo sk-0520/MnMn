@@ -153,7 +153,7 @@
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
-    <Compile Include="Define\Service\Smile\SmileMyListResult.cs" />
+    <Compile Include="Define\Service\Smile\SmileJsonResultState.cs" />
     <Compile Include="Define\Service\Smile\Video\Parameter\SmileVideoSearchMyListQueryType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentSize.cs" />
@@ -171,6 +171,7 @@
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\Extensions\ICommunicationExtensions.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
+    <Compile Include="Logic\MultiStrings.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
     <Compile Include="Logic\Service\Smile\Api\V1\MyList.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileIdUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\SmileJsonResultUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileMyListUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoCommentUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtility.cs" />
@@ -225,7 +227,7 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
-    <Compile Include="Model\Service\Smile\SmileMyListResultModel.cs" />
+    <Compile Include="Model\Service\Smile\SmileJsonResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoAccountHistoryItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoAccountHistoryModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoGetthreadkeyModel.cs" />

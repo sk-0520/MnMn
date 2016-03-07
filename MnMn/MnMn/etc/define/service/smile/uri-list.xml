@@ -8,8 +8,12 @@
 
 	<item key="smile-video-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="none" />
 	<item key="smile-video-mylist-account-default-add" uri="http://www.nicovideo.jp/api/deflist/add" param="none" />
+	<item key="smile-video-mylist-account-default-delete" uri="http://www.nicovideo.jp/api/deflist/delete" param="none" />
+
 	<item key="smile-video-mylist-account-add" uri="http://www.nicovideo.jp/api/mylist/add" param="none" />
+	<item key="smile-video-mylist-account-delete" uri="http://www.nicovideo.jp/api/mylist/delete" param="none" />
 	
+
 	<item key="smile-video-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="none" />
 	<item key="smile-video-mylist-account-group-token" uri="http://www.nicovideo.jp/my/mylist/#" param="hierarchy" />
 	<item key="smile-video-mylist-account-group-delete" uri="http://www.nicovideo.jp/api/mylistgroup/delete" param="none" />

@@ -20,28 +20,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
-    public class SmileMyListResultModel
+    public class SmileJsonResultModel: CheckResultModel<JObject>
     {
-        public SmileMyListResultModel(SmileMyListResult result)
-        {
-            Result = result;
-        }
+        SmileJsonResultModel(JObject json, SmileJsonResultState resultState)
+            : base(resultState == SmileJsonResultState.Success, json, resultState, null)
+        { }
 
-        public SmileMyListResultModel(SmileMyListResult result, JObject json)
-        {
-            Result = result;
-            Json = json;
-        }
+        public SmileJsonResultModel(JObject json)
+            : this(json, SmileJsonResultUtility.ConvertResultStatus(json))
+        { }
 
         #region property
 
-        public SmileMyListResult Result { get; }
+        public SmileJsonResultState Status { get { return (SmileJsonResultState)Detail; } }
 
-        public JObject Json { get; }
+        #endregion
+
+        #region function
+
+        public static SmileJsonResultModel FailureLoadToken()
+        {
+            return new SmileJsonResultModel(null, SmileJsonResultState.Failure);
+        }
+
+        public static SmileJsonResultModel FailureParameterError()
+        {
+            return new SmileJsonResultModel(null, SmileJsonResultState.ParameterError);
+        }
+
 
         #endregion
     }

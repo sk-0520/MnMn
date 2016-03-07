@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -233,6 +234,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public ICommand RemoveCheckedAccountMyListVideoCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var finder = SelectedAccountFinder;
+                        if(finder != null) {
+                            RemoveAccountMyListVideoAsync(finder).ContinueWith(task => {
+                                if(task.Result.IsSuccess) {
+                                    // TODO: 即値
+                                    var sleepTime = TimeSpan.FromMilliseconds(500);
+                                    System.Threading.Thread.Sleep(sleepTime);
+                                }
+                                return task.Result;
+                            }).ContinueWith(task => {
+                                if(task.Result.IsSuccess) {
+                                    return finder.LoadDefaultCacheAsync();
+                                } else {
+                                    return Task.CompletedTask;
+                                }
+                            }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
+                        }
+                    }
+                );
+            }
+        }
+
         public ICommand SearchUserMyListCommand
         {
             get
@@ -348,7 +377,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
 
             var result = await myList.CreateAccountGroupAsync(newMyListName);
-            if(result.Result == SmileMyListResult.Success) {
+            if(result.IsSuccess) {
                 var myListId = SmileMyListUtility.GetMyListId(result);
                 await LoadAccountMyListAsync(myListId);
             }
@@ -365,6 +394,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
             await myList.DeleteAccountGroupAsync(accountFinder.MyListId);
             await LoadAccountMyListAsync(null);
+        }
+
+        async Task<CheckModel> RemoveAccountMyListVideoAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
+        {
+            var videoIdList = accountFinder.VideoInformationViewer
+                .Where(v => v.IsChecked.GetValueOrDefault())
+                .Select(v => v.VideoId)
+                .ToArray()
+            ;
+            if(videoIdList.Length == 0) {
+                return CheckModel.Failure();
+            }
+            var myList = GetMyListApi();
+            
+            var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
+            if(defaultMyListFinder != null) {
+                var model = await myList.LoadAccountDefaultAsync();
+                var map = model.Items.ToDictionary(i => i.Data.VideoId, i => i.Id);
+                var itemIdList = videoIdList.Select(s => map[s]);
+                return await myList.RemoveAccountDefaultMyListFromVideo(itemIdList);
+            } else {
+                var myListId = accountFinder.MyListId;
+                var model = await myList.LoadGroupAsync(myListId);
+                var map = model.Channel.Items.ToDictionary(i => SmileVideoFeedUtility.GetVideoId(i), i => SmileVideoFeedUtility.GetItemId(i));
+                var itemIdList = videoIdList.Select(s => map[s]);
+                return await myList.RemoveAccountMyListFromVideo(myListId, itemIdList);
+            }
         }
 
         public Task SearchUserMyListFromParameterAsync(SmileVideoSearchMyListParameterModel parameter)

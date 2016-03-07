@@ -10,6 +10,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -77,25 +78,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             });
         }
 
-        protected override Task RemoveCheckedItemsAsync()
+        protected async override Task<CheckModel> RemoveCheckedItemsAsync()
         {
             var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
             if(!VideoInformationList.Any(v => v.IsChecked.GetValueOrDefault())) {
-                return Task.CompletedTask;
+                return CheckModel.Failure();
             }
 
-            return history.LoadHistoryAsync().ContinueWith(async task => {
-                var model = task.Result;
-                var removeItems = VideoInformationList
-                    .Where(v => v.IsChecked.GetValueOrDefault())
-                    .ToArray()
-                ;
-                foreach(var removeItem in removeItems) {
-                    var sleepTime = TimeSpan.FromMilliseconds(250);
-                    Thread.Sleep(sleepTime);
-                    await history.RemoveVideoAsync(model, removeItem.VideoId);
+            var model = await history.LoadHistoryAsync();
+
+            var removeItems = VideoInformationList
+                .Where(v => v.IsChecked.GetValueOrDefault())
+                .ToArray()
+            ;
+
+            var errors = new List<CheckModel>();
+
+            foreach(var removeItem in removeItems) {
+                // TODO: 即値
+                var sleepTime = TimeSpan.FromMilliseconds(250);
+                Thread.Sleep(sleepTime);
+                var result = await history.RemoveVideoAsync(model, removeItem.VideoId);
+                Mediation.Logger.Trace(result.Status.ToString());
+                if(!result.IsSuccess) {
+                    errors.Add(result);
                 }
-            }, TaskContinuationOptions.AttachedToParent);
+            }
+            if(errors.Any()) {
+                return errors.First();
+            } else {
+                return CheckModel.Success();
+            }
         }
 
         #endregion

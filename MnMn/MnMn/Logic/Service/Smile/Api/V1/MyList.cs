@@ -167,17 +167,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        async Task<SmileMyListResultModel> RequestPost(PageLoader page)
+        async Task<SmileJsonResultModel> RequestPost(PageLoader page)
         {
             var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
-            var result = response.Result;
-            var json = JObject.Parse(result);
-            var resultStatus = SmileMyListUtility.ConvertResultStatus(json);
-            Debug.WriteLine(resultStatus);
-            return new SmileMyListResultModel(resultStatus, json);
+            var resultJson = response.Result;
+            var json = JObject.Parse(resultJson);
+            var result = new SmileJsonResultModel(json);
+            Mediation.Logger.Debug(result.Status.ToString());
+            return result;
         }
 
-        public async Task<SmileMyListResultModel> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
+        public async Task<SmileJsonResultModel> AdditionAccountDefaultMyListFromVideo(string videoId, string token)
         {
             await LoginIfNotLoginAsync();
 
@@ -189,13 +189,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResultModel> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
+        public async Task<SmileJsonResultModel> AdditionAccountMyListFromVideo(string myListId, string threadId, string token)
         {
             await LoginIfNotLoginAsync();
 
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistVideoAdd, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestPost(page);
+            }
+        }
+
+        public async Task<SmileJsonResultModel> RemoveAccountDefaultMyListFromVideo(IEnumerable<string> itemIdList)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await LoadAccountGroupToken(null);
+            if(token == null) {
+                return SmileJsonResultModel.FailureLoadToken();
+            }
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultVideoDelete, ServiceType.Smile)) {
+                var ms = new MultiStrings(itemIdList);
+                page.ReplaceRequestParameters["item-id-list"] = ms.ToString();
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestPost(page);
+            }
+        }
+
+        public async Task<SmileJsonResultModel> RemoveAccountMyListFromVideo(string myListId, IEnumerable<string> itemIdList)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await LoadAccountGroupToken(myListId);
+            if(token == null) {
+                return SmileJsonResultModel.FailureLoadToken();
+            }
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistVideoDelete, ServiceType.Smile)) {
+                var ms = new MultiStrings(itemIdList);
+                page.ReplaceRequestParameters["mylist-id"] = myListId;
+                page.ReplaceRequestParameters["item-id-list"] = ms.ToString();
                 page.ReplaceRequestParameters["token"] = token;
 
                 return await RequestPost(page);
@@ -251,14 +288,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResultModel> CreateAccountGroupAsync(string myListName)
+        public async Task<SmileJsonResultModel> CreateAccountGroupAsync(string myListName)
         {
             await LoginIfNotLoginAsync();
 
             var token = await LoadAccountGroupToken(null);
             if(token == null) {
-                Debug.WriteLine("group token is null");
-                return new SmileMyListResultModel(SmileMyListResult.Failure);
+                return SmileJsonResultModel.FailureLoadToken();
             }
 
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupCreate, ServiceType.Smile)) {
@@ -269,14 +305,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResultModel> DeleteAccountGroupAsync(string myListId)
+        public async Task<SmileJsonResultModel> DeleteAccountGroupAsync(string myListId)
         {
             await LoginIfNotLoginAsync();
 
             var token = await LoadAccountGroupToken(myListId);
             if(token == null) {
-                Debug.WriteLine("group token is null");
-                return new SmileMyListResultModel(SmileMyListResult.Failure);
+                return SmileJsonResultModel.FailureLoadToken();
             }
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupDelete, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["mylist-id"] = myListId;
@@ -286,14 +321,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<SmileMyListResultModel> UpdateAccountGroupAsync(string myListId, string myListFolderId, string myListName, string myListSort, string myListDescription, bool isPublic)
+        public async Task<SmileJsonResultModel> UpdateAccountGroupAsync(string myListId, string myListFolderId, string myListName, string myListSort, string myListDescription, bool isPublic)
         {
             await LoginIfNotLoginAsync();
 
             var token = await LoadAccountGroupToken(myListId);
             if(token == null) {
-                Debug.WriteLine("group token is null");
-                return new SmileMyListResultModel(SmileMyListResult.Failure);
+                return SmileJsonResultModel.FailureLoadToken();
             }
 
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupUpdate, ServiceType.Smile)) {

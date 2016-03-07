@@ -32,7 +32,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
 
         public const string mylistDefault = "smile-video-mylist-account-default";
         public const string mylistDefaultVideoAdd = "smile-video-mylist-account-default-add";
+        public const string mylistDefaultVideoDelete = "smile-video-mylist-account-default-delete";
         public const string mylistVideoAdd = "smile-video-mylist-account-add";
+        public const string mylistVideoDelete = "smile-video-mylist-account-delete";
         public const string mylistGroup = "smile-video-mylist-account-group";
         public const string mylistGroupToken = "smile-video-mylist-account-group-token";
         public const string mylistGroupDelete = "smile-video-mylist-account-group-delete";
