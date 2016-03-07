@@ -79,7 +79,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static DateTime ConvertDateTime(string s)
         {
-            return ConvertT(s, DateTime.TryParse, UnknownDateTime);
+            var trimedValue = s
+                .Replace("年", "/")
+                .Replace("月", "/")
+                .Replace("日", "")
+                .Replace("：", ":")
+            ;
+            return ConvertT(trimedValue, DateTime.TryParse, UnknownDateTime);
         }
 
         public static TimeSpan ConvertTimeSpan(string s)

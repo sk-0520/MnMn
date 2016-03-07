@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         ViewCounter = 0x02,
         CommentCounter = 0x04,
         MylistCounter = 0x08,
-
+        FirstRetrieve = 0x10,
         //------------------------------------
-        All = Length | ViewCounter | CommentCounter | MylistCounter,
+        All = Length | ViewCounter | CommentCounter | MylistCounter | FirstRetrieve,
     }
 }

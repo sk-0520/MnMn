@@ -148,6 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 detailModel.MylistCounter = mylistElement.InnerText.Split(':').Last();
 
                 // うーん、ださい
+                // NOTE: RawValueUtility.ConvertDateTimeとは意味合いが異なる
                 var dateElement = metadataElement.SelectSingleNode(".//*[@class='posttime']");
                 detailModel.FirstRetrieve = dateElement.InnerText.Trim()
                     .Replace("年", "/")

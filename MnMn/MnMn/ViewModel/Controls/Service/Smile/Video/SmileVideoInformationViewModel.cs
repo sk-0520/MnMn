@@ -180,6 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool HasViewConter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.ViewCounter); } }
         public bool HasCommentCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.CommentCounter); } }
         public bool HasMylistCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.MylistCounter); } }
+        public bool HasFirstRetrieve { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.FirstRetrieve); } }
 
         public bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
 

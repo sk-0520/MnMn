@@ -77,6 +77,8 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
                   <TextBlock Grid.Row="0" Grid.Column="0" Text="再生数" />
@@ -241,6 +243,95 @@
                     </TextBlock>
                   </DockPanel>
 
+                  <TextBlock Grid.Row="0" Grid.Column="4" Text="投稿日" />
+                  <DockPanel Grid.Row="0" Grid.Column="5">
+                    <app_view_controls:LoadStateNavigator Width="16" HorizontalAlignment="Left" ShowStateText="False">
+                      <app_view_controls:LoadStateNavigator.Style>
+                        <Style TargetType="app_view_controls:LoadStateNavigator">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding NeedLoadInformationFlag}" Value="True">
+                              <Setter Property="LoadState" Value="{Binding InformationLoadState}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding NeedLoadInformationFlag}" Value="False">
+                              <Setter Property="LoadState" Value="Loaded" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </app_view_controls:LoadStateNavigator.Style>
+                    </app_view_controls:LoadStateNavigator>
+                    <TextBlock>
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                          <Style.Triggers>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding HasFirstRetrieve}" Value="False" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="----/--/--" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding HasFirstRetrieve}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay}" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding HasFirstRetrieve}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay}" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding HasFirstRetrieve}" Value="False" />
+                                <Condition Binding="{Binding InformationLoadState}" Value="None" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="未処理" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding HasFirstRetrieve}" Value="False" />
+                                <Condition Binding="{Binding InformationLoadState}" Value="Preparation" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="準備中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding HasFirstRetrieve}" Value="False" />
+                                <Condition Binding="{Binding InformationLoadState}" Value="Loading" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding InformationLoadState}" Value="Failure" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込失敗" />
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                  </DockPanel>
+                  
                   <TextBlock Grid.Row="1" Grid.Column="0" Text="時間" />
                   <DockPanel Grid.Row="1" Grid.Column="1" >
                     <app_view_controls:LoadStateNavigator Width="16" HorizontalAlignment="Left" ShowStateText="False">
@@ -418,6 +509,7 @@
                       </TextBlock.Style>
                     </TextBlock>
                   </DockPanel>
+
                 </Grid>
               </Grid>
 
