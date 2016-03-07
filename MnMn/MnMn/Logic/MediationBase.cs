@@ -271,15 +271,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected IDictionary<string, string> GetRequestParameter_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            return RequestParameterList.Parameters
+            var targetParameter = RequestParameterList.Parameters
                 .FirstOrDefault(up => up.Key == key)
-                ?.Items
-                ?.Where(p => p.HasKey)
-                ?.ToDictionary(
+            ;
+            if(targetParameter == null) {
+                return (IDictionary<string, string>)EmptyMap;
+            }
+
+            return targetParameter.Items
+                .Where(p => p.HasKey)
+                .ToDictionary(
                     p => p.Key,
                     p => ReplaceString(p.Value, replaceMap)
                 )
-                ?? (IDictionary<string, string>)EmptyMap
             ;
         }
 

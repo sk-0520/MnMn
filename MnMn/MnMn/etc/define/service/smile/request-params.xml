@@ -10,11 +10,20 @@
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
 	</param>
+	<param key="smile-video-mylist-account-default-delete">
+		<item key="id_list[0][]" value="${thread-id}" />
+		<item key="token" value="${token}" />
+	</param>
 	<param key="smile-video-mylist-account-add">
 		<item key="group_id" value="${mylist-id}" />
 		<item key="item_id" value="${thread-id}" />
 		<item key="token" value="${token}" />
 		<item key="unwatched" value="0" />
+	</param>
+	<param key="smile-video-mylist-account-delete">
+		<item key="group_id[0][]" value="${mylist-id}" />
+		<item key="id_list[0][]" value="${thread-id}" />
+		<item key="token" value="${token}" />
 	</param>
 	<param key="smile-video-mylist-account-group-delete">
 		<item key="group_id" value="${mylist-id}" />

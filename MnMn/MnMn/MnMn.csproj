@@ -171,6 +171,7 @@
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\Extensions\ICommunicationExtensions.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
+    <Compile Include="Logic\MultiStrings.cs" />
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
     <Compile Include="Logic\Service\Smile\Api\V1\MyList.cs" />
