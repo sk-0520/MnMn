@@ -172,8 +172,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
             var result = response.Result;
             var json = JObject.Parse(result);
-            var resultStatus = SmileJsonResultUtility.ConvertResultStatus(json);
-            Debug.WriteLine(resultStatus);
             return new SmileJsonResultModel(json);
         }
 

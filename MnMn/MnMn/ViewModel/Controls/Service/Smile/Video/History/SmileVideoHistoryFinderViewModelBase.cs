@@ -37,11 +37,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             {
                 return CreateCommand(
                     o => {
-                        RemoveCheckedItemsAsync().ContinueWith(_ => {
-                            var sleepTime = TimeSpan.FromMilliseconds(500);
-                            System.Threading.Thread.Sleep(sleepTime);
-                        }).ContinueWith(_ => {
-                            return LoadDefaultCacheAsync();
+                        RemoveCheckedItemsAsync().ContinueWith(task => {
+                            if(task.Result.IsSuccess) {
+                                // TODO: 即値
+                                var sleepTime = TimeSpan.FromMilliseconds(500);
+                                System.Threading.Thread.Sleep(sleepTime);
+                            }
+                            return task.Result;
+                        }).ContinueWith(task => {
+                            if(task.Result.IsSuccess) {
+                                return LoadDefaultCacheAsync();
+                            } else {
+                                return Task.CompletedTask;
+                            }
                         }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
                     }
                 );
@@ -52,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region function
 
-        protected abstract Task RemoveCheckedItemsAsync();
+        protected abstract Task<CheckModel> RemoveCheckedItemsAsync();
 
         #endregion
 

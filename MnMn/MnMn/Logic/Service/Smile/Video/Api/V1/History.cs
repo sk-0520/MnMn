@@ -25,10 +25,12 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
@@ -61,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task RemoveVideoAsync(RawSmileVideoAccountHistoryModel model, string videoId)
+        public async Task<SmileJsonResultModel> RemoveVideoAsync(RawSmileVideoAccountHistoryModel model, string videoId)
         {
             await LoginIfNotLoginAsync();
 
@@ -74,11 +76,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                     page.ReplaceRequestParameters["video-id"] = targetId;
                     page.ReplaceRequestParameters["token"] = model.Token;
                     var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
-                    if(!response.IsSuccess) {
-                        return;
-                    }
-                    // TODO: 結果からなんか返さないと。
+
+                    var result = response.Result;
+                    var json = JObject.Parse(result);
+                    return new SmileJsonResultModel(json);
                 }
+            } else {
+                return SmileJsonResultModel.FailureParameterError();
             }
         }
 

@@ -48,6 +48,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
             return new SmileJsonResultModel(null, SmileJsonResultState.Failure);
         }
 
+        public static SmileJsonResultModel FailureParameterError()
+        {
+            return new SmileJsonResultModel(null, SmileJsonResultState.ParameterError);
+        }
+
 
         #endregion
     }
