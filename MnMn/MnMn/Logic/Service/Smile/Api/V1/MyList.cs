@@ -213,12 +213,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistDefaultVideoDelete, ServiceType.Smile)) {
                 var ms = new MultiStrings(itemIdList);
-                page.ReplaceRequestParameters["item-id"] = ms.ToString();
+                page.ReplaceRequestParameters["item-id-list"] = ms.ToString();
                 page.ReplaceRequestParameters["token"] = token;
 
                 return await RequestPost(page);
             }
+        }
 
+        public async Task<SmileJsonResultModel> RemoveAccountMyListFromVideo(string myListId, IEnumerable<string> itemIdList)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await LoadAccountGroupToken(myListId);
+            if(token == null) {
+                return SmileJsonResultModel.FailureLoadToken();
+            }
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistVideoDelete, ServiceType.Smile)) {
+                var ms = new MultiStrings(itemIdList);
+                page.ReplaceRequestParameters["mylist-id"] = myListId;
+                page.ReplaceRequestParameters["item-id-list"] = ms.ToString();
+                page.ReplaceRequestParameters["token"] = token;
+
+                return await RequestPost(page);
+            }
         }
 
         async Task<string> LoadAccountGroupToken(string myListId)
