@@ -15,7 +15,12 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
-    <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+    </ResourceDictionary>
   </UserControl.Resources>
   
   <Grid>
@@ -30,7 +35,8 @@
 
     <ListBox 
       x:Name="PART_List" 
-      Grid.Row="2" 
+      Grid.Row="2"
+      Style="{StaticResource ContentListBox}"
       ItemsSource="{Binding VideoInformationItems}"
       SelectedItem="{Binding SelectedVideoInformation}"
     >

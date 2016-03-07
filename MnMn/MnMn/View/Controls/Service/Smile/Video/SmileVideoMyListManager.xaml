@@ -19,49 +19,53 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-    <app_view_converter_service_smile_video:FinderLoadStateIsNotCompletedConverter x:Key="FinderLoadStateIsNotCompletedConverter" />
-    <app_view_converter_service_smile_video:MyLIstFolderIdToIdConverter x:Key="MyLIstFolderIdToIdConverter" />
-    <app_view_converter_service_smile_video:MyLIstFolderIdToColorConverter x:Key="MyLIstFolderIdToColorConverter" />
+      <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <app_view_converter_service_smile_video:FinderLoadStateIsNotCompletedConverter x:Key="FinderLoadStateIsNotCompletedConverter" />
+      <app_view_converter_service_smile_video:MyLIstFolderIdToIdConverter x:Key="MyLIstFolderIdToIdConverter" />
+      <app_view_converter_service_smile_video:MyLIstFolderIdToColorConverter x:Key="MyLIstFolderIdToColorConverter" />
 
-    <Style x:Key="MyListBox" TargetType="ListBox">
-      <Setter Property="SelectedItem" Value="{Binding DataContext.SelectedFinder, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-      <Setter Property="ItemsPanel">
-        <Setter.Value>
-          <ItemsPanelTemplate>
-            <VirtualizingStackPanel />
-          </ItemsPanelTemplate>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="ItemTemplate">
-        <Setter.Value>
-          <DataTemplate>
-            <StackPanel>
-              <Rectangle Width="16" Height="16">
-                <Rectangle.Fill>
-                  <SolidColorBrush Color="{Binding MyListFolderColor}" />
-                </Rectangle.Fill>
-              </Rectangle>
-              <TextBlock Text="{Binding MyListName}" />
-              <TextBlock>
-                <TextBlock.Style>
-                  <Style TargetType="TextBlock">
-                    <Style.Triggers>
-                      <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                          <Condition Binding="{Binding FinderLoadState, Converter={StaticResource FinderLoadStateIsNotCompletedConverter}}" Value="True"  />
-                          <Condition Binding="{Binding MyListItemCount}" Value="0" />
-                        </MultiDataTrigger.Conditions>
-                        <Setter Property="Text" Value="not loaded" />
-                      </MultiDataTrigger>
-                    </Style.Triggers>
-                    <Setter Property="Text" Value="{Binding MyListItemCount}" />
-                  </Style>
-                </TextBlock.Style>
-              </TextBlock>
-              <TextBlock Visibility="{Binding IsAccountMyList, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Style x:Key="MyListBox" TargetType="ListBox" BasedOn="{StaticResource ContentListBox}">
+        <Setter Property="SelectedItem" Value="{Binding DataContext.SelectedFinder, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <Setter Property="ItemsPanel">
+          <Setter.Value>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+          </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+          <Setter.Value>
+            <DataTemplate>
+              <StackPanel>
+                <Rectangle Width="16" Height="16">
+                  <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding MyListFolderColor}" />
+                  </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding MyListName}" />
+                <TextBlock>
+                  <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                      <Style.Triggers>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding FinderLoadState, Converter={StaticResource FinderLoadStateIsNotCompletedConverter}}" Value="True"  />
+                            <Condition Binding="{Binding MyListItemCount}" Value="0" />
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="Text" Value="not loaded" />
+                        </MultiDataTrigger>
+                      </Style.Triggers>
+                      <Setter Property="Text" Value="{Binding MyListItemCount}" />
+                    </Style>
+                  </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Visibility="{Binding IsAccountMyList, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Run Text="type:" />
                 <Run>
                   <Run.Style>
@@ -77,15 +81,15 @@
                     </Style>
                   </Run.Style>
                 </Run>
-              </TextBlock>
-              <TextBlock Text="{Binding FinderLoadState}" />
+                </TextBlock>
+                <TextBlock Text="{Binding FinderLoadState}" />
 
-            </StackPanel>
-          </DataTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-
+              </StackPanel>
+            </DataTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
