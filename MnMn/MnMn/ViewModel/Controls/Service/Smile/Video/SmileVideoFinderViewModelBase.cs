@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var loader = new SmileVideoInformationLoader(VideoInformationList);
                 var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
-                return Task.WhenAll(infoTask, infoTask);
+                return Task.WhenAll(imageTask, infoTask);
             }, CancelLoading.Token).ContinueWith(t => {
                 FinderLoadState = SmileVideoFinderLoadState.Completed;
                 NowLoading = false;
