@@ -79,9 +79,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            //FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
-            //NowLoading = true;
-
             var search = new ContentsSearch(Mediation);
 
             return search.SearchAsync(
@@ -101,24 +98,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return list;
             }).ContinueWith(task => {
                 var list = task.Result;
-                //VideoInformationList.InitializeRange(list);
                 SetItems(list);
             }, TaskScheduler.FromCurrentSynchronizationContext());
-            //}, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
-                //var cancel = CancelLoading = new CancellationTokenSource();
-                /*
-                return Task.Run(() => {
-                    FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
-                    var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    var infoTask = loader.LoadInformationAsync(thumbCacheSpan);
-                    var imageTasl = loader.LoadThumbnaiImageAsync(imageCacheSpan);
-                    return Task.WhenAll(infoTask, imageTasl);
-                }).ContinueWith(_ => {
-                    FinderLoadState = SmileVideoFinderLoadState.Completed;
-                    NowLoading = false;
-                }, CancelLoading.Token, TaskContinuationOptions.LongRunning, TaskScheduler.Current);
-                */
-            //});
         }
 
         #endregion

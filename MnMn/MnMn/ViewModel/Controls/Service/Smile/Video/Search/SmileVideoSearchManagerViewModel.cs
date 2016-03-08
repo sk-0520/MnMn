@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get
             {
                 return CreateCommand(o => {
-                    LoadSearchAsync().ConfigureAwait(false);
+                    SearchAsync().ConfigureAwait(false);
                 });
             }
         }
@@ -121,14 +121,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region function
 
-        public Task LoadSearchAsync()
+        public Task SearchAsync()
         {
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
             var nowType = SelectedType;
             var nowQuery = InputQuery;
 
-            return LoadSearchAsync(nowMethod, nowSort, nowType, nowQuery);
+            return SearchAsync(nowMethod, nowSort, nowType, nowQuery);
         }
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
@@ -140,10 +140,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var nowSort = SelectedSort;
             var nowType = SelectedType;
 
-            return LoadSearchAsync(nowMethod, nowSort, nowType, parameter.Query);
+            return SearchAsync(nowMethod, nowSort, nowType, parameter.Query);
         }
 
-        Task LoadSearchAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
+        Task SearchAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
         {
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(

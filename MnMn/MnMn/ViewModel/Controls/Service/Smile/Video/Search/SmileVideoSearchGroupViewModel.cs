@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
+        SmileVideoSearchItemViewModel SearchFinder { get; set; }
+
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
 
@@ -108,22 +110,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get
             {
                 if(SelectedPage == null) {
-                    //return null;
-                    return base.VideoInformationItems;
+                    if(SearchFinder != null) {
+                        return SearchFinder.VideoInformationItems;
+                    } else {
+                        return base.VideoInformationItems;
+                    }
                 }
                 return SelectedPage.ViewModel.VideoInformationItems;
+            }
         }
-    }
-
-        //public ICollectionView SelectedVideoInformationItems
-        //{
-        //    get {
-        //        if(SelectedPage == null) {
-        //            return null;
-        //        }
-        //        return SelectedPage.ViewModel.VideoInformationItems; }
-        //    //set { SetVariableValue(ref this._selectedVideoInformationItems, value); }
-        //}
 
         public int TotalCount
         {
@@ -142,7 +137,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get
             {
                 if(SelectedPage == null) {
-                    return SmileVideoFinderLoadState.None;
+                    if(SearchFinder != null) {
+                        return SearchFinder.FinderLoadState;
+                    } else {
+                        return base.FinderLoadState;
+                    }
                 }
                 return SelectedPage.ViewModel.FinderLoadState;
             }
@@ -237,31 +236,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowSort = LoadingSort;
             }
 
-            var vm = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
-            vm.PropertyChanged += PageVm_PropertyChanged;
-            return vm.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
+            SearchFinder = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
+            SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            return SearchFinder.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
                 if(isReload) {
-                    TotalCount = vm.TotalCount;
+                    TotalCount = SearchFinder.TotalCount;
                     if(TotalCount > Setting.SearchCount) {
                         var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
-                        var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1: 0;
+                        var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1 : 0;
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
                             .Select((n, i) => new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemViewModel>(v, i + 2))
                             .ToList()
                         ;
-                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
+                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(SearchFinder, 1) {
                             LoadState = LoadState.Loaded,
                         };
                         preList.Insert(0, pageVm);
-                        SearchItems.InitializeRange(preList);
+                        return (IEnumerable<PageViewModel<SmileVideoSearchItemViewModel>>)preList;
                     } else if(TotalCount > 0) {
-                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(vm, 1) {
+                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(SearchFinder, 1) {
                             LoadState = LoadState.Loaded,
                         };
-                        SearchItems.InitializeRange(new[] { pageVm });
+                        return new[] { pageVm };
                     }
                 }
+
+                return Enumerable.Empty<PageViewModel<SmileVideoSearchItemViewModel>>();
+            }).ContinueWith(task => {
+                var preList = task.Result;
+                SearchItems.InitializeRange(preList);
                 NotFound = !SearchItems.Any();
                 if(!NotFound) {
                     SelectedPage = SearchItems.First();
@@ -295,18 +299,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        //protected override void CallOnPropertyChangeDisplayItem()
-        //{
-        //    CallOnPropertyChange(nameof(SearchItems));
-
-        //    base.CallOnPropertyChangeDisplayItem();
-        //}
-
         #endregion
 
         private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(FinderLoadState)) {
+            Mediation.Logger.Information(e.PropertyName);
+            if(ChangePagePropertyNames.Any(n => n == e.PropertyName)) {
                 CallPageItemOnPropertyChange();
             }
         }

@@ -155,6 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             VideoInformationList.InitializeRange(items);
             VideoInformationItems.Refresh();
+            CallOnPropertyChange(nameof(VideoInformationItems));
         }
 
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
