@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -693,46 +694,54 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return this._thumbnailImage;
         }
 
-        async Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
+        Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
         {
             var uri = ThumbnailUri;
 
-            var binary = await RestrictUtility.Block(async () => {
-                try {
-                    Mediation.Logger.Trace($"img -> {uri}");
-                    return await client.GetByteArrayAsync(uri);
-                } catch(HttpRequestException ex) {
-                    Mediation.Logger.Error($"error img -> {uri}");
-                    Mediation.Logger.Warning(ex);
-                    return null;
+            return RestrictUtility.Block(async () => {
+                var maxCount = 3;
+                var count = 0;
+                do {
+                    try {
+                        Mediation.Logger.Trace($"img -> {uri}");
+                        return await client.GetByteArrayAsync(uri);
+                    } catch(HttpRequestException ex) {
+                        Mediation.Logger.Error($"error img -> {uri}");
+                        Mediation.Logger.Warning(ex);
+                        if(count != 0) {
+                            var wait = TimeSpan.FromSeconds(1);
+                            Thread.Sleep(wait);
+                        }
+                    }
+                } while(count++ < maxCount);
+                return null;
+            }).ContinueWith(task => {
+                var binary = task.Result;
+
+                if(binary != null) {
+                    using(var stream = new MemoryStream(binary)) {
+                        GetImage(stream);
+                        ThumbnailLoadState = LoadState.Loaded;
+                    }
+                    if(this._thumbnailImage != null && Application.Current != null) {
+                        // キャッシュ構築
+                        Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                            var frame = BitmapFrame.Create(this._thumbnailImage);
+                            var encoder = new PngBitmapEncoder();
+                            encoder.Frames.Add(frame);
+                            FileUtility.MakeFileParentDirectory(savePath);
+                            using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+                                encoder.Save(stream);
+                            }
+                        }));
+                    }
+                } else {
+                    ThumbnailLoadState = LoadState.Failure;
                 }
             });
-
-            if(binary != null) {
-                using(var stream = new MemoryStream(binary)) {
-                    GetImage(stream);
-                    ThumbnailLoadState = LoadState.Loaded;
-                }
-                if(this._thumbnailImage != null) {
-                    // キャッシュ構築
-                    // TODO: 別スレッドで所有うんぬん
-                    await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                        var frame = BitmapFrame.Create(this._thumbnailImage);
-                        var encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(frame);
-                        FileUtility.MakeFileParentDirectory(savePath);
-                        using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                            encoder.Save(stream);
-                        }
-                    }));
-                }
-            } else {
-                ThumbnailLoadState = LoadState.Failure;
-            }
-            await Task.CompletedTask;
         }
 
-        public async Task LoadThumbnaiImageAsync(CacheSpan cacheSpan)
+        public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
         {
             ThumbnailLoadState = LoadState.Preparation;
 
@@ -746,15 +755,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     using(var stream = new FileStream(cachedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                         GetImage(stream);
                         ThumbnailLoadState = LoadState.Loaded;
-                        return;
+                        return Task.CompletedTask;
                     }
                 }
             }
 
             ThumbnailLoadState = LoadState.Loading;
-            using(var client = new HttpClient()) {
-                await LoadThumbnaiImageAsync_Impl(cachedFilePath, client);
-            }
+            return LoadThumbnaiImageAsync_Impl(cachedFilePath, client);
+        }
+
+        public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
+        {
+            var client = new HttpClient();
+            return LoadThumbnaiImageAsync(cacheSpan, client).ContinueWith(_ => {
+                client.Dispose();
+            });
         }
 
         public async Task LoadInformationAsync(CacheSpan cacheSpan)

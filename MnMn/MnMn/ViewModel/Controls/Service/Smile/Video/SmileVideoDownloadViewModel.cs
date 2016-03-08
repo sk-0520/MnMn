@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ThumbnailLoadState = LoadState.Loading;
             OnLoadDataWithoutSessionStart();
-            return VideoInformation.LoadThumbnaiImageAsync(imageCacheSpan).ContinueWith(task => {
+            return VideoInformation.LoadThumbnaiImageDefaultAsync(imageCacheSpan).ContinueWith(task => {
                 ThumbnailLoadState = LoadState.Loaded;
                 OnLoadDataWithoutSessionEnd();
             });

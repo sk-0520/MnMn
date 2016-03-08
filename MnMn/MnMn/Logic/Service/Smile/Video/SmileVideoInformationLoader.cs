@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,43 +45,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
         {
             var tasks = new List<Task>();
-            //return Task.Run(() => {
+            var groups = List
+                .GroupBy(i => i.ThumbnailUri.Host)
+                .OrderByDescending(g => g.Count())
+                .ToArray()
+            ;
+            foreach(var group in groups) {
+                var groupTask = Task.Run(() => {
+                    var client = new HttpClient();
 
-                //var option = new ParallelOptions() {
-                //    MaxDegreeOfParallelism = 2,
-                //};
-
-                //Parallel.ForEach(List, option, item => {
-                foreach(var item in List) {
-                    var count = 0;
-                    var max = 3;
-                    var wait = TimeSpan.FromSeconds(1);
-                    while(count++ <= max) {
-                        Cancel.Token.ThrowIfCancellationRequested();
-
-                        try {
-                            var task = item.LoadThumbnaiImageAsync(imageCacheSpan);
-                        tasks.Add(task);
-                            break;
-                        } catch(Exception ex) {
-                            Debug.WriteLine($"{item}: {ex}");
-                            if(Cancel.IsCancellationRequested) {
-                                break;
-                            } else {
-                                Thread.Sleep(wait);
-                                continue;
-                            }
-                        }
+                    var childTasks = new List<Task>();
+                    foreach(var item in group) {
+                        var task = item.LoadThumbnaiImageAsync(imageCacheSpan, client);
+                        childTasks.Add(task);
                     }
-                    //});
-                }
-            //});
+
+                    return Task.WhenAll(childTasks).ContinueWith(_ => {
+                        client.Dispose();
+                    });
+                });
+                tasks.Add(groupTask);
+
+                // 地味に待つ
+                var wait = TimeSpan.FromMilliseconds(250);
+                Thread.Sleep(wait);
+            }
+
             return Task.WhenAll(tasks);
         }
 
         public Task LoadInformationAsync(CacheSpan cacheSpan)
         {
             var tasks = new List<Task>();
+            
             //return Task.Run(() => {
             //Parallel.ForEach(List, item => {
             foreach(var item in List) {
