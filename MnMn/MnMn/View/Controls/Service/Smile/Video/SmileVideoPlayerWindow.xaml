@@ -105,6 +105,12 @@
           <Run>x</Run>
           <Run Text="{Binding BaseHeight}" />
         </TextBlock>
+        <TextBlock>
+          <Run>,comment</Run>
+          <Run Text="{Binding CommentAreaWidth}" />
+          <Run>x</Run>
+          <Run Text="{Binding CommentAreaHeight}" />
+        </TextBlock>
         <TextBlock>,datetime</TextBlock>
         <TextBlock>,play</TextBlock>
         <TextBlock>,mylist</TextBlock>
@@ -155,7 +161,7 @@
           <vlc_wpf:VlcPlayer x:Name="player" Grid.Row="0" EndBehavior="Nothing" />
 
           <Viewbox Grid.Row="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid Width="640" Height="386">
+            <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
               <Canvas x:Name="normalCommentArea" />
               <Canvas x:Name="contributorCommentArea" />
             </Grid>

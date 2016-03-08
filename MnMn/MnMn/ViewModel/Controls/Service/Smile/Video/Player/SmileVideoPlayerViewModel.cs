@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         static readonly Size BaseSize_4x3 = new Size(640, 480);
         static readonly Size BaseSize_16x9 = new Size(512, 384);
 
+        const float initPrevStateChangedPosition = -1;
+
         class CommentData
         {
             public CommentData(SmileVideoCommentElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
@@ -112,7 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _isVideoPlayng;
 
         float _videoPosition;
-        float _prevStateChangedPosition = 0;
+        float _prevStateChangedPosition;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -125,6 +127,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _realVideoHeight;
         double _baseWidth;
         double _baseHeight;
+        double _commentAreaWidth = 640;
+        double _commentAreaHeight = 386;
 
         PlayerState _playerState;
         bool _isBufferingStop;
@@ -327,6 +331,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseHeight, value); }
         }
 
+        public double CommentAreaWidth
+        {
+            get { return this._commentAreaWidth; }
+            set { SetVariableValue(ref this._commentAreaWidth, value); }
+        }
+        public double CommentAreaHeight
+        {
+            get { return this._commentAreaHeight; }
+            set { SetVariableValue(ref this._commentAreaHeight, value); }
+        }
         //public string Description
         //{
         //    get
@@ -515,6 +529,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // コメントエリアのサイズ設定
             ChangeBaseSize();
+
+            var realScale = RealVideoHeight/ CommentAreaHeight;
+            CommentAreaWidth *= realScale;
         }
 
         void SetMedia()
@@ -1117,6 +1134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsFirstPlay = true;
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
+            _prevStateChangedPosition = initPrevStateChangedPosition;
             IsBufferingStop = false;
             UserOperationStop = false;
             IsMakedDescription = false;
@@ -1320,7 +1338,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(e.Value == xZune.Vlc.Interop.Media.MediaState.Opening) {
                 return;
             }
-            if(this._prevStateChangedPosition == VideoPosition) {
+            if(PlayerState != PlayerState.Pause && this._prevStateChangedPosition == VideoPosition && this._prevStateChangedPosition != initPrevStateChangedPosition) {
                 return;
             }
             this._prevStateChangedPosition = VideoPosition;
