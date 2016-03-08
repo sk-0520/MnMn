@@ -263,8 +263,8 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\NewArrivals\SmileVideoNewArrivalsManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchGroupViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchGroupFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoSearchMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoTagViewModel.cs" />
     <Compile Include="ViewModel\ManagerViewModelBase.cs" />
@@ -424,7 +424,7 @@
     <Compile Include="Model\ParametersModel.cs" />
     <Compile Include="Model\UrisModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\Ranking\SmileVideoRankingCategoryGroupItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Ranking\SmileVideoRankingCategoryFinderViewModel.cs" />
     <Compile Include="ViewModel\ApplicationManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSessionViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileManagerViewModel.cs" />

@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         DefinedElementModel _selectedCategory;
 
-        SmileVideoRankingCategoryGroupItemViewModel _selectedRankingCategory;
+        SmileVideoRankingCategoryFinderViewModel _selectedRankingCategory;
 
         #endregion
 
@@ -77,13 +77,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         public IList<DefinedElementModel> CategoryItems { get; private set; }
 
-        public SmileVideoRankingCategoryGroupItemViewModel SelectedRankingCategory
+        public SmileVideoRankingCategoryFinderViewModel SelectedRankingCategory
         {
             get { return this._selectedRankingCategory; }
             set { SetVariableValue(ref this._selectedRankingCategory, value); }
         }
 
-        public CollectionModel<SmileVideoRankingCategoryGroupItemViewModel> RankingCategoryGroupItems { get; set; } = new CollectionModel<SmileVideoRankingCategoryGroupItemViewModel>();
+        public CollectionModel<SmileVideoRankingCategoryFinderViewModel> RankingCategoryGroupItems { get; set; } = new CollectionModel<SmileVideoRankingCategoryFinderViewModel>();
 
         #endregion
 
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                     return viewModel;
                 },
                 () => {
-                    var viewModel = new SmileVideoRankingCategoryGroupItemViewModel(Mediation, RankingModel, period, target, category);
+                    var viewModel = new SmileVideoRankingCategoryFinderViewModel(Mediation, RankingModel, period, target, category);
                     RankingCategoryGroupItems.Insert(0, viewModel);
                     return viewModel;
                 }

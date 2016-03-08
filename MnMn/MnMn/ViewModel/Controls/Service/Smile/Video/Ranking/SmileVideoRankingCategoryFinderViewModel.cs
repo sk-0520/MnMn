@@ -44,7 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking
 {
-    public class SmileVideoRankingCategoryGroupItemViewModel: SmileVideoFeedFinderViewModelBase
+    public class SmileVideoRankingCategoryFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
         #region variable
 
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #endregion
 
-        public SmileVideoRankingCategoryGroupItemViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
+        public SmileVideoRankingCategoryFinderViewModel(Mediation mediation, SmileVideoRankingModel rankingModel, DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
             : base(mediation)
         {
             PeriodItems = new CollectionModel<DefinedElementModel>(rankingModel.Periods.Items.Select(i => (DefinedElementModel)i.DeepClone()));

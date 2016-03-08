@@ -33,7 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
-    public class SmileVideoSearchItemViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoSearchItemFinderViewModel: SmileVideoFinderViewModelBase
     {
         #region variable
 
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchItemViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query, int index, int count)
+        public SmileVideoSearchItemFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query, int index, int count)
             :base(mediation)
         {
             SearchModel = searchModel;

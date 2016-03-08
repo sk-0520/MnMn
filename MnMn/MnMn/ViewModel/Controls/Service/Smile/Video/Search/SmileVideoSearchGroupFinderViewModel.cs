@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
     /// <summary>
     /// <para>配列的な操作はこのクラス内で完結させたい思い</para>
     /// </summary>
-    public class SmileVideoSearchGroupViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase
     {
         #region variable
 
@@ -47,13 +47,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         //ICollectionView _selectedVideoInformationItems;
 
         int _totalCount;
-        PageViewModel<SmileVideoSearchItemViewModel> _selectedPage;
+        PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
 
         bool _notfound;
 
         #endregion
 
-        public SmileVideoSearchGroupViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
+        public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
             : base(mediation)
         {
             SearchModel = searchModel;
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
-        SmileVideoSearchItemViewModel SearchFinder { get; set; }
+        SmileVideoSearchItemFinderViewModel SearchFinder { get; set; }
 
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
@@ -89,9 +89,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._selectedSort, value); }
         }
 
-        public CollectionModel<PageViewModel<SmileVideoSearchItemViewModel>> SearchItems { get; } = new CollectionModel<PageViewModel<SmileVideoSearchItemViewModel>>();
+        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> SearchItems { get; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
-        public PageViewModel<SmileVideoSearchItemViewModel> SelectedPage
+        public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
         {
             get { return this._selectedPage; }
             set {
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             {
                 return CreateCommand(
                     o => {
-                        var pageVm = (PageViewModel<SmileVideoSearchItemViewModel>)o;
+                        var pageVm = (PageViewModel<SmileVideoSearchItemFinderViewModel>)o;
                         if(pageVm.LoadState != LoadState.Loaded) {
                             var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
                             var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowSort = LoadingSort;
             }
 
-            SearchFinder = new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
+            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
             SearchFinder.PropertyChanged += PageVm_PropertyChanged;
             return SearchFinder.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
                 if(isReload) {
@@ -245,24 +245,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
                         var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1 : 0;
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
-                            .Select((n, i) => new SmileVideoSearchItemViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
-                            .Select((v, i) => new PageViewModel<SmileVideoSearchItemViewModel>(v, i + 2))
+                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
+                            .Select((v, i) => new PageViewModel<SmileVideoSearchItemFinderViewModel>(v, i + 2))
                             .ToList()
                         ;
-                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(SearchFinder, 1) {
+                        var pageVm = new PageViewModel<SmileVideoSearchItemFinderViewModel>(SearchFinder, 1) {
                             LoadState = LoadState.Loaded,
                         };
                         preList.Insert(0, pageVm);
-                        return (IEnumerable<PageViewModel<SmileVideoSearchItemViewModel>>)preList;
+                        return (IEnumerable<PageViewModel<SmileVideoSearchItemFinderViewModel>>)preList;
                     } else if(TotalCount > 0) {
-                        var pageVm = new PageViewModel<SmileVideoSearchItemViewModel>(SearchFinder, 1) {
+                        var pageVm = new PageViewModel<SmileVideoSearchItemFinderViewModel>(SearchFinder, 1) {
                             LoadState = LoadState.Loaded,
                         };
                         return new[] { pageVm };
                     }
                 }
 
-                return Enumerable.Empty<PageViewModel<SmileVideoSearchItemViewModel>>();
+                return Enumerable.Empty<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
             }).ContinueWith(task => {
                 var preList = task.Result;
                 SearchItems.InitializeRange(preList);

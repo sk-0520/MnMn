@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         string _inputQuery = "ACV";
 
-        SmileVideoSearchGroupViewModel _selectedSearchGroup;
+        SmileVideoSearchGroupFinderViewModel _selectedSearchGroup;
 
         #endregion
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
         public IList<DefinedElementModel> TypeItems => SearchModel.Type;
 
-        public CollectionModel<SmileVideoSearchGroupViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupViewModel>();
+        public CollectionModel<SmileVideoSearchGroupFinderViewModel> SearchGroups { get; } = new CollectionModel<SmileVideoSearchGroupFinderViewModel>();
 
         public DefinedElementModel SelectedMethod
         {
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._inputQuery, value); }
         }
 
-        public SmileVideoSearchGroupViewModel SelectedSearchGroup
+        public SmileVideoSearchGroupFinderViewModel SelectedSearchGroup
         {
             get { return this._selectedSearchGroup; }
             set {
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     return viewModel;
                 },
                 () => {
-                    var viewModel = new SmileVideoSearchGroupViewModel(Mediation, SearchModel, method, sort, type, query);
+                    var viewModel = new SmileVideoSearchGroupFinderViewModel(Mediation, SearchModel, method, sort, type, query);
                     SearchGroups.Insert(0, viewModel);
                     return viewModel;
                 }
