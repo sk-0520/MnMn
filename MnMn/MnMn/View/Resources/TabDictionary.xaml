@@ -1,0 +1,81 @@
+﻿<ResourceDictionary 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <!--
+  http://www.kanazawa-net.ne.jp/~pmansato/wpf/wpf_custom_tabcontrol.htm
+  -->
+  <Style x:Key="FinderTab" TargetType="TabControl">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TabControl">
+          <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}">
+              <RepeatButton 
+                Name="PART_MoveLeft" 
+                DockPanel.Dock="Left"
+                Content="&lt;-" 
+               CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+               Command="ScrollBar.LineLeftCommand" 
+              />
+              <RepeatButton 
+                Name="PART_MoveRight" 
+                DockPanel.Dock="Right"
+                Content="->" 
+                CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+                Command="ScrollBar.LineRightCommand" 
+              />
+              <ScrollViewer 
+                Name="PART_ScrollViewer" 
+                CanContentScroll="True"
+                IsDeferredScrollingEnabled="False" 
+                SnapsToDevicePixels="True"
+                HorizontalScrollBarVisibility="Hidden" 
+                VerticalScrollBarVisibility="Disabled"
+              >
+                <StackPanel 
+                  x:Name="HeaderPanel"
+                  Margin="4,2,4,0"
+                  Panel.ZIndex="1"
+                  Orientation="Horizontal"
+                  IsItemsHost="true"
+                />
+              </ScrollViewer>
+            </DockPanel>
+
+            <Border 
+              Name="ContentPanel" 
+              Grid.Row="1"
+              BorderThickness="{TemplateBinding Border.BorderThickness}"
+              BorderBrush="{TemplateBinding Border.BorderBrush}"
+              Background="{TemplateBinding Panel.Background}"
+              KeyboardNavigation.TabIndex="2"
+              KeyboardNavigation.TabNavigation="Local"
+              KeyboardNavigation.DirectionalNavigation="Contained"
+            >
+              <ContentPresenter 
+                ContentSource="PART_SelectedContentHost"
+                Content="{TemplateBinding TabControl.SelectedContent}"
+                ContentTemplate="{TemplateBinding TabControl.SelectedContentTemplate}"
+                ContentStringFormat="{TemplateBinding TabControl.SelectedContentStringFormat}"
+                Margin="{TemplateBinding Control.Padding}"
+                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+              />
+            </Border>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+              <Setter Property="Panel.ZIndex" Value="100" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

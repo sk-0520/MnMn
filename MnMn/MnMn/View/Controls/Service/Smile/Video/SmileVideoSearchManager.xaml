@@ -17,7 +17,7 @@
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <!--<ResourceDictionary Source="/View/Resources/PagerDictionary.xaml" />-->
+        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </UserControl.Resources>
@@ -54,6 +54,7 @@
       Grid.Row="1" 
       ItemsSource="{Binding SearchGroups}"
       SelectedItem="{Binding SelectedSearchGroup}"
+      Style="{StaticResource FinderTab}"
     >
       <TabControl.ItemTemplate>
         <DataTemplate>

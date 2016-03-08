@@ -23,6 +23,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -101,7 +102,7 @@
 
     <Grid Grid.Column="0">
       <!-- 各データコンテキストは選択用で下位はUserControlのデータコンテキストを参照する -->
-      <TabControl>
+      <TabControl Style="{StaticResource FinderTab}">
         <TabItem x:Name="viewAccount" Header="account" IsSelected="{Binding IsSelectedAccount}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">

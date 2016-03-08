@@ -13,10 +13,18 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
   <Grid>
     <TabControl 
       ItemsSource="{Binding ItemsList}"
       SelectedItem="{Binding SelectedItem}"
+      Style="{StaticResource FinderTab}"
     >
       <TabControl.ItemTemplate>
         <DataTemplate>
