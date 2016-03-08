@@ -533,7 +533,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadGetthumbinfoStart();
             VideoInformation = videoInformation;
             if(VideoInformation.VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
-                await VideoInformation.LoadInformationAsync(thumbCacheSpan);
+                await VideoInformation.LoadInformationDefaultAsync(thumbCacheSpan);
             }
             InformationLoadState = LoadState.Loaded;
             OnLoadGetthumbinfoEnd();

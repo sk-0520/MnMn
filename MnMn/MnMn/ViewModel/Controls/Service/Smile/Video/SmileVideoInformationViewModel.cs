@@ -772,23 +772,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-        public async Task LoadInformationAsync(CacheSpan cacheSpan)
+        public Task LoadInformationAsync(CacheSpan cacheSpan, HttpClient client)
         {
             InformationLoadState = LoadState.Preparation;
 
             InformationLoadState = LoadState.Loading;
 
-            var rawGetthumbinfo = await LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan);
-            //SetThumbModel(rawGetthumbinfo.Thumb);
-            Thumb = rawGetthumbinfo.Thumb;
-            InformationLoadState = LoadState.Loaded;
-            VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
-            var propertyNames = new[] {
-                nameof(Length),
-                nameof(HasLength),
-                nameof(InformationLoadState),
-            };
-            CallOnPropertyChange(propertyNames);
+            return LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
+                var rawGetthumbinfo = task.Result;
+                Thumb = rawGetthumbinfo.Thumb;
+                InformationLoadState = LoadState.Loaded;
+                VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+                var propertyNames = new[] {
+                    nameof(Length),
+                    nameof(HasLength),
+                    nameof(InformationLoadState),
+                };
+                CallOnPropertyChange(propertyNames);
+            });
+        }
+
+        public Task LoadInformationDefaultAsync(CacheSpan cacheSpan)
+        {
+            var client = new HttpClient();
+            return LoadInformationAsync(cacheSpan, client).ContinueWith(_ => {
+                client.Dispose();
+            });
         }
 
         public Task SetPageHtmlAsync(string html, bool isSave)

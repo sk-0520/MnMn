@@ -76,19 +76,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public Task LoadInformationAsync(CacheSpan cacheSpan)
         {
+            var client = new HttpClient();
             var tasks = new List<Task>();
-            
-            //return Task.Run(() => {
-            //Parallel.ForEach(List, item => {
-            foreach(var item in List) {
-                    Cancel.Token.ThrowIfCancellationRequested();
 
-                var task = item.LoadInformationAsync(cacheSpan);
+            foreach(var item in List) {
+                var task = item.LoadInformationAsync(cacheSpan, client);
                 tasks.Add(task);
-                }
-                //});
-            //});
-            return Task.WhenAll(tasks);
+            }
+
+            return Task.WhenAll(tasks).ContinueWith(_ => {
+                client.Dispose();
+            });
         }
 
     }
