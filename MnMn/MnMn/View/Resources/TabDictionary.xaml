@@ -17,18 +17,25 @@
 
             <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}">
               <RepeatButton 
-                Name="PART_MoveLeft" 
+                Name="PART_HeadMoveLeft" 
                 DockPanel.Dock="Left"
                 Content="&lt;-" 
                CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                Command="ScrollBar.LineLeftCommand" 
               />
               <RepeatButton 
-                Name="PART_MoveRight" 
+                Name="PART_TailMoveRight" 
                 DockPanel.Dock="Right"
                 Content="->" 
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineRightCommand" 
+              />
+              <RepeatButton 
+                Name="PART_TailMoveLeft" 
+                DockPanel.Dock="Right"
+                Content="&lt;-" 
+               CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+               Command="ScrollBar.LineLeftCommand" 
               />
               <ScrollViewer 
                 Name="PART_ScrollViewer" 
