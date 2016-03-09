@@ -107,10 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(task => {
-                // TODO:開発用のものを設定
-                SelectedManager = ManagerItems.Last();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
         }
     }
 }

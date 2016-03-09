@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            var isReload =(bool)extends;
+            var isReload = (bool)extends;
 
             DefinedElementModel nowMethod;
             DefinedElementModel nowSort;
@@ -235,6 +235,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowMethod = LoadingMethod;
                 nowSort = LoadingSort;
             }
+
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
             SearchFinder.PropertyChanged += PageVm_PropertyChanged;
@@ -263,7 +264,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
 
                 return Enumerable.Empty<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
-            }).ContinueWith(task => {
+            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
                 var preList = task.Result;
                 SearchItems.InitializeRange(preList);
                 NotFound = !SearchItems.Any();
