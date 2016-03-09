@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var tasks = new List<Task>();
             var groups = List
-                .GroupBy(i => i.ThumbnailUri.Host)
+                .GroupBy(i => i.ThumbnailUri.IsAbsoluteUri ? i.ThumbnailUri.Host: string.Empty)
                 .OrderByDescending(g => g.Count())
                 .ToArray()
             ;

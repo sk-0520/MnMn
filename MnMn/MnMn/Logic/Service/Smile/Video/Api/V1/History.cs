@@ -134,7 +134,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 detailModel.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
 
                 var lengthElement = thumbContainerElement.SelectSingleNode(".//*[@class='videoTime']");
-                detailModel.Length = lengthElement.InnerText;
+                if(lengthElement != null) {
+                    detailModel.Length = lengthElement.InnerText;
+                } else {
+                    detailModel.Length = "00:00";
+                }
 
                 var metadataElement = sectionElement.SelectSingleNode("//*[@class='metadata']");
 
