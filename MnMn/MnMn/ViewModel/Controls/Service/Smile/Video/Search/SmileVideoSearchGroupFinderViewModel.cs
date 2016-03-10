@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._selectedSort, value); }
         }
 
-        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> SearchItems { get; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
+        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> SearchItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
         public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
         {
@@ -195,6 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             nameof(FinderLoadState),
             nameof(CanLoad),
             nameof(NowLoading),
+            nameof(SearchItems),
         };
 
 

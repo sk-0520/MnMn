@@ -103,11 +103,12 @@
                   <Run Text="{Binding TotalCount}" />
                 </TextBlock>
 
-                <!--<app_contrls:Pager 
+                <app_contrls:Pager 
                   Grid.Column="2" 
+                  DataContext="{Binding}"
                   PageItems="{Binding SearchItems, Mode=OneWay}"
                   Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_contrls_service_smile_video:SmileVideoFinderControl}}"
-                />-->
+                />
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
