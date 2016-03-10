@@ -21,14 +21,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
-    public abstract class PageViewModelBase: ViewModelBase
+    public abstract class PageViewModelBase: ViewModelBase, ICheckable
     {
         #region variable
 
         LoadState _loadState;
+        bool? _isChecked;
 
         #endregion
 
@@ -45,6 +47,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get { return this._loadState; }
             set { SetVariableValue(ref this._loadState, value); }
+        }
+
+        #endregion
+
+        #region 
+
+        public bool? IsChecked
+        {
+            get { return this._isChecked; }
+            set { SetVariableValue(ref this._isChecked, value); }
         }
 
         #endregion

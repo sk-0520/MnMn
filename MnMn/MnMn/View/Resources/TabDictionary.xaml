@@ -20,8 +20,8 @@
                 Name="PART_HeadMoveLeft" 
                 DockPanel.Dock="Left"
                 Content="&lt;-" 
-               CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-               Command="ScrollBar.LineLeftCommand" 
+                CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+                Command="ScrollBar.LineLeftCommand" 
               />
               <RepeatButton 
                 Name="PART_TailMoveRight" 

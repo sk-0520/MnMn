@@ -105,7 +105,7 @@
 
                 <app_view_contrls:Pager 
                   Grid.Column="2" 
-                  PageItems="{Binding SearchItems, Mode=OneWay}"
+                  PageItems="{Binding PageItems}"
                   Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_contrls_service_smile_video:SmileVideoFinderControl}}"
                 />
                 <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">

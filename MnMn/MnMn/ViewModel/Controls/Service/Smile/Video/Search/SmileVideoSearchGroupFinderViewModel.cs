@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._selectedSort, value); }
         }
 
-        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> SearchItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
+        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
         public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
         {
@@ -97,8 +97,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set {
                 var oldSelectedPage = this._selectedPage;
                 if(SetVariableValue(ref this._selectedPage, value)) {
+                    if(this._selectedPage != null) {
+                        this._selectedPage.IsChecked = true;
+                    }
                     if(oldSelectedPage!= null) {
                         oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+                        oldSelectedPage.IsChecked = false;
                     }
                     CallPageItemOnPropertyChange();
                 }
@@ -195,7 +199,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             nameof(FinderLoadState),
             nameof(CanLoad),
             nameof(NowLoading),
-            nameof(SearchItems),
+            nameof(PageItems),
             nameof(PageChangeCommand),
         };
 
@@ -268,10 +272,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return Enumerable.Empty<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(task => {
                 var preList = task.Result;
-                SearchItems.InitializeRange(preList);
-                NotFound = !SearchItems.Any();
+                PageItems.InitializeRange(preList);
+                NotFound = !PageItems.Any();
                 if(!NotFound) {
-                    SelectedPage = SearchItems.First();
+                    SelectedPage = PageItems.First();
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

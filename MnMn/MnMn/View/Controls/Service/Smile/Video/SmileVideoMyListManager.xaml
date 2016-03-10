@@ -181,7 +181,7 @@
 
             <app_view_contrls:Pager 
               DockPanel.Dock="Bottom"
-              PageItems="{Binding SearchItems, Mode=OneWay}"
+              PageItems="{Binding PageItems}"
               Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             />
             <!--<app_view_contrls:Pager

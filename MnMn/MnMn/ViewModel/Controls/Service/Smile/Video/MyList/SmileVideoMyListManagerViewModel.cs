@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView SearchUserMyListItems { get; }
-        public CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>> SearchItems { get; } = new CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>>();
+        public CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>> PageItems { get; } = new CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>>();
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> LocalUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView LocalUserMyListItems { get; }
@@ -183,6 +183,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 var oldSelectedPage = this._selectedPage;
                 if(SetVariableValue(ref this._selectedPage, value)) {
+                    if(this._selectedPage != null) {
+                        this._selectedPage.IsChecked = true;
+                    }
+                    if(oldSelectedPage != null) {
+                        oldSelectedPage.IsChecked = false;
+                    }
                     SelectedSearchFinder = this._selectedPage.ViewModel.Items.First();
                     SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
                 }
@@ -314,7 +320,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         void ClearSearchUserMyListPage()
         {
             SelectedPage = null;
-            SearchItems.Clear();
+            PageItems.Clear();
         }
 
         void ChangedSelectedFinder(SmileVideoMyListFinderViewModelBase selectedFinder)
@@ -481,9 +487,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var pages = list
                     .Select((vm, i) => new PageViewModel<SmileVideoMyListFinderPageViewModel>(vm, i + 1))
                 ;
-                SearchItems.InitializeRange(pages);
+                PageItems.InitializeRange(pages);
                 SearchUserMyList.InitializeRange(finders);
-                SelectedPage = SearchItems.First();
+                SelectedPage = PageItems.First();
             } else {
                 ClearSearchUserMyListPage();
             }
