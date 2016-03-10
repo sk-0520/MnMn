@@ -505,7 +505,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand LoadSelectVideoItemCommand
+        public ICommand LoadSelectPlayListItemCommand
         {
             get
             {
@@ -518,7 +518,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand LoadNextPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                    }
+                );
+            }
+        }
+        public ICommand LoadPrevPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                    }
+                );
+            }
+        }
+
         #endregion
+
 
         #region function
 

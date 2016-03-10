@@ -24,6 +24,7 @@
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+
     </ResourceDictionary>
   </Window.Resources>
   <DockPanel>
@@ -50,11 +51,15 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
+      
+      <Separator />
+      
+      <Button Command="{Binding LoadPrevPlayListItemCommand}">prev</Button>
       <Menu>
         <MenuItem Header="play list" ItemsSource="{Binding PlayListItems}">
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem">
-              <Setter Property="Command" Value="{Binding DataContext.LoadSelectVideoItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+              <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
           </MenuItem.ItemContainerStyle>
@@ -65,7 +70,7 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
-      <ToggleButton x:Name="switchComment" Content="comment" IsChecked="{Binding PlayerShowCommentArea}" />
+      <Button Command="{Binding LoadNextPlayListItemCommand}">next</Button>
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom" >
@@ -147,7 +152,7 @@
             <Style>
               <Setter Property="Grid.ColumnSpan" Value="1" />
               <Style.Triggers>
-                <DataTrigger Binding="{Binding IsChecked, ElementName=switchComment}" Value="False">
+                <DataTrigger Binding="{Binding PlayerShowCommentArea}" Value="False">
                   <Setter Property="Grid.ColumnSpan" Value="3" />
                 </DataTrigger>
               </Style.Triggers>
@@ -189,6 +194,7 @@
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton Content="msg" IsChecked="{Binding PlayerVisibleComment}" />
+                  <ToggleButton Content="list" IsChecked="{Binding PlayerShowCommentArea}" />
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>
@@ -202,10 +208,10 @@
         <GridSplitter 
           Grid.Row="0" Grid.Column="1" 
           Style="{StaticResource DefaultVericalGridSplitter}" 
-          Visibility="{Binding IsChecked, ElementName=switchComment, Converter={StaticResource BooleanToVisibilityConverter}}"
+          Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}"
         />
 
-        <Grid Grid.Row="0" Grid.Column="2" Visibility="{Binding IsChecked, ElementName=switchComment, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}">
           <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
             <ListView.View>
               <GridView>
