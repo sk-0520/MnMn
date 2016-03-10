@@ -66,12 +66,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(null != newValueINotifyCollectionChanged) {
                 newValueINotifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(newValueINotifyCollectionChanged_CollectionChanged);
             }
-
         }
 
         private void newValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //throw new NotImplementedException();
+            if(e.Action == NotifyCollectionChangedAction.Add) {
+                //Refresh();
+            }
         }
 
         public IEnumerable PageItems
@@ -97,7 +99,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             var control = d as Pager;
             if(control != null) {
-                control.Command = e.NewValue as ICommand;
+                //control.Command = e.NewValue as ICommand;
+                control.OnItemsSourceChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+            }
+        }
+
+        private void OnItemsSourceChanged(ICommand oldValue, ICommand newValue)
+        {
+            // Remove handler for oldValue.CollectionChanged
+            var oldValueINotifyCollectionChanged = oldValue as INotifyCollectionChanged;
+
+            if(null != oldValueINotifyCollectionChanged) {
+                oldValueINotifyCollectionChanged.CollectionChanged -= new NotifyCollectionChangedEventHandler(newValueINotifyCollectionChanged_CollectionChanged);
+            }
+            // Add handler for newValue.CollectionChanged (if possible)
+            var newValueINotifyCollectionChanged = newValue as INotifyCollectionChanged;
+            if(null != newValueINotifyCollectionChanged) {
+                newValueINotifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(newValueINotifyCollectionChanged_CollectionChanged);
             }
         }
 

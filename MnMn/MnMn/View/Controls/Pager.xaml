@@ -10,7 +10,7 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <Grid>
-    <ItemsControl Grid.Column="1" ItemsSource="{Binding PageItems, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}">
+    <ItemsControl ItemsSource="{Binding PageItems, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}">
         <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel Orientation="Horizontal" />

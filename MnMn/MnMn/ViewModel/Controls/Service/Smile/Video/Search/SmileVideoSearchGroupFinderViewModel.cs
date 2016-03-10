@@ -196,6 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             nameof(CanLoad),
             nameof(NowLoading),
             nameof(SearchItems),
+            nameof(PageChangeCommand),
         };
 
 

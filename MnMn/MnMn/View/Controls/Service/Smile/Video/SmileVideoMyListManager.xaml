@@ -179,12 +179,17 @@
               <Button Command="{Binding SearchUserMyListCommand}">find</Button>
             </ToolBar>
 
+            <app_view_contrls:Pager 
+              DockPanel.Dock="Bottom"
+              PageItems="{Binding SearchItems, Mode=OneWay}"
+              Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            />
             <!--<app_view_contrls:Pager
               DockPanel.Dock="Bottom"
               PageItems="{Binding SearchItems}"
               Command="{Binding DataContext.SearchUserMyListPageChangeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
             />-->
-            <ItemsControl  DockPanel.Dock="Bottom" ItemsSource="{Binding SearchItems}">
+            <!--<ItemsControl  DockPanel.Dock="Bottom" ItemsSource="{Binding SearchItems}">
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                   <StackPanel Orientation="Horizontal" />
@@ -199,7 +204,7 @@
                     />
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl>-->
 
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedSearchFinder}" ItemsSource="{Binding SearchUserMyListItems}" />
 
