@@ -95,5 +95,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
                 return ResourceManager.GetString("String_Service_Smile_SmileVideo_NewArrivals_Recent_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   あなたにおすすめ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title", resourceCulture);
+            }
+        }
     }
 }
