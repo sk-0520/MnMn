@@ -28,16 +28,22 @@
     </Grid.RowDefinitions>
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <ComboBox 
+      <!-- だっせぇ！ -->
+      <!--<ComboBox 
         DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding MethodItems}" 
         SelectedItem="{Binding SelectedMethod}"
       />
-      <!-- だっせぇ！ -->
       <ComboBox 
         DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding SortItems}" 
         SelectedItem="{Binding SelectedSort}"
+      />-->
+      <app_view_contrls_service_smile_video:SmileVideoSearchContext
+        SelectedMethod="{Binding SelectedMethod}"
+        SelectedSort="{Binding SelectedSort}"
+        MethodItems="{Binding MethodItems}"
+        SortItems="{Binding SortItems}"
       />
       <ComboBox 
         DisplayMemberPath="DisplayText" 
@@ -70,7 +76,7 @@
               </StackPanel>
               <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
             </Grid>
-            <ComboBox 
+            <!--<ComboBox 
               DisplayMemberPath="DisplayText" 
               ItemsSource="{Binding MethodItems}" 
               SelectedItem="{Binding SelectedMethod}"
@@ -79,6 +85,12 @@
               DisplayMemberPath="DisplayText" 
               ItemsSource="{Binding SortItems}" 
               SelectedItem="{Binding SelectedSort}"
+            />-->
+            <app_view_contrls_service_smile_video:SmileVideoSearchContext
+              SelectedMethod="{Binding SelectedMethod}"
+              SelectedSort="{Binding SelectedSort}"
+              MethodItems="{Binding MethodItems}"
+              SortItems="{Binding SortItems}"
             />
             <Button
               Content="reload"

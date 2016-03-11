@@ -295,6 +295,9 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoPlayerWindow.xaml.cs">
       <DependentUpon>SmileVideoPlayerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoSearchContext.xaml.cs">
+      <DependentUpon>SmileVideoSearchContext.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml.cs">
       <DependentUpon>SmileVideoSearchManager.xaml</DependentUpon>
     </Compile>
@@ -449,6 +452,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoSearchContext.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoSearchManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
