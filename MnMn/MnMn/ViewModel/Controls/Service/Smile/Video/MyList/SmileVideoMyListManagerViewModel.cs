@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 return CreateCommand(
                     o => {
-                        LoadAccountMyListAsync(null).ConfigureAwait(false);
+                        LoadAccountMyListAsync(true, null).ConfigureAwait(false);
                     }
                 );
             }
@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             //SelectedTabItem
         }
 
-        async Task LoadAccountMyListAsync(string firstSelectedMyListId)
+        async Task LoadAccountMyListAsync(bool isFinderSelected, string selectedMyListId)
         {
             var list = new List<SmileVideoAccountMyListFinderViewModel>();
 
@@ -371,8 +371,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             AccountMyList.InitializeRange(list);
 
-            SelectedAccountFinder = list.FirstOrDefault(i => i.MyListId == firstSelectedMyListId) ?? defaultMyList;
-            Debug.WriteLine(accountGroup);
+            if(isFinderSelected) {
+                SelectedAccountFinder = list.FirstOrDefault(i => i.MyListId == selectedMyListId) ?? defaultMyList;
+            }
         }
 
         async Task CreateAccountMyListAsync()
@@ -385,7 +386,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var result = await myList.CreateAccountGroupAsync(newMyListName);
             if(result.IsSuccess) {
                 var myListId = SmileMyListUtility.GetMyListId(result);
-                await LoadAccountMyListAsync(myListId);
+                await LoadAccountMyListAsync(true, myListId);
             }
         }
 
@@ -399,7 +400,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             var myList = GetMyListApi();
             await myList.DeleteAccountGroupAsync(accountFinder.MyListId);
-            await LoadAccountMyListAsync(null);
+            await LoadAccountMyListAsync(true, null);
         }
 
         async Task<CheckModel> RemoveAccountMyListVideoAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
@@ -507,16 +508,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 myListGroup.EditingMyListDescription, 
                 myListGroup.EditingMyListIsPublic
             );
-            await LoadAccountMyListAsync(myListGroup.MyListId);
+            await LoadAccountMyListAsync(true, myListGroup.MyListId);
         }
 
         #endregion
 
         #region ManagerViewModelBase
 
+        protected override void ShowView()
+        {
+            if(SelectedAccountFinder == null && AccountMyListViewer.Any()) {
+                SelectedAccountFinder = AccountMyListViewer.First();
+            }
+            base.ShowView();
+        }
+
         public override Task InitializeAsync()
         {
-            return LoadAccountMyListAsync(null);
+            return LoadAccountMyListAsync(false, null);
         }
 
         #endregion
