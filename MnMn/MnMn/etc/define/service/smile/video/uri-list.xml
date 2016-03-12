@@ -15,9 +15,11 @@
 	<item key="video-getthreadkey" uri="http://flapi.nicovideo.jp/api/getthreadkey" param="query" />
 	
 	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
-	
-	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
 
+	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
+	
+	<item key="video-relation-tag" uri="http://api.search.nicovideo.jp/api/tag/" param="none" />
+	
 	<item key="video-history-page" uri="http://www.nicovideo.jp/my/history" />
 	<item key="video-history-api" uri="http://www.nicovideo.jp/api/videoviewhistory/list" />
 	<item key="video-history-remove" uri="http://www.nicovideo.jp/my/history" />
