@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -76,14 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
             return result;
         }
 
-        RawSmileVideoRecommendModel ConvertRecommend(string htmlSource)
+        RawSmileVideoRecommendModel ConvertRecommend(HtmlDocument htmlDocument)
         {
-            var htmlDocument = new HtmlDocument() {
-                OptionAutoCloseOnEnd = true,
-            };
-            htmlDocument.LoadHtml(htmlSource);
-
-
             var regParam = new Regex(
                 $@"
                 var
@@ -120,17 +115,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
             return result;
         }
 
+        public Task<HtmlDocument> LoadPageAsync()
+        {
+            Debug.Assert(Session.LoginState == LoginState.Logged);
+
+            var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.recommendationPage, ServiceType.SmileVideo);
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
+                page.Dispose();
+
+                var response = task.Result;
+
+                var htmlDocument = new HtmlDocument() {
+                    OptionAutoCloseOnEnd = true,
+                };
+                htmlDocument.LoadHtml(response.Result);
+
+                return htmlDocument;
+            });
+        }
+
         public async Task<RawSmileVideoRecommendModel> LoadAsync()
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.recommendationPage, ServiceType.SmileVideo)) {
-                var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
+            var htmlDocument = await LoadPageAsync();
 
-                var result = ConvertRecommend(response.Result);
+            var result = ConvertRecommend(htmlDocument);
 
-                return result;
-            }
+            return result;
         }
 
         public async Task<RawSmileVideoRecommendModel> LoadNextAsync(string pageNumber)
