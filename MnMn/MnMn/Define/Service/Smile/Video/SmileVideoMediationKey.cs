@@ -32,6 +32,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string getthreadkey = "video-getthreadkey";
         public const string msg = "video-msg";
 
+        public const string tagRelation = "video-tag-relation";
+
         public const string newarrival = "video-newarrival";
         public const string recent = "video-recent";
         public const string hotlist = "video-hotlist";

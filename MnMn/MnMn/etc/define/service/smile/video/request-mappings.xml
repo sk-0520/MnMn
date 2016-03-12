@@ -80,4 +80,29 @@
 			]]>
 		</content>
 	</mapping>
+	
+	<!-- 関連タグ -->
+	<mapping key="video-tag-relation">
+		<item key="query" type="simple" value="${query}">
+			<bracket target="value" open="&quot;" close="&quot;" />
+			<custom target="value" rep-from="&quot;" rep-to="\&quot;" />
+		</item>
+		<item key="from" type="simple" value="0" />
+		<item key="size" type="simple" value="10" />
+		<item key="issuer" type="simple" value="pc" />
+		<item key="reason" type="simple" value="user" />
+		
+		<content trim="none" oneline="false">
+			<![CDATA[
+				{
+					"query": ${query},
+					"service": [ "tag_video" ],
+					"from": ${from},
+					"size": ${size},
+					"issuer":"${issuer}",
+					"reason":"${reason}"
+				}
+			]]>
+		</content>
+	</mapping>
 </mappings>

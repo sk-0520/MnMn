@@ -91,6 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
+        public CollectionModel<SmileVideoTagViewModel> RelationTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
+
         public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
         {
             get { return this._selectedPage; }
@@ -245,6 +247,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
             SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+
+            var query = Query;
+
+            if(isReload) {
+                var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
+                var tagTask = tag.LoadRelationTagListAsync(query).ContinueWith(task => {
+                    var list = task.Result;
+                    var items = list.Tags
+                        .Where(t => t.Text != query)
+                        .Select(t => new SmileVideoTagViewModel(Mediation, t))
+                    ;
+                    RelationTagItems.InitializeRange(items);
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+
             return SearchFinder.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
                 if(isReload) {
                     TotalCount = SearchFinder.TotalCount;
@@ -252,7 +269,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
                         var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1 : 0;
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
-                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
+                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemFinderViewModel>(v, i + 2))
                             .ToList()
                         ;

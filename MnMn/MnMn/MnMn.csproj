@@ -181,6 +181,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\History.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\NewArrivals.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Ranking.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Tag.cs" />
     <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\HotList.cs" />
     <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\Recommendations.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
