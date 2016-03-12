@@ -272,7 +272,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoSearchMyListFinderViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoTagViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
     <Compile Include="ViewModel\ManagerViewModelBase.cs" />
     <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
       <DependentUpon>LoadStateNavigator.xaml</DependentUpon>
