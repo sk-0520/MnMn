@@ -23,6 +23,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         SmileVideoSearchGroupFinderViewModel _selectedSearchGroup;
 
         bool _showTagArea;
+        LoadState _recommendTagLoadState;
 
         #endregion
 
@@ -108,8 +110,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public bool ShowTagArea
         {
             get { return this._showTagArea; }
-            set { SetVariableValue(ref this._showTagArea, value); }
+            set
+            {
+                if(SetVariableValue(ref this._showTagArea, value)) {
+                    if(this._showTagArea) {
+                        if(RecommendTagLoadState == LoadState.None) {
+                            LoadRecommendTagItemsAsync().ConfigureAwait(false);
+                        }
+                    }
+                }
+            }
         }
+
+        public LoadState RecommendTagLoadState
+        {
+            get { return this._recommendTagLoadState; }
+            set { SetVariableValue(ref this._recommendTagLoadState, value); }
+        }
+
 
         public CollectionModel<SmileVideoTagViewModel> RecommendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
@@ -134,6 +152,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return CreateCommand(
                     o => {
                         LoadRecommendTagItemsAsync().ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        public ICommand SearchRecommendTagCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        ShowTagArea = false;
+
+                        var tagViewModel = (SmileVideoTagViewModel)o;
+                        var parameter = new SmileVideoSearchParameterModel() {
+                            MethodIsTag = true,
+                            Query = tagViewModel.TagName,
+                        };
+
+                        LoadSearchFromParameterAsync(parameter).ConfigureAwait(false);
                     }
                 );
             }
@@ -187,13 +225,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public Task LoadRecommendTagItemsAsync()
         {
+            RecommendTagLoadState = LoadState.Preparation;
+
             var rec = new Recommendations(Mediation);
+
+            RecommendTagLoadState = LoadState.Loading;
             return rec.LoadTagListAsync().ContinueWith(task => {
                 var rawTagList = task.Result;
                 return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
             }).ContinueWith(task => {
                 var list = task.Result;
                 RecommendTagItems.InitializeRange(list);
+                RecommendTagLoadState = LoadState.Loaded;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
