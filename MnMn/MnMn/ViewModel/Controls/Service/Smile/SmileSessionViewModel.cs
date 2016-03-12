@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
                         .FirstOrDefault(h => h.Key == "x-niconico-authflag")
-                        .Value.Any(s => s == "1")
+                        .Value.Any(s => s == "1" || s == "3")
                     ;
 
                     if(successLogin) {
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 page.JudgeCheckResponseHeaders = response => {
                     var successLogin = response.Headers
                         .FirstOrDefault(h => h.Key == "x-niconico-authflag")
-                        .Value.Any(s => s == "1")
+                        .Value.Any(s => s == "1" || s == "3")
                     ;
                     if(successLogin) {
                         LoginState = LoginState.Logged;

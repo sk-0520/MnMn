@@ -552,8 +552,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // コメントエリアのサイズ設定
             ChangeBaseSize();
 
-            var realScale = RealVideoHeight/ CommentAreaHeight;
-            CommentAreaWidth *= realScale;
+            if(RealVideoHeight < CommentAreaHeight) {
+                var realScale = RealVideoHeight/CommentAreaHeight;
+                CommentAreaWidth *= realScale;
+            }
         }
 
         void SetMedia()
