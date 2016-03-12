@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             var reg = new Regex(
                 @"
-                <Run(?<STYLE>\s+.+?)>
+                <Run(?<STYLE>\s+.+?)?>
                     (?<VALUE>.*?)
                 </Run>
                 ",
