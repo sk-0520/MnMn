@@ -35,10 +35,25 @@
         SelectedPeriod="{Binding SelectedPeriod}"
       />
       <ComboBox 
-        DisplayMemberPath="DisplayText" 
         ItemsSource="{Binding CategoryItems}"
         SelectedItem="{Binding SelectedCategory}"
-      />
+      >
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding DisplayText, Mode=OneTime}">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsRoot}" Value="False">
+                      <Setter Property="Margin" Value="10, 0, 0, 0" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
       <Button
         Content="get"
         Command="{Binding LoadRankingCategoryCommand}"

@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         DefinedElementModel _selectedPeriod;
         DefinedElementModel _selectedTarget;
 
-        DefinedElementModel _selectedCategory;
+        SmileVideoRankingCategoryDefinedElementViewModel _selectedCategory;
 
         SmileVideoRankingCategoryFinderViewModel _selectedRankingCategory;
 
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             : base(mediation)
         {
             RankingModel = rankingModel;
-            CategoryItems = new CollectionModel<DefinedElementModel>(GetLinearRankingElementList(RankingModel.Items));
+            CategoryItems = new CollectionModel<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
             SelectedPeriod = PeriodItems.First();
             SelectedTarget = TargetItems.First();
             SelectedCategory = CategoryItems.First();
@@ -69,13 +69,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             get { return this._selectedTarget; }
             set { SetVariableValue(ref this._selectedTarget, value); }
         }
-        public DefinedElementModel SelectedCategory
+        public SmileVideoRankingCategoryDefinedElementViewModel SelectedCategory
         {
             get { return this._selectedCategory; }
             set { SetVariableValue(ref this._selectedCategory, value); }
         }
 
-        public IList<DefinedElementModel> CategoryItems { get; private set; }
+        public IList<SmileVideoRankingCategoryDefinedElementViewModel> CategoryItems { get; private set; }
 
         public SmileVideoRankingCategoryFinderViewModel SelectedRankingCategory
         {
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
 
-                        LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory).ConfigureAwait(false);
+                        LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory.Model).ConfigureAwait(false);
                     }
                 );
             }
@@ -109,14 +109,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region function
 
-        IEnumerable<DefinedElementModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
+        IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
         {
             foreach(var item in items) {
                 if(item.IsSingleCategory) {
-                    yield return item.Categories.Single();
+                    yield return new SmileVideoRankingCategoryDefinedElementViewModel(item.Categories.Single(), true);
                 } else {
-                    foreach(var c in item.Categories) {
-                        yield return c;
+                    foreach(var c in item.Categories.Take(1)) {
+                        yield return new SmileVideoRankingCategoryDefinedElementViewModel(c, true);
+                    }
+                    foreach(var c in item.Categories.Skip(1)) {
+                        yield return new SmileVideoRankingCategoryDefinedElementViewModel(c, false);
                     }
                 }
             }
@@ -128,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             var nowTarget = SelectedTarget;
             var nowCategory = SelectedCategory;
 
-            return LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory);
+            return LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory.Model);
         }
 
         Task LoadRankingCategoryAsync(DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
