@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 {
     public class SmileVideoSearchManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        #region property
+        #region variable
 
         DefinedElementModel _selectedMethod;
         DefinedElementModel _selectedSort;
@@ -43,6 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         string _inputQuery = "ACV";
 
         SmileVideoSearchGroupFinderViewModel _selectedSearchGroup;
+
+        bool _showTagArea;
 
         #endregion
 
@@ -102,6 +105,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public bool ShowTagArea
+        {
+            get { return this._showTagArea; }
+            set { SetVariableValue(ref this._showTagArea, value); }
+        }
+
+        public CollectionModel<SmileVideoTagViewModel> RecommendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
         #endregion
 
@@ -114,6 +124,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return CreateCommand(o => {
                     SearchAsync().ConfigureAwait(false);
                 });
+            }
+        }
+
+        public ICommand LoadRecommendTagCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LoadRecommendTagItemsAsync().ConfigureAwait(false);
+                    }
+                );
             }
         }
 
@@ -161,6 +183,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(task => {
                 SelectedSearchGroup = selectViewModel;
             });
+        }
+
+        public Task LoadRecommendTagItemsAsync()
+        {
+            var rec = new Recommendations(Mediation);
+            return rec.LoadTagListAsync().ContinueWith(task => {
+                var rawTagList = task.Result;
+                return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
+            }).ContinueWith(task => {
+                var list = task.Result;
+                RecommendTagItems.InitializeRange(list);
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion

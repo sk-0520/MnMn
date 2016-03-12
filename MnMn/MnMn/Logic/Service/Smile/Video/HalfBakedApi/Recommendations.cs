@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
             return result;
         }
 
-        public Task<HtmlDocument> LoadPageAsync()
+        Task<HtmlDocument> LoadPageAsync()
         {
             Debug.Assert(Session.LoginState == LoginState.Logged);
 
@@ -158,6 +158,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
                 return Load(response.Result);
             }
         }
+
+        public async Task<RawSmileVideoTagListModel> LoadTagListAsync()
+        {
+            await LoginIfNotLoginAsync();
+
+            var htmlDocument = await LoadPageAsync();
+
+            var result = new RawSmileVideoTagListModel();
+            result.Domain = Constants.CurrentLanguageCode;
+            var tagsElement = htmlDocument.DocumentNode.Descendants("div")
+                .Where(n => n.Attributes.Contains("class"))
+                .Where(n => n.Attributes["class"].Value.Contains("text_list"))
+                .FirstOrDefault()
+            ;
+            if(tagsElement == null) {
+                return null;
+            }
+
+            var items = tagsElement.SelectNodes(".//ul/li");
+            foreach(var itemElement in items) {
+                var tag = new RawSmileVideoTagItemModel();
+                var tagNameElement = itemElement.SelectSingleNode(".//a");
+                tag.Text = tagNameElement.InnerText;
+                result.Tags.Add(tag);
+            }
+
+            return result;
+        }
+
         #endregion
     }
 }
