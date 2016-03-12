@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
                 { SmileVideoMediationKey.newarrival, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_NewArrival_Title },
                 { SmileVideoMediationKey.recent, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recent_Title },
                 { SmileVideoMediationKey.hotlist, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Hotlist_Title },
+                { SmileVideoMediationKey.recommendation, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title },
             };
             Title = titleMap[Key];
         }

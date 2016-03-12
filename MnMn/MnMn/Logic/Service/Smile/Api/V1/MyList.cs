@@ -274,7 +274,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                     .Where(n => n.Name == "script")
                     .Select(e => e.InnerText)
                     .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .First(s => regToken.IsMatch(s))
+                    .FirstOrDefault(s => regToken.IsMatch(s))
                 ;
 
                 if(tokenElement == null) {

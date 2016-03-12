@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
     /// </summary>
     public class SmileVideoHotlistFinderViewModel: SmileVideoNewArrivalsFinderViewModel
     {
-        public SmileVideoHotlistFinderViewModel(Mediation mediation, string key)
-            : base(mediation, key)
+        public SmileVideoHotlistFinderViewModel(Mediation mediation)
+            : base(mediation, SmileVideoMediationKey.hotlist)
         { }
 
         #region function

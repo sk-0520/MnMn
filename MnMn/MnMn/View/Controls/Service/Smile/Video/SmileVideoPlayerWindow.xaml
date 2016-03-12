@@ -326,7 +326,7 @@
                         Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                         CommandParameter="{Binding}"
                       >
-                        <Run Text="{Binding TagName, Mode=OneWay}" />
+                        <Run Text="{Binding TagName, Mode=OneTime}" />
                       </Hyperlink>
                       </TextBlock>
                     </DataTemplate>
