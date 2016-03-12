@@ -218,9 +218,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     return viewModel;
                 }
             );
-            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(task => {
-                SelectedSearchGroup = selectViewModel;
-            });
+            SelectedSearchGroup = selectViewModel;
+            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
         }
 
         public Task LoadRecommendTagItemsAsync()

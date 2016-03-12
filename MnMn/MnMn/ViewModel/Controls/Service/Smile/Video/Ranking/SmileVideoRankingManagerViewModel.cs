@@ -147,9 +147,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                 }
             );
 
-            return selectViewModel.LoadDefaultCacheAsync().ContinueWith(task => {
-                SelectedRankingCategory = selectViewModel;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            SelectedRankingCategory = selectViewModel;
+            return selectViewModel.LoadDefaultCacheAsync();
         }
 
         #endregion
