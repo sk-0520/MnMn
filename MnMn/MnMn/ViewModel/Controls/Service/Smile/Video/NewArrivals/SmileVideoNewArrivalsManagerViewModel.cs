@@ -44,10 +44,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             Recommendations = new SmileVideoRecommendationsFinderViewModel(Mediation);
 
             ItemsList = new CollectionModel<SmileVideoNewArrivalsFinderViewModel>(new[] {
-                Recommendations,
+                Hotlist,
                 NewArrival,
                 Recent,
-                Hotlist,
+                Recommendations,
             });
         }
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             {
                 var prevItem = this._selectedItem;
                 if(SetVariableValue(ref this._selectedItem, value)) {
-                    if(prevItem != null && this._selectedItem.CanLoad) {
+                    if(prevItem != null && this._selectedItem.FinderLoadState == SmileVideoFinderLoadState.None) {
                         this._selectedItem.LoadDefaultCacheAsync();
                     }
                 }
