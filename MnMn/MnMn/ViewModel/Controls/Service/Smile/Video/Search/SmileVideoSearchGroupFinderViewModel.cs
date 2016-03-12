@@ -242,6 +242,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowSort = LoadingSort;
             }
 
+            var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
+            tag.LoadRelationTagListAsync(Query).ConfigureAwait(false);
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
             SearchFinder.PropertyChanged += PageVm_PropertyChanged;
