@@ -45,7 +45,7 @@
                 HorizontalScrollBarVisibility="Hidden" 
                 VerticalScrollBarVisibility="Disabled"
               >
-                <StackPanel 
+                <VirtualizingStackPanel 
                   x:Name="HeaderPanel"
                   Margin="4,2,4,0"
                   Panel.ZIndex="1"
