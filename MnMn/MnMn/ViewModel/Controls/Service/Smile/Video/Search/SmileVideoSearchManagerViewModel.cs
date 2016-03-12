@@ -157,13 +157,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public ICommand SearchRecommendTagCommand
+        public ICommand SearchTagCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        ShowTagArea = false;
+                        if(ShowTagArea) {
+                            ShowTagArea = false;
+                        }
 
                         var tagViewModel = (SmileVideoTagViewModel)o;
                         var parameter = new SmileVideoSearchParameterModel() {

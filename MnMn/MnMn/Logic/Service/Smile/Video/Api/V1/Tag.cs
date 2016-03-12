@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        RawSmileVideoTagListModel ConvertTagListFromRelation(string tagStrings, string ignoreTagName)
+        RawSmileVideoTagListModel ConvertTagListFromRelation(string tagStrings)
         {
             var dataLine = tagStrings.SplitLines().First();
             var json = JObject.Parse(dataLine);
@@ -44,7 +44,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             var result = new RawSmileVideoTagListModel();
 
             var values = json["values"]
-                .Where(t => t["tag"].Value<string>() != ignoreTagName)
                 .OrderBy(t => t["_rowid"].Value<int>())
             ;
             foreach(var tag in values) {
@@ -58,16 +57,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         }
 
 
-        public async Task<RawSmileVideoTagListModel> LoadRelationTagListAsync(string tagName)
+        public Task<RawSmileVideoTagListModel> LoadRelationTagListAsync(string tagName)
         {
             var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagRelation, ServiceType.SmileVideo);
             page.ReplaceRequestParameters["query"] = tagName;
 
-            var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
-
-            var result = ConvertTagListFromRelation(response.Result, tagName);
-
-            return result;
+            return page.GetResponseTextAsync(PageLoaderMethod.Post).ContinueWith(task => {
+                page.Dispose();
+                var response = task.Result;
+                var result = ConvertTagListFromRelation(response.Result);
+                return result;
+            });
         }
 
         #endregion
