@@ -142,10 +142,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             if(GroupModel != null) {
                 EditingMyListName = MyListName;
-                EditingMyListFolderIdElement = MyList.Folder.First(f => f.Key == MyListFolderId);
+                EditingMyListFolderIdElement = MyList.Folder.FirstOrDefault(f => f.Key == MyListFolderId) ?? MyList.Folder.First();
                 EditingMyListIsPublic = IsPublic;
                 EditingMyListDescription = GroupModel.Description;
-                EditingMyListSortElement = MyList.Sort.First(f => f.Key == MyListSort);
+                EditingMyListSortElement = MyList.Sort.FirstOrDefault(f => f.Key == MyListSort) ?? MyList.Sort.First();
                 IsEditing = false;
             }
         }
