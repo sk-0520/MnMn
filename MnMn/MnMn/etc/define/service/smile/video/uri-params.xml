@@ -33,4 +33,13 @@
 		<item key="lang" value="${lang}" />
 	</param>
 	
+	<param key="video-recommendation-page">
+		<item key="ref" value="top_recoall" />
+	</param>
+	<param key="video-recommendation-api">
+		<item key="user_tags" value="${user-tags}" />
+		<item key="seed" value="${seed}" />
+		<item key="page" value="${page}" />
+	</param>
+
 </parameters>

@@ -182,6 +182,7 @@
     <Compile Include="Logic\Service\Smile\Video\Api\V1\NewArrivals.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Ranking.cs" />
     <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\HotList.cs" />
+    <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\Recommendations.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFinderLoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRecommendationsUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPIUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
@@ -235,6 +237,9 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgThreadModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgViewCounterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendItemModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoMyListModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
@@ -247,6 +252,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoAccountHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\NewArrivals\SmileVideoRecommendationsFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDownloadViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoAccountMyListDefaultFinderViewModel.cs" />

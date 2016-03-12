@@ -40,9 +40,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
         {
             NewArrival = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.newarrival);
             Recent = new SmileVideoNewArrivalsFinderViewModel(Mediation, SmileVideoMediationKey.recent);
-            Hotlist = new SmileVideoHotlistFinderViewModel(Mediation, SmileVideoMediationKey.hotlist);
+            Hotlist = new SmileVideoHotlistFinderViewModel(Mediation);
+            Recommendations = new SmileVideoRecommendationsFinderViewModel(Mediation);
 
             ItemsList = new CollectionModel<SmileVideoNewArrivalsFinderViewModel>(new[] {
+                Recommendations,
                 NewArrival,
                 Recent,
                 Hotlist,
@@ -53,7 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         SmileVideoNewArrivalsFinderViewModel NewArrival { get; }
         SmileVideoNewArrivalsFinderViewModel Recent { get; }
-        SmileVideoNewArrivalsFinderViewModel Hotlist { get; }
+        SmileVideoHotlistFinderViewModel Hotlist { get; }
+        SmileVideoRecommendationsFinderViewModel Recommendations { get; }
 
         public CollectionModel<SmileVideoNewArrivalsFinderViewModel> ItemsList { get; }
         public SmileVideoNewArrivalsFinderViewModel SelectedItem

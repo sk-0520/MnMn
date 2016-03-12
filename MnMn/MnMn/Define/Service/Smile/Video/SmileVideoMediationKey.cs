@@ -35,6 +35,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string newarrival = "video-newarrival";
         public const string recent = "video-recent";
         public const string hotlist = "video-hotlist";
+        public const string recommendation = "video-recommendation";
+        public const string recommendationPage = "video-recommendation-page";
+        public const string recommendationApi = "video-recommendation-api";
 
         public const string historyPage = "video-history-page";
         public const string historyApi = "video-history-api";
