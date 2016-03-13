@@ -33,6 +33,13 @@
 		<item key="lang" value="${lang}" />
 	</param>
 	
+	<param key="video-getrelation">
+		<item key="page" value="${page}" />
+		<item key="sort" value="${sort}" />
+		<item key="order" value="${order}" />
+		<item key="video" value="${video-id}" />
+	</param>
+
 	<param key="video-recommendation-page">
 		<item key="ref" value="top_recoall" />
 	</param>

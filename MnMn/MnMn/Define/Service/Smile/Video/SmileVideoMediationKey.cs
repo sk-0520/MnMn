@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string getflvSwf = "video-getflv-swf";
         public const string getflvScraping = "video-getflv-scraping";
         public const string getthreadkey = "video-getthreadkey";
+        public const string getrelation = "video-getrelation";
         public const string msg = "video-msg";
 
         public const string tagRelation = "video-tag-relation";
