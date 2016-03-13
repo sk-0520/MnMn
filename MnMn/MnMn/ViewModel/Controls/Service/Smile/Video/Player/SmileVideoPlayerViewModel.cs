@@ -122,6 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         SmileVideoCommentViewModel _selectedComment;
 
         LoadState _tagLoadState;
+        LoadState _relationVideoLoadState;
 
         double _realVideoWidth;
         double _realVideoHeight;
@@ -224,6 +225,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._tagLoadState; }
             set { SetVariableValue(ref this._tagLoadState, value); }
+        }
+        public LoadState RelationVideoLoadState
+        {
+            get { return this._relationVideoLoadState; }
+            set { SetVariableValue(ref this._relationVideoLoadState, value); }
         }
 
         /// <summary>
@@ -856,107 +862,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return Task.CompletedTask;
         }
 
-        //Inline CreateDescriptionInline(HtmlNode node)
-        //{
-        //    switch(node.NodeType) {
-        //        case HtmlNodeType.Text: {
-        //                var text = new Run(node.InnerText);
-        //                return text;
-        //            }
+        Task LoadRelationVideoAsync()
+        {
+            RelationVideoLoadState = LoadState.Preparation;
 
-        //        case HtmlNodeType.Element:
-        //            if(node.Name == "br") {
-        //                return new LineBreak();
-        //            } else if(node.Name == "a") {
-        //                var text = new Run(node.InnerText);
-        //                var link = new Hyperlink(text);
-        //                link.Command = OpenLinkCommand;
-        //                link.CommandParameter = node.GetAttributeValue("href", string.Empty);
-        //                return link;
-        //            } else if(node.Name == "font") {
-        //                var text = new Run(node.InnerText);
-        //                var colorCode = node.GetAttributeValue("color", "#000000");
-        //                try {
-        //                    var color = (Color)ColorConverter.ConvertFromString(colorCode);
-        //                    text.Foreground = new SolidColorBrush() {
-        //                        Color = color,
-        //                    };
-        //                }catch(FormatException ex) {
-        //                    //TODO: Webブラウザ並みとは言わんけどある程度の補正は必要かも
-        //                    Mediation.Logger.Warning(ex);
-        //                }
-        //                return text;
-        //            } else {
-        //                var text = new Run("*" + node.OuterHtml + "*");
-        //                return text;
-        //            }
-        //            throw new NotImplementedException();
+            VideoInformation.LoadRelationVideosAsync(Constants.ServiceSmileVideoRelationCacheSpan);
 
-        //        default:
-        //            return new Run(string.Empty);
-        //    }
-        //}
+            RelationVideoLoadState = LoadState.Loaded;
 
-        //IEnumerable<HtmlNode> ChompBreak(IEnumerable<HtmlNode> ndoes)
-        //{
-        //    return ndoes
-        //        .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
-        //        .Reverse()
-        //        .SkipWhile(n => n.NodeType == HtmlNodeType.Element && n.Name == "br")
-        //        .Reverse()
-        //    ;
-        //}
-
-        //Paragraph CreateDescriptionParagraph(IEnumerable<HtmlNode> paragraphNodes)
-        //{
-        //    var p = new Paragraph();
-
-        //    foreach(var node in ChompBreak(paragraphNodes)) {
-        //        var inline = CreateDescriptionInline(node);
-        //        p.Inlines.Add(inline);
-        //    }
-
-        //    return p;
-        //}
-
-        //void MakeDescription()
-        //{
-        //    IsMakedDescription = true;
-
-        //    DocumentDescription.Dispatcher.Invoke(() => {
-        //        //var document = new FlowDocument();
-        //        var document = DocumentDescription.Document;
-        //        document.Blocks.Clear();
-
-        //        var html = new HtmlDocument() {
-        //            OptionAutoCloseOnEnd = true,
-        //        };
-        //        html.LoadHtml(VideoInformation.PageDescription);
-
-        //        var nodeIndexList = ChompBreak(html.DocumentNode.ChildNodes.Cast<HtmlNode>()).Select((n, i) => new { Node = n, Index = i }).ToArray();
-        //        var breakIndexList = nodeIndexList.Where(ni => ni.Node.NodeType == HtmlNodeType.Element && ni.Node.Name == "br").Select((n, i) => new { Node = n.Node, Index = n.Index, BreakIndex = i }).ToArray();
-        //        var paragraphPointList = breakIndexList.Where(bi => bi.BreakIndex < breakIndexList.Length - 1 && bi.Node.NextSibling == breakIndexList[bi.BreakIndex + 1].Node).ToArray();
-        //        if(paragraphPointList.Length > 1) {
-        //            var head = 0;
-        //            foreach(var point in paragraphPointList.Take(paragraphPointList.Length - 1)) {
-        //                var tail = point.Index;
-        //                var nodes = nodeIndexList.Skip(head).Take(tail - head);
-        //                var p = CreateDescriptionParagraph(nodes.Select(ni => ni.Node));
-        //                document.Blocks.Add(p);
-        //                head = tail + 1;
-        //            }
-        //        } else {
-        //            var p = CreateDescriptionParagraph(nodeIndexList.Select(ni => ni.Node));
-        //            document.Blocks.Add(p);
-        //        }
-
-        //        document.FontSize = DocumentDescription.FontSize;
-        //        document.FontFamily = DocumentDescription.FontFamily;
-        //        document.FontStretch = DocumentDescription.FontStretch;
-
-        //        //DocumentDescription.Document = document;
-        //    });
-        //}
+            return Task.CompletedTask;
+        }
 
         void MakeDescription()
         {
@@ -1148,6 +1063,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             TotalTime = VideoInformation.Length;
 
             LoadTagsAsync();
+            LoadRelationVideoAsync();
 
             base.OnLoadGetthumbinfoEnd();
         }

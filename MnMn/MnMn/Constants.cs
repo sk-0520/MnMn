@@ -68,6 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+        public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
 
         public static string ServiceName { get; } = "service";
         public static string ServiceSmileName { get; } = "smile";

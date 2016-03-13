@@ -68,6 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         LoadState _thumbnailLoadState;
         LoadState _informationLoadState;
         LoadState _pageHtmlLoadState;
+        LoadState _relationVideoLoadState;
 
         BitmapSource _thumbnailImage;
 
@@ -175,6 +176,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._pageHtmlLoadState; }
             set { SetVariableValue(ref this._pageHtmlLoadState, value); }
+        }
+
+        public LoadState RelationVideoLoadState
+        {
+            get { return this._relationVideoLoadState; }
+            set { SetVariableValue(ref this._relationVideoLoadState, value); }
         }
 
         public bool HasLength { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.Length); } }
@@ -823,6 +830,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var filePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html"));
                     File.WriteAllText(filePath, PageHtml);
                 }
+            });
+        }
+
+        public Task LoadRelationVideosAsync(CacheSpan cacheSpan)
+        {
+            RelationVideoLoadState = LoadState.Preparation;
+
+            RelationVideoLoadState = LoadState.Loading;
+            var getRelation = new Getrelation(Mediation);
+            return getRelation.LoadAsync(VideoId, 1, "p", Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
+                var relation = task.Result;
             });
         }
 
