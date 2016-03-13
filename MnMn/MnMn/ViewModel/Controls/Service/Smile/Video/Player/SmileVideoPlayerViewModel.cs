@@ -463,9 +463,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         UserOperationStop = true;
-                        Player.BeginStop(new Action(() => {
-                            UserOperationStop = false;
-                        }));
+                        StopMovie();
+                        UserOperationStop = false;
                     }
                 );
             }
@@ -1004,6 +1003,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
         }
 
+        void StopMovie()
+        {
+            Mediation.Logger.Debug("stop");
+            Player.BeginStop(() => {
+                Mediation.Logger.Debug("stoped");
+                PlayerState = PlayerState.Stop;
+                VideoPosition = 0;
+                ClearComment();
+                PrevPlayedTime = TimeSpan.Zero;
+            });
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1288,9 +1299,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(e.Value == xZune.Vlc.Interop.Media.MediaState.Opening) {
                 return;
             }
-            if(PlayerState != PlayerState.Pause && this._prevStateChangedPosition == VideoPosition && this._prevStateChangedPosition != initPrevStateChangedPosition) {
-                return;
-            }
+            //if(PlayerState != PlayerState.Pause && this._prevStateChangedPosition == VideoPosition && this._prevStateChangedPosition != initPrevStateChangedPosition) {
+            //    return;
+            //}
             this._prevStateChangedPosition = VideoPosition;
 
             Mediation.Logger.Debug($"{e.Value}, pos: {VideoPosition}, time: {PlayTime} / {Player.Length}");
@@ -1303,14 +1314,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             data.Clock.Controller.Resume();
                         }
                     }
-                    break;
-
-                case xZune.Vlc.Interop.Media.MediaState.Stopped:
-                    Mediation.Logger.Debug("stop");
-                    PlayerState = PlayerState.Stop;
-                    VideoPosition = 0;
-                    ClearComment();
-                    PrevPlayedTime = TimeSpan.Zero;
                     break;
 
                 case xZune.Vlc.Interop.Media.MediaState.Paused:
@@ -1344,7 +1347,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         //VideoPosition = 0;
                         //ClearComment();
                         //PrevPlayedTime = TimeSpan.Zero;
-                        Player.BeginStop();
+                        StopMovie();
                     }
                     break;
 
