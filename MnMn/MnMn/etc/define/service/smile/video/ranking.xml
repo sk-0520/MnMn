@@ -99,6 +99,53 @@
 			</words>
 		</element>
 	</categories>
+	<categories>
+		<element key="g_life2">
+			<words>
+				<word key="ja-jp" value="生活・一般・スポ" />
+			</words>
+		</element>
+		<element key="animal">
+			<words>
+				<word key="ja-jp" value="動物" />
+			</words>
+		</element>
+		<element key="cooking">
+			<words>
+				<word key="ja-jp" value="料理" />
+			</words>
+		</element>
+		<element key="nature">
+			<words>
+				<word key="ja-jp" value="自然" />
+			</words>
+		</element>
+		<element key="travel">
+			<words>
+				<word key="ja-jp" value="旅行" />
+			</words>
+		</element>
+		<element key="sport">
+			<words>
+				<word key="ja-jp" value="スポーツ" />
+			</words>
+		</element>
+		<element key="lecture">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画講座" />
+			</words>
+		</element>
+		<element key="drive">
+			<words>
+				<word key="ja-jp" value="車載動画" />
+			</words>
+		</element>
+		<element key="history">
+			<words>
+				<word key="ja-jp" value="歴史" />
+			</words>
+		</element>
+	</categories>
 
-	
+
 </ranking>
