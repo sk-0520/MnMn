@@ -25,6 +25,9 @@
     <TabItem Header="history" DataContext="{Binding VideoManager.HistoryManager}" >
       <app_controls_service_smile_video:SmileVideoHistoryManager />
     </TabItem>
+    <TabItem Header="setting" DataContext="{Binding VideoManager.SettingManager}" >
+      <app_controls_service_smile_video:SmileVideoSettingManager />
+    </TabItem>
 
   </TabControl>
 </UserControl>

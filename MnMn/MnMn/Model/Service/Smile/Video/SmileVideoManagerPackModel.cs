@@ -30,13 +30,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     public class SmileVideoManagerPackModel: ManagerPackModelBase
     {
-        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager)
+        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager, SmileVideoSettingManagerViewModel settingManager)
         {
             RankingManager = rankingManager;
             SearchManager = searchManager;
             NewArrivalsManager = newArrivalsManager;
             MyListManager = myListManager;
             HistoryManager = historyManager;
+            SettingManager = settingManager;
         }
 
         public SmileVideoRankingManagerViewModel RankingManager { get; }
@@ -44,5 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager { get; }
         public SmileVideoHistoryManagerViewModel HistoryManager { get; }
+        public SmileVideoSettingManagerViewModel SettingManager { get; }
+        
     }
 }

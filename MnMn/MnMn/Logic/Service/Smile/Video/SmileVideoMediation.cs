@@ -64,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         internal SmileVideoManagerPackModel ManagerPack { get; private set; }
 
+        HashSet<SmileVideoPlayerWindow> Players { get; } = new HashSet<SmileVideoPlayerWindow>();
+
         #endregion
 
         #region function
@@ -239,6 +241,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     var window = new SmileVideoPlayerWindow() {
                         DataContext = player,
                     };
+                    window.Closed += Player_Closed;
+                    Players.Add(window);
                     return window;
                 }
             } else {
@@ -263,5 +267,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         }
 
         #endregion
+
+        private void Player_Closed(object sender, EventArgs e)
+        {
+            Players.Remove((SmileVideoPlayerWindow)sender);
+        }
+
     }
 }
