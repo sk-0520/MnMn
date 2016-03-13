@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoTagViewModel: SingleModelWrapperViewModelBase<RawSmileVideoTagItemModel>
     {
+        #region variable
+
+        bool _existPedia;
+
+        #endregion
+
         public SmileVideoTagViewModel(Mediation mediation, RawSmileVideoTagItemModel model)
             : base(model)
         {
@@ -51,6 +57,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool IsCategory
         {
             get { return SmileVideoGetthumbinfoUtility.IsCategory(Model); }
+        }
+
+        public bool ExistPedia
+        {
+            get { return this._existPedia; }
+            set { SetVariableValue(ref this._existPedia, value); }
         }
 
         #endregion
