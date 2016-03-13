@@ -199,7 +199,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         List<CommentData> ShowingCommentList { get; } = new List<CommentData>();
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
-
+        public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
+        
         /// <summary>
         /// 動画再生位置を変更中か。
         /// </summary>
@@ -866,11 +867,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             RelationVideoLoadState = LoadState.Preparation;
 
-            VideoInformation.LoadRelationVideosAsync(Constants.ServiceSmileVideoRelationCacheSpan);
-
-            RelationVideoLoadState = LoadState.Loaded;
-
-            return Task.CompletedTask;
+            RelationVideoLoadState = LoadState.Loading;
+            return VideoInformation.LoadRelationVideosAsync(Constants.ServiceSmileVideoRelationCacheSpan).ContinueWith(task => {
+                var items = task.Result;
+                if(items == null) {
+                    RelationVideoLoadState = LoadState.Failure;
+                    return Task.CompletedTask;
+                } else {
+                    RelationVideoItems.InitializeRange(items);
+                    var loader = new SmileVideoInformationLoader(items);
+                    return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
+                        RelationVideoLoadState = LoadState.Loaded;
+                    });
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         void MakeDescription()

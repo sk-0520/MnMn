@@ -196,6 +196,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFinderLoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetflvUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetrelationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRecommendationsUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />

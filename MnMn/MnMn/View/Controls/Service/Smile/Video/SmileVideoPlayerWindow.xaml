@@ -2,6 +2,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
 
   xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
   
@@ -25,6 +26,14 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
+      <sys:Double x:Key="ImageWidth">100</sys:Double>
+      <sys:Double x:Key="ImageHeight">80</sys:Double>
+
+      <Style x:Key="ThumbnailImage" TargetType="Image" >
+        <Setter Property="Width" Value="{StaticResource ImageWidth}" />
+        <Setter Property="Height" Value="{StaticResource ImageHeight}" />
+      </Style>
+      
     </ResourceDictionary>
   </Window.Resources>
   <DockPanel>
@@ -280,7 +289,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-              <Image Width="100" Height="80" Source="{Binding ThumbnailImage}" />
+              <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
 
               <!--<TextBlock Text="{Binding UserNickname}" />-->
               <Grid>
@@ -349,6 +358,27 @@
           </Grid>
         </TabItem>
         <TabItem Header="relation">
+          <StackPanel>
+            <TextBlock Text="クリックもスクロールも実装してないけどそれが何か問題？" />
+            <ItemsControl ItemsSource="{Binding RelationVideoItems}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel>
+                    <Grid>
+                      <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                      <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
+                    </Grid>
+                    <TextBlock Text="{Binding Title}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
         </TabItem>
         <TabItem Header="market">
         </TabItem>

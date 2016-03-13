@@ -833,7 +833,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
-        public Task LoadRelationVideosAsync(CacheSpan cacheSpan)
+        public Task<IEnumerable<SmileVideoInformationViewModel>> LoadRelationVideosAsync(CacheSpan cacheSpan)
         {
             RelationVideoLoadState = LoadState.Preparation;
 
@@ -841,6 +841,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var getRelation = new Getrelation(Mediation);
             return getRelation.LoadAsync(VideoId, 1, "p", Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
                 var relation = task.Result;
+
+                if(!SmileVideoGetrelationUtility.IsSuccessResponse(relation)) {
+                    return null;
+                }
+
+                var result = new List<SmileVideoInformationViewModel>();
+
+                foreach(var video in relation.Videos.Select((item, index) => new { Item = item, Index = index })) {
+                    var item = new FeedSmileVideoItemModel();
+                    item.Link = video.Item.Url;
+                    item.Title = video.Item.Title;
+
+                    var detailModel = new RawSmileVideoFeedDetailModel() {
+                        ViewCounter = video.Item.View,
+                        MylistCounter = video.Item.Mylist,
+                        CommentNum = video.Item.Comment,
+                        ThumbnailUrl = video.Item.Thumbnail,
+                        Length = video.Item.Length,
+                        FirstRetrieve = RawValueUtility.ConvertUnixTime(video.Item.Time).ToString("s"),
+                    };
+                    item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
+
+                    var videoInformation = new SmileVideoInformationViewModel(Mediation, item, video.Index + 1, SmileVideoInformationFlags.All);
+                    result.Add(videoInformation);
+                }
+                
+                return (IEnumerable<SmileVideoInformationViewModel>)result;
             });
         }
 

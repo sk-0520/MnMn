@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         public string Thumbnail { get; set; }
         [XmlElement("title")]
         public string Title { get; set; }
+        [XmlElement("view")]
+        public string View { get; set; }
         [XmlElement("comment")]
         public string Comment { get; set; }
         [XmlElement("mylist")]
