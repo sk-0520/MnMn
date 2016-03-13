@@ -146,6 +146,106 @@
 			</words>
 		</element>
 	</categories>
+	<categories>
+		<element key="g_politics">
+			<words>
+				<word key="ja-jp" value="政治" />
+			</words>
+		</element>
+	</categories>
+	<categories>
+		<element key="g_tech">
+			<words>
+				<word key="ja-jp" value="科学・技術" />
+			</words>
+		</element>
+		<element key="science">
+			<words>
+				<word key="ja-jp" value="科学" />
+			</words>
+		</element>
+		<element key="tech">
+			<words>
+				<word key="ja-jp" value="ニコニコ技術部" />
+			</words>
+		</element>
+		<element key="handcraft">
+			<words>
+				<word key="ja-jp" value="ニコニコ手芸部" />
+			</words>
+		</element>
+		<element key="make">
+			<words>
+				<word key="ja-jp" value="作ってみた" />
+			</words>
+		</element>
+	</categories>
+	<categories>
+		<element key="g_culture2">
+			<words>
+				<word key="ja-jp" value="アニメ・ゲーム・絵" />
+			</words>
+		</element>
+		<element key="anime">
+			<words>
+				<word key="ja-jp" value="アニメ" />
+			</words>
+		</element>
+		<element key="game">
+			<words>
+				<word key="ja-jp" value="ゲーム" />
+			</words>
+		</element>
+		<element key="toho">
+			<words>
+				<word key="ja-jp" value="東方" />
+			</words>
+		</element>
+		<element key="imas">
+			<words>
+				<word key="ja-jp" value="アイドルマスター" />
+			</words>
+		</element>
+		<element key="radio">
+			<words>
+				<word key="ja-jp" value="ラジオ" />
+			</words>
+		</element>
+		<element key="draw">
+			<words>
+				<word key="ja-jp" value="描いてみた" />
+			</words>
+		</element>
+	</categories>
+	<categories>
+		<element key="g_other">
+			<words>
+				<word key="ja-jp" value="その他" />
+			</words>
+		</element>
+		<element key="are">
+			<words>
+				<word key="ja-jp" value="例のアレ" />
+			</words>
+		</element>
+		<element key="diary">
+			<words>
+				<word key="ja-jp" value="日記" />
+			</words>
+		</element>
+		<element key="other">
+			<words>
+				<word key="ja-jp" value="その他" />
+			</words>
+		</element>
+	</categories>
+	<categories>
+		<element key="g_r18">
+			<words>
+				<word key="ja-jp" value="R-18" />
+			</words>
+		</element>
+	</categories>
 
 
 </ranking>
