@@ -21,9 +21,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoSettingManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoSettingManagerViewModel: ManagerViewModelBase
     {
         public SmileVideoSettingManagerViewModel(Mediation mediation)
             : base(mediation)

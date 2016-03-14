@@ -4,7 +4,8 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
-
+  xmlns:app_controls_service_smile_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Setting"
+  
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
@@ -25,8 +26,8 @@
     <TabItem Header="history" DataContext="{Binding VideoManager.HistoryManager}" >
       <app_controls_service_smile_video:SmileVideoHistoryManager />
     </TabItem>
-    <TabItem Header="setting" DataContext="{Binding VideoManager.SettingManager}" >
-      <app_controls_service_smile_video:SmileVideoSettingManager />
+    <TabItem Header="setting" DataContext="{Binding SettingManager}" >
+      <app_controls_service_smile_setting:SmileSettingManager />
     </TabItem>
 
   </TabControl>

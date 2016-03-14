@@ -282,7 +282,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoSearchMyListFinderViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoSettingManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
     <Compile Include="ViewModel\ManagerViewModelBase.cs" />
     <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
@@ -300,7 +300,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoCommentElement.xaml.cs">
       <DependentUpon>SmileVideoCommentElement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoSettingManager.xaml.cs">
+    <Compile Include="View\Controls\Service\Smile\Setting\SmileVideoSettingManager.xaml.cs">
       <DependentUpon>SmileVideoSettingManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoHistoryManager.xaml.cs">
@@ -354,7 +354,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\Service\Smile\Video\SmileVideoSettingManager.xaml">
+    <Page Include="View\Controls\Service\Smile\Setting\SmileVideoSettingManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

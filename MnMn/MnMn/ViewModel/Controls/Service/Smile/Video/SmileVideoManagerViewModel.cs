@@ -65,8 +65,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             HistoryManager = new SmileVideoHistoryManagerViewModel(Mediation);
 
-            SettingManager = new SmileVideoSettingManagerViewModel(Mediation);
-
             Mediation.SetManager(
                 ServiceType.SmileVideo, 
                 new SmileVideoManagerPackModel(
@@ -74,8 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     RankingManager, 
                     NewArrivalsManager, 
                     MyListManager,
-                    HistoryManager,
-                    SettingManager
+                    HistoryManager
                 )
             );
         }
@@ -89,7 +86,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager {get;}
         public SmileVideoHistoryManagerViewModel HistoryManager {get;}
-        public SmileVideoSettingManagerViewModel SettingManager {get;}
 
         public IEnumerable<SmileVideoCustomManagerViewModelBase> ManagerItems => new SmileVideoCustomManagerViewModelBase[] {
             SearchManager,
@@ -97,7 +93,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             NewArrivalsManager,
             MyListManager,
             HistoryManager,
-            SettingManager,
         };
 
         #endregion
