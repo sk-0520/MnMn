@@ -19,5 +19,11 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
+    <StackPanel>
+      <Label>name</Label>
+      <TextBox Text="{Binding AccountName}" />
+      <Label>pass</Label>
+      <TextBox Text="{Binding AccountPassword}" />
+    </StackPanel>
   </Grid>
 </UserControl>

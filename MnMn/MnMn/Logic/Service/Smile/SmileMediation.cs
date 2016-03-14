@@ -70,6 +70,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case RequestKind.Session:
                     return RequestSession(request);
 
+                case RequestKind.Setting:
+                    return new ResponseModel(request, Setting);
+
                 default:
                     ThrowNotSupportRequest(request);
                     throw new NotImplementedException();
@@ -78,11 +81,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
         ResponseModel RequestSession(RequestModel request)
         {
-            if(Session == null) {
-                var model = new SmileUserAccountModel();
-                model.User = VariableConstants.OptionValueSmileUserAccountName;
-                model.Password = VariableConstants.OptionValueSmileUserAccountPassword;
-                Session = new SmileSessionViewModel(Mediation, model);
+            if(Session == null || (Session.LoginState == LoginState.None || Session.LoginState == LoginState.Failure)) {
+                SmileUserAccountModel model;
+
+                if(VariableConstants.HasOptionSmileUserAccountName && VariableConstants.HasOptionSmileUserAccountPassword) {
+                    model = new SmileUserAccountModel() {
+                        Name = VariableConstants.OptionValueSmileUserAccountName,
+                        Password = VariableConstants.OptionValueSmileUserAccountPassword,
+                    };
+                } else {
+                    model = Setting.Account;
+                }
+                if(Session == null) {
+                    Session = new SmileSessionViewModel(Mediation, model);
+                }else {
+                    Session.ChangeUserAccountAsync(model).Wait();
+                }
             }
 
             return new ResponseModel(request, Session);

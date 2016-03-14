@@ -59,6 +59,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             return ClientHandler.CookieContainer.GetCookies(uri)["user_session"].Value;
         }
 
+        public Task ChangeUserAccountAsync(SmileUserAccountModel userAccount)
+        {
+            if(LoginState == LoginState.Logged) {
+                return LogoutAsync().ContinueWith(_ => {
+                    UserAccount = userAccount;
+                });
+            }
+
+            UserAccount = userAccount;
+            return Task.CompletedTask;
+        }
+
         #endregion
 
         #region SessionViewModelBase
@@ -75,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
                 page.HeaderCheckOnly = true;
 
-                page.ReplaceRequestParameters["user"] = UserAccount.User;
+                page.ReplaceRequestParameters["user"] = UserAccount.Name;
                 page.ReplaceRequestParameters["pass"] = UserAccount.Password;
 
                 page.JudgeFailureStatusCode = response => {

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             :base(mediation)
         {
             VideoManager = new SmileVideoManagerViewModel(Mediation);
-            SettingManager = new SmileVideoSettingManagerViewModel(Mediation);
+            SettingManager = new SmileSettingManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, SettingManager));
         }
@@ -49,8 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         #region property
 
         public SmileVideoManagerViewModel VideoManager { get; set; }
-
-        public SmileVideoSettingManagerViewModel SettingManager { get; set; }
+        public SmileSettingManagerViewModel SettingManager { get; set; }
 
         #endregion
 

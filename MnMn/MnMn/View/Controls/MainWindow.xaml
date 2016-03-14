@@ -29,6 +29,11 @@
 
     <StatusBar Grid.Row="2">
       <TextBox>test</TextBox>
+      <TextBlock>
+        <Run>smile:</Run>
+        <Run Text="{Binding SmileSession.LoginState, Mode=OneWay}" />
+        <Run Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
+      </TextBlock>
     </StatusBar>
 
     <TabControl Grid.Row="1" TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">

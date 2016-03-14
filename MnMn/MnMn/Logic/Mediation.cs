@@ -45,16 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public class Mediation: MediationBase
     {
-        public Mediation()
-        {
-            // 二重生成だけど気にしない
-            Setting = new AppSettingModel();
-
-            Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
-        }
-
         public Mediation(AppSettingModel mainSettingModel, ILogger logger)
-            : this()
         {
             Logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
@@ -65,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Logger.Information("start!");
 
             Setting = mainSettingModel;
+            Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
 
         #region property

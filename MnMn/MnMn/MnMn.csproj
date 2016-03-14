@@ -257,6 +257,7 @@
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
+    <Compile Include="Model\Setting\PasswordSettingModelBase.cs" />
     <Compile Include="Model\UriResultModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\DefinedElementViewModelBase.cs" />

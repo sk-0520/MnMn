@@ -54,13 +54,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void login()
         {
-            var mediation = new Mediation();
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
             var cmd = new CommandLine();
             var account = cmd.GetValue("smile-login-name");
             var password = cmd.GetValue("smile-login-pass");
 
             var model = new SmileUserAccountModel() {
-                User = account,
+                Name = account,
                 Password = password,
             };
             var vm = new SmileSessionViewModel(mediation, model);
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void getthumbinfo()
         {
-            var gt = new Getthumbinfo(new Mediation());
+            var gt = new Getthumbinfo(new Mediation(new Model.Setting.AppSettingModel(), new Logger()));
             var a = await gt.LoadAsync("sm9");
             var b = await gt.LoadAsync("sm9");
         }
@@ -111,13 +111,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         async void mylist()
         {
-            var mediation = new Mediation();
+            var mediation = new Mediation(new Model.Setting.AppSettingModel(), new Logger());
             var cmd = new CommandLine();
             var account = cmd.GetValue("smile-login-name");
             var password = cmd.GetValue("smile-login-pass");
 
             var model = new SmileUserAccountModel() {
-                User = account,
+                Name = account,
                 Password = password,
             };
             var session = new SmileSessionViewModel(mediation, model);

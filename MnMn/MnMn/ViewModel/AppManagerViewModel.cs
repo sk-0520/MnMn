@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
@@ -52,6 +53,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
+
+            SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
         }
 
         #region property
@@ -59,8 +63,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
-        public SmileManagerViewModel SmileManager { get; private set; }
         public AppSettingManagerViewModel AppSettingManager { get; }
+
+        public SmileManagerViewModel SmileManager { get; }
+
+        public SessionViewModelBase SmileSession { get; }
 
         #endregion
 

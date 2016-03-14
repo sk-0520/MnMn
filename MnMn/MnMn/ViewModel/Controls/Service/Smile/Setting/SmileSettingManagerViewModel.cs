@@ -19,16 +19,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoSettingManagerViewModel: ManagerViewModelBase
+    public class SmileSettingManagerViewModel: ManagerViewModelBase
     {
-        public SmileVideoSettingManagerViewModel(Mediation mediation)
+        public SmileSettingManagerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+        }
 
+        #region property
+
+        SmileSettingModel Setting { get; }
+
+        public string AccountName
+        {
+            get { return Setting.Account.Name; }
+            set { SetPropertyValue(Setting.Account, value, nameof(Setting.Account.Name)); }
+        }
+        public string AccountPassword
+        {
+            get { return Setting.Account.Password; }
+            set { SetPropertyValue(Setting.Account, value, nameof(Setting.Account.Password)); }
+        }
+
+        #endregion
 
         #region SmileVideoCustomManagerViewModelBase
 

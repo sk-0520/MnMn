@@ -20,27 +20,20 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
     /// <summary>
-    /// アカウント情報を保持。
+    /// パスワード設定。
     /// </summary>
     [DataContract]
-    public class SmileUserAccountModel: PasswordSettingModelBase
+    public class PasswordSettingModelBase: SettingModelBase
     {
-        #region property
-
         /// <summary>
-        /// アカウント名。
+        /// アカウントパスワード。
         /// </summary>
         [DataMember]
-        public string Name { get; set; }
-
-        #endregion
+        public string Password { get; set; }
     }
 }

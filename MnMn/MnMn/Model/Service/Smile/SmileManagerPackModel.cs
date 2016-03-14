@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
     public class SmileManagerPackModel: ManagerPackModelBase
     {
-        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileVideoSettingManagerViewModel settingManager)
+        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileSettingManagerViewModel settingManager)
         {
             VideoManager = videoManager;
         }
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         #region proeprty
 
         public SmileVideoManagerViewModel VideoManager { get; }
-        public SmileVideoSettingManagerViewModel SettingManager { get; }
+        public SmileSettingManagerViewModel SettingManager { get; }
 
         #endregion
     }

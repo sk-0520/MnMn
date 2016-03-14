@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -50,6 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var settingResponse = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResponse.Result;
+
+            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             var rankingResponse = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
             var rankingModel = (SmileVideoRankingModel)rankingResponse.Result;
@@ -80,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
+
+        public SessionViewModelBase Session { get; }
 
         public SmileVideoRankingManagerViewModel RankingManager { get; }
         public SmileVideoSearchManagerViewModel SearchManager { get; }
