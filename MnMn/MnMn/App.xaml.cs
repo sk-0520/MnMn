@@ -18,9 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using MnMn.View.Controls;
@@ -50,7 +55,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #if DEBUG
             DoDebug();
 #endif
-            var viewModel = new AppManagerViewModel();
+            var logger = new Pe.PeMain.Logic.AppLogger();
+            var dir = VariableConstants.GetSettingDirectory();
+            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+            var setting = AppUtility.LoadSetting<AppSettingModel>(filePath, FileType.Json, logger);
+            var mediation = new Mediation(setting, logger);
+            var viewModel = new AppManagerViewModel(mediation);
 
             SplashWindow.Show();
 
@@ -58,6 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow = new MainWindow() {
                 DataContext = viewModel,
             };
+            viewModel.SetView(MainWindow);
             MainWindow.Show();
             SplashWindow.Close();
         }

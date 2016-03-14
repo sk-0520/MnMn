@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -27,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// <summary>
     /// 設定基底。
     /// </summary>
+    [DataContract]
     public class AppSettingModel: SettingModelBase
     {
         #region property
@@ -34,14 +36,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// <summary>
         /// キャッシュディレクトリ。
         /// </summary>
+        [DataMember]
         public string CacheDirectoryPath { get; set; }
         /// <summary>
         /// キャッシュ有効期間。
         /// </summary>
+        [DataMember]
         public TimeSpan CacheLifeTime { get; set; }
 
         #region service
 
+        [DataMember]
         public SmileSettingModel ServiceSmileSetting { get; set; } = new SmileSettingModel();
 
         #endregion

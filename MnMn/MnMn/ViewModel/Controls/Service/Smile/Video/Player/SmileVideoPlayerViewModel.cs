@@ -571,7 +571,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StartIfAutoPlay()
         {
-            if(Setting.AutoPlay) {
+            if(Setting.VideoAutoPlay) {
                 SetMedia();
                 VideoPlay();
             }
@@ -786,7 +786,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
 
                     // アニメーション設定
-                    var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.ShowTime + correctionTime);
+                    var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.CommentShowTime + correctionTime);
 
                     var data = new CommentData(element, commentViewModel, animation);
                     showingCommentList.Add(data);

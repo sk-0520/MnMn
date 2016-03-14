@@ -20,12 +20,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -34,20 +37,17 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
-    public class AppManagerViewModel: ManagerViewModelBase
+    public class AppManagerViewModel: ManagerViewModelBase, ISetView
     {
-        public AppManagerViewModel()
-            :base(new Mediation())
+        public AppManagerViewModel(Mediation mediation)
+            :base(mediation)
         {
-            var logger = new Pe.PeMain.Logic.AppLogger();
+            Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
-            Setting = LoadSetting(logger);
-
-            Mediation = new Mediation(Setting, logger);
-            
             SmileManager = new SmileManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region property
 
+        MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
         public SmileManagerViewModel SmileManager { get; private set; }
@@ -85,18 +86,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region function
 
-
-        AppSettingModel LoadSettingCore(string path, ILogger logger)
-        {
-            return AppUtility.LoadSetting<AppSettingModel>(path, FileType.Json, logger);
-        }
-
-        AppSettingModel LoadSetting(ILogger logger)
+        void SaveSetting()
         {
             var dir = VariableConstants.GetSettingDirectory();
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
 
-            return LoadSettingCore(filePath, logger);
+            AppUtility.SaveSetting(filePath, Setting, FileType.Json, true, Mediation.Logger);
         }
 
         #endregion
@@ -109,6 +104,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
 
         #endregion
+
+        #region ISetView
+
+        public  void SetView(FrameworkElement view)
+        {
+            View = (MainWindow)view;
+
+            View.Closed += View_Closed;
+        }
+
+        #endregion
+
+        private void View_Closed(object sender, EventArgs e)
+        {
+            View.Closed -= View_Closed;
+
+            SaveSetting();
+        }
 
     }
 }
