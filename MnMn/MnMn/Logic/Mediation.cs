@@ -48,12 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Mediation()
         {
             // 二重生成だけど気にしない
-            Setting = new MainSettingModel();
+            Setting = new AppSettingModel();
 
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
 
-        public Mediation(MainSettingModel mainSettingModel)
+        public Mediation(AppSettingModel mainSettingModel)
             : this()
         {
             Logger = new Pe.PeMain.Logic.AppLogger();
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        MainSettingModel Setting { get; }
+        AppSettingModel Setting { get; }
 
         /// <summary>
         /// ニコニコ関係。
@@ -199,6 +199,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             switch(request.ServiceType) {
+                case ServiceType.Application:
+                    return new ResponseModel(request, Setting);
+
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                     return Smile.Request(request);

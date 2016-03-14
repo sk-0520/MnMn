@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// <summary>
     /// 設定基底。
     /// </summary>
-    public class MainSettingModel: SettingModelBase
+    public class AppSettingModel: SettingModelBase
     {
         #region property
 
@@ -35,6 +35,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// キャッシュディレクトリ。
         /// </summary>
         public string CacheDirectoryPath { get; set; }
+        /// <summary>
+        /// キャッシュ有効期間。
+        /// </summary>
+        public TimeSpan CacheLifeTime { get; set; }
 
         #region service
 

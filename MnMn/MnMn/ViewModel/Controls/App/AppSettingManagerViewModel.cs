@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
@@ -27,7 +29,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
     {
         public AppSettingManagerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, Define.ServiceType.Application));
+        }
+
+        #region property
+
+        AppSettingModel AppSetting { get; }
+
+        public string CacheDirectoryPath
+        {
+            get { return AppSetting.CacheDirectoryPath; }
+            set { SetPropertyValue(AppSetting, value); }
+        }
+
+        public TimeSpan CacheLifeTime
+        {
+            get { return AppSetting.CacheLifeTime; }
+            set { SetPropertyValue(AppSetting, value); }
+        }
+
+        #endregion
 
         #region ManagerViewModelBase
 

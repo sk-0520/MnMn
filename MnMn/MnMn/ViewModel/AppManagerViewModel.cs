@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region property
 
-        MainSettingModel Setting { get; }
+        AppSettingModel Setting { get; }
 
         public SmileManagerViewModel SmileManager { get; private set; }
         public AppSettingManagerViewModel AppSettingManager { get; }
@@ -79,9 +79,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region function
 
-        MainSettingModel LoadSetting()
+        AppSettingModel LoadSetting()
         {
-            return new MainSettingModel();
+            return new AppSettingModel();
         }
 
         #endregion
