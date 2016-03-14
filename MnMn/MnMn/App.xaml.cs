@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #if DEBUG
             DoDebug();
 #endif
-            var viewModel = new ApplicationManagerViewModel();
+            var viewModel = new AppManagerViewModel();
 
             SplashWindow.Show();
 

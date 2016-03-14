@@ -19,24 +19,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.View.Controls.App;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
-    public class ApplicationManagerPackModel: ManagerPackModelBase
+    public class AppSettingManagerViewModel: ManagerViewModelBase
     {
-        public ApplicationManagerPackModel(AppSettingManagerViewModel appSettingManager, SmileManagerViewModel smileManager)
+        public AppSettingManagerViewModel(Mediation mediation)
+            : base(mediation)
+        { }
+
+        #region ManagerViewModelBase
+
+        public override Task InitializeAsync()
         {
-            AppSettingManager = appSettingManager;
-            SmileManager = smileManager;
+            return Task.CompletedTask;
         }
-
-        #region
-
-        public AppSettingManagerViewModel AppSettingManager { get; }
-        public SmileManagerViewModel SmileManager { get; }
 
         #endregion
     }

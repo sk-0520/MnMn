@@ -256,6 +256,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
     <Compile Include="Model\UriResultModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\DefinedElementViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryFinderViewModelBase.cs" />
@@ -285,6 +286,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
     <Compile Include="ViewModel\ManagerViewModelBase.cs" />
+    <Compile Include="View\Controls\App\AppSettingManager.xaml.cs">
+      <DependentUpon>AppSettingManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\LoadStateNavigator.xaml.cs">
       <DependentUpon>LoadStateNavigator.xaml</DependentUpon>
     </Compile>
@@ -334,6 +338,10 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Page Include="View\Controls\App\AppSettingManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\LoadStateNavigator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -459,7 +467,7 @@
     <Compile Include="Model\UrisModel.cs" />
     <Compile Include="Model\WindowStatusModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Ranking\SmileVideoRankingCategoryFinderViewModel.cs" />
-    <Compile Include="ViewModel\ApplicationManagerViewModel.cs" />
+    <Compile Include="ViewModel\AppManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileSessionViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Ranking\SmileVideoRankingManagerViewModel.cs" />

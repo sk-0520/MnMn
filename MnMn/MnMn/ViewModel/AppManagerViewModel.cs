@@ -25,15 +25,17 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.App;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
-    public class ApplicationManagerViewModel: ManagerViewModelBase
+    public class AppManagerViewModel: ManagerViewModelBase
     {
-        public ApplicationManagerViewModel()
+        public AppManagerViewModel()
             :base(new Mediation())
         {
             Setting = LoadSetting();
@@ -41,8 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Mediation = new Mediation(Setting);
             
             SmileManager = new SmileManagerViewModel(Mediation);
+            AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(SmileManager));
+            Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
         }
 
         #region property
@@ -50,6 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainSettingModel Setting { get; }
 
         public SmileManagerViewModel SmileManager { get; private set; }
+        public AppSettingManagerViewModel AppSettingManager { get; }
 
         #endregion
 
