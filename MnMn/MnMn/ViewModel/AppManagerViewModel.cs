@@ -16,13 +16,17 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.App;
@@ -38,9 +42,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public AppManagerViewModel()
             :base(new Mediation())
         {
-            Setting = LoadSetting();
+            var logger = new Pe.PeMain.Logic.AppLogger();
 
-            Mediation = new Mediation(Setting);
+            Setting = LoadSetting(logger);
+
+            Mediation = new Mediation(Setting, logger);
             
             SmileManager = new SmileManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
@@ -79,9 +85,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region function
 
-        AppSettingModel LoadSetting()
+
+        AppSettingModel LoadSettingCore(string path, ILogger logger)
         {
-            return new AppSettingModel();
+            return AppUtility.LoadSetting<AppSettingModel>(path, FileType.Json, logger);
+        }
+
+        AppSettingModel LoadSetting(ILogger logger)
+        {
+            var dir = VariableConstants.GetSettingDirectory();
+            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+
+            return LoadSettingCore(filePath, logger);
         }
 
         #endregion

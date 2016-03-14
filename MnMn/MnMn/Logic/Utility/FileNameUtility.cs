@@ -38,5 +38,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         {
             return CreateFileName_Impl(name, null, extension);
         }
+
+        /// <summary>
+        /// 一時ファイル用拡張子の作成
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTemporaryExtension(string role)
+        {
+            return "." + Constants.GetNowTimestampFileName() + "." + role + "." + Constants.ExtensionTemporaryFile;
+        }
+
+
     }
 }

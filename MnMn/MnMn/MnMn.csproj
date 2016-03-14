@@ -146,6 +146,7 @@
     <Compile Include="Define\Event\DownloadingErrorEventArgs.cs" />
     <Compile Include="Define\Event\DownloadingEventArgs.cs" />
     <Compile Include="Define\Event\DownloaderEventArgs.cs" />
+    <Compile Include="Define\FileType.cs" />
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Define\MappingContentTrim.cs" />
     <Compile Include="Define\MappingItemType.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\Recommendations.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
+    <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileIdUtility.cs" />

@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
 
-        public Mediation(AppSettingModel mainSettingModel)
+        public Mediation(AppSettingModel mainSettingModel, ILogger logger)
             : this()
         {
-            Logger = new Pe.PeMain.Logic.AppLogger();
+            Logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
             
             Logger.LoggerConfig.EnabledAll = true;

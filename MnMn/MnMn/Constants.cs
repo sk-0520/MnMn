@@ -35,16 +35,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         #region proeprty
 
-        public static string ApplicationName => "MnMn";
+        public static string ApplicationName { get; } = "MnMn";
 
-        public static string AssemblyPath => Assembly.GetExecutingAssembly().Location;
-        public static string AssemblyParentDirectoryPath => Path.GetDirectoryName(AssemblyPath);
+        public static string AssemblyPath { get; } = Assembly.GetExecutingAssembly().Location;
+        public static string AssemblyParentDirectoryPath { get; } = Path.GetDirectoryName(AssemblyPath);
 
 #if DEBUG
-        public static string ApplicationDirectoryName => ApplicationName + "-debug";
+        public static string ApplicationDirectoryName { get; } = ApplicationName + "-debug";
 #else
-        public static string ApplicationDirectoryName => ApplicationName;
+        public static string ApplicationDirectoryName  { get; } =  ApplicationName;
 #endif
+        const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
 
         /// <summary>
         /// 最小XMLファイルサイズ。
@@ -69,6 +70,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
         public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+
+        public static string SettingDirectoryName { get; } = "setting";
+        public static string SettingFileName { get; } = "setting.json";
 
         public static string ServiceName { get; } = "service";
         public static string ServiceSmileName { get; } = "smile";
@@ -96,16 +100,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
         public static string SmileVideoRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
 
-        public static string SmileVideoRankingPath => Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
-        public static string SmileVideoSearchPath => Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
-        public static string SmileVideoMyListPath => Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
+        public static string SmileVideoRankingPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
+        public static string SmileVideoSearchPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
+        public static string SmileVideoMyListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
 
-        public static string SmileVideoCacheVideosDirectoryName => "videos";
+        public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
-        public static double CommentFontSize => System.Windows.SystemFonts.MessageFontSize * 1.8;
-        public static string CommentFontFamily => System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value;
-        public static double CommentFontAlpha => 1;
-        public static TimeSpan CommentShowTime => TimeSpan.FromSeconds(3);
+        public static double CommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
+        public static string CommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value;
+        public static double CommentFontAlpha { get; } = 1;
+        public static TimeSpan CommentShowTime { get; } = TimeSpan.FromSeconds(3);
 
         public static int SmileVideoSearchCount { get; } = 100;
         public static bool SmileVideoAutoPlay { get; } = true;
@@ -118,16 +122,31 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string CurrentLanguageCode => "ja-jp";
 
+        public static string ExtensionTemporaryFile { get; } = "tmp";
+
         /// <summary>
         /// 設定ディレクトリパス。
         /// </summary>
-        public static string UserDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string UserDirectoryPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         /// <summary>
         /// データ保存ディレクトリパス。
         /// </summary>
-        public static string CacheDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static string CacheDirectoryPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-#endregion
+        #endregion
+
+        #region function
+
+        public static string GetTimestampFileName(DateTime dateTime)
+        {
+            return dateTime.ToString(formatTimestampFileName);
+        }
+
+        public static string GetNowTimestampFileName()
+        {
+            return GetTimestampFileName(DateTime.Now);
+        }
+        #endregion
     }
 }
