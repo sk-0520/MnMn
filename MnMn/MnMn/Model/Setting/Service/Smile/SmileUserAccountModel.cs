@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
     /// アカウント情報を保持。
     /// </summary>
     [DataContract]
-    public class SmileUserAccountModel: PasswordSettingModelBase
+    public class SmileUserAccountModel: PasswordSettingModel
     {
         #region property
 

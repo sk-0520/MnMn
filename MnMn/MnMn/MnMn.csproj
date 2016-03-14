@@ -80,6 +80,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -172,6 +173,7 @@
     <Compile Include="IF\Service\Smile\Video\ISmileVideoScrapingPageHtmlToFeedApi.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoDescription.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
+    <Compile Include="Logic\Converter\PasswordConverter.cs" />
     <Compile Include="Logic\Downloader.cs" />
     <Compile Include="Logic\Extensions\ICommunicationExtensions.cs" />
     <Compile Include="Logic\MediationCustomBase.cs" />
@@ -257,7 +259,7 @@
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
-    <Compile Include="Model\Setting\PasswordSettingModelBase.cs" />
+    <Compile Include="Model\Setting\PasswordSettingModel.cs" />
     <Compile Include="Model\UriResultModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\DefinedElementViewModelBase.cs" />

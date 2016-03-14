@@ -21,6 +21,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Converter;
+using Newtonsoft.Json;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
@@ -28,12 +30,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     /// パスワード設定。
     /// </summary>
     [DataContract]
-    public class PasswordSettingModelBase: SettingModelBase
+    public class PasswordSettingModel: SettingModelBase
     {
         /// <summary>
         /// アカウントパスワード。
+        /// <para>DPAPIを用いてユーザーアカウント毎に暗号化。</para>
         /// </summary>
-        [DataMember]
+        [DataMember, JsonConverter(typeof(PasswordConverter))]
         public string Password { get; set; }
     }
 }
