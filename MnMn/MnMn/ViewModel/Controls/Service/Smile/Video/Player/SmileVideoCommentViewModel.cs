@@ -58,13 +58,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             switch(SmileVideoCommentUtility.GetFontSize(commands)) {
                 case SmileVideoCommentSize.Medium:
-                    FontSize = Setting.CommentFontSize;
+                    FontSize = Setting.Comment.FontSize;
                     break;
                 case SmileVideoCommentSize.Small:
-                    FontSize = Setting.CommentFontSize * 0.8;
+                    FontSize = Setting.Comment.FontSize * 0.8;
                     break;
                 case SmileVideoCommentSize.Big:
-                    FontSize = Setting.CommentFontSize * 1.2;
+                    FontSize = Setting.Comment.FontSize * 1.2;
                     break;
             }
 
@@ -146,12 +146,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public double FontSize { get; }
 
-        public string FontFamily { get { return Setting.CommentFontFamily; } }
+        public string FontFamily { get { return Setting.Comment.FontFamily; } }
+
+        public bool FontBold { get { return Setting.Comment.FontBold; } }
+
+        public bool FontItalic { get { return Setting.Comment.FontItalic; } }
 
         public Brush Foreground { get; }
         public Color Shadow { get; }
 
-        public double Opacity { get { return Setting.CommentFontAlpha; } }
+        public double Opacity { get { return Setting.Comment.FontAlpha; } }
 
         public SmileVideoCommentVertical Vertical { get; }
 

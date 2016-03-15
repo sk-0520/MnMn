@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
 
-            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.SearchCount);
+            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
             SearchFinder.PropertyChanged += PageVm_PropertyChanged;
 
             var query = Query;
@@ -265,11 +265,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             return SearchFinder.LoadAsync(thumbCacheSpan, imageCacheSpan).ContinueWith(task => {
                 if(isReload) {
                     TotalCount = SearchFinder.TotalCount;
-                    if(TotalCount > Setting.SearchCount) {
-                        var pageCount = Math.Min(TotalCount / Setting.SearchCount, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.SearchCount);
+                    if(TotalCount > Setting.Search.Count) {
+                        var pageCount = Math.Min(TotalCount / Setting.Search.Count, (SearchModel.MaximumIndex + SearchModel.MaximumCount) / Setting.Search.Count);
                         var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1 : 0;
                         var preList = Enumerable.Range(1, pageCount - correctionPage)
-                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, query, (i + 1) * Setting.SearchCount, Setting.SearchCount))
+                            .Select((n, i) => new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, query, (i + 1) * Setting.Search.Count, Setting.Search.Count))
                             .Select((v, i) => new PageViewModel<SmileVideoSearchItemFinderViewModel>(v, i + 2))
                             .ToList()
                         ;

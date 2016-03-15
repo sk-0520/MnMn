@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool HasMylistCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.MylistCounter); } }
         public bool HasFirstRetrieve { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.FirstRetrieve); } }
 
-        public bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
+        public bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
 
         #region 生データから取得
 

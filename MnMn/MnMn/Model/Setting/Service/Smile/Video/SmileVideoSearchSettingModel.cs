@@ -20,28 +20,22 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoSettingModel: SettingModelBase
+    public class SmileVideoSearchSettingModel: SettingModelBase
     {
-        #region property
-
-
         /// <summary>
-        /// コメント設定。
+        /// 動画検索で一度に取得する数。
         /// </summary>
         [DataMember]
-        public SmileVideoCommentSettingModel Comment { get; set; } = new SmileVideoCommentSettingModel();
-
+        public int Count { get; set; } = Constants.SmileVideoSearchCount;
+        /// <summary>
+        /// 一覧データから動画情報を取得するか。
+        /// <para>※元データが一覧表示情報を持っていない場合に使用。</para>
+        /// </summary>
         [DataMember]
-        public SmileVideoSearchSettingModel Search { get; set; } = new SmileVideoSearchSettingModel();
-
-        [DataMember]
-        public SmileVideoPlayerSettingModel Player { get; set; } = new SmileVideoPlayerSettingModel();
-
-        #endregion
+        public bool LoadInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
     }
 }

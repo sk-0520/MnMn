@@ -157,20 +157,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool PlayerShowDetailArea
         {
-            get { return Setting.PlayerShowDetailArea; }
-            set { SetPropertyValue(Setting, value); }
+            get { return Setting.Player.ShowDetailArea; }
+            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowDetailArea)); }
         }
 
         public bool PlayerShowCommentArea
         {
-            get { return Setting.PlayerShowCommentArea; }
-            set { SetPropertyValue(Setting, value); }
+            get { return Setting.Player.ShowCommentList; }
+            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowCommentList)); }
         }
 
         public bool PlayerVisibleComment
         {
-            get { return Setting.PlayerVisibleComment; }
-            set { SetPropertyValue(Setting, value); }
+            get { return Setting.Player.VisibleComment; }
+            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.VisibleComment)); }
         }
         
 
@@ -265,22 +265,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public int Volume
         {
-            get { return Setting.PlayerVolume; }
+            get { return Setting.Player.Volume; }
             set
             {
-                if(SetPropertyValue(Setting, value, nameof(Setting.PlayerVolume))) {
-                    Player.Volume = Setting.PlayerVolume;
+                if(SetPropertyValue(Setting.Player, value, nameof(Setting.Player.Volume))) {
+                    Player.Volume = Setting.Player.Volume;
                 }
             }
         }
 
         public bool IsMute
         {
-            get { return Setting.PlayerIsMute; }
+            get { return Setting.Player.IsMute; }
             set
             {
-                if(SetPropertyValue(Setting, value, nameof(Setting.PlayerIsMute))) {
-                    Player.IsMute = Setting.PlayerIsMute;
+                if(SetPropertyValue(Setting.Player, value, nameof(Setting.Player.IsMute))) {
+                    Player.IsMute = Setting.Player.IsMute;
                 }
             }
         }
@@ -378,8 +378,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool ReplayVideo
         {
-            get { return Setting.PlayerReplayVideo; }
-            set { SetPropertyValue(Setting, value, nameof(Setting.PlayerReplayVideo)); }
+            get { return Setting.Player.ReplayVideo; }
+            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ReplayVideo)); }
         }
 
         public string UserNickname
@@ -571,7 +571,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StartIfAutoPlay()
         {
-            if(Setting.VideoAutoPlay) {
+            if(Setting.Player.AutoPlay) {
                 SetMedia();
                 VideoPlay();
             }
@@ -723,6 +723,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var animation = new DoubleAnimation();
             var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
             var diffPosition = starTime / commentArea.Width;
+            if(double.IsInfinity(diffPosition)) {
+                diffPosition = 0;
+            }
 
             animation.From = commentArea.Width + diffPosition;
             animation.To = -element.ActualWidth;
@@ -786,7 +789,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
 
                     // アニメーション設定
-                    var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.CommentShowTime + correctionTime);
+                    var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
 
                     var data = new CommentData(element, commentViewModel, animation);
                     showingCommentList.Add(data);
@@ -811,11 +814,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
                 }
                 // 超過分のコメントを破棄
-                if(0 < setting.PlayerDisplayCommentCount) {
+                if(0 < setting.Player.DisplayCommentCount) {
                     var removeList = showingCommentList
                         .OrderBy(i => i.ViewModel.ElapsedTime)
                         .ThenBy(i => i.ViewModel.Number)
-                        .Take(showingCommentList.Count - setting.PlayerDisplayCommentCount)
+                        .Take(showingCommentList.Count - setting.Player.DisplayCommentCount)
                         .ToArray()
                     ;
                     foreach(var item in removeList) {

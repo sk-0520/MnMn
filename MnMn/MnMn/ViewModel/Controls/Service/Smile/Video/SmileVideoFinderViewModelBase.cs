@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        protected virtual bool IsLoadVideoInformation { get { return Setting.LoadVideoInformation; } }
+        protected virtual bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
 
         #endregion
 

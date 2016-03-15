@@ -257,7 +257,10 @@
     <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
     <Compile Include="Model\Setting\AppSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoPlayerSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSettingModel.cs" />
     <Compile Include="Model\Setting\PasswordSettingModel.cs" />
     <Compile Include="Model\UriResultModel.cs" />
