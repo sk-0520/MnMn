@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -47,6 +49,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return AppSetting.CacheLifeTime; }
             set { SetPropertyValue(AppSetting, value); }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand SelectCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        CacheDirectoryPath = SelectDirectory(CacheDirectoryPath);
+                    }
+                );
+            }
+        }
+
+        public ICommand SetDefaultCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        CacheDirectoryPath = string.Empty;
+                    }
+                );
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        string SelectDirectory(string initialDirectoryPath)
+        {
+            using(var dialog = new FolderBrowserDialog()) {
+                dialog.SelectedPath = initialDirectoryPath;
+                if(dialog.ShowDialog().GetValueOrDefault()) {
+                    return dialog.SelectedPath;
+                }
+            }
+
+            return initialDirectoryPath;
         }
 
         #endregion

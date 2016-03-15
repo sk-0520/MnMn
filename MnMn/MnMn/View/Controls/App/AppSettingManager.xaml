@@ -10,10 +10,27 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <Grid>
-    <StackPanel>
-      <Label>キャッシュ</Label>
-      <TextBox Text="{Binding CacheDirectoryPath}" />
-      <xctk:TimeSpanUpDown Value="{Binding CacheLifeTime}" />
-    </StackPanel>
+    <GroupBox Header="cache">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0">path</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CacheDirectoryPath}"/>
+        <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectCacheDirectoryCommand}">directory</Button>
+        <Button Grid.Row="0" Grid.Column="3" Command="{Binding SetDefaultCacheDirectoryCommand}" >default</Button>
+        
+        <Label Grid.Row="1" Grid.Column="0">time</Label>
+        <xctk:TimeSpanUpDown Grid.Row="1" Grid.Column="1" Value="{Binding CacheLifeTime}" />
+      </Grid>
+    </GroupBox>
   </Grid>
 </UserControl>
