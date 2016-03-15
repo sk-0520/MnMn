@@ -88,6 +88,20 @@
 
       <Menu>
         <MenuItem Header="player size">
+          <MenuItem>
+            <MenuItem.Header>
+              <TextBlock>
+                思った以上に計算ややこしいから
+                <LineBreak/>
+                動画サイズに連動したプレイヤーサイズ変更は
+                <LineBreak/>
+                あとまわし
+              </TextBlock>
+            </MenuItem.Header>
+            <MenuItem.Icon>
+              <Label FontSize="30">☃</Label>
+            </MenuItem.Icon>
+          </MenuItem>
           <MenuItem Header="50%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="50"  />
           <MenuItem Header="75%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="75"  />
           <MenuItem Header="100%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="100"  />
@@ -155,7 +169,7 @@
         <RowDefinition Height="120" />
       </Grid.RowDefinitions>
 
-      <Grid Grid.Row="0"  VerticalAlignment="Stretch">
+      <Grid Grid.Row="0" VerticalAlignment="Stretch">
         <Grid.Style>
           <Style>
             <Setter Property="Grid.RowSpan" Value="1" />
@@ -188,6 +202,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
+          
           <vlc_wpf:VlcPlayer x:Name="player" Grid.Row="0" EndBehavior="Nothing" />
 
           <Viewbox Grid.Row="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">

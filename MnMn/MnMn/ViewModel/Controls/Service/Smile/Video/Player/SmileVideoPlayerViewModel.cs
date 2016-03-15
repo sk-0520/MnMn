@@ -131,11 +131,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _baseHeight;
         double _commentAreaWidth = 640;
         double _commentAreaHeight = 386;
-        /*
-        GridLength _commentListLength = new GridLength(290);
-        GridLength _visualPlayerWidth = new GridLength(500);
+
+        [Obsolete]
+        GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
+        [Obsolete]
+        GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
+        [Obsolete]
         GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
-        */
 
         PlayerState _playerState;
         bool _isBufferingStop;
@@ -400,23 +402,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._commentAreaHeight; }
             set { SetVariableValue(ref this._commentAreaHeight, value); }
         }
-        /*
+
+        [Obsolete]
         public GridLength VisualPlayerWidth
         {
             get { return this._visualPlayerWidth; }
             set { SetVariableValue(ref this._visualPlayerWidth, value); }
         }
+        [Obsolete]
         public GridLength VisualPlayerHeight
         {
             get { return this._visualPlayerHeight; }
             set { SetVariableValue(ref this._visualPlayerHeight, value); }
         }
+        [Obsolete]
         public GridLength CommentListLength
         {
             get { return this._commentListLength; }
             set { SetVariableValue(ref this._commentListLength, value); }
         }
-        */
         public PlayerState PlayerState
         {
             get { return this._playerState; }
@@ -602,6 +606,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        [Obsolete]
         public ICommand ChangePlayerSizeCommand
         {
             get
@@ -620,16 +625,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
+        [Obsolete]
         void ChangePlayerSizeFromPercent(int percent)
         {
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
-            var scale = percent / 100.0;
-            //VisualPlayerWidth = new GridLength(VisualVideoSize.Width * scale);
+            var baseLength = 100.0;
+            var scale = percent / baseLength;
+            var videoWidth = VisualVideoSize.Width * scale;
+            VisualPlayerWidth = new GridLength(videoWidth);
+            CommentListLength = new GridLength(Width - videoWidth);
             //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
 
-            //View.SizeToContent = SizeToContent.WidthAndHeight;
+            //View.SizeToContent = SizeToContent.Width;
         }
 
         void SetVideoDataInformation()
