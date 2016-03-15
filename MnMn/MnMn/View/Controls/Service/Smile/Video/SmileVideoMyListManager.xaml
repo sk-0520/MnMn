@@ -237,7 +237,7 @@
     </Grid>
 
 
-    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultHorizonGridSplitter}" />
+    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
     <Grid Grid.Column="2">
       <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />
