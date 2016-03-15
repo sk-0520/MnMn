@@ -131,6 +131,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _baseHeight;
         double _commentAreaWidth = 640;
         double _commentAreaHeight = 386;
+        GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
+        GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
 
         PlayerState _playerState;
         bool _isBufferingStop;
@@ -395,17 +397,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._commentAreaHeight; }
             set { SetVariableValue(ref this._commentAreaHeight, value); }
         }
-        //public string Description
-        //{
-        //    get
-        //    {
-        //        if(VideoInformation?.PageHtmlLoadState == LoadState.Loaded) {
-        //            return VideoInformation.PageDescription;
-        //        }
 
-        //        return null;
-        //    }
-        //}
+        public GridLength VisualPlayerWidth
+        {
+            get { return this._visualPlayerWidth; }
+            set { SetVariableValue(ref this._visualPlayerWidth, value); }
+        }
+        public GridLength VisualPlayerHeight
+        {
+            get { return this._visualPlayerHeight; }
+            set { SetVariableValue(ref this._visualPlayerHeight, value); }
+        }
 
         public PlayerState PlayerState
         {
@@ -571,16 +573,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand LoadNextPlayListItemCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                    }
-                );
-            }
-        }
         public ICommand LoadPrevPlayListItemCommand
         {
             get
@@ -591,11 +583,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
+        public ICommand LoadNextPlayListItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                    }
+                );
+            }
+        }
+
+        public ICommand ChangePlayerSizeCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var percent = int.Parse((string)o);
+                        ChangePlayerSizeFromPercent(percent);
+                    }
+                );
+            }
+        }
 
         #endregion
 
 
         #region function
+
+        void ChangePlayerSizeFromPercent(int percent)
+        {
+            if(VisualVideoSize.IsEmpty) {
+                return;
+            }
+            var scale = percent / 100.0;
+            VisualPlayerWidth = new GridLength(VisualVideoSize.Width * scale);
+            VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
+            View.SizeToContent = SizeToContent.WidthAndHeight;
+        }
 
         void SetVideoDataInformation()
         {

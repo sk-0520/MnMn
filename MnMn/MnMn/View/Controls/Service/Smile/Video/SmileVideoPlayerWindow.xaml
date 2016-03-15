@@ -83,6 +83,19 @@
         </MenuItem>
       </Menu>
       <Button Command="{Binding LoadNextPlayListItemCommand}">next</Button>
+
+      <Separator />
+
+      <Menu>
+        <MenuItem Header="player size">
+          <MenuItem Header="50%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="50"  />
+          <MenuItem Header="75%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="75"  />
+          <MenuItem Header="100%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="100"  />
+          <MenuItem Header="150%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="150"  />
+          <MenuItem Header="200%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="200" />
+        </MenuItem>
+      </Menu>
+      
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom" >
@@ -154,7 +167,7 @@
           </Style>
         </Grid.Style>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="7*" />
+          <ColumnDefinition Width="{Binding VisualPlayerWidth, Mode=OneWay}" />
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
@@ -171,7 +184,7 @@
             </Style>
           </Grid.Style>
           <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="{Binding VisualPlayerHeight, Mode=OneWay}" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
