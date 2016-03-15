@@ -294,6 +294,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoTagViewModel.cs" />
     <Compile Include="ViewModel\ManagerViewModelBase.cs" />
+    <Compile Include="View\Attachment\PasswordBoxPasswordBehavior.cs" />
     <Compile Include="View\Controls\App\AppSettingManager.xaml.cs">
       <DependentUpon>AppSettingManager.xaml</DependentUpon>
     </Compile>
