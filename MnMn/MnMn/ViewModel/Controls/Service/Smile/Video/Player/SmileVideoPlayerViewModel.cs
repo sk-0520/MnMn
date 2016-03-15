@@ -109,12 +109,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region variable
 
-
         bool _canVideoPlay;
         bool _isVideoPlayng;
 
         float _videoPosition;
         float _prevStateChangedPosition;
+
+        WindowState _state;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -154,6 +155,52 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Canvas ContributorCommentArea { get; set; }
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
+
+        public WindowState State
+        {
+            get { return this._state; }
+            set { SetVariableValue(ref this._state, value); }
+        }
+        public double Left
+        {
+            get { return Setting.Player.Window.Left; }
+            set
+            {
+                if(State == WindowState.Normal) {
+                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Left));
+                }
+            }
+        }
+        public double Top
+        {
+            get { return Setting.Player.Window.Top; }
+            set
+            {
+                if(State == System.Windows.WindowState.Normal) {
+                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Top));
+                }
+            }
+        }
+        public double Width
+        {
+            get { return Setting.Player.Window.Width; }
+            set
+            {
+                if(State == WindowState.Normal) {
+                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Width));
+                }
+            }
+        }
+        public double Height
+        {
+            get { return Setting.Player.Window.Height; }
+            set
+            {
+                if(State == System.Windows.WindowState.Normal) {
+                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height));
+                }
+            }
+        }
 
         public bool PlayerShowDetailArea
         {

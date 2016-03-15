@@ -80,5 +80,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public TimeSpan PlayListBufferingSkipTime { get; set; }
 
+        [DataMember]
+        public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
+            Left = 150,
+            Top = 150,
+            Width = 800,
+            Height = 600,
+        };
     }
 }

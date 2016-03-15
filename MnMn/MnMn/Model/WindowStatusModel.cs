@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [DataMember, IsDeepClone]
         public double Height { get; set; }
-
+ 
         #endregion
 
         #region IDeepClone
