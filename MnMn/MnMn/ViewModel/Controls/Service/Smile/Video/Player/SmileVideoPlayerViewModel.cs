@@ -774,6 +774,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // 現在時間から-1秒したものを表示対象とする
             var correctionTime = TimeSpan.FromSeconds(1);
             var newComments = list
+                .Where(c => !c.NowShowing)
                 .Where(c => prevTime <= (c.ElapsedTime - correctionTime) && (c.ElapsedTime - correctionTime) <= nowTime)
                 .ToArray()
             ;
