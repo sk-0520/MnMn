@@ -131,8 +131,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _baseHeight;
         double _commentAreaWidth = 640;
         double _commentAreaHeight = 386;
-        GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
+        /*
+        GridLength _commentListLength = new GridLength(290);
+        GridLength _visualPlayerWidth = new GridLength(500);
         GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
+        */
 
         PlayerState _playerState;
         bool _isBufferingStop;
@@ -397,7 +400,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._commentAreaHeight; }
             set { SetVariableValue(ref this._commentAreaHeight, value); }
         }
-
+        /*
         public GridLength VisualPlayerWidth
         {
             get { return this._visualPlayerWidth; }
@@ -408,7 +411,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._visualPlayerHeight; }
             set { SetVariableValue(ref this._visualPlayerHeight, value); }
         }
-
+        public GridLength CommentListLength
+        {
+            get { return this._commentListLength; }
+            set { SetVariableValue(ref this._commentListLength, value); }
+        }
+        */
         public PlayerState PlayerState
         {
             get { return this._playerState; }
@@ -618,9 +626,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
             var scale = percent / 100.0;
-            VisualPlayerWidth = new GridLength(VisualVideoSize.Width * scale);
-            VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
-            View.SizeToContent = SizeToContent.WidthAndHeight;
+            //VisualPlayerWidth = new GridLength(VisualVideoSize.Width * scale);
+            //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
+
+            //View.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
         void SetVideoDataInformation()

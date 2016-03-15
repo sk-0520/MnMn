@@ -167,7 +167,7 @@
           </Style>
         </Grid.Style>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="{Binding VisualPlayerWidth, Mode=OneWay}" />
+          <ColumnDefinition Width="7*" />
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
@@ -184,7 +184,7 @@
             </Style>
           </Grid.Style>
           <Grid.RowDefinitions>
-            <RowDefinition Height="{Binding VisualPlayerHeight, Mode=OneWay}" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
