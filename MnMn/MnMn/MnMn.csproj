@@ -148,6 +148,7 @@
     <Compile Include="Define\Event\DownloadingEventArgs.cs" />
     <Compile Include="Define\Event\DownloaderEventArgs.cs" />
     <Compile Include="Define\FileType.cs" />
+    <Compile Include="Define\FilteringType.cs" />
     <Compile Include="Define\LoadState.cs" />
     <Compile Include="Define\MappingContentTrim.cs" />
     <Compile Include="Define\MappingItemType.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentSize.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentVertical.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoFilteringTarget.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoInformationFlags.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="Define\ShowViewState.cs" />
@@ -256,8 +258,10 @@
     <Compile Include="Model\Service\Smile\Video\SmileVideoMyListModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
     <Compile Include="Model\Setting\AppSettingModel.cs" />
+    <Compile Include="Model\Setting\FilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoPlayerSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchSettingModel.cs" />

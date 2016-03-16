@@ -43,8 +43,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public double FontAlpha { get; set; } = Constants.CommentFontAlpha;
+        /// <summary>
+        /// 太字。
+        /// </summary>
         [DataMember]
         public bool FontBold { get; set; }
+        /// <summary>
+        /// イタリック。
+        /// </summary>
         [DataMember]
         public bool FontItalic { get; set; }
         /// <summary>
@@ -63,6 +69,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public int CommonNgLevel { get; set; }
 
+        /// <summary>
+        /// コメント投稿を匿名にするか。
+        /// </summary>
+        public bool PostAnonymous { get; set; } = true;
 
         #endregion
     }
