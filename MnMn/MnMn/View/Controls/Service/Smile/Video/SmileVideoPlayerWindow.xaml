@@ -312,8 +312,34 @@
           <Expander DockPanel.Dock="Bottom" Header="show filter">
           </Expander>
           <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
+            <ListView.ItemContainerStyle>
+              <Style TargetType="ListViewItem">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding NowShowing}" Value="True">
+                    <Setter Property="FontWeight" Value="Bold" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
               <GridView>
+                <GridViewColumn>
+                  <GridViewColumn.HeaderTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="color" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.HeaderTemplate>
+                  <GridViewColumn.CellTemplate>
+                    <ItemContainerTemplate>
+                      <Rectangle Fill="{Binding Foreground}" Width="8" Height="8">
+                        <Rectangle.Stroke>
+                          <SolidColorBrush Color="{Binding Shadow}" />
+                        </Rectangle.Stroke>
+                      </Rectangle>
+                    </ItemContainerTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
                 <GridViewColumn>
                   <GridViewColumn.HeaderTemplate>
                     <ItemContainerTemplate>
@@ -327,6 +353,32 @@
                   </GridViewColumn.CellTemplate>
                 </GridViewColumn>
 
+                <GridViewColumn>
+                  <GridViewColumn.HeaderTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="contributor" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.HeaderTemplate>
+                  <GridViewColumn.CellTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="{Binding IsContributor}" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn>
+                  <GridViewColumn.HeaderTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="approval" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.HeaderTemplate>
+                  <GridViewColumn.CellTemplate>
+                    <ItemContainerTemplate>
+                      <TextBlock Text="{Binding Approval}" />
+                    </ItemContainerTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                
                 <GridViewColumn>
                   <GridViewColumn.HeaderTemplate>
                     <ItemContainerTemplate>
