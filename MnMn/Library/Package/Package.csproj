@@ -111,6 +111,7 @@
     <Compile Include="HTMLConverter\HtmlTokenType.cs" />
     <Compile Include="HTMLConverter\HtmlToXamlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="stackoverflow.com\ItemsControlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -73,6 +73,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
+using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -993,7 +994,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .FirstOrDefault(c => InShowTime(c, PrevPlayedTime, PlayTime))
             ;
             if(nowTimelineItem != null) {
-                CommentView.ScrollIntoView(nowTimelineItem);
+                CommentView.ScrollToCenterOfView(nowTimelineItem, true, false);
             }
         }
 
