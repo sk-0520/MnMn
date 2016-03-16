@@ -42,6 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _isSelected;
         bool _nowShowing;
 
+        bool _filteringView;
+
+        bool _approval;
+
         #endregion
 
         public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model, SmileVideoSettingModel setting)
@@ -75,6 +79,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         SmileVideoSettingModel Setting { get; }
 
+        public bool Approval
+        {
+            get { return this._approval; }
+            set { SetVariableValue(ref this._approval, value); }
+        }
+
+        /// <summary>
+        /// 選択されているか。
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return this._isSelected; }
+            set { SetVariableValue(ref this._isSelected, value); }
+        }
+
+        /// <summary>
+        /// 表示中か。
+        /// </summary>
+        public bool NowShowing
+        {
+            get { return this._nowShowing; }
+            set { SetVariableValue(ref this._nowShowing, value); }
+        }
+
+        /// <summary>
+        /// フィルタリングされているか。
+        /// </summary>
+        public bool FilteringView
+        {
+            get { return this._filteringView; }
+            set { SetVariableValue(ref this._filteringView, value); }
+        }
+
         public int Score
         {
             get { return RawValueUtility.ConvertInteger(Model.Score); }
@@ -90,20 +127,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public DateTime Timestamp
         {
-            get
-            {
-                return RawValueUtility.ConvertUnixTime(Model.Date);
-            }
+            get { return RawValueUtility.ConvertUnixTime(Model.Date); }
         }
 
         public string UserId { get { return Model.UserId; } }
 
         public SmileVideoUserKind UserKind
         {
-            get
-            {
-                return SmileVideoMsgUtility.ConvertUserKind(Model.Premium);
-            }
+            get { return SmileVideoMsgUtility.ConvertUserKind(Model.Premium); }
         }
 
         /// <summary>
@@ -111,10 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public TimeSpan ElapsedTime
         {
-            get
-            {
-                return SmileVideoMsgUtility.ConvertElapsedTime(Model.VPos);
-            }
+            get { return SmileVideoMsgUtility.ConvertElapsedTime(Model.VPos); }
         }
 
         public IEnumerable<string> Commands
@@ -158,18 +186,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public double Opacity { get { return Setting.Comment.FontAlpha; } }
 
         public SmileVideoCommentVertical Vertical { get; }
-
-        public bool IsSelected
-        {
-            get { return this._isSelected; }
-            set { SetVariableValue(ref this._isSelected, value); }
-        }
-
-        public bool NowShowing
-        {
-            get { return this._nowShowing; }
-            set { SetVariableValue(ref this._nowShowing, value); }
-        }
 
         #endregion
 

@@ -144,13 +144,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
 
+        bool _isAutoScroll;
+        SmileVideoFilteringCommentType _filteringCommentType;
+        string _filteringUserId;
+        int _commentListCount;
+        int _contributorCommentListCount;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
             : base(mediation)
         {
             CommentItems = CollectionViewSource.GetDefaultView(CommentList);
-            CommentItems.Filter = FilterItems;
+            CommentItems.Filter = FilterCommentItems;
         }
 
         #region property
@@ -226,6 +232,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.VisibleComment; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.VisibleComment)); }
         }
+
+        public bool IsAutoScroll
+        {
+            get { return this._isAutoScroll; }
+            set { SetVariableValue(ref this._isAutoScroll, value); }
+        }
+        public SmileVideoFilteringCommentType FilteringCommentType
+        {
+            get { return this._filteringCommentType; }
+            set
+            {
+                if(SetVariableValue(ref this._filteringCommentType, value)) {
+                    if(this._filteringCommentType == SmileVideoFilteringCommentType.All) {
+                        CommentItems.Refresh();
+                    } else {
+                        RefreshFilteringComment();
+                    }
+                }
+            }
+        }
+
+        public string FilteringUserId
+        {
+            get { return this._filteringUserId; }
+            set
+            {
+                if(SetVariableValue(ref this._filteringUserId, value)) {
+                    if(FilteringCommentType == SmileVideoFilteringCommentType.UserId) {
+                        RefreshFilteringComment();
+                    }
+                }
+            }
+        }
+        public int CommentListCount
+        {
+            get { return this._commentListCount; }
+            private set { SetVariableValue(ref this._commentListCount, value); }
+        }
+        public int ContributorCommentListCount
+        {
+            get { return this._contributorCommentListCount; }
+            private set { SetVariableValue(ref this._contributorCommentListCount, value); }
+        }
+
         
 
         public string VideoId
@@ -939,11 +989,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        bool FilterItems(object o)
+        bool FilterCommentItems(object o)
         {
+            if(FilteringCommentType == SmileVideoFilteringCommentType.All) {
+                return true;
+            }
+
             var item = (SmileVideoCommentViewModel)o;
 
-            return true;
+            return item.FilteringView;
         }
 
         Task LoadTagsAsync()
@@ -1110,6 +1164,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             });
         }
 
+        void RefreshFilteringComment()
+        {
+            Debug.Assert(FilteringCommentType != SmileVideoFilteringCommentType.All);
+
+            foreach(var item in CommentList) {
+                item.FilteringView = false;
+            }
+
+            switch(FilteringCommentType) {
+                case SmileVideoFilteringCommentType.All:
+                    break;
+
+                case SmileVideoFilteringCommentType.Contributor:
+                    foreach(var item in ContributorCommentList) {
+                        item.FilteringView = true;
+                    }
+                    break;
+
+                case SmileVideoFilteringCommentType.UserId:
+                    if(!string.IsNullOrWhiteSpace(FilteringUserId)) {
+                        foreach(var item in CommentList.Where(i => i.UserId != null && i.UserId.IndexOf(FilteringUserId, StringComparison.OrdinalIgnoreCase) != -1)) {
+                            item.FilteringView = true;
+                        }
+                    } else {
+                        foreach(var item in CommentList) {
+                            item.FilteringView = true;
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            CommentItems.Refresh();
+        }
+
+        void ApprovalComment()
+        {
+
+        }
+
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1163,9 +1260,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .OrderBy(c => c.ElapsedTime)
             ;
             CommentList.InitializeRange(comments);
+            CommentListCount = CommentList.Count;
+            ApprovalComment();
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsContributor));
             ContributorCommentList.InitializeRange(CommentList.Where(c => c.IsContributor));
+            ContributorCommentListCount = ContributorCommentList.Count;
+
+            if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
+                RefreshFilteringComment();
+            }
 
             return base.LoadCommentAsync(rawMsgPacket);
         }

@@ -164,6 +164,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentSize.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentVertical.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoFilteringCommentType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoFilteringTarget.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoInformationFlags.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
