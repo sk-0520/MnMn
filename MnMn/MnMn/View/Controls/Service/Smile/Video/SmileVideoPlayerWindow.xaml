@@ -291,27 +291,25 @@
                   </Style.Triggers>
                 </Style>
               </RadioButton.Style>
-              <TextBlock>
-                <Run Text="user" />
-                <Run>
-                  <Run.Style>
-                    <Style TargetType="Run">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding FilteringCommentType}" Value="UserId">
-                          <Setter Property="Text" Value="{Binding CommentItems.Count, Mode=OneWay, StringFormat=({0})}" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </Run.Style>
-                </Run>
-              </TextBlock>
+              <TextBlock>user</TextBlock>
             </RadioButton>
+            <TextBlock DockPanel.Dock="Right">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding FilteringCommentType}" Value="UserId">
+                      <Setter Property="Text" Value="{Binding CommentItems.Count, Mode=OneWay, StringFormat=({0})}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
             <TextBox 
               Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
               IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
             />
           </DockPanel>
-          <Expander DockPanel.Dock="Bottom" Header="filter">
+          <Expander DockPanel.Dock="Bottom" Header="show filter">
           </Expander>
           <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
             <ListView.View>

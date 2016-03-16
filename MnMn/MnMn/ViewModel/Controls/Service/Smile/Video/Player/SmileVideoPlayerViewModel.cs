@@ -85,6 +85,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         const float initPrevStateChangedPosition = -1;
 
+        static readonly TimeSpan correctionTime = TimeSpan.FromSeconds(1);
+
         class CommentData
         {
             public CommentData(SmileVideoCommentElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
@@ -144,7 +146,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
 
-        bool _isAutoScroll;
         SmileVideoFilteringCommentType _filteringCommentType;
         string _filteringUserId;
         int _commentListCount;
@@ -235,8 +236,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool IsAutoScroll
         {
-            get { return this._isAutoScroll; }
-            set { SetVariableValue(ref this._isAutoScroll, value); }
+            get { return Setting.Player.AutoScrollCommentList; }
+            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.AutoScrollCommentList)); }
         }
         public SmileVideoFilteringCommentType FilteringCommentType
         {
@@ -734,6 +735,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ShowingCommentList.Clear();
         }
 
+        static bool InShowTime(SmileVideoCommentViewModel comment, TimeSpan prevTime, TimeSpan nowTime)
+        {
+            return prevTime <= (comment.ElapsedTime - correctionTime) && (comment.ElapsedTime - correctionTime) <= nowTime;
+        }
+
         void MoveVideoPostion(float targetPosition)
         {
             Mediation.Logger.Debug(targetPosition.ToString());
@@ -913,10 +919,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
-            var correctionTime = TimeSpan.FromSeconds(1);
             var newComments = list
                 .Where(c => !c.NowShowing)
-                .Where(c => prevTime <= (c.ElapsedTime - correctionTime) && (c.ElapsedTime - correctionTime) <= nowTime)
+                .Where(c => InShowTime(c, prevTime ,nowTime))
                 .ToArray()
             ;
             if(newComments.Any()) {
@@ -980,9 +985,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ScrollCommentList()
         {
+            if(!IsAutoScroll) {
+                return;
+            }
             var nowTimelineItem = CommentItems
                 .Cast<SmileVideoCommentViewModel>()
-                .FirstOrDefault(c => PrevPlayedTime <= c.ElapsedTime && c.ElapsedTime <= PlayTime)
+                .FirstOrDefault(c => InShowTime(c, PrevPlayedTime, PlayTime))
             ;
             if(nowTimelineItem != null) {
                 CommentView.ScrollIntoView(nowTimelineItem);
