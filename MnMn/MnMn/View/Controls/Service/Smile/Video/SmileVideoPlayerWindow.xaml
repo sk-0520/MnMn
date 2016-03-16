@@ -214,7 +214,7 @@
           <Viewbox Grid.Row="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
               <Canvas x:Name="normalCommentArea" />
-              <Canvas x:Name="contributorCommentArea" />
+              <Canvas x:Name="originalPosterCommentArea" />
             </Grid>
           </Viewbox>
 
@@ -266,19 +266,19 @@
                 <Run Text="{Binding CommentListCount, Mode=OneWay, StringFormat=({0})}" />
               </TextBlock>
             </RadioButton>
-            <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.Contributor}}">
+            <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
               <RadioButton.Style>
                 <Style TargetType="RadioButton">
                   <Style.Triggers>
-                    <DataTrigger Binding="{Binding ContributorCommentListCount}" Value="0">
+                    <DataTrigger Binding="{Binding OriginalPosterCommentListCount}" Value="0">
                       <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
                   </Style.Triggers>
                 </Style>
               </RadioButton.Style>
               <TextBlock>
-                <Run Text="contributor" />
-                <Run Text="{Binding ContributorCommentListCount, Mode=OneWay, StringFormat=({0})}" />
+                <Run Text="op" />
+                <Run Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=({0})}" />
               </TextBlock>
             </RadioButton>
             <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
@@ -356,12 +356,12 @@
                 <GridViewColumn>
                   <GridViewColumn.HeaderTemplate>
                     <ItemContainerTemplate>
-                      <TextBlock Text="contributor" />
+                      <TextBlock Text="op" />
                     </ItemContainerTemplate>
                   </GridViewColumn.HeaderTemplate>
                   <GridViewColumn.CellTemplate>
                     <ItemContainerTemplate>
-                      <TextBlock Text="{Binding IsContributor}" />
+                      <TextBlock Text="{Binding IsOriginalPoster}" />
                     </ItemContainerTemplate>
                   </GridViewColumn.CellTemplate>
                 </GridViewColumn>

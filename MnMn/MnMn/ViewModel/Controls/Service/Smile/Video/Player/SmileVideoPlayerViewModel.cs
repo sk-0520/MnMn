@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         SmileVideoFilteringCommentType _filteringCommentType;
         string _filteringUserId;
         int _commentListCount;
-        int _contributorCommentListCount;
+        int _originalPosterCommentListCount;
 
         #endregion
 
@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         VlcPlayer Player { get; set; }
         Navigationbar Navigationbar { get; set; }
         Canvas NormalCommentArea { get; set; }
-        Canvas ContributorCommentArea { get; set; }
+        Canvas OriginalPosterCommentArea { get; set; }
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
@@ -271,10 +271,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._commentListCount; }
             private set { SetVariableValue(ref this._commentListCount, value); }
         }
-        public int ContributorCommentListCount
+        public int OriginalPosterCommentListCount
         {
-            get { return this._contributorCommentListCount; }
-            private set { SetVariableValue(ref this._contributorCommentListCount, value); }
+            get { return this._originalPosterCommentListCount; }
+            private set { SetVariableValue(ref this._originalPosterCommentListCount, value); }
         }
 
         
@@ -299,7 +299,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICollectionView CommentItems { get; private set; }
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
-        CollectionModel<SmileVideoCommentViewModel> ContributorCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        CollectionModel<SmileVideoCommentViewModel> OriginalPosterCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
         List<CommentData> ShowingCommentList { get; } = new List<CommentData>();
 
@@ -980,7 +980,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Logger.Trace($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             FireShowComment_Impl(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
-            FireShowComment_Impl(ContributorCommentArea, PrevPlayedTime, PlayTime, ContributorCommentList, ShowingCommentList, Setting);
+            FireShowComment_Impl(OriginalPosterCommentArea, PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
         }
 
         void ScrollCommentList()
@@ -1184,8 +1184,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 case SmileVideoFilteringCommentType.All:
                     break;
 
-                case SmileVideoFilteringCommentType.Contributor:
-                    foreach(var item in ContributorCommentList) {
+                case SmileVideoFilteringCommentType.OriginalPoster:
+                    foreach(var item in OriginalPosterCommentList) {
                         item.FilteringView = true;
                     }
                     break;
@@ -1271,9 +1271,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentListCount = CommentList.Count;
             ApprovalComment();
 
-            NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsContributor));
-            ContributorCommentList.InitializeRange(CommentList.Where(c => c.IsContributor));
-            ContributorCommentListCount = ContributorCommentList.Count;
+            NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
+            OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
+            OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
 
             if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
                 RefreshFilteringComment();
@@ -1321,7 +1321,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.Dispatcher.Invoke(() => {
                     CommentList.Clear();
                     NormalCommentList.Clear();
-                    ContributorCommentList.Clear();
+                    OriginalPosterCommentList.Clear();
                     ClearComment();
                 });
             }
@@ -1356,7 +1356,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             View = playerView;
             Player = playerView.player;//.MediaPlayer;
             NormalCommentArea = playerView.normalCommentArea;
-            ContributorCommentArea = playerView.contributorCommentArea;
+            OriginalPosterCommentArea = playerView.originalPosterCommentArea;
             Navigationbar = playerView.seekbar;
             CommentView = playerView.commentView;
             DocumentDescription = playerView.documentDescription;

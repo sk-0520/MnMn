@@ -24,8 +24,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
     public enum SmileVideoFilteringCommentType
     {
+        /// <summary>
+        /// 全部。
+        /// </summary>
         All,
-        Contributor,
+        /// <summary>
+        /// 投稿者。
+        /// </summary>
+        OriginalPoster,
+        /// <summary>
+        /// ユーザーID指定。
+        /// </summary>
         UserId,
     }
 }
