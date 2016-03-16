@@ -894,7 +894,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return animation;
         }
 
-
         static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
         {
             switch(commentViewModel.Vertical) {
@@ -910,7 +909,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        static void FireShowComment_Impl(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        static void FireShowCommentCore(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, List<CommentData> showingCommentList, SmileVideoSettingModel setting)
         {
             var commentArea = new Size(
                commentParentElement.ActualWidth,
@@ -920,6 +919,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
             var newComments = list
+                .Where(c => c.Approval)
                 .Where(c => !c.NowShowing)
                 .Where(c => InShowTime(c, prevTime ,nowTime))
                 .ToArray()
@@ -979,8 +979,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Mediation.Logger.Trace($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
-            FireShowComment_Impl(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
-            FireShowComment_Impl(OriginalPosterCommentArea, PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
+            FireShowCommentCore(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
+            FireShowCommentCore(OriginalPosterCommentArea, PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
         }
 
         void ScrollCommentList()
@@ -1211,7 +1211,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ApprovalComment()
         {
-
+            // TODO: NGとかとか。
+            foreach(var item in CommentList) {
+                item.Approval = true;
+            }
         }
 
 
