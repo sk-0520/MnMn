@@ -114,7 +114,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public int Score
         {
-            get { return RawValueUtility.ConvertInteger(Model.Score); }
+            get
+            {
+                var result = RawValueUtility.ConvertInteger(Model.Score);
+                if(result == RawValueUtility.UnknownInteger) {
+                    return 0;
+                }
+
+                return result;
+            }
         }
 
         public int Number

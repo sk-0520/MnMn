@@ -63,11 +63,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool ConvertPairYenSlash { get; set; }
+
+        /// <summary>
+        /// コメントの共有NGを有効にするか。
+        /// </summary>
+        [DataMember]
+        public bool IsEnabledSharedNoGood { get; set; }
+
         /// <summary>
         /// コメントの共有NGレベル。
         /// </summary>
         [DataMember]
-        public int CommonNgLevel { get; set; }
+        public int SharedNoGoodScore { get; set; }
 
         /// <summary>
         /// コメント投稿を匿名にするか。

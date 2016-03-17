@@ -61,6 +61,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static int ConvertInteger(string s)
         {
+            if(s == null) {
+                return UnknownInteger;
+            }
             if(s.Any(c => c == ',')) {
                 s = string.Concat(s.Where(c => c != ','));
             }
@@ -70,6 +73,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static long ConvertLong(string s)
         {
+            if(s == null) {
+                return UnknownLong;
+            }
             if(s.Any(c => c == ',')) {
                 s = string.Concat(s.Where(c => c != ','));
             }

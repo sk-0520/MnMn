@@ -240,6 +240,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.AutoScrollCommentList; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.AutoScrollCommentList)); }
         }
+
+        public bool IsEnabledSharedNoGood
+        {
+            get { return Setting.Comment.IsEnabledSharedNoGood; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.IsEnabledSharedNoGood))) {
+                    ApprovalComment();
+                }
+            }
+        }
+        public int SharedNoGoodScore
+        {
+            get { return Setting.Comment.SharedNoGoodScore; }
+            set {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.SharedNoGoodScore))) {
+                    ApprovalComment();
+                }
+            }
+        }
+
         public SmileVideoFilteringCommentType FilteringCommentType
         {
             get { return this._filteringCommentType; }
@@ -1210,12 +1231,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems.Refresh();
         }
 
+        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value)
+        {
+            foreach(var item in list) {
+                item.Approval = value;
+            }
+        }
+
+        void ApprovalCommentSharedNoGood()
+        {
+            // 共有NG
+            if(IsEnabledSharedNoGood) {
+                var targetComments = CommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
+                ApprovalCommentSet(targetComments, false);
+            }
+        }
+
         void ApprovalComment()
         {
-            // TODO: NGとかとか。
-            foreach(var item in CommentList) {
-                item.Approval = true;
-            }
+            ApprovalCommentSet(CommentList, true);
+
+            ApprovalCommentSharedNoGood();
         }
 
 
