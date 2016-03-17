@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -35,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
@@ -52,6 +54,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
+
+            GlobalVideoCommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel>(Setting.Comment.FilteringItems, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
         }
 
         #region property
@@ -66,6 +70,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         HashSet<SmileVideoPlayerWindow> Players { get; } = new HashSet<SmileVideoPlayerWindow>();
 
+        MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> GlobalVideoCommentFilterList { get; }
+
         #endregion
 
         #region function
@@ -79,6 +85,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 case SmileVideoCustomSettingKind.MyList:
                     var list = ManagerPack.MyListManager.AccountMyListViewer;
                     return new ResponseModel(request, new SmileVideoAccountMyListSettingResultModel(list));
+
+                case SmileVideoCustomSettingKind.CommentFiltering:
+                    var filter = GlobalVideoCommentFilterList;
+                    return new ResponseModel(request, new SmileVideoCommentFilteringResultModel(filter));
 
                 default:
                     throw new NotImplementedException();

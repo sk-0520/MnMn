@@ -17,12 +17,14 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
+    [DataContract]
     public class FilteringSettingModel: SettingModelBase
     {
         #region property
@@ -30,21 +32,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// <summary>
         /// フィルタリング方法。
         /// </summary>
+        [DataMember]
         public FilteringType FilteringType { get; set; }
 
         /// <summary>
         /// 大文字小文字を無視するか。
         /// </summary>
+        [DataMember]
         public bool IgnoreCase { get; set; }
 
         /// <summary>
         /// 全角半角を無視するか。
         /// </summary>
+        [DataMember]
         public bool IgnoreWidth { get; set; }
 
         /// <summary>
         /// フィルタリング文字列。
         /// </summary>
+        [DataMember]
         public string Source { get; set; }
 
         #endregion

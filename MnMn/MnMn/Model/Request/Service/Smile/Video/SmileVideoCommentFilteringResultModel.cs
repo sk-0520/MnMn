@@ -17,23 +17,25 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
-    [DataContract]
-    public class SmileVideoFilteringSettingModel: FilteringSettingModel
+    public class SmileVideoCommentFilteringResultModel: ModelBase
     {
+        public SmileVideoCommentFilteringResultModel(MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> filteringList)
+        {
+            CommentFilteringList = filteringList;
+        }
+
         #region property
-        
-        /// <summary>
-        /// 対象。
-        /// </summary>
-        [DataMember]
-        public SmileVideoFilteringTarget Target { get; set; }
+
+        public MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilteringList { get; }
 
         #endregion
     }

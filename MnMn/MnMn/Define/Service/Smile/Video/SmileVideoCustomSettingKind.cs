@@ -33,5 +33,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// TODO: 動画なのかサービス全体なのかが今とてつもなくフワフワしてる。
         /// </summary>
         MyList,
+        /// <summary>
+        /// 全体設定フィルタリング。
+        /// </summary>
+        CommentFiltering,
     }
 }

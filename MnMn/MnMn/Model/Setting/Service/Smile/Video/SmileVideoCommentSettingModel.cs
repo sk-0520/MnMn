@@ -80,11 +80,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// コメント投稿を匿名にするか。
         /// </summary>
+        [DataMember]
         public bool PostAnonymous { get; set; } = true;
 
         /// <summary>
         /// フィルタリングデータ。
         /// </summary>
+        [DataMember]
         public CollectionModel<SmileVideoFilteringSettingModel> FilteringItems { get; set; } = new CollectionModel<SmileVideoFilteringSettingModel>();
 
         #endregion

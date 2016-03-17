@@ -72,9 +72,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.22\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.23\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -227,6 +226,7 @@
     <Compile Include="Model\Request\Service\Smile\SmileCustomSettingRequestModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoSearchMyListParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoSearchParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoCommentFilteringResultModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoCustomSettingRequestModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoAccountMyListSettingResultModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoSearchSettingResultModel.cs" />

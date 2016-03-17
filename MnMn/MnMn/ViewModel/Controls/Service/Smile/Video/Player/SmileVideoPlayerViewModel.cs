@@ -160,6 +160,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             CommentItems = CollectionViewSource.GetDefaultView(CommentList);
             CommentItems.Filter = FilterCommentItems;
+
+            var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
+            GlobalCommentFileringItems = filteringResult.CommentFilteringList;
         }
 
         #region property
@@ -329,9 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
 
-        public CollectionModel<Setting.SmileVideoFilteringEditItemViewModel> VideoFileringItems { get; } = new CollectionModel<SmileVideoFilteringEditItemViewModel>() {
-            new SmileVideoFilteringEditItemViewModel(new SmileVideoFilteringSettingModel() { Source = "#", }),
-        };
+        public MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> GlobalCommentFileringItems { get; }
 
         /// <summary>
         /// 動画再生位置を変更中か。

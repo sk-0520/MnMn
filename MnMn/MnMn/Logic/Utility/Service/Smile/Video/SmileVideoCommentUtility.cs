@@ -22,12 +22,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
     public static class SmileVideoCommentUtility
     {
-
         public static SmileVideoCommentVertical GetVerticalAlign(IEnumerable<string> commands)
         {
             var map = new Dictionary<string, SmileVideoCommentVertical>() {
@@ -130,6 +131,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
 
             return Colors.White;
+        }
+
+        public static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringSettingModel model, object data)
+        {
+            return new SmileVideoFilteringEditItemViewModel(model);
         }
     }
 }
