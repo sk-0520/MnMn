@@ -267,7 +267,7 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">shared ng</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">low</TextBlock>
                   <TextBlock DockPanel.Dock="Right">high</TextBlock>
-                  <Slider Minimum="-10000" Maximum="0" Value="{Binding SharedNoGoodScore, Delay=250}" />
+                  <Slider Minimum="-4000" Maximum="0" Value="{Binding SharedNoGoodScore, Delay=250}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock>
@@ -338,11 +338,14 @@
                       </GridViewColumn.HeaderTemplate>
                       <GridViewColumn.CellTemplate>
                         <ItemContainerTemplate>
-                          <Rectangle Fill="{Binding Foreground}" Width="8" Height="8">
-                            <Rectangle.Stroke>
-                              <SolidColorBrush Color="{Binding Shadow}" />
-                            </Rectangle.Stroke>
-                          </Rectangle>
+                          <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="{Binding Foreground}" Width="4" Height="8">
+                              <Rectangle.Stroke>
+                                <SolidColorBrush Color="{Binding Shadow}" />
+                              </Rectangle.Stroke>
+                            </Rectangle>
+                            <TextBlock Text="{Binding Score}" FontSize="9" />
+                          </StackPanel>
                         </ItemContainerTemplate>
                       </GridViewColumn.CellTemplate>
                     </GridViewColumn>
