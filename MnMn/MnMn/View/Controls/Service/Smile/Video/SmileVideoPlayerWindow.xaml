@@ -416,10 +416,10 @@
               </ListView>
             </DockPanel>
           </TabItem>
-          <TabItem Header="NG: video">
+          <TabItem Header="NG: local">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding LocalCommentFileringItems}" />
           </TabItem>
-          <TabItem Header="NG: system">
+          <TabItem Header="NG: global">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding GlobalCommentFileringItems}"  />
           </TabItem>
         </TabControl>

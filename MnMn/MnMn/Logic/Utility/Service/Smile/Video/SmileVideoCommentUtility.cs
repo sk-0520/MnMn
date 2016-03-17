@@ -135,14 +135,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringSettingModel model, object data)
         {
-            if(data != null) {
-                var src = (SmileVideoFilteringEditItemViewModel)data;
-                model.Type = src.EditingType;
-                model.Target = src.EditingTarget;
-                model.Source = src.EditingSource;
-                model.IgnoreCase = src.EditingIgnoreCase;
-                model.IgnoreWidth = src.EditingIgnoreWidth;
-            }
             return new SmileVideoFilteringEditItemViewModel(model);
         }
     }
