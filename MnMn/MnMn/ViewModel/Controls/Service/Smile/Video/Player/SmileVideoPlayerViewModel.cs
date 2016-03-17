@@ -757,7 +757,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ClearComment()
         {
-            foreach(var data in ShowingCommentList) {
+            foreach(var data in ShowingCommentList.ToArray()) {
                 data.Clock.Controller.SkipToFill();
                 data.Clock.Controller.Remove();
             }
