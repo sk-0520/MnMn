@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             : base(model)
         {
             EditFilteringType = model.FilteringType;
-            EditFilteringTarget = model.Target;
+            EditTarget = model.Target;
             EditSource = model.Source;
             EditIgnoreCase = model.IgnoreCase;
             EditIgnoreWidth = model.IgnoreWidth;
@@ -50,12 +50,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region property
 
+        public FilteringType FilteringType
+        {
+            get { return Model.FilteringType; }
+            set { SetModelValue(value); }
+        }
+        public SmileVideoFilteringTarget Target
+        {
+            get { return Model.Target; }
+            set { SetModelValue(value); }
+        }
+        public string Source
+        {
+            get { return Model.Source; }
+            set { SetModelValue(value); }
+        }
+        public bool IgnoreCase
+        {
+            get { return Model.IgnoreCase; }
+            set { SetModelValue(value); }
+        }
+        public bool IgnoreWidth
+        {
+            get { return Model.IgnoreWidth; }
+            set { SetModelValue(value); }
+        }
+
         public FilteringType EditFilteringType
         {
             get { return this._editFilteringType; }
             set { SetVariableValue(ref this._editFilteringType, value); }
         }
-        public SmileVideoFilteringTarget EditFilteringTarget
+        public SmileVideoFilteringTarget EditTarget
         {
             get { return this._editFilteringTarget; }
             set { SetVariableValue(ref this._editFilteringTarget, value); }
@@ -74,6 +100,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         {
             get { return this._editIgnoreWidth; }
             set { SetVariableValue(ref this._editIgnoreWidth, value); }
+        }
+
+        #endregion
+
+        #region property
+
+        internal void Update()
+        {
+            FilteringType = EditFilteringType;
+            Target = EditTarget;
+            Source = EditSource;
+            IgnoreCase = EditIgnoreCase;
+            IgnoreWidth = EditIgnoreWidth;
         }
 
         #endregion

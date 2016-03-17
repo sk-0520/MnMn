@@ -74,6 +74,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
 using Package.stackoverflow.com;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -328,8 +329,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
 
-        public CollectionModel<SmileVideoFilteringSettingModel> VideoFileringItems { get; } = new CollectionModel<SmileVideoFilteringSettingModel>() {
-            new SmileVideoFilteringSettingModel() { Source = "#", }
+        public CollectionModel<Setting.SmileVideoFilteringEditItemViewModel> VideoFileringItems { get; } = new CollectionModel<SmileVideoFilteringEditItemViewModel>() {
+            new SmileVideoFilteringEditItemViewModel(new SmileVideoFilteringSettingModel() { Source = "#", }),
         };
 
         /// <summary>

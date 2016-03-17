@@ -23,7 +23,7 @@
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFilteringEditItem.EditFilteringType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <ComboBox Grid.Column="1" SelectedItem="{Binding SelectedFilteringEditItem.EditFilteringTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <ComboBox Grid.Column="1" SelectedItem="{Binding SelectedFilteringEditItem.EditTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
       </Grid>
       <StackPanel Orientation="Horizontal">
         <CheckBox IsChecked="{Binding SelectedFilteringEditItem.EditIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore case</CheckBox>
@@ -36,9 +36,9 @@
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0">update</Button>
-        <Button Grid.Column="1">create</Button>
-        <Button Grid.Column="2">remove</Button>
+        <Button Grid.Column="0" Click="UpdateButton_Click">update</Button>
+        <Button Grid.Column="1" Click="CreateButton_Click">create</Button>
+        <Button Grid.Column="2" Click="CancelButton_Click">remove</Button>
       </Grid>
     </StackPanel>
 
@@ -46,6 +46,21 @@
       x:Name="filterItems"
       ItemsSource="{Binding FilteringItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
      SelectionChanged="filterItems_SelectionChanged"
-    />
+    >
+      <ListView.View>
+        <GridView>
+          <GridViewColumn>
+            <GridViewColumn.Header>
+              <TextBlock Text="Source" />
+            </GridViewColumn.Header>
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Source}" />
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+        </GridView>
+      </ListView.View>
+    </ListView>
   </DockPanel>
 </UserControl>

@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 {
     /// <summary>
     /// SmileVideoFilteringCommentList.xaml の相互作用ロジック
+    /// <para>Formsのにほい。</para>
     /// </summary>
     public partial class SmileVideoFilteringCommentList: UserControl
     {
@@ -72,14 +73,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         #region SelectedFilteringEditItemProperty
 
-        public static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
+        static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedFilteringEditItemProperty)),
             typeof(SmileVideoFilteringEditItemViewModel),
             typeof(SmileVideoFilteringCommentList),
             new FrameworkPropertyMetadata(default(SmileVideoFilteringEditItemViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
         );
 
-        private static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as SmileVideoFilteringCommentList;
             if(control != null) {
@@ -87,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             }
         }
 
-        public SmileVideoFilteringEditItemViewModel SelectedFilteringEditItem
+        SmileVideoFilteringEditItemViewModel SelectedFilteringEditItem
         {
             get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoFilteringEditItemViewModel; }
             set { SetValue(SelectedFilteringEditItemProperty, value); }
@@ -106,9 +107,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 return;
             }
 
-            var filterItem = selectedItem as SmileVideoFilteringSettingModel;
-            var editItem = new SmileVideoFilteringEditItemViewModel(filterItem);
-            SelectedFilteringEditItem = editItem;
+            var filterItem = selectedItem as SmileVideoFilteringEditItemViewModel;
+            SelectedFilteringEditItem = filterItem;
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedFilteringEditItem == null) {
+                return;
+            }
+            SelectedFilteringEditItem.Update();
+            this.filterItems.UpdateDefaultStyle();
+        }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
