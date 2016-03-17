@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
@@ -29,6 +31,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         {
             InitializeComponent();
         }
+
+        static readonly DependencyProperty FilteringTypeItemsProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(FilteringTypeItemsProperty)),
+            typeof(IEnumerable<FilteringType>),
+            typeof(SmileVideoFilteringCommentList),
+            new FrameworkPropertyMetadata(EnumUtility.GetMembers<FilteringType>())
+        );
+
+        static readonly DependencyProperty FilteringTargetItemsProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(FilteringTargetItemsProperty)),
+            typeof(IEnumerable<SmileVideoFilteringTarget>),
+            typeof(SmileVideoFilteringCommentList),
+            new FrameworkPropertyMetadata(EnumUtility.GetMembers<SmileVideoFilteringTarget>())
+        );
 
         #region FilteringItemSourceProperty
 
@@ -79,5 +95,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         #endregion
 
+
+        private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.AddedItems.Count != 1) {
+                return;
+            }
+            var selectedItem = e.AddedItems[0];
+            if(selectedItem == null) {
+                return;
+            }
+
+            var filterItem = selectedItem as SmileVideoFilteringSettingModel;
+            var editItem = new SmileVideoFilteringEditItemViewModel(filterItem);
+            SelectedFilteringEditItem = editItem;
+
+        }
     }
 }
