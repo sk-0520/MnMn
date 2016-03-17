@@ -314,9 +314,9 @@
                   </TextBlock.Style>
                 </TextBlock>
                 <TextBox 
-              Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
-              IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
-            />
+                  Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
+                  IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
+                />
               </DockPanel>
               <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
                 <ListView.ItemContainerStyle>
@@ -417,7 +417,7 @@
             </DockPanel>
           </TabItem>
           <TabItem Header="NG: video">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList />
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding LocalCommentFileringItems}" />
           </TabItem>
           <TabItem Header="NG: system">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding GlobalCommentFileringItems}"  />

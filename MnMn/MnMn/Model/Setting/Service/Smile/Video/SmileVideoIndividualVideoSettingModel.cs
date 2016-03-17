@@ -40,5 +40,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool LoadedEconomyMode { get; set; } = false;
+
+        /// <summary>
+        /// フィルタリングデータ。
+        /// </summary>
+        [DataMember]
+        public CollectionModel<SmileVideoFilteringSettingModel> FilteringItems { get; set; } = new CollectionModel<SmileVideoFilteringSettingModel>();
+
     }
 }

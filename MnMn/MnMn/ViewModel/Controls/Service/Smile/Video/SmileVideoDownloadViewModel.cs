@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             } else {
                                 VideoInformation.LoadedNormalVideo = true;
                             }
-                            VideoInformation.SaveSetting();
+                            VideoInformation.SaveSetting(false);
                         } else {
                             VideoLoadState = LoadState.Failure;
                         }

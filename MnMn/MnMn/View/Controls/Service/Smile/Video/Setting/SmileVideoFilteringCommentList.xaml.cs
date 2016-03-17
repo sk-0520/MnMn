@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         }
 
 
-        public ObservableCollection<SmileVideoFilteringEditItemViewModel> FilteringViewModelItemsSource
+        ObservableCollection<SmileVideoFilteringEditItemViewModel> FilteringViewModelItemsSource
         {
             get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoFilteringEditItemViewModel>; }
             set { SetValue(FilteringViewModelItemsSourceProperty, value); }

@@ -332,6 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
 
+        public MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> LocalCommentFileringItems { get; private set; }
         public MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> GlobalCommentFileringItems { get; }
 
         /// <summary>
@@ -1253,11 +1254,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        private void ApprovalCommentCustom(IReadOnlyList<SmileVideoFilteringSettingModel> filterList)
+        {
+            if(filterList.Any()) {
+                // TODO: コメントフィルタリング
+            }
+        }
+
         void ApprovalComment()
         {
             ApprovalCommentSet(CommentList, true);
 
             ApprovalCommentSharedNoGood();
+            ApprovalCommentCustom(LocalCommentFileringItems.ModelList);
+            ApprovalCommentCustom(GlobalCommentFileringItems.ModelList);
         }
 
 
@@ -1338,6 +1348,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             LoadTagsAsync();
             LoadRelationVideoAsync();
+
+            LocalCommentFileringItems = new MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel>(VideoInformation.IndividualVideoSetting.FilteringItems, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            CallOnPropertyChange(nameof(LocalCommentFileringItems));
 
             base.OnLoadGetthumbinfoEnd();
         }
@@ -1481,6 +1494,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
 
             IsViewClosed = true;
+
+            VideoInformation.SaveSetting(true);
 
             if(Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
                 Player.BeginStop();

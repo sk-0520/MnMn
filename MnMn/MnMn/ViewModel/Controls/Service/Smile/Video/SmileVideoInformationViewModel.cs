@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoInformationFlags InformationFlags { get; }
         public bool NeedLoadInformationFlag { get { return InformationFlags != SmileVideoInformationFlags.All; } }
 
-        SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
+        internal SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; private set; } = new SmileVideoIndividualVideoSettingModel();
         FileInfo IndividualVideoSettingFile { get; set; }
 
         RawSmileVideoThumbModel Thumb { get; set; }
@@ -663,7 +663,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Setting = (SmileVideoSettingModel)resSetting.Result;
 
             IndividualVideoSettingFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("setting", "json")));
-            if(IndividualVideoSettingFile.Exists && IndividualVideoSettingFile.Length <= Constants.MinimumJsonFileSize) {
+            if(IndividualVideoSettingFile.Exists && Constants.MinimumJsonFileSize <= IndividualVideoSettingFile.Length) {
                 IndividualVideoSetting = SerializeUtility.LoadJsonDataFromFile<SmileVideoIndividualVideoSettingModel>(IndividualVideoSettingFile.FullName);
             } else {
                 IndividualVideoSetting = new SmileVideoIndividualVideoSettingModel();
@@ -901,9 +901,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
         //}
 
-        public bool SaveSetting()
+        public bool SaveSetting(bool force)
         {
-            if(!IsChanged) {
+            if(!force && !IsChanged) {
                 return false;
             }
 
