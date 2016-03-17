@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -80,6 +81,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメント投稿を匿名にするか。
         /// </summary>
         public bool PostAnonymous { get; set; } = true;
+
+        /// <summary>
+        /// フィルタリングデータ。
+        /// </summary>
+        public CollectionModel<SmileVideoFilteringSettingModel> FilteringItems { get; set; } = new CollectionModel<SmileVideoFilteringSettingModel>();
 
         #endregion
     }

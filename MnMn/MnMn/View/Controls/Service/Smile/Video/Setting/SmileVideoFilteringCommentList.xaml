@@ -23,7 +23,7 @@
       <StackPanel Orientation="Horizontal">
         <RadioButton >Comment</RadioButton>
         <RadioButton >Command</RadioButton>
-        <RadioButton >User</RadioButton>
+        <RadioButton >UserId</RadioButton>
       </StackPanel>
       <TextBox />
       <Grid>
@@ -37,7 +37,7 @@
         <Button Grid.Column="2">remove</Button>
       </Grid>
     </StackPanel>
-    
-    <ListView></ListView>
+
+    <ListView ItemsSource="{Binding FilteringItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"></ListView>
   </DockPanel>
 </UserControl>

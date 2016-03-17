@@ -417,7 +417,7 @@
             </DockPanel>
           </TabItem>
           <TabItem Header="NG: video">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList />
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding VideoFileringItems}" />
           </TabItem>
           <TabItem Header="NG: system">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList />

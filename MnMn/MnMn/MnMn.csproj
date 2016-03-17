@@ -272,6 +272,7 @@
     <Compile Include="ViewModel\Controls\App\AppSettingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\DefinedElementViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringEditItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoAccountHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryManagerViewModel.cs" />

@@ -19,22 +19,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public enum SmileVideoFilteringTarget
+    public class SmileVideoFilteringEditItemViewModel: SingleModelWrapperViewModelBase<SmileVideoFilteringSettingModel>
     {
-        /// <summary>
-        /// コメント。
-        /// </summary>
-        Comment,
-        /// <summary>
-        /// コマンド。
-        /// </summary>
-        Command,
-        /// <summary>
-        /// ユーザー。
-        /// </summary>
-        UserId,
+        public SmileVideoFilteringEditItemViewModel(SmileVideoFilteringSettingModel model)
+            : base(model)
+        { }
     }
 }

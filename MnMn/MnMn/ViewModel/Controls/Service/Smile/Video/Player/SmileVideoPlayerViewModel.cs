@@ -327,7 +327,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
-        
+
+        public CollectionModel<SmileVideoFilteringSettingModel> VideoFileringItems { get; } = new CollectionModel<SmileVideoFilteringSettingModel>() {
+            new SmileVideoFilteringSettingModel() { Source = "#", }
+        };
+
         /// <summary>
         /// 動画再生位置を変更中か。
         /// </summary>
