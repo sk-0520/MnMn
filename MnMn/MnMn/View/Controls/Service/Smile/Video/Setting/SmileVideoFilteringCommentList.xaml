@@ -17,19 +17,20 @@
   </UserControl.Resources>
   <DockPanel>
     <StackPanel DockPanel.Dock="Bottom">
+      <TextBlock Text="細かい挙動はあとまわし" FontSize="9" />
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFilteringEditItem.EditFilteringType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <ComboBox Grid.Column="1" SelectedItem="{Binding SelectedFilteringEditItem.EditTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <ComboBox Grid.Column="1" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
       </Grid>
       <StackPanel Orientation="Horizontal">
-        <CheckBox IsChecked="{Binding SelectedFilteringEditItem.EditIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore case</CheckBox>
-        <CheckBox IsChecked="{Binding SelectedFilteringEditItem.EditIgnoreWidth, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore width</CheckBox>
+        <CheckBox IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore case</CheckBox>
+        <CheckBox IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreWidth, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore width</CheckBox>
       </StackPanel>
-      <TextBox Text="{Binding SelectedFilteringEditItem.EditSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+      <TextBox Text="{Binding SelectedFilteringEditItem.EditingSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition />

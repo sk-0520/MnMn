@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// フィルタリング方法。
         /// </summary>
         [DataMember]
-        public FilteringType FilteringType { get; set; }
+        public FilteringType Type { get; set; }
 
         /// <summary>
         /// 大文字小文字を無視するか。

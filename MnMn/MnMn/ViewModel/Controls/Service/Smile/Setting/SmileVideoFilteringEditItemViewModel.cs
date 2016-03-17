@@ -30,29 +30,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
     {
         #region variable
 
-        FilteringType _editFilteringType;
-        SmileVideoFilteringTarget _editFilteringTarget;
-        string _editSource;
-        bool _editIgnoreCase;
-        bool _editIgnoreWidth;
+        FilteringType _editingType;
+        SmileVideoFilteringTarget _editingTarget;
+        string _editingSource;
+        bool _editingIgnoreCase;
+        bool _editingIgnoreWidth;
 
         #endregion
 
         public SmileVideoFilteringEditItemViewModel(SmileVideoFilteringSettingModel model)
             : base(model)
         {
-            EditFilteringType = model.FilteringType;
-            EditTarget = model.Target;
-            EditSource = model.Source;
-            EditIgnoreCase = model.IgnoreCase;
-            EditIgnoreWidth = model.IgnoreWidth;
+            EditingType = model.Type;
+            EditingTarget = model.Target;
+            EditingSource = model.Source;
+            EditingIgnoreCase = model.IgnoreCase;
+            EditingIgnoreWidth = model.IgnoreWidth;
         }
 
         #region property
 
-        public FilteringType FilteringType
+        public FilteringType Type
         {
-            get { return Model.FilteringType; }
+            get { return Model.Type; }
             set { SetModelValue(value); }
         }
         public SmileVideoFilteringTarget Target
@@ -76,30 +76,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetModelValue(value); }
         }
 
-        public FilteringType EditFilteringType
+        public FilteringType EditingType
         {
-            get { return this._editFilteringType; }
-            set { SetVariableValue(ref this._editFilteringType, value); }
+            get { return this._editingType; }
+            set { SetVariableValue(ref this._editingType, value); }
         }
-        public SmileVideoFilteringTarget EditTarget
+        public SmileVideoFilteringTarget EditingTarget
         {
-            get { return this._editFilteringTarget; }
-            set { SetVariableValue(ref this._editFilteringTarget, value); }
+            get { return this._editingTarget; }
+            set { SetVariableValue(ref this._editingTarget, value); }
         }
-        public string EditSource
+        public string EditingSource
         {
-            get { return this._editSource; }
-            set { SetVariableValue(ref this._editSource, value); }
+            get { return this._editingSource; }
+            set { SetVariableValue(ref this._editingSource, value); }
         }
-        public bool EditIgnoreCase
+        public bool EditingIgnoreCase
         {
-            get { return this._editIgnoreCase; }
-            set { SetVariableValue(ref this._editIgnoreCase, value); }
+            get { return this._editingIgnoreCase; }
+            set { SetVariableValue(ref this._editingIgnoreCase, value); }
         }
-        public bool EditIgnoreWidth
+        public bool EditingIgnoreWidth
         {
-            get { return this._editIgnoreWidth; }
-            set { SetVariableValue(ref this._editIgnoreWidth, value); }
+            get { return this._editingIgnoreWidth; }
+            set { SetVariableValue(ref this._editingIgnoreWidth, value); }
         }
 
         #endregion
@@ -108,11 +108,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         internal void Update()
         {
-            FilteringType = EditFilteringType;
-            Target = EditTarget;
-            Source = EditSource;
-            IgnoreCase = EditIgnoreCase;
-            IgnoreWidth = EditIgnoreWidth;
+            Type = EditingType;
+            Target = EditingTarget;
+            Source = EditingSource;
+            IgnoreCase = EditingIgnoreCase;
+            IgnoreWidth = EditingIgnoreWidth;
         }
 
         #endregion

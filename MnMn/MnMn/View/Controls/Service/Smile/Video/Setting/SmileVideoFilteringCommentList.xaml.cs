@@ -175,7 +175,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             var model = new SmileVideoFilteringSettingModel();
-            FilteringItemsSource.Add(model, null);
+            var pair = FilteringItemsSource.Add(model, SelectedFilteringEditItem);
+            SelectedFilteringEditItem = pair.ViewModel;
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
