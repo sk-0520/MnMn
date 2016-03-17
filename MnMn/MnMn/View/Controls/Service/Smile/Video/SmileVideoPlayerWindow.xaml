@@ -257,163 +257,169 @@
           Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}"
         />
 
-        <DockPanel Grid.Row="0" Grid.Column="2"  Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}">
-          <DockPanel DockPanel.Dock="Top">
-            <DockPanel DockPanel.Dock="Top">
-              <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsAutoScroll}">auto scroll</CheckBox>
-              <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">shared ng</CheckBox>
-              <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">low</TextBlock>
-              <TextBlock DockPanel.Dock="Right">high</TextBlock>
-              <Slider Minimum="-10000" Maximum="0" Value="{Binding SharedNoGoodScore, Delay=250}" />
-            </DockPanel>
-            <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
-              <TextBlock>
-                <Run Text="all" />
-                <Run Text="{Binding CommentListCount, Mode=OneWay, StringFormat=({0})}" />
-              </TextBlock>
-            </RadioButton>
-            <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
-              <RadioButton.Style>
-                <Style TargetType="RadioButton">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding OriginalPosterCommentListCount}" Value="0">
-                      <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </RadioButton.Style>
-              <TextBlock>
-                <Run Text="op" />
-                <Run Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=({0})}" />
-              </TextBlock>
-            </RadioButton>
-            <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
-              <RadioButton.Style>
-                <Style TargetType="RadioButton">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding CommentListCount}" Value="0">
-                      <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </RadioButton.Style>
-              <TextBlock>user</TextBlock>
-            </RadioButton>
-            <TextBlock DockPanel.Dock="Right">
-              <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding FilteringCommentType}" Value="UserId">
-                      <Setter Property="Text" Value="{Binding CommentItems.Count, Mode=OneWay, StringFormat=({0})}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </TextBlock.Style>
-            </TextBlock>
-            <TextBox 
+        <TabControl Grid.Row="0" Grid.Column="2"  Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <TabItem Header="comment">
+            <DockPanel>
+              <DockPanel DockPanel.Dock="Top">
+                <DockPanel DockPanel.Dock="Top">
+                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsAutoScroll}">auto scroll</CheckBox>
+                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">shared ng</CheckBox>
+                  <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">low</TextBlock>
+                  <TextBlock DockPanel.Dock="Right">high</TextBlock>
+                  <Slider Minimum="-10000" Maximum="0" Value="{Binding SharedNoGoodScore, Delay=250}" />
+                </DockPanel>
+                <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
+                  <TextBlock>
+              <Run Text="all" />
+              <Run Text="{Binding CommentListCount, Mode=OneWay, StringFormat=({0})}" />
+                  </TextBlock>
+                </RadioButton>
+                <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
+                  <RadioButton.Style>
+                    <Style TargetType="RadioButton">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding OriginalPosterCommentListCount}" Value="0">
+                          <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </RadioButton.Style>
+                  <TextBlock>
+              <Run Text="op" />
+              <Run Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=({0})}" />
+                  </TextBlock>
+                </RadioButton>
+                <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
+                  <RadioButton.Style>
+                    <Style TargetType="RadioButton">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding CommentListCount}" Value="0">
+                          <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </RadioButton.Style>
+                  <TextBlock>user</TextBlock>
+                </RadioButton>
+                <TextBlock DockPanel.Dock="Right">
+                  <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding FilteringCommentType}" Value="UserId">
+                          <Setter Property="Text" Value="{Binding CommentItems.Count, Mode=OneWay, StringFormat=({0})}" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBlock.Style>
+                </TextBlock>
+                <TextBox 
               Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
               IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
             />
-          </DockPanel>
-          <Expander DockPanel.Dock="Bottom" Header="show filter">
-          </Expander>
-          <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
-            <ListView.ItemContainerStyle>
-              <Style TargetType="ListViewItem">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding NowShowing}" Value="True">
-                    <Setter Property="FontWeight" Value="Bold" />
-                  </DataTrigger>
-                </Style.Triggers>
-              </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-              <GridView>
-                <GridViewColumn>
-                  <GridViewColumn.HeaderTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="color" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.HeaderTemplate>
-                  <GridViewColumn.CellTemplate>
-                    <ItemContainerTemplate>
-                      <Rectangle Fill="{Binding Foreground}" Width="8" Height="8">
-                        <Rectangle.Stroke>
-                          <SolidColorBrush Color="{Binding Shadow}" />
-                        </Rectangle.Stroke>
-                      </Rectangle>
-                    </ItemContainerTemplate>
-                  </GridViewColumn.CellTemplate>
-                </GridViewColumn>
+              </DockPanel>
+              <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
+                <ListView.ItemContainerStyle>
+                  <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding NowShowing}" Value="True">
+                        <Setter Property="FontWeight" Value="Bold" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                  <GridView>
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="color" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <Rectangle Fill="{Binding Foreground}" Width="8" Height="8">
+                            <Rectangle.Stroke>
+                              <SolidColorBrush Color="{Binding Shadow}" />
+                            </Rectangle.Stroke>
+                          </Rectangle>
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-                <GridViewColumn>
-                  <GridViewColumn.HeaderTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="time" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.HeaderTemplate>
-                  <GridViewColumn.CellTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.CellTemplate>
-                </GridViewColumn>
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="time" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-                <GridViewColumn>
-                  <GridViewColumn.HeaderTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="op" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.HeaderTemplate>
-                  <GridViewColumn.CellTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="{Binding IsOriginalPoster}" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.CellTemplate>
-                </GridViewColumn>
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="op" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="{Binding IsOriginalPoster}" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-                <GridViewColumn>
-                  <GridViewColumn.HeaderTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="approval" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.HeaderTemplate>
-                  <GridViewColumn.CellTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="{Binding Approval}" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-                
-                <GridViewColumn>
-                  <GridViewColumn.HeaderTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="comment" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.HeaderTemplate>
-                  <GridViewColumn.CellTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="{Binding Content}" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.CellTemplate>
-                </GridViewColumn>
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="approval" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="{Binding Approval}" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-                <GridViewColumn>
-                  <GridViewColumn.HeaderTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="timestamp" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.HeaderTemplate>
-                  <GridViewColumn.CellTemplate>
-                    <ItemContainerTemplate>
-                      <TextBlock Text="{Binding Timestamp}" />
-                    </ItemContainerTemplate>
-                  </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-              </GridView>
-            </ListView.View>
-          </ListView>
-        </DockPanel>
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="comment" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="{Binding Content}" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn>
+                      <GridViewColumn.HeaderTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="timestamp" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.HeaderTemplate>
+                      <GridViewColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                          <TextBlock Text="{Binding Timestamp}" />
+                        </ItemContainerTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                  </GridView>
+                </ListView.View>
+              </ListView>
+            </DockPanel>
+          </TabItem>
+          <TabItem Header="NG: video">
+          </TabItem>
+          <TabItem Header="NG: system">
+          </TabItem>
+        </TabControl>
       </Grid>
 
       <GridSplitter
