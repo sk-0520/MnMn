@@ -275,6 +275,7 @@
     <Compile Include="ViewModel\Controls\DefinedElementViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringEditItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\SmileUsersManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoAccountHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryManagerViewModel.cs" />
@@ -314,6 +315,9 @@
     </Compile>
     <Compile Include="View\Controls\Pager.xaml.cs">
       <DependentUpon>Pager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\SmileUsersManager.xaml.cs">
+      <DependentUpon>SmileUsersManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFilteringCommentList.xaml.cs">
       <DependentUpon>SmileVideoFilteringCommentList.xaml</DependentUpon>
@@ -371,6 +375,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Pager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\SmileUsersManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
