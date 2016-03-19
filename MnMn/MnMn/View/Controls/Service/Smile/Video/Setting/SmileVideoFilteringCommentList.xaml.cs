@@ -30,10 +30,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
     /// </summary>
     public partial class SmileVideoFilteringCommentList: UserControl
     {
+        public event EventHandler ItemsChanged;
+
         public SmileVideoFilteringCommentList()
         {
             InitializeComponent();
         }
+
+        #region function
+
+        protected void OnItemsChanged()
+        {
+            if(ItemsChanged != null) {
+                ItemsChanged(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
 
         static readonly DependencyProperty FilteringTypeItemsProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(FilteringTypeItemsProperty)),
@@ -170,6 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 return;
             }
             SelectedFilteringEditItem.Update();
+            OnItemsChanged();
         }
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
@@ -189,6 +203,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             }
             var pair = FilteringItemsSource.Add(model, null);
             SelectedFilteringEditItem = pair.ViewModel;
+            OnItemsChanged();
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -198,6 +213,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             }
             var a = FilteringItemsSource.Remove(SelectedFilteringEditItem);
             SelectedFilteringEditItem = null;
+            OnItemsChanged();
         }
 
     }

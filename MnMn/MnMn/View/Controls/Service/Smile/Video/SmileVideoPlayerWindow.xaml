@@ -3,7 +3,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
-  
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+
   xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
   
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
@@ -267,12 +268,12 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">shared ng</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">low</TextBlock>
                   <TextBlock DockPanel.Dock="Right">high</TextBlock>
-                  <Slider Minimum="-4000" Maximum="0" Value="{Binding SharedNoGoodScore, Delay=250}" ToolTip="{Binding SharedNoGoodScore}" />
+                  <Slider Minimum="-4000" Maximum="0" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock>
-              <Run Text="all" />
-              <Run Text="{Binding CommentListCount, Mode=OneWay, StringFormat=({0})}" />
+                    <Run Text="all" />
+                    <Run Text="{Binding CommentListCount, Mode=OneWay, StringFormat=({0})}" />
                   </TextBlock>
                 </RadioButton>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
@@ -420,10 +421,22 @@
             </DockPanel>
           </TabItem>
           <TabItem Header="NG: local">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding LocalCommentFileringItems}" />
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding LocalCommentFileringItems}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ItemsChanged">
+                  <i:InvokeCommandAction Command="{Binding ChangedFilterItemsCommand}" CommandParameter="{Binding LocalCommentFileringItems}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
           </TabItem>
           <TabItem Header="NG: global">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding GlobalCommentFileringItems}"  />
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding GlobalCommentFileringItems}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ItemsChanged">
+                  <i:InvokeCommandAction Command="{Binding ChangedFilterItemsCommand}" CommandParameter="{Binding GlobalCommentFileringItems}"/>
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
           </TabItem>
         </TabControl>
       </Grid>

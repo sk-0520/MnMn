@@ -700,6 +700,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ChangedFilterItemsCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o=> {
+                        ApprovalComment();
+                    }
+                );
+            }
+        }
+
         #endregion
 
 
