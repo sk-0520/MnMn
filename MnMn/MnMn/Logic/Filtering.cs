@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
-        FilteringSettingModel Setting { get; }
+        protected FilteringSettingModel Setting { get; }
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Debug.Assert(target != null);
 
-            return target.IndexOf(filterSource, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal) != 0;
+            return target.IndexOf(filterSource, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal) != -1;
         }
         protected bool CheckForward(string target, string filterSource, bool ignoreCase)
         {
@@ -77,27 +77,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public bool CheckHit(string target)
+        protected virtual bool CheckCore(string target, string source, bool ignoreCase)
         {
-            var notNullTarget = target ?? string.Empty;
-            var notNullSource = Setting.Source ?? string.Empty;
             switch(Setting.Type) {
                 case FilteringType.PartialMatch:
-                    return CheckPartial(notNullTarget, notNullSource, Setting.IgnoreCase);
+                    return CheckPartial(target, source, ignoreCase);
 
                 case FilteringType.ForwardMatch:
-                    return CheckForward(notNullTarget, notNullSource, Setting.IgnoreCase);
+                    return CheckForward(target, source, ignoreCase);
 
                 case FilteringType.PerfectMatch:
-                    return CheckPerfect(notNullTarget, notNullSource, Setting.IgnoreCase);
+                    return CheckPerfect(target, source, ignoreCase);
 
                 case FilteringType.Regex:
-                    return CheckRegex(notNullTarget, notNullSource, Setting.IgnoreCase);
+                    return CheckRegex(target, source, ignoreCase);
 
                 default:
                     throw new NotImplementedException();
             }
+        }
 
+        public bool Check(string target)
+        {
+            var notNullTarget = target ?? string.Empty;
+            var notNullSource = Setting.Source ?? string.Empty;
+
+            return CheckCore(notNullTarget, notNullSource, Setting.IgnoreCase);
         }
 
         #endregion

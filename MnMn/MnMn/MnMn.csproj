@@ -195,6 +195,7 @@
     <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\HotList.cs" />
     <Compile Include="Logic\Service\Smile\Video\HalfBakedApi\Recommendations.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
+    <Compile Include="Logic\Service\Smile\Video\SmileVideoFiltering.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />

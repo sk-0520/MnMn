@@ -34,7 +34,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         SmileVideoFilteringTarget _editingTarget;
         string _editingSource;
         bool _editingIgnoreCase;
-        bool _editingIgnoreWidth;
 
         #endregion
 
