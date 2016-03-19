@@ -1279,7 +1279,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ApprovalCommentSharedNoGood()
         {
             // 共有NG
-            if(IsEnabledSharedNoGood && Setting.Comment.SharedNoGoodScore < 0) {
+            if(IsEnabledSharedNoGood) {
                 var targetComments = CommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
                 ApprovalCommentSet(targetComments, false);
             }
@@ -1288,7 +1288,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void ApprovalCommentCustom(IReadOnlyList<SmileVideoFilteringSettingModel> filterList)
         {
             if(filterList.Any()) {
-                // TODO: コメントフィルタリング
                 var filters = filterList.Select(f => new SmileVideoFiltering(f));
                 foreach(var filter in filters.AsParallel()) {
                     foreach(var item in CommentList.Where(c => c.Approval)) {
