@@ -3,6 +3,10 @@
 	<param key="video-session-login">
 		<item key="site" value="niconico" />
 	</param>
+	<param key="smile-user-page">
+		<item key="user-id" value="${user-id}" />
+	</param>
+	
 	<param key="smile-contents-search">
 		<item key="service" value="${service}" />
 		
