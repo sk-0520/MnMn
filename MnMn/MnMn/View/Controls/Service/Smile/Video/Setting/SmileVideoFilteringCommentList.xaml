@@ -22,14 +22,12 @@
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
+          <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ComboBox x:Name="selectType" Grid.Column="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         <ComboBox x:Name="selectTarget" Grid.Column="1" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <CheckBox x:Name="selectIgnoreCase" Grid.Column="2" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore case</CheckBox>
       </Grid>
-      <StackPanel Orientation="Horizontal">
-        <CheckBox x:Name="selectIgnoreCase" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore case</CheckBox>
-        <CheckBox x:Name="selectIgnoreWidth" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreWidth, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore width</CheckBox>
-      </StackPanel>
       <TextBox x:Name="inputSource" Text="{Binding SelectedFilteringEditItem.EditingSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <Grid>
         <Grid.ColumnDefinitions>

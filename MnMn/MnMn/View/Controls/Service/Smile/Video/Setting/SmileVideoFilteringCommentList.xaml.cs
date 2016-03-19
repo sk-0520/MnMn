@@ -181,13 +181,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 model.Target = src.EditingTarget;
                 model.Source = src.EditingSource;
                 model.IgnoreCase = src.EditingIgnoreCase;
-                model.IgnoreWidth = src.EditingIgnoreWidth;
             } else {
                 model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem: default(FilteringType);
                 model.Target = selectTarget.SelectedItem != null ? (SmileVideoFilteringTarget)selectTarget.SelectedItem : default(SmileVideoFilteringTarget);
                 model.Source = inputSource.Text;
                 model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
-                model.IgnoreWidth = selectIgnoreWidth.IsChecked.GetValueOrDefault();
             }
             var pair = FilteringItemsSource.Add(model, null);
             SelectedFilteringEditItem = pair.ViewModel;

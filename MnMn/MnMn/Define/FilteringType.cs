@@ -36,6 +36,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         ForwardMatch,
         /// <summary>
+        /// 完全一致。
+        /// </summary>
+        PerfectMatch,
+        /// <summary>
         /// 正規表現。
         /// </summary>
         Regex,

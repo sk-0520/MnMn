@@ -42,12 +42,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         public bool IgnoreCase { get; set; }
 
         /// <summary>
-        /// 全角半角を無視するか。
-        /// </summary>
-        [DataMember]
-        public bool IgnoreWidth { get; set; }
-
-        /// <summary>
         /// フィルタリング文字列。
         /// </summary>
         [DataMember]

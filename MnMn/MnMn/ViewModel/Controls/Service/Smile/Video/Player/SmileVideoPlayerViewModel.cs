@@ -1248,10 +1248,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ApprovalCommentSharedNoGood()
         {
             // 共有NG
-            if(IsEnabledSharedNoGood) {
+            if(IsEnabledSharedNoGood && Setting.Comment.SharedNoGoodScore < 0) {
                 var targetComments = CommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
                 ApprovalCommentSet(targetComments, false);
             }
+        }
+
+        void ApprovalCommentCustom_()
+        {
+
         }
 
         private void ApprovalCommentCustom(IReadOnlyList<SmileVideoFilteringSettingModel> filterList)

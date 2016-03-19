@@ -45,7 +45,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             EditingTarget = model.Target;
             EditingSource = model.Source;
             EditingIgnoreCase = model.IgnoreCase;
-            EditingIgnoreWidth = model.IgnoreWidth;
         }
 
         #region property
@@ -70,11 +69,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return Model.IgnoreCase; }
             set { SetModelValue(value); }
         }
-        public bool IgnoreWidth
-        {
-            get { return Model.IgnoreWidth; }
-            set { SetModelValue(value); }
-        }
 
         public FilteringType EditingType
         {
@@ -96,11 +90,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return this._editingIgnoreCase; }
             set { SetVariableValue(ref this._editingIgnoreCase, value); }
         }
-        public bool EditingIgnoreWidth
-        {
-            get { return this._editingIgnoreWidth; }
-            set { SetVariableValue(ref this._editingIgnoreWidth, value); }
-        }
 
         #endregion
 
@@ -112,7 +101,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             Target = EditingTarget;
             Source = EditingSource;
             IgnoreCase = EditingIgnoreCase;
-            IgnoreWidth = EditingIgnoreWidth;
+
+            ResetChangeFlag();
         }
 
         #endregion
