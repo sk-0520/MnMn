@@ -44,6 +44,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
     public class AppManagerViewModel: ManagerViewModelBase, ISetView
     {
+        #region variable
+
+        WindowState _state = WindowState.Normal;
+
+        #endregion
+
         public AppManagerViewModel(Mediation mediation)
             :base(mediation)
         {
@@ -68,6 +74,53 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public SmileManagerViewModel SmileManager { get; }
 
         public SessionViewModelBase SmileSession { get; }
+
+        public WindowState State
+        {
+            get { return this._state; }
+            set { SetVariableValue(ref this._state, value); }
+        }
+        public double Left
+        {
+            get { return Setting.Window.Left; }
+            set
+            {
+                if(State == WindowState.Normal) {
+                    SetPropertyValue(Setting.Window, value, nameof(Setting.Window.Left));
+                }
+            }
+        }
+        public double Top
+        {
+            get { return Setting.Window.Top; }
+            set
+            {
+                if(State == System.Windows.WindowState.Normal) {
+                    SetPropertyValue(Setting.Window, value, nameof(Setting.Window.Top));
+                }
+            }
+        }
+        public double Width
+        {
+            get { return Setting.Window.Width; }
+            set
+            {
+                if(State == WindowState.Normal) {
+                    SetPropertyValue(Setting.Window, value, nameof(Setting.Window.Width));
+                }
+            }
+        }
+        public double Height
+        {
+            get { return Setting.Window.Height; }
+            set
+            {
+                if(State == System.Windows.WindowState.Normal) {
+                    SetPropertyValue(Setting.Window, value, nameof(Setting.Window.Height));
+                }
+            }
+        }
+
 
         #endregion
 

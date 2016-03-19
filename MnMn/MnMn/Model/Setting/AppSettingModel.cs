@@ -44,6 +44,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public TimeSpan CacheLifeTime { get; set; }
 
+        [DataMember]
+        public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
+            Left = 100,
+            Top = 100,
+            Width = 720,
+            Height = 450,
+        };
+
         #region service
 
         [DataMember]

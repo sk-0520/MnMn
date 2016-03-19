@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         float _videoPosition;
         float _prevStateChangedPosition;
 
-        WindowState _state;
+        WindowState _state = WindowState.Normal;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;

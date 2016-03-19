@@ -9,8 +9,11 @@
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   Title="MainWindow" 
-  Height="420" 
-  Width="760"
+  Left="{Binding Left, Mode=TwoWay}"
+  Top="{Binding Top, Mode=TwoWay}"
+  Width="{Binding Width, Mode=TwoWay}"
+  Height="{Binding Height, Mode=TwoWay}"
+  WindowState="{Binding AsyncState, Mode=TwoWay}"
   ResizeMode="CanResizeWithGrip"
   
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
