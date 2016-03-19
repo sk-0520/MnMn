@@ -184,6 +184,7 @@
     <Compile Include="Logic\Service\SessionApiBase.cs" />
     <Compile Include="Logic\Service\ApiBase.cs" />
     <Compile Include="Logic\Service\Smile\Api\V1\MyList.cs" />
+    <Compile Include="Logic\Service\Smile\HalfBakedApi\User.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Getrelation.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Msg.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Getthreadkey.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileSimpleUserAccountModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\SmileJsonResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoAccountHistoryItemModel.cs" />

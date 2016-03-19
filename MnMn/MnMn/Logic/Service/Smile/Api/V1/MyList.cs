@@ -114,10 +114,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
-                var html = new HtmlDocument();
-                html.LoadHtml(response.Result);
+                var htmlDocument = new HtmlDocument() {
+                    OptionAutoCloseOnEnd = true,
+                };
+                htmlDocument.LoadHtml(response.Result);
 
-                var totalItemCountElement = html.DocumentNode.SelectSingleNode("//*[@class='search_total']");
+                var totalItemCountElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='search_total']");
                 var totalItemCountValue = RawValueUtility.ConvertInteger(totalItemCountElement.InnerText);
 
                 var siblingElements = totalItemCountElement.ParentNode.SelectNodes(".//strong");
@@ -136,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var result = new List<SmileVideoSearchMyListFinderViewModel>(showCount);
 
                 // 親となる要素
-                var paremtElement = html.DocumentNode.SelectSingleNode("//*[@class='content_672']");
+                var paremtElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='content_672']");
                 var baseElements = paremtElement.SelectNodes(".//div/div").Where(be => be.InnerText.Length > 0);
                 foreach(var baseElement in baseElements) {
                     var paragraphElements = baseElement.SelectNodes(".//p")?.ToArray();
@@ -248,7 +250,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 var htmlSource = response.Result;
 
-                var htmlDocument = new HtmlDocument();
+                var htmlDocument = new HtmlDocument() {
+                    OptionAutoCloseOnEnd = true,
+                };
                 htmlDocument.LoadHtml(htmlSource);
 
                 var regToken = new Regex(

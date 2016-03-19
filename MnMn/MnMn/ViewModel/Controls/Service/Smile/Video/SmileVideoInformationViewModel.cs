@@ -811,12 +811,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             PageHtmlLoadState = LoadState.Loading;
 
-            var document = new HtmlDocument();
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
             return Task.Run(() => {
                 PageHtml = html;
-                document.LoadHtml(html);
+                htmlDocument.LoadHtml(html);
                 //document.DocumentNode.SelectSingleNode("@")
-                var description = document.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
+                var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
                 DescriptionHtml = description.InnerHtml;
 
                 var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);

@@ -17,25 +17,33 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
-using Newtonsoft.Json.Linq;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    public static class SmileVideoWatchAPIUtility
+    [DataContract]
+    public class RawSmileSimpleUserAccountModel: ModelBase
     {
-        public static JObject ConvertJsonFromWatchPage(string watchPageHtml)
-        {
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(watchPageHtml);
+        #region property
 
-            var watchApiDataElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
-            var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
+        [DataMember(Name = "id")]
+        public string UserId { get; set; }
 
-            var json = JObject.Parse(watchApiDataText);
-            return json;
-        }
+        [DataMember(Name = "age")]
+        public string Age { get; set; }
+
+        [DataMember(Name = "isPremium")]
+        public string IsPremium { get; set; }
+
+        [DataMember(Name = "isOver18")]
+        public string IsOver18 { get; set; }
+
+        [DataMember(Name = "isMan")]
+        public string IsMan { get; set; }
+
+        #endregion
     }
 }

@@ -85,18 +85,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             // NOTE: 検索実装時にわかったけど合わせる必要なさげ
             var html = "<html><body>" + rawDescription + "</body></html>";
 
-            var doc = new HtmlDocument() {
+            var htmlDocument = new HtmlDocument() {
                 OptionCheckSyntax = false,
             };
-            doc.LoadHtml(html);
+            htmlDocument.LoadHtml(html);
 
-            var image = doc.DocumentNode.SelectSingleNode("//*[@class='nico-thumbnail']/img");
-            var description= doc.DocumentNode.SelectSingleNode("//*[@class='nico-description']");
-            var length = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-length']");
-            var date = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-date']");
-            var viewCounter = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-view']");
-            var resCounter = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-res']");
-            var mylist = doc.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-mylist']");
+            var image = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-thumbnail']/img");
+            var description= htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-description']");
+            var length = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-info-length']");
+            var date = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-info-date']");
+            var viewCounter = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-view']");
+            var resCounter = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-res']");
+            var mylist = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='nico-info-total-mylist']");
 
             var result = new RawSmileVideoFeedDetailModel() {
                 FirstRetrieve = HtmlNodeToString(date),
