@@ -1290,7 +1290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(filterList.Any()) {
                 var filters = filterList.Select(f => new SmileVideoFiltering(f));
                 foreach(var filter in filters.AsParallel()) {
-                    foreach(var item in CommentList.Where(c => c.Approval)) {
+                    foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
                         item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
                     }
                 }

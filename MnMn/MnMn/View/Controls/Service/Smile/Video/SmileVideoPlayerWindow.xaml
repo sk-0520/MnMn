@@ -21,7 +21,7 @@
   Top="{Binding Top, Mode=TwoWay}"
   Width="{Binding Width, Mode=TwoWay}"
   Height="{Binding Height, Mode=TwoWay}"
-  WindowState="{Binding AsyncState, Mode=TwoWay}"
+  WindowState="{Binding State, Mode=TwoWay}"
   
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
