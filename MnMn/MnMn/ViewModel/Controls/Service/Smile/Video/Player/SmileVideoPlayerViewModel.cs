@@ -566,12 +566,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         switch(PlayerState) {
                             case PlayerState.Stop:
-                                if(Player.State != xZune.Vlc.Interop.Media.MediaState.Stopped) {
-                                    Player.BeginStop(() => {
-                                        Player.Play();
-                                    });
-                                } else {
-                                    Player.Play();
+                                switch(Player.State) {
+                                    case xZune.Vlc.Interop.Media.MediaState.NothingSpecial:
+                                    case xZune.Vlc.Interop.Media.MediaState.Stopped:
+                                        SetMedia();
+                                        VideoPlay();
+                                        break;
+
+                                    default:
+                                        Player.BeginStop(() => {
+                                            Player.Play();
+                                        });
+                                        break;
                                 }
                                 return;
 

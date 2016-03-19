@@ -310,14 +310,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
 
             var msg = new Msg(Mediation);
-            var rawMessagePacket = await msg.GetAsync(
+            var rawMessagePacket = await msg.LoadAsync(
                 VideoInformation.MessageServerUrl,
                 //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
                 VideoInformation.ThreadId,
                 VideoInformation.UserId,
                 1000,
                 1, (int)VideoInformation.Length.TotalMinutes, 100,
-                1000,
+                500,
                 threadkeyModel
             );
 

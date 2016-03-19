@@ -49,21 +49,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketModel>(stream);
         }
 
-        public async Task<RawSmileVideoMsgPacketModel> GetAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
+        public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, Define.ServiceType.SmileVideo)) {
                 //page.ParameterType = ParameterType.Mapping;
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["user-id"] = userId;
+                page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
                 if(rangeHeadMinutes < rangeTailMinutes && 0 < rangeGetCount) {
-                    page.ReplaceRequestParameters["res_from"] = null;
                     page.ReplaceRequestParameters["time-size"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount}";
                     page.ReplaceRequestParameters["all-size"] = $"{Math.Abs(rangeGetAllCount)}";
-                } else {
-                    page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
-                    page.ReplaceRequestParameters["time-size"] = null;
-                    page.ReplaceRequestParameters["all-size"] = null;
                 }
                 if(threadkeyModel != null) {
                     page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
