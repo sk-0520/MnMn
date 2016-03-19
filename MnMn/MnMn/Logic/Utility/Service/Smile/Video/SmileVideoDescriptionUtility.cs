@@ -16,10 +16,12 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -30,7 +32,7 @@ using HTMLConverter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
-    internal static class SmileVideoDescriptionUtility
+    public static class SmileVideoDescriptionUtility
     {
         #region define
 
@@ -147,17 +149,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return replacedSource;
         }
 
-        static string ConvertSafeXaml(string flowDocumentSource)
+        public static string ConvertSafeXaml(string flowDocumentSource)
         {
-            var reg = new Regex(
-                @"
-                <Run(?<STYLE>\s+.+?)?>
-                    (?<VALUE>.*?)
-                </Run>
-                ",
-                RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-            );
-            return reg.Replace(flowDocumentSource, "<TextBlock${STYLE}>${VALUE}</TextBlock>");
+            return flowDocumentSource
+                .Replace("Run>", "TextBlock>")
+                .Replace("<Run", "<TextBlock")
+            ;
+            //var reg = new Regex(
+            //    @"
+            //    <Run(?<STYLE>\s+.+?)?>
+            //        (?<VALUE>.*?)
+            //    </Run>
+            //    ",
+            //    RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            //);
+            //return reg.Replace(flowDocumentSource, "<TextBlock${STYLE}>${VALUE}</TextBlock>");
         }
 
         /// <summary>
@@ -172,6 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromMyList(convertCompatibility, convertedFlowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromVideoId(convertCompatibility, convertedFlowDocumentSource);
+
             convertedFlowDocumentSource = ConvertSafeXaml(convertedFlowDocumentSource);
 
             return convertedFlowDocumentSource;

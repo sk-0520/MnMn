@@ -75,6 +75,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
 using Package.stackoverflow.com;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
+using System.Xml;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1109,10 +1110,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 document.Blocks.Clear();
                 
-                using(var stringReader = new StringReader(flowDocumentSource))
+                using(var stringReader = new StringReader(flowDocumentSource)) 
                 using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
-                    var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
-                    document.Blocks.AddRange(flowDocument.Blocks.ToArray());
+                    try {
+                        var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
+                        document.Blocks.AddRange(flowDocument.Blocks.ToArray());
+                    } catch(XamlParseException ex) {
+                        Mediation.Logger.Error(ex);
+                        var error = new Paragraph();
+                        error.Inlines.Add(ex.ToString());
+
+                        var raw = new Paragraph();
+                        raw.Inlines.Add(flowDocumentSource);
+
+                        document.Blocks.Add(error);
+                        document.Blocks.Add(raw);
+                    }
                 }
 
                 document.FontSize = DocumentDescription.FontSize;
