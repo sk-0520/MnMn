@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 VideoInformation.UserId,
                 1000,
                 1, (int)VideoInformation.Length.TotalMinutes, 100,
-                500,
+                1000,
                 threadkeyModel
             );
 

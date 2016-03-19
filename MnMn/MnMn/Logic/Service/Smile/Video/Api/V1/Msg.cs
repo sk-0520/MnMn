@@ -56,10 +56,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
                 page.ReplaceRequestParameters["user-id"] = userId;
-                page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
                 if(rangeHeadMinutes < rangeTailMinutes && 0 < rangeGetCount) {
+                    page.ReplaceRequestParameters["res_from"] = null;
                     page.ReplaceRequestParameters["time-size"] = $"{rangeHeadMinutes}-{rangeTailMinutes}:{rangeGetCount}";
                     page.ReplaceRequestParameters["all-size"] = $"{Math.Abs(rangeGetAllCount)}";
+                } else {
+                    page.ReplaceRequestParameters["res_from"] = $"-{Math.Abs(getCount)}";
+                    page.ReplaceRequestParameters["time-size"] = null;
+                    page.ReplaceRequestParameters["all-size"] = null;
                 }
                 if(threadkeyModel != null) {
                     page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
