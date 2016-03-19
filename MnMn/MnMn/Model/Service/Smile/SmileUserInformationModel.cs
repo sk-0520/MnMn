@@ -21,28 +21,38 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
     [DataContract]
-    public class RawSmileSimpleUserAccountModel: ModelBase
+    public class SmileUserInformationModel: ModelBase
     {
         #region property
 
-        [DataMember(Name = "id")]
+        [DataMember]
         public string UserId { get; set; }
 
-        [DataMember(Name = "age")]
-        public string Age { get; set; }
+        [DataMember]
+        public string ResistedVersion { get; set; }
 
-        [DataMember(Name = "isPremium")]
-        public string IsPremium { get; set; }
+        [DataMember]
+        public string UserName { get; set; }
 
-        [DataMember(Name = "isOver18")]
-        public string IsOver18 { get; set; }
+        [DataMember]
+        public bool IsBookmarked { get; set; }
 
-        [DataMember(Name = "isMan")]
-        public string IsMan { get; set; }
+        [DataMember]
+        public Gender Gender { get; set; }
+
+        [DataMember]
+        public DateTime Birthday { get; set; }
+
+        [DataMember]
+        public string Location { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
 
         #endregion
     }

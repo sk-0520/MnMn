@@ -19,15 +19,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
     public class SmileUsersManagerViewModel: ManagerViewModelBase
     {
+        #region variable
+
+        SmileUserInformationViewModel _selectedUser;
+            
+        #endregion
+
         public SmileUsersManagerViewModel(Mediation mediation)
             : base(mediation)
         { }
+
+        #region property
+
+        public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
+
+        public SmileUserInformationViewModel SelectedUser
+        {
+            get { return this._selectedUser; }
+            set { SetVariableValue(ref this._selectedUser, value); }
+        }
+
+        #endregion
 
         #region ManagerViewModelBase
 

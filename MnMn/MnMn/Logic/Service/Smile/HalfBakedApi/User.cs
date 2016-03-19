@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
@@ -21,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         #region function
 
-        public RawSmileSimpleUserAccountModel GetSimpleUserAccountModelFromHtmlSource(string htmlSource)
+        public RawSmileUserAccountSimpleModel GetSimpleUserAccountModelFromHtmlSource(string htmlSource)
         {
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
@@ -64,8 +66,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             var jsonUser = "{" + rawUser + "}";
 
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonUser))) {
-                return SerializeUtility.LoadJsonDataFromStream<RawSmileSimpleUserAccountModel>(stream);
+                return SerializeUtility.LoadJsonDataFromStream<RawSmileUserAccountSimpleModel>(stream);
             }
+        }
+
+        SmileUserInformationModel GetUserInformationFromHtmlSource(string htmlSource)
+        {
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            htmlDocument.LoadHtml(htmlSource);
+
+            return null;
+        }
+
+        public Task<SmileUserInformationModel> LoadUserInformationAsync(string userId)
+        {
+            var page = new PageLoader(Mediation, SessionBase, SmileMediationKey.userPage, ServiceType.Smile);
+            page.ReplaceUriParameters["user-id"] = userId;
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
+                page.Dispose();
+                var response = task.Result;
+                return GetUserInformationFromHtmlSource(response.Result);
+            });
         }
 
         #endregion

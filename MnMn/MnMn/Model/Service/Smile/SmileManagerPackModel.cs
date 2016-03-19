@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile

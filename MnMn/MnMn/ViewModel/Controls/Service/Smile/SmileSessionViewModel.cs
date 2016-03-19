@@ -52,7 +52,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
         /// </summary>
         SmileUserAccountModel UserAccount { get; set; }
 
-        RawSmileSimpleUserAccountModel SimpleUserAccount { get; set; }
+        RawSmileUserAccountSimpleModel SimpleUserAccount { get; set; }
+
+        public string UserId
+        {
+            get { return SimpleUserAccount.UserId; }
+        }
+
 
         #endregion
 
