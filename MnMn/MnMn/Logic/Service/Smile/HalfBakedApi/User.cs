@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -17,19 +18,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 {
     public class User: SessionApiBase<SmileSessionViewModel>
     {
-        public User(Mediation mediation, ServiceType sessionServiceType) 
-            : base(mediation, sessionServiceType)
+        public User(Mediation mediation) 
+            : base(mediation, ServiceType.Smile)
         { }
 
         #region function
 
-        public RawSmileUserAccountSimpleModel GetSimpleUserAccountModelFromHtmlSource(string htmlSource)
+        RawSmileUserAccountSimpleModel GetSimpleUserAccountModelFromHtmlDocument(HtmlDocument htmlDocument)
         {
-            var htmlDocument = new HtmlDocument() {
-                OptionAutoCloseOnEnd = true,
-            };
-            htmlDocument.LoadHtml(htmlSource);
-
             var regUser = new Regex(
                 @"
                 var
@@ -70,6 +66,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             }
         }
 
+        public RawSmileUserAccountSimpleModel GetSimpleUserAccountModelFromHtmlSource(string htmlSource)
+        {
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            htmlDocument.LoadHtml(htmlSource);
+
+            return GetSimpleUserAccountModelFromHtmlDocument(htmlDocument);
+        }
+
         SmileUserInformationModel GetUserInformationFromHtmlSource(string htmlSource)
         {
             var htmlDocument = new HtmlDocument() {
@@ -77,7 +83,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             };
             htmlDocument.LoadHtml(htmlSource);
 
-            return null;
+            var result = new SmileUserInformationModel();
+
+            var nickNameElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='userDetail']/*[@class='avatar']/img");
+            var nickName = nickNameElement.Attributes["alt"].Value;
+            var imageUrl = nickNameElement.Attributes["src"].Value;
+
+            result.ThumbnailUri = new Uri(imageUrl);
+            result.UserName = nickName;
+
+            var profileElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='profile']");
+            var accountElement = profileElement.SelectSingleNode(".//*[@class='account']");
+
+            var accountElementInnerText = accountElement.InnerText;
+
+            result.UserId = SmileUserUtility.GetUserId(accountElementInnerText);
+            result.IsPremium = SmileUserUtility.IsPremium(accountElementInnerText);
+            result.ResistedVersion = SmileUserUtility.GetVersion(accountElementInnerText);
+            var gender = SmileUserUtility.GetGender(accountElementInnerText);
+            result.IsPublicGender = gender.IsSuccess;
+            if(result.IsPublicGender) {
+                result.Gender = gender.Result;
+            } else {
+                result.Gender = Gender.Unknown;
+            }
+            var location = SmileUserUtility.GetLocation(accountElementInnerText);
+            result.IsPublicLocation = location.IsSuccess;
+            if(result.IsPublicLocation) {
+                result.Location = location.Result;
+            }
+            var birthday = SmileUserUtility.GetBirthday(accountElementInnerText);
+            result.IsPublicBirthday = birthday.IsSuccess;
+            if(result.IsPublicBirthday) {
+                result.Birthday = birthday.Result;
+            }
+
+            return result;
         }
 
         public Task<SmileUserInformationModel> LoadUserInformationAsync(string userId)

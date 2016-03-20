@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 if(response.IsSuccess) {
-                    var user = new User(Mediation, ServiceType.Smile);
+                    var user = new User(Mediation);
                     SimpleUserAccount = user.GetSimpleUserAccountModelFromHtmlSource(response.Result);
                 }
             }

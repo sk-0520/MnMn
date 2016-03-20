@@ -20,7 +20,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
@@ -39,6 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         #region property
 
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
+        public SmileLoginUserInformationViewModel LoginUser { get; private set; }
 
         public SmileUserInformationViewModel SelectedUser
         {
@@ -49,6 +54,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         #endregion
 
         #region ManagerViewModelBase
+
+        protected override void ShowView()
+        {
+            if(LoginUser == null) {
+                var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+                if(session.LoginState == LoginState.Logged) {
+                    LoginUser = new SmileLoginUserInformationViewModel(Mediation, session.UserId);
+                    LoginUser.LoadDefaultAsync().ConfigureAwait(false);
+                    UserItems.Add(LoginUser);
+                }
+            }
+            base.ShowView();
+        }
 
         public override Task InitializeAsync()
         {

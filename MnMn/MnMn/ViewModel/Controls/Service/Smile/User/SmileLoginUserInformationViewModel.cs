@@ -19,18 +19,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
-    public interface ITreeNodeItem
+    /// <summary>
+    /// アカウント情報表示用VM。
+    /// <para>不要なら削除する。</para>
+    /// </summary>
+    public class SmileLoginUserInformationViewModel: SmileUserInformationViewModel
     {
-        bool IsSelected { get; set; }
-        bool IsExpanded { get; set; }
-        bool CanMove { get; set; }
-    }
+        public SmileLoginUserInformationViewModel(Mediation mediation, string userId)
+            :base(mediation, userId, true)
+        { }
 
-    public interface ITreeNodeItem<TChild>: ITreeNodeItem
-    {
-        IEnumerable<TChild> Children { get; set; }
+        #region property
+
+        #endregion
     }
 }

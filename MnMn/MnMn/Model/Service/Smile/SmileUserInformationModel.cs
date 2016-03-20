@@ -34,6 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         public string UserId { get; set; }
 
         [DataMember]
+        public bool IsPremium { get; set; }
+
+        [DataMember]
         public string ResistedVersion { get; set; }
 
         [DataMember]
@@ -46,13 +49,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         public Gender Gender { get; set; }
 
         [DataMember]
+        public bool IsPublicGender { get; set; }
+
+        [DataMember]
         public DateTime Birthday { get; set; }
+
+        [DataMember]
+        public bool IsPublicBirthday { get; set; }
 
         [DataMember]
         public string Location { get; set; }
 
         [DataMember]
+        public bool IsPublicLocation { get; set; }
+
+        [DataMember]
         public string Description { get; set; }
+
+        [DataMember]
+        public Uri ThumbnailUri { get; set; }
 
         #endregion
     }
