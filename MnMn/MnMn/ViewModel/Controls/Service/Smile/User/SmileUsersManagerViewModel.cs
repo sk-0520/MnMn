@@ -24,6 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
@@ -53,17 +54,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #endregion
 
+        #region funcxtion
+
+        public Task LoadFromParameterAsync(SmileOpenUserIdParameterModel parameter)
+        {
+            return LoadAsync(parameter.UserId, parameter.IsLoginUser);
+        }
+
+        public Task LoadAsync(string userId, bool isLoginUser)
+        {
+            var existUser = UserItems.FirstOrDefault(i => i.UserId == userId);
+            if(existUser != null) {
+                SelectedUser = existUser;
+                return Task.CompletedTask;
+            } else {
+                var user = new SmileUserInformationViewModel(Mediation, userId, isLoginUser);
+                UserItems.Insert(0, user);
+                if(LoginUser == null) {
+                    LoadLoginUserAsync().ConfigureAwait(false);
+                }
+                SelectedUser = user;
+                return user.LoadDefaultAsync();
+            }
+        }
+
+        public Task LoadLoginUserAsync()
+        {
+            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            if(session.LoginState == LoginState.Logged) {
+                LoginUser = new SmileLoginUserInformationViewModel(Mediation, session.UserId);
+                return LoginUser.LoadDefaultAsync().ContinueWith(_ => {
+                    UserItems.Add(LoginUser);
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+
+            return Task.CompletedTask;
+        }
+
+        #endregion
+
         #region ManagerViewModelBase
 
         protected override void ShowView()
         {
             if(LoginUser == null) {
-                var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-                if(session.LoginState == LoginState.Logged) {
-                    LoginUser = new SmileLoginUserInformationViewModel(Mediation, session.UserId);
-                    LoginUser.LoadDefaultAsync().ConfigureAwait(false);
-                    UserItems.Add(LoginUser);
-                }
+                LoadLoginUserAsync().ConfigureAwait(false);
             }
             base.ShowView();
         }

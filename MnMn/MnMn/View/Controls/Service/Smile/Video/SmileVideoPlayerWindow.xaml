@@ -470,15 +470,19 @@
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
                 <TextBlock>
-                  <TextBlock.Resources>
-                    <Style TargetType="TextBlock">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding InformationLoadState}" Value="Loaded">
-                          <Setter Property="Text" Value="{Binding UserNickname}" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </TextBlock.Resources>
+                  <Hyperlink Command="{Binding OpenUserIdCommand}">
+                    <Run>
+                      <Run.Resources>
+                        <Style TargetType="Run">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding InformationLoadState}" Value="Loaded">
+                              <Setter Property="Text" Value="{Binding UserNickname, Mode=OneTime}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </Run.Resources>
+                    </Run>
+                  </Hyperlink>
                 </TextBlock>
               </Grid>
 

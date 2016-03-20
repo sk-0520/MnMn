@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             var match = reg.Match(accountElementInnerText);
             if(match.Success) {
                 var s = match.Groups["LOCATION"].Value;
-                if(s.IndexOf("非公開") != -1) {
+                if(s.IndexOf("非公開") == -1) {
                     return CheckResultModel.Success(s);
                 }
             }

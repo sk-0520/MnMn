@@ -427,6 +427,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string UserId
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return Thumb.UserId;
+            }
+        }
+
         #region Getflv
 
         public bool HasError
@@ -509,15 +518,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 ThrowHasNotGetflv();
                 return Getflv.ThreadId;
-            }
-        }
-
-        public string UserId
-        {
-            get
-            {
-                ThrowHasNotGetflv();
-                return Getflv.UserId;
             }
         }
 

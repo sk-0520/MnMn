@@ -229,6 +229,7 @@
     <Compile Include="Model\MappingResultModel.cs" />
     <Compile Include="Model\MappingsModel.cs" />
     <Compile Include="Model\Request\CustomSettingRequestModelBase.cs" />
+    <Compile Include="Model\Request\Service\Smile\Parameter\SmileOpenUserIdParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\SmileCustomSettingRequestModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoSearchMyListParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoSearchParameterModel.cs" />

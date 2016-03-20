@@ -50,29 +50,53 @@
         <DataTemplate>
           <Grid>
             <StackPanel>
-              <TextBlock Text="{Binding UserId}" />
-              <TextBlock Text="{Binding UserName}" />
-              <TextBlock Text="{Binding IsPremium}" />
-              <TextBlock Text="{Binding ResistedVersion}" />
-              <TextBlock Text="{Binding UserThumbnailLoadState}" />
-              <Image Source="{Binding ThumbnailImage}" Width="150" Height="150" />
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>user id:</TextBlock>
+                <TextBlock Text="{Binding UserId}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>user name:</TextBlock>
+                <TextBlock Text="{Binding UserName}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>is premium:</TextBlock>
+                <TextBlock Text="{Binding IsPremium}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>regist version:</TextBlock>
+                <TextBlock Text="{Binding ResistedVersion}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>image load:</TextBlock>
+                <TextBlock Text="{Binding UserThumbnailLoadState}" />
+                <Image Source="{Binding ThumbnailImage}" Width="150" Height="150" />
+              </StackPanel>
 
               <StackPanel Orientation="Horizontal">
+                <TextBlock>location:</TextBlock>
                 <TextBlock Text="{Binding IsPublicLocation}" />
+                <TextBlock>,</TextBlock>
                 <TextBlock Text="{Binding Location}" />
               </StackPanel>
 
               <StackPanel Orientation="Horizontal">
+                <TextBlock>gender:</TextBlock>
                 <TextBlock Text="{Binding IsPublicGender}" />
+                <TextBlock>,</TextBlock>
                 <TextBlock Text="{Binding Gender}" />
               </StackPanel>
 
               <StackPanel Orientation="Horizontal">
+                <TextBlock>birthday:</TextBlock>
                 <TextBlock Text="{Binding IsPublicBirthday}" />
+                <TextBlock>,</TextBlock>
                 <TextBlock Text="{Binding Birthday}" />
               </StackPanel>
 
-              <TextBlock Text="{Binding Description}" />
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>description(未):</TextBlock>
+                <TextBlock Text="{Binding Description}" />
+              </StackPanel>
 
             </StackPanel>
           </Grid>
