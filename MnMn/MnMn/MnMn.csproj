@@ -248,6 +248,8 @@
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupItemModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileAccountMyListGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileUserMyListGroupModel.cs" />
+    <Compile Include="Model\Service\Smile\Raw\RawSmileUserMyListModel.cs" />
     <Compile Include="Model\Service\Smile\Raw\RawSmileUserAccountSimpleModel.cs" />
     <Compile Include="Model\Service\Smile\SmileUserInformationModel.cs" />
     <Compile Include="Model\Service\Smile\SmileManagerPackModel.cs" />
@@ -282,6 +284,7 @@
     <Compile Include="ViewModel\Controls\DefinedElementViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringEditItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\User\SmileMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserBookmarkItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileLoginUserInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserInformationViewModel.cs" />
@@ -590,7 +593,6 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
-    <Folder Include="View\Resources\Service\Smile\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

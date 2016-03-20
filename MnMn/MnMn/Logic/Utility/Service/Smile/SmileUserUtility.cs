@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -210,5 +211,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Success(link);
         }
 
+        public static int GetMyListCount(string innerText)
+        {
+            var reg = new Regex(@"
+                (?<NUM>
+                    [\d,]
+                )
+                \s*
+                件
+                ",
+                RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace
+            );
+            var match = reg.Match(innerText);
+            if(match.Success) {
+                return RawValueUtility.ConvertInteger(match.Groups["NUM"].Value);
+            }
+            Debug.WriteLine(innerText);
+            return 0;
+        }
     }
 }

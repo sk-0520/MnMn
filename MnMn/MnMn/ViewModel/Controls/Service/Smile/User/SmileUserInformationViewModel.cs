@@ -26,13 +26,16 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
@@ -48,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         LoadState _userThumbnailLoadState;
 
         BitmapSource _thumbnailImage;
+        SmileVideoFinderViewModelBase _selectedMyListFinder;
 
         #endregion
 
@@ -72,6 +76,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         Mediation Mediation { get; set; }
         SmileUserInformationModel UserInformation { get; set; }
+        public SmileVideoFinderViewModelBase SelectedMyListFinder
+        {
+            get { return this._selectedMyListFinder; }
+            set { if(SetVariableValue(ref this._selectedMyListFinder, value)) {
+                    if(this._selectedMyListFinder != null) {
+                        if(this._selectedMyListFinder.FinderLoadState == SmileVideoFinderLoadState.None) {
+                            this._selectedMyListFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+                        }
+                    }
+                }
+            }
+        }
 
         public virtual bool IsMyAccount { get; }
 
@@ -290,6 +306,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
         }
 
+        public CollectionModel<SmileMyListFinderViewModel> MyListItems { get; } = new CollectionModel<SmileMyListFinderViewModel>();
 
         #endregion
 
@@ -387,7 +404,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
             }).ContinueWith(task => {
                 LoadThumbnaiImageAsync(userImageCacheSpan);
-            }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+            }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current).ContinueWith(_ => {
+                if(UserInformation.IsPublicMyList) {
+                    user.LoadUserMyListAsync(UserId).ContinueWith(task => {
+                        var userMyList = task.Result;
+                        if(userMyList.Groups.Any()) {
+                            var items = userMyList.Groups.Select(g => new SmileMyListFinderViewModel(Mediation, g));
+                            MyListItems.InitializeRange(items);
+                        }
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public Task LoadDefaultAsync()

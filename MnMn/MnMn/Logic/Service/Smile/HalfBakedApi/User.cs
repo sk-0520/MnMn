@@ -142,6 +142,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             });
         }
 
+        RawSmileUserMyListModel GetUserMyListFromHtmlDocument(HtmlDocument htmlDocument)
+        {
+            var result = new RawSmileUserMyListModel();
+
+            var myListElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='mylist']");
+
+            var groupElements = myListElement.SelectNodes(".//*[@class='outer']");
+            foreach(var groupElement in groupElements) {
+                var group = new RawSmileUserMyListGroupModel();
+
+                var headerElement = groupElement.SelectSingleNode(".//h4");
+                var titleElement = headerElement.SelectSingleNode(".//a");
+                group.MyListId = titleElement.Attributes["href"].Value.Split('/').Last();
+                group.Title = titleElement.InnerText;
+
+                var countElement = headerElement.SelectSingleNode(".//*[@class='mylistNum']");
+                group.Count = SmileUserUtility.GetMyListCount(countElement.InnerText);
+
+                var descElement = groupElement.SelectNodes(".//*[@class='mylistDescription']");
+                if(descElement != null) {
+                    var descFullElement = descElement.FirstOrDefault(n => n.Attributes.Any(a => a.Value == "data-nico-mylist-desc-full"));
+                    if(descFullElement != null) {
+                        group.Description = descFullElement.InnerText;
+                    }
+                }
+
+                result.Groups.Add(group);
+            }
+
+            return result;
+        }
+
+        RawSmileUserMyListModel GetUserMyListFromHtmlSource(string htmlSource)
+        {
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            htmlDocument.LoadHtml(htmlSource);
+
+            return GetUserMyListFromHtmlDocument(htmlDocument);
+        }
+
+        public Task<RawSmileUserMyListModel> LoadUserMyListAsync(string userId)
+        {
+            var page = new PageLoader(Mediation, SessionBase, SmileMediationKey.userMyListPage, ServiceType.Smile);
+            page.ReplaceUriParameters["user-id"] = userId;
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
+                page.Dispose();
+                var response = task.Result;
+                return GetUserMyListFromHtmlSource(response.Result);
+            });
+        }
+
+
         #endregion
     }
 }
