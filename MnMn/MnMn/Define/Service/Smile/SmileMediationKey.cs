@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string videoCheck = "video-session-check";
 
         public const string userPage = "smile-user-page";
+        public const string userMyListPage = "smile-user-mylist-page";
+        public const string userBookmarkMyListPage = "smile-user-bookmark-mylist-page";
 
         public const string contentsSearch = "smile-contents-search";
 

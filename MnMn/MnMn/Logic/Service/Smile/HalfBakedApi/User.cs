@@ -76,6 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             return GetSimpleUserAccountModelFromHtmlDocument(htmlDocument);
         }
 
+
         SmileUserInformationModel GetUserInformationFromHtmlSource(string htmlSource)
         {
             var htmlDocument = new HtmlDocument() {
@@ -117,6 +118,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             if(result.IsPublicBirthday) {
                 result.Birthday = birthday.Result;
             }
+
+            var sidebarElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='sidebar']");
+
+            var mylist = SmileUserUtility.GetPageLink(sidebarElement, "mylistTab");
+            result.IsPublicMyList = mylist.IsSuccess;
+            var post = SmileUserUtility.GetPageLink(sidebarElement, "videoTab");
+            result.IsPublicPost = post.IsSuccess;
+            var report = SmileUserUtility.GetPageLink(sidebarElement, "nicorepoTab");
+            result.IsPublicReport = report.IsSuccess;
 
             return result;
         }

@@ -116,6 +116,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                         nameof(ResistedVersion),
                         nameof(IsPremium),
                         nameof(Description),
+                        nameof(IsPublicMyList),
+                        nameof(IsPublicPost),
+                        nameof(IsPublicReport),
                     };
                     CallOnPropertyChange(propertyNames);
                 }
@@ -244,7 +247,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 return string.Empty;
             }
         }
-        
+        public bool IsPublicMyList
+        {
+            get
+            {
+                if(UserInformationLoadState == LoadState.Loaded) {
+                    return UserInformation.IsPublicMyList;
+                }
+
+                return false;
+            }
+        }
+        public bool IsPublicPost
+        {
+            get
+            {
+                if(UserInformationLoadState == LoadState.Loaded) {
+                    return UserInformation.IsPublicPost;
+                }
+
+                return false;
+            }
+        }
+        public bool IsPublicReport
+        {
+            get
+            {
+                if(UserInformationLoadState == LoadState.Loaded) {
+                    return UserInformation.IsPublicReport;
+                }
+
+                return false;
+            }
+        }
+
         public SourceLoadState UserLoadState
         {
             get { return this._userLoadState; }

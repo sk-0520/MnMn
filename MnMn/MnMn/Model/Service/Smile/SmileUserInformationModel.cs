@@ -69,6 +69,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         [DataMember]
         public Uri ThumbnailUri { get; set; }
 
+        [DataMember]
+        public bool IsPublicReport { get; set; }
+
+        [DataMember]
+        public bool IsPublicMyList { get; set; }
+
+        [DataMember]
+        public bool IsPublicPost { get; set; }
+
         #endregion
     }
 }

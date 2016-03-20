@@ -22,6 +22,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -179,7 +180,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return CheckResultModel.Failure<string>();
         }
 
+        static HtmlNode FindNodeOrDefaultFromClassName(HtmlNode node, string className)
+        {
+            var result = node.Descendants()
+                .Where(n => n.HasAttributes)
+                .FirstOrDefault(n => n.Attributes.Any(a => a.Name == "class") && n.Attributes["class"].Value.Split(null).Select(s => s.Trim()).Any(s => s.Equals(className, StringComparison.OrdinalIgnoreCase)))
+            ;
 
+            return result;
+        }
+
+        public static CheckResultModel<string> GetPageLink(HtmlNode node, string className)
+        {
+            var element = FindNodeOrDefaultFromClassName(node, className);
+            if(element == null) {
+                return CheckResultModel.Failure<string>();
+            }
+
+            var anchorElement = element.SelectSingleNode(".//a");
+            if(anchorElement == null) {
+                return CheckResultModel.Failure<string>();
+            }
+
+            var link = anchorElement.Attributes["href"]?.Value;
+            if(string.IsNullOrWhiteSpace(link)) {
+                return CheckResultModel.Failure<string>();
+            }
+
+            return CheckResultModel.Success(link);
+        }
 
     }
 }

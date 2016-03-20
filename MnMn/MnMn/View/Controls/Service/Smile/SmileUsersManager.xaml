@@ -98,6 +98,19 @@
                 <TextBlock Text="{Binding Description}" />
               </StackPanel>
 
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>mylist:</TextBlock>
+                <TextBlock Text="{Binding IsPublicMyList}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>report:</TextBlock>
+                <TextBlock Text="{Binding IsPublicReport}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>post:</TextBlock>
+                <TextBlock Text="{Binding IsPublicPost}" />
+              </StackPanel>
+
             </StackPanel>
           </Grid>
         </DataTemplate>

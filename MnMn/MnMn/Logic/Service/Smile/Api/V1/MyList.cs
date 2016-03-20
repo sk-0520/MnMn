@@ -120,6 +120,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 htmlDocument.LoadHtml(response.Result);
 
                 var totalItemCountElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='search_total']");
+                if(totalItemCountElement == null) {
+                    return null;
+                }
                 var totalItemCountValue = RawValueUtility.ConvertInteger(totalItemCountElement.InnerText);
 
                 var siblingElements = totalItemCountElement.ParentNode.SelectNodes(".//strong");
