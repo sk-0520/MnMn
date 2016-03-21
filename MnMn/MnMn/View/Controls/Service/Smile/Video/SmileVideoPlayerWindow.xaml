@@ -364,7 +364,7 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedComment.Content, Mode=OneWay}" />
 
                     <TextBlock Grid.Row="4" Grid.Column="0">command</TextBlock>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedComment.Commands, Mode=OneWay}" />
+                    <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding SelectedComment.Commands, Mode=OneWay}" />
 
                     <TextBlock Grid.Row="5" Grid.Column="0">user</TextBlock>
                     <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedComment.UserId, Mode=OneWay}" />
