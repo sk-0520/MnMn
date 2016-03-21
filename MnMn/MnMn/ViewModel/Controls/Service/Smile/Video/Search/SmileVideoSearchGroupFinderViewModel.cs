@@ -239,6 +239,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             if(isReload) {
                 nowMethod = SelectedMethod;
                 nowSort = SelectedSort;
+                SelectedPage = null;
             } else {
                 nowMethod = LoadingMethod;
                 nowSort = LoadingSort;
