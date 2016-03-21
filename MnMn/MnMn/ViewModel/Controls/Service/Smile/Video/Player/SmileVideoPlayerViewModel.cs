@@ -1366,12 +1366,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 // とりあえず待って
                 VideoFile.Refresh();
-                CanVideoPlay = VideoFile.Length > VideoPlayLowestSize;
+                CanVideoPlay = VideoPlayLowestSize < VideoFile.Length;
                 if(CanVideoPlay) {
                     StartIfAutoPlay();
                 }
             }
             e.Cancel = IsViewClosed || IsProcessCancel ;
+            if(e.Cancel) {
+                StopMovie();
+            }
 
             base.OnDownloading(sender, e);
         }

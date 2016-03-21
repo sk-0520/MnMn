@@ -505,7 +505,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     wait.Dispose();
                     PropertyChanged -= changedEvent;
                     InitializeStatus();
-
                 });
             } else {
                 wait.Dispose();
@@ -518,7 +517,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public async Task LoadAsync(SmileVideoInformationViewModel videoInformation, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
-                await StopPrevProcessAsync();
+            await StopPrevProcessAsync();
 
             OnLoadStart();
 

@@ -33,9 +33,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         #region define
 
-        public static int DefaultReceiveBufferSize => 8 * 1024;
-        public static long UnknownDonwloadSize => -1;
-        public static long RangeAll => -1;
+        public static int DefaultReceiveBufferSize { get; } = 8 * 1024;
+        public static long UnknownDonwloadSize { get; } = -1;
+        public static long RangeAll { get; } = -1;
 
         #endregion
 
