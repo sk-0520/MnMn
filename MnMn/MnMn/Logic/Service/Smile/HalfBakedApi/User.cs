@@ -11,6 +11,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
 
@@ -133,7 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         public Task<SmileUserInformationModel> LoadUserInformationAsync(string userId)
         {
-            var page = new PageLoader(Mediation, SessionBase, SmileMediationKey.userPage, ServiceType.Smile);
+            var page = new PageLoader(Mediation, Session, SmileMediationKey.userPage, ServiceType.Smile);
             page.ReplaceUriParameters["user-id"] = userId;
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                 page.Dispose();
@@ -186,7 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
         public Task<RawSmileUserMyListModel> LoadUserMyListAsync(string userId)
         {
-            var page = new PageLoader(Mediation, SessionBase, SmileMediationKey.userMyListPage, ServiceType.Smile);
+            var page = new PageLoader(Mediation, Session, SmileMediationKey.userMyListPage, ServiceType.Smile);
             page.ReplaceUriParameters["user-id"] = userId;
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                 page.Dispose();
@@ -195,6 +196,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             });
         }
 
+        public Task<FeedSmileVideoModel> LoadPostVideoAsync(string userId)
+        {
+            var page = new PageLoader(Mediation, Session, SmileMediationKey.userPostVideo, ServiceType.Smile);
+            page.ReplaceUriParameters["user-id"] = userId;
+            page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
+                var feedResult = task.Result;
+                if(!feedResult.IsSuccess) {
+                    return null;
+                } else {
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
+                        return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                    }
+                }
+            });
+        }
 
         #endregion
     }

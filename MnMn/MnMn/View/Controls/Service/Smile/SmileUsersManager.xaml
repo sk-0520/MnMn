@@ -139,6 +139,9 @@
                   <app_view_contrls_service_smile_video:SmileVideoFinderControl Grid.Column="2" DataContext="{Binding SelectedMyListFinder}" />
                 </Grid>
               </TabItem>
+              <TabItem Header="post video">
+                <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding PostVideoFinder}" />
+              </TabItem>
             </TabControl>
           </Grid>
         </DataTemplate>

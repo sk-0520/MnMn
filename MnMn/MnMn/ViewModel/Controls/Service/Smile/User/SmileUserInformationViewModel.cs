@@ -89,6 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
         }
 
+        public SmileVideoFinderViewModelBase PostVideoFinder { get; set; }
+
         public virtual bool IsMyAccount { get; }
 
         public ImageSource ThumbnailImage
@@ -405,6 +407,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }).ContinueWith(task => {
                 LoadThumbnaiImageAsync(userImageCacheSpan);
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current).ContinueWith(_ => {
+                var mylistTask = Task.CompletedTask;
                 if(UserInformation.IsPublicMyList) {
                     user.LoadUserMyListAsync(UserId).ContinueWith(task => {
                         var userMyList = task.Result;
@@ -414,6 +417,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                 }
+
+                var postVideoTask = Task.CompletedTask;
+                if(UserInformation.IsPublicPost) {
+                    PostVideoFinder = new SmilePostVideoFinderViewModel(Mediation, UserId);
+                    CallOnPropertyChange(nameof(PostVideoFinder));
+
+                    postVideoTask = PostVideoFinder.LoadDefaultCacheAsync();
+                }
+
+                return Task.WhenAll(mylistTask, postVideoTask);
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
