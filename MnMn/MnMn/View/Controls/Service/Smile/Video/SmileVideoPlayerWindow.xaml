@@ -537,12 +537,11 @@
           </Grid>
         </TabItem>
         <TabItem Header="relation">
-          <StackPanel>
-            <TextBlock Text="クリックもスクロールも実装してないけどそれが何か問題？" />
+          <ScrollViewer>
             <ItemsControl ItemsSource="{Binding RelationVideoItems}">
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                  <WrapPanel Orientation="Horizontal" />
+                  <UniformGrid />
                 </ItemsPanelTemplate>
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
@@ -552,12 +551,16 @@
                       <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
                       <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
                     </Grid>
-                    <TextBlock Text="{Binding Title}" />
+                    <TextBlock>
+                      <Hyperlink Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
+                        <Run Text="{Binding Title, Mode=OneTime}" />
+                      </Hyperlink>
+                    </TextBlock>
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
-          </StackPanel>
+          </ScrollViewer>
         </TabItem>
         <TabItem Header="market">
         </TabItem>

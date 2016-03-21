@@ -564,6 +564,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand OpenRelationVideo
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var videoInformation = (SmileVideoInformationViewModel)o;
+                        LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
         public ICommand PlayCommand
         {
             get
