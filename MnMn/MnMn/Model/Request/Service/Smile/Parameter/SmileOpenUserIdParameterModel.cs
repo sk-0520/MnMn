@@ -20,17 +20,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter
 {
-    public interface ITreeNodeItem
+    public class SmileOpenUserIdParameterModel: ShowParameterModelBase
     {
-        bool IsSelected { get; set; }
-        bool IsExpanded { get; set; }
-        bool CanMove { get; set; }
-    }
+        #region property
 
-    public interface ITreeNodeItem<TChild>: ITreeNodeItem
-    {
-        IEnumerable<TChild> Children { get; set; }
+        public string UserId { get; set; }
+        public bool IsLoginUser { get; set; }
+
+        #endregion
     }
 }

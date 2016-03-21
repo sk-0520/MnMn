@@ -20,17 +20,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public interface ITreeNodeItem
+    public enum Gender
     {
-        bool IsSelected { get; set; }
-        bool IsExpanded { get; set; }
-        bool CanMove { get; set; }
-    }
-
-    public interface ITreeNodeItem<TChild>: ITreeNodeItem
-    {
-        IEnumerable<TChild> Children { get; set; }
+        /// <summary>
+        /// 不明。
+        /// </summary>
+        Unknown,
+        /// <summary>
+        /// 男。
+        /// </summary>
+        Male,
+        /// <summary>
+        /// 女。
+        /// </summary>
+        Female,
     }
 }

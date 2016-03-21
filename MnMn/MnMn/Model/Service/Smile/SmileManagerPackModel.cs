@@ -19,21 +19,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
     public class SmileManagerPackModel: ManagerPackModelBase
     {
-        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileSettingManagerViewModel settingManager)
+        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileUsersManagerViewModel usersManager, SmileSettingManagerViewModel settingManager)
         {
             VideoManager = videoManager;
+            UsersManager = usersManager;
+            SettingManager = settingManager;
         }
 
         #region proeprty
 
         public SmileVideoManagerViewModel VideoManager { get; }
+        public SmileUsersManagerViewModel UsersManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; }
 
         #endregion

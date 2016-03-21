@@ -76,6 +76,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
 using Package.stackoverflow.com;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using System.Xml;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -528,6 +529,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return VideoInformation.UserNickname; }
         }
+        public string UserId
+        {
+            get { return VideoInformation.UserId; }
+        }
 
         public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
         {
@@ -627,6 +632,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         var tagViewModel = (SmileVideoTagViewModel)o;
 
                         SearchTag(tagViewModel);
+                    }
+                );
+            }
+        }
+
+        public ICommand OpenUserIdCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        OpenUserId(UserId);
                     }
                 );
             }
@@ -1190,6 +1207,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             };
 
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+        }
+
+        void OpenUserId(string userId)
+        {
+            var parameter = new SmileOpenUserIdParameterModel() {
+                UserId = userId,
+            };
+
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
         }
 
         void OpenWebLink(string link)

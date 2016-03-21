@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -145,8 +146,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(viewModel != null) {
                 // コントロール側はうまいことがんばる
                 switch(request.ServiceType) {
+                    case ServiceType.Smile:
                     case ServiceType.SmileVideo:
-                        ManagerPack.SmileManager.SelectedManager = viewModel as SmileVideoCustomManagerViewModelBase;
+                        ManagerPack.SmileManager.SelectedManager = viewModel as ManagerViewModelBase;
                         return new ResponseModel(request, null);
 
                     default:

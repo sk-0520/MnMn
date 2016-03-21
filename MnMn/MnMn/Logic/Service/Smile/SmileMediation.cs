@@ -23,6 +23,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
@@ -31,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -330,11 +332,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
+        object RequestShowViewCore(ShowViewRequestModel request)
+        {
+            CheckUtility.DebugEnforce(request.ServiceType == ServiceType.Smile);
+
+            if(request.ParameterIsViewModel) {
+                throw new NotImplementedException();
+            } else {
+                var user = request.ShowRequestParameter as SmileOpenUserIdParameterModel;
+                if(user != null) {
+                    ManagerPack.UsersManager.LoadFromParameterAsync(user).ConfigureAwait(false);
+                    return ManagerPack.UsersManager;
+                }
+            }
+
+            throw new NotImplementedException();
+        }
+
         internal override object RequestShowView(ShowViewRequestModel request)
         {
             switch(request.ServiceType) {
                 case ServiceType.Smile:
-                    throw new NotImplementedException();
+                    return RequestShowViewCore(request);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.RequestShowView(request);

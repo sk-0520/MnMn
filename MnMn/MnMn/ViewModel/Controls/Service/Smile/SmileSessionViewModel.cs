@@ -25,8 +25,10 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
@@ -49,6 +51,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
         /// ユーザーアカウント情報。
         /// </summary>
         SmileUserAccountModel UserAccount { get; set; }
+
+        RawSmileUserAccountSimpleModel SimpleUserAccount { get; set; }
+
+        public string UserId
+        {
+            get { return SimpleUserAccount.UserId; }
+        }
+
 
         #endregion
 
@@ -85,22 +95,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
             LoginState = LoginState.In;
             using(var page = new PageLoader(Mediation, this, SmileMediationKey.videoLogin, ServiceType.Smile)) {
-                page.HeaderCheckOnly = true;
+                //page.HeaderCheckOnly = true;
 
                 page.ReplaceRequestParameters["user"] = UserAccount.Name;
                 page.ReplaceRequestParameters["pass"] = UserAccount.Password;
 
-                page.JudgeFailureStatusCode = response => {
+                page.JudgeFailureStatusCode = res => {
                     LoginState = LoginState.Failure;
                     return CheckModel.Failure();
                 };
-                page.JudgeSuccessStatusCode = response => {
+                page.JudgeSuccessStatusCode = res => {
                     LoginState = LoginState.Check;
                     return CheckModel.Success();
                 };
 
-                page.JudgeCheckResponseHeaders = response => {
-                    var successLogin = response.Headers
+                page.JudgeCheckResponseHeaders = res => {
+                    var successLogin = res.Headers
                         .FirstOrDefault(h => h.Key == "x-niconico-authflag")
                         .Value.Any(s => s == "1" || s == "3")
                     ;
@@ -115,7 +125,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                     return CheckModel.Failure();
                 };
 
-                await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                if(response.IsSuccess) {
+                    var user = new User(Mediation);
+                    SimpleUserAccount = user.GetSimpleUserAccountModelFromHtmlSource(response.Result);
+                }
             }
             return;
         }

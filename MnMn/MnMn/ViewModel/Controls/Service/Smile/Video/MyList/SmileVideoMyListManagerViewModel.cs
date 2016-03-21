@@ -185,12 +185,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 if(SetVariableValue(ref this._selectedPage, value)) {
                     if(this._selectedPage != null) {
                         this._selectedPage.IsChecked = true;
+                        SelectedSearchFinder = this._selectedPage.ViewModel.Items.First();
+                        SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
                     }
                     if(oldSelectedPage != null) {
                         oldSelectedPage.IsChecked = false;
                     }
-                    SelectedSearchFinder = this._selectedPage.ViewModel.Items.First();
-                    SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
                 }
             }
         }
@@ -476,7 +476,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             var mylist = GetMyListApi();
             var finders = await mylist.SearchPage(query, 1);
-            if(finders.Count > 0) {
+            if(finders != null && finders.Count > 0) {
                 var top = finders.First();
                 var pageCount = top.TotalItemCount / top.PageItemCount;
                 var list = Enumerable

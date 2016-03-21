@@ -28,6 +28,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string videoLogout = "video-session-logout";
         public const string videoCheck = "video-session-check";
 
+        public const string userPage = "smile-user-page";
+        public const string userMyListPage = "smile-user-mylist-page";
+        public const string userPostVideo = "smile-user-post-video";
+        public const string userFavMyListPage = "smile-user-fav-mylist-page";
+
         public const string contentsSearch = "smile-contents-search";
 
         public const string mylistDefault = "smile-video-mylist-account-default";

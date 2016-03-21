@@ -19,18 +19,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    public interface ITreeNodeItem
+    public class RawSmileUserMyListModel: ModelBase
     {
-        bool IsSelected { get; set; }
-        bool IsExpanded { get; set; }
-        bool CanMove { get; set; }
-    }
+        #region property
 
-    public interface ITreeNodeItem<TChild>: ITreeNodeItem
-    {
-        IEnumerable<TChild> Children { get; set; }
+        public CollectionModel<RawSmileUserMyListGroupModel> Groups { get; set; } = new CollectionModel<RawSmileUserMyListGroupModel>();
+
+        #endregion
     }
 }

@@ -28,10 +28,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
     {
         public static JObject ConvertJsonFromWatchPage(string watchPageHtml)
         {
-            var document = new HtmlDocument();
-            document.LoadHtml(watchPageHtml);
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(watchPageHtml);
 
-            var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
+            var watchApiDataElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
             var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
 
             var json = JObject.Parse(watchApiDataText);

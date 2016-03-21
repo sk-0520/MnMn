@@ -19,18 +19,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    public interface ITreeNodeItem
+    /// <summary>
+    /// 重複が危ぶまれるであります。
+    /// </summary>
+    public class RawSmileUserMyListGroupModel: ModelBase
     {
-        bool IsSelected { get; set; }
-        bool IsExpanded { get; set; }
-        bool CanMove { get; set; }
-    }
+        #region property
 
-    public interface ITreeNodeItem<TChild>: ITreeNodeItem
-    {
-        IEnumerable<TChild> Children { get; set; }
+        public string MyListId { get; set; }
+
+        public string Title { get; set; }
+
+        public int Count { get; set; }
+
+        public string Description { get; set; }
+
+        #endregion
     }
 }

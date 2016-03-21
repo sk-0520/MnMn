@@ -17,20 +17,33 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw
 {
-    public interface ITreeNodeItem
+    [DataContract]
+    public class RawSmileUserAccountSimpleModel: ModelBase
     {
-        bool IsSelected { get; set; }
-        bool IsExpanded { get; set; }
-        bool CanMove { get; set; }
-    }
+        #region property
 
-    public interface ITreeNodeItem<TChild>: ITreeNodeItem
-    {
-        IEnumerable<TChild> Children { get; set; }
+        [DataMember(Name = "id")]
+        public string UserId { get; set; }
+
+        [DataMember(Name = "age")]
+        public string Age { get; set; }
+
+        [DataMember(Name = "isPremium")]
+        public string IsPremium { get; set; }
+
+        [DataMember(Name = "isOver18")]
+        public string IsOver18 { get; set; }
+
+        [DataMember(Name = "isMan")]
+        public string IsMan { get; set; }
+
+        #endregion
     }
 }

@@ -8,7 +8,7 @@
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
   
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
-  xmlns:app_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
@@ -28,7 +28,7 @@
     </Grid.RowDefinitions>
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <app_contrls_service_smile_video:SmileVideoRankingContext 
+      <app_view_contrls_service_smile_video:SmileVideoRankingContext 
         TargetItemsSource="{Binding TargetItems}"
         PeriodItemsSource="{Binding PeriodItems}"
         SelectedTarget="{Binding SelectedTarget}"
@@ -77,7 +77,7 @@
               <TextBlock Grid.Row="0" Text="{Binding CategoryName}" />
               <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
             </Grid>
-            <app_contrls_service_smile_video:SmileVideoRankingContext 
+            <app_view_contrls_service_smile_video:SmileVideoRankingContext 
               TargetItemsSource="{Binding TargetItems}"
               PeriodItemsSource="{Binding PeriodItems}"
               SelectedTarget="{Binding SelectedTarget, Mode=TwoWay}"
@@ -93,7 +93,7 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}" />
+          <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}" />
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>
