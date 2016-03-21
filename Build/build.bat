@@ -7,7 +7,7 @@ set ERROR=%BUILD%\@error
 set OUTPUT=Output\Release
 set OUTPUTx86=%OUTPUT%\x86
 set OUTPUTx64=%OUTPUT%\x64
-set VER_TARGET=%OUTPUTx86%\PeMain.exe
+set VER_TARGET=%OUTPUTx86%\MnMnMain.exe
 set ZIP=%BUILD%\zip.vbs
 set GV=%BUILD%\get-ver.vbs
 
@@ -26,11 +26,11 @@ rem )
 set MB=%ProgramFiles(x86)%\MSBuild\14.0\Bin\msbuild
 
 echo build x86
-"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
+"%MB%" MnMn\MnMn.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
 set ERROR_X86=%ERRORLEVEL%
 
 rem echo build x64
-rem "%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x64 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
+rem "%MB%" MnMn\MnMn.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x64 /t:Rebuild /m /p:TargetFrameworkVersion=v4.6
 rem set ERROR_X64=%ERRORLEVEL%
 
 if not %ERROR_X86% == 0 echo "build error x86: %ERROR_X86%" >> "%ERROR%"
@@ -45,6 +45,6 @@ del /S /Q "%OUTPUTx86%\lib\*.xml"
 rem del /S /Q "%OUTPUTx64%\lib\*.xml"
 
 echo compression
-cscript "%ZIP%" "%OUTPUTx86%" "%OUTPUT%\Pe_%EXEVER%_x86.zip"
-rem cscript "%ZIP%" "%OUTPUTx64%" "%OUTPUT%\Pe_%EXEVER%_x64.zip"
+cscript "%ZIP%" "%OUTPUTx86%" "%OUTPUT%\MnMn_%EXEVER%_x86.zip"
+rem cscript "%ZIP%" "%OUTPUTx64%" "%OUTPUT%\MnMn_%EXEVER%_x64.zip"
 
