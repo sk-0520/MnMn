@@ -1109,6 +1109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsMakedDescription = true;
 
             var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, VideoInformation.DescriptionHtml);
+#if false
 #if DEBUG
             var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
             using(var s = File.CreateText(h)) {
@@ -1120,6 +1121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     s.Write(flowDocumentSource);
                 }
             }
+#endif
 #endif
 
             DocumentDescription.Dispatcher.Invoke(() => {
