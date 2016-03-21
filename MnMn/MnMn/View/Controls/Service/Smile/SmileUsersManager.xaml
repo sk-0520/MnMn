@@ -22,20 +22,7 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*" />
-      <ColumnDefinition Width="Auto" />
-      <ColumnDefinition Width="7*" />
-    </Grid.ColumnDefinitions>
-
-    <Grid Grid.Column="0">
-      <TreeView></TreeView>
-    </Grid>
-
-    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
-
     <TabControl
-      Grid.Column="2"
       SelectedItem="{Binding SelectedUser}"
       ItemsSource="{Binding UserItems}"
       Style="{StaticResource FinderTab}"
@@ -54,70 +41,72 @@
           <Grid>
             <TabControl TabStripPlacement="Left">
               <TabItem Header="user">
-                <StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>user id:</TextBlock>
-                    <TextBlock Text="{Binding UserId}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>user name:</TextBlock>
-                    <TextBlock Text="{Binding UserName}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>is premium:</TextBlock>
-                    <TextBlock Text="{Binding IsPremium}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>regist version:</TextBlock>
-                    <TextBlock Text="{Binding ResistedVersion}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>image load:</TextBlock>
-                    <TextBlock Text="{Binding UserThumbnailLoadState}" />
-                    <Image Source="{Binding ThumbnailImage}" Width="150" Height="150" />
-                  </StackPanel>
+                <ScrollViewer>
+                  <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>user id:</TextBlock>
+                      <TextBlock Text="{Binding UserId}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>user name:</TextBlock>
+                      <TextBlock Text="{Binding UserName}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>is premium:</TextBlock>
+                      <TextBlock Text="{Binding IsPremium}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>regist version:</TextBlock>
+                      <TextBlock Text="{Binding ResistedVersion}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>image load:</TextBlock>
+                      <TextBlock Text="{Binding UserThumbnailLoadState}" />
+                      <Image Source="{Binding ThumbnailImage}" Width="150" Height="150" />
+                    </StackPanel>
 
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>location:</TextBlock>
-                    <TextBlock Text="{Binding IsPublicLocation}" />
-                    <TextBlock>,</TextBlock>
-                    <TextBlock Text="{Binding Location}" />
-                  </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>location:</TextBlock>
+                      <TextBlock Text="{Binding IsPublicLocation}" />
+                      <TextBlock>,</TextBlock>
+                      <TextBlock Text="{Binding Location}" />
+                    </StackPanel>
 
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>gender:</TextBlock>
-                    <TextBlock Text="{Binding IsPublicGender}" />
-                    <TextBlock>,</TextBlock>
-                    <TextBlock Text="{Binding Gender}" />
-                  </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>gender:</TextBlock>
+                      <TextBlock Text="{Binding IsPublicGender}" />
+                      <TextBlock>,</TextBlock>
+                      <TextBlock Text="{Binding Gender}" />
+                    </StackPanel>
 
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>birthday:</TextBlock>
-                    <TextBlock Text="{Binding IsPublicBirthday}" />
-                    <TextBlock>,</TextBlock>
-                    <TextBlock Text="{Binding Birthday}" />
-                  </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>birthday:</TextBlock>
+                      <TextBlock Text="{Binding IsPublicBirthday}" />
+                      <TextBlock>,</TextBlock>
+                      <TextBlock Text="{Binding Birthday}" />
+                    </StackPanel>
 
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>description(未):</TextBlock>
-                    <TextBlock Text="{Binding Description}" />
-                  </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>description:</TextBlock>
+                      <TextBlock Text="{Binding Description}" />
+                    </StackPanel>
 
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>mylist:</TextBlock>
-                    <TextBlock Text="{Binding IsPublicMyList}" />
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>mylist:</TextBlock>
+                      <TextBlock Text="{Binding IsPublicMyList}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>report:</TextBlock>
+                      <TextBlock Text="{Binding IsPublicReport}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>post:</TextBlock>
+                      <TextBlock Text="{Binding IsPublicPost}" />
+                    </StackPanel>
                   </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>report:</TextBlock>
-                    <TextBlock Text="{Binding IsPublicReport}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock>post:</TextBlock>
-                    <TextBlock Text="{Binding IsPublicPost}" />
-                  </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
               </TabItem>
-              <TabItem Header="mylist">
+              <TabItem Header="mylist" IsEnabled="{Binding IsPublicMyList}">
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*" />
@@ -139,8 +128,8 @@
                   <app_view_contrls_service_smile_video:SmileVideoFinderControl Grid.Column="2" DataContext="{Binding SelectedMyListFinder}" />
                 </Grid>
               </TabItem>
-              <TabItem Header="post video">
-                <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding PostVideoFinder}" />
+              <TabItem Header="post" IsEnabled="{Binding IsPublicPost}">
+                <app_view_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding PostFinder}" />
               </TabItem>
             </TabControl>
           </Grid>

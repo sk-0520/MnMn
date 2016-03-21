@@ -285,7 +285,7 @@
     <Compile Include="ViewModel\Controls\PageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringEditItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileMyListFinderViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\User\SmilePostVideoFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserPostFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserBookmarkItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileLoginUserInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserInformationViewModel.cs" />

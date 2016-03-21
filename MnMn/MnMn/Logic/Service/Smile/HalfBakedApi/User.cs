@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
@@ -77,14 +78,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             return GetSimpleUserAccountModelFromHtmlDocument(htmlDocument);
         }
 
-
-        SmileUserInformationModel GetUserInformationFromHtmlSource(string htmlSource)
+        SmileUserInformationModel GetUserInformationFromHtmlDocument(HtmlDocument htmlDocument)
         {
-            var htmlDocument = new HtmlDocument() {
-                OptionAutoCloseOnEnd = true,
-            };
-            htmlDocument.LoadHtml(htmlSource);
-
             var result = new SmileUserInformationModel();
 
             var nickNameElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='userDetail']/*[@class='avatar']/img");
@@ -120,6 +115,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
                 result.Birthday = birthday.Result;
             }
 
+            var descriptionElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='description_full']");
+            if(descriptionElement != null) {
+                var lines = descriptionElement.InnerText
+                    .SplitLines()
+                    .Select(s => s.Trim())
+                    .Where(s => 0 < s.Length)
+                ;
+                result.Description = string.Join(Environment.NewLine, lines);
+            }
+
             var sidebarElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='sidebar']");
 
             var mylist = SmileUserUtility.GetPageLink(sidebarElement, "mylistTab");
@@ -130,6 +135,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             result.IsPublicReport = report.IsSuccess;
 
             return result;
+        }
+
+        SmileUserInformationModel GetUserInformationFromHtmlSource(string htmlSource)
+        {
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            htmlDocument.LoadHtml(htmlSource);
+
+            return GetUserInformationFromHtmlDocument(htmlDocument);
         }
 
         public Task<SmileUserInformationModel> LoadUserInformationAsync(string userId)
@@ -150,6 +165,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             var myListElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='mylist']");
 
             var groupElements = myListElement.SelectNodes(".//*[@class='outer']");
+            if(groupElements == null) {
+                return null;
+            }
             foreach(var groupElement in groupElements) {
                 var group = new RawSmileUserMyListGroupModel();
 

@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
         }
 
-        public SmileVideoFinderViewModelBase PostVideoFinder { get; set; }
+        public SmileVideoFinderViewModelBase PostFinder { get; private set; }
 
         public virtual bool IsMyAccount { get; }
 
@@ -411,22 +411,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 if(UserInformation.IsPublicMyList) {
                     user.LoadUserMyListAsync(UserId).ContinueWith(task => {
                         var userMyList = task.Result;
-                        if(userMyList.Groups.Any()) {
+                        if(userMyList != null && userMyList.Groups.Any()) {
                             var items = userMyList.Groups.Select(g => new SmileMyListFinderViewModel(Mediation, g));
                             MyListItems.InitializeRange(items);
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                 }
 
-                var postVideoTask = Task.CompletedTask;
+                var postTask = Task.CompletedTask;
                 if(UserInformation.IsPublicPost) {
-                    PostVideoFinder = new SmilePostVideoFinderViewModel(Mediation, UserId);
-                    CallOnPropertyChange(nameof(PostVideoFinder));
+                    PostFinder = new SmileUserPostFinderViewModel(Mediation, UserId);
+                    CallOnPropertyChange(nameof(PostFinder));
 
-                    postVideoTask = PostVideoFinder.LoadDefaultCacheAsync();
+                    postTask = PostFinder.LoadDefaultCacheAsync();
                 }
 
-                return Task.WhenAll(mylistTask, postVideoTask);
+                return Task.WhenAll(mylistTask, postTask);
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
