@@ -155,6 +155,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         int _commentListCount;
         int _originalPosterCommentListCount;
 
+        bool _isSelectedComment;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -447,7 +449,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public SmileVideoCommentViewModel SelectedComment
         {
             get { return this._selectedComment; }
-            set { SetVariableValue(ref this._selectedComment, value); }
+            set
+            {
+                var prevSelectedComment = this._selectedComment;
+                if(SetVariableValue(ref this._selectedComment, value)) {
+                    IsSelectedComment = this._selectedComment != null;
+                    if(IsSelectedComment) {
+                        this._selectedComment.IsSelected = true;
+                    }
+                    if(prevSelectedComment != null) {
+                        prevSelectedComment.IsSelected = false;
+                    }
+                }
+            }
         }
 
         Size VisualVideoSize { get; set; }
@@ -548,9 +562,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public bool IsSelectedComment
+        {
+            get { return this._isSelectedComment; }
+            set { SetVariableValue(ref this._isSelectedComment, value); }
+        }
+
+
         #endregion
 
-        #region command
+            #region command
 
         public ICommand OpenLinkCommand
         {
@@ -744,6 +765,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o=> {
                         ApprovalComment();
+                    }
+                );
+            }
+        }
+
+        public ICommand ClearSelectedCommentCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        ClearSelectedComment();
                     }
                 );
             }
@@ -1347,6 +1380,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentCustom(GlobalCommentFileringItems.ModelList);
         }
 
+        void ClearSelectedComment()
+        {
+            SelectedComment = null;
+        }
 
         #endregion
 

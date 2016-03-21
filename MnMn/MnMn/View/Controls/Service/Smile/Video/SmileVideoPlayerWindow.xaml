@@ -321,6 +321,65 @@
                   IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
                 />
               </DockPanel>
+              <DockPanel DockPanel.Dock="Bottom" Visibility="{Binding IsSelectedComment, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <GroupBox>
+                  <GroupBox.Header>
+                    <DockPanel>
+                      <Button DockPanel.Dock="Right" Content="close" Command="{Binding ClearSelectedCommentCommand}" />
+                      <TextBlock>comment</TextBlock>
+                    </DockPanel>
+                  </GroupBox.Header>
+                  <Grid>
+                    <Grid.Resources>
+                      <Style TargetType="TextBox">
+                        <Setter Property="IsReadOnly" Value="True" />
+                      </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0">show time</TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0">post time</TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0">score</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedComment.Score, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0">comment</TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedComment.Content, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0">command</TextBlock>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedComment.Commands, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0">user</TextBlock>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedComment.UserId, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="0">kind</TextBlock>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedComment.UserKind, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="7" Grid.Column="0">anonymity</TextBlock>
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SelectedComment.Anonymity, Mode=OneWay}" />
+                    
+                    <TextBlock Grid.Row="8" Grid.Column="0">approval</TextBlock>
+                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding SelectedComment.Approval, Mode=OneWay}" />
+                  </Grid>
+                </GroupBox>
+              </DockPanel>
               <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
                 <ListView.ItemContainerStyle>
                   <Style TargetType="ListViewItem">
@@ -336,26 +395,6 @@
                     <GridViewColumn>
                       <GridViewColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="color" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.HeaderTemplate>
-                      <GridViewColumn.CellTemplate>
-                        <ItemContainerTemplate>
-                          <StackPanel Orientation="Horizontal">
-                            <Rectangle Fill="{Binding Foreground}" Width="4" Height="8">
-                              <Rectangle.Stroke>
-                                <SolidColorBrush Color="{Binding Shadow}" />
-                              </Rectangle.Stroke>
-                            </Rectangle>
-                            <TextBlock Text="{Binding Score}" FontSize="9" />
-                          </StackPanel>
-                        </ItemContainerTemplate>
-                      </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn>
-                      <GridViewColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
                           <TextBlock Text="time" />
                         </ItemContainerTemplate>
                       </GridViewColumn.HeaderTemplate>
@@ -365,33 +404,7 @@
                         </ItemContainerTemplate>
                       </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
-                    <GridViewColumn>
-                      <GridViewColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="op" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.HeaderTemplate>
-                      <GridViewColumn.CellTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="{Binding IsOriginalPoster}" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn>
-                      <GridViewColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="approval" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.HeaderTemplate>
-                      <GridViewColumn.CellTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="{Binding Approval}" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
+                    
                     <GridViewColumn>
                       <GridViewColumn.HeaderTemplate>
                         <ItemContainerTemplate>
