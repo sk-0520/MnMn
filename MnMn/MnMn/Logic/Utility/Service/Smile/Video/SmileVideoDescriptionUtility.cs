@@ -99,15 +99,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             var regTarget = new Regex(
                 @"
-                    (?<OPEN>
-                        <Run>
+                (?<OPEN>
+                    <Run>
+                )
+                    (?<TARGET>
+                        .+?
                     )
-                        (?<TARGET>
-                            .+?
-                        )
-                    (?<CLOSE>
-                        </Run>
-                    )
+                (?<CLOSE>
+                    </Run>
+                )
                 ",
                 RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
            );
@@ -125,6 +125,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 if(convertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, target, typeof(string), ServiceType.Smile)) {
                     var link = (string)outputValue;
                     return MakeLink(link, target, nameof(ISmileVideoDescription.OpenMyListLinkCommand));
+                } else {
+                    return m.Groups[0].Value;
+                }
+            });
+
+            return replacedSource;
+        }
+
+        static string ConvertLinkFromUserId(IConvertCompatibility convertCompatibility, string flowDocumentSource)
+        {
+            var replacedSource = ConvertRunTarget(flowDocumentSource, m => {
+                var target = m.Groups["TARGET"].Value;
+                object outputValue;
+                if(convertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetUserId, target, typeof(string), ServiceType.Smile)) {
+                    var link = (string)outputValue;
+                    return MakeLink(link, target, nameof(ISmileVideoDescription.OpenUserLinkCommand));
                 } else {
                     return m.Groups[0].Value;
                 }
@@ -169,6 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromMyList(convertCompatibility, convertedFlowDocumentSource);
+            convertedFlowDocumentSource = ConvertLinkFromUserId(convertCompatibility, convertedFlowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromVideoId(convertCompatibility, convertedFlowDocumentSource);
 
             convertedFlowDocumentSource = ConvertSafeXaml(convertedFlowDocumentSource);

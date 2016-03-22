@@ -123,6 +123,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                         return outputValue != null;
                     }
 
+                case SmileMediationKey.inputGetUserId: {
+                        var s = SmileIdUtility.GetUserId(inputValue as string);
+                        outputValue = s;
+                        return outputValue != null;
+                    }
+
 
 
                 default:

@@ -1592,6 +1592,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand OpenUserLinkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var userId = o as string;
+                        OpenUserId(userId);
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region event

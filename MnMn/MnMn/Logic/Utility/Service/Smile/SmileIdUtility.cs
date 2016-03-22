@@ -52,15 +52,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
             var regFormat = new Regex(
                 $@"
-                    (
-                        watch
-                        \/
-                    )?
-                    (?<VIDEO_ID>
-                        (sm|nm|so) # 他にもあるっぽいけど別段困らない
-                        \d+
-                    )
-                    \s*
+                (
+                    watch
+                    \/
+                )?
+                (?<VIDEO_ID>
+                    (sm|nm|so) # 他にもあるっぽいけど別段困らない
+                    \d+
+                )
                 ",
                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
@@ -75,7 +74,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                     (?<VIDEO_ID>
                         \d+
                     )
-                    \s*
                     ",
                     RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
                 );
@@ -102,14 +100,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
             var regFormat = new Regex(
                 @"
-                    (
-                        mylist
-                        \/
-                    )
-                    (?<MYLIST_ID>
-                        \d+
-                    )
-                    \s*
+                mylist
+                \/
+                (?<MYLIST_ID>
+                    \d+
+                )
                 ",
                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
@@ -120,5 +115,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 return null;
             }
         }
+
+        /// <summary>
+        /// 文字列中からユーザーIDを取得する。
+        /// </summary>
+        /// <param name="inputValue"></param>
+        /// <returns>null: とれんかった</returns>
+        public static string GetUserId(string inputValue)
+        {
+            if(string.IsNullOrWhiteSpace(inputValue)) {
+                return null;
+            }
+
+            var regFormat = new Regex(
+                @"
+                user
+                \/
+                (?<USER_ID>
+                    \d+
+                )
+                ",
+                RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
+            );
+            var match = regFormat.Match(inputValue);
+            if(match.Success) {
+                return match.Groups["USER_ID"].Value;
+            } else {
+                return null;
+            }
+        }
+
     }
 }
