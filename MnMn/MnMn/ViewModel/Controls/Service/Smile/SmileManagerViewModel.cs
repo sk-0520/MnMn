@@ -39,6 +39,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 {
     public class SmileManagerViewModel: ManagerViewModelBase
     {
+        #region variable
+
+        string _inputVideoId;
+
+        #endregion
+
         public SmileManagerViewModel(Mediation mediation)
             :base(mediation)
         {
@@ -55,25 +61,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileUsersManagerViewModel UsersManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; set; }
 
+        public string InputVideoId
+        {
+            get { return this._inputVideoId; }
+            set { SetVariableValue(ref this._inputVideoId, value); }
+        }
+
         #endregion
 
         #region command
 
-        [Obsolete]
-        public ICommand Temp_OpenSmilePlayerCommand
+        public ICommand OpenVideoPlayerCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, "sm15218544", Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(task => {
-                            task.Result.OpenPlayerAsync();
-                        }, TaskScheduler.FromCurrentSynchronizationContext());
-
+                        OpenVideoPlayerAsync(InputVideoId).ConfigureAwait(false);
                     }
                 );
             }
         }
+
+        #endregion
+
+        #region function
+
+        async Task<bool> OpenVideoPlayerAsync(string videoId)
+        {
+            var videoInformation = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, Constants.ServiceSmileVideoThumbCacheSpan);
+
+            await videoInformation.OpenPlayerAsync();
+            return true;
+        }
+
 
         #endregion
 

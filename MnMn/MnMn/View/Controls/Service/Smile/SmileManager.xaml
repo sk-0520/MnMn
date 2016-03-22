@@ -23,9 +23,11 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <DockPanel>
-    <Menu DockPanel.Dock="Top">
-      <MenuItem Header="ACV" Command="{Binding Temp_OpenSmilePlayerCommand}" Width="300" />
-    </Menu>
+    <ToolBar DockPanel.Dock="Top">
+      <TextBlock>movie</TextBlock>
+      <TextBox Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}" />
+      <Button Command="{Binding OpenVideoPlayerCommand}">open</Button>
+    </ToolBar>
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
       <TabItem Header="search" DataContext="{Binding VideoManager.SearchManager}">
         <app_controls_service_smile_video:SmileVideoSearchManager />
