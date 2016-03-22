@@ -140,8 +140,8 @@
       >
         <Popup.IsOpen>
           <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
-            <Binding Path="IsMouseOver" Mode="OneWay" ElementName="PART_AudioMute" />
             <Binding Path="IsMouseOver" Mode="OneWay" ElementName="PART_AudioSlider" />
+            <Binding Path="IsMouseOver" Mode="OneWay" ElementName="PART_AudioMute" />
           </MultiBinding>
         </Popup.IsOpen>
         <Slider 
