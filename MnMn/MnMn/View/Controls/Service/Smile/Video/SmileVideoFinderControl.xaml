@@ -33,6 +33,14 @@
 
     <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
+    <Grid>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock>title filter</TextBlock>
+        <TextBox Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox IsChecked="{Binding IsBlacklist}">black list</CheckBox>
+      </StackPanel>
+    </Grid>
+    
     <ListBox 
       x:Name="PART_List" 
       Grid.Row="2"

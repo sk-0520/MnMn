@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string InputFilter
+        public virtual string InputFilter
         {
             get { return this._inputFilter; }
             set
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-        public bool IsBlacklist
+        public virtual bool IsBlacklist
         {
             get { return this._isBlacklist; }
             set
@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var isBlack = IsBlacklist;
 
             var viewModel = (SmileVideoInformationViewModel)obj;
-            var isHit = viewModel.Title.IndexOf(filter ?? string.Empty) >= -1;
+            var isHit = viewModel.Title.IndexOf(filter ?? string.Empty) != -1;
             if(IsBlacklist) {
                 return !isHit;
             } else {

@@ -324,6 +324,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public override string InputFilter
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    if(SearchFinder != null) {
+                        return SearchFinder.InputFilter;
+                    } else {
+                        return base.InputFilter;
+                    }
+                }
+
+                return SelectedPage.ViewModel.InputFilter;
+            }
+            set
+            {
+                if(SelectedPage == null) {
+                    if(SearchFinder != null) {
+                        SearchFinder.InputFilter = value;
+                    } else {
+                        base.InputFilter = value;
+                    }
+                } else {
+                    SelectedPage.ViewModel.InputFilter = value;
+                }
+            }
+        }
+        public override bool IsBlacklist
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    if(SearchFinder != null) {
+                        return SearchFinder.IsBlacklist;
+                    } else {
+                        return base.IsBlacklist;
+                    }
+                }
+
+                return SelectedPage.ViewModel.IsBlacklist;
+            }
+            set
+            {
+                if(SelectedPage == null) {
+                    if(SearchFinder != null) {
+                        SearchFinder.IsBlacklist = value;
+                    } else {
+                        base.IsBlacklist = value;
+                    }
+                } else {
+                    SelectedPage.ViewModel.IsBlacklist = value;
+                }
+            }
+        }
+
+
         #endregion
 
         private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
