@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <summary>
         /// エコノミーモード時にダウンロードしたファイル名
         /// </summary>
-        public static string EconomyFileSuffix => "economy";
+        public static string EconomyFileSuffix { get; } = "economy";
 
         #endregion
 

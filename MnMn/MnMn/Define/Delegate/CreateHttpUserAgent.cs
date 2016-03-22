@@ -23,5 +23,10 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Delegate
 {
+    /// <summary>
+    /// HttpClient作成。
+    /// <para>作成したHttpClientの面倒を見る必要はない。</para>
+    /// </summary>
+    /// <returns></returns>
     public delegate HttpClient CreateHttpUserAgent();
 }

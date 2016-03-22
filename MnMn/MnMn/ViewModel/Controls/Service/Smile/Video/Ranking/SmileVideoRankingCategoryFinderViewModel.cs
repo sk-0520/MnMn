@@ -88,97 +88,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region command
 
-        //public ICommand ReloadCategoryCommand
-        //{
-        //    get
-        //    {
-        //        //return CreateCommand(
-        //        //    o => {
-        //        //        LoadRankingAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(true);
-        //        //    }
-        //        //);
-        //        return ReloadCommand;
-        //    }
-        //}
-
         #endregion
 
         #region function
-
-        /*
-        async Task LoadRankingAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
-            NowLoading = true;
-            var rankingFeedModel = await RestrictUtility.Block(async () => {
-                using(var host = new HttpUserAgentHost())
-                using(var page = new PageLoader(Mediation, host, SmileVideoMediationKey.ranking, ServiceType.SmileVideo)) {
-                    page.ReplaceUriParameters["target"] = SelectedTarget.Key;
-                    page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
-                    page.ReplaceUriParameters["category"] = Category.Key;
-                    page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
-
-                    var rankingXmlResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                    if(!rankingXmlResult.IsSuccess) {
-                        FinderLoadState = SmileVideoFinderLoadState.Failure;
-                        return null;
-                    }
-
-                    FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
-
-                    return RestrictUtility.Block(() => {
-                        using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rankingXmlResult.Result))) {
-                            return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoRankingModel>(stream);
-                        }
-                    });
-                }
-            });
-            if(rankingFeedModel == null) {
-                NowLoading = false;
-                FinderLoadState = SmileVideoFinderLoadState.Failure;
-                return;
-            }
-
-
-            await Task.Run(() => {
-                return rankingFeedModel.Channel.Items
-                    .AsParallel()
-                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1))
-                ;
-            }).ContinueWith(task => {
-                var cancel = CancelLoading = new CancellationTokenSource();
-
-
-                VideoInformationList.InitializeRange(task.Result);
-                VideoInformationItems.Refresh();
-
-                Task.Run(() => {
-                    FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
-                    var loader = new SmileVideoInformationLoader(VideoInformationList);
-                    loader.LoadThumbnaiImageAsync(imageCacheSpan);
-                }).ContinueWith(t => {
-                    //VideoInformationItems.Refresh();
-                    FinderLoadState = SmileVideoFinderLoadState.Completed;
-                    NowLoading = true;
-                    // return Task.CompletedTask;
-                }, cancel.Token, TaskContinuationOptions.LongRunning, TaskScheduler.FromCurrentSynchronizationContext());
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-        }
-        */
-
-        //public Task LoadRankingAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        //{
-        //    //if(CanLoad) {
-        //    //    if(NowLoading) {
-        //    //        CancelLoading.Cancel(true);
-        //    //    }
-
-        //    //    return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan);
-        //    //} else {
-        //    //    return Task.CompletedTask;
-        //    //}
-        //    return LoadAsync(thumbCacheSpan, imageCacheSpan);
-        //}
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
         {
@@ -201,18 +113,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         protected override bool IsLoadVideoInformation => false;
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
-
-        //protected override PageLoader CreatePageLoader()
-        //{
-        //    var page = new PageLoader(Mediation, UserAgentHost, SmileVideoMediationKey.ranking, ServiceType.SmileVideo);
-
-        //    page.ReplaceUriParameters["target"] = SelectedTarget.Key;
-        //    page.ReplaceUriParameters["period"] = SelectedPeriod.Key;
-        //    page.ReplaceUriParameters["category"] = Category.Key;
-        //    page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
-
-        //    return page;
-        //}
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {

@@ -44,8 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoFeedFinderViewModelBase
 
-        //protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
-        protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
+        protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.Length;
 
         // ぶっちゃけAPI使うよりこっちの方が総通信数は少ないから使いたいけどHTML腐り過ぎてて使いたくない相反する思い。
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()

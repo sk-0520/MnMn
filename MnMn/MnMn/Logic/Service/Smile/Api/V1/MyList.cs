@@ -156,19 +156,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                     var myListItemCountSource = myListItemCountElement.InnerText;
                     var myListItemCountText = string.Concat(myListItemCountSource.TakeWhile(c => char.IsDigit(c)));
                     var myListItemCount = RawValueUtility.ConvertInteger(myListItemCountText);
-                    //var descriptionElement = paragraphElements[1];
 
                     var finder = new SmileVideoSearchMyListFinderViewModel(Mediation, myListId, myListName, myListItemCount, query, totalItemCountValue, showCount);
                     result.Add(finder);
                 }
 
                 return result;
-                //SmileVideoSearchMyListFinderViewModel finder;
-                //if(pageNumber == 0) {
-                //    finder = new SmileVideoSearchMyListFinderViewModel(Mediation);
-                //} else {
-                //    finder = new SmileVideoSearchMyListFinderViewModel(Mediation);
-                //}
             }
         }
 

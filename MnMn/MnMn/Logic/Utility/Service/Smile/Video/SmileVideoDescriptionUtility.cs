@@ -151,19 +151,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static string ConvertSafeXaml(string flowDocumentSource)
         {
+            //TODO: Run*てのがあることは考慮してない。
             return flowDocumentSource
                 .Replace("Run>", "TextBlock>")
                 .Replace("<Run", "<TextBlock")
             ;
-            //var reg = new Regex(
-            //    @"
-            //    <Run(?<STYLE>\s+.+?)?>
-            //        (?<VALUE>.*?)
-            //    </Run>
-            //    ",
-            //    RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
-            //);
-            //return reg.Replace(flowDocumentSource, "<TextBlock${STYLE}>${VALUE}</TextBlock>");
         }
 
         /// <summary>

@@ -691,62 +691,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
         }
 
-        //ImageSource GetImage(Stream stream)
-        //{
-        //    Application.Current.Dispatcher.Invoke(new Action(() => {
-        //        var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-        //        FreezableUtility.SafeFreeze(image);
-        //        this._thumbnailImage = image;
-        //    }));
-        //    return this._thumbnailImage;
-        //}
-
-        //Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
-        //{
-        //    var uri = ThumbnailUri;
-
-        //    return RestrictUtility.Block(async () => {
-        //        var maxCount = 3;
-        //        var count = 0;
-        //        do {
-        //            try {
-        //                Mediation.Logger.Trace($"img -> {uri}");
-        //                return await client.GetByteArrayAsync(uri);
-        //            } catch(HttpRequestException ex) {
-        //                Mediation.Logger.Error($"error img -> {uri}");
-        //                Mediation.Logger.Warning(ex);
-        //                if(count != 0) {
-        //                    var wait = TimeSpan.FromSeconds(1);
-        //                    Thread.Sleep(wait);
-        //                }
-        //            }
-        //        } while(count++ < maxCount);
-        //        return null;
-        //    }).ContinueWith(task => {
-        //        var binary = task.Result;
-
-        //        if(binary != null) {
-        //            this._thumbnailImage = CacheImageUtility.GetBitmapSource(binary);
-        //            ThumbnailLoadState = LoadState.Loaded;
-
-        //            if(this._thumbnailImage != null && Application.Current != null) {
-        //                // キャッシュ構築
-        //                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-        //                    var frame = BitmapFrame.Create(this._thumbnailImage);
-        //                    var encoder = new PngBitmapEncoder();
-        //                    encoder.Frames.Add(frame);
-        //                    FileUtility.MakeFileParentDirectory(savePath);
-        //                    using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-        //                        encoder.Save(stream);
-        //                    }
-        //                }));
-        //            }
-        //        } else {
-        //            ThumbnailLoadState = LoadState.Failure;
-        //        }
-        //    });
-        //}
-
         public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
         {
             ThumbnailLoadState = LoadState.Preparation;

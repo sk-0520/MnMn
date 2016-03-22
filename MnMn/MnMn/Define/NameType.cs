@@ -22,8 +22,14 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
+    /// <summary>
+    /// 名前設定用列挙体。
+    /// </summary>
     public enum NameType
     {
+        /// <summary>
+        /// 通常。
+        /// </summary>
         Plain,
     }
 }

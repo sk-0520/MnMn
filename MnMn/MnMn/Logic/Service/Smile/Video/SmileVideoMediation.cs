@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             switch(inputKey) {
                 case SmileVideoMediationKey.inputEconomyMode:
-                    outputValue = SmileVideoGetflvUtility.isEconomyMode((string)inputValue);
+                    outputValue = SmileVideoGetflvUtility.IsEconomyMode((string)inputValue);
                     return true;
 
                 default:

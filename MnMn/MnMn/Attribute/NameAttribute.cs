@@ -23,7 +23,10 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 {
-    [System.AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    /// <summary>
+    /// メンバに命名する属性。
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class NameAttribute: System.Attribute
     {
         NameAttribute(string name, NameType nameType)
@@ -38,8 +41,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 
         #region property
 
-        public string Name { get; private set; }
-        public NameType NameType { get; private set; }
+        public string Name { get; }
+        public NameType NameType { get; }
 
         #endregion
 

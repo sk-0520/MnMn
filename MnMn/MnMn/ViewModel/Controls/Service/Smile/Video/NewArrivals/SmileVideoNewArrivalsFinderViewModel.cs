@@ -64,14 +64,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
-        //protected override PageLoader CreatePageLoader()
-        //{
-        //    var page = new PageLoader(Mediation, UserAgentHost, Key, ServiceType.SmileVideo);
-        //    page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
-
-        //    return page;
-        //}
-
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var newArrival = new Logic.Service.Smile.Video.Api.V1.NewArrivals(Mediation);

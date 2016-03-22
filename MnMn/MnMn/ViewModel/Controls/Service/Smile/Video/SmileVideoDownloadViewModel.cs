@@ -423,31 +423,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadEnd()
         { }
 
-        //async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(string videoId, CacheSpan thumbCacheSpan)
-        //{
-        //    var cachedThumbFilePath = Path.Combine(DownloadDirectory.FullName, Constants.SmileVideoCacheGetthumbinfoFileName);
-        //    if(File.Exists(cachedThumbFilePath)) {
-        //        var fileInfo = new FileInfo(cachedThumbFilePath);
-        //        if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-        //            using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-        //                return Getthumbinfo.Load(stream);
-        //            }
-        //        }
-        //    }
-
-        //    var getthumbinfo = new Getthumbinfo(Mediation);
-        //    var result = await getthumbinfo.GetAsync(videoId);
-
-        //    // キャッシュ構築
-        //    try {
-        //        SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, result);
-        //    } catch(FileNotFoundException) {
-        //        // BUGS: いかんのう
-        //    }
-
-        //    return result;
-        //}
-
         protected virtual void OnLoadGetthumbinfoStart() { }
         protected virtual void OnLoadGetthumbinfoEnd() { }
 
