@@ -23,20 +23,36 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
+    /// <summary>
+    /// ファイル名共通処理。
+    /// </summary>
     public static class FileNameUtility
     {
-        static string CreateFileName_Impl(string name, string roll, string extension)
+        static string CreateFileNameCore(string name, string roll, string extension)
         {
             return $"{name}{(roll == null ? string.Empty : "-" + roll)}.{extension}";
         }
+        /// <summary>
+        /// ファイル名を生成。
+        /// </summary>
+        /// <param name="name">ファイル名。</param>
+        /// <param name="roll">役割。</param>
+        /// <param name="extension">拡張子。</param>
+        /// <returns></returns>
         public static string CreateFileName(string name, string roll, string extension)
         {
             CheckUtility.EnforceNotNullAndNotEmpty(roll);
-            return CreateFileName_Impl(name, roll, extension);
+            return CreateFileNameCore(name, roll, extension);
         }
+        /// <summary>
+        /// ファイル名を生成。
+        /// </summary>
+        /// <param name="name">ファイル名。</param>
+        /// <param name="extension">拡張子。</param>
+        /// <returns></returns>
         public static string CreateFileName(string name, string extension)
         {
-            return CreateFileName_Impl(name, null, extension);
+            return CreateFileNameCore(name, null, extension);
         }
 
         /// <summary>
