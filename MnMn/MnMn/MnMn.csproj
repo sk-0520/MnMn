@@ -202,6 +202,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
+    <Compile Include="Logic\Utility\ImageLoaderUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileIdUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileJsonResultUtility.cs" />

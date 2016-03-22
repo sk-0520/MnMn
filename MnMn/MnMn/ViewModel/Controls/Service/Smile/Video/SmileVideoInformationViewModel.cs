@@ -691,15 +691,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
         }
 
-        ImageSource GetImage(Stream stream)
-        {
-            Application.Current.Dispatcher.Invoke(new Action(() => {
-                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                FreezableUtility.SafeFreeze(image);
-                this._thumbnailImage = image;
-            }));
-            return this._thumbnailImage;
-        }
+        //ImageSource GetImage(Stream stream)
+        //{
+        //    Application.Current.Dispatcher.Invoke(new Action(() => {
+        //        var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+        //        FreezableUtility.SafeFreeze(image);
+        //        this._thumbnailImage = image;
+        //    }));
+        //    return this._thumbnailImage;
+        //}
 
         Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
         {
@@ -726,10 +726,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var binary = task.Result;
 
                 if(binary != null) {
-                    using(var stream = new MemoryStream(binary)) {
-                        GetImage(stream);
-                        ThumbnailLoadState = LoadState.Loaded;
-                    }
+                    this._thumbnailImage = ImageLoaderUtility.GetBitmapSource(binary);
+                    ThumbnailLoadState = LoadState.Loaded;
+
                     if(this._thumbnailImage != null && Application.Current != null) {
                         // キャッシュ構築
                         Application.Current.Dispatcher.BeginInvoke(new Action(() => {
@@ -760,7 +759,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     ThumbnailLoadState = LoadState.Loading;
 
                     using(var stream = new FileStream(cachedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        GetImage(stream);
+                        this._thumbnailImage = ImageLoaderUtility.GetBitmapSource(stream);
                         ThumbnailLoadState = LoadState.Loaded;
                         return Task.CompletedTask;
                     }
