@@ -22,28 +22,32 @@
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </UserControl.Resources>
-  <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-    <TabItem Header="search" DataContext="{Binding VideoManager.SearchManager}">
-      <app_controls_service_smile_video:SmileVideoSearchManager />
-    </TabItem>
-    <TabItem Header="ranking" DataContext="{Binding VideoManager.RankingManager}">
-      <app_controls_service_smile_video:SmileVideoRankingManager />
-    </TabItem>
-    <TabItem Header="new" DataContext="{Binding VideoManager.NewArrivalsManager}" >
-      <app_controls_service_smile_video:SmileVideoNewArrivalsManager />
-    </TabItem>
-    <TabItem Header="mylist" DataContext="{Binding VideoManager.MyListManager}">
-      <app_controls_service_smile_video:SmileVideoMyListManager />
-    </TabItem>
-    <TabItem Header="history" DataContext="{Binding VideoManager.HistoryManager}" >
-      <app_controls_service_smile_video:SmileVideoHistoryManager />
-    </TabItem>
-    <TabItem Header="users" DataContext="{Binding UsersManager}">
-      <app_controls_service_smile:SmileUsersManager />
-    </TabItem>
-    <TabItem Header="setting" DataContext="{Binding SettingManager}" >
-      <app_controls_service_smile_setting:SmileSettingManager />
-    </TabItem>
-
-  </TabControl>
+  <DockPanel>
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="ACV" Command="{Binding Temp_OpenSmilePlayerCommand}" Width="300" />
+    </Menu>
+    <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
+      <TabItem Header="search" DataContext="{Binding VideoManager.SearchManager}">
+        <app_controls_service_smile_video:SmileVideoSearchManager />
+      </TabItem>
+      <TabItem Header="ranking" DataContext="{Binding VideoManager.RankingManager}">
+        <app_controls_service_smile_video:SmileVideoRankingManager />
+      </TabItem>
+      <TabItem Header="new" DataContext="{Binding VideoManager.NewArrivalsManager}" >
+        <app_controls_service_smile_video:SmileVideoNewArrivalsManager />
+      </TabItem>
+      <TabItem Header="mylist" DataContext="{Binding VideoManager.MyListManager}">
+        <app_controls_service_smile_video:SmileVideoMyListManager />
+      </TabItem>
+      <TabItem Header="history" DataContext="{Binding VideoManager.HistoryManager}" >
+        <app_controls_service_smile_video:SmileVideoHistoryManager />
+      </TabItem>
+      <TabItem Header="users" DataContext="{Binding UsersManager}">
+        <app_controls_service_smile:SmileUsersManager />
+      </TabItem>
+      <TabItem Header="setting" DataContext="{Binding SettingManager}" >
+        <app_controls_service_smile_setting:SmileSettingManager />
+      </TabItem>
+    </TabControl>
+  </DockPanel>
 </UserControl>

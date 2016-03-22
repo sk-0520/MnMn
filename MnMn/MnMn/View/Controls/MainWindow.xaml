@@ -27,18 +27,8 @@
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Window.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
-
-    <Menu Grid.Row="0">
-      <MenuItem Header="ACV" Command="{Binding Temp_OpenSmilePlayerCommand}" Width="300" />
-    </Menu>
-
-    <StatusBar Grid.Row="2">
+  <DockPanel>
+    <StatusBar DockPanel.Dock="Bottom">
       <TextBox>test</TextBox>
       <TextBlock>
         <Run>smile:</Run>
@@ -47,7 +37,7 @@
       </TextBlock>
     </StatusBar>
 
-    <TabControl Grid.Row="1" TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
+    <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
       <TabItem Header="2525 video" DataContext="{Binding SmileManager}">
         <app_view_controls_service_smile:SmileManager />
       </TabItem>
@@ -55,5 +45,5 @@
         <app_view_controls_app:AppSettingManager />
       </TabItem>
     </TabControl>
-  </Grid>
+  </DockPanel>
 </Window>

@@ -126,22 +126,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region command
 
-        [Obsolete]
-        public ICommand Temp_OpenSmilePlayerCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, "sm15218544", Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(task => {
-                            task.Result.OpenPlayerAsync();
-                        }, TaskScheduler.FromCurrentSynchronizationContext());
-                        
-                    }
-                );
-            }
-        }
-
         #endregion
 
         #region function

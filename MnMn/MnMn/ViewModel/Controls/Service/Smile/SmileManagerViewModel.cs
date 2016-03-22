@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -53,6 +54,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileVideoManagerViewModel VideoManager { get; set; }
         public SmileUsersManagerViewModel UsersManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; set; }
+
+        #endregion
+
+        #region command
+
+        [Obsolete]
+        public ICommand Temp_OpenSmilePlayerCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, "sm15218544", Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(task => {
+                            task.Result.OpenPlayerAsync();
+                        }, TaskScheduler.FromCurrentSynchronizationContext());
+
+                    }
+                );
+            }
+        }
 
         #endregion
 
