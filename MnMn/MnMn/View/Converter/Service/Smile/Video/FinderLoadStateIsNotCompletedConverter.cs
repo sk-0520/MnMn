@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var temp = 1;
+            if(temp == 1) throw new NotImplementedException();
             var loadState = (SmileVideoFinderLoadState)value;
             return SmileVideoFinderLoadStateUtility.IsNotCompleted(loadState);
         }
