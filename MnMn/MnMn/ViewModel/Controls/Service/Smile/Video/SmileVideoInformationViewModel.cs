@@ -701,73 +701,75 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    return this._thumbnailImage;
         //}
 
-        Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
-        {
-            var uri = ThumbnailUri;
+        //Task LoadThumbnaiImageAsync_Impl(string savePath, HttpClient client)
+        //{
+        //    var uri = ThumbnailUri;
 
-            return RestrictUtility.Block(async () => {
-                var maxCount = 3;
-                var count = 0;
-                do {
-                    try {
-                        Mediation.Logger.Trace($"img -> {uri}");
-                        return await client.GetByteArrayAsync(uri);
-                    } catch(HttpRequestException ex) {
-                        Mediation.Logger.Error($"error img -> {uri}");
-                        Mediation.Logger.Warning(ex);
-                        if(count != 0) {
-                            var wait = TimeSpan.FromSeconds(1);
-                            Thread.Sleep(wait);
-                        }
-                    }
-                } while(count++ < maxCount);
-                return null;
-            }).ContinueWith(task => {
-                var binary = task.Result;
+        //    return RestrictUtility.Block(async () => {
+        //        var maxCount = 3;
+        //        var count = 0;
+        //        do {
+        //            try {
+        //                Mediation.Logger.Trace($"img -> {uri}");
+        //                return await client.GetByteArrayAsync(uri);
+        //            } catch(HttpRequestException ex) {
+        //                Mediation.Logger.Error($"error img -> {uri}");
+        //                Mediation.Logger.Warning(ex);
+        //                if(count != 0) {
+        //                    var wait = TimeSpan.FromSeconds(1);
+        //                    Thread.Sleep(wait);
+        //                }
+        //            }
+        //        } while(count++ < maxCount);
+        //        return null;
+        //    }).ContinueWith(task => {
+        //        var binary = task.Result;
 
-                if(binary != null) {
-                    this._thumbnailImage = ImageLoaderUtility.GetBitmapSource(binary);
-                    ThumbnailLoadState = LoadState.Loaded;
+        //        if(binary != null) {
+        //            this._thumbnailImage = CacheImageUtility.GetBitmapSource(binary);
+        //            ThumbnailLoadState = LoadState.Loaded;
 
-                    if(this._thumbnailImage != null && Application.Current != null) {
-                        // キャッシュ構築
-                        Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                            var frame = BitmapFrame.Create(this._thumbnailImage);
-                            var encoder = new PngBitmapEncoder();
-                            encoder.Frames.Add(frame);
-                            FileUtility.MakeFileParentDirectory(savePath);
-                            using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                                encoder.Save(stream);
-                            }
-                        }));
-                    }
-                } else {
-                    ThumbnailLoadState = LoadState.Failure;
-                }
-            });
-        }
+        //            if(this._thumbnailImage != null && Application.Current != null) {
+        //                // キャッシュ構築
+        //                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+        //                    var frame = BitmapFrame.Create(this._thumbnailImage);
+        //                    var encoder = new PngBitmapEncoder();
+        //                    encoder.Frames.Add(frame);
+        //                    FileUtility.MakeFileParentDirectory(savePath);
+        //                    using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+        //                        encoder.Save(stream);
+        //                    }
+        //                }));
+        //            }
+        //        } else {
+        //            ThumbnailLoadState = LoadState.Failure;
+        //        }
+        //    });
+        //}
 
         public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
         {
             ThumbnailLoadState = LoadState.Preparation;
 
             var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
-            if(File.Exists(cachedFilePath)) {
-                var fileInfo = new FileInfo(cachedFilePath);
-                if(cacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumPngFileSize <= fileInfo.Length) {
-
-                    ThumbnailLoadState = LoadState.Loading;
-
-                    using(var stream = new FileStream(cachedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        this._thumbnailImage = ImageLoaderUtility.GetBitmapSource(stream);
-                        ThumbnailLoadState = LoadState.Loaded;
-                        return Task.CompletedTask;
-                    }
-                }
+            if(CacheImageUtility.ExistImage(cachedFilePath, cacheSpan)) {
+                ThumbnailLoadState = LoadState.Loading;
+                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(cachedFilePath);
+                ThumbnailLoadState = LoadState.Loaded;
+                return Task.CompletedTask;
             }
 
             ThumbnailLoadState = LoadState.Loading;
-            return LoadThumbnaiImageAsync_Impl(cachedFilePath, client);
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+                var image = task.Result;
+                if(image != null) {
+                    this._thumbnailImage = image;
+                    ThumbnailLoadState = LoadState.Loaded;
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, cachedFilePath, Mediation.Logger);
+                } else {
+                    ThumbnailLoadState = LoadState.Failure;
+                }
+            });
         }
 
         public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)

@@ -314,82 +314,105 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region function
 
-        ImageSource GetImage(Stream stream)
-        {
-            Application.Current.Dispatcher.Invoke(new Action(() => {
-                var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                FreezableUtility.SafeFreeze(image);
-                this._thumbnailImage = image;
-            }));
-            return this._thumbnailImage;
-        }
+        //ImageSource GetImage(Stream stream)
+        //{
+        //    Application.Current.Dispatcher.Invoke(new Action(() => {
+        //        var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+        //        FreezableUtility.SafeFreeze(image);
+        //        this._thumbnailImage = image;
+        //    }));
+        //    return this._thumbnailImage;
+        //}
 
-        Task LoadThumbnaiImageAsyncCore(string savePath, HttpClient client)
-        {
-            var uri = UserInformation.ThumbnailUri;
+        //Task LoadThumbnaiImageAsyncCore(string savePath, HttpClient client)
+        //{
+        //    var uri = UserInformation.ThumbnailUri;
 
-            return RestrictUtility.Block(async () => {
-                var maxCount = 3;
-                var count = 0;
-                do {
-                    try {
-                        Mediation.Logger.Trace($"img -> {uri}");
-                        return await client.GetByteArrayAsync(uri);
-                    } catch(HttpRequestException ex) {
-                        Mediation.Logger.Error($"error img -> {uri}");
-                        Mediation.Logger.Warning(ex);
-                        if(count != 0) {
-                            var wait = TimeSpan.FromSeconds(1);
-                            Thread.Sleep(wait);
-                        }
-                    }
-                } while(count++ < maxCount);
-                return null;
-            }).ContinueWith(task => {
-                var binary = task.Result;
+        //    return RestrictUtility.Block(async () => {
+        //        var maxCount = 3;
+        //        var count = 0;
+        //        do {
+        //            try {
+        //                Mediation.Logger.Trace($"img -> {uri}");
+        //                return await client.GetByteArrayAsync(uri);
+        //            } catch(HttpRequestException ex) {
+        //                Mediation.Logger.Error($"error img -> {uri}");
+        //                Mediation.Logger.Warning(ex);
+        //                if(count != 0) {
+        //                    var wait = TimeSpan.FromSeconds(1);
+        //                    Thread.Sleep(wait);
+        //                }
+        //            }
+        //        } while(count++ < maxCount);
+        //        return null;
+        //    }).ContinueWith(task => {
+        //        var binary = task.Result;
 
-                if(binary != null) {
-                    using(var stream = new MemoryStream(binary)) {
-                        GetImage(stream);
-                        UserThumbnailLoadState = LoadState.Loaded;
-                    }
-                    if(this._thumbnailImage != null && Application.Current != null) {
-                        // キャッシュ構築
-                        Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                            var frame = BitmapFrame.Create(this._thumbnailImage);
-                            var encoder = new PngBitmapEncoder();
-                            encoder.Frames.Add(frame);
-                            FileUtility.MakeFileParentDirectory(savePath);
-                            using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                                encoder.Save(stream);
-                            }
-                        }));
-                    }
-                } else {
-                    UserThumbnailLoadState = LoadState.Failure;
-                }
-            });
-        }
+        //        if(binary != null) {
+        //            using(var stream = new MemoryStream(binary)) {
+        //                GetImage(stream);
+        //                UserThumbnailLoadState = LoadState.Loaded;
+        //            }
+        //            if(this._thumbnailImage != null && Application.Current != null) {
+        //                // キャッシュ構築
+        //                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+        //                    var frame = BitmapFrame.Create(this._thumbnailImage);
+        //                    var encoder = new PngBitmapEncoder();
+        //                    encoder.Frames.Add(frame);
+        //                    FileUtility.MakeFileParentDirectory(savePath);
+        //                    using(var stream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+        //                        encoder.Save(stream);
+        //                    }
+        //                }));
+        //            }
+        //        } else {
+        //            UserThumbnailLoadState = LoadState.Failure;
+        //        }
+        //    });
+        //}
 
         Task LoadThumbnaiImageAsync(CacheSpan userImageCacheSpan)
         {
-            UserThumbnailLoadState = LoadState.Preparation;
-            var imagePath = Path.Combine(CacheDirectory.FullName, UserId + ".png");
-            var imageFile = new FileInfo(imagePath);
-            if(imageFile.Exists && Constants.MinimumPngFileSize <= imageFile.Length &&  userImageCacheSpan.IsCacheTime(DateTime.Now)) {
-                UserThumbnailLoadState = LoadState.Loading;
+            //UserThumbnailLoadState = LoadState.Preparation;
+            //var imagePath = Path.Combine(CacheDirectory.FullName, UserId + ".png");
+            //var imageFile = new FileInfo(imagePath);
+            //if(imageFile.Exists && Constants.MinimumPngFileSize <= imageFile.Length &&  userImageCacheSpan.IsCacheTime(DateTime.Now)) {
+            //    UserThumbnailLoadState = LoadState.Loading;
 
-                using(var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                    GetImage(stream);
-                    UserThumbnailLoadState = LoadState.Loaded;
-                    return Task.CompletedTask;
-                }
+            //    using(var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+            //        GetImage(stream);
+            //        UserThumbnailLoadState = LoadState.Loaded;
+            //        return Task.CompletedTask;
+            //    }
+            //}
+
+            //UserThumbnailLoadState = LoadState.Loading;
+            //var client = new HttpClient();
+            //return LoadThumbnaiImageAsyncCore(imagePath, client).ContinueWith(_ => {
+            //    client.Dispose();
+            //});
+
+            UserThumbnailLoadState = LoadState.Preparation;
+            var imagePath = Path.Combine(CacheDirectory.FullName, FileNameUtility.CreateFileName(UserId, "png"));
+            if(CacheImageUtility.ExistImage(imagePath, userImageCacheSpan)) {
+                UserThumbnailLoadState = LoadState.Loading;
+                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(imagePath);
+                UserThumbnailLoadState = LoadState.Loaded;
+                return Task.CompletedTask;
             }
 
             UserThumbnailLoadState = LoadState.Loading;
             var client = new HttpClient();
-            return LoadThumbnaiImageAsyncCore(imagePath, client).ContinueWith(_ => {
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, UserInformation.ThumbnailUri, Mediation.Logger).ContinueWith(task => {
                 client.Dispose();
+                var image = task.Result;
+                if(image != null) {
+                    this._thumbnailImage = image;
+                    UserThumbnailLoadState = LoadState.Loaded;
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, imagePath, Mediation.Logger);
+                } else {
+                    UserThumbnailLoadState = LoadState.Failure;
+                }
             });
         }
 
