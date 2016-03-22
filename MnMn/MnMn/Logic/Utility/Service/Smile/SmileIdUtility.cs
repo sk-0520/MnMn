@@ -61,7 +61,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                         \d+
                     )
                     \s*
-                    $
                 ",
                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
@@ -69,6 +68,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             if(match.Success) {
                 return match.Groups["VIDEO_ID"].Value;
             } else {
+                var regNumber = new Regex(
+                    @"
+                    watch
+                    \/
+                    (?<VIDEO_ID>
+                        \d+
+                    )
+                    \s*
+                    ",
+                    RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
+                );
+
+                var numberMatch = regNumber.Match(inputValue);
+                if(numberMatch.Success) {
+                    return numberMatch.Groups["VIDEO_ID"].Value;
+                }
+
                 return null;
             }
         }
@@ -85,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
 
             var regFormat = new Regex(
-                $@"
+                @"
                     (
                         mylist
                         \/
@@ -94,7 +110,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                         \d+
                     )
                     \s*
-                    $
                 ",
                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOptions.Singleline
             );
