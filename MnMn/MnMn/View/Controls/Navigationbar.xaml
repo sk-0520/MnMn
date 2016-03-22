@@ -1,9 +1,11 @@
 ﻿<UserControl
-  x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Navigationbar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  
+  xmlns:sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+  
   
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
@@ -12,6 +14,7 @@
   <UserControl.Resources>
     <sys:Double x:Key="ProgressHeight">8</sys:Double>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -112,7 +115,6 @@
         <ColumnDefinition />
         <ColumnDefinition />
         <ColumnDefinition />
-        <ColumnDefinition />
       </Grid.ColumnDefinitions>
       <ToggleButton
         Grid.Column="0"
@@ -124,20 +126,34 @@
         リ
       </ToggleButton>
       <ToggleButton
+        x:Name="PART_AudioMute"
         Grid.Column="1"
         IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}}"
       >
         音
       </ToggleButton>
-      <Slider 
-        Grid.Column="2" 
-        Width="80" 
-        Minimum="0" 
-        Maximum="100" 
-        Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
-      />
+      <Popup 
+        x:Name="PART_AudioSlider"
+        Placement="Top"
+        Width="{Binding ActualWidth, ElementName=PART_AudioMute}"
+        PlacementTarget="{Binding ElementName=PART_AudioMute}"
+      >
+        <Popup.IsOpen>
+          <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+            <Binding Path="IsMouseOver" Mode="OneWay" ElementName="PART_AudioMute" />
+            <Binding Path="IsMouseOver" Mode="OneWay" ElementName="PART_AudioSlider" />
+          </MultiBinding>
+        </Popup.IsOpen>
+        <Slider 
+          Orientation="Vertical"
+          Height="100"
+          Minimum="0" 
+          Maximum="100" 
+          Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        />
+      </Popup>
       <ContentControl
-        Grid.Column="3" 
+        Grid.Column="2" 
         Content="{Binding ExstendsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
     </Grid>
