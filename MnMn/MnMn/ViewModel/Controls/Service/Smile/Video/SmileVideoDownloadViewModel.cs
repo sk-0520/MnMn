@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
             var getflv = new Getflv(Mediation);
 
-            var rawVideoGetflvModel = await getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl);
+            var rawVideoGetflvModel = await getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl, VideoInformation.MovieType);
             VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
             var path = Path.Combine(DownloadDirectory.FullName, FileNameUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));

@@ -16,10 +16,6 @@
 	<param key="video-getflv-normal">
 		<item key="video-id" value="${video-id}" />
 	</param>
-	<param key="video-getflv-swf">
-		<item key="video-id" value="${video-id}" />
-		<item prefix="?" key="as3" bond="=" value="1" />
-	</param>
 	<param key="video-getthreadkey">
 		<item key="thread" value="${thread-id}" />
 	</param>

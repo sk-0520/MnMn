@@ -27,7 +27,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string getthumbinfo = "video-getthumbinfo";
         public const string ranking = "video-ranking";
         public const string getflvNormal = "video-getflv-normal";
-        public const string getflvSwf = "video-getflv-swf";
         public const string getflvScraping = "video-getflv-scraping";
         public const string getthreadkey = "video-getthreadkey";
         public const string getrelation = "video-getrelation";
