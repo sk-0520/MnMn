@@ -860,14 +860,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return true;
         }
 
-        public async void OpenPlayerAsync()
+        public Task OpenPlayerAsync()
         {
             var vm = new SmileVideoPlayerViewModel(Mediation);
             var task = vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
-            await task;
+            return task;
         }
 
         #endregion

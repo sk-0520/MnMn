@@ -139,8 +139,6 @@
         <TextBlock Text="{Binding CommentLoadState}" />
         <TextBlock>,video:</TextBlock>
         <TextBlock Text="{Binding VideoLoadState}" />
-        <TextBlock>,tag:</TextBlock>
-        <TextBlock Text="{Binding TagLoadState}" />
         <TextBlock>
           <Run>,size</Run>
           <Run Text="{Binding RealVideoWidth}" />
@@ -523,12 +521,24 @@
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <TextBlock FontSize="10">
-                      <Hyperlink 
-                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding}"
-                      >
-                        <Run Text="{Binding TagName, Mode=OneTime}" />
-                      </Hyperlink>
+                        <TextBlock.ToolTip>
+                          <TextBlock>
+                            <Run>lock</Run>
+                            <Run Text="{Binding IsLocked, Mode=OneTime}" />
+                            <Run>,</Run>
+                            <Run>category</Run>
+                            <Run Text="{Binding IsCategory, Mode=OneTime}" />
+                            <Run>,</Run>
+                            <Run>pedia</Run>
+                            <Run Text="{Binding ExistPedia, Mode=OneWay}" />
+                          </TextBlock>
+                        </TextBlock.ToolTip>
+                        <Hyperlink
+                          Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                          CommandParameter="{Binding}"
+                        >
+                          <Run Text="{Binding TagName, Mode=OneTime}" />
+                        </Hyperlink>
                       </TextBlock>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>

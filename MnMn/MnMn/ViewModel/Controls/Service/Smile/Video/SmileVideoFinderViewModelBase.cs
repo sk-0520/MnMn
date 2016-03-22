@@ -209,9 +209,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(CanLoad) {
                 if(NowLoading) {
-                    Debug.WriteLine("CANCEL!");
+                    Mediation.Logger.Trace("CANCEL!");
                     CancelLoading.Cancel(true);
-                    Debug.WriteLine(";-)");
                 }
 
                 FinderLoadState = SourceLoadState.SourceLoading;

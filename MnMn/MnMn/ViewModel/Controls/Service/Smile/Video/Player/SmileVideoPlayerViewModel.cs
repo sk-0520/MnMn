@@ -128,7 +128,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         SmileVideoCommentViewModel _selectedComment;
 
-        LoadState _tagLoadState;
         LoadState _relationVideoLoadState;
 
         double _realVideoWidth;
@@ -325,6 +324,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// 投降者コメントが構築されたか。
         /// </summary>
         bool IsMakedDescription { get; set; } = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        bool IsCheckedTagPedia { get; set; } = false;
 
         public ICollectionView CommentItems { get; private set; }
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
@@ -359,12 +362,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public CollectionModel<SmileVideoInformationViewModel> PlayListItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
 
-
-        public LoadState TagLoadState
-        {
-            get { return this._tagLoadState; }
-            set { SetVariableValue(ref this._tagLoadState, value); }
-        }
         public LoadState RelationVideoLoadState
         {
             get { return this._relationVideoLoadState; }
@@ -1119,17 +1116,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return item.FilteringView;
         }
 
-        Task LoadTagsAsync()
-        {
-            TagLoadState = LoadState.Preparation;
-
-            TagItems.InitializeRange(VideoInformation.TagList);
-
-            TagLoadState = LoadState.Loaded;
-
-            return Task.CompletedTask;
-        }
-
         Task LoadRelationVideoAsync()
         {
             RelationVideoLoadState = LoadState.Preparation;
@@ -1148,6 +1134,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     });
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void CheckTagPedia()
+        {
+            Debug.Assert(VideoInformation.PageHtmlLoadState == LoadState.Loaded);
+
+            IsCheckedTagPedia = true;
+
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            htmlDocument.LoadHtml(VideoInformation.PageHtml);
+            var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(VideoInformation.PageHtml);
+            var videoDetail = json?.SelectToken("videoDetail");
+            var tagList = videoDetail?.SelectToken("tagList");
+            if(tagList != null) {
+                var map = TagItems.ToDictionary(tk => tk.TagName, tv => tv);
+                foreach(var tagItem in tagList) {
+                    var tagName = tagItem.Value<string>("tag");
+                    var hasDic  = tagItem.Value<string>("dic");
+                    if(RawValueUtility.ConvertBoolean(hasDic)) {
+                        SmileVideoTagViewModel tag;
+                        if(map.TryGetValue(tagName, out tag)) {
+                            tag.ExistPedia = true;
+                        }
+                    }
+                }
+            }
         }
 
         void MakeDescription()
@@ -1394,6 +1408,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!IsMakedDescription) {
                 MakeDescription();
             }
+            if(!IsCheckedTagPedia) {
+                CheckTagPedia();
+            }
 
             base.OnDownloadStart(sender, e);
         }
@@ -1419,8 +1436,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void OnLoadVideoEnd()
         {
             if(!IsProcessCancel) {
-                if(!IsMakedDescription && VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
-                    MakeDescription();
+                if(VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+                    if(!IsMakedDescription) {
+                        MakeDescription();
+                    }
+                    if(!IsCheckedTagPedia) {
+                        CheckTagPedia();
+                    }
                 }
 
                 // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
@@ -1463,7 +1485,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             TotalTime = VideoInformation.Length;
 
-            LoadTagsAsync();
+            TagItems.InitializeRange(VideoInformation.TagList);
+
             LoadRelationVideoAsync();
 
             LocalCommentFileringItems = new MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel>(VideoInformation.IndividualVideoSetting.FilteringItems, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
