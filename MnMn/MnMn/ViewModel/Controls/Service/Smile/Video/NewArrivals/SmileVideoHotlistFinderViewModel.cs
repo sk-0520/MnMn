@@ -128,11 +128,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
             var htmlDocument = await hotList.LoadPageHtmlDocument();
             if(htmlDocument == null) {
-                FinderLoadState = SmileVideoFinderLoadState.Failure;
+                FinderLoadState = SourceLoadState.Failure;
                 return null;
             }
 
-            FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+            FinderLoadState = SourceLoadState.SourceChecking;
 
             var feedModel = hotList.ConvertFeedModelFromPageHtml(htmlDocument);
             return feedModel;

@@ -54,11 +54,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
             var htmlDocument = await history.LoadPageHtmlDocument();
             if(htmlDocument == null) {
-                FinderLoadState = SmileVideoFinderLoadState.Failure;
+                FinderLoadState = SourceLoadState.Failure;
                 return null;
             }
 
-            FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+            FinderLoadState = SourceLoadState.SourceChecking;
 
             var feedModel = history.ConvertFeedModelFromPageHtml(htmlDocument);
             return feedModel;
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             return base.LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(_ => {
-                if(FinderLoadState == SmileVideoFinderLoadState.Failure) {
+                if(FinderLoadState == SourceLoadState.Failure) {
                     return Task.CompletedTask;
                 }
 

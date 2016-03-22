@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             get { return this._selectedMyListFinder; }
             set { if(SetVariableValue(ref this._selectedMyListFinder, value)) {
                     if(this._selectedMyListFinder != null) {
-                        if(this._selectedMyListFinder.FinderLoadState == SmileVideoFinderLoadState.None) {
+                        if(this._selectedMyListFinder.FinderLoadState == SourceLoadState.None) {
                             this._selectedMyListFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
                         }
                     }

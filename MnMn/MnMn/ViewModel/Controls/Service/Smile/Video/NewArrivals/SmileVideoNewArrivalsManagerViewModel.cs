@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             {
                 var prevItem = this._selectedItem;
                 if(SetVariableValue(ref this._selectedItem, value)) {
-                    if(prevItem != null && this._selectedItem.FinderLoadState == SmileVideoFinderLoadState.None) {
+                    if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
                         this._selectedItem.LoadDefaultCacheAsync();
                     }
                 }

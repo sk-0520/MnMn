@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var feedModel = task.Result;
                 if(feedModel == null) {
                     NowLoading = false;
-                    FinderLoadState = SmileVideoFinderLoadState.Failure;
+                    FinderLoadState = SourceLoadState.Failure;
                     return null;
                 } else {
                     return ConvertInformationFromChannelItems(feedModel.Channel.Items);

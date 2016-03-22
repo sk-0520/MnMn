@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _nowLoading;
         SmileVideoInformationViewModel _selectedVideoInformation;
-        SmileVideoFinderLoadState _finderLoadState;
+        SourceLoadState _finderLoadState;
 
         string _inputFilter="#";
         bool _isBlacklist;
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._selectedVideoInformation, value); }
         }
 
-        public virtual SmileVideoFinderLoadState FinderLoadState
+        public virtual SourceLoadState FinderLoadState
         {
             get { return this._finderLoadState; }
             set
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public virtual bool CanLoad {
             get
             {
-                var loadSkips = new[] { SmileVideoFinderLoadState.VideoSourceLoading, SmileVideoFinderLoadState.VideoSourceChecking };
+                var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
                 return !loadSkips.Any(l => l == FinderLoadState);
             }
         }
@@ -161,13 +161,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             return Task.Run(() => {
-                FinderLoadState = SmileVideoFinderLoadState.InformationLoading;
+                FinderLoadState = SourceLoadState.InformationLoading;
                 var loader = new SmileVideoInformationLoader(VideoInformationList);
                 var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
                 return Task.WhenAll(imageTask, infoTask);
             }, CancelLoading.Token).ContinueWith(t => {
-                FinderLoadState = SmileVideoFinderLoadState.Completed;
+                FinderLoadState = SourceLoadState.Completed;
                 NowLoading = false;
             }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
         }
@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     Debug.WriteLine(";-)");
                 }
 
-                FinderLoadState = SmileVideoFinderLoadState.VideoSourceLoading;
+                FinderLoadState = SourceLoadState.SourceLoading;
                 NowLoading = true;
 
                 CancelLoading = new CancellationTokenSource();

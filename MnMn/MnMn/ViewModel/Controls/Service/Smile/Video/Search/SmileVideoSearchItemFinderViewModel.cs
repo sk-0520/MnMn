@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
@@ -91,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 Index,
                 Count
             ).ContinueWith(task => {
-                FinderLoadState = SmileVideoFinderLoadState.VideoSourceChecking;
+                FinderLoadState = SourceLoadState.SourceChecking;
                 var result = task.Result;
                 TotalCount = RawValueUtility.ConvertInteger(result.Meta.TotalCount);
                 var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index + 1));

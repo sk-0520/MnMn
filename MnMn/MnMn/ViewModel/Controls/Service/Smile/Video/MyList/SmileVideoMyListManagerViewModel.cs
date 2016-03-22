@@ -326,7 +326,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         void ChangedSelectedFinder(SmileVideoMyListFinderViewModelBase selectedFinder)
         {
             if(selectedFinder != null && selectedFinder.CanLoad) {
-                if(selectedFinder.FinderLoadState != SmileVideoFinderLoadState.Completed) {
+                if(selectedFinder.FinderLoadState != SourceLoadState.Completed) {
                     selectedFinder.LoadDefaultCacheAsync();
                 }
             }

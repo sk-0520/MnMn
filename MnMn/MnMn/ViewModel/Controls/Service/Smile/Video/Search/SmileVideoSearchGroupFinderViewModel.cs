@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._notfound, value); }
         }
 
-        public override SmileVideoFinderLoadState FinderLoadState
+        public override SourceLoadState FinderLoadState
         {
             get
             {
