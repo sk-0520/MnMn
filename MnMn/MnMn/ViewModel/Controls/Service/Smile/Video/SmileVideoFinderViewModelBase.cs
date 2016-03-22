@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoInformationViewModel _selectedVideoInformation;
         SourceLoadState _finderLoadState;
 
-        string _inputFilter="#";
+        string _inputFilter;
         bool _isBlacklist;
 
         #endregion
