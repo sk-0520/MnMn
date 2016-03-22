@@ -186,10 +186,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(string.IsNullOrEmpty(filter)) {
                 return true;
             }
-            var isBlack = IsBlacklist;
 
             var viewModel = (SmileVideoInformationViewModel)obj;
-            var isHit = viewModel.Title.IndexOf(filter ?? string.Empty) != -1;
+            var isHit = viewModel.Title.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1;
             if(IsBlacklist) {
                 return !isHit;
             } else {

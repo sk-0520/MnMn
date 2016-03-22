@@ -423,6 +423,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 ThrowNotGetthumbinfoSource();
+                
                 return Thumb.UserNickname;
             }
         }
