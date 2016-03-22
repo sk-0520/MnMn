@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     /// <summary>
     /// 動画リストの読込状態。
     /// </summary>
+    [Obsolete()]
     public enum SmileVideoFinderLoadState
     {
         /// <summary>

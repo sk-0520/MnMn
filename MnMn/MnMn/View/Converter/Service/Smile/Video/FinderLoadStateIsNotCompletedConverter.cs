@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
 {
+    [Obsolete]
     public class FinderLoadStateIsNotCompletedConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
