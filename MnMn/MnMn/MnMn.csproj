@@ -217,6 +217,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoRecommendationsUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoSnapshotUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPIUtility.cs" />
+    <Compile Include="Logic\Utility\SourceLoadStateUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
     <Compile Include="Model\ApplicationManagerPackModel.cs" />
     <Compile Include="Model\DefinedKeyValuePairModel.cs" />
