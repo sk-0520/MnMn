@@ -157,6 +157,5 @@
         Content="{Binding ExstendsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
     </Grid>
-
   </Grid>
 </UserControl>
