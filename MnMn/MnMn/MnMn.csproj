@@ -371,6 +371,8 @@
     <Compile Include="View\Controls\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\SourceLoadStateIsCompletedConverter.cs" />
+    <Compile Include="View\Converter\SourceLoadStateIsNotCompletedConverter.cs" />
     <Compile Include="View\Converter\LoadStateIsLoadedConverter.cs" />
     <Compile Include="View\Converter\LoadStateIsNotLoadedConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\FinderLoadStateIsCompletedConverter.cs" />

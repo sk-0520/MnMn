@@ -16,23 +16,27 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using System.Windows.Data;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
-    [Obsolete]
-    public static class SmileVideoFinderLoadStateUtility
+    public class SourceLoadStateIsNotCompletedConverter: IValueConverter
     {
-        public static bool IsCompleted(SmileVideoFinderLoadState loadState)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return loadState == SmileVideoFinderLoadState.Completed;
+            var loadState = (SourceLoadState)value;
+            return SourceLoadStateUtility.IsNotCompleted(loadState);
         }
-        public static bool IsNotCompleted(SmileVideoFinderLoadState loadState)
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !IsCompleted(loadState);
+            throw new NotImplementedException();
         }
     }
 }
