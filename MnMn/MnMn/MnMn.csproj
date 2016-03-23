@@ -73,9 +73,9 @@
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.6\lib\net46\PInvoke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SharedLibrary, Version=0.1.5926.15539, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharedLibrary, Version=0.1.5926.16405, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.27\lib\net46\SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.28\lib\net46\SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
