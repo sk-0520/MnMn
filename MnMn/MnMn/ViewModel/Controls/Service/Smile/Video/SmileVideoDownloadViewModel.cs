@@ -376,7 +376,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var tcs = new CancellationTokenSource();
             await LoadGetflvAsync(session);
 
-            if(VideoInformation.HasError) {
+            if(VideoInformation.HasGetflvError) {
                 InformationLoadState = LoadState.Failure;
                 return;
             }

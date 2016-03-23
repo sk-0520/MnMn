@@ -439,7 +439,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region Getflv
 
-        public bool HasError
+        public bool HasGetflvError
         {
             get
             {
