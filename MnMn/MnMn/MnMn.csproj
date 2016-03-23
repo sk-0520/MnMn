@@ -150,7 +150,6 @@
     <Compile Include="Define\Event\DownloadingErrorEventArgs.cs" />
     <Compile Include="Define\Event\DownloadingEventArgs.cs" />
     <Compile Include="Define\Event\DownloaderEventArgs.cs" />
-    <Compile Include="Define\FileType.cs" />
     <Compile Include="Define\FilteringType.cs" />
     <Compile Include="Define\Gender.cs" />
     <Compile Include="Define\LoadState.cs" />

@@ -45,8 +45,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #else
         public static string ApplicationDirectoryName  { get; } =  ApplicationName;
 #endif
-        const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
-
         /// <summary>
         /// 最小XMLファイルサイズ。
         /// </summary>
@@ -142,15 +140,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region function
 
-        public static string GetTimestampFileName(DateTime dateTime)
-        {
-            return dateTime.ToString(formatTimestampFileName);
-        }
-
-        public static string GetNowTimestampFileName()
-        {
-            return GetTimestampFileName(DateTime.Now);
-        }
         #endregion
     }
 }

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
@@ -128,9 +129,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             var ext = GetFileExtension(movieType);
             if(isEconomyMode) {
-                return FileNameUtility.CreateFileName(videoId, EconomyFileSuffix, ext);
+                return PathUtility.CreateFileName(videoId, EconomyFileSuffix, ext);
             } else {
-                return FileNameUtility.CreateFileName(videoId, ext);
+                return PathUtility.CreateFileName(videoId, ext);
             }
         }
 

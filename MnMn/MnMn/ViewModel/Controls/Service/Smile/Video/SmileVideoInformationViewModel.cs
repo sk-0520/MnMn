@@ -596,17 +596,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         static string GetCacheFileName(string videoId, string roll, string extension)
         {
-            return FileNameUtility.CreateFileName(videoId, roll, extension);
+            return PathUtility.CreateFileName(videoId, roll, extension);
         }
 
         string GetCacheFileName(string roll, string extension)
         {
             CheckUtility.EnforceNotNullAndNotEmpty(roll);
-            return FileNameUtility.CreateFileName(VideoId, roll, extension);
+            return PathUtility.CreateFileName(VideoId, roll, extension);
         }
         string GetCacheFileName(string extension)
         {
-            return FileNameUtility.CreateFileName(VideoId, extension);
+            return PathUtility.CreateFileName(VideoId, extension);
         }
 
         static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)

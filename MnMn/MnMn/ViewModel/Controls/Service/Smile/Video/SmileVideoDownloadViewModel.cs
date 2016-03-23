@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var rawVideoGetflvModel = await getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl, VideoInformation.MovieType);
             VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
-            var path = Path.Combine(DownloadDirectory.FullName, FileNameUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));
+            var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));
             SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
 
             OnLoadGetflvEnd();
@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Preparation;
 
-            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, FileNameUtility.CreateFileName(VideoInformation.VideoId, "msg", "xml"));
+            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoInformation.VideoId, "msg", "xml"));
             if(File.Exists(cacheFilePath)) {
                 var fileInfo = new FileInfo(cacheFilePath);
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {

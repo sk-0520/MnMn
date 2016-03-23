@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         Task LoadThumbnaiImageAsync(CacheSpan userImageCacheSpan)
         {
             UserThumbnailLoadState = LoadState.Preparation;
-            var imagePath = Path.Combine(CacheDirectory.FullName, FileNameUtility.CreateFileName(UserId, "png"));
+            var imagePath = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(UserId, "png"));
             if(CacheImageUtility.ExistImage(imagePath, userImageCacheSpan)) {
                 UserThumbnailLoadState = LoadState.Loading;
                 this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(imagePath);

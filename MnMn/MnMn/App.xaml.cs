@@ -22,6 +22,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -58,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var logger = new Pe.PeMain.Logic.AppLogger();
             var dir = VariableConstants.GetSettingDirectory();
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
-            var setting = AppUtility.LoadSetting<AppSettingModel>(filePath, FileType.Json, logger);
+            var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
             var mediation = new Mediation(setting, logger);
             var viewModel = new AppManagerViewModel(mediation);
 

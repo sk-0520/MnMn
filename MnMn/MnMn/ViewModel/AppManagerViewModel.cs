@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -135,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             var dir = VariableConstants.GetSettingDirectory();
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
 
-            AppUtility.SaveSetting(filePath, Setting, FileType.Json, true, Mediation.Logger);
+            SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
         }
 
         #endregion

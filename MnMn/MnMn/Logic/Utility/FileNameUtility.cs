@@ -28,42 +28,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
     /// </summary>
     public static class FileNameUtility
     {
-        static string CreateFileNameCore(string name, string roll, string extension)
-        {
-            return $"{name}{(roll == null ? string.Empty : "-" + roll)}.{extension}";
-        }
-        /// <summary>
-        /// ファイル名を生成。
-        /// </summary>
-        /// <param name="name">ファイル名。</param>
-        /// <param name="roll">役割。</param>
-        /// <param name="extension">拡張子。</param>
-        /// <returns></returns>
-        public static string CreateFileName(string name, string roll, string extension)
-        {
-            CheckUtility.EnforceNotNullAndNotEmpty(roll);
-            return CreateFileNameCore(name, roll, extension);
-        }
-        /// <summary>
-        /// ファイル名を生成。
-        /// </summary>
-        /// <param name="name">ファイル名。</param>
-        /// <param name="extension">拡張子。</param>
-        /// <returns></returns>
-        public static string CreateFileName(string name, string extension)
-        {
-            return CreateFileNameCore(name, null, extension);
-        }
-
-        /// <summary>
-        /// 一時ファイル用拡張子の作成
-        /// </summary>
-        /// <returns></returns>
-        public static string GetTemporaryExtension(string role)
-        {
-            return "." + Constants.GetNowTimestampFileName() + "." + role + "." + Constants.ExtensionTemporaryFile;
-        }
-
-
     }
 }
