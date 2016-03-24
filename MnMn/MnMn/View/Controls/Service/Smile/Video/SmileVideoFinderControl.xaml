@@ -49,6 +49,11 @@
       ItemsSource="{Binding VideoInformationItems}"
       SelectedItem="{Binding SelectedVideoInformation}"
     >
+      <ListBox.Resources>
+        <Style TargetType="ListBoxItem">
+          <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+        </Style>
+      </ListBox.Resources>
       <ListBox.ItemTemplate>
         <DataTemplate>
           <ContentControl>
@@ -79,6 +84,8 @@
                 <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
               </Grid>
 
+              <TextBlock DockPanel.Dock="Right" Text="status" />
+              
               <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition />
@@ -533,7 +540,6 @@
                 </Grid>
               </Grid>
 
-              <TextBlock DockPanel.Dock="Right" Text="status" />
 
             </DockPanel>
           </ContentControl>
