@@ -8,6 +8,8 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
   
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 
@@ -85,19 +87,15 @@
                 <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
               </Grid>
 
+              <TextBlock DockPanel.Dock="Top" FontWeight="Bold" Text="{Binding Title}" />
+
               <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition />
-                  <RowDefinition />
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="{Binding Title}" />
-
-                <Grid Grid.Row="1"  Grid.Column="0">
+                <Grid Grid.Column="0">
                   <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -542,25 +540,7 @@
 
                 </Grid>
 
-                <TextBlock Grid.Row="1"  Grid.Column="1" DockPanel.Dock="Right" Text="status" />
-
-                <Border Grid.Row="1" Grid.Column="0" Visibility="{Binding IsMouseOver, ElementName=detail, Converter={StaticResource BooleanToVisibilityConverter}}">
-                  <Border.Resources>
-                    <Style TargetType="Button">
-                      <Setter Property="Margin" Value="4" />
-                    </Style>
-                  </Border.Resources>
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition />
-                      <ColumnDefinition />
-                      <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Background="Blue">not impl</Label>
-                    <Button Grid.Column="1" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick">play</Button>
-                    <Button Grid.Column="2" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick">play(eco)</Button>
-                  </Grid>
-                </Border>
+                <TextBlock Grid.Column="1" DockPanel.Dock="Right" Text="status" />
               </Grid>
 
 
