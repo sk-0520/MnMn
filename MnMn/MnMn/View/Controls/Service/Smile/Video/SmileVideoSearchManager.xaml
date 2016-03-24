@@ -10,8 +10,8 @@
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
-  xmlns:app_view_contrls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
-  xmlns:app_view_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
@@ -42,7 +42,7 @@
         ItemsSource="{Binding SortItems}" 
         SelectedItem="{Binding SelectedSort}"
       />-->
-      <app_view_contrls_service_smile_video:SmileVideoSearchContext
+      <app_view_controls_service_smile_video:SmileVideoSearchContext
         SelectedMethod="{Binding SelectedMethod}"
         SelectedSort="{Binding SelectedSort}"
         MethodItems="{Binding MethodItems}"
@@ -63,7 +63,7 @@
             <GroupBox>
               <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
-                  <app_view_contrls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
+                  <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
                   <TextBlock Text="おすすめたぐ" />
                   <Button Command="{Binding LoadRecommendTagCommand}" Content="reload"/>
                 </StackPanel>
@@ -111,7 +111,11 @@
                 <TextBlock Text="{Binding Query}" />
                 <TextBlock Text="{Binding Type.DisplayText}" />
               </StackPanel>
-              <TextBlock Grid.Row="1" Text="{Binding FinderLoadState}" />
+              <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState, Mode=OneWay}" />
+                <TextBlock Text="{Binding FinderLoadState, Mode=OneWay}" />
+              </StackPanel>
+
             </Grid>
             <!--<ComboBox 
               DisplayMemberPath="DisplayText" 
@@ -123,7 +127,7 @@
               ItemsSource="{Binding SortItems}" 
               SelectedItem="{Binding SelectedSort}"
             />-->
-            <app_view_contrls_service_smile_video:SmileVideoSearchContext
+            <app_view_controls_service_smile_video:SmileVideoSearchContext
               SelectedMethod="{Binding SelectedMethod}"
               SelectedSort="{Binding SelectedSort}"
               MethodItems="{Binding MethodItems}"
@@ -139,8 +143,8 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <app_view_contrls_service_smile_video:SmileVideoFinderControl x:Name="finder" DataContext="{Binding}">
-            <app_view_contrls_service_smile_video:SmileVideoFinderControl.FooterContent>
+          <app_view_controls_service_smile_video:SmileVideoFinderControl x:Name="finder" DataContext="{Binding}">
+            <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
               <Grid Height="24">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
@@ -174,10 +178,10 @@
                   </ItemsControl>
                 </ScrollViewer>
 
-                <app_view_contrls:Pager 
+                <app_view_controls:Pager 
                   Grid.Column="2" 
                   PageItems="{Binding PageItems}"
-                  Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_contrls_service_smile_video:SmileVideoFinderControl}}"
+                  Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
                 />
                 <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">
                   <ItemsControl.ItemsPanel>
@@ -196,8 +200,8 @@
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>-->
               </Grid>
-            </app_view_contrls_service_smile_video:SmileVideoFinderControl.FooterContent>
-          </app_view_contrls_service_smile_video:SmileVideoFinderControl>
+            </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+          </app_view_controls_service_smile_video:SmileVideoFinderControl>
 
         </DataTemplate>
       </TabControl.ContentTemplate>

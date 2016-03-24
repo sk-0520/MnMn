@@ -29,7 +29,7 @@
           <Setter Property="RadiusY" Value="5" />
 
           <Style.Triggers>
-            <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">
+            <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">
               <Setter Property="Fill">
                 <Setter.Value>
                   <SolidColorBrush Color="{StaticResource SourceLoadState_None}" />

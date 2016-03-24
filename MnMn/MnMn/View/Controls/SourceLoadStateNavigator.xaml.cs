@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public static readonly DependencyProperty SourceLoadStateProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SourceLoadStateProperty)),
             typeof(SourceLoadState),
-            typeof(LoadStateNavigator),
+            typeof(SourceLoadStateNavigator),
             new FrameworkPropertyMetadata(SourceLoadState.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSourceLoadStateChanged))
         );
 
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public static readonly DependencyProperty SpeedProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SpeedProperty)),
             typeof(TimeSpan),
-            typeof(LoadStateNavigator),
+            typeof(SourceLoadStateNavigator),
             new FrameworkPropertyMetadata(TimeSpan.FromSeconds(1), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSpeedChanged))
         );
 
