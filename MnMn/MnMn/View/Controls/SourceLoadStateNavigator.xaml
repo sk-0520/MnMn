@@ -7,34 +7,69 @@
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
 >
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
   <Grid>
     <Rectangle x:Name="PART_Marker">
       <Rectangle.Resources>
         <Style TargetType="Rectangle">
 
-          <Setter Property="Fill" Value="Gray" />
+          <Setter Property="Fill">
+            <Setter.Value>
+              <SolidColorBrush Color="{StaticResource SourceLoadState_None}" />
+            </Setter.Value>
+          </Setter>
 
           <Setter Property="RadiusX" Value="5" />
           <Setter Property="RadiusY" Value="5" />
 
           <Style.Triggers>
             <DataTrigger Binding="{Binding LoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">
-              <Setter Property="Fill" Value="Gray" />
+              <Setter Property="Fill">
+                <Setter.Value>
+                  <SolidColorBrush Color="{StaticResource SourceLoadState_None}" />
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="SourceLoading">
-              <Setter Property="Fill" Value="Orange" />
+              <Setter Property="Fill">
+                <Setter.Value>
+                  <SolidColorBrush Color="{StaticResource SourceLoadState_SourceLoading}" />
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="SourceChecking">
-              <Setter Property="Fill" Value="Yellow" />
+              <Setter Property="Fill">
+                <Setter.Value>
+                  <SolidColorBrush Color="{StaticResource SourceLoadState_SourceChecking}" />
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="InformationLoading">
-              <Setter Property="Fill" Value="Lime" />
+              <Setter Property="Fill">
+                <Setter.Value>
+                  <SolidColorBrush Color="{StaticResource SourceLoadState_InformationLoading}" />
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Completed">
-              <Setter Property="Fill" Value="Lime" />
+              <Setter Property="Fill">
+                <Setter.Value>
+                  <SolidColorBrush Color="{StaticResource SourceLoadState_Completed}" />
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Failure">
-              <Setter Property="Fill" Value="Red" />
+              <Setter Property="Fill">
+                <Setter.Value>
+                  <SolidColorBrush Color="{StaticResource SourceLoadState_Failure}" />
+                </Setter.Value>
+              </Setter>
             </DataTrigger>
           </Style.Triggers>
         </Style>
