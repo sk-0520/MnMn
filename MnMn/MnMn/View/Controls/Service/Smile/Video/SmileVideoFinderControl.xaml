@@ -59,12 +59,23 @@
             </i:Interaction.Triggers>
 
             <DockPanel>
-              <CheckBox DockPanel.Dock="Left" PreviewMouseDoubleClick="CheckBox_PreviewMouseDoubleClick"  IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}">
-                <TextBlock Text="{Binding Number}" />
+              <CheckBox DockPanel.Dock="Left" Width="32" PreviewMouseDoubleClick="CheckBox_PreviewMouseDoubleClick" IsChecked="{Binding IsChecked}">
+                <CheckBox.Template>
+                  <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                      </Grid.RowDefinitions>
+                      <Label Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="{Binding Number}" />
+                      <CheckBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}" />
+                    </Grid>
+                  </ControlTemplate>
+                </CheckBox.Template>
               </CheckBox>
 
               <Grid Width="78" Height="60" DockPanel.Dock="Left" >
-                <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState, Mode=OneWay}" />
                 <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
               </Grid>
 
