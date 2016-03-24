@@ -20,6 +20,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
@@ -72,7 +73,7 @@
                         <RowDefinition />
                         <RowDefinition />
                       </Grid.RowDefinitions>
-                      <Label Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="{Binding Number}" />
+                      <TextBlock Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" Text="{Binding Number}" />
                       <CheckBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}" />
                     </Grid>
                   </ControlTemplate>
@@ -84,17 +85,19 @@
                 <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
               </Grid>
 
-              <TextBlock DockPanel.Dock="Right" Text="status" />
-              
-              <Grid>
+              <Grid x:Name="detail">
                 <Grid.RowDefinitions>
                   <RowDefinition />
                   <RowDefinition />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Text="{Binding Title}" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Title}" />
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1"  Grid.Column="0">
                   <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -538,6 +541,21 @@
                   </DockPanel>
 
                 </Grid>
+
+                <TextBlock Grid.Row="1"  Grid.Column="1" DockPanel.Dock="Right" Text="status" />
+
+                <Border Grid.Row="1" Grid.Column="0" Visibility="{Binding IsMouseOver, ElementName=detail, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <Border.Resources>
+                    <Style TargetType="Button">
+                      <Setter Property="Margin" Value="4" />
+                    </Style>
+                  </Border.Resources>
+                  <StackPanel Orientation="Horizontal">
+                    <Label Background="Blue">not impl</Label>
+                    <Button >play</Button>
+                    <Button >play(eco)</Button>
+                  </StackPanel>
+                </Border>
               </Grid>
 
 

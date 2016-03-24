@@ -15,6 +15,7 @@
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
   
+  FontWeight="Normal"
   ResizeMode="CanResizeWithGrip"
   
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
