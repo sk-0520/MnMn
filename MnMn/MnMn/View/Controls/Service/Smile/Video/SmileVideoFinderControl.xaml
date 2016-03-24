@@ -57,7 +57,7 @@
       </ListBox.Resources>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <ContentControl>
+          <ContentControl x:Name="detail">
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="MouseDoubleClick">
                 <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" CommandParameter="{Binding}"/>
@@ -65,7 +65,7 @@
             </i:Interaction.Triggers>
 
             <DockPanel>
-              <CheckBox DockPanel.Dock="Left" Width="32" PreviewMouseDoubleClick="CheckBox_PreviewMouseDoubleClick" IsChecked="{Binding IsChecked}">
+              <CheckBox DockPanel.Dock="Left" Width="32" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick" IsChecked="{Binding IsChecked}">
                 <CheckBox.Template>
                   <ControlTemplate TargetType="CheckBox">
                     <Grid>
@@ -85,7 +85,7 @@
                 <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
               </Grid>
 
-              <Grid x:Name="detail">
+              <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition />
                   <RowDefinition />
@@ -95,7 +95,7 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Title}" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="{Binding Title}" />
 
                 <Grid Grid.Row="1"  Grid.Column="0">
                   <Grid.RowDefinitions>
@@ -550,11 +550,16 @@
                       <Setter Property="Margin" Value="4" />
                     </Style>
                   </Border.Resources>
-                  <StackPanel Orientation="Horizontal">
-                    <Label Background="Blue">not impl</Label>
-                    <Button >play</Button>
-                    <Button >play(eco)</Button>
-                  </StackPanel>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Background="Blue">not impl</Label>
+                    <Button Grid.Column="1" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick">play</Button>
+                    <Button Grid.Column="2" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick">play(eco)</Button>
+                  </Grid>
                 </Border>
               </Grid>
 
