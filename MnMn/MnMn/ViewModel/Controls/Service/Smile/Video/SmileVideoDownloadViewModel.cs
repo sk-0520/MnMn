@@ -178,6 +178,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._isProcessCancel, value); }
         }
 
+        protected FileInfo PlayFile
+        {
+            get
+            {
+                if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
+                    var filePath = VideoFile.FullName + ".mp4";
+                    var result = new FileInfo(filePath);
+                    return result;
+                } else {
+                    return VideoFile;
+                }
+            }
+        }
+
         #endregion
 
         #region function
@@ -269,7 +283,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         downloader.DownloadingError -= Downloader_DownloadingError;
                         downloader.Downloading -= Downloader_Downloading;
 
-                        OnLoadVideoEnd();
+                        //OnLoadVideoEnd();
                     }
                 }
             }
@@ -385,6 +399,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(DownloadDirectory != null);
+
+            if(VideoInformation.MovieType == SmileVideoMovieType.Swf && VideoInformation.ConvertedSwf) {
+                var f = new FileInfo(Path.Combine(DownloadDirectory.FullName, VideoInformation.GetVideoFileName(false)));
+                LoadVideoFromCache(f);
+                return;
+            }
+
             var normalVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, VideoInformation.GetVideoFileName(false)));
             var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, VideoInformation.SizeHigh);
             if(normalHeadPosition == isDonwloaded) {

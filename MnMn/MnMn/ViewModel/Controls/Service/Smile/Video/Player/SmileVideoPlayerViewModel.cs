@@ -566,20 +566,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isSelectedComment, value); }
         }
 
-        protected FileInfo PlayFile
-        {
-            get
-            {
-                if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
-                    var filePath = VideoFile.FullName + ".mp4";
-                    var result = new FileInfo(filePath);
-                    return result;
-                } else {
-                    return VideoFile;
-                }
-            }
-        }
-
         #endregion
 
         #region command
@@ -1448,6 +1434,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             base.OnDownloading(sender, e);
         }
+        
+        void ResetSwf()
+        {
+            PlayFile.Refresh();
+            VideoLoadedSize = VideoTotalSize = PlayFile.Length;
+        }
 
         protected override void OnLoadVideoEnd()
         {
@@ -1461,14 +1453,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                 }
 
-                if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
-                    if(!VideoInformation.ConvertedSwf) {
-                        // 変換が必要
-                        var ffmpeg = new Ffmpeg();
-                        var s = $"-i '{VideoFile.FullName}' -vcodec mpeg4 '{PlayFile.FullName}'";
-                        ffmpeg.ExecuteAsync(s);
-                    }
+                if(VideoInformation.MovieType == SmileVideoMovieType.Swf && !VideoInformation.ConvertedSwf) {
+                    // 変換が必要
+                    var ffmpeg = new Ffmpeg();
+                    var s = $"-i \"{VideoFile.FullName}\" -vcodec mpeg4 \"{PlayFile.FullName}\"";
+                    ffmpeg.ExecuteAsync(s).ContinueWith(task => {
+                        VideoInformation.ConvertedSwf = true;
+                        VideoInformation.SaveSetting(true);
+                        ResetSwf();
+                        CanVideoPlay = true;
+                        StartIfAutoPlay();
+                    });
                 } else {
+                    if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
+                        ResetSwf();
+                    }
                     // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
                     if(!CanVideoPlay) {
                         CanVideoPlay = true;

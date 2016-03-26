@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper
         #region property
 
         string ApplicationPath { get; }
+        TaskCompletionSource<bool> ConvertTask { get; set; }
 
         #endregion
 
@@ -44,10 +45,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper
 
         public Task ExecuteAsync(string arguments)
         {
-            var process = Process.Start(ApplicationPath, arguments);
-            return Task.CompletedTask;
+            ConvertTask = new TaskCompletionSource<bool>();
+
+            var process = new Process();
+            process.StartInfo.FileName = ApplicationPath;
+            process.StartInfo.Arguments = arguments;
+            process.EnableRaisingEvents = true;
+            process.Exited += Process_Exited;
+            process.Start();
+
+            return ConvertTask.Task;
+        }
+
+        private void Process_Exited(object sender, EventArgs e)
+        {
+            var process = (Process)sender;
+            ConvertTask.SetResult(true);
         }
 
         #endregion
+
+
     }
 }
