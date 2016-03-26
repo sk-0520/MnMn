@@ -221,6 +221,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoWatchAPIUtility.cs" />
     <Compile Include="Logic\Utility\SourceLoadStateUtility.cs" />
     <Compile Include="Logic\VariableConstants.cs" />
+    <Compile Include="Logic\Wrapper\Ffmpeg.cs" />
     <Compile Include="Model\ApplicationManagerPackModel.cs" />
     <Compile Include="Model\DefinedKeyValuePairModel.cs" />
     <Compile Include="Model\ManagerPackModelBase.cs" />
@@ -741,7 +742,6 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

@@ -41,6 +41,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public bool LoadedEconomyMode { get; set; } = false;
 
+        [DataMember]
+        public bool ConvertedSwf { get; set; } = false;
+
         /// <summary>
         /// フィルタリングデータ。
         /// </summary>

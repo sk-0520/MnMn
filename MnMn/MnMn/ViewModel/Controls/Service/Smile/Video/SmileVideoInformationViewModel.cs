@@ -573,6 +573,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return IndividualVideoSetting.LoadedEconomyMode; }
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.LoadedEconomyMode)); }
         }
+        public bool ConvertedSwf
+        {
+            get { return IndividualVideoSetting.ConvertedSwf; }
+            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
+        }
+        
 
         #endregion
 

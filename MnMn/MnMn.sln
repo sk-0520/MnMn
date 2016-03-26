@@ -15,30 +15,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Library\Package\
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{96623185-24F0-4A71-8429-560AC8A5F172}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{96623185-24F0-4A71-8429-560AC8A5F172}.Debug|x86.ActiveCfg = Debug|x86
-		{96623185-24F0-4A71-8429-560AC8A5F172}.Debug|x86.Build.0 = Debug|x86
-		{96623185-24F0-4A71-8429-560AC8A5F172}.Release|Any CPU.ActiveCfg = Release|x86
 		{96623185-24F0-4A71-8429-560AC8A5F172}.Release|x86.ActiveCfg = Release|x86
-		{96623185-24F0-4A71-8429-560AC8A5F172}.Release|x86.Build.0 = Release|x86
-		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A}.Debug|x86.ActiveCfg = Debug|x86
-		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A}.Debug|x86.Build.0 = Debug|x86
-		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A}.Release|Any CPU.ActiveCfg = Release|x86
 		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A}.Release|x86.ActiveCfg = Release|x86
-		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A}.Release|x86.Build.0 = Release|x86
-		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}.Debug|x86.ActiveCfg = Debug|x86
-		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}.Debug|x86.Build.0 = Debug|x86
-		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}.Release|Any CPU.ActiveCfg = Release|x86
 		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}.Release|x86.ActiveCfg = Release|x86
-		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -77,6 +77,7 @@ using Package.stackoverflow.com;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using System.Xml;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -565,10 +566,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isSelectedComment, value); }
         }
 
+        protected FileInfo PlayFile
+        {
+            get
+            {
+                if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
+                    var filePath = VideoFile.FullName + ".mp4";
+                    var result = new FileInfo(filePath);
+                    return result;
+                } else {
+                    return VideoFile;
+                }
+            }
+        }
 
         #endregion
 
-            #region command
+        #region command
 
         public ICommand OpenLinkCommand
         {
@@ -816,7 +830,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void SetMedia()
         {
-            Player.LoadMedia(VideoFile.FullName);
+            Player.LoadMedia(PlayFile.FullName);
         }
 
         void StartIfAutoPlay()
@@ -1417,12 +1431,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
         {
-            if(!CanVideoPlay) {
-                // とりあえず待って
-                VideoFile.Refresh();
-                CanVideoPlay = VideoPlayLowestSize < VideoFile.Length;
-                if(CanVideoPlay) {
-                    StartIfAutoPlay();
+            if(VideoInformation.MovieType != SmileVideoMovieType.Swf) {
+                if(!CanVideoPlay) {
+                    // とりあえず待って
+                    VideoFile.Refresh();
+                    CanVideoPlay = VideoPlayLowestSize < VideoFile.Length;
+                    if(CanVideoPlay) {
+                        StartIfAutoPlay();
+                    }
                 }
             }
             e.Cancel = IsViewClosed || IsProcessCancel ;
@@ -1445,10 +1461,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                 }
 
-                // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
-                if(!CanVideoPlay) {
-                    CanVideoPlay = true;
-                    StartIfAutoPlay();
+                if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
+                    if(!VideoInformation.ConvertedSwf) {
+                        // 変換が必要
+                        var ffmpeg = new Ffmpeg();
+                        var s = $"-i '{VideoFile.FullName}' -vcodec mpeg4 '{PlayFile.FullName}'";
+                        ffmpeg.ExecuteAsync(s);
+                    }
+                } else {
+                    // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
+                    if(!CanVideoPlay) {
+                        CanVideoPlay = true;
+                        StartIfAutoPlay();
+                    }
                 }
             }
 

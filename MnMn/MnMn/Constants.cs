@@ -79,6 +79,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ServiceSmileName { get; } = "smile";
         public static string ServiceSmileVideoName { get; } = "video";
 
+        public static string BinaryDirectoryName { get; } = "bin";
+
+        public static string FfmpegApplicationPath { get; } = Path.Combine(AssemblyParentDirectoryPath, BinaryDirectoryName, "ffmpeg", "ffmpeg.exe");
+
         public static string DefineName { get; } = "define";
 
         public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyParentDirectoryPath, "etc");

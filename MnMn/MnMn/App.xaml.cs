@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             DoDebug();
 #endif
             var logger = new Pe.PeMain.Logic.AppLogger();
+            logger.Information(Constants.ApplicationName);
             var dir = VariableConstants.GetSettingDirectory();
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
             var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
