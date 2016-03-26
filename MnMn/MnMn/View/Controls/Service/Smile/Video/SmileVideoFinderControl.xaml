@@ -54,7 +54,7 @@
     >
       <ListBox.Resources>
         <Style TargetType="ListBoxItem">
-          <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+          <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         </Style>
       </ListBox.Resources>
       <ListBox.ItemTemplate>

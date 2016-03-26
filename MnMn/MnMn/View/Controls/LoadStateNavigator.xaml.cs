@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             DependencyPropertyUtility.GetName(nameof(LoadStateProperty)),
             typeof(LoadState),
             typeof(LoadStateNavigator),
-            new FrameworkPropertyMetadata(Define.LoadState.None, new PropertyChangedCallback(OnLoadStateChanged))
+            new FrameworkPropertyMetadata(Define.LoadState.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnLoadStateChanged))
         );
 
         private static void OnLoadStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
