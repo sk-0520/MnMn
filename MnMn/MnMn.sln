@@ -13,15 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{C2E8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Library\Package\Package.csproj", "{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{7ADD158C-E3E7-4786-BFBC-F9713C004C40}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{A677E950-2639-43E3-A9EC-B522151C540C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ffmpeg", "ffmpeg", "{9C545F58-713D-4EAE-9D85-7F71752998FD}"
-	ProjectSection(SolutionItems) = preProject
-		Applications\bin\ffmpeg\ffmpeg.exe = Applications\bin\ffmpeg\ffmpeg.exe
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,7 +46,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8463A4EB-9EF0-4150-BA54-7EC005D63C4A} = {97053CFE-6538-44F1-A837-18EA9FE8E7B8}
 		{922D77B4-F3B7-4685-B6DC-6ECB0F4BBE8F} = {C2E8C451-56CD-4526-8AC1-43942317175C}
-		{A677E950-2639-43E3-A9EC-B522151C540C} = {7ADD158C-E3E7-4786-BFBC-F9713C004C40}
-		{9C545F58-713D-4EAE-9D85-7F71752998FD} = {A677E950-2639-43E3-A9EC-B522151C540C}
 	EndGlobalSection
 EndGlobal
