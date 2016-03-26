@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
         }
 
-        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        protected override Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             var isReload = (bool)extends;
 
@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
         {
-            return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, isReload);
+            return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, isReload);
         }
 
         public new Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)

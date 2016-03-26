@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected abstract Task<FeedSmileVideoModel> LoadFeedAsync();
 
-        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        protected override Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
             return LoadFeedAsync().ContinueWith(task => {
                 var feedModel = task.Result;

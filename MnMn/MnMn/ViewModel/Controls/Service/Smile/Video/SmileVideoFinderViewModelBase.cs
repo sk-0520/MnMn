@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         //protected abstract PageLoader CreatePageLoader();
 
-        protected abstract Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
+        protected abstract Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
 
         public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 CancelLoading = new CancellationTokenSource();
 
-                return LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, null).ContinueWith(task => {
+                return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, null).ContinueWith(task => {
                     return LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
                 }, CancelLoading.Token);
             } else {

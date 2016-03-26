@@ -63,9 +63,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             return feedModel;
         }
 
-        protected override Task LoadAsync_Impl(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        protected override Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
-            return base.LoadAsync_Impl(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(_ => {
+            return base.LoadCoreAsync(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(_ => {
                 if(FinderLoadState == SourceLoadState.Failure) {
                     return Task.CompletedTask;
                 }
