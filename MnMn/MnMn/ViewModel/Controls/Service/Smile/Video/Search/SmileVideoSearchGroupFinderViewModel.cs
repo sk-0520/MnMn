@@ -154,7 +154,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             set
             {
-                throw new NotSupportedException();
+                if(SelectedPage == null) {
+                    if(SearchFinder != null) {
+                        SearchFinder.FinderLoadState = value;
+                    } else {
+                        base.FinderLoadState = value;
+                    }
+                } else {
+                    SelectedPage.ViewModel.FinderLoadState = value;
+                }
             }
         }
 

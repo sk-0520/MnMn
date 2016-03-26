@@ -33,7 +33,7 @@
             <StackPanel>
               <TextBlock Text="{Binding Title}" />
               <StackPanel Orientation="Horizontal">
-                <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState, Mode=OneWay}" />
+                <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
                 <TextBlock Text="{Binding FinderLoadState, Mode=OneWay}" />
               </StackPanel>
             </StackPanel>
