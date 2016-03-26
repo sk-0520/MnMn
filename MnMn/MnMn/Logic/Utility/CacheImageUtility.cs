@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 try {
                     logger.Trace($"img -> {loadUri}");
                     binary = await client.GetByteArrayAsync(loadUri);
-                } catch(HttpRequestException ex) {
+                } catch(Exception ex) {
                     logger.Error($"error img -> {loadUri}");
                     logger.Warning(ex);
                     if(count != 0) {
