@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
-                    var filePath = VideoFile.FullName + ".mp4";
+                    var filePath = VideoFile.FullName + ".flv";
                     var result = new FileInfo(filePath);
                     return result;
                 } else {

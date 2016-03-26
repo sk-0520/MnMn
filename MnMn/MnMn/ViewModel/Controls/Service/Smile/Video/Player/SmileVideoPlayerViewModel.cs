@@ -1456,7 +1456,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 if(VideoInformation.MovieType == SmileVideoMovieType.Swf && !VideoInformation.ConvertedSwf) {
                     // 変換が必要
                     var ffmpeg = new Ffmpeg();
-                    var s = $"-i \"{VideoFile.FullName}\" -vcodec mpeg4 \"{PlayFile.FullName}\"";
+                    var s = $"-i \"{VideoFile.FullName}\" -vcodec flv \"{PlayFile.FullName}\"";
                     ffmpeg.ExecuteAsync(s).ContinueWith(task => {
                         VideoInformation.ConvertedSwf = true;
                         VideoInformation.SaveSetting(true);
