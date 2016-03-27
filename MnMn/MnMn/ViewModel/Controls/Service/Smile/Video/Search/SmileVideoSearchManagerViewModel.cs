@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         DefinedElementModel _selectedSort;
         DefinedElementModel _selectedType;
 
-        string _inputQuery = "ACV";
+        string _inputQuery;
 
         SmileVideoSearchGroupFinderViewModel _selectedSearchGroup;
 

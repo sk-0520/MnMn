@@ -52,11 +52,17 @@
       ItemsSource="{Binding VideoInformationItems}"
       SelectedItem="{Binding SelectedVideoInformation}"
     >
-      <ListBox.Resources>
+      <!--<ListBox.Resources>
         <Style TargetType="ListBoxItem">
           <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         </Style>
-      </ListBox.Resources>
+      </ListBox.Resources>-->
+      <ListBox.ItemContainerStyle>
+        <Style TargetType="{x:Type ListBoxItem}">
+          <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+          <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+      </ListBox.ItemContainerStyle>
       <ListBox.ItemTemplate>
         <DataTemplate>
           <ContentControl x:Name="detail">
