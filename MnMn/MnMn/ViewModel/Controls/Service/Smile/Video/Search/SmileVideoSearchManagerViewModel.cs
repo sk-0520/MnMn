@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
                         var tagViewModel = (SmileVideoTagViewModel)o;
                         var parameter = new SmileVideoSearchParameterModel() {
-                            MethodIsTag = true,
+                            Method = SearchMethod.Tag,
                             Query = tagViewModel.TagName,
                         };
 
@@ -192,15 +192,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region function
 
-        static bool IsTag(string s)
+        #region 外部化予定
+
+        static SearchMethod ConvertSearchMethodFromValue(string s)
         {
-            return s == "tag";
+            if(s == "tag") {
+                return SearchMethod.Tag;
+            }
+
+            return SearchMethod.Keyword;
         }
 
-        static string ToMethod(bool isTag)
+        static string ConvertValueFromSearchMethod(SearchMethod searchMethod)
         {
-            return isTag ? "tag" : "keyword";
+            if(searchMethod == SearchMethod.Tag) {
+                return "tag";
+            }
+
+            return "keyword";
         }
+
+        #endregion
 
 
         static SmileVideoSearchHistoryViewModel CreateSearchHistory(SmileVideoSearchHistoryModel model, object data)
@@ -220,7 +232,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
         {
-            var key = ToMethod(parameter.MethodIsTag);
+            var key = ConvertValueFromSearchMethod(parameter.Method);
             var tagElement = SearchModel.Type.First(e => e.Extends.Any(w => w.Key == key && RawValueUtility.ConvertBoolean(w.Value)));
 
             var nowMethod = SelectedMethod;
@@ -243,9 +255,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     // タブになければ履歴に登録(履歴の有無ではない)
                     var history = new SmileVideoSearchHistoryModel() {
                         Query = query,
-                        IsTag = IsTag(method.Key),
+                        Method = ConvertSearchMethodFromValue(method.Key),
                     };
-                    var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.IsTag == history.IsTag && m.Query == history.Query);
+                    var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.Method == history.Method && m.Query == history.Query);
                     if(exsitHistory != null) {
                         history = exsitHistory;
                         SearchHistoryList.Remove(history);

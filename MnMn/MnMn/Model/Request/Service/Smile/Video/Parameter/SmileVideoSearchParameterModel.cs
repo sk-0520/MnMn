@@ -19,12 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter
 {
     public class SmileVideoSearchParameterModel: ShowParameterModelBase
     {
-        public bool MethodIsTag { get; set; }
+        public SearchMethod Method { get; set; }
         public string Query { get; set; }
     }
 }

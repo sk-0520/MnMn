@@ -19,31 +19,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public class SmileVideoSearchHistoryModel: SettingModelBase
+    /// <summary>
+    /// 検索方法。
+    /// <para>サービスが扱えるかどうかまでは面倒見ない。</para>
+    /// </summary>
+    public enum SearchMethod
     {
-        #region property
-
-        /// <summary>
-        /// 検索クエリ。
-        /// </summary>
-        public string Query { get; set; }
-        /// <summary>
-        /// 検索方法。
-        /// </summary>
-        public SearchMethod Method { get; set; }
-        /// <summary>
-        /// 最終使用日時。
-        /// </summary>
-        public DateTime EndUse { get; set; }
-        /// <summary>
-        /// 使用回数。
-        /// </summary>
-        public int Count { get; set; }
-
-        #endregion
+        Keyword,
+        Tag,
     }
 }

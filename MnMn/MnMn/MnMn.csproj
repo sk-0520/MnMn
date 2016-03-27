@@ -158,6 +158,7 @@
     <Compile Include="Define\ParameterEncode.cs" />
     <Compile Include="Define\ParameterType.cs" />
     <Compile Include="Define\PlayerState.cs" />
+    <Compile Include="Define\SearchMethod.cs" />
     <Compile Include="Define\Service\Smile\SmileCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
