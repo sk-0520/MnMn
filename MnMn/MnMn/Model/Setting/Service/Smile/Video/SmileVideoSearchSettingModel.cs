@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -37,5 +38,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool LoadInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
+
+        /// <summary>
+        /// 検索履歴。
+        /// </summary>
+        [DataMember]
+        public CollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new CollectionModel<SmileVideoSearchHistoryModel>();
     }
 }
