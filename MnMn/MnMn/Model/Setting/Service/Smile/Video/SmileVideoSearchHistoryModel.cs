@@ -17,32 +17,32 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    [DataContract]
-    public class SmileVideoSearchSettingModel: SettingModelBase
+    public class SmileVideoSearchHistoryModel: SettingModelBase
     {
-        /// <summary>
-        /// 動画検索で一度に取得する数。
-        /// </summary>
-        [DataMember]
-        public int Count { get; set; } = Constants.SmileVideoSearchCount;
-        /// <summary>
-        /// 一覧データから動画情報を取得するか。
-        /// <para>※元データが一覧表示情報を持っていない場合に使用。</para>
-        /// </summary>
-        [DataMember]
-        public bool LoadInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
+        #region property
 
         /// <summary>
-        /// 検索履歴。
+        /// 検索クエリ。
         /// </summary>
-        [DataMember]
-        public CollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new CollectionModel<SmileVideoSearchHistoryModel>();
+        public string Query { get; set; }
+        /// <summary>
+        /// タグ検索か否か。
+        /// </summary>
+        public bool IsTag { get; set; }
+        /// <summary>
+        /// 最終使用日時。
+        /// </summary>
+        public DateTime EndUse { get; set; }
+        /// <summary>
+        /// 使用回数。
+        /// </summary>
+        public int Count { get; set; }
+
+        #endregion
     }
 }

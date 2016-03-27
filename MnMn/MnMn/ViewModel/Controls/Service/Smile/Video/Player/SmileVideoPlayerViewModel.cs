@@ -1438,7 +1438,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ResetSwf()
         {
             PlayFile.Refresh();
-            VideoLoadedSize = VideoTotalSize = PlayFile.Length;
+            //VideoLoadedSize = VideoTotalSize = PlayFile.Length;
         }
 
         protected override void OnLoadVideoEnd()
