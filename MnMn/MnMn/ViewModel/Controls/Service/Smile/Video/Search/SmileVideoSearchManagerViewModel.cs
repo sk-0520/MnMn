@@ -16,10 +16,13 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -51,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchManagerViewModel(Mediation mediation, SmileVideoSearchModel searchModel, SmileVideoSettingModel setting)
+        public SmileVideoSearchManagerViewModel(Mediation mediation, SmileVideoSearchModel searchModel)
             : base(mediation)
         {
             SearchModel = searchModel;
@@ -59,12 +62,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             SelectedMethod = MethodItems.First();
             SelectedSort = SortItems.First();
             SelectedType = TypeItems.First();
+
+            SearchHistoryList = new MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel>(Setting.Search.SearchHistoryItems, default(object), CreateSearchHistory);
+            SearchHistoryItems = CollectionViewSource.GetDefaultView(SearchHistoryList.ViewModelList);
         }
 
 
         #region property
 
         SmileVideoSearchModel SearchModel { get; }
+
+        MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel> SearchHistoryList { get; }
+        public ICollectionView SearchHistoryItems { get; }
 
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
@@ -183,6 +192,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region function
 
+        static bool IsTag(string s)
+        {
+            return s == "tag";
+        }
+
+        static string ToMethod(bool isTag)
+        {
+            return isTag ? "tag" : "keyword";
+        }
+
+
+        static SmileVideoSearchHistoryViewModel CreateSearchHistory(SmileVideoSearchHistoryModel model, object data)
+        {
+            return new SmileVideoSearchHistoryViewModel(model);
+        }
+
         public Task SearchAsync()
         {
             var nowMethod = SelectedMethod;
@@ -190,22 +215,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var nowType = SelectedType;
             var nowQuery = InputQuery;
 
-            return SearchAsync(nowMethod, nowSort, nowType, nowQuery);
+            return SearchCoreAsync(nowMethod, nowSort, nowType, nowQuery);
         }
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
         {
-            var key = parameter.MethodIsTag ? "tag" : "keyword";
+            var key = ToMethod(parameter.MethodIsTag);
             var tagElement = SearchModel.Type.First(e => e.Extends.Any(w => w.Key == key && RawValueUtility.ConvertBoolean(w.Value)));
 
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
             var nowType = SelectedType;
 
-            return SearchAsync(nowMethod, nowSort, nowType, parameter.Query);
+            return SearchCoreAsync(nowMethod, nowSort, nowType, parameter.Query);
         }
 
-        Task SearchAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
+        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
         {
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(
@@ -215,9 +240,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     return viewModel;
                 },
                 () => {
-                    var viewModel = new SmileVideoSearchGroupFinderViewModel(Mediation, SearchModel, method, sort, type, query);
-                    SearchGroups.Insert(0, viewModel);
-                    return viewModel;
+                    // タブになければ履歴に登録(履歴の有無ではない)
+                    var history = new SmileVideoSearchHistoryModel() {
+                        Query = query,
+                        IsTag = IsTag(method.Key),
+                    };
+                    var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.IsTag == history.IsTag && m.Query == history.Query);
+                    if(exsitHistory != null) {
+                        history = exsitHistory;
+                        SearchHistoryList.Remove(history);
+                    }
+                    var historyPair = SearchHistoryList.Insert(0, history, null);
+                    historyPair.ViewModel.Count += 1;
+                    historyPair.ViewModel.EndUse = DateTime.Now;
+
+                    var finder = new SmileVideoSearchGroupFinderViewModel(Mediation, SearchModel, method, sort, type, query);
+                    SearchGroups.Insert(0, finder);
+                    return finder;
                 }
             );
             SelectedSearchGroup = selectViewModel;

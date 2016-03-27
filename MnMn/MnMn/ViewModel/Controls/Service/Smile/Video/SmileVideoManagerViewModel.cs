@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var searchResponse = Mediation.Request(new RequestModel(RequestKind.SearchDefine, ServiceType.SmileVideo));
             var searchModel = (SmileVideoSearchModel)searchResponse.Result;
-            SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel, Setting);
+            SearchManager = new SmileVideoSearchManagerViewModel(Mediation, searchModel);
 
             NewArrivalsManager = new SmileVideoNewArrivalsManagerViewModel(Mediation);
 

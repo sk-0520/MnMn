@@ -54,7 +54,17 @@
         SelectedItem="{Binding SelectedType}"
       />
 
-      <ComboBox IsEditable="True" Text="{Binding InputQuery}" />
+      <ComboBox
+        IsEditable="True" 
+        Text="{Binding InputQuery}"
+        ItemsSource="{Binding SearchHistoryItems}"
+      >
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Query}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
 
       <Button Command="{Binding SearchCommand}">search</Button>
       <xctk:DropDownButton IsOpen="{Binding ShowTagArea, Mode=TwoWay}">
