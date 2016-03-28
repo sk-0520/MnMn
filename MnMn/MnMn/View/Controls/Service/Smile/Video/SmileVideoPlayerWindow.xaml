@@ -434,19 +434,19 @@
             </DockPanel>
           </TabItem>
           <TabItem Header="NG: local">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding LocalCommentFileringItems}">
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding LocalCommentFilering}">
               <i:Interaction.Triggers>
-                <i:EventTrigger EventName="ItemsChanged">
-                  <i:InvokeCommandAction Command="{Binding ChangedFilterItemsCommand}" CommandParameter="{Binding LocalCommentFileringItems}"/>
+                <i:EventTrigger EventName="FilteringChanged">
+                  <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
                 </i:EventTrigger>
               </i:Interaction.Triggers>
             </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
           </TabItem>
           <TabItem Header="NG: global">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList FilteringItemsSource="{Binding GlobalCommentFileringItems}">
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding GlobalCommentFilering}">
               <i:Interaction.Triggers>
-                <i:EventTrigger EventName="ItemsChanged">
-                  <i:InvokeCommandAction Command="{Binding ChangedFilterItemsCommand}" CommandParameter="{Binding GlobalCommentFileringItems}"/>
+                <i:EventTrigger EventName="FilteringChanged">
+                  <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
                 </i:EventTrigger>
               </i:Interaction.Triggers>
             </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>

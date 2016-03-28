@@ -20,23 +20,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoCommentFilteringResultModel: ModelBase
+    public class SmileVideoFilteringViweModel: SingleModelWrapperViewModelBase<SmileVideoFilteringSettingModel>
     {
-        public SmileVideoCommentFilteringResultModel(SmileVideoFilteringViweModel filtering)
+        public SmileVideoFilteringViweModel(SmileVideoFilteringSettingModel model)
+            : base(model)
         {
-            Filtering = filtering;
+            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
         }
 
         #region property
 
-        public SmileVideoFilteringViweModel Filtering { get; }
+        public MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilterList { get; }
 
         #endregion
     }

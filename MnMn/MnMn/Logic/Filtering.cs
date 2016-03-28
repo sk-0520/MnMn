@@ -28,14 +28,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class Filtering
     {
-        public Filtering(FilteringSettingModel setting)
+        public Filtering(FilteringItemSettingModel setting)
         {
             Setting = setting;
         }
 
         #region property
 
-        protected FilteringSettingModel Setting { get; }
+        protected FilteringItemSettingModel Setting { get; }
 
         #endregion
 

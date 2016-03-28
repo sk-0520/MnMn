@@ -20,32 +20,20 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class FilteringSettingModel: SettingModelBase
+    public class SmileVideoFilteringItemSettingModel: FilteringItemSettingModel
     {
         #region property
-
+        
         /// <summary>
-        /// フィルタリング方法。
+        /// 対象。
         /// </summary>
         [DataMember]
-        public FilteringType Type { get; set; }
-
-        /// <summary>
-        /// 大文字小文字を無視するか。
-        /// </summary>
-        [DataMember]
-        public bool IgnoreCase { get; set; }
-
-        /// <summary>
-        /// フィルタリング文字列。
-        /// </summary>
-        [DataMember]
-        public string Source { get; set; }
+        public SmileVideoFilteringTarget Target { get; set; }
 
         #endregion
     }

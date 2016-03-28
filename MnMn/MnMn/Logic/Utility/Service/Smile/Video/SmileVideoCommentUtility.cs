@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return Colors.White;
         }
 
-        public static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringSettingModel model, object data)
+        public static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringItemSettingModel model, object data)
         {
             return new SmileVideoFilteringEditItemViewModel(model);
         }

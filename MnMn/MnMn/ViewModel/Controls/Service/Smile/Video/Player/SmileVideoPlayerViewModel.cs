@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems.Filter = FilterCommentItems;
 
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
-            GlobalCommentFileringItems = filteringResult.CommentFilteringList;
+            GlobalCommentFilering = filteringResult.Filtering;
         }
 
         #region property
@@ -340,8 +340,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
 
-        public MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> LocalCommentFileringItems { get; private set; }
-        public MVMPairCollectionBase<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> GlobalCommentFileringItems { get; }
+        public SmileVideoFilteringViweModel LocalCommentFilering { get; set; }
+        public SmileVideoFilteringViweModel GlobalCommentFilering { get; }
 
         /// <summary>
         /// 動画再生位置を変更中か。
@@ -755,7 +755,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand ChangedFilterItemsCommand
+        public ICommand ChangedFilteringCommand
         {
             get
             {
@@ -1375,7 +1375,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        private void ApprovalCommentCustom(IReadOnlyList<SmileVideoFilteringSettingModel> filterList)
+        private void ApprovalCommentCustom(IReadOnlyList<SmileVideoFilteringItemSettingModel> filterList)
         {
             if(filterList.Any()) {
                 var filters = filterList.Select(f => new SmileVideoFiltering(f));
@@ -1392,8 +1392,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentSet(CommentList, true);
 
             ApprovalCommentSharedNoGood();
-            ApprovalCommentCustom(LocalCommentFileringItems.ModelList);
-            ApprovalCommentCustom(GlobalCommentFileringItems.ModelList);
+            ApprovalCommentCustom(LocalCommentFilering.CommentFilterList.ModelList);
+            ApprovalCommentCustom(GlobalCommentFilering.CommentFilterList.ModelList);
         }
 
         void ClearSelectedComment()
@@ -1515,8 +1515,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             LoadRelationVideoAsync();
 
-            LocalCommentFileringItems = new MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel>(VideoInformation.IndividualVideoSetting.FilteringItems, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
-            CallOnPropertyChange(nameof(LocalCommentFileringItems));
+            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering);
+            CallOnPropertyChange(nameof(LocalCommentFilering));
 
             base.OnLoadGetthumbinfoEnd();
         }

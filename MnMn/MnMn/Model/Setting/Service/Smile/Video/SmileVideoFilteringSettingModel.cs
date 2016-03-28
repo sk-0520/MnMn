@@ -20,21 +20,17 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoFilteringSettingModel: FilteringSettingModel
+    public class SmileVideoFilteringSettingModel: SettingModelBase
     {
-        #region property
-        
         /// <summary>
-        /// 対象。
+        /// フィルタリングデータ。
         /// </summary>
         [DataMember]
-        public SmileVideoFilteringTarget Target { get; set; }
-
-        #endregion
+        public CollectionModel<SmileVideoFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoFilteringItemSettingModel>();
     }
 }

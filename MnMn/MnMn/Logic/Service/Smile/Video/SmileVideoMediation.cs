@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
 
-            GlobalVideoCommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel>(Setting.Comment.FilteringItems, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            GlobalCommentFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering);
         }
 
         #region property
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         HashSet<SmileVideoPlayerWindow> Players { get; } = new HashSet<SmileVideoPlayerWindow>();
 
-        MVMPairCreateDelegationCollection<SmileVideoFilteringSettingModel, SmileVideoFilteringEditItemViewModel> GlobalVideoCommentFilterList { get; }
+        SmileVideoFilteringViweModel GlobalCommentFiltering { get; }
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return new ResponseModel(request, new SmileVideoAccountMyListSettingResultModel(list));
 
                 case SmileVideoCustomSettingKind.CommentFiltering:
-                    var filter = GlobalVideoCommentFilterList;
+                    var filter = GlobalCommentFiltering;
                     return new ResponseModel(request, new SmileVideoCommentFilteringResultModel(filter));
 
                 default:

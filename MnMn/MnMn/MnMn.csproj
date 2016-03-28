@@ -271,13 +271,14 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRelatedVideoModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoMyListModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchHistoryModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />
     <Compile Include="Model\Setting\AppSettingModel.cs" />
-    <Compile Include="Model\Setting\FilteringSettingModel.cs" />
+    <Compile Include="Model\Setting\FilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentSettingModel.cs" />
-    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFilteringSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoIndividualVideoSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoPlayerSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchSettingModel.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListFinderPageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFilteringViweModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCustomManagerViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\NewArrivals\SmileVideoHotlistFinderViewModel.cs" />

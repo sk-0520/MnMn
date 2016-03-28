@@ -17,26 +17,35 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    public class SmileVideoCommentFilteringResultModel: ModelBase
+    [DataContract]
+    public class FilteringItemSettingModel: SettingModelBase
     {
-        public SmileVideoCommentFilteringResultModel(SmileVideoFilteringViweModel filtering)
-        {
-            Filtering = filtering;
-        }
-
         #region property
 
-        public SmileVideoFilteringViweModel Filtering { get; }
+        /// <summary>
+        /// フィルタリング方法。
+        /// </summary>
+        [DataMember]
+        public FilteringType Type { get; set; }
+
+        /// <summary>
+        /// 大文字小文字を無視するか。
+        /// </summary>
+        [DataMember]
+        public bool IgnoreCase { get; set; }
+
+        /// <summary>
+        /// フィルタリング文字列。
+        /// </summary>
+        [DataMember]
+        public string Source { get; set; }
 
         #endregion
     }
