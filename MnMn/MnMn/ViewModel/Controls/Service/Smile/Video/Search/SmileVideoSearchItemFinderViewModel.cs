@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchItemFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query, int index, int count)
+        public SmileVideoSearchItemFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, int index, int count)
             :base(mediation)
         {
             SearchModel = searchModel;
@@ -62,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public DefinedElementModel Method { get; }
         public DefinedElementModel Sort { get; }
-        public DefinedElementModel Type { get; }
+        public SearchType Type { get; }
         public string Query { get; }
 
         public int Index { get; }
@@ -82,10 +83,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var search = new ContentsSearch(Mediation);
 
+            var typeElement = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Type, Type);
+
             return search.SearchAsync(
                 SearchModel.Service,
                 Query,
-                Type.Key,
+                typeElement.Key,
                 Method.Key,
                 SearchModel.Results,
                 Sort.Key,

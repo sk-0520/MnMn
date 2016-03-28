@@ -68,6 +68,14 @@
       </ComboBox>
 
       <Button Command="{Binding SearchCommand}">search</Button>
+      <xctk:SplitButton Content="search" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
+        <xctk:SplitButton.DropDownContent>
+          <StackPanel>
+            <MenuItem Header="tag" />
+            <MenuItem Header="keyword" />
+          </StackPanel>
+        </xctk:SplitButton.DropDownContent>
+      </xctk:SplitButton>
       
       <xctk:DropDownButton IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
         <xctk:DropDownButton.DropDownContent>
@@ -121,7 +129,7 @@
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0">
                 <TextBlock Text="{Binding Query}" />
-                <TextBlock Text="{Binding Type.DisplayText}" />
+                <TextBlock Text="{Binding Type}" />
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />

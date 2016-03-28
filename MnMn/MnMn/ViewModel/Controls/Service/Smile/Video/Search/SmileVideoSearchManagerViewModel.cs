@@ -44,15 +44,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         DefinedElementModel _selectedMethod;
         DefinedElementModel _selectedSort;
-        DefinedElementModel _selectedType;
+        //DefinedElementModel _selectedType;
 
         string _inputQuery;
 
         SmileVideoSearchGroupFinderViewModel _selectedSearchGroup;
 
+        bool _showSearchTypeArea;
         bool _showTagArea;
         LoadState _recommendTagLoadState;
         SmileVideoSearchHistoryViewModel _selectedQueryHistory;
+
+        SearchType _selectedSearchType = SearchType.Tag;
 
         #endregion
 
@@ -63,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SelectedMethod = MethodItems.First();
             SelectedSort = SortItems.First();
-            SelectedType = TypeItems.First();
+            //SelectedType = TypeItems.First();
 
             SearchHistoryList = new MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel>(Setting.Search.SearchHistoryItems, default(object), CreateSearchHistory);
             SearchHistoryItems = CollectionViewSource.GetDefaultView(SearchHistoryList.ViewModelList);
@@ -101,11 +104,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return this._selectedSort; }
             set { SetVariableValue(ref this._selectedSort, value); }
         }
-        public DefinedElementModel SelectedType
-        {
-            get { return this._selectedType; }
-            set { SetVariableValue(ref this._selectedType, value); }
-        }
+        //public DefinedElementModel SelectedType
+        //{
+        //    get { return this._selectedType; }
+        //    set { SetVariableValue(ref this._selectedType, value); }
+        //}
 
         public string InputQuery
         {
@@ -126,6 +129,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public SearchType SelectedSearchType
+        {
+            get { return this._selectedSearchType; }
+            set { SetVariableValue(ref this._selectedSearchType, value); }
+        }
+
+        public bool ShowSearchTypeArea
+        {
+            get { return this._showSearchTypeArea; }
+            set { SetVariableValue(ref this._showSearchTypeArea, value); }
+        }
         public bool ShowTagArea
         {
             get { return this._showTagArea; }
@@ -146,7 +160,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return this._recommendTagLoadState; }
             set { SetVariableValue(ref this._recommendTagLoadState, value); }
         }
-
 
         public CollectionModel<SmileVideoTagViewModel> RecommendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
@@ -211,26 +224,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
-            var nowType = SelectedType;
+            //var nowType = SelectedType;
             var nowQuery = InputQuery;
 
-            return SearchCoreAsync(nowMethod, nowSort, nowType, nowQuery);
+            return SearchCoreAsync(nowMethod, nowSort, SelectedSearchType, nowQuery);
         }
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
         {
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
-            var nowType = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Type, parameter.SearchType);
+            //var nowType = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Type, parameter.SearchType);
 
-            return SearchCoreAsync(nowMethod, nowSort, nowType, parameter.Query);
+            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query);
         }
 
-        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
+        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
         {
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(
-                SearchGroups.FirstOrDefault(i => i.Query == query && i.Type.Key == type.Key),
+                SearchGroups.FirstOrDefault(i => i.Query == query && i.Type == type),
                 viewModel => {
                     viewModel.SetContextElements(method, sort);
                     return viewModel;
@@ -239,7 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     // タブになければ履歴に登録(履歴の有無ではない)
                     var history = new SmileVideoSearchHistoryModel() {
                         Query = query,
-                        SearchType = SmileVideoSearchUtility.ConvertSearchTypeFromElement(type),
+                        SearchType = type,
                     };
                     var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.SearchType == history.SearchType && m.Query == history.Query);
                     if(exsitHistory != null) {

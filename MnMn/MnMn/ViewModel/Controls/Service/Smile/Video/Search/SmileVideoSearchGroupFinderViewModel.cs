@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, DefinedElementModel type, string query)
+        public SmileVideoSearchGroupFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
             : base(mediation)
         {
             SearchModel = searchModel;
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
 
         public string Query { get; }
-        public DefinedElementModel Type { get; }
+        public SearchType Type { get; }
 
         public DefinedElementModel LoadingMethod { get; private set; }
         public DefinedElementModel LoadingSort { get; private set; }
