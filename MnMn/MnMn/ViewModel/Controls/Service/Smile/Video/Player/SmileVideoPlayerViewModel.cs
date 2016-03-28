@@ -1264,7 +1264,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SearchTag(SmileVideoTagViewModel tagViewModel)
         {
             var parameter = new SmileVideoSearchParameterModel() {
-                Method = SearchMethod.Tag,
+                SearchType = SearchType.Tag,
                 Query = tagViewModel.TagName,
             };
 

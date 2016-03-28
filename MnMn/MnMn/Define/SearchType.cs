@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     /// 検索方法。
     /// <para>サービスが扱えるかどうかまでは面倒見ない。</para>
     /// </summary>
-    public enum SearchMethod
+    public enum SearchType
     {
         Keyword,
         Tag,

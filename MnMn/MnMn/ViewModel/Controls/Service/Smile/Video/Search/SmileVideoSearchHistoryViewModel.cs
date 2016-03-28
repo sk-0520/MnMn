@@ -38,9 +38,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return Model.Query; }
         }
 
-        public SearchMethod SearchMethod
+        public SearchType SearchType
         {
-            get { return Model.Method; }
+            get { return Model.SearchType; }
         }
 
         public int Count

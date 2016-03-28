@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 検索方法。
         /// </summary>
-        public SearchMethod Method { get; set; }
+        public SearchType SearchType { get; set; }
         /// <summary>
         /// 最終使用日時。
         /// </summary>

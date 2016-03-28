@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
 {
     public class SmileVideoSearchParameterModel: ShowParameterModelBase
     {
-        public SearchMethod Method { get; set; }
+        public SearchType SearchType { get; set; }
         public string Query { get; set; }
     }
 }

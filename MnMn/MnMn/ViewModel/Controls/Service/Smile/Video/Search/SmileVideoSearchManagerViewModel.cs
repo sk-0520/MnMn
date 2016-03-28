@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -187,7 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
                         var tagViewModel = (SmileVideoTagViewModel)o;
                         var parameter = new SmileVideoSearchParameterModel() {
-                            Method = SearchMethod.Tag,
+                            SearchType = SearchType.Tag,
                             Query = tagViewModel.TagName,
                         };
 
@@ -200,29 +201,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #endregion
 
         #region function
-
-        #region 外部化予定
-
-        static SearchMethod ConvertSearchMethodFromValue(string s)
-        {
-            if(s == "tag") {
-                return SearchMethod.Tag;
-            }
-
-            return SearchMethod.Keyword;
-        }
-
-        static string ConvertValueFromSearchMethod(SearchMethod searchMethod)
-        {
-            if(searchMethod == SearchMethod.Tag) {
-                return "tag";
-            }
-
-            return "keyword";
-        }
-
-        #endregion
-
 
         static SmileVideoSearchHistoryViewModel CreateSearchHistory(SmileVideoSearchHistoryModel model, object data)
         {
@@ -241,12 +219,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
         {
-            var key = ConvertValueFromSearchMethod(parameter.Method);
-            var tagElement = SearchModel.Type.First(e => e.Extends.Any(w => w.Key == key && RawValueUtility.ConvertBoolean(w.Value)));
-
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
-            var nowType = SelectedType;
+            var nowType = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Type, parameter.SearchType);
 
             return SearchCoreAsync(nowMethod, nowSort, nowType, parameter.Query);
         }
@@ -264,9 +239,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     // タブになければ履歴に登録(履歴の有無ではない)
                     var history = new SmileVideoSearchHistoryModel() {
                         Query = query,
-                        Method = ConvertSearchMethodFromValue(method.Key),
+                        SearchType = SmileVideoSearchUtility.ConvertSearchTypeFromElement(type),
                     };
-                    var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.Method == history.Method && m.Query == history.Query);
+                    var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.SearchType == history.SearchType && m.Query == history.Query);
                     if(exsitHistory != null) {
                         history = exsitHistory;
                         SearchHistoryList.Remove(history);
