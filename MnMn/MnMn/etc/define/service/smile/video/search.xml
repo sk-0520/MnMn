@@ -43,16 +43,16 @@
 				<word key="ja-jp" value="タグ" />
 			</words>
 			<extends>
-				<extend key="tag" value="true" />
+				<extend key="type" value="tag" />
 			</extends>
 		</element>
 		<element key="title,description,tags">
 			<words>
 				<word key="ja-jp" value="キーワード" />
-			<extends>
-				<extend key="keyword" value="true" />
-			</extends>
 			</words>
+			<extends>
+				<extend key="type" value="keyword" />
+			</extends>
 		</element>
 	</type>
 	<result>

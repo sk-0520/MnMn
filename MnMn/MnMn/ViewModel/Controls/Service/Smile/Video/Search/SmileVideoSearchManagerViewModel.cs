@@ -171,9 +171,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get
             {
-                return CreateCommand(o => {
-                    SearchAsync().ConfigureAwait(false);
-                });
+                return CreateCommand(
+                    o => {
+                        SearchAsync().ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        public ICommand SearchFromTypeCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        SelectedSearchType = (SearchType)Enum.Parse(typeof(SearchType), (string)o);
+                        ShowSearchTypeArea = false;
+                        SearchAsync().ConfigureAwait(false);
+                    }
+                );
             }
         }
 
@@ -222,6 +238,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public Task SearchAsync()
         {
+            if(string.IsNullOrWhiteSpace(InputQuery)) {
+                return Task.CompletedTask;
+            }
+
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
             //var nowType = SelectedType;
@@ -232,15 +252,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
         {
+            if(string.IsNullOrWhiteSpace(parameter.Query)) {
+                return Task.CompletedTask;
+            }
+
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
-            //var nowType = SmileVideoSearchUtility.GetSearchTypeFromElements(SearchModel.Type, parameter.SearchType);
 
             return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query);
         }
 
         Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
         {
+            CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
+
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(
                 SearchGroups.FirstOrDefault(i => i.Query == query && i.Type == type),

@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
     public static class SmileVideoSearchUtility
     {
-        static string ConvertKeyFromSearchType(SearchType searchType)
+        static string ConvertTypeValueFromSearchType(SearchType searchType)
         {
             if(searchType == SearchType.Tag) {
                 return "tag";
@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static DefinedElementModel GetSearchTypeFromElements(IEnumerable<DefinedElementModel> elements, SearchType searchType)
         {
-            var key = ConvertKeyFromSearchType(searchType);
-            return elements.First(e => e.Extends.Any(w => w.Key == key && RawValueUtility.ConvertBoolean(w.Value)));
+            var typeValue = ConvertTypeValueFromSearchType(searchType);
+            return elements.First(e => e.Extends.Any(w => w.Key == "type" && w.Value == typeValue));
         }
 
         public static SearchType ConvertSearchTypeFromElement(DefinedElementModel element)

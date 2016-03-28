@@ -48,12 +48,7 @@
         MethodItems="{Binding MethodItems}"
         SortItems="{Binding SortItems}"
       />
-      <ComboBox 
-        DisplayMemberPath="DisplayText" 
-        ItemsSource="{Binding TypeItems}" 
-        SelectedItem="{Binding SelectedType}"
-      />
-
+      
       <ComboBox
         IsEditable="True" 
         Text="{Binding InputQuery}"
@@ -67,12 +62,27 @@
         </ComboBox.ItemTemplate>
       </ComboBox>
 
-      <Button Command="{Binding SearchCommand}">search</Button>
-      <xctk:SplitButton Content="search" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
+      <xctk:SplitButton Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
+        <xctk:SplitButton.Content>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock>search</TextBlock>
+            <TextBlock>
+              <Run>(</Run>
+              <Run Text="{Binding SelectedSearchType, Mode=OneWay}" />
+              <Run>)</Run>
+            </TextBlock>
+          </StackPanel>
+        </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
-            <MenuItem Header="tag" />
-            <MenuItem Header="keyword" />
+            <StackPanel.Resources>
+              <Style TargetType="MenuItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+              </Style>
+            </StackPanel.Resources>
+            <MenuItem Header="tag" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" />
+            <MenuItem Header="keyword" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" />
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
