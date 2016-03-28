@@ -38,6 +38,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             get { return MyListGroup.Title; }
         }
 
+        public override int MyListItemCount
+        {
+            get { return MyListGroup.Count; }
+        }
+
         #endregion
     }
 }

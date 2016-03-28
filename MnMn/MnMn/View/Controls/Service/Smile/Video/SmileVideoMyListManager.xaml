@@ -12,8 +12,6 @@
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   
-  x:Name="root"
-  
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   mc:Ignorable="d" 
   d:DesignHeight="300" d:DesignWidth="300"
@@ -45,7 +43,8 @@
           <Setter.Value>
             <DataTemplate>
               <StackPanel>
-                <Rectangle Width="16" Height="16">
+                <TextBlock Text="{Binding HasMyListFolder, Mode=OneWay}" />
+                <Rectangle Width="16" Height="16" Visibility="{Binding HasMyListFolder, Converter={StaticResource BooleanToVisibilityConverter}}">
                   <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding MyListFolderColor}" />
                   </Rectangle.Fill>

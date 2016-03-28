@@ -61,10 +61,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public virtual bool CanEdit { get; } = false;
 
         public virtual Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
+        public virtual bool HasMyListFolder { get; } = false;
 
         #endregion
 
-            #region SmileVideoFeedFinderViewModelBase
+        #region SmileVideoFeedFinderViewModelBase
 
         protected override void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
         {

@@ -123,7 +123,11 @@
                         <StackPanel>
                           <TextBlock Text="{Binding MyListId}" />
                           <TextBlock Text="{Binding MyListName}" />
-                          <TextBlock Text="{Binding FinderLoadState, Mode=OneWay}" />
+                          <TextBlock Text="{Binding MyListItemCount}" />
+                          <StackPanel Orientation="Horizontal">
+                            <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
+                            <TextBlock Text="{Binding FinderLoadState, Mode=OneWay}" />
+                          </StackPanel>
                         </StackPanel>
                       </DataTemplate>
                     </ListBox.ItemTemplate>

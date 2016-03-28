@@ -350,8 +350,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 UserLoadState = SourceLoadState.SourceChecking;
                 UserInformation = task.Result;
                 UserInformationLoadState = LoadState.Loaded;
-
             }).ContinueWith(task => {
+                UserLoadState = SourceLoadState.InformationLoading;
                 LoadThumbnaiImageAsync(userImageCacheSpan);
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current).ContinueWith(_ => {
                 var mylistTask = Task.CompletedTask;
@@ -373,7 +373,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                     postTask = PostFinder.LoadDefaultCacheAsync();
                 }
 
-                return Task.WhenAll(mylistTask, postTask);
+                return Task.WhenAll(mylistTask, postTask).ContinueWith(__ => {
+                    UserLoadState = SourceLoadState.Completed;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
