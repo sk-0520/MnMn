@@ -309,7 +309,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListFinderPageViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFeedFinderViewModelBase.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFilteringViweModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoFilteringViweModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoCustomManagerViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\NewArrivals\SmileVideoHotlistFinderViewModel.cs" />
