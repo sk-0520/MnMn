@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 }
 
                 var rawJson = response.Result;
+                File.AppendAllText(@"z:\test.json", rawJson);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileVideoAccountHistoryModel>(stream);
                 }
@@ -131,7 +132,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var detailModel = new RawSmileVideoFeedDetailModel();
 
                 var imageElement = thumbContainerElement.SelectSingleNode(".//a/img");
-                detailModel.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
+                var dataPath = imageElement.Attributes.FirstOrDefault(a => a.Name == "data-original");
+                var srcPath = imageElement.GetAttributeValue("src", string.Empty);
+                if(dataPath != null && !dataPath.Value.StartsWith("data:", StringComparison.OrdinalIgnoreCase)) {
+                    detailModel.ThumbnailUrl = dataPath.Value;
+                } else {
+                    detailModel.ThumbnailUrl = imageElement.GetAttributeValue("src", string.Empty);
+                }
 
                 var lengthElement = thumbContainerElement.SelectSingleNode(".//*[@class='videoTime']");
                 if(lengthElement != null) {
