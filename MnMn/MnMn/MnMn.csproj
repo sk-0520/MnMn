@@ -121,12 +121,12 @@
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="xZune.Vlc">
+    <Reference Include="xZune.Vlc, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\xZune.Vlc.16.03.13\lib\net45\x86\xZune.Vlc.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="xZune.Vlc.Wpf">
+    <Reference Include="xZune.Vlc.Wpf, Version=15.10.25.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\packages\xZune.Vlc.Wpf.16.03.13\lib\net45\x86\xZune.Vlc.Wpf.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>

@@ -831,7 +831,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Player.IsMute = IsMute;
             Player.Volume = Volume;
-            Player.Play();
+            View.Dispatcher.BeginInvoke(new Action(() => {
+                Player.Play();
+            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
         void ClearComment()
