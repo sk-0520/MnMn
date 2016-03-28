@@ -32,5 +32,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public CollectionModel<SmileVideoFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoFilteringItemSettingModel>();
+
+        /// <summary>
+        /// 重複したコメントを無視するか。
+        /// </summary>
+        [DataMember]
+        public bool IgnoreOverlapWord { get; set; }
+
+        /// <summary>
+        /// <see cref="IgnoreOverlapWord"/>が有効な際の重複判定時間。
+        /// </summary>
+        [DataMember]
+        public TimeSpan IgnoreOverlapTime { get; set; } = TimeSpan.FromSeconds(3);
     }
 }
