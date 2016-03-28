@@ -3,7 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   
-  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   
   xmlns:app_define="crl-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="crl-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"

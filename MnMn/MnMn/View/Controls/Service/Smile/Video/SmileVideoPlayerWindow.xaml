@@ -7,7 +7,7 @@
 
   xmlns:vlc_wpf="clr-namespace:xZune.Vlc.Wpf;assembly=xZune.Vlc.Wpf"
   
-  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
