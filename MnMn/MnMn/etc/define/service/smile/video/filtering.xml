@@ -10,7 +10,7 @@
 			<word key="ja-jp" value="投稿者への労り" />
 		</words>
 	</element>
-	<element key="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あっ?$)">
+	<element key="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あっ?$)|($[！？!\?)]$)">
 		<words>
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>

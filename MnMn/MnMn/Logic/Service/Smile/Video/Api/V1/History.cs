@@ -57,7 +57,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 }
 
                 var rawJson = response.Result;
-                File.AppendAllText(@"z:\test.json", rawJson);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileVideoAccountHistoryModel>(stream);
                 }
