@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<filtering>
+	<element key="^\s*[wWｗＷ][wWｗＷ\s]\s*$">
+		<words>
+			<word key="ja-jp" value="笑ってるだけのコメント" />
+		</words>
+	</element>
+	<element key="(うぽつ|う(ｐ|p)乙)|(^[8８]$)">
+		<words>
+			<word key="ja-jp" value="投稿者への労り" />
+		</words>
+	</element>
+	<element key="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あっ?$)">
+		<words>
+			<word key="ja-jp" value="すごい一体感を感じる" />
+		</words>
+	</element>
+	<element key=".{5,}">
+		<words>
+			<word key="ja-jp" value="四文字熟語" />
+		</words>
+	</element>
+</filtering>
