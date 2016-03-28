@@ -58,6 +58,7 @@
         IsEditable="True" 
         Text="{Binding InputQuery}"
         ItemsSource="{Binding SearchHistoryItems}"
+        SelectedItem="{Binding SelectedQueryHistory}"
       >
         <ComboBox.ItemTemplate>
           <DataTemplate>
@@ -67,6 +68,7 @@
       </ComboBox>
 
       <Button Command="{Binding SearchCommand}">search</Button>
+      
       <xctk:DropDownButton IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
         <xctk:DropDownButton.DropDownContent>
           <Border>

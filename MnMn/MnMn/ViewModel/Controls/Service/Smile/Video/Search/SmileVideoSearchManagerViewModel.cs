@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         bool _showTagArea;
         LoadState _recommendTagLoadState;
+        SmileVideoSearchHistoryViewModel _selectedQueryHistory;
 
         #endregion
 
@@ -74,6 +75,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel> SearchHistoryList { get; }
         public ICollectionView SearchHistoryItems { get; }
+        public SmileVideoSearchHistoryViewModel SelectedQueryHistory
+        {
+            get { return this._selectedQueryHistory; }
+            set
+            {
+                SetVariableValue(ref this._selectedQueryHistory, value);
+            }
+        }
 
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
