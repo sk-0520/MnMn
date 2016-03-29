@@ -69,13 +69,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントの共有NGを有効にするか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledSharedNoGood { get; set; }
+        public bool IsEnabledSharedNoGood { get; set; } = true;
 
         /// <summary>
         /// コメントの共有NGレベル。
         /// </summary>
         [DataMember]
-        public int SharedNoGoodScore { get; set; }
+        public int SharedNoGoodScore { get; set; } = 1500;
 
         /// <summary>
         /// コメント投稿を匿名にするか。
