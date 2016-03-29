@@ -36,6 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         protected FilteringItemSettingModel Setting { get; }
+        Regex RegexChecker { get; set; } = null;
+        bool InvlidRegex { get; set; } = false;
 
         #endregion
 
@@ -68,11 +70,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 option |= RegexOptions.IgnoreCase;
             }
             try {
-                var reg = new Regex(filterSource, option);
-                return reg.IsMatch(target);
+                if(RegexChecker == null && !InvlidRegex) {
+                    RegexChecker = new Regex(filterSource, option);
+                }
+                if(!InvlidRegex) {
+                    return RegexChecker.IsMatch(target);
+                } else {
+                    return false;
+                }
             } catch(ArgumentException ex) {
                 // 解析エラー
                 Debug.WriteLine(ex);
+                InvlidRegex = true;
                 return false;
             }
         }
