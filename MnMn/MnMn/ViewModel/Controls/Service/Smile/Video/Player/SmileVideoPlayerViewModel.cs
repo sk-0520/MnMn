@@ -1460,11 +1460,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var ffmpeg = new Ffmpeg();
                     var s = $"-i \"{VideoFile.FullName}\" -vcodec flv \"{PlayFile.FullName}\"";
                     ffmpeg.ExecuteAsync(s).ContinueWith(task => {
-                        VideoInformation.ConvertedSwf = true;
-                        VideoInformation.SaveSetting(true);
-                        ResetSwf();
-                        CanVideoPlay = true;
-                        StartIfAutoPlay();
+                        if(!IsViewClosed) {
+                            VideoInformation.ConvertedSwf = true;
+                            VideoInformation.SaveSetting(true);
+                            ResetSwf();
+                            CanVideoPlay = true;
+                            StartIfAutoPlay();
+                        }
                     });
                 } else {
                     if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
