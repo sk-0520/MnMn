@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
+            Filtering = LoadModelFromFile<SmileVideoFilteringModel>(Constants.SmileVideoFilteringPath);
 
             GlobalCommentFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering);
         }
@@ -65,6 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
         SmileVideoMyListModel AccountMyList { get; }
+        SmileVideoFilteringModel Filtering { get; }
 
         internal SmileVideoManagerPackModel ManagerPack { get; private set; }
 

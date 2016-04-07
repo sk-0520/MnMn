@@ -108,6 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoRankingPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "ranking.xml");
         public static string SmileVideoSearchPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "search.xml");
         public static string SmileVideoMyListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
+        public static string SmileVideoFilteringPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "filtering.xml");
 
         public static string SmileUserCacheVideosDirectoryName { get; } = "users";
         public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
