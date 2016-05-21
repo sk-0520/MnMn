@@ -20,6 +20,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
@@ -29,6 +30,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.5940.17989, Culture=neutral, processorArchitecture=MSIL">
