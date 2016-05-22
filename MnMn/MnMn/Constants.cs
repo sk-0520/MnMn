@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
         public static double CommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
-        public static string CommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value;
+        public static string CommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.FirstOrDefault(x => string.Compare(x.Key.IetfLanguageTag, CurrentLanguageCode, true) == 0).Value ?? System.Windows.SystemFonts.MessageFontFamily.FamilyNames.First().Value;
         public static double CommentFontAlpha { get; } = 1;
         public static TimeSpan CommentShowTime { get; } = TimeSpan.FromSeconds(3);
 

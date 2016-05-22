@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
             var values = json["values"]
                 .OrderBy(t => t["_rowid"].Value<int>())
+                .Where(t => t["tag"] != null)
             ;
             foreach(var tag in values) {
                 var item = new RawSmileVideoTagItemModel();
