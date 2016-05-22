@@ -411,7 +411,23 @@
                       </GridViewColumn.HeaderTemplate>
                       <GridViewColumn.CellTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="{Binding Content}" />
+                          <TextBlock Text="{Binding Content}">
+                            <TextBlock.Style>
+                              <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                  <DataTrigger Binding="{Binding Approval}" Value="False">
+                                    <Setter Property="TextDecorations">
+                                      <Setter.Value>
+                                        <TextDecorationCollection>
+                                          <TextDecoration Location="Strikethrough" />
+                                        </TextDecorationCollection>
+                                      </Setter.Value>
+                                    </Setter>
+                                  </DataTrigger>
+                                </Style.Triggers>
+                              </Style>
+                            </TextBlock.Style>
+                          </TextBlock>
                         </ItemContainerTemplate>
                       </GridViewColumn.CellTemplate>
                     </GridViewColumn>
