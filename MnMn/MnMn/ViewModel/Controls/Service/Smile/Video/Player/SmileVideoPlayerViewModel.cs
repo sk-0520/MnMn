@@ -56,7 +56,7 @@ using System.Windows.Documents;
 using HtmlAgilityPack;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
-using xZune.Vlc.Wpf;
+using Meta.Vlc.Wpf;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
@@ -604,16 +604,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         switch(PlayerState) {
                             case PlayerState.Stop:
                                 switch(Player.State) {
-                                    case xZune.Vlc.Interop.Media.MediaState.NothingSpecial:
-                                    case xZune.Vlc.Interop.Media.MediaState.Stopped:
+                                    case Meta.Vlc.Interop.Media.MediaState.NothingSpecial:
+                                    case Meta.Vlc.Interop.Media.MediaState.Stopped:
                                         SetMedia();
                                         VideoPlay();
                                         break;
 
                                     default:
-                                        Player.BeginStop(() => {
-                                            Player.Play();
-                                        });
+                                        //Player.BeginStop(() => {
+                                        //    Player.Play();
+                                        //});
+                                        Player.Stop();
+                                        Player.Play();
                                         break;
                                 }
                                 return;
@@ -1313,13 +1315,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void StopMovie()
         {
             Mediation.Logger.Debug("stop");
-            Player.BeginStop(() => {
-                Mediation.Logger.Debug("stoped");
-                PlayerState = PlayerState.Stop;
-                VideoPosition = 0;
-                ClearComment();
-                PrevPlayedTime = TimeSpan.Zero;
-            });
+            Player.Stop();
+            //Player.BeginStop(() => {
+            //    Mediation.Logger.Debug("stoped");
+            //    PlayerState = PlayerState.Stop;
+            //    VideoPosition = 0;
+            //    ClearComment();
+            //    PrevPlayedTime = TimeSpan.Zero;
+            //});
+            Mediation.Logger.Debug("stoped");
+            PlayerState = PlayerState.Stop;
+            VideoPosition = 0;
+            ClearComment();
+            PrevPlayedTime = TimeSpan.Zero;
         }
 
         void RefreshFilteringComment()
@@ -1541,8 +1549,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             TotalTime = TimeSpan.Zero;
             SelectedComment = null;
             if(View != null) {
-                if(Player != null && Player.State != xZune.Vlc.Interop.Media.MediaState.Playing && Player.State != xZune.Vlc.Interop.Media.MediaState.Paused) {
-                    // https://github.com/higankanshi/xZune.Vlc/issues/80
+                if(Player != null && Player.State != Meta.Vlc.Interop.Media.MediaState.Playing && Player.State != Meta.Vlc.Interop.Media.MediaState.Paused) {
+                    // https://github.com/higankanshi/Meta.Vlc/issues/80
                     Player.VlcMediaPlayer.Media = null;
                 }
                 View.Dispatcher.Invoke(() => {
@@ -1559,7 +1567,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var processTask = base.StopPrevProcessAsync();
             var playerTask = Task.CompletedTask;
             if(Player!= null) {
-                if(Player.State != xZune.Vlc.Interop.Media.MediaState.Stopped) {
+                if(Player.State != Meta.Vlc.Interop.Media.MediaState.Stopped) {
                     playerTask = Task.Run(() => {
                         var sleepTime = TimeSpan.FromMilliseconds(500);
                         Thread.Sleep(sleepTime);
@@ -1678,8 +1686,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             VideoInformation.SaveSetting(true);
 
-            if(Player.State == xZune.Vlc.Interop.Media.MediaState.Playing) {
-                Player.BeginStop();
+            if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
+                //Player.BeginStop();
+                Player.Stop();
             }
         }
 
@@ -1742,10 +1751,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ChangeBaseSize();
         }
 
-        private void Player_StateChanged(object sender, xZune.Vlc.ObjectEventArgs<xZune.Vlc.Interop.Media.MediaState> e)
+        private void Player_StateChanged(object sender, Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
         {
             // 開いてる最中は気にしない
-            if(e.Value == xZune.Vlc.Interop.Media.MediaState.Opening) {
+            if(e.Value == Meta.Vlc.Interop.Media.MediaState.Opening) {
                 return;
             }
             //if(PlayerState != PlayerState.Pause && this._prevStateChangedPosition == VideoPosition && this._prevStateChangedPosition != initPrevStateChangedPosition) {
@@ -1755,7 +1764,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Mediation.Logger.Debug($"{e.Value}, pos: {VideoPosition}, time: {PlayTime} / {Player.Length}");
             switch(e.Value) {
-                case xZune.Vlc.Interop.Media.MediaState.Playing:
+                case Meta.Vlc.Interop.Media.MediaState.Playing:
                     var prevState = PlayerState;
                     PlayerState = PlayerState.Playing;
                     if(prevState == PlayerState.Pause) {
@@ -1765,14 +1774,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                     break;
 
-                case xZune.Vlc.Interop.Media.MediaState.Paused:
+                case Meta.Vlc.Interop.Media.MediaState.Paused:
                     PlayerState = PlayerState.Pause;
                     foreach(var data in ShowingCommentList) {
                         data.Clock.Controller.Pause();
                     }
                     break;
 
-                case xZune.Vlc.Interop.Media.MediaState.Ended:
+                case Meta.Vlc.Interop.Media.MediaState.Ended:
                     if(VideoLoadState == LoadState.Loading) {
                         // 終わってない
                         IsBufferingStop = true;
@@ -1786,11 +1795,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         }
                     } else if(ReplayVideo && !UserOperationStop) {
                         Mediation.Logger.Debug("replay");
-                        Player.BeginStop(() => {
-                            Player.Dispatcher.Invoke(() => {
-                                Player.Play();
-                            });
-                        });
+                        //Player.BeginStop(() => {
+                        //    Player.Dispatcher.Invoke(() => {
+                        //        Player.Play();
+                        //    });
+                        //});
+                        Player.Stop();
+                        Player.Play();
                     } else {
                         //PlayerState = PlayerState.Stop;
                         //VideoPosition = 0;
