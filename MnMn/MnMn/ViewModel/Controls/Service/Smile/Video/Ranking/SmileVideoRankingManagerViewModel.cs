@@ -72,7 +72,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         public SmileVideoRankingCategoryDefinedElementViewModel SelectedCategory
         {
             get { return this._selectedCategory; }
-            set { SetVariableValue(ref this._selectedCategory, value); }
+            set {
+                if(SetVariableValue(ref this._selectedCategory, value)) {
+                    if(this._selectedCategory != null) {
+                        LoadRankingCategoryAsync().ConfigureAwait(false);
+                    }
+                }
+            }
         }
 
         public IList<SmileVideoRankingCategoryDefinedElementViewModel> CategoryItems { get; private set; }
@@ -99,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                         var nowTarget = SelectedTarget;
                         var nowCategory = SelectedCategory;
 
-                        LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory.Model).ConfigureAwait(false);
+                        LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, nowCategory.Model).ConfigureAwait(false);
                     }
                 );
             }
@@ -131,10 +137,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             var nowTarget = SelectedTarget;
             var nowCategory = SelectedCategory;
 
-            return LoadRankingCategoryAsync(nowPeriod, nowTarget, nowCategory.Model);
+            return LoadRankingCategoryCoreAsync(nowPeriod, nowTarget, nowCategory.Model);
         }
 
-        Task LoadRankingCategoryAsync(DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
+        Task LoadRankingCategoryCoreAsync(DefinedElementModel period, DefinedElementModel target, DefinedElementModel category)
         {
             // 存在する場合は該当タブへ遷移
             var selectViewModel = RestrictUtility.IsNotNull(
