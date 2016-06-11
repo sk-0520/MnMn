@@ -26,6 +26,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     [DataContract]
     public class SmileVideoPlayerSettingModel: SettingModelBase
     {
+        #region property
+
         [DataMember]
         public bool IsEnabledDisplayCommentLimit { get; set; } = false;
 
@@ -95,5 +97,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
             Width = 800,
             Height = 600,
         };
+
+        /// <summary>
+        /// コメント非表示領域を使用するか。
+        /// </summary>
+        [DataMember]
+        public bool IsEnabledNonCommentArea { get; set; } = false;
+
+        /// <summary>
+        /// コメント非表示領域の高さ。
+        /// <para>全体領域の下辺を0として正の値分を非表示領域とする。</para>
+        /// </summary>
+        [DataMember]
+        public double NoneCommentBottomHeight { get; set; } = 0;
+
+        #endregion
     }
 }

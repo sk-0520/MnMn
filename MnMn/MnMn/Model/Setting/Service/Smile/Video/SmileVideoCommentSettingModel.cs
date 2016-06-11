@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントの共有NGレベル。
         /// </summary>
         [DataMember]
-        public int SharedNoGoodScore { get; set; } = 1500;
+        public int SharedNoGoodScore { get; set; } = -1500;
 
         /// <summary>
         /// コメント投稿を匿名にするか。
@@ -88,19 +88,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public SmileVideoFilteringSettingModel Filtering { get; set; } = new SmileVideoFilteringSettingModel();
-
-        /// <summary>
-        /// コメント非表示領域を使用するか。
-        /// </summary>
-        [DataMember]
-        public bool IsEnabledNonCommentArea { get; set; } = false;
-
-        /// <summary>
-        /// コメント非表示領域の高さ。
-        /// <para>全体領域の下辺を0として正の値分を非表示領域とする。</para>
-        /// </summary>
-        [DataMember]
-        public double NoneCommentBottomHeight { get; set; } = 0;
 
         #endregion
     }
