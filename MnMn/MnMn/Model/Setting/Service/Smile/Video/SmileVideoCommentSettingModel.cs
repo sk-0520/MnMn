@@ -89,6 +89,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoFilteringSettingModel Filtering { get; set; } = new SmileVideoFilteringSettingModel();
 
+        /// <summary>
+        /// コメント非表示領域を使用するか。
+        /// </summary>
+        [DataMember]
+        public bool EnabledNonCommentArea { get; set; } = false;
+
+        /// <summary>
+        /// コメント非表示領域の高さ。
+        /// <para>全体領域の下辺を0として正の値分を非表示領域とする。</para>
+        /// </summary>
+        [DataMember]
+        public double NoneCommentBottomHeight { get; set; } = 0;
+
         #endregion
     }
 }
