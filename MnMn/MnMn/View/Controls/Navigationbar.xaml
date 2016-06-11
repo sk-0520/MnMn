@@ -3,12 +3,12 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
-  
+
   xmlns:sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  
-  
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="30" d:DesignWidth="300"
 >
   <UserControl.Resources>
@@ -24,7 +24,7 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
-    <Button 
+    <Button
       Grid.Column="0"
       IsEnabled="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}}"
       Command="{Binding PlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -33,7 +33,7 @@
       <Button.Resources>
         <Style TargetType="Button">
           <Setter Property="Content" Value="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />
-          
+
           <Style.Triggers>
             <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Playing">
               <Setter Property="Content" Value="||" />
@@ -86,10 +86,10 @@
                     <Thumb.Template>
                       <ControlTemplate>
                         <Rectangle
-                          Width="20" 
-                          RadiusX="4" 
-                          RadiusY="4" 
-                          Fill="AliceBlue" 
+                          Width="20"
+                          RadiusX="4"
+                          RadiusY="4"
+                          Fill="AliceBlue"
                           Stroke="Red"
                           StrokeThickness="1"
                         />
@@ -132,9 +132,10 @@
       >
         音
       </ToggleButton>
-      <Popup 
+      <Popup
         x:Name="PART_AudioSlider"
-        Placement="Top"
+        Placement="Relative"
+        VerticalOffset="-95"
         Width="{Binding ActualWidth, ElementName=PART_AudioMute}"
         PlacementTarget="{Binding ElementName=PART_AudioMute}"
       >
@@ -144,16 +145,16 @@
             <Binding Path="IsMouseOver" Mode="OneWay" ElementName="PART_AudioMute" />
           </MultiBinding>
         </Popup.IsOpen>
-        <Slider 
+        <Slider
           Orientation="Vertical"
           Height="100"
-          Minimum="0" 
-          Maximum="100" 
+          Minimum="0"
+          Maximum="100"
           Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
         />
       </Popup>
       <ContentControl
-        Grid.Column="2" 
+        Grid.Column="2"
         Content="{Binding ExstendsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
     </Grid>
