@@ -26,12 +26,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     [DataContract]
     public class SmileVideoPlayerSettingModel: SettingModelBase
     {
+        [DataMember]
+        public bool IsEnabledDisplayCommentLimit { get; set; } = false;
+
         /// <summary>
         /// 画面上に一度に表示するコメント数。
-        /// <para>0で全件。</para>
         /// </summary>
         [DataMember]
-        public int DisplayCommentCount { get; set; } = Constants.SmileVideoPlayerDisplayCommentCount;
+        public int DisplayCommentLimitCount { get; set; } = Constants.SmileVideoPlayerDisplayCommentLimitCount;
 
         /// <summary>
         /// プレイヤーの動画情報欄を表示するか。

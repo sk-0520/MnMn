@@ -319,6 +319,37 @@
                   IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
                 />
               </DockPanel>
+              <DockPanel DockPanel.Dock="Bottom">
+                <DockPanel>
+                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+                    <TextBlock>
+                      <Run>use show limit</Run>
+                      <Run>(</Run>
+                      <Run Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                      <Run>
+                        <Run.Style>
+                          <Style TargetType="Run">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
+                                <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </Run.Style>
+                      </Run>
+                      <Run>)</Run>
+                    </TextBlock>
+                  </CheckBox>
+                  <TextBlock DockPanel.Dock="Left" >low</TextBlock>
+                  <TextBlock DockPanel.Dock="Right" >high</TextBlock>
+                  <Slider
+                    Minimum="1"
+                    Maximum="100"
+                    Value="{Binding DisplayCommentLimitCount}"
+                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
+                  />
+                </DockPanel>
+              </DockPanel>
               <DockPanel DockPanel.Dock="Bottom" Visibility="{Binding IsSelectedComment, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <GroupBox>
                   <GroupBox.Header>

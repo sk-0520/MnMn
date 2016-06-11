@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメント非表示領域を使用するか。
         /// </summary>
         [DataMember]
-        public bool EnabledNonCommentArea { get; set; } = false;
+        public bool IsEnabledNonCommentArea { get; set; } = false;
 
         /// <summary>
         /// コメント非表示領域の高さ。
