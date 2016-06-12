@@ -60,8 +60,8 @@
           <DataTemplate>
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <TextBlock>
-                  <Run Text="{Binding Query, Mode=OneTime}" />
+                <TextBlock FontWeight="Normal">
+                  <Run Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
                   <Run Text="," />
                   <Run Text="{Binding SearchType, Mode=OneTime}" />
                   <Run Text="," />
