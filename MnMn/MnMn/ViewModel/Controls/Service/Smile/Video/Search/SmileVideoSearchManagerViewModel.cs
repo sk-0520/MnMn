@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         SmileVideoSearchGroupFinderViewModel _selectedSearchGroup;
 
         bool _showSearchTypeArea;
+        bool _showHistoryArea;
         bool _showTagArea;
         LoadState _recommendTagLoadState;
         SmileVideoSearchHistoryViewModel _selectedQueryHistory;
@@ -140,6 +141,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return this._showSearchTypeArea; }
             set { SetVariableValue(ref this._showSearchTypeArea, value); }
         }
+        public bool ShowHistoryArea
+        {
+            get { return this._showHistoryArea; }
+            set { SetVariableValue(ref this._showHistoryArea, value); }
+        }
         public bool ShowTagArea
         {
             get { return this._showTagArea; }
@@ -227,6 +233,63 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand SearchHistoryFromHistoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(ShowHistoryArea) {
+                        ShowHistoryArea = false;
+                    }
+                    var viewModel = (SmileVideoSearchHistoryViewModel)o;
+                    var parameter = new SmileVideoSearchParameterModel() {
+                        SearchType = viewModel.SearchType,
+                        Query = viewModel.Query,
+                    };
+
+                    LoadSearchFromParameterAsync(parameter).ConfigureAwait(false);
+                });
+            }
+        }
+
+        public ICommand SearchHistoryFromTagCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(ShowHistoryArea) {
+                        ShowHistoryArea = false;
+                    }
+                    var viewModel = (SmileVideoSearchHistoryViewModel)o;
+                    var parameter = new SmileVideoSearchParameterModel() {
+                        SearchType = SearchType.Tag,
+                        Query = viewModel.Query,
+                    };
+
+                    LoadSearchFromParameterAsync(parameter).ConfigureAwait(false);
+                });
+            }
+        }
+
+        public ICommand SearchHistoryFromKeywordCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(ShowHistoryArea) {
+                        ShowHistoryArea = false;
+                    }
+                    var viewModel = (SmileVideoSearchHistoryViewModel)o;
+                    var parameter = new SmileVideoSearchParameterModel() {
+                        SearchType = SearchType.Keyword,
+                        Query = viewModel.Query,
+                    };
+
+                    LoadSearchFromParameterAsync(parameter).ConfigureAwait(false);
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -234,6 +297,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         static SmileVideoSearchHistoryViewModel CreateSearchHistory(SmileVideoSearchHistoryModel model, object data)
         {
             return new SmileVideoSearchHistoryViewModel(model);
+        }
+
+        Task SearchSimpleAsync(string query, SearchType searchType)
+        {
+            var parameter = new SmileVideoSearchParameterModel() {
+                SearchType = searchType,
+                Query = query,
+            };
+
+            return LoadSearchFromParameterAsync(parameter);
         }
 
         public Task SearchAsync()
@@ -274,27 +347,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     return viewModel;
                 },
                 () => {
-                    // タブになければ履歴に登録(履歴の有無ではない)
-                    var history = new SmileVideoSearchHistoryModel() {
-                        Query = query,
-                        SearchType = type,
-                    };
-                    var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.SearchType == history.SearchType && m.Query == history.Query);
-                    if(exsitHistory != null) {
-                        history = exsitHistory;
-                        SearchHistoryList.Remove(history);
-                    }
-                    var historyPair = SearchHistoryList.Insert(0, history, null);
-                    historyPair.ViewModel.Count += 1;
-                    historyPair.ViewModel.EndUse = DateTime.Now;
-
                     var finder = new SmileVideoSearchGroupFinderViewModel(Mediation, SearchModel, method, sort, type, query);
                     SearchGroups.Insert(0, finder);
                     return finder;
                 }
             );
             SelectedSearchGroup = selectViewModel;
-            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(t => {
+                var history = new SmileVideoSearchHistoryModel() {
+                    Query = query,
+                    SearchType = type,
+                };
+                var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.SearchType == history.SearchType && m.Query == history.Query);
+                if(exsitHistory != null) {
+                    history = exsitHistory;
+                    SearchHistoryList.Remove(history);
+                }
+                var historyPair = SearchHistoryList.Insert(0, history, null);
+                historyPair.ViewModel.Count += 1;
+                historyPair.ViewModel.LastTimestamp = DateTime.Now;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public Task LoadRecommendTagItemsAsync()

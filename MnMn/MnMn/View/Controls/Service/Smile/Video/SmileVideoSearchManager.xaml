@@ -1,7 +1,7 @@
 ﻿<!--
   呼び出し元から DataContext を設定して使用。
 -->
-<UserControl 
+<UserControl
   x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoSearchManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -13,8 +13,8 @@
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
@@ -32,14 +32,14 @@
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
       <!-- だっせぇ！ -->
-      <!--<ComboBox 
-        DisplayMemberPath="DisplayText" 
-        ItemsSource="{Binding MethodItems}" 
+      <!--<ComboBox
+        DisplayMemberPath="DisplayText"
+        ItemsSource="{Binding MethodItems}"
         SelectedItem="{Binding SelectedMethod}"
       />
-      <ComboBox 
-        DisplayMemberPath="DisplayText" 
-        ItemsSource="{Binding SortItems}" 
+      <ComboBox
+        DisplayMemberPath="DisplayText"
+        ItemsSource="{Binding SortItems}"
         SelectedItem="{Binding SelectedSort}"
       />-->
       <app_view_controls_service_smile_video:SmileVideoSearchContext
@@ -48,16 +48,34 @@
         MethodItems="{Binding MethodItems}"
         SortItems="{Binding SortItems}"
       />
-      
+
       <ComboBox
-        IsEditable="True" 
+        IsEditable="True"
         Text="{Binding InputQuery}"
         ItemsSource="{Binding SearchHistoryItems}"
         SelectedItem="{Binding SelectedQueryHistory}"
+        IsDropDownOpen="{Binding ShowHistoryArea}"
       >
         <ComboBox.ItemTemplate>
           <DataTemplate>
-            <TextBlock Text="{Binding Query}" />
+            <StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>
+                  <Run Text="{Binding Query, Mode=OneTime}" />
+                  <Run Text="," />
+                  <Run Text="{Binding SearchType, Mode=OneTime}" />
+                  <Run Text="," />
+                  <Run Text="{Binding LastTimestamp, Mode=OneWay}" />
+                  <Run Text="," />
+                  <Run Text="{Binding Count, Mode=OneWay}" />
+                </TextBlock>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>
+                <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">tag</Button>
+                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">key</Button>
+              </StackPanel>
+            </StackPanel>
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>
@@ -86,7 +104,7 @@
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
-      
+
       <xctk:DropDownButton IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
         <xctk:DropDownButton.DropDownContent>
           <Border>
@@ -108,7 +126,7 @@
                   <DataTemplate>
                     <TextBlock>
                       <Hyperlink
-                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                         CommandParameter="{Binding}"
                       >
                         <Run Text="{Binding TagName, Mode=OneTime}" />
@@ -123,8 +141,8 @@
       </xctk:DropDownButton>
     </StackPanel>
 
-    <TabControl 
-      Grid.Row="1" 
+    <TabControl
+      Grid.Row="1"
       ItemsSource="{Binding SearchGroups}"
       SelectedItem="{Binding SelectedSearchGroup}"
       Style="{StaticResource FinderTab}"
@@ -147,14 +165,14 @@
               </StackPanel>
 
             </Grid>
-            <!--<ComboBox 
-              DisplayMemberPath="DisplayText" 
-              ItemsSource="{Binding MethodItems}" 
+            <!--<ComboBox
+              DisplayMemberPath="DisplayText"
+              ItemsSource="{Binding MethodItems}"
               SelectedItem="{Binding SelectedMethod}"
             />
-            <ComboBox 
-              DisplayMemberPath="DisplayText" 
-              ItemsSource="{Binding SortItems}" 
+            <ComboBox
+              DisplayMemberPath="DisplayText"
+              ItemsSource="{Binding SortItems}"
               SelectedItem="{Binding SelectedSort}"
             />-->
             <app_view_controls_service_smile_video:SmileVideoSearchContext
@@ -208,8 +226,8 @@
                   </ItemsControl>
                 </ScrollViewer>
 
-                <app_view_controls:Pager 
-                  Grid.Column="2" 
+                <app_view_controls:Pager
+                  Grid.Column="2"
                   PageItems="{Binding PageItems}"
                   Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
                 />

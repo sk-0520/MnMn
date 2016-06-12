@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 最終使用日時。
         /// </summary>
-        public DateTime EndUse { get; set; }
+        public DateTime LastTimestamp { get; set; }
         /// <summary>
         /// 使用回数。
         /// </summary>

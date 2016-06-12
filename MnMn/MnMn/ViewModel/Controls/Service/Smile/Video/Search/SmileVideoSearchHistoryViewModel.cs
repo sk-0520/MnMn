@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetModelValue(value); }
         }
 
-        public DateTime EndUse
+        public DateTime LastTimestamp
         {
-            get { return Model.EndUse; }
+            get { return Model.LastTimestamp; }
             set { SetModelValue(value); }
         }
 

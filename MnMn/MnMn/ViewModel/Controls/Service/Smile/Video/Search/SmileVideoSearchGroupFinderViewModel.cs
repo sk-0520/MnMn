@@ -39,6 +39,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
     /// </summary>
     public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase
     {
+        #region define
+
+        static IEnumerable<string> ChangePagePropertyNames => new[] {
+            nameof(VideoInformationItems),
+            nameof(FinderLoadState),
+            nameof(CanLoad),
+            nameof(NowLoading),
+            nameof(PageItems),
+            nameof(PageChangeCommand),
+        };
+
+        #endregion
         #region variable
 
         DefinedElementModel _selectedMethod;
@@ -203,16 +215,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 );
             }
         }
-
-        static IEnumerable<string> ChangePagePropertyNames => new[] {
-            nameof(VideoInformationItems),
-            nameof(FinderLoadState),
-            nameof(CanLoad),
-            nameof(NowLoading),
-            nameof(PageItems),
-            nameof(PageChangeCommand),
-        };
-
 
         #endregion
 
