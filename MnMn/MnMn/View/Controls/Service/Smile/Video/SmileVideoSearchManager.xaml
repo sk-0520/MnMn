@@ -74,7 +74,8 @@
                 <TextBlock>search: </TextBlock>
                 <Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>
                 <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">tag</Button>
-                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">key</Button>
+                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">keyword</Button>
+                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">remove</Button>
               </StackPanel>
             </StackPanel>
           </DataTemplate>

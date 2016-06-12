@@ -290,6 +290,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand RemoveHistoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => RemoveHistory((SmileVideoSearchHistoryViewModel)o));
+            }
+        }
+
         #endregion
 
         #region function
@@ -385,6 +393,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 RecommendTagLoadState = LoadState.Loaded;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+        void RemoveHistory(SmileVideoSearchHistoryViewModel o)
+        {
+            SearchHistoryList.Remove(o);
+        }
+
 
         #endregion
 
