@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         /// <summary>
-        /// 投稿者コメント。
+        /// 投稿者コメントか。
         /// </summary>
         public bool IsOriginalPoster
         {

@@ -309,6 +309,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoAccountHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\NewArrivals\SmileVideoRecommendationsFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\FilteringUserViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoCommentViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Ranking\SmileVideoRankingCategoryDefinedElementViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Search\SmileVideoSearchHistoryViewModel.cs" />

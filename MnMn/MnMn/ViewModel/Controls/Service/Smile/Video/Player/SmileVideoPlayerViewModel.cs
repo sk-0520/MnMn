@@ -279,6 +279,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+
+        public CollectionModel<FilteringUserViewModel> FilteringUserList { get; } = new CollectionModel<FilteringUserViewModel>();
+
         public int CommentListCount
         {
             get { return this._commentListCount; }
@@ -1509,6 +1512,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalComment();
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
+            var userSequence = NormalCommentList
+                .Where(c => !string.IsNullOrWhiteSpace(c.UserId))
+                .GroupBy(c => c.UserId)
+                .Select(g => new { Count = g.Count(), Comment = g.First() })
+                .Select(cc => new FilteringUserViewModel(cc.Comment.UserId, cc.Comment.UserKind, cc.Count))
+                .OrderByDescending(fu => fu.Count)
+                .ThenBy(fu => fu.UserId)
+            ;
+            FilteringUserList.InitializeRange(userSequence);
             OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
             OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
 

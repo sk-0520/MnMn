@@ -343,10 +343,25 @@
                     </Style>
                   </TextBlock.Style>
                 </TextBlock>
-                <TextBox
+                <ComboBox
+                  IsEditable="True"
                   Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding FilteringUserList}"
                   IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
-                />
+                >
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding UserId, Mode=OneTime}"/>
+                        <TextBlock>(</TextBlock>
+                        <TextBlock Text="{Binding UserKind, Mode=OneTime}" />
+                        <TextBlock>:</TextBlock>
+                        <TextBlock Text="{Binding Count, Mode=OneTime}" />
+                        <TextBlock>)</TextBlock>
+                      </StackPanel>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
               </DockPanel>
               <DockPanel DockPanel.Dock="Bottom">
                 <DockPanel>
