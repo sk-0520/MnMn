@@ -567,26 +567,28 @@
                   </ItemsControl.ItemsPanel>
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                      <TextBlock FontSize="10">
-                        <TextBlock.ToolTip>
-                          <TextBlock>
-                            <Run>lock</Run>
-                            <Run Text="{Binding IsLocked, Mode=OneTime}" />
-                            <Run>,</Run>
-                            <Run>category</Run>
-                            <Run Text="{Binding IsCategory, Mode=OneTime}" />
-                            <Run>,</Run>
-                            <Run>pedia</Run>
-                            <Run Text="{Binding ExistPedia, Mode=OneWay}" />
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="10">
+                          <TextBlock Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" >[L]</TextBlock>
+                          <TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>
+                          <Hyperlink
+                            Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{Binding}"
+                          >
+                            <Run Text="{Binding TagName, Mode=OneTime}" />
+                          </Hyperlink>
+                          <TextBlock Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Hyperlink
+                              Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                              CommandParameter="{Binding}"
+                            >
+                              <Run>[百]</Run>
+                            </Hyperlink>
                           </TextBlock>
-                        </TextBlock.ToolTip>
-                        <Hyperlink
-                          Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                          CommandParameter="{Binding}"
-                        >
-                          <Run Text="{Binding TagName, Mode=OneTime}" />
-                        </Hyperlink>
-                      </TextBlock>
+                          <!-- TODO: ださい -->
+                          <Border Width="8" />
+                        </TextBlock>
+                      </StackPanel>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>

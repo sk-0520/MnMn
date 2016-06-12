@@ -681,6 +681,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand OpenPediaCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var viewModel = (SmileVideoTagViewModel)o;
+                });
+            }
+        }
+
         public ICommand OpenUserIdCommand
         {
             get
