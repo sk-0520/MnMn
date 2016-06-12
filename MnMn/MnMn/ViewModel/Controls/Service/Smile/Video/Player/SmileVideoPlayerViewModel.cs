@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             GlobalCommentFilering = filteringResult.Filtering;
-            
+
         }
 
         #region property
@@ -322,6 +322,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
+
+        public CollectionModel<object> MarketItems { get; } = new CollectionModel<object>();
 
         public SmileVideoFilteringViweModel LocalCommentFilering { get; set; }
         public SmileVideoFilteringViweModel GlobalCommentFilering { get; }

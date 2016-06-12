@@ -664,6 +664,22 @@
           </ScrollViewer>
         </TabItem>
         <TabItem Header="market">
+          <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding MarketItems}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <UniformGrid />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel>
+                    <TextBlock>market item</TextBlock>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
         </TabItem>
       </TabControl>
     </Grid>
