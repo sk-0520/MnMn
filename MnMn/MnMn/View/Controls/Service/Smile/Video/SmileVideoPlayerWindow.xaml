@@ -16,7 +16,7 @@
 
   ResizeMode="CanResizeWithGrip"
 
-  Title="VideoPlayerWindow"
+  Title="{Binding Title}"
   Left="{Binding Left, Mode=TwoWay}"
   Top="{Binding Top, Mode=TwoWay}"
   Width="{Binding Width, Mode=TwoWay}"
@@ -125,48 +125,77 @@
     <StatusBar DockPanel.Dock="Bottom" >
       <ToggleButton x:Name="switchInformation" Content="info" IsChecked="{Binding PlayerShowDetailArea}" />
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
-        <TextBlock>[</TextBlock>
-        <TextBlock Text="{Binding PlayerState}"></TextBlock>
-        <TextBlock>,</TextBlock>
-        <TextBlock>eco:</TextBlock>
-        <TextBlock Text="{Binding IsEconomyMode}" />
-        <TextBlock>,</TextBlock>
-        <TextBlock>info:</TextBlock>
-        <TextBlock Text="{Binding InformationLoadState}" />
-        <TextBlock>,image:</TextBlock>
-        <TextBlock Text="{Binding ThumbnailLoadState}" />
-        <TextBlock>,comment:</TextBlock>
-        <TextBlock Text="{Binding CommentLoadState}" />
-        <TextBlock>,video:</TextBlock>
-        <TextBlock Text="{Binding VideoLoadState}" />
+        <StackPanel.Resources>
+          <Style TargetType="app_view_controls:LoadStateNavigator">
+            <Setter Property="LoadedToVisibility" Value="Visible" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Height" Value="10" />
+          </Style>
+        </StackPanel.Resources>
         <TextBlock>
-          <Run>,size</Run>
-          <Run Text="{Binding RealVideoWidth}" />
-          <Run>x</Run>
-          <Run Text="{Binding RealVideoHeight}" />
+          <Run>[</Run>
+          <Run Text="{Binding PlayerState, Mode=OneWay}"/>
+          <Run>]</Run>
         </TextBlock>
         <TextBlock>
-          <Run>,player</Run>
-          <Run Text="{Binding ActualWidth, ElementName=player, Mode=OneWay}" />
-          <Run>x</Run>
-          <Run Text="{Binding ActualHeight, ElementName=player, Mode=OneWay}" />
+          <Run>[</Run>
+          <Run>economy</Run>
+          <Run>:</Run>
+          <Run Text="{Binding IsEconomyMode, Mode=OneWay}"/>
+          <Run>]</Run>
         </TextBlock>
         <TextBlock>
-          <Run>,base</Run>
-          <Run Text="{Binding BaseWidth}" />
-          <Run>x</Run>
-          <Run Text="{Binding BaseHeight}" />
+          <Run>[</Run>
+          <Run>info</Run>
+          <Run>:</Run>
+          <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
+          <TextBlock>
+            <Run>(</Run>
+            <Run>upload</Run>
+            <Run>:</Run>
+            <Run Text="{Binding VideoInformation.FirstRetrieve, Mode=OneWay}" />
+            <Run>,</Run>
+            <Run>view</Run>
+            <Run>:</Run>
+            <Run Text="{Binding VideoInformation.ViewCounter, Mode=OneWay}" />
+            <Run>,</Run>
+            <Run>mylist</Run>
+            <Run>:</Run>
+            <Run Text="{Binding VideoInformation.MylistCounter, Mode=OneWay}" />
+            <Run>,</Run>
+            <Run>comment</Run>
+            <Run>:</Run>
+            <Run Text="{Binding VideoInformation.CommentCounter, Mode=OneWay}" />
+            <Run>)</Run>
+          </TextBlock>
+          <Run>]</Run>
         </TextBlock>
         <TextBlock>
-          <Run>,comment</Run>
-          <Run Text="{Binding CommentAreaWidth}" />
-          <Run>x</Run>
-          <Run Text="{Binding CommentAreaHeight}" />
+          <Run>[</Run>
+          <Run>image</Run>
+          <Run>:</Run>
+          <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
+          <Run>]</Run>
         </TextBlock>
-        <TextBlock>,datetime</TextBlock>
-        <TextBlock>,play</TextBlock>
-        <TextBlock>,mylist</TextBlock>
-        <TextBlock>]</TextBlock>
+        <TextBlock>
+          <Run>[</Run>
+          <Run>comment</Run>
+          <Run>:</Run>
+          <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" />
+          <Run>]</Run>
+        </TextBlock>
+        <TextBlock>
+          <Run>[</Run>
+          <Run>video</Run>
+          <Run>:</Run>
+          <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" />
+          <Run>,</Run>
+          <Run>size</Run>
+          <Run Text="{Binding RealVideoWidth, Mode=OneWay}" />
+          <Run>x</Run>
+          <Run Text="{Binding RealVideoHeight, Mode=OneWay}" />
+          <Run>]</Run>
+        </TextBlock>
       </StackPanel>
     </StatusBar>
 
