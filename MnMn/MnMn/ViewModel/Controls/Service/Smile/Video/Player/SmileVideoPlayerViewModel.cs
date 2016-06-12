@@ -1503,6 +1503,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
             var comments = rawMsgPacket.Chat
+                .Where(c => !string.IsNullOrEmpty(c.Content))
                 .GroupBy(c => new { c.No, c.Fork })
                 .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
                 .OrderBy(c => c.ElapsedTime)
