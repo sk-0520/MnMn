@@ -92,26 +92,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         static readonly TimeSpan correctionTime = TimeSpan.FromSeconds(1);
 
-        public class CommentData
-        {
-            public CommentData(SmileVideoCommentElement element, SmileVideoCommentViewModel viewModel, AnimationTimeline animation)
-            {
-                Element = element;
-                ViewModel = viewModel;
-                Animation = animation;
-                Clock = Animation.CreateClock();
-            }
-
-            #region property
-
-            public SmileVideoCommentElement Element { get; }
-            public SmileVideoCommentViewModel ViewModel { get; }
-            public AnimationTimeline Animation { get; }
-            public AnimationClock Clock { get; }
-
-            #endregion
-        }
-
         #endregion
 
         #region variable
@@ -338,7 +318,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         CollectionModel<SmileVideoCommentViewModel> OriginalPosterCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
-        public CollectionModel<CommentData> ShowingCommentList { get; } = new CollectionModel<CommentData>();
+        public CollectionModel<SmileVideoCommentDataModel> ShowingCommentList { get; } = new CollectionModel<SmileVideoCommentDataModel>();
 
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
@@ -912,7 +892,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return element;
         }
 
-        static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<CommentData> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoSettingModel setting)
+        static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoSettingModel setting)
         {
             var isAsc = orderBy == OrderBy.Ascending;
             // 空いている部分に放り込む
@@ -966,14 +946,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return compromiseY;
         }
 
-        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
         {
             var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Ascending, true, setting);
             Canvas.SetTop(element, y);
             Canvas.SetLeft(element, commentArea.Width);
         }
 
-        static void SetStaticCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<CommentData> showingCommentList, OrderBy orderBy, SmileVideoSettingModel setting)
+        static void SetStaticCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, SmileVideoSettingModel setting)
         {
             var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, orderBy, false, setting);
             Canvas.SetTop(element, y);
@@ -981,7 +961,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             element.Width = commentArea.Width;
         }
 
-        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
         {
             switch(commentViewModel.Vertical) {
                 case SmileVideoCommentVertical.Normal:
@@ -1045,7 +1025,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        static void FireShowCommentCore(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<CommentData> showingCommentList, SmileVideoSettingModel setting)
+        static void FireShowCommentCore(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
         {
             var commentArea = new Size(
                commentParentElement.ActualWidth,
@@ -1074,7 +1054,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     // アニメーション設定
                     var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
 
-                    var data = new CommentData(element, commentViewModel, animation);
+                    var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
                     showingCommentList.Add(data);
 
                     EventDisposer<EventHandler> ev = null;

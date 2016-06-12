@@ -277,6 +277,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRecommendInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRelatedVideoItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoRelatedVideoModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\SmileVideoCommentDataModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFilteringModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoManagerPackModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoMyListModel.cs" />
