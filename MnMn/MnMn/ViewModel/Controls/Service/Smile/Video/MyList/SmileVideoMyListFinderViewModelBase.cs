@@ -74,6 +74,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public virtual Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
         public virtual bool HasMyListFolder { get; } = false;
 
+        /// <summary>
+        /// キャッシュを無視するか。
+        /// </summary>
+        public bool IgnoreCache { get; set; }
+
         #endregion
 
         #region SmileVideoFeedFinderViewModelBase
@@ -89,10 +94,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var myListPath = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(MyListId, "xml"));
-            if(CacheImageUtility.ExistImage(myListPath, Constants.ServiceSmileMyListCacheSpan)) {
-                using(var stream = new FileStream(myListPath, FileMode.Open, FileAccess.Read)) {
-                    var cacheResult = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
-                    return Task.Run(() => cacheResult);
+            if(!IgnoreCache) {
+                if(CacheImageUtility.ExistImage(myListPath, Constants.ServiceSmileMyListCacheSpan)) {
+                    using(var stream = new FileStream(myListPath, FileMode.Open, FileAccess.Read)) {
+                        var cacheResult = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                        return Task.Run(() => cacheResult);
+                    }
                 }
             }
 
