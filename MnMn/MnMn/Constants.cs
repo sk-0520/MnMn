@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static CacheSpan ServiceSmileUserDataCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
         public static CacheSpan ServiceSmileUserImageCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(3));
 
+        public static CacheSpan ServiceSmileMyListCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+
         public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
@@ -111,6 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoFilteringPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "filtering.xml");
 
         public static string SmileUserCacheVideosDirectoryName { get; } = "users";
+        public static string SmileMyListCacheVideosDirectoryName { get; } = "mylist";
         public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
         public static double CommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;

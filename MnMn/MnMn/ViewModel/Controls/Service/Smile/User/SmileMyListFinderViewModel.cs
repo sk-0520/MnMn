@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 
@@ -14,7 +18,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
     /// </summary>
     public class SmileMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
     {
-        public SmileMyListFinderViewModel(Mediation mediation, RawSmileUserMyListGroupModel group) 
+        public SmileMyListFinderViewModel(Mediation mediation, RawSmileUserMyListGroupModel group)
             : base(mediation, false)
         {
             MyListGroup = group;

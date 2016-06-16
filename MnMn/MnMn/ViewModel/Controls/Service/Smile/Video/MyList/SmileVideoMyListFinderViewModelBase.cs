@@ -47,6 +47,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             IsAccountMyList = isAccountMyList;
+
+
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheVideosDirectoryName);
+            if(Directory.Exists(cachedDirPath)) {
+                CacheDirectory = new DirectoryInfo(cachedDirPath);
+            } else {
+                CacheDirectory = Directory.CreateDirectory(cachedDirPath);
+            }
         }
 
         #region property
@@ -56,6 +65,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public abstract string MyListName { get; }
         public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
         public bool IsAccountMyList {get; }
+
+        protected DirectoryInfo CacheDirectory { get; }
 
         public virtual bool IsPublic { get; } = false;
         public virtual bool CanEdit { get; } = false;
@@ -77,9 +88,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
+            var myListPath = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(MyListId, "xml"));
+            if(CacheImageUtility.ExistImage(myListPath, Constants.ServiceSmileMyListCacheSpan)) {
+                using(var stream = new FileStream(myListPath, FileMode.Open, FileAccess.Read)) {
+                    var cacheResult = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                    return Task.Run(() => cacheResult);
+                }
+            }
+
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
 
-            return mylist.LoadGroupAsync(MyListId);
+            return mylist.LoadGroupAsync(MyListId).ContinueWith(t => {
+                var result = t.Result;
+
+                SerializeUtility.SaveXmlSerializeToFile(myListPath, result);
+
+                return result;
+            });
         }
 
         #endregion
