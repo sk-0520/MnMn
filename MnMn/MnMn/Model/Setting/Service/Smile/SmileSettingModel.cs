@@ -36,6 +36,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         [DataMember]
         public SmileUserAccountModel Account { get; set; } = new SmileUserAccountModel();
 
+        [DataMember]
+        public SmileMyListSettingModel MyList { get; set; } = new SmileMyListSettingModel();
+
         #endregion
     }
 }

@@ -36,6 +36,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         public string MyListId { get; set; }
 
         /// <summary>
+        /// マイリスト名。
+        /// </summary>
+        [DataMember]
+        public string MyListName { get; set; }
+
+        /// <summary>
         /// 更新日時(作成日時)。
         /// </summary>
         [DataMember]

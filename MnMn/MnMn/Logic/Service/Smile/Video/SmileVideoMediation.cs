@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     if(mylist != null) {
                         ManagerPack.MyListManager.SearchUserMyListFromParameterAsync(mylist).ConfigureAwait(false);
                         ManagerPack.MyListManager.IsSelectedAccount = false;
-                        ManagerPack.MyListManager.IsSelectedLocal = false;
+                        ManagerPack.MyListManager.IsSelectedBookmark = false;
                         ManagerPack.MyListManager.IsSelectedHistory = false;
                         ManagerPack.MyListManager.IsSelectedSearch = true;
                         return ManagerPack.MyListManager;

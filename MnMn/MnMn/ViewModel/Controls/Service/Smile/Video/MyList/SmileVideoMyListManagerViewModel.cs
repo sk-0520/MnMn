@@ -26,6 +26,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -44,6 +45,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
@@ -53,13 +55,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         #region variable
 
         SmileVideoAccountMyListFinderViewModel _selectedAccountFinder;
-        SmileVideoMyListFinderViewModelBase _selectedLocalFinder;
+        SmileVideoMyListFinderViewModelBase _selectedBookmarkFinder;
         SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
 
         bool _isSelectedAccount;
         bool _isSelectedSearch;
-        bool _isSelectedLocal;
+        bool _isSelectedBookmark;
         bool _isSelectedHistory;
 
         SmileVideoMyListFinderViewModelBase _selectedCurrentFinder;
@@ -75,10 +77,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
+
+            var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel>(setting.MyList.Bookmark, default(object), (m, d) => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
+            HistoryUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel>(setting.MyList.History, default(object), (m, d) => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
+
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
-            LocalUserMyListItems = CollectionViewSource.GetDefaultView(LocalUserMyList);
-            HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
+            BookmarkUserMyListItems = CollectionViewSource.GetDefaultView(BookmarkUserMyListPairs.ViewModelList);
+            HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyListPairs.ViewModelList);
         }
 
         #region property
@@ -94,10 +101,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public ICollectionView SearchUserMyListItems { get; }
         public CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>> PageItems { get; } = new CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>>();
 
-        CollectionModel<SmileVideoMyListFinderViewModelBase> LocalUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
-        public ICollectionView LocalUserMyListItems { get; }
+        MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel> BookmarkUserMyListPairs { get; }
+        public ICollectionView BookmarkUserMyListItems { get; }
 
-        CollectionModel<SmileVideoMyListFinderViewModelBase> HistoryUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
+        MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel> HistoryUserMyListPairs { get; }
         public ICollectionView HistoryUserMyListItems { get; }
 
         public bool IsSelectedAccount
@@ -110,10 +117,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             get { return this._isSelectedSearch; }
             set { SetVariableValue(ref this._isSelectedSearch, value); }
         }
-        public bool IsSelectedLocal
+        public bool IsSelectedBookmark
         {
-            get { return this._isSelectedLocal; }
-            set { SetVariableValue(ref this._isSelectedLocal, value); }
+            get { return this._isSelectedBookmark; }
+            set { SetVariableValue(ref this._isSelectedBookmark, value); }
         }
         public bool IsSelectedHistory
         {
@@ -131,13 +138,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
         }
-        public SmileVideoMyListFinderViewModelBase SelectedLocalFinder
+        public SmileVideoMyListFinderViewModelBase SelectedBookmarkFinder
         {
-            get { return this._selectedLocalFinder; }
+            get { return this._selectedBookmarkFinder; }
             set
             {
-                if(SetVariableValue(ref this._selectedLocalFinder, value)) {
-                    ChangedSelectedFinder(this._selectedLocalFinder);
+                if(SetVariableValue(ref this._selectedBookmarkFinder, value)) {
+                    ChangedSelectedFinder(this._selectedBookmarkFinder);
                 }
             }
         }
@@ -167,7 +174,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             get { return this._selectedCurrentFinder; }
             set { SetVariableValue(ref this._selectedCurrentFinder, value); }
         }
-        
+
 
 
         public string InputSearchMyList
@@ -414,7 +421,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return CheckModel.Failure();
             }
             var myList = GetMyListApi();
-            
+
             var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder != null) {
                 var model = await myList.LoadAccountDefaultAsync();
@@ -501,11 +508,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var myList = GetMyListApi();
 
             await myList.UpdateAccountGroupAsync(
-                myListGroup.MyListId, 
-                myListGroup.EditingMyListFolderIdElement.Key, 
-                myListGroup.EditingMyListName, 
+                myListGroup.MyListId,
+                myListGroup.EditingMyListFolderIdElement.Key,
+                myListGroup.EditingMyListName,
                 myListGroup.EditingMyListSortElement.Key,
-                myListGroup.EditingMyListDescription, 
+                myListGroup.EditingMyListDescription,
                 myListGroup.EditingMyListIsPublic
             );
             await LoadAccountMyListAsync(true, myListGroup.MyListId);
