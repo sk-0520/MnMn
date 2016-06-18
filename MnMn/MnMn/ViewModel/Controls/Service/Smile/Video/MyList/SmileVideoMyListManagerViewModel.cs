@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -467,8 +469,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         async Task SearchUserMyListFromIdAsync(string myListId)
         {
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheVideosDirectoryName);
+            var cacheDirectory = RestrictUtility.Is(Directory.Exists(cachedDirPath), () => new DirectoryInfo(cachedDirPath), () => Directory.CreateDirectory(cachedDirPath));
+            var cacheFile = new FileInfo(Path.Combine(cacheDirectory.FullName, PathUtility.CreateFileName(myListId, "xml")));
+
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-            var group = await mylist.LoadGroupAsync(myListId);
+            FeedSmileVideoModel group = null;
+            if(CacheImageUtility.ExistImage(cacheFile.FullName, Constants.ServiceSmileMyListCacheSpan)) {
+                using(var stream = new FileStream(cacheFile.FullName, FileMode.Open, FileAccess.Read)) {
+                    group = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                }
+            }
+            if(group == null) {
+                group = await mylist.LoadGroupAsync(myListId);
+                SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
+            }
 
             var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
 
@@ -477,6 +493,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             if(SearchUserMyList.Any()) {
                 SelectedSearchFinder = SearchUserMyList.First();
             }
+
         }
 
         async Task SearchUserMyListFromKeywordAsync(string query)

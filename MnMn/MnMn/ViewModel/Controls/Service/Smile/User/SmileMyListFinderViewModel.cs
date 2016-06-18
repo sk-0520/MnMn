@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             : base(mediation, false)
         {
             MyListGroup = group;
+            InitializeCacheData();
         }
 
         #region property
@@ -34,12 +35,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         public override string MyListId
         {
-            get { return MyListGroup.MyListId; }
+            get { return MyListGroup?.MyListId; }
         }
 
         public override string MyListName
         {
-            get { return MyListGroup.Title; }
+            get { return MyListGroup?.Title; }
         }
 
         public override int MyListItemCount

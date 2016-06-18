@@ -48,14 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
             IsAccountMyList = isAccountMyList;
 
-
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
-            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheVideosDirectoryName);
-            if(Directory.Exists(cachedDirPath)) {
-                CacheDirectory = new DirectoryInfo(cachedDirPath);
-            } else {
-                CacheDirectory = Directory.CreateDirectory(cachedDirPath);
-            }
+            InitializeCacheData();
         }
 
         #region property
@@ -66,7 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
         public bool IsAccountMyList {get; }
 
-        protected DirectoryInfo CacheDirectory { get; }
+        protected DirectoryInfo CacheDirectory { get; private set; }
+        protected FileInfo CacheFile { get; private set; }
 
         public virtual bool IsPublic { get; } = false;
         public virtual bool CanEdit { get; } = false;
@@ -78,6 +72,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         /// キャッシュを無視するか。
         /// </summary>
         public bool IgnoreCache { get; set; }
+
+        #endregion
+
+        #region function
+
+        protected void InitializeCacheData()
+        {
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheVideosDirectoryName);
+            if(Directory.Exists(cachedDirPath)) {
+                CacheDirectory = new DirectoryInfo(cachedDirPath);
+            } else {
+                CacheDirectory = Directory.CreateDirectory(cachedDirPath);
+            }
+            CacheFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(MyListId, "xml")));
+        }
+
+        protected FeedSmileVideoModel GetCache()
+        {
+            if(CacheImageUtility.ExistImage(CacheFile.FullName, Constants.ServiceSmileMyListCacheSpan)) {
+                using(var stream = new FileStream(CacheFile.FullName, FileMode.Open, FileAccess.Read)) {
+                    var cacheResult = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                    return cacheResult;
+                }
+            }
+
+            return null;
+        }
+
+        protected virtual Task<FeedSmileVideoModel> LoadFeedCoreAsync()
+        {
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+
+            return mylist.LoadGroupAsync(MyListId);
+        }
 
         #endregion
 
@@ -93,22 +122,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            var myListPath = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(MyListId, "xml"));
             if(!IgnoreCache) {
-                if(CacheImageUtility.ExistImage(myListPath, Constants.ServiceSmileMyListCacheSpan)) {
-                    using(var stream = new FileStream(myListPath, FileMode.Open, FileAccess.Read)) {
-                        var cacheResult = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
-                        return Task.Run(() => cacheResult);
-                    }
+                var cacheResult = GetCache();
+                if(cacheResult != null) {
+                    return Task.Run(() => cacheResult);
                 }
             }
 
-            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-
-            return mylist.LoadGroupAsync(MyListId).ContinueWith(t => {
+            return LoadFeedCoreAsync().ContinueWith(t => {
                 var result = t.Result;
 
-                SerializeUtility.SaveXmlSerializeToFile(myListPath, result);
+                InitializeCacheData();
+                SerializeUtility.SaveXmlSerializeToFile(CacheFile.FullName, result);
 
                 return result;
             });

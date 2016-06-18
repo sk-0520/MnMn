@@ -52,6 +52,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #endregion
 
+        #region function
+
+        #endregion
+
         #region SmileVideoFeedFinderViewModelBase
 
         public override string MyListId { get; }

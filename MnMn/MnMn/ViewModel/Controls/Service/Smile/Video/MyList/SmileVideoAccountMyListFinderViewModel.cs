@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region SmileVideoMyListFinderViewModel
 
-        public override string MyListId { get { return GroupModel.Id; } }
+        public override string MyListId { get { return GroupModel?.Id; } }
         public override string MyListName { get { return GroupModel.Name; } }
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
