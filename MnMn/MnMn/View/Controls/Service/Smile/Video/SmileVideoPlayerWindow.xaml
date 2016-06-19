@@ -367,7 +367,7 @@
                 <DockPanel>
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
                     <TextBlock>
-                      <Run>show comment limit</Run>
+                      <Run>show limit</Run>
                       <Run>(</Run>
                       <Run Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
                       <Run>
