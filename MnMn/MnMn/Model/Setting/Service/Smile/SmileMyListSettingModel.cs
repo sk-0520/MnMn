@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         /// 履歴。
         /// </summary>
         [DataMember]
-        public CollectionModel<SmileMyListItemModel> History { get; set; } = new CollectionModel<SmileMyListItemModel>();
+        public FixedSizeCollectionModel<SmileMyListItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileMyListItemModel>(Constants.SmileMyListHistoryCount, false);
 
         #endregion
     }
