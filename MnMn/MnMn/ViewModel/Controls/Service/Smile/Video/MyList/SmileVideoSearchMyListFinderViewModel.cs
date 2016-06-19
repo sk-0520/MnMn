@@ -28,6 +28,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public SmileVideoSearchMyListFinderViewModel(Mediation mediation, string myListId, string myListName, int myListItemCount, string query, int totalItemCount, int pageItemCount)
             : base(mediation, false)
         {
+            IgnoreAddHistory = false;
+
             MyListId = myListId;
             MyListName = myListName;
             MyListItemCount = myListItemCount;

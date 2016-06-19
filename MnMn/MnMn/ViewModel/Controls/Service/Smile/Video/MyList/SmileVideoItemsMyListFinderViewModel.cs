@@ -13,7 +13,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
     {
         public SmileVideoItemsMyListFinderViewModel(Mediation mediation, SmileMyListItemModel item)
             :base(mediation, false)
-        { }
+        {
+            IgnoreAddHistory = false;
+
+            Item = item;
+        }
 
         #region property
 
@@ -25,12 +29,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override string MyListId
         {
-            get { return Item.MyListId; }
+            get { return Item?.MyListId; }
         }
 
         public override string MyListName
         {
-            get { return Item.MyListName; }
+            get { return Item?.MyListName; }
         }
 
         #endregion

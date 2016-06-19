@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         /// キャッシュを無視するか。
         /// </summary>
         public bool IgnoreCache { get; set; }
-
+        protected bool IgnoreAddHistory { get; set; } = true;
         #endregion
 
         #region function
@@ -101,6 +102,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             return null;
         }
 
+        protected virtual void AddHistory(SmileMyListItemModel model)
+        {
+            //SmileMyListHistoryCount
+            var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            var existModel = setting.MyList.History.FirstOrDefault(m => m.MyListId == model.MyListId);
+            if(existModel != null) {
+                setting.MyList.History.Remove(existModel);
+                model = existModel;
+            }
+            model.UpdateTimestamp = DateTime.Now;
+            setting.MyList.History.Insert(0, model);
+        }
+
         protected virtual Task<FeedSmileVideoModel> LoadFeedCoreAsync()
         {
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
@@ -125,6 +139,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             if(!IgnoreCache) {
                 var cacheResult = GetCache();
                 if(cacheResult != null) {
+                    if(!IgnoreAddHistory) {
+                        AddHistory(new SmileMyListItemModel() { MyListId = this.MyListId, MyListName = this.MyListName });
+                    }
                     return Task.Run(() => cacheResult);
                 }
             }
@@ -134,6 +151,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
                 InitializeCacheData();
                 SerializeUtility.SaveXmlSerializeToFile(CacheFile.FullName, result);
+                if(!IgnoreAddHistory) {
+                    AddHistory(new SmileMyListItemModel() { MyListId = this.MyListId, MyListName = this.MyListName });
+                }
 
                 return result;
             });

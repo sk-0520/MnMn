@@ -79,15 +79,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
-
-            var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
-            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel>(setting.MyList.Bookmark, default(object), (m, d) => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
-            HistoryUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel>(setting.MyList.History, default(object), (m, d) => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
-
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
-            BookmarkUserMyListItems = CollectionViewSource.GetDefaultView(BookmarkUserMyListPairs.ViewModelList);
-            HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyListPairs.ViewModelList);
+            BookmarkUserMyListItems = CollectionViewSource.GetDefaultView(BookmarkUserMyList);
+            HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
         }
 
         #region property
@@ -103,10 +98,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public ICollectionView SearchUserMyListItems { get; }
         public CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>> PageItems { get; } = new CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>>();
 
-        MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel> BookmarkUserMyListPairs { get; }
+        CollectionModel<SmileVideoItemsMyListFinderViewModel> BookmarkUserMyList { get; } = new CollectionModel<SmileVideoItemsMyListFinderViewModel>();
         public ICollectionView BookmarkUserMyListItems { get; }
 
-        MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel> HistoryUserMyListPairs { get; }
+        CollectionModel<SmileVideoItemsMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoItemsMyListFinderViewModel>();
         public ICollectionView HistoryUserMyListItems { get; }
 
         public bool IsSelectedAccount
@@ -122,12 +117,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public bool IsSelectedBookmark
         {
             get { return this._isSelectedBookmark; }
-            set { SetVariableValue(ref this._isSelectedBookmark, value); }
+            set {
+                if(SetVariableValue(ref this._isSelectedBookmark, value)) {
+                    if(value) {
+                        var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+                        var items = setting.MyList.Bookmark.Select(m => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
+
+                        BookmarkUserMyList.InitializeRange(items);
+                        BookmarkUserMyListItems.Refresh();
+                    }
+                }
+            }
         }
         public bool IsSelectedHistory
         {
             get { return this._isSelectedHistory; }
-            set { SetVariableValue(ref this._isSelectedHistory, value); }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedHistory, value)) {
+                    if(value) {
+                        var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+                        var items = setting.MyList.History.Select(m => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
+
+                        HistoryUserMyList.InitializeRange(items);
+                        HistoryUserMyListItems.Refresh();
+                    }
+                }
+            }
         }
 
         public SmileVideoAccountMyListFinderViewModel SelectedAccountFinder

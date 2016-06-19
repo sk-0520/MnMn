@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public SmileVideoMatchMyListFinderViewModel(Mediation mediation, FeedSmileVideoModel feedModel, string myListId, bool isAccountMyList)
             : base(mediation, isAccountMyList)
         {
+            IgnoreAddHistory = false;
+
             FeedModel = feedModel;
             MyListId = myListId;
         }
@@ -65,7 +67,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            return Task.Run(() => FeedModel);
+            return Task.Run(() => FeedModel).ContinueWith(t => {
+                var result = t.Result;
+
+                if(!IgnoreAddHistory) {
+                    AddHistory(new Model.Setting.Service.Smile.SmileMyListItemModel() { MyListId = this.MyListId, MyListName = this.MyListName });
+                }
+
+                return result;
+            });
         }
 
         #endregion

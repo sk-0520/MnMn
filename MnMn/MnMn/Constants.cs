@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double CommentFontAlpha { get; } = 1;
         public static TimeSpan CommentShowTime { get; } = TimeSpan.FromSeconds(3);
 
+        public static int SmileMyListHistoryCount { get; } = 50;
+
         public static int SmileVideoSearchCount { get; } = 100;
         public static bool SmileVideoAutoPlay { get; } = true;
         public static bool SmileVideoLoadVideoInformation { get; } = true;
