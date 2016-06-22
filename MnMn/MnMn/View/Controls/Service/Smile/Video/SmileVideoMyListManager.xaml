@@ -111,8 +111,6 @@
               <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
               <Button Command="{Binding CreateAccountMyListCommand}">create</Button>
               <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
-              <Separator />
-              <Button Command="{Binding RemoveCheckedAccountMyListVideoCommand}">remove video</Button>
             </ToolBar>
             <Expander DockPanel.Dock="Bottom" Header="edit" Visibility="{Binding SelectedAccountFinder.CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Grid>
@@ -170,6 +168,9 @@
 
               </Grid>
             </Expander>
+            <ToolBar DockPanel.Dock="Bottom">
+              <Button Command="{Binding RemoveCheckedAccountMyListVideoCommand}">remove video</Button>
+            </ToolBar>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedAccountFinder}" ItemsSource="{Binding AccountMyListItems}" />
           </DockPanel>
         </TabItem>
@@ -179,6 +180,8 @@
             <ToolBar DockPanel.Dock="Top">
               <TextBox Text="{Binding InputSearchMyList}" />
               <Button Command="{Binding SearchUserMyListCommand}">find</Button>
+              <Separator />
+              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" >add bookmark</Button>
             </ToolBar>
 
             <app_view_controls:Pager
@@ -216,11 +219,10 @@
         <TabItem x:Name="viewBookmark" Header="bookmark" IsSelected="{Binding IsSelectedBookmark}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <Button Command="{Binding LoadBookmarkUserMyListCommand}">load</Button>
               <Button Command="{Binding RemoveSelectedBookmarkUserMyListCommand}">remove</Button>
               <Separator />
-              <Button Command="{Binding UpBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">up</Button>
-              <Button Command="{Binding DownBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">down</Button>
+              <Button Command="{Binding PositionUpBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">up</Button>
+              <Button Command="{Binding PositionDownBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">down</Button>
             </ToolBar>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />
           </DockPanel>
@@ -229,8 +231,7 @@
         <TabItem x:Name="viewHistory" Header="hist" IsSelected="{Binding IsSelectedHistory}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <Button Command="{Binding LoadHistoryUserMyListCommand}">load</Button>
-              <Button Command="{Binding RemoveSelectedHistoryUserMyListCommand}">remove</Button>
+              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedHistoryFinder}">add bookmark</Button>
             </ToolBar>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedHistoryFinder}" ItemsSource="{Binding HistoryUserMyListItems}" />
           </DockPanel>

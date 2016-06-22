@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             :base(mediation, false)
         {
             IgnoreAddHistory = false;
-
+            
             Item = item;
         }
 

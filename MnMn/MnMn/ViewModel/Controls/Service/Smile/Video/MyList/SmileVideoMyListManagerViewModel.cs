@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         #region variable
 
         SmileVideoAccountMyListFinderViewModel _selectedAccountFinder;
-        SmileVideoMyListFinderViewModelBase _selectedBookmarkFinder;
+        SmileVideoItemsMyListFinderViewModel _selectedBookmarkFinder;
         SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
 
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
         }
-        public SmileVideoMyListFinderViewModelBase SelectedBookmarkFinder
+        public SmileVideoItemsMyListFinderViewModel SelectedBookmarkFinder
         {
             get { return this._selectedBookmarkFinder; }
             set
@@ -343,7 +343,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
-        public ICommand UpBookmarkUserMyListCommand
+        public ICommand RemoveSelectedBookmarkUserMyListCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(SelectedBookmarkFinder != null) {
+                        RemoveSelectedBookmarkUserMyList();
+                    }
+
+                });
+            }
+        }
+
+        public ICommand PositionUpBookmarkUserMyListCommand
         {
             get
             {
@@ -351,11 +364,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
-        public ICommand DownBookmarkUserMyListCommand
+        public ICommand PositionDownBookmarkUserMyListCommand
         {
             get
             {
                 return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, false));
+            }
+        }
+
+        public ICommand AddBookmarkUserMyListCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var finder = o as SmileVideoMyListFinderViewModelBase;
+                    if(finder != null) {
+                        AddBookmarkUserMyList(finder);
+                    }
+                });
             }
         }
 
@@ -573,6 +599,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             await LoadAccountMyListAsync(true, myListGroup.MyListId);
         }
 
+        void RemoveSelectedBookmarkUserMyList()
+        {
+            BookmarkUserMyListPairs.Remove(SelectedBookmarkFinder);
+        }
+
         void ChangePositionBookmarkUserMyList(SmileVideoItemsMyListFinderViewModel viewModel, bool isUp)
         {
             var srcIndex = BookmarkUserMyListPairs.ViewModelList.IndexOf(viewModel);
@@ -586,6 +617,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var nextIndex = isUp ? srcIndex - 1 : srcIndex + 1;
             BookmarkUserMyListPairs.SwapIndex(srcIndex, nextIndex);
         }
+
+        void AddBookmarkUserMyList(SmileVideoMyListFinderViewModelBase finder)
+        {
+            CheckUtility.DebugEnforceNotNull(finder);
+
+            // TODO 情報読み込み待ち
+            //finder.FinderLoadState == SourceLoadState.None || SourceLoadState.SourceLoading || SourceLoadState.SourceChecking
+
+            var model = new SmileMyListItemModel() {
+                MyListId = finder.MyListId,
+                MyListName = finder.MyListName,
+            };
+            // 見た目履歴と違うけどまぁいいや
+            BookmarkUserMyListPairs.Add(model, null);
+            BookmarkUserMyListItems.Refresh();
+        }
+
+
 
         #endregion
 
