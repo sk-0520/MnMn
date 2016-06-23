@@ -1439,8 +1439,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var index = PlayListItems.FindIndex(i => i == VideoInformation);
             if(index == PlayListItems.Count - 1) {
                 index = 0;
-            } else {
+            } else if(index >= 0) {
                 index += 1;
+            } else {
+                index = 0;
             }
             var targetViewModel = PlayListItems[index];
             return LoadAsync(targetViewModel, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
@@ -1454,8 +1456,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var index = PlayListItems.FindIndex(i => i == VideoInformation);
             if(index == 0) {
                 index = PlayListItems.Count - 1;
-            } else {
+            } else if(0 < index) {
                 index -= 1;
+            } else {
+                index = 0;
             }
             var targetViewModel = PlayListItems[index];
             return LoadAsync(targetViewModel, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
