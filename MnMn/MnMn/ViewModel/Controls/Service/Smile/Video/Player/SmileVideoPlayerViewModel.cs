@@ -737,6 +737,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
+                        if(1 < PlayListItems.Count) {
+                            LoadPrevPlayListItemAsync().ConfigureAwait(false);
+                        }
                     }
                 );
             }
@@ -747,6 +750,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
+                        if(1 < PlayListItems.Count) {
+                            LoadNextPlayListItemAsync().ConfigureAwait(false);
+                        }
                     }
                 );
             }
@@ -1425,6 +1431,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
         }
 
+        Task LoadNextPlayListItemAsync()
+        {
+            // TODO: ランダム再生の考慮
+            Debug.Assert(1 < PlayListItems.Count);
+
+            var index = PlayListItems.FindIndex(i => i == VideoInformation);
+            if(index == PlayListItems.Count - 1) {
+                index = 0;
+            } else {
+                index += 1;
+            }
+            var targetViewModel = PlayListItems[index];
+            return LoadAsync(targetViewModel, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
+        Task LoadPrevPlayListItemAsync()
+        {
+            // TODO: ランダム再生の考慮と*Next*時にちゃんと戻れるようにする
+            Debug.Assert(1 < PlayListItems.Count);
+
+            var index = PlayListItems.FindIndex(i => i == VideoInformation);
+            if(index == 0) {
+                index = PlayListItems.Count - 1;
+            } else {
+                index -= 1;
+            }
+            var targetViewModel = PlayListItems[index];
+            return LoadAsync(targetViewModel, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1809,6 +1845,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 case Meta.Vlc.Interop.Media.MediaState.Ended:
                     if(VideoLoadState == LoadState.Loading) {
+                        Mediation.Logger.Debug("buffering stop");
                         // 終わってない
                         IsBufferingStop = true;
                         BufferingVideoPosition = VideoPosition;
@@ -1819,6 +1856,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Pause();
                         }
+                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop) {
+                        Mediation.Logger.Debug("next playlist item");
+                        LoadNextPlayListItemAsync();
                     } else if(ReplayVideo && !UserOperationStop) {
                         Mediation.Logger.Debug("replay");
                         //Player.BeginStop(() => {
