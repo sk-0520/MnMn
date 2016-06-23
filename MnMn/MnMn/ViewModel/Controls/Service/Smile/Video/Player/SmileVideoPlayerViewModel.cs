@@ -1605,6 +1605,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(LocalCommentFilering),
                 nameof(VideoId),
                 nameof(Title),
+                nameof(VideoInformation),
             };
             CallOnPropertyChange(propertyNames);
 
