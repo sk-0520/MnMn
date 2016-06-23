@@ -47,6 +47,15 @@
         <Setter Property="Height" Value="{StaticResource ImageHeight}" />
       </Style>
 
+      <Style x:Key="PlayListChangeButton" TargetType="Button">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding PlayListItems.Count}" Value="1">
+            <Setter Property="IsEnabled" Value="False" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="IsEnabled" Value="True" />
+      </Style>
+
     </ResourceDictionary>
   </Window.Resources>
   <DockPanel>
@@ -76,7 +85,7 @@
 
       <Separator />
 
-      <Button Command="{Binding LoadPrevPlayListItemCommand}">prev</Button>
+      <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">prev</Button>
       <Menu>
         <MenuItem Header="play list" ItemsSource="{Binding PlayListItems}">
           <MenuItem.ItemContainerStyle>
@@ -92,7 +101,7 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
-      <Button Command="{Binding LoadNextPlayListItemCommand}">next</Button>
+      <Button Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">next</Button>
 
       <Separator />
 
