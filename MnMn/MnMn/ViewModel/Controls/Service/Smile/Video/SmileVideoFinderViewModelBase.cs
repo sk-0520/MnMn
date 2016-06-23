@@ -152,6 +152,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return CreateCommand(o => ToggleAllCheck()); }
         }
 
+        public ICommand ContinuousPlaybackCommand
+        {
+            get { return CreateCommand(o => ContinuousPlayback()); }
+        }
+
         #endregion
 
         #region function
@@ -236,7 +241,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
-        public virtual void ToggleAllCheck()
+        internal virtual void ToggleAllCheck()
         {
             var isChecked = VideoInformationList.Any(i => !i.IsChecked.GetValueOrDefault());
 
@@ -245,6 +250,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        internal virtual Task ContinuousPlayback()
+        {
+            if(!VideoInformationList.Any(i => i.IsChecked.GetValueOrDefault())) {
+                return Task.CompletedTask;
+            }
+
+            var playList = VideoInformationList.Where(i => i.IsChecked.GetValueOrDefault()).ToArray();
+            var vm = new SmileVideoPlayerViewModel(Mediation);
+            var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(t => {
+                foreach(var item in playList) {
+                    item.IsChecked = false;
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+            return task;
+        }
 
         #endregion
 

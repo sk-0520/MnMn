@@ -795,6 +795,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
+        public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            PlayListItems.AddRange(videoInformations);
+            return LoadAsync(PlayListItems.First(), thumbCacheSpan, imageCacheSpan);
+        }
+
+
         [Obsolete]
         void ChangePlayerSizeFromPercent(int percent)
         {

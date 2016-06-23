@@ -389,7 +389,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public override void ToggleAllCheck()
+        internal override void ToggleAllCheck()
         {
             if(SelectedPage == null) {
                 if(SearchFinder != null) {
