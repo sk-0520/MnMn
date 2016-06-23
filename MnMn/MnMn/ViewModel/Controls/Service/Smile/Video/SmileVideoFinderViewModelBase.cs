@@ -147,6 +147,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand AllCheckCommand
+        {
+            get { return CreateCommand(o => ToggleAllCheck()); }
+        }
+
         #endregion
 
         #region function
@@ -230,6 +235,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
+
+        public virtual void ToggleAllCheck()
+        {
+            var isChecked = VideoInformationList.Any(i => !i.IsChecked.GetValueOrDefault());
+
+            foreach(var item in VideoInformationList) {
+                item.IsChecked = isChecked;
+            }
+        }
+
 
         #endregion
 

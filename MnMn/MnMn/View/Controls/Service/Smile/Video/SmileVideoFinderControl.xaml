@@ -39,6 +39,7 @@
 
     <Grid>
       <StackPanel Orientation="Horizontal">
+        <Button Command="{Binding AllCheckCommand}">all check</Button>
         <TextBlock>title filter</TextBlock>
         <TextBox Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" />
         <CheckBox IsChecked="{Binding IsBlacklist}">black list</CheckBox>
