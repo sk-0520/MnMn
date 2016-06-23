@@ -1597,7 +1597,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             LoadRelationVideoAsync();
 
             LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering);
-            CallOnPropertyChange(nameof(LocalCommentFilering));
+            var propertyNames = new[] {
+                nameof(LocalCommentFilering),
+                nameof(VideoId),
+                nameof(Title),
+            };
+            CallOnPropertyChange(propertyNames);
 
             base.OnLoadGetthumbinfoEnd();
         }
