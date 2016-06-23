@@ -1465,6 +1465,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region SmileVideoDownloadViewModel
 
+        public override Task LoadAsync(SmileVideoInformationViewModel videoInformation, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
+                item.IsPlaying = false;
+            }
+            videoInformation.IsPlaying = true;
+            return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan);
+        }
+
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
             if(!IsMakedDescription) {

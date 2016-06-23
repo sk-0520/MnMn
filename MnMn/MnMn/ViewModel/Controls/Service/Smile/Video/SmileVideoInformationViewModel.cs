@@ -77,6 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CollectionModel<SmileVideoTagViewModel> _tagList;
 
         bool? _isChecked = false;
+        bool _isPlaying = false;
 
         #endregion
 
@@ -191,6 +192,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool HasFirstRetrieve { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.FirstRetrieve); } }
 
         public bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
+
+        /// <summary>
+        /// 動画をプレイヤーで表示中か。
+        /// </summary>
+        public bool IsPlaying
+        {
+            get { return this._isPlaying; }
+            set { SetVariableValue(ref this._isPlaying, value); }
+        }
 
         #region 生データから取得
 
@@ -423,7 +433,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 ThrowNotGetthumbinfoSource();
-                
+
                 return Thumb.UserNickname;
             }
         }
@@ -457,7 +467,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return RawValueUtility.ConvertBoolean(Getflv.Done);
             }
         }
-        
+
         public bool IsEconomyMode
         {
             get
@@ -578,7 +588,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return IndividualVideoSetting.ConvertedSwf; }
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
-        
+
 
         #endregion
 
@@ -820,7 +830,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var videoInformation = new SmileVideoInformationViewModel(Mediation, item, video.Index + 1, SmileVideoInformationFlags.All);
                     result.Add(videoInformation);
                 }
-                
+
                 return (IEnumerable<SmileVideoInformationViewModel>)result;
             });
         }

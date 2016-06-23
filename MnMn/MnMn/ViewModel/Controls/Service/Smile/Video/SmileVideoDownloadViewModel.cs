@@ -511,7 +511,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
 
-        public async Task LoadAsync(SmileVideoInformationViewModel videoInformation, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        public virtual async Task LoadAsync(SmileVideoInformationViewModel videoInformation, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             await StopPrevProcessAsync();
 

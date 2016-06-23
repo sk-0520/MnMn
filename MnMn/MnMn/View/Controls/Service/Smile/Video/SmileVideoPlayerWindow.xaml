@@ -92,6 +92,7 @@
             <Style TargetType="MenuItem">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
+              <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
             </Style>
           </MenuItem.ItemContainerStyle>
           <MenuItem.ItemTemplate>
