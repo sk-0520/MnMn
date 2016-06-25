@@ -175,6 +175,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoFilteringCommentType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoFilteringTarget.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoInformationFlags.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoSortType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="Define\SourceLoadState.cs" />

@@ -24,6 +24,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -49,6 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         string _inputFilter;
         bool _isBlacklist;
 
+        bool _isAscending =  true;
+        SmileVideoSortType _selectedSortType;
+
         #endregion
 
         public SmileVideoFinderViewModelBase(Mediation mediation)
@@ -57,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResult.Result;
+
+            SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
             VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
             VideoInformationItems.Filter = FilterItems;
@@ -70,8 +77,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; } = new CollectionModel<SmileVideoInformationViewModel>();
         public IReadOnlyList<SmileVideoInformationViewModel> VideoInformationViewer => VideoInformationList;
-
+        public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView VideoInformationItems { get; }
+
+        public bool IsAscending
+        {
+            get { return this._isAscending; }
+            set
+            {
+                if(SetVariableValue(ref this._isAscending, value)) {
+                    ChangeSortItems();
+                }
+            }
+        }
+
+        public SmileVideoSortType SelectedSortType
+        {
+            get { return this._selectedSortType; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSortType, value)) {
+                    ChangeSortItems();
+                }
+            }
+        }
 
         public virtual bool NowLoading
         {
@@ -271,6 +300,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }, TaskScheduler.FromCurrentSynchronizationContext());
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
             return task;
+        }
+
+        internal void ChangeSortItems()
+        {
+            var map = new Dictionary<SmileVideoSortType, string>() {
+                { SmileVideoSortType.Number, nameof(SmileVideoInformationViewModel.Number) },
+                { SmileVideoSortType.Title, nameof(SmileVideoInformationViewModel.Title) },
+                { SmileVideoSortType.FirstRetrieve, nameof(SmileVideoInformationViewModel.FirstRetrieve) },
+                { SmileVideoSortType.ViewCount, nameof(SmileVideoInformationViewModel.ViewCounter) },
+                { SmileVideoSortType.CommentCount, nameof(SmileVideoInformationViewModel.CommentCounter) },
+                { SmileVideoSortType.MyListCount, nameof(SmileVideoInformationViewModel.MylistCounter) },
+            };
+            var propertyName = map[SelectedSortType];
+            var direction = IsAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
+            var sort = new SortDescription(propertyName, direction);
+
+            VideoInformationItems.SortDescriptions.Clear();
+            VideoInformationItems.SortDescriptions.Add(sort);
+            VideoInformationItems.Refresh();
         }
 
         #endregion

@@ -44,6 +44,9 @@
         <TextBlock>title filter</TextBlock>
         <TextBox Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" />
         <CheckBox IsChecked="{Binding IsBlacklist}">black list</CheckBox>
+
+        <CheckBox IsChecked="{Binding IsAscending}">ascending</CheckBox>
+        <ComboBox ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}" />
       </StackPanel>
     </Grid>
 
