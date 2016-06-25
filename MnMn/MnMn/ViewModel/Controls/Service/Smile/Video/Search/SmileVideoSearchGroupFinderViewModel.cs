@@ -17,8 +17,10 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -319,6 +321,70 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             throw new NotSupportedException();
         }
 
+        KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase> GetMemberInfo(bool getMethod, string memberName)
+        {
+            SmileVideoFinderViewModelBase target;
+            if(SelectedPage == null) {
+                if(SearchFinder != null) {
+                    target = SearchFinder;
+                } else {
+                    target = this;
+                }
+            } else {
+                target = SelectedPage.ViewModel;
+            }
+            var type = target.GetType();
+            MemberInfo[] members = getMethod 
+                ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.InvokeMethod).Where(m => m.Name == memberName).ToArray()
+                : type.GetMember(memberName)
+            ;
+            MemberInfo member;
+            if(target == this) {
+                member = members.First(m => m.DeclaringType == typeof(SmileVideoFinderViewModelBase));
+            } else {
+                member = members.First();
+            }
+
+            return new KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase>(member, target);
+        }
+
+        KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase> GetPropertyInfo([CallerMemberName] string propertyName = "")
+        {
+            var pair = GetMemberInfo(false, propertyName);
+
+            return new KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase>((PropertyInfo)pair.Key, pair.Value);
+        }
+
+        KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase> GetMethodInfo([CallerMemberName] string propertyName = "")
+        {
+            var pair = GetMemberInfo(true, propertyName);
+
+            return new KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase>((MethodInfo)pair.Key, pair.Value);
+        }
+
+        TResult GetSearchProperty<TResult>([CallerMemberName] string propertyName = "")
+        {
+            var pair = GetPropertyInfo(propertyName);
+            Debug.Assert(pair.Key.PropertyType == typeof(TResult));
+
+            return (TResult)pair.Key.GetValue(pair.Value);
+        }
+        void SetSearchProperty<TValue>(TValue value, [CallerMemberName] string propertyName = "")
+        {
+            var pair = GetPropertyInfo(propertyName);
+            Debug.Assert(pair.Key.PropertyType == typeof(TValue));
+
+            pair.Key.SetValue(pair.Value, value);
+        }
+
+        void DoSearchAction(string methodName, params object[] parameters)
+        {
+            var pair = GetMethodInfo(methodName);
+            Debug.Assert(pair.Key.ReturnType == typeof(void));
+
+            pair.Key.Invoke(pair.Value, parameters);
+        }
+
         #endregion
 
         #region SmileVideoFinderViewModelBase
@@ -339,27 +405,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get
             {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        return SearchFinder.InputFilter;
-                    } else {
-                        return base.InputFilter;
-                    }
-                }
+                //if(SelectedPage == null) {
+                //    if(SearchFinder != null) {
+                //        return SearchFinder.InputFilter;
+                //    } else {
+                //        return base.InputFilter;
+                //    }
+                //}
 
-                return SelectedPage.ViewModel.InputFilter;
+                //return SelectedPage.ViewModel.InputFilter;
+                return GetSearchProperty<string>();
             }
             set
             {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        SearchFinder.InputFilter = value;
-                    } else {
-                        base.InputFilter = value;
-                    }
-                } else {
-                    SelectedPage.ViewModel.InputFilter = value;
-                }
+                //if(SelectedPage == null) {
+                //    if(SearchFinder != null) {
+                //        SearchFinder.InputFilter = value;
+                //    } else {
+                //        base.InputFilter = value;
+                //    }
+                //} else {
+                //    SelectedPage.ViewModel.InputFilter = value;
+                //}
+                SetSearchProperty(value);
             }
         }
         public override bool IsBlacklist
@@ -392,15 +460,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         internal override void ToggleAllCheck()
         {
-            if(SelectedPage == null) {
-                if(SearchFinder != null) {
-                    SearchFinder.ToggleAllCheck();
-                } else {
-                    base.ToggleAllCheck();
-                }
-            } else {
-                SelectedPage.ViewModel.ToggleAllCheck();
-            }
+            //if(SelectedPage == null) {
+            //    if(SearchFinder != null) {
+            //        SearchFinder.ToggleAllCheck();
+            //    } else {
+            //        base.ToggleAllCheck();
+            //    }
+            //} else {
+            //    SelectedPage.ViewModel.ToggleAllCheck();
+            //}
+            DoSearchAction(nameof(ToggleAllCheck));
         }
 
         internal override Task ContinuousPlayback()
