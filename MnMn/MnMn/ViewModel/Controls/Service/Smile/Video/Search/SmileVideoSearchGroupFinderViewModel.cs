@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -399,6 +400,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             } else {
                 SelectedPage.ViewModel.ToggleAllCheck();
+            }
+        }
+
+        internal override Task ContinuousPlayback()
+        {
+            if(SelectedPage == null) {
+                if(SearchFinder != null) {
+                    return SearchFinder.ContinuousPlayback();
+                } else {
+                    return base.ContinuousPlayback();
+                }
+            } else {
+                return SelectedPage.ViewModel.ContinuousPlayback();
             }
         }
 
