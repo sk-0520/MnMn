@@ -243,20 +243,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         internal virtual void ToggleAllCheck()
         {
-            var isChecked = VideoInformationList.Any(i => !i.IsChecked.GetValueOrDefault());
+            var items = VideoInformationItems.Cast<SmileVideoInformationViewModel>().ToArray();
+            var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
-            foreach(var item in VideoInformationList) {
+            foreach(var item in items) {
                 item.IsChecked = isChecked;
             }
         }
 
         internal virtual Task ContinuousPlayback()
         {
-            if(!VideoInformationList.Any(i => i.IsChecked.GetValueOrDefault())) {
+            var items = VideoInformationItems.Cast<SmileVideoInformationViewModel>().ToArray();
+
+            if(!items.Any(i => i.IsChecked.GetValueOrDefault())) {
                 return Task.CompletedTask;
             }
 
-            var playList = VideoInformationList.Where(i => i.IsChecked.GetValueOrDefault()).ToArray();
+            var playList = items
+                .Where(i => i.IsChecked.GetValueOrDefault())
+                .ToArray()
+            ;
             var vm = new SmileVideoPlayerViewModel(Mediation);
             var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(t => {
                 foreach(var item in playList) {
