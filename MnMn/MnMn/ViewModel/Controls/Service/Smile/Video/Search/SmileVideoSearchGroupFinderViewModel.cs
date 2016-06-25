@@ -335,7 +335,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
             var type = target.GetType();
             MemberInfo[] members = getMethod 
-                ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.InvokeMethod).Where(m => m.Name == memberName).ToArray()
+                ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(m => m.Name == memberName).ToArray()
                 : type.GetMember(memberName)
             ;
             MemberInfo member;
@@ -383,6 +383,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             Debug.Assert(pair.Key.ReturnType == typeof(void));
 
             pair.Key.Invoke(pair.Value, parameters);
+        }
+
+        TResult DoSearchFunction<TResult>(string methodName, params object[] parameters)
+        {
+            var pair = GetMethodInfo(methodName);
+            Debug.Assert(pair.Key.ReturnType == typeof(TResult));
+
+            return (TResult)pair.Key.Invoke(pair.Value, parameters);
         }
 
         #endregion
@@ -434,27 +442,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get
             {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        return SearchFinder.IsBlacklist;
-                    } else {
-                        return base.IsBlacklist;
-                    }
-                }
+                //if(SelectedPage == null) {
+                //    if(SearchFinder != null) {
+                //        return SearchFinder.IsBlacklist;
+                //    } else {
+                //        return base.IsBlacklist;
+                //    }
+                //}
 
-                return SelectedPage.ViewModel.IsBlacklist;
+                //return SelectedPage.ViewModel.IsBlacklist;
+                return GetSearchProperty<bool>();
             }
             set
             {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        SearchFinder.IsBlacklist = value;
-                    } else {
-                        base.IsBlacklist = value;
-                    }
-                } else {
-                    SelectedPage.ViewModel.IsBlacklist = value;
-                }
+                //if(SelectedPage == null) {
+                //    if(SearchFinder != null) {
+                //        SearchFinder.IsBlacklist = value;
+                //    } else {
+                //        base.IsBlacklist = value;
+                //    }
+                //} else {
+                //    SelectedPage.ViewModel.IsBlacklist = value;
+                //}
+                SetSearchProperty(value);
             }
         }
 
@@ -472,17 +482,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             DoSearchAction(nameof(ToggleAllCheck));
         }
 
-        internal override Task ContinuousPlayback()
+        internal override Task ContinuousPlaybackAsync()
         {
-            if(SelectedPage == null) {
-                if(SearchFinder != null) {
-                    return SearchFinder.ContinuousPlayback();
-                } else {
-                    return base.ContinuousPlayback();
-                }
-            } else {
-                return SelectedPage.ViewModel.ContinuousPlayback();
-            }
+            //if(SelectedPage == null) {
+            //    if(SearchFinder != null) {
+            //        return SearchFinder.ContinuousPlayback();
+            //    } else {
+            //        return base.ContinuousPlayback();
+            //    }
+            //} else {
+            //    return SelectedPage.ViewModel.ContinuousPlayback();
+            //}
+            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync));
         }
 
         #endregion

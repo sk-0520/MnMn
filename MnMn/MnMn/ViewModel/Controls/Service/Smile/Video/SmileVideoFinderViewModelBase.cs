@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public ICommand ContinuousPlaybackCommand
         {
-            get { return CreateCommand(o => ContinuousPlayback()); }
+            get { return CreateCommand(o => ContinuousPlaybackAsync()); }
         }
 
         #endregion
@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlayback()
+        internal virtual Task ContinuousPlaybackAsync()
         {
             var items = VideoInformationItems.Cast<SmileVideoInformationViewModel>().ToArray();
 
