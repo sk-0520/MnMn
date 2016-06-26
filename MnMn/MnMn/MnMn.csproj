@@ -616,6 +616,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Service\Smile\Video\Player\Pedia.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\Lock.png" />
+    <Resource Include="Resources\Service\Smile\Finance.png" />
+    <Resource Include="Resources\Service\Smile\Smile.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\ImageState.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\CommentState.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\VideoState.png" />
@@ -628,7 +632,7 @@
     <Resource Include="Resources\Tab\Close.png" />
     <Resource Include="Resources\Tab\Next.png" />
     <Resource Include="Resources\Tab\Previous.png" />
-    <Resource Include="Resources\Service\Smile\Video\SortAscending.png" />
+    <Resource Include="Resources\Service\Smile\Video\Finder\SortAscending.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\Backward.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\Forward.png" />
     <Resource Include="Resources\Navigationbar\Repeat.png" />
@@ -789,7 +793,6 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
-    <Folder Include="Resources\Service\Smile\Video\Finder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

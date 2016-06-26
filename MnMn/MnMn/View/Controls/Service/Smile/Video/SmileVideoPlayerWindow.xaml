@@ -11,6 +11,7 @@
 
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 
@@ -41,6 +42,7 @@
 
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 
+      <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
       <Style x:Key="ThumbnailImage" TargetType="Image" >
@@ -72,6 +74,7 @@
         <Setter Property="Height" Value="6" />
         <Setter Property="Canvas.Left" Value="10" />
         <Setter Property="Canvas.Top" Value="10" />
+        <Setter Property="LoadedToVisibility" Value="Visible" />
       </Style>
 
     </ResourceDictionary>
@@ -81,12 +84,12 @@
     <ToolBar DockPanel.Dock="Top">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <TextBlock Text="cache:" />
+          <TextBlock Text="キャッシュ:" />
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
       </Button>
       <Menu>
-        <MenuItem Header="add mylist" ItemsSource="{Binding AccountMyListItems}">
+        <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem">
               <Setter Property="Command" Value="{Binding DataContext.AdditionMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -107,7 +110,7 @@
         <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
       </Button>
       <Menu>
-        <MenuItem Header="play list" ItemsSource="{Binding PlayListItems}">
+        <MenuItem Header="プレイリスト" ItemsSource="{Binding PlayListItems}">
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -155,73 +158,89 @@
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom" >
+      <StatusBar.Resources>
+        <Style TargetType="app_view_controls:LoadStateNavigator">
+          <Setter Property="LoadedToVisibility" Value="Visible" />
+          <Setter Property="Width" Value="10" />
+          <Setter Property="Height" Value="10" />
+        </Style>
+      </StatusBar.Resources>
       <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea}">
-        <Image Source="/Resources/Service/Smile/Video/Player/VideoInformation.png" Style="{StaticResource ButtonImage}" />
+        <Canvas Style="{StaticResource StatePanel}">
+          <Image Source="/Resources/Service/Smile/Video/Player/VideoInformation.png" Style="{StaticResource ButtonImage}" />
+          <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
+        </Canvas>
       </ToggleButton>
-      <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
-        <StackPanel.Resources>
-          <Style TargetType="app_view_controls:LoadStateNavigator">
-            <Setter Property="LoadedToVisibility" Value="Visible" />
-            <Setter Property="Width" Value="10" />
-            <Setter Property="Height" Value="10" />
+      <TextBlock>
+        <TextBlock>[</TextBlock>
+        <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
+        <TextBlock>]</TextBlock>
+      </TextBlock>
+      <Canvas Style="{StaticResource StatePanel}">
+        <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />
+        <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Style="{StaticResource StateControl}" />
+      </Canvas>
+      <Canvas Style="{StaticResource StatePanel}">
+        <Image Source="/Resources/Service/Smile/Video/Player/CommentState.png" Style="{StaticResource ButtonImage}" />
+        <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
+      </Canvas>
+      <Canvas Style="{StaticResource StatePanel}">
+        <Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />
+        <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
+      </Canvas>
+      <TextBlock ToolTip="動画サイズ">
+        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
+        <TextBlock>x</TextBlock>
+        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
+        </TextBlock>
+      <Image>
+        <Image.Style>
+          <Style TargetType="Image" BasedOn="{StaticResource ButtonImage}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsEconomyMode}" Value="True">
+                <Setter Property="Source" Value="/Resources/Service/Smile/Smile.png" />
+                <Setter Property="ToolTip" Value="エコノミーモード" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding IsEconomyMode}" Value="False">
+                <Setter Property="Source" Value="/Resources/Service/Smile/Finance.png" />
+                <Setter Property="ToolTip" Value="通常再生" />
+              </DataTrigger>
+            </Style.Triggers>
           </Style>
-        </StackPanel.Resources>
-        <TextBlock>
-          <Run>[</Run>
-          <Run Text="{Binding PlayerState, Mode=OneWay}"/>
-          <Run>]</Run>
-        </TextBlock>
-        <TextBlock>
-          <Run>[</Run>
-          <Run>economy</Run>
-          <Run>:</Run>
-          <Run Text="{Binding IsEconomyMode, Mode=OneWay}"/>
-          <Run>]</Run>
-        </TextBlock>
-        <TextBlock>
-          <Run>[</Run>
-          <Run>info</Run>
-          <Run>:</Run>
-          <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
-          <TextBlock>
-            <Run>(</Run>
-            <Run>upload</Run>
-            <Run>:</Run>
-            <Run Text="{Binding VideoInformation.FirstRetrieve, Mode=OneWay}" />
-            <Run>,</Run>
-            <Run>view</Run>
-            <Run>:</Run>
-            <Run Text="{Binding VideoInformation.ViewCounter, Mode=OneWay}" />
-            <Run>,</Run>
-            <Run>mylist</Run>
-            <Run>:</Run>
-            <Run Text="{Binding VideoInformation.MylistCounter, Mode=OneWay}" />
-            <Run>,</Run>
-            <Run>comment</Run>
-            <Run>:</Run>
-            <Run Text="{Binding VideoInformation.CommentCounter, Mode=OneWay}" />
-            <Run>)</Run>
-          </TextBlock>
-          <Run>]</Run>
-        </TextBlock>
-        <Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />
-          <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Style="{StaticResource StateControl}" />
-        </Canvas>
-        <Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/CommentState.png" Style="{StaticResource ButtonImage}" />
-          <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
-        </Canvas>
-        <Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />
-          <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
-        </Canvas>
-        <TextBlock>
-          <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
-          <TextBlock>x</TextBlock>
-          <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
-        </TextBlock>
-      </StackPanel>
+        </Image.Style>
+      </Image>
+      <ContentControl>
+        <ContentControl.Style>
+          <Style TargetType="ContentControl">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding InformationLoadState, Converter={StaticResource LoadStateIsLoadedConverter}}" Value="False">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <TextBlock>動画情報未取得</TextBlock>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding InformationLoadState, Converter={StaticResource LoadStateIsLoadedConverter}}" Value="True">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <StackPanel Orientation="Horizontal">
+                      <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                          <Setter Property="Margin" Value="0,0,8,0" />
+                        </Style>
+                      </StackPanel.Resources>
+                      <TextBlock Text="{Binding VideoInformation.FirstRetrieve, Mode=OneWay, StringFormat=投稿日時: {0:yyyy/MM/dd hh:mm:ss}}" />
+                      <TextBlock Text="{Binding VideoInformation.ViewCounter, Mode=OneWay, StringFormat=再生数: {0:#,#.}}" />
+                      <TextBlock Text="{Binding VideoInformation.CommentCounter, Mode=OneWay, StringFormat=コメント数: {0:#,#.}}" />
+                      <TextBlock Text="{Binding VideoInformation.MylistCounter, Mode=OneWay, StringFormat=マイリスト数: {0:#,#.}}" />
+                    </StackPanel>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ContentControl.Style>
+        </ContentControl>
     </StatusBar>
 
     <Grid>
@@ -631,8 +650,19 @@
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="tag:" />
+                <TextBlock Grid.Column="0" Text="登録タグ" Margin="10,0" />
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding TagItems}">
+                  <ItemsControl.Resources>
+                    <Style TargetType="TextBlock">
+                      <Setter Property="FontSize" Value="10" />
+                      <Setter Property="VerticalAlignment" Value="Stretch" />
+                    </Style>
+                    <Style TargetType="Image">
+                      <Setter Property="VerticalAlignment" Value="Center" />
+                      <Setter Property="Width" Value="12" />
+                      <Setter Property="Height" Value="12" />
+                    </Style>
+                  </ItemsControl.Resources>
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                       <WrapPanel Orientation="Horizontal" />
@@ -640,27 +670,26 @@
                   </ItemsControl.ItemsPanel>
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                      <StackPanel Orientation="Horizontal">
-                        <TextBlock FontSize="10">
-                          <TextBlock Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" >[L]</TextBlock>
-                          <TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>
+                      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <!--<TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>-->
+                        <Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultImage}" />
+                        <TextBlock>
                           <Hyperlink
                             Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                             CommandParameter="{Binding}"
                           >
                             <Run Text="{Binding TagName, Mode=OneTime}" />
                           </Hyperlink>
-                          <TextBlock Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Hyperlink
-                              Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                              CommandParameter="{Binding}"
-                            >
-                              <Run>[百]</Run>
-                            </Hyperlink>
-                          </TextBlock>
-                          <!-- TODO: ださい -->
-                          <Border Width="8" />
                         </TextBlock>
+                        <Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultImage}">
+                          <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                              <i:InvokeCommandAction Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
+                            </i:EventTrigger>
+                          </i:Interaction.Triggers>
+                        </Image>
+                        <!-- TODO: ださい -->
+                        <Border Width="8" />
                       </StackPanel>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
