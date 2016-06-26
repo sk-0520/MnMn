@@ -122,6 +122,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             }
         }
 
+        public ICommand CloseTabCommand
+        {
+            get
+            {
+                return CreateCommand(o => CloseTab((SmileVideoRankingCategoryFinderViewModel)o));
+            }
+        }
+
         #endregion
 
         #region function
@@ -169,6 +177,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
             SelectedRankingCategory = selectViewModel;
             return selectViewModel.LoadDefaultCacheAsync();
+        }
+
+        void CloseTab(SmileVideoRankingCategoryFinderViewModel finder)
+        {
+            RankingCategoryGroupItems.Remove(finder);
         }
 
         #endregion
