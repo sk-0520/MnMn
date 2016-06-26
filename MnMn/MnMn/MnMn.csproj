@@ -616,6 +616,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Service\Smile\Video\Finder\Check.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\Pedia.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\Lock.png" />
     <Resource Include="Resources\Service\Smile\Finance.png" />
