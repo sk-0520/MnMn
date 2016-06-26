@@ -63,7 +63,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.54\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.55\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -586,6 +586,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Resources\ImageDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\LoadStateDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -612,6 +616,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Service\Smile\Video\Player\ImageState.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\CommentState.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\VideoState.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\VideoInformation.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\CommentList.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\CommentShow.png" />
+    <Resource Include="Resources\Tab\Refresh.png" />
+    <Resource Include="Resources\Pager\Left.png" />
+    <Resource Include="Resources\Pager\Right.png" />
+    <Resource Include="Resources\Tab\Close.png" />
+    <Resource Include="Resources\Tab\Next.png" />
+    <Resource Include="Resources\Tab\Previous.png" />
+    <Resource Include="Resources\Service\Smile\Video\SortAscending.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\Backward.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\Forward.png" />
+    <Resource Include="Resources\Navigationbar\Repeat.png" />
+    <Resource Include="Resources\Navigationbar\Resume.png" />
+    <Resource Include="Resources\Navigationbar\AudioMute.png" />
+    <Resource Include="Resources\Navigationbar\AudioOn.png" />
+    <Resource Include="Resources\Navigationbar\Pause.png" />
+    <Resource Include="Resources\Navigationbar\Play.png" />
+    <Resource Include="Resources\Navigationbar\Stop.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -763,6 +789,7 @@
   <ItemGroup>
     <Folder Include="etc\image\niconico\video\" />
     <Folder Include="etc\script\niconico\" />
+    <Folder Include="Resources\Service\Smile\Video\Finder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

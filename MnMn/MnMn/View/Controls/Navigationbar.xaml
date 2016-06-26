@@ -5,16 +5,21 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
 
   xmlns:sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-
-
+  
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="30" d:DesignWidth="300"
 >
   <UserControl.Resources>
-    <sys:Double x:Key="ProgressHeight">8</sys:Double>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+      <sys:Double x:Key="ProgressHeight">8</sys:Double>
+      <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+      <sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -30,23 +35,26 @@
       Command="{Binding PlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding PlayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
-      <Button.Resources>
-        <Style TargetType="Button">
-          <Setter Property="Content" Value="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />
+      <Image>
+        <Image.Style>
+          <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+            <!--<Setter Property="Source" Value="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />-->
 
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Playing">
-              <Setter Property="Content" Value="||" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Pause">
-              <Setter Property="Content" Value="->" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop">
-              <Setter Property="Content" Value="|>" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </Button.Resources>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Playing">
+                <Setter Property="Source" Value="/Resources/Navigationbar/Pause.png" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Pause">
+                <Setter Property="Source" Value="/Resources/Navigationbar/Resume.png" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop">
+                <Setter Property="Source" Value="/Resources/Navigationbar/Play.png" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+
+        </Image.Style>
+      </Image>
     </Button>
     <Button
       Grid.Column="1"
@@ -54,7 +62,7 @@
       Command="{Binding StopCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding StopCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
-      ■
+      <Image Source="/Resources/Navigationbar/Stop.png" Style="{StaticResource DefaultImage}" />
     </Button>
     <Slider
       x:Name="seekbar"
@@ -123,14 +131,27 @@
         Command="{Binding ReplayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
         CommandParameter="{Binding ReplayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
       >
-        リ
+        <Image Source="/Resources/Navigationbar/Repeat.png" Style="{StaticResource DefaultImage}" />
       </ToggleButton>
       <ToggleButton
         x:Name="PART_AudioMute"
         Grid.Column="1"
-        IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
       >
-        音
+        <Image>
+          <Image.Style>
+            <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, ElementName=PART_AudioMute}" Value="True">
+                  <Setter Property="Source" Value="/Resources/Navigationbar/AudioOn.png" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsChecked, ElementName=PART_AudioMute}" Value="False">
+                  <Setter Property="Source" Value="/Resources/Navigationbar/AudioMute.png" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Image.Style>
+        </Image>
       </ToggleButton>
       <Popup
         x:Name="PART_AudioSlider"
