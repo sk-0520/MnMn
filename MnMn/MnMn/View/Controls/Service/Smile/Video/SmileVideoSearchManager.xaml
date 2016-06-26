@@ -21,6 +21,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </UserControl.Resources>
@@ -152,7 +153,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
-            <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabSourceLoadState}" />
             <Label Content="{Binding Query}" />
             <Label Content="{Binding Type}" />
             <app_view_controls_service_smile_video:SmileVideoSearchContext

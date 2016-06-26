@@ -70,7 +70,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
-            <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabSourceLoadState}" />
             <Label Content="{Binding CategoryName}" />
             <app_view_controls_service_smile_video:SmileVideoRankingContext
               TargetItemsSource="{Binding TargetItems}"
