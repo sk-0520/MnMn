@@ -1,15 +1,15 @@
-﻿<UserControl 
+﻿<UserControl
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting.SmileVideoFilteringCommentList"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  
+
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  
+
   xmlns:app_define="crl-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="crl-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
 
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
@@ -22,11 +22,11 @@
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
-          <ColumnDefinition />
+          <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="selectType" Grid.Column="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <ComboBox x:Name="selectTarget" Grid.Column="1" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <CheckBox x:Name="selectIgnoreCase" Grid.Column="2" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">ignore case</CheckBox>
+        <ComboBox x:Name="selectType" Grid.Column="0" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <ComboBox x:Name="selectTarget" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <CheckBox x:Name="selectIgnoreCase" Grid.Column="2" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">大文字小文字を無視</CheckBox>
       </Grid>
       <TextBox x:Name="inputSource" Text="{Binding SelectedFilteringEditItem.EditingSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <Grid>
@@ -35,9 +35,9 @@
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Click="UpdateButton_Click">update</Button>
-        <Button Grid.Column="1" Click="CreateButton_Click">insert</Button>
-        <Button Grid.Column="2" Click="RemoveButton_Click">remove</Button>
+        <Button Grid.Column="0" Click="UpdateButton_Click">更新</Button>
+        <Button Grid.Column="1" Click="CreateButton_Click">挿入</Button>
+        <Button Grid.Column="2" Click="RemoveButton_Click">削除</Button>
         <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
       </Grid>
     </StackPanel>
@@ -51,7 +51,7 @@
         <GridView>
           <GridViewColumn>
             <GridViewColumn.Header>
-              <TextBlock Text="Source" />
+              <TextBlock Text="ソース" />
             </GridViewColumn.Header>
             <GridViewColumn.CellTemplate>
               <DataTemplate>
