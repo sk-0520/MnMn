@@ -106,14 +106,14 @@
     <Grid Grid.Column="0">
       <!-- 各データコンテキストは選択用で下位はUserControlのデータコンテキストを参照する -->
       <TabControl Style="{StaticResource FinderTab}">
-        <TabItem x:Name="viewAccount" Header="account" IsSelected="{Binding IsSelectedAccount}">
+        <TabItem x:Name="viewAccount" Header="アカウント" IsSelected="{Binding IsSelectedAccount}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <Button Command="{Binding LoadAccountMyListCommand}">load</Button>
-              <Button Command="{Binding CreateAccountMyListCommand}">create</Button>
-              <Button Command="{Binding RemoveSelectedAccountMyListCommand}">remove</Button>
+              <Button Command="{Binding LoadAccountMyListCommand}">読込</Button>
+              <Button Command="{Binding CreateAccountMyListCommand}">作成</Button>
+              <Button Command="{Binding RemoveSelectedAccountMyListCommand}">削除</Button>
             </ToolBar>
-            <Expander DockPanel.Dock="Bottom" Header="edit" Visibility="{Binding SelectedAccountFinder.CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Expander DockPanel.Dock="Bottom" Header="編集" Visibility="{Binding SelectedAccountFinder.CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition />
@@ -126,7 +126,7 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="name" />
+                <Label Grid.Row="0" Grid.Column="0" Content="名前" />
                 <Grid Grid.Row="0" Grid.Column="1" >
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -145,13 +145,13 @@
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>
-                  <CheckBox Grid.Column="2" Content="public" IsChecked="{Binding SelectedAccountFinder.EditingMyListIsPublic}"/>
+                  <CheckBox Grid.Column="2" Content="公開" IsChecked="{Binding SelectedAccountFinder.EditingMyListIsPublic}"/>
                 </Grid>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="sort" />
+                <Label Grid.Row="1" Grid.Column="0" Content="ソート" />
                 <ComboBox Grid.Row="1" Grid.Column="1" DisplayMemberPath="DisplayText" ItemsSource="{Binding Sorts}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListSortElement}" />
 
-                <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="memo" >
+                <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="メモ" >
                   <TextBox
                     AcceptsReturn="True"
                     Text="{Binding SelectedAccountFinder.EditingMyListDescription, UpdateSourceTrigger=PropertyChanged}"
@@ -163,27 +163,27 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
-                  <Button Grid.Column="0" Content="save" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
-                  <Button Grid.Column="1" Content="cancel" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
+                  <Button Grid.Column="0" Content="保存" Command="{Binding SaveEditCommand}" CommandParameter="{Binding SelectedAccountFinder}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}" />
+                  <Button Grid.Column="1" Content="キャンセル" Command="{Binding SelectedAccountFinder.CancelEditCommand}" IsEnabled="{Binding SelectedAccountFinder.IsEditing}"/>
                 </Grid>
 
               </Grid>
             </Expander>
             <ToolBar DockPanel.Dock="Bottom">
-              <Button Command="{Binding RemoveCheckedAccountMyListVideoCommand}">remove video</Button>
+              <Button Command="{Binding RemoveCheckedAccountMyListVideoCommand}">選択ビデオ削除</Button>
             </ToolBar>
 
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedAccountFinder}" ItemsSource="{Binding AccountMyListItems}" />
           </DockPanel>
         </TabItem>
 
-        <TabItem x:Name="viewSearch" Header="search" IsSelected="{Binding IsSelectedSearch}">
+        <TabItem x:Name="viewSearch" Header="検索" IsSelected="{Binding IsSelectedSearch}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <TextBox Text="{Binding InputSearchMyList}" />
-              <Button Command="{Binding SearchUserMyListCommand}">find</Button>
+              <Button Command="{Binding SearchUserMyListCommand}">検索</Button>
               <Separator />
-              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" >add bookmark</Button>
+              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" >ブックマーク追加</Button>
             </ToolBar>
 
             <app_view_controls:Pager
@@ -218,22 +218,22 @@
           </DockPanel>
         </TabItem>
 
-        <TabItem x:Name="viewBookmark" Header="bookmark" IsSelected="{Binding IsSelectedBookmark}">
+        <TabItem x:Name="viewBookmark" Header="ブックマーク" IsSelected="{Binding IsSelectedBookmark}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <Button Command="{Binding RemoveSelectedBookmarkUserMyListCommand}">remove</Button>
+              <Button Command="{Binding RemoveSelectedBookmarkUserMyListCommand}">削除</Button>
               <Separator />
-              <Button Command="{Binding PositionUpBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">up</Button>
-              <Button Command="{Binding PositionDownBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">down</Button>
+              <Button Command="{Binding PositionUpBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">上へ</Button>
+              <Button Command="{Binding PositionDownBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">下へ</Button>
             </ToolBar>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />
           </DockPanel>
         </TabItem>
 
-        <TabItem x:Name="viewHistory" Header="hist" IsSelected="{Binding IsSelectedHistory}">
+        <TabItem x:Name="viewHistory" Header="履歴" IsSelected="{Binding IsSelectedHistory}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedHistoryFinder}">add bookmark</Button>
+              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedHistoryFinder}">ブックマーク追加</Button>
             </ToolBar>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedHistoryFinder}" ItemsSource="{Binding HistoryUserMyListItems}" />
           </DockPanel>
