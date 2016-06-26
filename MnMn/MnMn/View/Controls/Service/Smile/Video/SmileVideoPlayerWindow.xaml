@@ -608,7 +608,7 @@
         TabStripPlacement="Left"
         Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
-        <TabItem Header="動画情報">
+        <TabItem Header="動画情報" IsSelected="{Binding IsSelectedVideoInformation}">
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />

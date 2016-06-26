@@ -137,6 +137,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _isSelectedComment;
 
+        bool _isSelectedVideoInformation;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -563,6 +565,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return Setting.Player.DisplayCommentLimitCount; }
             set { SetPropertyValue(Setting.Player, value); }
+        }
+
+        public bool IsSelectedVideoInformation
+        {
+            get { return this._isSelectedVideoInformation; }
+            set { SetVariableValue(ref this._isSelectedVideoInformation, value); }
         }
 
         #endregion
@@ -1484,6 +1492,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 item.IsPlaying = false;
             }
             videoInformation.IsPlaying = true;
+            IsSelectedVideoInformation = true;
+
             return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan);
         }
 
@@ -1631,6 +1641,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsBufferingStop = false;
             UserOperationStop = false;
             IsMakedDescription = false;
+            IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
             CanVideoPlay = false;
