@@ -313,6 +313,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand CloseTabCommand
+        {
+            get
+            {
+                return CreateCommand(o => CloseTab((SmileVideoSearchGroupFinderViewModel)o));
+            }
+        }
+
         #endregion
 
         #region function
@@ -414,6 +422,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             SearchHistoryList.Remove(o);
         }
 
+        void CloseTab(SmileVideoSearchGroupFinderViewModel finder)
+        {
+            SearchGroups.Remove(finder);
+        }
 
         #endregion
 

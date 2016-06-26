@@ -9,6 +9,8 @@
       </Trigger>
     </Style.Triggers>
     <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
   </Style>
 
 </ResourceDictionary>

@@ -630,7 +630,6 @@
     <Resource Include="Resources\Tab\Refresh.png" />
     <Resource Include="Resources\Pager\Left.png" />
     <Resource Include="Resources\Pager\Right.png" />
-    <Resource Include="Resources\Tab\Close.png" />
     <Resource Include="Resources\Tab\Next.png" />
     <Resource Include="Resources\Tab\Previous.png" />
     <Resource Include="Resources\Service\Smile\Video\Finder\SortAscending.png" />

@@ -152,31 +152,9 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
-            <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-              </Grid.RowDefinitions>
-              <StackPanel Grid.Row="0">
-                <TextBlock Text="{Binding Query}" />
-                <TextBlock Text="{Binding Type}" />
-              </StackPanel>
-              <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
-                <TextBlock Text="{Binding FinderLoadState, Mode=OneWay}" />
-              </StackPanel>
-
-            </Grid>
-            <!--<ComboBox
-              DisplayMemberPath="DisplayText"
-              ItemsSource="{Binding MethodItems}"
-              SelectedItem="{Binding SelectedMethod}"
-            />
-            <ComboBox
-              DisplayMemberPath="DisplayText"
-              ItemsSource="{Binding SortItems}"
-              SelectedItem="{Binding SelectedSort}"
-            />-->
+            <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
+            <Label Content="{Binding Query}" />
+            <Label Content="{Binding Type}" />
             <app_view_controls_service_smile_video:SmileVideoSearchContext
               SelectedMethod="{Binding SelectedMethod}"
               SelectedSort="{Binding SelectedSort}"
@@ -184,10 +162,12 @@
               SortItems="{Binding SortItems}"
             />
             <Button
-              Content="reload"
               Command="{Binding ReloadCommand}"
               IsEnabled="{Binding CanLoad}"
-            />
+            >
+              <Image Source="/Resources/Tab/Refresh.png" Style="{StaticResource TabImage}" />
+            </Button>
+            <Button Style="{StaticResource TabCloseButton}" Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>

@@ -1,16 +1,24 @@
-﻿<ResourceDictionary 
+﻿<ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
   </ResourceDictionary.MergedDictionaries>
-  
+
   <Style x:Key="TabImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
     <Setter Property="Width" Value="16" />
     <Setter Property="Height" Value="16" />
   </Style>
-  
+
+  <Style x:Key="TabCloseButton" TargetType="Button">
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="Margin" Value="2,0,-2,0" />
+    <Setter Property="FontFamily" Value="Webdings" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Content" Value="r" />
+  </Style>
+
   <!--
   http://www.kanazawa-net.ne.jp/~pmansato/wpf/wpf_custom_tabcontrol.htm
   -->
@@ -25,39 +33,39 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}">
-              <RepeatButton 
-                Name="PART_HeadMoveLeft" 
+              <RepeatButton
+                Name="PART_HeadMoveLeft"
                 DockPanel.Dock="Left"
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-                Command="ScrollBar.LineLeftCommand" 
+                Command="ScrollBar.LineLeftCommand"
               >
                 <Image Source="/Resources/Tab/Previous.png" Style="{StaticResource TabImage}" />
               </RepeatButton>
-              <RepeatButton 
-                Name="PART_TailMoveRight" 
+              <RepeatButton
+                Name="PART_TailMoveRight"
                 DockPanel.Dock="Right"
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-                Command="ScrollBar.LineRightCommand" 
+                Command="ScrollBar.LineRightCommand"
               >
                 <Image Source="/Resources/Tab/Next.png" Style="{StaticResource TabImage}" />
               </RepeatButton>
-              <RepeatButton 
-                Name="PART_TailMoveLeft" 
+              <RepeatButton
+                Name="PART_TailMoveLeft"
                 DockPanel.Dock="Right"
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-                Command="ScrollBar.LineLeftCommand" 
+                Command="ScrollBar.LineLeftCommand"
               >
                 <Image Source="/Resources/Tab/Previous.png" Style="{StaticResource TabImage}" />
               </RepeatButton>
-              <ScrollViewer 
-                Name="PART_ScrollViewer" 
+              <ScrollViewer
+                Name="PART_ScrollViewer"
                 CanContentScroll="True"
-                IsDeferredScrollingEnabled="False" 
+                IsDeferredScrollingEnabled="False"
                 SnapsToDevicePixels="True"
-                HorizontalScrollBarVisibility="Hidden" 
+                HorizontalScrollBarVisibility="Hidden"
                 VerticalScrollBarVisibility="Disabled"
               >
-                <VirtualizingStackPanel 
+                <VirtualizingStackPanel
                   x:Name="HeaderPanel"
                   Margin="4,2,4,0"
                   Panel.ZIndex="1"
@@ -67,8 +75,8 @@
               </ScrollViewer>
             </DockPanel>
 
-            <Border 
-              Name="ContentPanel" 
+            <Border
+              Name="ContentPanel"
               Grid.Row="1"
               BorderThickness="{TemplateBinding Border.BorderThickness}"
               BorderBrush="{TemplateBinding Border.BorderBrush}"
@@ -77,7 +85,7 @@
               KeyboardNavigation.TabNavigation="Local"
               KeyboardNavigation.DirectionalNavigation="Contained"
             >
-              <ContentPresenter 
+              <ContentPresenter
                 ContentSource="PART_SelectedContentHost"
                 Content="{TemplateBinding TabControl.SelectedContent}"
                 ContentTemplate="{TemplateBinding TabControl.SelectedContentTemplate}"
@@ -96,5 +104,5 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
 </ResourceDictionary>
