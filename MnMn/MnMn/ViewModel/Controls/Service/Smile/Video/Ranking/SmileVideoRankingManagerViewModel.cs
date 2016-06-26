@@ -47,9 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         {
             RankingModel = rankingModel;
             CategoryItems = new CollectionModel<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
-            SelectedPeriod = PeriodItems.First();
-            SelectedTarget = TargetItems.First();
-            SelectedCategory = CategoryItems.First();
+            SelectedPeriod = PeriodItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultPeriodKey) ?? PeriodItems.First();
+            SelectedTarget = TargetItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultTargetKey) ?? TargetItems.First();
+            SelectedCategory = CategoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? CategoryItems.First();
         }
 
         #region property
@@ -62,18 +62,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         public DefinedElementModel SelectedPeriod
         {
             get { return this._selectedPeriod; }
-            set { SetVariableValue(ref this._selectedPeriod, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedPeriod, value)) {
+                    Setting.Ranking.DefaultPeriodKey = SelectedPeriod.Key;
+                }
+            }
         }
         public DefinedElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
-            set { SetVariableValue(ref this._selectedTarget, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedTarget, value)) {
+                    Setting.Ranking.DefaultTargetKey = SelectedTarget.Key;
+                }
+            }
         }
         public SmileVideoRankingCategoryDefinedElementViewModel SelectedCategory
         {
             get { return this._selectedCategory; }
             set {
                 if(SetVariableValue(ref this._selectedCategory, value)) {
+                    Setting.Ranking.DefaultCategoryKey = SelectedCategory.Model.Key;
                     if(this._selectedCategory != null) {
                         LoadRankingCategoryAsync().ConfigureAwait(false);
                     }

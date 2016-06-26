@@ -20,30 +20,20 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoSettingModel: SettingModelBase
+    public class SmileVideoRankingSettingModel: SettingModelBase
     {
         #region property
 
-
-        /// <summary>
-        /// コメント設定。
-        /// </summary>
         [DataMember]
-        public SmileVideoCommentSettingModel Comment { get; set; } = new SmileVideoCommentSettingModel();
-
+        public string DefaultPeriodKey { get; set; }
         [DataMember]
-        public SmileVideoSearchSettingModel Search { get; set; } = new SmileVideoSearchSettingModel();
-
+        public string DefaultTargetKey { get; set; }
         [DataMember]
-        public SmileVideoPlayerSettingModel Player { get; set; } = new SmileVideoPlayerSettingModel();
-
-        [DataMember]
-        public SmileVideoRankingSettingModel Ranking { get; set; } = new SmileVideoRankingSettingModel();
+        public string DefaultCategoryKey { get; set; }
 
         #endregion
     }
