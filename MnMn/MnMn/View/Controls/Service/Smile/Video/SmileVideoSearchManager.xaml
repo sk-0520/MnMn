@@ -161,13 +161,8 @@
               MethodItems="{Binding MethodItems}"
               SortItems="{Binding SortItems}"
             />
-            <Button
-              Command="{Binding ReloadCommand}"
-              IsEnabled="{Binding CanLoad}"
-            >
-              <Image Source="/Resources/Tab/Refresh.png" Style="{StaticResource TabImage}" />
-            </Button>
-            <Button Style="{StaticResource TabCloseButton}" Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+            <Button Style="{StaticResource TabReloadButton}" />
+            <Button Style="{StaticResource TabCloseButton}" />
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>

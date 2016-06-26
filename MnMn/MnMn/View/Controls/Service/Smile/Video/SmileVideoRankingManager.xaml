@@ -78,13 +78,14 @@
               SelectedTarget="{Binding SelectedTarget, Mode=TwoWay}"
               SelectedPeriod="{Binding SelectedPeriod, Mode=TwoWay}"
             />
-            <Button
+            <!--<Button
               Command="{Binding ReloadCommand}"
               IsEnabled="{Binding CanLoad}"
             >
               <Image Source="/Resources/Tab/Refresh.png" Style="{StaticResource TabImage}" />
-            </Button>
-            <Button Style="{StaticResource TabCloseButton}" Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+            </Button>-->
+            <Button Style="{StaticResource TabReloadButton}" />
+            <Button Style="{StaticResource TabCloseButton}" />
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>

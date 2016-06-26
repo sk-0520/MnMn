@@ -627,7 +627,6 @@
     <Resource Include="Resources\Service\Smile\Video\Player\VideoInformation.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\CommentList.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\CommentShow.png" />
-    <Resource Include="Resources\Tab\Refresh.png" />
     <Resource Include="Resources\Pager\Left.png" />
     <Resource Include="Resources\Pager\Right.png" />
     <Resource Include="Resources\Tab\Next.png" />

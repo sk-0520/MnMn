@@ -11,12 +11,22 @@
     <Setter Property="Height" Value="16" />
   </Style>
 
+  <Style x:Key="TabReloadButton" TargetType="Button">
+    <Setter Property="Command" Value="{Binding ReloadCommand}" />
+    <Setter Property="IsEnabled" Value="{Binding CanLoad}" />
+    <Setter Property="FontFamily" Value="Webdings" />
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="Content" Value="q" />
+  </Style>
+
   <Style x:Key="TabCloseButton" TargetType="Button">
     <Setter Property="VerticalAlignment" Value="Top" />
     <Setter Property="Margin" Value="2,0,-2,0" />
     <Setter Property="FontFamily" Value="Webdings" />
     <Setter Property="FontSize" Value="12" />
     <Setter Property="Content" Value="r" />
+    <Setter Property="Command" Value="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <Setter Property="CommandParameter" Value="{Binding}" />
   </Style>
 
   <!--
