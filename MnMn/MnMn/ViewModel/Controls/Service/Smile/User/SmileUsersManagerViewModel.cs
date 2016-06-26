@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         #region variable
 
         SmileUserInformationViewModel _selectedUser;
-            
+
         #endregion
 
         public SmileUsersManagerViewModel(Mediation mediation)
@@ -54,7 +55,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #endregion
 
-        #region funcxtion
+        #region command
+
+        public ICommand CloseTabCommand
+        {
+            get
+            {
+                return CreateCommand(o => CloseTab((SmileUserInformationViewModel)o));
+            }
+        }
+
+        #endregion
+
+        #region function
 
         public Task LoadFromParameterAsync(SmileOpenUserIdParameterModel parameter)
         {
@@ -89,6 +102,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
 
             return Task.CompletedTask;
+        }
+
+        void CloseTab(SmileUserInformationViewModel finder)
+        {
+            UserItems.Remove(finder);
         }
 
         #endregion

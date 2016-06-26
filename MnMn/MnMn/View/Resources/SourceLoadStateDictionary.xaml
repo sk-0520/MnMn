@@ -14,6 +14,9 @@
   <Style x:Key="TabSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator">
     <Setter Property="Width" Value="8" />
     <Setter Property="Height" Value="8" />
+  </Style>
+
+  <Style x:Key="TabVideoSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator" BasedOn="{StaticResource TabSourceLoadState}">
     <Setter Property="SourceLoadState" Value="{Binding FinderLoadState}" />
   </Style>
 

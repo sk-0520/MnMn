@@ -30,7 +30,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabSourceLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
             <Label Content="{Binding Title}" />
             <Button Style="{StaticResource TabReloadButton}" />
           </StackPanel>
