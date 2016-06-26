@@ -40,6 +40,9 @@
       <sys:Double x:Key="ImageWidth">100</sys:Double>
       <sys:Double x:Key="ImageHeight">80</sys:Double>
 
+      <sys:Double x:Key="VideoInfoWidth">120</sys:Double>
+      <sys:Double x:Key="VideoInfoHeight">120</sys:Double>
+
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
@@ -605,7 +608,7 @@
         TabStripPlacement="Left"
         Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
-        <TabItem Header="movie">
+        <TabItem Header="動画情報">
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
@@ -710,7 +713,7 @@
             </Grid>
           </Grid>
         </TabItem>
-        <TabItem Header="relation">
+        <TabItem Header="関連動画">
           <ScrollViewer>
             <ItemsControl ItemsSource="{Binding RelationVideoItems}">
               <ItemsControl.ItemsPanel>
@@ -720,23 +723,22 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <StackPanel>
-                    <Grid>
-                      <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
-                      <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
-                    </Grid>
-                    <TextBlock HorizontalAlignment="Stretch">
-                      <Hyperlink Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
-                        <Run Text="{Binding Title, Mode=OneTime}" />
-                      </Hyperlink>
-                    </TextBlock>
-                  </StackPanel>
+                  <TextBlock TextAlignment="Center" Width="{StaticResource VideoInfoWidth}" Height="{StaticResource VideoInfoHeight}" ToolTip="{Binding Title, Mode=OneTime}">
+                    <Hyperlink Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
+                      <Grid>
+                        <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
+                        <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
+                      </Grid>
+                      <LineBreak />
+                      <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Title, Mode=OneTime}" />
+                    </Hyperlink>
+                  </TextBlock>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </ScrollViewer>
         </TabItem>
-        <TabItem Header="market">
+        <TabItem Header="market" IsEnabled="False">
           <ScrollViewer>
             <ItemsControl ItemsSource="{Binding MarketItems}">
               <ItemsControl.ItemsPanel>
