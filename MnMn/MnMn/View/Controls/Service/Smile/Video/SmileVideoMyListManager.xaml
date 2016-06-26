@@ -2,6 +2,7 @@
   呼び出し元から DataContext を設定して使用。
 -->
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoMyListManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -171,6 +172,7 @@
             <ToolBar DockPanel.Dock="Bottom">
               <Button Command="{Binding RemoveCheckedAccountMyListVideoCommand}">remove video</Button>
             </ToolBar>
+
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedAccountFinder}" ItemsSource="{Binding AccountMyListItems}" />
           </DockPanel>
         </TabItem>
@@ -238,15 +240,15 @@
         </TabItem>
 
       </TabControl>
-
-
     </Grid>
 
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
     <Grid Grid.Column="2">
+
       <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />
+
     </Grid>
   </Grid>
 </UserControl>
