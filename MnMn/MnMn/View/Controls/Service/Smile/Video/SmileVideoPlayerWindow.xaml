@@ -32,6 +32,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -54,6 +55,23 @@
           </DataTrigger>
         </Style.Triggers>
         <Setter Property="IsEnabled" Value="True" />
+      </Style>
+
+      <Style x:Key="ButtonImage" TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+      </Style>
+
+      <Style x:Key="StatePanel" TargetType="Canvas">
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="18" />
+      </Style>
+
+      <Style x:Key="StateControl" TargetType="app_view_controls:LoadStateNavigator">
+        <Setter Property="Width" Value="6" />
+        <Setter Property="Height" Value="6" />
+        <Setter Property="Canvas.Left" Value="10" />
+        <Setter Property="Canvas.Top" Value="10" />
       </Style>
 
     </ResourceDictionary>
@@ -85,7 +103,9 @@
 
       <Separator />
 
-      <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">prev</Button>
+      <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">
+        <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
+      </Button>
       <Menu>
         <MenuItem Header="play list" ItemsSource="{Binding PlayListItems}">
           <MenuItem.ItemContainerStyle>
@@ -102,7 +122,9 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
-      <Button Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">next</Button>
+      <Button Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">
+        <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />
+      </Button>
 
       <Separator />
 
@@ -133,7 +155,9 @@
     </ToolBar>
 
     <StatusBar DockPanel.Dock="Bottom" >
-      <ToggleButton x:Name="switchInformation" Content="info" IsChecked="{Binding PlayerShowDetailArea}" />
+      <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea}">
+        <Image Source="/Resources/Service/Smile/Video/Player/VideoInformation.png" Style="{StaticResource ButtonImage}" />
+      </ToggleButton>
       <StackPanel Orientation="Horizontal" Panel.ZIndex="100" Grid.Row="2" >
         <StackPanel.Resources>
           <Style TargetType="app_view_controls:LoadStateNavigator">
@@ -180,31 +204,22 @@
           </TextBlock>
           <Run>]</Run>
         </TextBlock>
+        <Canvas Style="{StaticResource StatePanel}">
+          <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />
+          <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Style="{StaticResource StateControl}" />
+        </Canvas>
+        <Canvas Style="{StaticResource StatePanel}">
+          <Image Source="/Resources/Service/Smile/Video/Player/CommentState.png" Style="{StaticResource ButtonImage}" />
+          <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
+        </Canvas>
+        <Canvas Style="{StaticResource StatePanel}">
+          <Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />
+          <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
+        </Canvas>
         <TextBlock>
-          <Run>[</Run>
-          <Run>image</Run>
-          <Run>:</Run>
-          <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
-          <Run>]</Run>
-        </TextBlock>
-        <TextBlock>
-          <Run>[</Run>
-          <Run>comment</Run>
-          <Run>:</Run>
-          <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" />
-          <Run>]</Run>
-        </TextBlock>
-        <TextBlock>
-          <Run>[</Run>
-          <Run>video</Run>
-          <Run>:</Run>
-          <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" />
-          <Run>,</Run>
-          <Run>size</Run>
-          <Run Text="{Binding RealVideoWidth, Mode=OneWay}" />
-          <Run>x</Run>
-          <Run Text="{Binding RealVideoHeight, Mode=OneWay}" />
-          <Run>]</Run>
+          <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
+          <TextBlock>x</TextBlock>
+          <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
         </TextBlock>
       </StackPanel>
     </StatusBar>
@@ -280,8 +295,12 @@
             >
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
-                  <ToggleButton Content="msg" IsChecked="{Binding PlayerVisibleComment}" />
-                  <ToggleButton Content="list" IsChecked="{Binding PlayerShowCommentArea}" />
+                  <ToggleButton IsChecked="{Binding PlayerVisibleComment}">
+                    <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
+                  </ToggleButton>
+                  <ToggleButton IsChecked="{Binding PlayerShowCommentArea}">
+                    <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
+                  </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>
