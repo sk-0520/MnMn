@@ -681,13 +681,13 @@
                             <Run Text="{Binding TagName, Mode=OneTime}" />
                           </Hyperlink>
                         </TextBlock>
-                        <Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultImage}">
-                          <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                              <i:InvokeCommandAction Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
-                            </i:EventTrigger>
-                          </i:Interaction.Triggers>
-                        </Image>
+                        <Button Cursor="Hand" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                          <Button.Template>
+                            <ControlTemplate>
+                              <Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" Style="{StaticResource DefaultImage}" />
+                            </ControlTemplate>
+                          </Button.Template>
+                        </Button>
                         <!-- TODO: ださい -->
                         <Border Width="8" />
                       </StackPanel>
