@@ -616,6 +616,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Tab\Close.png" />
+    <Resource Include="Resources\Tab\Next.png" />
+    <Resource Include="Resources\Tab\Previous.png" />
+    <Resource Include="Resources\Service\Smile\Video\SortAscending.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\Backward.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\Forward.png" />
     <Resource Include="Resources\Navigationbar\Repeat.png" />
     <Resource Include="Resources\Navigationbar\Resume.png" />
     <Resource Include="Resources\Navigationbar\AudioMute.png" />

@@ -2,6 +2,15 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+  
+  <Style x:Key="TabImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+    <Setter Property="Width" Value="16" />
+    <Setter Property="Height" Value="16" />
+  </Style>
+  
   <!--
   http://www.kanazawa-net.ne.jp/~pmansato/wpf/wpf_custom_tabcontrol.htm
   -->
@@ -19,24 +28,27 @@
               <RepeatButton 
                 Name="PART_HeadMoveLeft" 
                 DockPanel.Dock="Left"
-                Content="&lt;-" 
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineLeftCommand" 
-              />
+              >
+                <Image Source="/Resources/Tab/Previous.png" Style="{StaticResource TabImage}" />
+              </RepeatButton>
               <RepeatButton 
                 Name="PART_TailMoveRight" 
                 DockPanel.Dock="Right"
-                Content="->" 
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineRightCommand" 
-              />
+              >
+                <Image Source="/Resources/Tab/Next.png" Style="{StaticResource TabImage}" />
+              </RepeatButton>
               <RepeatButton 
                 Name="PART_TailMoveLeft" 
                 DockPanel.Dock="Right"
-                Content="&lt;-" 
-               CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-               Command="ScrollBar.LineLeftCommand" 
-              />
+                CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+                Command="ScrollBar.LineLeftCommand" 
+              >
+                <Image Source="/Resources/Tab/Previous.png" Style="{StaticResource TabImage}" />
+              </RepeatButton>
               <ScrollViewer 
                 Name="PART_ScrollViewer" 
                 CanContentScroll="True"
@@ -84,5 +96,5 @@
       </Setter.Value>
     </Setter>
   </Style>
-
+  
 </ResourceDictionary>
