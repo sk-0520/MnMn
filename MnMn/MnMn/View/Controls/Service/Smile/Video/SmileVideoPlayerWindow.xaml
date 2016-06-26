@@ -340,21 +340,18 @@
         />
 
         <TabControl Grid.Row="0" Grid.Column="2"  Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}">
-          <TabItem Header="comment">
+          <TabItem Header="コメント">
             <DockPanel>
               <DockPanel DockPanel.Dock="Top">
                 <DockPanel DockPanel.Dock="Top">
-                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsAutoScroll}">auto scroll</CheckBox>
-                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">shared ng</CheckBox>
-                  <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">low</TextBlock>
-                  <TextBlock DockPanel.Dock="Right">high</TextBlock>
+                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsAutoScroll}">自動スクロール</CheckBox>
+                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
+                  <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
+                  <TextBlock DockPanel.Dock="Right">高</TextBlock>
                   <Slider Minimum="-3000" Maximum="-1" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
-                  <TextBlock>
-                    <Run Text="all" />
-                    <Run Text="{Binding CommentListCount, Mode=OneWay, StringFormat=({0})}" />
-                  </TextBlock>
+                  <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
                 </RadioButton>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
                   <RadioButton.Style>
@@ -366,10 +363,7 @@
                       </Style.Triggers>
                     </Style>
                   </RadioButton.Style>
-                  <TextBlock>
-                    <Run Text="op" />
-                    <Run Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=({0})}" />
-                  </TextBlock>
+                  <TextBlock Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=投稿者({0})}" />
                 </RadioButton>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
                   <RadioButton.Style>
@@ -381,7 +375,7 @@
                       </Style.Triggers>
                     </Style>
                   </RadioButton.Style>
-                  <TextBlock>user</TextBlock>
+                  <TextBlock>ユーザー</TextBlock>
                 </RadioButton>
                 <TextBlock DockPanel.Dock="Right">
                   <TextBlock.Style>
@@ -418,25 +412,25 @@
                 <DockPanel>
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
                     <TextBlock>
-                      <Run>show limit</Run>
-                      <Run>(</Run>
-                      <Run Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
-                      <Run>
-                        <Run.Style>
-                          <Style TargetType="Run">
+                      <TextBlock>表示制限</TextBlock>
+                      <TextBlock>(</TextBlock>
+                      <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                      <TextBlock>
+                        <TextBlock.Style>
+                          <Style TargetType="TextBlock">
                             <Style.Triggers>
                               <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
                                 <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
                               </DataTrigger>
                             </Style.Triggers>
                           </Style>
-                        </Run.Style>
-                      </Run>
-                      <Run>)</Run>
+                        </TextBlock.Style>
+                      </TextBlock>
+                      <TextBlock>)</TextBlock>
                     </TextBlock>
                   </CheckBox>
-                  <TextBlock DockPanel.Dock="Left" >low</TextBlock>
-                  <TextBlock DockPanel.Dock="Right" >high</TextBlock>
+                  <TextBlock DockPanel.Dock="Left" >少</TextBlock>
+                  <TextBlock DockPanel.Dock="Right" >多</TextBlock>
                   <Slider
                     Minimum="1"
                     Maximum="50"
@@ -449,8 +443,8 @@
                 <GroupBox>
                   <GroupBox.Header>
                     <DockPanel>
-                      <Button DockPanel.Dock="Right" Content="close" Command="{Binding ClearSelectedCommentCommand}" />
-                      <TextBlock>comment</TextBlock>
+                      <Button DockPanel.Dock="Right" Margin="8,0,0,0" Content="閉じる" Command="{Binding ClearSelectedCommentCommand}" />
+                      <Label>コメント詳細</Label>
                     </DockPanel>
                   </GroupBox.Header>
                   <Grid>
@@ -471,35 +465,35 @@
                       <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition />
+                      <ColumnDefinition Width="Auto" />
                       <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0">show time</TextBlock>
+                    <Label Grid.Row="0" Grid.Column="0">表示時間</Label>
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0">post time</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay}" />
+                    <Label Grid.Row="1" Grid.Column="0">投稿時間</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd hh:mm:ss}}" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="0">score</TextBlock>
+                    <Label Grid.Row="2" Grid.Column="0">スコア</Label>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedComment.Score, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="0">comment</TextBlock>
+                    <Label Grid.Row="3" Grid.Column="0">コメント</Label>
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedComment.Content, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0">command</TextBlock>
-                    <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding SelectedComment.Commands, Mode=OneWay}" />
+                    <Label Grid.Row="4" Grid.Column="0">コマンド</Label>
+                    <ComboBox Grid.Row="4" Grid.Column="1" SelectedIndex="0" ItemsSource="{Binding SelectedComment.Commands, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="5" Grid.Column="0">user</TextBlock>
+                    <Label Grid.Row="5" Grid.Column="0">ユーザーID</Label>
                     <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedComment.UserId, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="6" Grid.Column="0">kind</TextBlock>
+                    <Label Grid.Row="6" Grid.Column="0">ユーザー種別</Label>
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedComment.UserKind, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="7" Grid.Column="0">anonymity</TextBlock>
+                    <Label Grid.Row="7" Grid.Column="0">匿名投稿</Label>
                     <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SelectedComment.Anonymity, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="8" Grid.Column="0">approval</TextBlock>
+                    <Label Grid.Row="8" Grid.Column="0">表示許可</Label>
                     <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding SelectedComment.Approval, Mode=OneWay}" />
                   </Grid>
                 </GroupBox>
@@ -519,7 +513,7 @@
                     <GridViewColumn>
                       <GridViewColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="time" />
+                          <TextBlock Text="時間" />
                         </ItemContainerTemplate>
                       </GridViewColumn.HeaderTemplate>
                       <GridViewColumn.CellTemplate>
@@ -532,7 +526,7 @@
                     <GridViewColumn>
                       <GridViewColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="comment" />
+                          <TextBlock Text="コメント" />
                         </ItemContainerTemplate>
                       </GridViewColumn.HeaderTemplate>
                       <GridViewColumn.CellTemplate>
@@ -561,12 +555,12 @@
                     <GridViewColumn>
                       <GridViewColumn.HeaderTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="timestamp" />
+                          <TextBlock Text="投稿時間" />
                         </ItemContainerTemplate>
                       </GridViewColumn.HeaderTemplate>
                       <GridViewColumn.CellTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="{Binding Timestamp}" />
+                          <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd hh:mm:ss}}" />
                         </ItemContainerTemplate>
                       </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -575,7 +569,7 @@
               </ListView>
             </DockPanel>
           </TabItem>
-          <TabItem Header="NG: local">
+          <TabItem Header="ローカルNG">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding LocalCommentFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
@@ -584,7 +578,7 @@
               </i:Interaction.Triggers>
             </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
           </TabItem>
-          <TabItem Header="NG: global">
+          <TabItem Header="全体NG">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding GlobalCommentFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
