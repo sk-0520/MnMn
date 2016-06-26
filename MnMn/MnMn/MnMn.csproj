@@ -586,6 +586,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Resources\ImageDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\LoadStateDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -612,6 +616,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Navigationbar\Repeat.png" />
+    <Resource Include="Resources\Navigationbar\Resume.png" />
     <Resource Include="Resources\Navigationbar\AudioMute.png" />
     <Resource Include="Resources\Navigationbar\AudioOn.png" />
     <Resource Include="Resources\Navigationbar\Pause.png" />
