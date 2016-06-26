@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             SearchModel = searchModel;
 
-            SelectedMethod = MethodItems.First();
-            SelectedSort = SortItems.First();
-            //SelectedType = TypeItems.First();
+            SelectedMethod = MethodItems.FirstOrDefault(m => m.Key == Setting.Search.DefaultMethodKey) ?? MethodItems.First();
+            SelectedSort = MethodItems.FirstOrDefault(m => m.Key == Setting.Search.DefaultSortKey) ?? SortItems.First();
+            SelectedSearchType = Setting.Search.DefaultType;
 
             SearchHistoryList = new MVMPairCreateDelegationCollection<SmileVideoSearchHistoryModel, SmileVideoSearchHistoryViewModel>(Setting.Search.SearchHistoryItems, default(object), CreateSearchHistory);
             SearchHistoryItems = CollectionViewSource.GetDefaultView(SearchHistoryList.ViewModelList);
@@ -98,12 +98,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public DefinedElementModel SelectedMethod
         {
             get { return this._selectedMethod; }
-            set { SetVariableValue(ref this._selectedMethod, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedMethod, value)) {
+                    Setting.Search.DefaultMethodKey = SelectedMethod.Key;
+                }
+            }
         }
         public DefinedElementModel SelectedSort
         {
             get { return this._selectedSort; }
-            set { SetVariableValue(ref this._selectedSort, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSort, value)) {
+                    Setting.Search.DefaultSortKey = SelectedSort.Key;
+                }
+            }
         }
         //public DefinedElementModel SelectedType
         //{
@@ -133,7 +143,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public SearchType SelectedSearchType
         {
             get { return this._selectedSearchType; }
-            set { SetVariableValue(ref this._selectedSearchType, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSearchType, value)) {
+                    Setting.Search.DefaultType = SelectedSearchType;
+                }
+            }
         }
 
         public bool ShowSearchTypeArea

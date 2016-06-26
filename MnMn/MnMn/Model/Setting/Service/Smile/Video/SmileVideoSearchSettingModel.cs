@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -38,6 +39,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool LoadInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
+
+        [DataMember]
+        public string DefaultMethodKey { get; set; }
+        [DataMember]
+        public string DefaultSortKey { get; set; }
+        [DataMember]
+        public SearchType DefaultType { get; set; } = SearchType.Tag;
 
         /// <summary>
         /// 検索履歴。
