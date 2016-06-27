@@ -9,9 +9,9 @@
   xmlns:app_controls_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile"
   xmlns:app_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   xmlns:app_controls_service_smile_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Setting"
-  
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
@@ -24,30 +24,30 @@
   </UserControl.Resources>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top">
-      <TextBlock>movie</TextBlock>
+      <Label>動画ID:</Label>
       <TextBox Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}" />
-      <Button Command="{Binding OpenVideoPlayerCommand}">open</Button>
+      <Button Command="{Binding OpenVideoPlayerCommand}">開く</Button>
     </ToolBar>
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-      <TabItem Header="search" DataContext="{Binding VideoManager.SearchManager}">
+      <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}" Height="24" VerticalAlignment="Top">
         <app_controls_service_smile_video:SmileVideoSearchManager />
       </TabItem>
-      <TabItem Header="ranking" DataContext="{Binding VideoManager.RankingManager}">
+      <TabItem Header="ランキング" DataContext="{Binding VideoManager.RankingManager}">
         <app_controls_service_smile_video:SmileVideoRankingManager />
       </TabItem>
-      <TabItem Header="new" DataContext="{Binding VideoManager.NewArrivalsManager}" >
+      <TabItem Header="新着とか" DataContext="{Binding VideoManager.NewArrivalsManager}" >
         <app_controls_service_smile_video:SmileVideoNewArrivalsManager />
       </TabItem>
-      <TabItem Header="mylist" DataContext="{Binding VideoManager.MyListManager}">
+      <TabItem Header="マイリスト" DataContext="{Binding VideoManager.MyListManager}">
         <app_controls_service_smile_video:SmileVideoMyListManager />
       </TabItem>
-      <TabItem Header="history" DataContext="{Binding VideoManager.HistoryManager}" >
+      <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" >
         <app_controls_service_smile_video:SmileVideoHistoryManager />
       </TabItem>
-      <TabItem Header="users" DataContext="{Binding UsersManager}">
+      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}">
         <app_controls_service_smile:SmileUsersManager />
       </TabItem>
-      <TabItem Header="setting" DataContext="{Binding SettingManager}" >
+      <TabItem Header="設定" DataContext="{Binding SettingManager}" >
         <app_controls_service_smile_setting:SmileSettingManager />
       </TabItem>
     </TabControl>
