@@ -50,7 +50,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public SmileUserInformationViewModel SelectedUser
         {
             get { return this._selectedUser; }
-            set { SetVariableValue(ref this._selectedUser, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedUser, value)) {
+                    if(SelectedUser != null) {
+                        SelectedUser.IsUserSelected = true;
+                    }
+                }
+            }
         }
 
         #endregion

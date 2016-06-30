@@ -57,7 +57,7 @@
         <DataTemplate>
           <Grid>
             <TabControl TabStripPlacement="Left">
-              <TabItem Header="user">
+              <TabItem Header="ユーザー情報" IsSelected="{Binding IsUserSelected}">
                 <ScrollViewer>
                   <StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -123,7 +123,7 @@
                   </StackPanel>
                 </ScrollViewer>
               </TabItem>
-              <TabItem Header="mylist" IsEnabled="{Binding IsPublicMyList}">
+              <TabItem Header="公開マイリスト" IsEnabled="{Binding IsPublicMyList}">
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*" />
@@ -149,7 +149,7 @@
                   <app_view_controls_service_smile_video:SmileVideoFinderControl Grid.Column="2" DataContext="{Binding SelectedMyListFinder}" />
                 </Grid>
               </TabItem>
-              <TabItem Header="post" IsEnabled="{Binding IsPublicPost}">
+              <TabItem Header="投稿動画" IsEnabled="{Binding IsPublicPost}">
                 <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding PostFinder}" />
               </TabItem>
             </TabControl>

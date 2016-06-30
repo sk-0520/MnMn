@@ -53,6 +53,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         BitmapSource _thumbnailImage;
         SmileVideoFinderViewModelBase _selectedMyListFinder;
 
+        bool _isUserSelected;
+
         #endregion
 
         public SmileUserInformationViewModel(Mediation mediation, string userId, bool isMyAccount)
@@ -87,6 +89,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                     }
                 }
             }
+        }
+
+        public bool IsUserSelected
+        {
+            get { return this._isUserSelected; }
+            set { SetVariableValue(ref this._isUserSelected, value); }
         }
 
         public SmileVideoFinderViewModelBase PostFinder { get; private set; }
