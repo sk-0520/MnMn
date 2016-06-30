@@ -21,6 +21,10 @@
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <Style x:Key="ReadonlyText" TargetType="TextBox">
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="IsUndoEnabled" Value="False" />
+      </Style>
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -33,8 +37,7 @@
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabSourceLoadState}" SourceLoadState="{Binding UserLoadState}" />
-            <Label Content="{Binding UserName}" />
-            <Label Content="{Binding UserId}" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" />
             <ContentControl>
               <ContentControl.Style>
                 <Style TargetType="ContentControl">
@@ -58,70 +61,113 @@
           <Grid>
             <TabControl TabStripPlacement="Left">
               <TabItem Header="ユーザー情報" IsSelected="{Binding IsUserSelected}">
-                <ScrollViewer>
-                  <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>user id:</TextBlock>
-                      <TextBlock Text="{Binding UserId}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>user name:</TextBlock>
-                      <TextBlock Text="{Binding UserName}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>is premium:</TextBlock>
-                      <TextBlock Text="{Binding IsPremium}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>regist version:</TextBlock>
-                      <TextBlock Text="{Binding ResistedVersion}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>image load:</TextBlock>
-                      <TextBlock Text="{Binding UserThumbnailLoadState}" />
-                      <Image Source="{Binding ThumbnailImage}" Width="150" Height="150" />
-                    </StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>location:</TextBlock>
-                      <TextBlock Text="{Binding IsPublicLocation}" />
-                      <TextBlock>,</TextBlock>
-                      <TextBlock Text="{Binding Location}" />
-                    </StackPanel>
+                  <Grid Grid.Column="0" Width="150" VerticalAlignment="Top" Height="150">
+                    <Image Source="{Binding ThumbnailImage}" Style="{StaticResource DefaultImage}" />
+                    <app_view_controls:LoadStateNavigator LoadState="{Binding UserThumbnailLoadState}" />
+                  </Grid>
 
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>gender:</TextBlock>
-                      <TextBlock Text="{Binding IsPublicGender}" />
-                      <TextBlock>,</TextBlock>
-                      <TextBlock Text="{Binding Gender}" />
-                    </StackPanel>
+                  <FlowDocumentReader Grid.Column="1" VerticalAlignment="Top">
+                    <FlowDocumentReader.Document>
+                      <FlowDocument>
+                        <Paragraph>
+                          <TextBlock Text="{Binding UserName, Mode=OneTime}" />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextBlock>
+                            <Run>ID:</Run>
+                            <Run Text="{Binding UserId, Mode=OneWay}" />
+                            <TextBlock>(</TextBlock>
+                            <Run Text="{Binding ResistedVersion, Mode=OneWay}" />
+                            <TextBlock>)</TextBlock>
+                          </TextBlock>
 
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>birthday:</TextBlock>
-                      <TextBlock Text="{Binding IsPublicBirthday}" />
-                      <TextBlock>,</TextBlock>
-                      <TextBlock Text="{Binding Birthday}" />
-                    </StackPanel>
+                          <TextBlock>
+                            <TextBlock.Style>
+                              <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                  <DataTrigger Binding="{Binding IsPremium}" Value="True">
+                                    <Setter Property="Text" Value="プレミアム会員" />
+                                  </DataTrigger>
+                                  <DataTrigger Binding="{Binding IsPremium}" Value="False">
+                                    <Setter Property="Text" Value="一般会員" />
+                                  </DataTrigger>
+                                </Style.Triggers>
+                              </Style>
+                            </TextBlock.Style>
+                          </TextBlock>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextBlock>
+                            <Run>性別:</Run>
+                            <Run>
+                              <Run.Style>
+                                <Style TargetType="Run">
+                                  <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsPublicGender}" Value="True">
+                                      <Setter Property="Text" Value="{Binding Gender, Mode=OneWay}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsPublicGender}" Value="False">
+                                      <Setter Property="Text" Value="非公開" />
+                                    </DataTrigger>
+                                  </Style.Triggers>
+                                </Style>
+                              </Run.Style>
+                            </Run>
+                          </TextBlock>
 
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>description:</TextBlock>
-                      <TextBlock Text="{Binding Description}" />
-                    </StackPanel>
+                          <TextBlock>
+                            <Run>誕生日:</Run>
+                            <Run>
+                              <Run.Style>
+                                <Style TargetType="Run">
+                                  <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsPublicBirthday}" Value="True">
+                                      <Setter Property="Text" Value="{Binding Birthday, Mode=OneWay}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsPublicBirthday}" Value="False">
+                                      <Setter Property="Text" Value="非公開" />
+                                    </DataTrigger>
+                                  </Style.Triggers>
+                                </Style>
+                              </Run.Style>
+                            </Run>
+                          </TextBlock>
 
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>mylist:</TextBlock>
-                      <TextBlock Text="{Binding IsPublicMyList}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>report:</TextBlock>
-                      <TextBlock Text="{Binding IsPublicReport}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock>post:</TextBlock>
-                      <TextBlock Text="{Binding IsPublicPost}" />
-                    </StackPanel>
-                  </StackPanel>
-                </ScrollViewer>
+                          <TextBlock>
+                            <Run>地域:</Run>
+                            <Run>
+                              <Run.Style>
+                                <Style TargetType="Run">
+                                  <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsPublicLocation}" Value="True">
+                                      <Setter Property="Text" Value="{Binding Location, Mode=OneWay}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsPublicLocation}" Value="False">
+                                      <Setter Property="Text" Value="非公開" />
+                                    </DataTrigger>
+                                  </Style.Triggers>
+                                </Style>
+                              </Run.Style>
+                            </Run>
+                          </TextBlock>
+
+                        </Paragraph>
+
+                        <Paragraph>
+                          <TextBlock Text="{Binding Description}" />
+                        </Paragraph>
+
+                      </FlowDocument>
+                    </FlowDocumentReader.Document>
+                  </FlowDocumentReader>
+
+                </Grid>
               </TabItem>
               <TabItem Header="公開マイリスト" IsEnabled="{Binding IsPublicMyList}">
                 <Grid>
