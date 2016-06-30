@@ -29,7 +29,7 @@
       <Button Command="{Binding OpenVideoPlayerCommand}">開く</Button>
     </ToolBar>
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-      <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}" Height="24" VerticalAlignment="Top">
+      <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}">
         <app_controls_service_smile_video:SmileVideoSearchManager />
       </TabItem>
       <TabItem Header="ランキング" DataContext="{Binding VideoManager.RankingManager}">
