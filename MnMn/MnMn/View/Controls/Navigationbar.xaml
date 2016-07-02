@@ -16,7 +16,7 @@
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-      <sys:Double x:Key="ProgressHeight">8</sys:Double>
+      <sys:Double x:Key="ProgressHeight">NaN</sys:Double>
       <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     </ResourceDictionary>
@@ -112,7 +112,7 @@
       </Slider.Template>
     </Slider>
     <StackPanel Grid.Column="3" Orientation="Horizontal">
-      <TextBlock>
+      <TextBlock VerticalAlignment="Center">
         <Run Text="{Binding PlayTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         <Run>/</Run>
         <Run Text="{Binding TotalTime, StringFormat=hh\\:mm\\:ss, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
