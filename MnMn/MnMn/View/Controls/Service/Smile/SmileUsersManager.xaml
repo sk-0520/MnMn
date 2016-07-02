@@ -72,8 +72,8 @@
                     <app_view_controls:LoadStateNavigator LoadState="{Binding UserThumbnailLoadState}" />
                   </Grid>
 
-                  <FlowDocumentReader Grid.Column="1" VerticalAlignment="Top">
-                    <FlowDocumentReader.Document>
+                  <FlowDocumentScrollViewer Grid.Column="1" VerticalAlignment="Stretch">
+                    <FlowDocumentScrollViewer.Document>
                       <FlowDocument>
                         <Paragraph>
                           <TextBlock Text="{Binding UserName, Mode=OneTime}" />
@@ -164,8 +164,8 @@
                         </Paragraph>
 
                       </FlowDocument>
-                    </FlowDocumentReader.Document>
-                  </FlowDocumentReader>
+                    </FlowDocumentScrollViewer.Document>
+                  </FlowDocumentScrollViewer>
 
                 </Grid>
               </TabItem>
