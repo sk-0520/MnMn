@@ -152,10 +152,10 @@
     >
       <TabControl.ItemTemplate>
         <DataTemplate>
-          <StackPanel Orientation="Horizontal">
+          <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
-            <Label Content="{Binding Query}" />
-            <Label Content="{Binding Type}" />
+            <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
+            <TextBlock Text="{Binding Type}" Style="{StaticResource TabHeaderText}" />
             <app_view_controls_service_smile_video:SmileVideoSearchContext
               SelectedMethod="{Binding SelectedMethod}"
               SelectedSort="{Binding SelectedSort}"

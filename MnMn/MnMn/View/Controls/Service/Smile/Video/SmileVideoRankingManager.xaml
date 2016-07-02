@@ -69,9 +69,9 @@
     >
       <TabControl.ItemTemplate>
         <DataTemplate>
-          <StackPanel Orientation="Horizontal">
+          <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
-            <Label Content="{Binding CategoryName}" />
+            <TextBlock Text="{Binding CategoryName}" Style="{StaticResource TabHeaderText}" />
             <app_view_controls_service_smile_video:SmileVideoRankingContext
               TargetItemsSource="{Binding TargetItems}"
               PeriodItemsSource="{Binding PeriodItems}"

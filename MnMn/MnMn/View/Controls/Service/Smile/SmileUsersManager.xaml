@@ -35,9 +35,9 @@
     >
       <TabControl.ItemTemplate>
         <DataTemplate>
-          <StackPanel Orientation="Horizontal">
+          <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabSourceLoadState}" SourceLoadState="{Binding UserLoadState}" />
-            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" />
+            <TextBlock Text="{Binding UserName}" Style="{StaticResource TabHeaderText}" />
             <ContentControl>
               <ContentControl.Style>
                 <Style TargetType="ContentControl">
