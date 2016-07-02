@@ -1675,7 +1675,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         Player.Stop();
                         InitializeStatus();
                     });
-                };
+                }
             }
 
             return Task.WhenAll(processTask, playerTask);
