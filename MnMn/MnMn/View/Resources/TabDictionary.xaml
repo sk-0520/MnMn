@@ -15,7 +15,7 @@
     <Setter Property="Command" Value="{Binding ReloadCommand}" />
     <Setter Property="IsEnabled" Value="{Binding CanLoad}" />
     <Setter Property="FontFamily" Value="Webdings" />
-    <Setter Property="FontSize" Value="18" />
+    <!--<Setter Property="FontSize" Value="18" />-->
     <Setter Property="Content" Value="q" />
   </Style>
 
