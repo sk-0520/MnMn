@@ -22,6 +22,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
@@ -51,7 +52,7 @@
         </ToggleButton>
         <Label DockPanel.Dock="Right" >並べ替え</Label>
         <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
-        <TextBox Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
       </DockPanel>
     </Grid>
 
