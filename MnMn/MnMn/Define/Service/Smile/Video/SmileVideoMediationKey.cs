@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string recommendationPage = "video-recommendation-page";
         public const string recommendationApi = "video-recommendation-api";
 
+        public const string historyApp = "video-history-app";
         public const string historyPage = "video-history-page";
         public const string historyApi = "video-history-api";
         public const string historyRemove = "video-history-remove";

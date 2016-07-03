@@ -310,6 +310,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileLoginUserInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUsersManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoApplicationHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoAccountHistoryFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\History\SmileVideoHistoryManagerViewModel.cs" />

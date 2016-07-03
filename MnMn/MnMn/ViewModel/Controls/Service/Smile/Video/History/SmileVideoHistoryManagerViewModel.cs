@@ -43,9 +43,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             AccountHistory = new SmileVideoAccountHistoryFinderViewModel(Mediation);
+            ApplicationHistory = new SmileVideoApplicationHistoryFinderViewModel(Mediation);
 
             ItemsList = new CollectionModel<SmileVideoFinderViewModelBase>() {
                 AccountHistory,
+                ApplicationHistory,
             };
         }
 
@@ -55,6 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         //LoadPageHtmlDocument
         public SmileVideoAccountHistoryFinderViewModel AccountHistory { get; }
+        public SmileVideoApplicationHistoryFinderViewModel ApplicationHistory { get; }
 
         #endregion
 
