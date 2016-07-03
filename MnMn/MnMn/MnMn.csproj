@@ -594,6 +594,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Resources\MenuDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\SourceLoadStateDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -620,6 +624,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Service\Smile\Video\Search\Keyword.png" />
+    <Resource Include="Resources\Service\Smile\Video\Search\Tag.png" />
     <Resource Include="Resources\Service\Smile\Video\Finder\Check.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\Pedia.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\Lock.png" />

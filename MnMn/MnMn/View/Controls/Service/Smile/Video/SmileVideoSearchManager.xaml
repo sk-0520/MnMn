@@ -20,8 +20,10 @@
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </UserControl.Resources>
@@ -78,24 +80,35 @@
       <xctk:SplitButton DockPanel.Dock="Right" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
         <xctk:SplitButton.Content>
           <StackPanel Orientation="Horizontal">
-            <TextBlock>検索</TextBlock>
             <TextBlock>
-              <Run>(</Run>
-              <Run Text="{Binding SelectedSearchType, Mode=OneWay}" />
-              <Run>)</Run>
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding SelectedSearchType}" Value="Keyword">
+                      <Setter Property="Text" Value="キーワード" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding SelectedSearchType}" Value="Tag">
+                      <Setter Property="Text" Value="タグ" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
             </TextBlock>
+            <TextBlock>検索</TextBlock>
           </StackPanel>
         </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
-            <StackPanel.Resources>
-              <Style TargetType="MenuItem">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-              </Style>
-            </StackPanel.Resources>
-            <MenuItem Header="tag" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" />
-            <MenuItem Header="keyword" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" />
+            <MenuItem Header="タグ" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" Style="{StaticResource DefaultMenuItem}">
+              <MenuItem.Icon>
+                <Image Source="/Resources/Service/Smile/Video/Search/Tag.png" Style="{StaticResource ItemImage}" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="キーワード" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" Style="{StaticResource DefaultMenuItem}">
+              <MenuItem.Icon>
+                <Image Source="/Resources/Service/Smile/Video/Search/Keyword.png" Style="{StaticResource ItemImage}" />
+              </MenuItem.Icon>
+            </MenuItem>
           </StackPanel>
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
@@ -116,9 +129,27 @@
               <StackPanel Orientation="Horizontal">
                 <TextBlock FontWeight="Normal">
                   <Run Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
-                  <Run Text="," />
-                  <Run Text="{Binding SearchType, Mode=OneTime}" />
-                  <Run Text="," />
+
+                  <Hyperlink
+                    Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    CommandParameter="{Binding}"
+                  >
+                    <TextBlock>
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                              <Setter Property="Text" Value="key" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                              <Setter Property="Text" Value="tag" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                  </Hyperlink>
+
                   <Run Text="{Binding LastTimestamp, Mode=OneWay}" />
                   <Run Text="," />
                   <Run Text="{Binding Count, Mode=OneWay}" />
@@ -126,7 +157,7 @@
               </StackPanel>
               <StackPanel Orientation="Horizontal">
                 <TextBlock>search:</TextBlock>
-                <Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>
+                <!--<Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>-->
                 <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">tag</Button>
                 <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">keyword</Button>
                 <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">remove</Button>

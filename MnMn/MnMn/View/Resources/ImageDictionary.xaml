@@ -13,4 +13,7 @@
     <Setter Property="HorizontalAlignment" Value="Center" />
   </Style>
 
+  <Style x:Key="ItemImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+  </Style>
+
 </ResourceDictionary>
