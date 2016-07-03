@@ -51,6 +51,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 検索履歴。
         /// </summary>
         [DataMember]
-        public CollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new CollectionModel<SmileVideoSearchHistoryModel>();
+        public FixedSizeCollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new FixedSizeCollectionModel<SmileVideoSearchHistoryModel>(100);
     }
 }
