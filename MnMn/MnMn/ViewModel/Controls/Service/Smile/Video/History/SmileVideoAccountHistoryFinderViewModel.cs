@@ -102,9 +102,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
             var model = await history.LoadHistoryAsync();
 
-            var removeItems = VideoInformationList
+            var removeItems = VideoInformationItems
+                .Cast<SmileVideoInformationViewModel>()
                 .Where(v => v.IsChecked.GetValueOrDefault())
-                .ToArray()
+                .ToArray();
             ;
 
             var errors = new List<CheckModel>();
