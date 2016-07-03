@@ -233,7 +233,7 @@
                           <Setter Property="Margin" Value="0,0,8,0" />
                         </Style>
                       </StackPanel.Resources>
-                      <TextBlock Text="{Binding VideoInformation.FirstRetrieve, Mode=OneWay, StringFormat=投稿日時: {0:yyyy/MM/dd hh:mm:ss}}" />
+                      <TextBlock Text="{Binding VideoInformation.FirstRetrieve, Mode=OneWay, StringFormat=投稿日時: {0:yyyy/MM/dd HH:mm:ss}}" />
                       <TextBlock Text="{Binding VideoInformation.ViewCounter, Mode=OneWay, StringFormat=再生数: {0:#,#.}}" />
                       <TextBlock Text="{Binding VideoInformation.CommentCounter, Mode=OneWay, StringFormat=コメント数: {0:#,#.}}" />
                       <TextBlock Text="{Binding VideoInformation.MylistCounter, Mode=OneWay, StringFormat=マイリスト数: {0:#,#.}}" />
@@ -474,7 +474,7 @@
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}" />
 
                     <Label Grid.Row="1" Grid.Column="0">投稿時間</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd hh:mm:ss}}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
 
                     <Label Grid.Row="2" Grid.Column="0">スコア</Label>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedComment.Score, Mode=OneWay}" />
@@ -561,7 +561,7 @@
                       </GridViewColumn.HeaderTemplate>
                       <GridViewColumn.CellTemplate>
                         <ItemContainerTemplate>
-                          <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd hh:mm:ss}}" />
+                          <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
                         </ItemContainerTemplate>
                       </GridViewColumn.CellTemplate>
                     </GridViewColumn>
