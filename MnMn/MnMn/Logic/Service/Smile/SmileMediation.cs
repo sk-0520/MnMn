@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             Setting = setting;
 
-            VideoMediation = new SmileVideoMediation(Mediation, Setting.VideoSetting);
+            VideoMediation = new SmileVideoMediation(Mediation, Setting.Video);
         }
 
         #region property

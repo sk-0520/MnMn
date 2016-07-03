@@ -20,33 +20,45 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoSettingModel: SettingModelBase
+    public class SmileVideoPlayHistoryModel: SettingModelBase
     {
         #region property
 
         /// <summary>
-        /// コメント設定。
+        /// 動画ID。
         /// </summary>
         [DataMember]
-        public SmileVideoCommentSettingModel Comment { get; set; } = new SmileVideoCommentSettingModel();
-
+        public string VideoId { get; set; }
+        /// <summary>
+        /// 動画タイトル。
+        /// </summary>
         [DataMember]
-        public SmileVideoSearchSettingModel Search { get; set; } = new SmileVideoSearchSettingModel();
-
+        public string VideoTitle { get; set; }
+        /// <summary>
+        /// 投稿日。
+        /// </summary>
         [DataMember]
-        public SmileVideoPlayerSettingModel Player { get; set; } = new SmileVideoPlayerSettingModel();
-
+        public DateTime FirstRetrieve { get; set; }
+        /// <summary>
+        /// 再生時間。
+        /// </summary>
         [DataMember]
-        public SmileVideoRankingSettingModel Ranking { get; set; } = new SmileVideoRankingSettingModel();
+        public TimeSpan Length { get; set; }
 
+        /// <summary>
+        /// 最終使用日時。
+        /// </summary>
         [DataMember]
-        public FixedSizeCollectionModel<SmileVideoPlayHistoryModel> Histories { get; set; } = new FixedSizeCollectionModel<SmileVideoPlayHistoryModel>(100);
+        public DateTime LastTimestamp { get; set; }
+        /// <summary>
+        /// 使用回数。
+        /// </summary>
+        [DataMember]
+        public int Count { get; set; }
 
         #endregion
     }

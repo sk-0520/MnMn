@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         #region property
 
         [DataMember]
-        public SmileVideoSettingModel VideoSetting { get; set; } = new SmileVideoSettingModel();
+        public SmileVideoSettingModel Video { get; set; } = new SmileVideoSettingModel();
 
         [DataMember]
         public SmileUserAccountModel Account { get; set; } = new SmileUserAccountModel();

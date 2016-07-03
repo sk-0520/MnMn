@@ -285,6 +285,7 @@
     <Compile Include="Model\Setting\Service\Smile\SmileMyListItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileMyListSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFilteringSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoPlayHistoryModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoRankingSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchHistoryModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoSearchModel.cs" />

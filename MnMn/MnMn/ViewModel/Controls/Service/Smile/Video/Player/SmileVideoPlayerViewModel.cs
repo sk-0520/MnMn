@@ -1494,7 +1494,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             videoInformation.IsPlaying = true;
             IsSelectedVideoInformation = true;
 
-            return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan);
+            return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan).ContinueWith(t => {
+
+                var historyModel = Setting.Histories.FirstOrDefault(f => f.VideoId == VideoInformation.VideoId);
+                if(historyModel == null) {
+                    historyModel = new SmileVideoPlayHistoryModel() {
+                        VideoId = VideoInformation.VideoId,
+                        VideoTitle = VideoInformation.Title,
+                        Length = VideoInformation.Length,
+                        FirstRetrieve = VideoInformation.FirstRetrieve,
+                    };
+                } else {
+                    Setting.Histories.Remove(historyModel);
+                }
+                historyModel.LastTimestamp = DateTime.Now;
+                historyModel.Count = RangeUtility.Increment(historyModel.Count);
+
+                Setting.Histories.Insert(0, historyModel);
+
+                return t;
+            });
         }
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
