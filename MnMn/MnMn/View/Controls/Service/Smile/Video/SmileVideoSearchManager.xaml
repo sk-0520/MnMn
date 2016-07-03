@@ -120,47 +120,54 @@
         SelectedItem="{Binding SelectedQueryHistory}"
         IsDropDownOpen="{Binding ShowHistoryArea}"
       >
+        <ComboBox.Resources>
+          <Style TargetType="ComboBoxItem">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+          </Style>
+        </ComboBox.Resources>
         <ComboBox.InputBindings>
           <KeyBinding Key="Enter" Command="{Binding SearchCommand}" />
         </ComboBox.InputBindings>
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock FontWeight="Normal">
-                  <Run Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
+              <DockPanel>
+                <Image DockPanel.Dock="Left">
+                  <Image.Style>
+                    <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                          <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Keyword.png" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                          <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Tag.png" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Image.Style>
+                </Image>
 
-                  <Hyperlink
-                    Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                    CommandParameter="{Binding}"
-                  >
-                    <TextBlock>
-                      <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                          <Style.Triggers>
-                            <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
-                              <Setter Property="Text" Value="key" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding SearchType}" Value="Tag">
-                              <Setter Property="Text" Value="tag" />
-                            </DataTrigger>
-                          </Style.Triggers>
-                        </Style>
-                      </TextBlock.Style>
-                    </TextBlock>
-                  </Hyperlink>
-
-                  <Run Text="{Binding LastTimestamp, Mode=OneWay}" />
-                  <Run Text="," />
+                <TextBlock DockPanel.Dock="Right">
+                  <Run>検索回数: </Run>
                   <Run Text="{Binding Count, Mode=OneWay}" />
                 </TextBlock>
-              </StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock>search:</TextBlock>
-                <!--<Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>-->
-                <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">tag</Button>
-                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">keyword</Button>
-                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">remove</Button>
+
+                <TextBlock DockPanel.Dock="Right" Margin="4,0" Text="{Binding LastTimestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
+
+                <Button Cursor="Hand" Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                  <Button.Template>
+                    <ControlTemplate>
+                      <TextBlock Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
+                    </ControlTemplate>
+                  </Button.Template>
+                </Button>
+
+              </DockPanel>
+              <StackPanel Orientation="Horizontal" Margin="2,2">
+                <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">タグ検索</Button>
+                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">キーワード検索</Button>
+                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">削除</Button>
               </StackPanel>
             </StackPanel>
           </DataTemplate>
