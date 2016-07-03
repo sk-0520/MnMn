@@ -31,84 +31,16 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
-    <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <!-- だっせぇ！ -->
-      <!--<ComboBox
-        DisplayMemberPath="DisplayText"
-        ItemsSource="{Binding MethodItems}"
-        SelectedItem="{Binding SelectedMethod}"
-      />
-      <ComboBox
-        DisplayMemberPath="DisplayText"
-        ItemsSource="{Binding SortItems}"
-        SelectedItem="{Binding SelectedSort}"
-      />-->
+    <DockPanel Grid.Row="0">
       <app_view_controls_service_smile_video:SmileVideoSearchContext
+        DockPanel.Dock="Left"
         SelectedMethod="{Binding SelectedMethod}"
         SelectedSort="{Binding SelectedSort}"
         MethodItems="{Binding MethodItems}"
         SortItems="{Binding SortItems}"
       />
 
-      <ComboBox
-        IsEditable="True"
-        Text="{Binding InputQuery}"
-        ItemsSource="{Binding SearchHistoryItems}"
-        SelectedItem="{Binding SelectedQueryHistory}"
-        IsDropDownOpen="{Binding ShowHistoryArea}"
-      >
-        <ComboBox.ItemTemplate>
-          <DataTemplate>
-            <StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock FontWeight="Normal">
-                  <Run Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
-                  <Run Text="," />
-                  <Run Text="{Binding SearchType, Mode=OneTime}" />
-                  <Run Text="," />
-                  <Run Text="{Binding LastTimestamp, Mode=OneWay}" />
-                  <Run Text="," />
-                  <Run Text="{Binding Count, Mode=OneWay}" />
-                </TextBlock>
-              </StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock>search: </TextBlock>
-                <Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>
-                <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">tag</Button>
-                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">keyword</Button>
-                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">remove</Button>
-              </StackPanel>
-            </StackPanel>
-          </DataTemplate>
-        </ComboBox.ItemTemplate>
-      </ComboBox>
-
-      <xctk:SplitButton Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
-        <xctk:SplitButton.Content>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock>search</TextBlock>
-            <TextBlock>
-              <Run>(</Run>
-              <Run Text="{Binding SelectedSearchType, Mode=OneWay}" />
-              <Run>)</Run>
-            </TextBlock>
-          </StackPanel>
-        </xctk:SplitButton.Content>
-        <xctk:SplitButton.DropDownContent>
-          <StackPanel>
-            <StackPanel.Resources>
-              <Style TargetType="MenuItem">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-              </Style>
-            </StackPanel.Resources>
-            <MenuItem Header="tag" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" />
-            <MenuItem Header="keyword" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" />
-          </StackPanel>
-        </xctk:SplitButton.DropDownContent>
-      </xctk:SplitButton>
-
-      <xctk:DropDownButton IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
+      <xctk:DropDownButton DockPanel.Dock="Right" IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
         <xctk:DropDownButton.DropDownContent>
           <Border>
             <GroupBox>
@@ -142,7 +74,69 @@
           </Border>
         </xctk:DropDownButton.DropDownContent>
       </xctk:DropDownButton>
-    </StackPanel>
+
+      <xctk:SplitButton DockPanel.Dock="Right" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
+        <xctk:SplitButton.Content>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock>検索</TextBlock>
+            <TextBlock>
+              <Run>(</Run>
+              <Run Text="{Binding SelectedSearchType, Mode=OneWay}" />
+              <Run>)</Run>
+            </TextBlock>
+          </StackPanel>
+        </xctk:SplitButton.Content>
+        <xctk:SplitButton.DropDownContent>
+          <StackPanel>
+            <StackPanel.Resources>
+              <Style TargetType="MenuItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+              </Style>
+            </StackPanel.Resources>
+            <MenuItem Header="tag" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" />
+            <MenuItem Header="keyword" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" />
+          </StackPanel>
+        </xctk:SplitButton.DropDownContent>
+      </xctk:SplitButton>
+
+      <ComboBox
+        IsEditable="True"
+        Text="{Binding InputQuery}"
+        ItemsSource="{Binding SearchHistoryItems}"
+        SelectedItem="{Binding SelectedQueryHistory}"
+        IsDropDownOpen="{Binding ShowHistoryArea}"
+      >
+        <ComboBox.InputBindings>
+          <KeyBinding Key="Enter" Command="{Binding SearchCommand}" />
+        </ComboBox.InputBindings>
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock FontWeight="Normal">
+                  <Run Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
+                  <Run Text="," />
+                  <Run Text="{Binding SearchType, Mode=OneTime}" />
+                  <Run Text="," />
+                  <Run Text="{Binding LastTimestamp, Mode=OneWay}" />
+                  <Run Text="," />
+                  <Run Text="{Binding Count, Mode=OneWay}" />
+                </TextBlock>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>search:</TextBlock>
+                <Button Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">history</Button>
+                <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">tag</Button>
+                <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">keyword</Button>
+                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">remove</Button>
+              </StackPanel>
+            </StackPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+    </DockPanel>
 
     <TabControl
       Grid.Row="1"
