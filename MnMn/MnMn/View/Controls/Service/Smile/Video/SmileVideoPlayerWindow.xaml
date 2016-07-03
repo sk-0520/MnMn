@@ -34,6 +34,7 @@
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -94,7 +95,7 @@
       <Menu>
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AdditionMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -115,7 +116,7 @@
       <Menu>
         <MenuItem Header="プレイリスト" ItemsSource="{Binding PlayListItems}">
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
