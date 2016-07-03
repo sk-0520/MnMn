@@ -383,21 +383,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     return finder;
                 }
             );
+
             SelectedSearchGroup = selectViewModel;
-            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ContinueWith(t => {
-                var history = new SmileVideoSearchHistoryModel() {
-                    Query = query,
-                    SearchType = type,
-                };
-                var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.SearchType == history.SearchType && m.Query == history.Query);
-                if(exsitHistory != null) {
-                    history = exsitHistory;
-                    SearchHistoryList.Remove(history);
-                }
-                var historyPair = SearchHistoryList.Insert(0, history, null);
-                historyPair.ViewModel.Count += 1;
-                historyPair.ViewModel.LastTimestamp = DateTime.Now;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            var history = new SmileVideoSearchHistoryModel() {
+                Query = query,
+                SearchType = type,
+            };
+            var exsitHistory = SearchHistoryList.ModelList.FirstOrDefault(m => m.SearchType == history.SearchType && m.Query == history.Query);
+            if(exsitHistory != null) {
+                history = exsitHistory;
+                SearchHistoryList.Remove(history);
+            }
+            var historyPair = SearchHistoryList.Insert(0, history, null);
+            historyPair.ViewModel.Count = RangeUtility.Increment(historyPair.ViewModel.Count);
+            historyPair.ViewModel.LastTimestamp = DateTime.Now;
+
+            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
         }
 
         public Task LoadRecommendTagItemsAsync()

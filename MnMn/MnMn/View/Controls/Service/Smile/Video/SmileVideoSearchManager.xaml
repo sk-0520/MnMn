@@ -209,8 +209,9 @@
                   <ColumnDefinition Width="7*" />
                   <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0">
-                  <Run>けっか</Run>
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                  <Run>検索件数: </Run>
                   <Run Text="{Binding TotalCount}" />
                 </TextBlock>
 
@@ -218,12 +219,12 @@
                   <ItemsControl ItemsSource="{Binding RelationTagItems}">
                     <ItemsControl.ItemsPanel>
                       <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
+                        <WrapPanel VerticalAlignment="Top" Orientation="Horizontal" />
                       </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                       <DataTemplate>
-                        <TextBlock>
+                        <TextBlock Margin="4,0">
                           <Hyperlink
                             Command="{Binding DataContext.SearchTagCommand, ElementName=root }"
                             CommandParameter="{Binding}"
@@ -241,22 +242,6 @@
                   PageItems="{Binding PageItems}"
                   Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoFinderControl}}"
                 />
-                <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding SearchItems}">
-                  <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                      <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <Button
-                        Content="{Binding PageNumber }"
-                        Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_contrls_service_smile_video:SmileVideoFinderControl}}"
-                        CommandParameter="{Binding }"
-                      />
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>-->
               </Grid>
             </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
           </app_view_controls_service_smile_video:SmileVideoFinderControl>
