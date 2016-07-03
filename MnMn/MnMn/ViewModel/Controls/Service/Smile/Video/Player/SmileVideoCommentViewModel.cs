@@ -53,14 +53,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Setting = setting;
 
-            var commands = Commands.ToArray();
+            Content = Model.Content ?? string.Empty;
+            Anonymity = RawValueUtility.ConvertBoolean(Model.Anonymity);
+            IsOriginalPoster= RawValueUtility.ConvertBoolean(Model.Fork);
+            Timestamp = RawValueUtility.ConvertUnixTime(Model.Date);
+            UserId = Model.UserId;
+            Number = RawValueUtility.ConvertInteger(Model.No);
+            Commands = SmileVideoCommentUtility.ConvertCommands(Model.Mail);
+            Score = SmileVideoCommentUtility.ConvertScore(Model.Score);
 
-            var foreColor = SmileVideoCommentUtility.GetForeColor(commands, UserKind == SmileVideoUserKind.Premium);
+            var foreColor = SmileVideoCommentUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
             Foreground = new SolidColorBrush(foreColor);
             FreezableUtility.SafeFreeze(Foreground);
             Shadow = MediaUtility.GetAutoColor(foreColor);
 
-            switch(SmileVideoCommentUtility.GetFontSize(commands)) {
+            ActualForeground = Foreground;
+            ActualShadow = Shadow;
+
+            switch(SmileVideoCommentUtility.GetFontSize(Commands)) {
                 case SmileVideoCommentSize.Medium:
                     FontSize = Setting.Comment.FontSize;
                     break;
@@ -72,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
             }
 
-            Vertical = SmileVideoCommentUtility.GetVerticalAlign(commands);
+            Vertical = SmileVideoCommentUtility.GetVerticalAlign(Commands);
         }
 
         #region property
@@ -112,33 +122,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._filteringView, value); }
         }
 
-        public int Score
-        {
-            get
-            {
-                var result = RawValueUtility.ConvertInteger(Model.Score);
-                if(result == RawValueUtility.UnknownInteger) {
-                    return 0;
-                }
+        public int Score { get; }
 
-                return result;
-            }
-        }
-
-        public int Number
-        {
-            get { return RawValueUtility.ConvertInteger(Model.No); }
-        }
+        public int Number { get; }
 
         /// <summary>
         /// 発言日時。
         /// </summary>
-        public DateTime Timestamp
-        {
-            get { return RawValueUtility.ConvertUnixTime(Model.Date); }
-        }
+        public DateTime Timestamp{ get; }
 
-        public string UserId { get { return Model.UserId; } }
+        public string UserId { get; }
 
         public SmileVideoUserKind UserKind
         {
@@ -153,43 +146,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return SmileVideoMsgUtility.ConvertElapsedTime(Model.VPos); }
         }
 
-        public IEnumerable<string> Commands
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(Model.Mail)) {
-                    return Enumerable.Empty<string>();
-                }
+        public IList<string> Commands{ get; }
 
-                return Model.Mail.Split(null);
-            }
-        }
+        /// <summary>
+        /// コメント内容。
+        /// </summary>
+        public string Content { get; }
+        /// <summary>
+        /// 実際に表示するコメント内容。
+        /// </summary>
+        public string ActualContent { get { return Content; } }
 
-        public string Content { get { return Model.Content ?? string.Empty; } }
-
-        public bool Anonymity
-        {
-            get { return RawValueUtility.ConvertBoolean(Model.Anonymity); }
-        }
+        /// <summary>
+        /// 匿名。
+        /// </summary>
+        public bool Anonymity { get; }
 
         /// <summary>
         /// 投稿者コメントか。
         /// </summary>
-        public bool IsOriginalPoster
-        {
-            get { return RawValueUtility.ConvertBoolean(Model.Fork); }
-        }
+        public bool IsOriginalPoster { get; }
 
+        /// <summary>
+        /// フォントサイズ。
+        /// </summary>
         public double FontSize { get; }
-
+        /// <summary>
+        /// フォント名。
+        /// </summary>
         public string FontFamily { get { return Setting.Comment.FontFamily; } }
-
+        /// <summary>
+        /// 太字か。
+        /// </summary>
         public bool FontBold { get { return Setting.Comment.FontBold; } }
-
+        /// <summary>
+        /// 斜体か。
+        /// </summary>
         public bool FontItalic { get { return Setting.Comment.FontItalic; } }
 
+        /// <summary>
+        /// 前景ブラシ。
+        /// </summary>
         public Brush Foreground { get; }
+        /// <summary>
+        /// 実際に使用する前景ブラシ。
+        /// </summary>
+        public Brush ActualForeground { get; private set; }
+        /// <summary>
+        /// 背景色。
+        /// </summary>
         public Color Shadow { get; }
+        /// <summary>
+        /// 実際に使用する背景色。
+        /// </summary>
+        public Color ActualShadow { get; private set; }
 
         public double Opacity { get { return Setting.Comment.FontAlpha; } }
 
@@ -198,6 +208,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #endregion
 
         #region function
+
+        public void ChangeDefaultCommand(Brush foreground, Color backcolor)
+        {
+            // not imple
+        }
 
         #endregion
     }

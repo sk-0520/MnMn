@@ -43,31 +43,11 @@
     <TextBlock
       FontSize="{Binding FontSize}"
       FontFamily="{Binding FontFamily}"
-      Foreground="{Binding Foreground}"
+      Foreground="{Binding ActualForeground}"
       Text="{Binding Content}" 
       VerticalAlignment="Stretch"
       HorizontalAlignment="Center"
     />
 
   </Grid>
-  <!--<Label 
-    FontSize="{Binding FontSize}"
-    Foreground="{Binding Foreground}"
-    FontFamily="{Binding FontFamily}"
-    Opacity="{Binding Opacity}"
-    Content="{Binding Content}" 
-    VerticalAlignment="Stretch"
-    HorizontalAlignment="Center"
-  >
-    <Label.Effect>
-      <DropShadowEffect
-        Color="{Binding Shadow}"
-        Direction="315"
-        BlurRadius="2"
-        ShadowDepth="2"
-        Opacity="0.8"
-        RenderingBias="Performance"
-      />
-    </Label.Effect>
-  </Label>-->
 </UserControl>

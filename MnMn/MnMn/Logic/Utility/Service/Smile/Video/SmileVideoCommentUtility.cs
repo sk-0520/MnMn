@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                     { "passionorange", (Color)ColorConverter.ConvertFromString("#FF6600") },
                     { "orange2", (Color)ColorConverter.ConvertFromString("#FF6600") },
-                    
+
                     { "madyellow", (Color)ColorConverter.ConvertFromString("#999900") },
                     { "yellow2", (Color)ColorConverter.ConvertFromString("#999900") },
 
@@ -136,6 +136,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringItemSettingModel model, object data)
         {
             return new SmileVideoFilteringEditItemViewModel(model);
+        }
+
+        public static string[] ConvertCommands(string rawCommand)
+        {
+            if(string.IsNullOrEmpty(rawCommand)) {
+                return new string[0];
+            }
+
+            return rawCommand.Split(null);
+        }
+
+        public static int ConvertScore(string rawScore)
+        {
+            var result = RawValueUtility.ConvertInteger(rawScore);
+            if(result == RawValueUtility.UnknownInteger) {
+                return 0;
+            }
+
+            return result;
         }
     }
 }
