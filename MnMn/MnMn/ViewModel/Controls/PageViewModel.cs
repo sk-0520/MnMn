@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #region variable
 
         LoadState _loadState;
-        bool? _isChecked;
+        bool? _isChecked = false;
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        #region 
+        #region
 
         public bool? IsChecked
         {
