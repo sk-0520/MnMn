@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 CancelLoading = new CancellationTokenSource();
 
-                return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, null).ContinueWith(task => {
+                return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(task => {
                     return LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
                 }, CancelLoading.Token);
             } else {
