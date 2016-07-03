@@ -77,7 +77,7 @@
         </xctk:DropDownButton.DropDownContent>
       </xctk:DropDownButton>
 
-      <xctk:SplitButton DockPanel.Dock="Right" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
+      <xctk:SplitButton DockPanel.Dock="Right" Width="120" Command="{Binding SearchCommand}" IsOpen="{Binding ShowSearchTypeArea, Mode=TwoWay}" >
         <xctk:SplitButton.Content>
           <StackPanel Orientation="Horizontal">
             <TextBlock>
