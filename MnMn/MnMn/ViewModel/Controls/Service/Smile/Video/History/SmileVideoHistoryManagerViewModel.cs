@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             {
                 var prevItem = this._selectedItem;
                 if(SetVariableValue(ref this._selectedItem, value)) {
-                    if(prevItem != null && this._selectedItem.CanLoad) {
+                    if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
                         this._selectedItem.LoadDefaultCacheAsync();
                     }
                 }
