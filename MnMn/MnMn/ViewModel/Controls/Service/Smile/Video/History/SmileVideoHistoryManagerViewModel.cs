@@ -93,10 +93,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
                 return;
             }
 
-            var target = ItemsList.First();
-            target.LoadDefaultCacheAsync().ContinueWith(task => {
-                SelectedItem = target;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            SelectedItem = ItemsList.First();
+            SelectedItem.LoadDefaultCacheAsync().ConfigureAwait(false);
         }
 
         #endregion

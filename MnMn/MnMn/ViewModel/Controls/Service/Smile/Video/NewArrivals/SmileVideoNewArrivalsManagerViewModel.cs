@@ -80,10 +80,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
                 return;
             }
 
-            var target = ItemsList.First();
-            target.LoadDefaultCacheAsync().ContinueWith(task => {
-                SelectedItem = target;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            SelectedItem = ItemsList.First();
+            SelectedItem.LoadDefaultCacheAsync().ConfigureAwait(false);
         }
 
         public override Task InitializeAsync()
