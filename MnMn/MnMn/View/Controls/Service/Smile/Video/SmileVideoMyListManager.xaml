@@ -181,7 +181,11 @@
         <TabItem x:Name="viewSearch" Header="検索" IsSelected="{Binding IsSelectedSearch}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <xctk:WatermarkTextBox Width="110" Watermark="検索 or mylist/xx" Text="{Binding InputSearchMyList}" />
+              <xctk:WatermarkTextBox Width="110" Watermark="検索 or mylist/xx" Text="{Binding InputSearchMyList, UpdateSourceTrigger=PropertyChanged}">
+                <xctk:WatermarkTextBox.InputBindings>
+                  <KeyBinding Key="Enter" Command="{Binding SearchUserMyListCommand}" />
+                </xctk:WatermarkTextBox.InputBindings>
+              </xctk:WatermarkTextBox>
               <Button Command="{Binding SearchUserMyListCommand}">検索</Button>
               <Separator />
               <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" >ブックマーク追加</Button>

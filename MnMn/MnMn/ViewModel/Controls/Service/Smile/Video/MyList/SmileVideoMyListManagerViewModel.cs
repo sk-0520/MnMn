@@ -304,7 +304,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 return CreateCommand(
                     o => {
-                        SearchUserMyListAsync(InputSearchMyList).ConfigureAwait(false);
+                        if(!string.IsNullOrEmpty(InputSearchMyList)) {
+                            SearchUserMyListAsync(InputSearchMyList).ConfigureAwait(false);
+                        }
                     }
                 );
             }
