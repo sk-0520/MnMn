@@ -81,6 +81,10 @@
         <Setter Property="LoadedToVisibility" Value="Visible" />
       </Style>
 
+      <Style x:Key="UserSelect" TargetType="RadioButton">
+        <Setter Property="Margin" Value="4,0,0,0" />
+      </Style>
+
     </ResourceDictionary>
   </Window.Resources>
   <DockPanel>
@@ -356,7 +360,7 @@
                 </RadioButton>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
                   <RadioButton.Style>
-                    <Style TargetType="RadioButton">
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource UserSelect}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding OriginalPosterCommentListCount}" Value="0">
                           <Setter Property="Visibility" Value="Collapsed" />
@@ -368,7 +372,7 @@
                 </RadioButton>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
                   <RadioButton.Style>
-                    <Style TargetType="RadioButton">
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource UserSelect}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding CommentListCount}" Value="0">
                           <Setter Property="IsEnabled" Value="False" />
@@ -411,7 +415,7 @@
               </DockPanel>
               <DockPanel DockPanel.Dock="Bottom">
                 <DockPanel>
-                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+                  <CheckBox DockPanel.Dock="Left" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
                     <TextBlock>
                       <TextBlock>表示制限</TextBlock>
                       <TextBlock>(</TextBlock>
@@ -430,8 +434,8 @@
                       <TextBlock>)</TextBlock>
                     </TextBlock>
                   </CheckBox>
-                  <TextBlock DockPanel.Dock="Left" >少</TextBlock>
-                  <TextBlock DockPanel.Dock="Right" >多</TextBlock>
+                  <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
+                  <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
                   <Slider
                     Minimum="1"
                     Maximum="50"

@@ -83,27 +83,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public string EditingMyListName
         {
             get { return this._editingMyListName; }
-            set { IsEditing = SetVariableValue(ref this._editingMyListName, value); }
+            set
+            {
+                var isEdited = SetVariableValue(ref this._editingMyListName, value);
+                if(isEdited) {
+                    IsEditing = isEdited;
+                }
+            }
         }
         public DefinedElementModel EditingMyListFolderIdElement
         {
             get { return this._editingMyListFolderIdElement; }
-            set { IsEditing = SetVariableValue(ref this._editingMyListFolderIdElement, value); }
+            set
+            {
+                var isEdited = SetVariableValue(ref this._editingMyListFolderIdElement, value);
+                if(isEdited) {
+                    IsEditing = isEdited;
+                }
+            }
         }
         public bool EditingMyListIsPublic
         {
             get { return this._editingMyListIsPublic; }
-            set { IsEditing = SetVariableValue(ref this._editingMyListIsPublic, value); }
+            set
+            {
+                var isEdited = SetVariableValue(ref this._editingMyListIsPublic, value);
+                if(isEdited) {
+                    IsEditing = isEdited;
+                }
+            }
         }
         public string EditingMyListDescription
         {
             get { return this._editingMyListDescription; }
-            set { IsEditing = SetVariableValue(ref this._editingMyListDescription, value); }
+            set
+            {
+                var isEdited = SetVariableValue(ref this._editingMyListDescription, value);
+                if(isEdited) {
+                    IsEditing = isEdited;
+                }
+            }
         }
         public DefinedElementModel EditingMyListSortElement
         {
             get { return this._editingMyListSortElement; }
-            set { IsEditing = SetVariableValue(ref this._editingMyListSortElement, value); }
+            set
+            {
+                var isEdited = SetVariableValue(ref this._editingMyListSortElement, value);
+                if(isEdited) {
+                    IsEditing = isEdited;
+                }
+            }
         }
 
         public bool IsEditing

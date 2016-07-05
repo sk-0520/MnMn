@@ -6,6 +6,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoMyListManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
@@ -15,7 +16,7 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300" d:DesignWidth="500"
+  d:DesignHeight="300" d:DesignWidth="600"
 >
   <UserControl.Resources>
     <ResourceDictionary>
@@ -180,7 +181,7 @@
         <TabItem x:Name="viewSearch" Header="検索" IsSelected="{Binding IsSelectedSearch}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <TextBox Text="{Binding InputSearchMyList}" />
+              <xctk:WatermarkTextBox Width="110" Watermark="検索 or mylist/xx" Text="{Binding InputSearchMyList}" />
               <Button Command="{Binding SearchUserMyListCommand}">検索</Button>
               <Separator />
               <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" >ブックマーク追加</Button>
