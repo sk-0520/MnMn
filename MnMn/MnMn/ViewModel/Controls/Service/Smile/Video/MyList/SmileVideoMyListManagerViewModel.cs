@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         SmileVideoAccountMyListFinderViewModel _selectedAccountFinder;
         SmileVideoItemsMyListFinderViewModel _selectedBookmarkFinder;
-        SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
+        SmileVideoSearchMyListFinderViewModel _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
 
         bool _isSelectedAccount;
@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
         }
-        public SmileVideoMyListFinderViewModelBase SelectedSearchFinder
+        public SmileVideoSearchMyListFinderViewModel SelectedSearchFinder
         {
             get { return this._selectedSearchFinder; }
             set
@@ -215,8 +215,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 if(SetVariableValue(ref this._selectedPage, value)) {
                     if(this._selectedPage != null) {
                         this._selectedPage.IsChecked = true;
-                        SelectedSearchFinder = this._selectedPage.ViewModel.Items.First();
                         SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
+                        SelectedSearchFinder = (SmileVideoSearchMyListFinderViewModel)this._selectedPage.ViewModel.Items.First();
                     }
                     if(oldSelectedPage != null) {
                         oldSelectedPage.IsChecked = false;
@@ -555,7 +555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             ClearSearchUserMyListPage();
             SearchUserMyList.InitializeRange(new[] { finder });
             if(SearchUserMyList.Any()) {
-                SelectedSearchFinder = SearchUserMyList.First();
+                SelectedSearchFinder = (SmileVideoSearchMyListFinderViewModel)SearchUserMyList.First();
             }
 
         }
