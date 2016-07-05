@@ -30,6 +30,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public abstract class SmileVideoCustomManagerViewModelBase: ManagerViewModelBase
     {
+        #region variable
+
+        SmileVideoFinderViewModelBase _selectedItem;
+
+        #endregion
+
         public SmileVideoCustomManagerViewModelBase(Mediation mediation)
             : base(mediation)
         {
@@ -40,6 +46,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         protected SmileVideoSettingModel Setting { get; }
+
+        public virtual SmileVideoFinderViewModelBase SelectedItem
+        {
+            get { return this._selectedItem; }
+            set
+            {
+                var prevItem = this._selectedItem;
+                if(SetVariableValue(ref this._selectedItem, value)) {
+                    if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
+                        this._selectedItem.LoadDefaultCacheAsync();
+                    }
+                }
+            }
+        }
 
         #endregion
 

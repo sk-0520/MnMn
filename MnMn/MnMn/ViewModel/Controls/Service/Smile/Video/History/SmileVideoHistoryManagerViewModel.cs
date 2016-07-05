@@ -31,12 +31,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 {
     public class SmileVideoHistoryManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        #region variable
-
-        SmileVideoFinderViewModelBase _selectedItem;
-
-        #endregion
-
         public SmileVideoHistoryManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -68,19 +62,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         public CollectionModel<SmileVideoFinderViewModelBase> ItemsList { get; }
 
-        public SmileVideoFinderViewModelBase SelectedItem
-        {
-            get { return this._selectedItem; }
-            set
-            {
-                var prevItem = this._selectedItem;
-                if(SetVariableValue(ref this._selectedItem, value)) {
-                    if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
-                        this._selectedItem.LoadDefaultCacheAsync();
-                    }
-                }
-            }
-        }
+        //public SmileVideoFinderViewModelBase SelectedItem
+        //{
+        //    get { return this._selectedItem; }
+        //    set
+        //    {
+        //        var prevItem = this._selectedItem;
+        //        if(SetVariableValue(ref this._selectedItem, value)) {
+        //            if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
+        //                this._selectedItem.LoadDefaultCacheAsync();
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
 
