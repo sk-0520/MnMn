@@ -72,13 +72,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void load_uri()
         {
-            var path = @"etc\niconico\uri-list.xml";
+            var path = @"etc\define\service\smile\uri-list.xml";
             var list = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(path);
         }
 
         void param()
         {
-            var path = @"etc\niconico\uri-params.xml";
+            var path = @"etc\define\service\smile\uri-params.xml";
             var list = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(path);
         }
 

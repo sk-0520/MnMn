@@ -806,8 +806,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="etc\image\niconico\video\" />
-    <Folder Include="etc\script\niconico\" />
+    <Folder Include="etc\image\smile\video\" />
+    <Folder Include="etc\script\smile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

@@ -12,9 +12,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
     /// </summary>
     partial class Constants
     {
-        #region niconico
+        #region smile
 
-        #region niconico-video
+        #region smile-video
 
         public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return TimeSpan.Parse(ConfigurationManager.AppSettings["service-smile-smilevideo-DownloadingErrorWaitTime"]); } }
         public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return int.Parse(ConfigurationManager.AppSettings["service-smile-smilevideo-DownloadingErrorRetryCount"]); } }
