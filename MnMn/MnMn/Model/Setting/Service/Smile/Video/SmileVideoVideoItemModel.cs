@@ -24,27 +24,27 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoPlayHistoryModel: SmileVideoVideoItemModel
+    public class SmileVideoVideoItemModel: SettingModelBase
     {
-        #region property
-
         /// <summary>
-        /// 最終使用日時。
+        /// 動画ID。
         /// </summary>
         [DataMember]
-        public DateTime LastTimestamp { get; set; }
+        public string VideoId { get; set; }
         /// <summary>
-        /// 使用回数。
+        /// 動画タイトル。
         /// </summary>
         [DataMember]
-        public int Count { get; set; }
+        public string VideoTitle { get; set; }
         /// <summary>
-        /// 使用回数。
+        /// 投稿日。
         /// </summary>
         [DataMember]
-        public Uri WatchUrl { get; set; }
-
-
-        #endregion
+        public DateTime FirstRetrieve { get; set; }
+        /// <summary>
+        /// 再生時間。
+        /// </summary>
+        [DataMember]
+        public TimeSpan Length { get; set; }
     }
 }
