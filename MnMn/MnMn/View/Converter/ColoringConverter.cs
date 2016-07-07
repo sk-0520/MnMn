@@ -26,26 +26,20 @@ using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
-using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
-    [ValueConversion(typeof(DefinedElementModel), typeof(BitmapSource))]
-    public class MyListFolderIdToColorConverter: IValueConverter
+    [ValueConversion(typeof(Color), typeof(ImageSource))]
+    public class ColoringConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var element = value as DefinedElementModel;
-            if(element != null) {
-                var color = SmileMyListUtility.GetColorsFromExtends(element.Extends).First();
-                var image = BitmapFrame.Create(SharedConstants.GetPackUri((string)parameter));
-                FreezableUtility.SafeFreeze(image);
-                return ImageUtility.ColoringImage(image, color);
-            }
+            var color = (Color)value;
+            
+            var image = BitmapFrame.Create(SharedConstants.GetPackUri((string)parameter));
+            FreezableUtility.SafeFreeze(image);
 
-            return null;
+            return ImageUtility.ColoringImage(image, color);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
