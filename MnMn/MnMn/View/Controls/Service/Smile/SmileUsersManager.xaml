@@ -176,20 +176,25 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="6*" />
                   </Grid.ColumnDefinitions>
-                  <ListBox Grid.Column="0" ItemsSource="{Binding MyListItems}" SelectedItem="{Binding SelectedMyListFinder}">
-                    <ListBox.ItemTemplate>
-                      <DataTemplate>
-                        <StackPanel>
-                          <StackPanel Orientation="Horizontal">
-                            <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
-                            <TextBlock Text="{Binding MyListName}" />
-                            <TextBlock Margin="8,0,0,0" FontSize="8" Text="{Binding MyListId}" />
+                  <DockPanel Grid.Column="0">
+                    <ToolBar DockPanel.Dock="Top">
+                      <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedMyListFinder}" >ブックマーク追加</Button>
+                    </ToolBar>
+                    <ListBox ItemsSource="{Binding MyListItems}" SelectedItem="{Binding SelectedMyListFinder}">
+                      <ListBox.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                              <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
+                              <TextBlock Text="{Binding MyListName}" />
+                              <TextBlock Margin="8,0,0,0" FontSize="8" Text="{Binding MyListId}" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding MyListItemCount, StringFormat=アイテム数: {0}}" />
                           </StackPanel>
-                          <TextBlock Text="{Binding MyListItemCount, StringFormat=アイテム数: {0}}" />
-                        </StackPanel>
-                      </DataTemplate>
-                    </ListBox.ItemTemplate>
-                  </ListBox>
+                        </DataTemplate>
+                      </ListBox.ItemTemplate>
+                    </ListBox>
+                  </DockPanel>
                   <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
                   <app_view_controls_service_smile_video:SmileVideoFinderControl Grid.Column="2" DataContext="{Binding SelectedMyListFinder}" />
                 </Grid>
