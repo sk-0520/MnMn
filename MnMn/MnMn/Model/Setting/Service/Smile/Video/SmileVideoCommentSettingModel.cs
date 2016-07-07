@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントの/と対になるx05cをバックスラッシュに置き換えるか。
         /// </summary>
         [DataMember]
-        public bool ConvertPairYenSlash { get; set; }
+        public bool ConvertPairYenSlash { get; set; } = true;
 
         /// <summary>
         /// コメントの共有NGを有効にするか。

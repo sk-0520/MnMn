@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         SmileVideoAccountMyListFinderViewModel _selectedAccountFinder;
         SmileVideoItemsMyListFinderViewModel _selectedBookmarkFinder;
-        SmileVideoSearchMyListFinderViewModel _selectedSearchFinder;
+        SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
 
         bool _isSelectedAccount;
@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
         }
-        public SmileVideoSearchMyListFinderViewModel SelectedSearchFinder
+        public SmileVideoMyListFinderViewModelBase SelectedSearchFinder
         {
             get { return this._selectedSearchFinder; }
             set
@@ -557,7 +557,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             ClearSearchUserMyListPage();
             SearchUserMyList.InitializeRange(new[] { finder });
             if(SearchUserMyList.Any()) {
-                SelectedSearchFinder = (SmileVideoSearchMyListFinderViewModel)SearchUserMyList.First();
+                SelectedSearchFinder = (SmileVideoMyListFinderViewModelBase)SearchUserMyList.First();
             }
 
         }

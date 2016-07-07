@@ -155,7 +155,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 実際に表示するコメント内容。
         /// </summary>
-        public string ActualContent { get { return Content; } }
+        public string ActualContent {
+            get {
+                var s = Content;
+                if(Setting.Comment.ConvertPairYenSlash) {
+                    s = ReplaceYenToBackslash(s);
+                }
+                return s;
+            }
+        }
 
         /// <summary>
         /// 匿名。
@@ -208,6 +216,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #endregion
 
         #region function
+
+        string ReplaceYenToBackslash(string s)
+        {
+            if(s.Any(c => c == '\\') && s.Any(c => c == '/')) {
+                return s.Replace('\\', '\u29F5');
+            }
+
+            return s;
+        }
+
 
         public void ChangeDefaultCommand(Brush foreground, Color backcolor)
         {
