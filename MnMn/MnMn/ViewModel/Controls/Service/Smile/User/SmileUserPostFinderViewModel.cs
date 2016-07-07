@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
     public class SmileUserPostFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
-        public SmileUserPostFinderViewModel(Mediation mediation, string userId) 
+        public SmileUserPostFinderViewModel(Mediation mediation, string userId)
             : base(mediation)
         {
             UserId = userId;

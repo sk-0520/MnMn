@@ -212,6 +212,7 @@
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\CacheImageUtility.cs" />
+    <Compile Include="Logic\Utility\ImageUtility.cs" />
     <Compile Include="Logic\Utility\LoadStateUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileIdUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileJsonResultUtility.cs" />
@@ -627,6 +628,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Service\Smile\MyList\Folder.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Keyword.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Tag.png" />
     <Resource Include="Resources\Service\Smile\Video\Finder\Check.png" />
