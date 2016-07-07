@@ -113,6 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             if(LoginState == LoginState.Logged) {
                 if(DateTime.Now - LastLoginTime < RegardLoginTime) {
+                    RenewalLastLoginTime();
                     return;
                 }
             }
