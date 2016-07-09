@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     {
         Number,
         Title,
+        //Length,
         FirstRetrieve,
         ViewCount,
         CommentCount,

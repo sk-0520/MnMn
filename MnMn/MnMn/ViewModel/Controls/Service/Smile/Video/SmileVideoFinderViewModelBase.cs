@@ -307,6 +307,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var map = new Dictionary<SmileVideoSortType, string>() {
                 { SmileVideoSortType.Number, nameof(SmileVideoInformationViewModel.Number) },
                 { SmileVideoSortType.Title, nameof(SmileVideoInformationViewModel.Title) },
+                //{ SmileVideoSortType.Length, nameof(SmileVideoInformationViewModel.Length) },
                 { SmileVideoSortType.FirstRetrieve, nameof(SmileVideoInformationViewModel.FirstRetrieve) },
                 { SmileVideoSortType.ViewCount, nameof(SmileVideoInformationViewModel.ViewCounter) },
                 { SmileVideoSortType.CommentCount, nameof(SmileVideoInformationViewModel.CommentCounter) },

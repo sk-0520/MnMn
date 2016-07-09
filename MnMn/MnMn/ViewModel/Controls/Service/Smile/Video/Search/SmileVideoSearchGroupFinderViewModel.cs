@@ -117,12 +117,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     if(this._selectedPage != null) {
                         this._selectedPage.IsChecked = true;
                     }
-                    if(oldSelectedPage!= null) {
+                    if(oldSelectedPage != null) {
                         oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
                         oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
                         oldSelectedPage.IsChecked = false;
                     }
+
                     CallPageItemOnPropertyChange();
+
+                    if(this._selectedPage != null && oldSelectedPage != null) {
+                        this._selectedPage.ViewModel.InputFilter = oldSelectedPage.ViewModel.InputFilter;
+                        this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+                        this._selectedPage.ViewModel.VideoInformationItems.Refresh();
+                    }
                 }
             }
         }
