@@ -78,6 +78,8 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using System.Xml;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
+using System.Windows.Threading;
+using System.Runtime.ExceptionServices;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -138,6 +140,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _isSelectedComment;
 
         bool _isSelectedVideoInformation;
+
+        bool _isSettedMedia;
 
         #endregion
 
@@ -573,6 +577,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isSelectedVideoInformation, value); }
         }
 
+        public bool IsSettedMedia
+        {
+            get { return this._isSettedMedia; }
+            set { SetVariableValue(ref this._isSettedMedia, value); }
+        }
+
         #endregion
 
         #region command
@@ -613,16 +623,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 switch(Player.State) {
                                     case Meta.Vlc.Interop.Media.MediaState.NothingSpecial:
                                     case Meta.Vlc.Interop.Media.MediaState.Stopped:
+                                        StopMovie();
                                         SetMedia();
-                                        VideoPlay();
+                                        PlayMovie();
                                         break;
 
                                     default:
                                         //Player.BeginStop(() => {
                                         //    Player.Play();
                                         //});
-                                        Player.Stop();
-                                        Player.Play();
+                                        StopMovie();
+                                        PlayMovie();
                                         break;
                                 }
                                 return;
@@ -633,11 +644,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                             case PlayerState.Pause:
                                 if(IsBufferingStop) {
+                                    Mediation.Logger.Debug("restart");
                                     SetMedia();
+                                    PlayMovie().Task.ContinueWith(task => {
                                     Player.Position = VideoPosition;
-                                    VideoPlay();
+                                    });
                                 } else {
+                                    Mediation.Logger.Debug("resume");
+                                    View.Dispatcher.BeginInvoke(new Action(() => {
                                     Player.PauseOrResume();
+                                    }));
                                 }
                                 return;
 
@@ -855,24 +871,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        [HandleProcessCorruptedStateExceptions]
         void SetMedia()
         {
-            Player.LoadMedia(PlayFile.FullName);
+            if(!IsSettedMedia) {
+                Player.LoadMedia(PlayFile.FullName);
+                IsSettedMedia = true;
+            }
         }
 
         void StartIfAutoPlay()
         {
             if(Setting.Player.AutoPlay) {
                 SetMedia();
-                VideoPlay();
+                PlayMovie();
             }
         }
 
-        void VideoPlay()
+        DispatcherOperation PlayMovie()
         {
             Player.IsMute = IsMute;
             Player.Volume = Volume;
-            View.Dispatcher.BeginInvoke(new Action(() => {
+            return View.Dispatcher.BeginInvoke(new Action(() => {
                 Player.Play();
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
@@ -1669,6 +1689,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayTime = TimeSpan.Zero;
             TotalTime = TimeSpan.Zero;
             SelectedComment = null;
+            IsSettedMedia = false;
             if(View != null) {
                 if(Player != null && Player.State != Meta.Vlc.Interop.Media.MediaState.Playing && Player.State != Meta.Vlc.Interop.Media.MediaState.Paused) {
                     // https://github.com/higankanshi/Meta.Vlc/issues/80
@@ -1809,8 +1830,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
-                Player.Stop();
+                StopMovie();
             }
+
+            //View.player.Dispose();
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)

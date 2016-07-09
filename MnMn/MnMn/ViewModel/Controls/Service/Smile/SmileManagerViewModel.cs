@@ -77,7 +77,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             {
                 return CreateCommand(
                     o => {
-                        OpenVideoPlayerAsync(InputVideoId).ConfigureAwait(false);
+                        if(!string.IsNullOrWhiteSpace(InputVideoId)) {
+                            OpenVideoPlayerAsync(InputVideoId.Trim()).ConfigureAwait(false);
+                            InputVideoId = string.Empty;
+                        }
                     }
                 );
             }

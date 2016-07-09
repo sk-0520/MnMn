@@ -25,7 +25,11 @@
   </UserControl.Resources>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top">
-      <xctk:WatermarkTextBox VerticalAlignment="Center" Width="140" Watermark="動画ID: smXXXXXX" Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}"/>
+      <xctk:WatermarkTextBox VerticalAlignment="Center" Width="140" Watermark="動画ID: smXXXXXX" Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}">
+        <xctk:WatermarkTextBox.InputBindings>
+          <KeyBinding Key="Enter" Command="{Binding OpenVideoPlayerCommand}" />
+        </xctk:WatermarkTextBox.InputBindings>
+      </xctk:WatermarkTextBox>
       <Button Command="{Binding OpenVideoPlayerCommand}">開く</Button>
     </ToolBar>
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
