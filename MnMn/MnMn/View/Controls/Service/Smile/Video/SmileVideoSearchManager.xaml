@@ -25,6 +25,34 @@
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+
+      <Style x:Key="ReloadButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="Webdings" />
+        <Setter Property="Content" Value="q" />
+      </Style>
+
+      <ControlTemplate x:Key="TagsItemsTemplate" TargetType="ItemsControl">
+        <ItemsControl ItemsSource="{TemplateBinding ItemsSource}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <TextBlock>
+                <Hyperlink
+                  Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  CommandParameter="{Binding}"
+                >
+                  <Run Text="{Binding TagName, Mode=OneTime}" />
+                </Hyperlink>
+              </TextBlock>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
+      </ControlTemplate>
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -51,28 +79,10 @@
                   <StackPanel Orientation="Horizontal">
                     <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
                     <TextBlock Text="おすすめ" />
-                    <Button Command="{Binding LoadRecommendTagCommand}" Content="reload"/>
+                    <Button Command="{Binding LoadRecommendTagCommand}" Style="{StaticResource ReloadButton}" />
                   </StackPanel>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding RecommendTagItems}">
-                  <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                      <StackPanel />
-                    </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <TextBlock>
-                      <Hyperlink
-                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        CommandParameter="{Binding}"
-                      >
-                        <Run Text="{Binding TagName, Mode=OneTime}" />
-                      </Hyperlink>
-                      </TextBlock>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ItemsControl Template="{StaticResource TagsItemsTemplate}" ItemsSource="{Binding RecommendTagItems}" />
               </GroupBox>
 
               <GroupBox>
@@ -80,28 +90,10 @@
                   <StackPanel Orientation="Horizontal">
                     <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding TrendTagLoadState}" />
                     <TextBlock Text="トレンド" />
-                    <Button Command="{Binding LoadTrendTagCommand}" Content="reload"/>
+                    <Button Command="{Binding LoadTrendTagCommand}" Style="{StaticResource ReloadButton}" />
                   </StackPanel>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding TrendTagItems}">
-                  <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                      <StackPanel />
-                    </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <TextBlock>
-                      <Hyperlink
-                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        CommandParameter="{Binding}"
-                      >
-                        <Run Text="{Binding TagName, Mode=OneTime}" />
-                      </Hyperlink>
-                      </TextBlock>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ItemsControl Template="{StaticResource TagsItemsTemplate}" ItemsSource="{Binding TrendTagItems}" />
               </GroupBox>
             </StackPanel>
           </Border>
@@ -254,10 +246,7 @@
                   <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" VerticalAlignment="Center">
-                  <Run>検索件数: </Run>
-                  <Run Text="{Binding TotalCount}" />
-                </TextBlock>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding TotalCount, StringFormat=検索件数: {0}}" />
 
                 <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                   <ItemsControl ItemsSource="{Binding RelationTagItems}">
