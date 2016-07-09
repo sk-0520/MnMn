@@ -329,7 +329,7 @@
                               <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
                               <Condition Binding="{Binding HasFirstRetrieve}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay}" />
+                            <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
                           </MultiDataTrigger>
 
                           <MultiDataTrigger>
@@ -362,7 +362,7 @@
                               <Condition Binding="{Binding NeedLoadInformationFlag}" Value="True" />
                               <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay}" />
+                            <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
                           </MultiDataTrigger>
                           <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>

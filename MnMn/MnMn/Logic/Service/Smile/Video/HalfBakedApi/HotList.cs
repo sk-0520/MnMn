@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
                 //var dateElement = parentElement.SelectSingleNode(".//*[contains(@class,'thumb_num']");
                 var dateElement = parentElement.SelectNodes(".//p")
                     .FirstOrDefault(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumb_num"))
-                    ?.SelectSingleNode("//strong")
+                    ?.SelectSingleNode("./strong")
                 ;
                 detailModel.FirstRetrieve = dateElement.InnerText;
 

@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 dstItem.Link = "/" + srcItem.Data.WatchId;
 
                 var detailModel = new RawSmileVideoFeedDetailModel();
-                detailModel.FirstRetrieve = RawValueUtility.ConvertUnixTime(srcItem.Data.UpdateTime).ToString("u");
+                detailModel.FirstRetrieve = RawValueUtility.ConvertUnixTime(srcItem.Data.UpdateTime).ToString("s");
                 detailModel.Description = srcItem.Description;
                 detailModel.ViewCounter = srcItem.Data.ViewCounter;
                 detailModel.MylistCounter = srcItem.Data.MylistCounter;
