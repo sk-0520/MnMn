@@ -28,11 +28,11 @@
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
       <Style x:Key="HeaderColumn" TargetType="TextBlock">
-        <Setter Property="Margin" Value="2" />
+        <Setter Property="Padding" Value="2" />
       </Style>
 
       <Style x:Key="NumberColumn" TargetType="TextBlock">
-        <Setter Property="Margin" Value="8, 2" />
+        <Setter Property="Padding" Value="8, 2" />
         <Setter Property="TextAlignment" Value="Right" />
       </Style>
 
@@ -155,7 +155,7 @@
                     </app_view_controls:LoadStateNavigator.Style>
                   </app_view_controls:LoadStateNavigator>
 
-                  <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="2,1" FontWeight="Bold" Text="{Binding Title}" />
+                  <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Padding="2,1" FontWeight="Bold" Text="{Binding Title}" />
 
                   <TextBlock Grid.Row="1" Grid.Column="0" Text="再生数" Style="{StaticResource HeaderColumn}" />
                   <TextBlock Grid.Row="1" Grid.Column="1">
