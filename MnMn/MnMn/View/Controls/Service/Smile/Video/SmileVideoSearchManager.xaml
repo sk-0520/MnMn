@@ -101,12 +101,12 @@
           <StackPanel>
             <MenuItem Header="タグ" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" Style="{StaticResource DefaultMenuItem}">
               <MenuItem.Icon>
-                <Image Source="/Resources/Service/Smile/Video/Search/Tag.png" Style="{StaticResource ItemImage}" />
+                <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
               </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="キーワード" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" Style="{StaticResource DefaultMenuItem}">
               <MenuItem.Icon>
-                <Image Source="/Resources/Service/Smile/Video/Search/Keyword.png" Style="{StaticResource ItemImage}" />
+                <Image Source="/Resources/SearchType/Keyword.png" Style="{StaticResource ItemImage}" />
               </MenuItem.Icon>
             </MenuItem>
           </StackPanel>
@@ -138,10 +138,10 @@
                     <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
-                          <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Keyword.png" />
+                          <Setter Property="Source" Value="/Resources/SearchType/Keyword.png" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding SearchType}" Value="Tag">
-                          <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Tag.png" />
+                          <Setter Property="Source" Value="/Resources/SearchType/Tag.png" />
                         </DataTrigger>
                       </Style.Triggers>
                     </Style>
@@ -192,10 +192,10 @@
                 <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
                   <Style.Triggers>
                     <DataTrigger Binding="{Binding Type}" Value="Keyword">
-                      <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Keyword.png" />
+                      <Setter Property="Source" Value="/Resources/SearchType/Keyword.png" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Tag">
-                      <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Tag.png" />
+                      <Setter Property="Source" Value="/Resources/SearchType/Tag.png" />
                     </DataTrigger>
                   </Style.Triggers>
                 </Style>

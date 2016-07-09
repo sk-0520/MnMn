@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
-        public string Title { get { return $"SmileVideo[{VideoId}]: {VideoInformation.Title}"; } }
+        public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
 
         public WindowState State
         {
@@ -583,7 +583,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-
+                        Mediation.Logger.Warning($"{o}");
                     }
                 );
             }

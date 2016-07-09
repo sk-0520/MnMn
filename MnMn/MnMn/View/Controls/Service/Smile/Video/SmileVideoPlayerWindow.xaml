@@ -656,7 +656,10 @@
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="登録タグ" Margin="10,0" />
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                  <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
+                  <TextBlock Text="登録タグ" Margin="10,0" />
+                </StackPanel>
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding TagItems}">
                   <ItemsControl.Resources>
                     <Style TargetType="TextBlock">
