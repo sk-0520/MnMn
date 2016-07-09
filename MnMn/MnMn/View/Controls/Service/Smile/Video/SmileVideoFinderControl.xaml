@@ -103,8 +103,6 @@
                 <Image Source="{Binding ThumbnailImage, Mode=OneWay}" />
               </Grid>
 
-              <TextBlock DockPanel.Dock="Top" FontWeight="Bold" Text="{Binding Title}" />
-
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -113,6 +111,7 @@
 
                 <Grid Grid.Column="0">
                   <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                   </Grid.RowDefinitions>
@@ -125,8 +124,31 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Row="0" Grid.Column="0" Text="再生数" />
-                  <TextBlock Grid.Row="0" Grid.Column="1">
+                  <app_view_controls:LoadStateNavigator
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    ShowStateText="False"
+                  >
+                    <app_view_controls:LoadStateNavigator.Style>
+                      <Style TargetType="app_view_controls:LoadStateNavigator">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding NeedLoadInformationFlag}" Value="True">
+                            <Setter Property="LoadState" Value="{Binding InformationLoadState}" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding NeedLoadInformationFlag}" Value="False">
+                            <Setter Property="LoadState" Value="Loaded" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </app_view_controls:LoadStateNavigator.Style>
+                  </app_view_controls:LoadStateNavigator>
+
+                  <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" FontWeight="Bold" Text="{Binding Title}" />
+
+                  <TextBlock Grid.Row="1" Grid.Column="0" Text="再生数" />
+                  <TextBlock Grid.Row="1" Grid.Column="1">
                     <TextBlock.Style>
                       <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -198,8 +220,8 @@
                     </TextBlock.Style>
                   </TextBlock>
 
-                  <TextBlock Grid.Row="0" Grid.Column="2" Text="マイリスト" />
-                  <DockPanel Grid.Row="0" Grid.Column="3">
+                  <TextBlock Grid.Row="1" Grid.Column="2" Text="マイリスト" />
+                  <DockPanel Grid.Row="1" Grid.Column="3">
                     <app_view_controls:LoadStateNavigator Width="16" HorizontalAlignment="Left" ShowStateText="False">
                       <app_view_controls:LoadStateNavigator.Style>
                         <Style TargetType="app_view_controls:LoadStateNavigator">
@@ -287,8 +309,8 @@
                     </TextBlock>
                   </DockPanel>
 
-                  <TextBlock Grid.Row="0" Grid.Column="4" Text="投稿日" />
-                  <DockPanel Grid.Row="0" Grid.Column="5">
+                  <TextBlock Grid.Row="1" Grid.Column="4" Text="投稿日" />
+                  <DockPanel Grid.Row="1" Grid.Column="5">
                     <app_view_controls:LoadStateNavigator Width="16" HorizontalAlignment="Left" ShowStateText="False">
                       <app_view_controls:LoadStateNavigator.Style>
                         <Style TargetType="app_view_controls:LoadStateNavigator">
@@ -320,7 +342,7 @@
                                 <Condition Binding="{Binding NeedLoadInformationFlag}" Value="False" />
                                 <Condition Binding="{Binding HasFirstRetrieve}" Value="True" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay}" />
+                              <Setter Property="Text" Value="{Binding FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
@@ -376,8 +398,10 @@
                     </TextBlock>
                   </DockPanel>
 
-                  <TextBlock Grid.Row="1" Grid.Column="0" Text="時間" />
-                  <DockPanel Grid.Row="1" Grid.Column="1" >
+                  <TextBlock Grid.Row="1" Grid.Column="5" Text="status" />
+
+                  <TextBlock Grid.Row="2" Grid.Column="0" Text="時間" />
+                  <DockPanel Grid.Row="2" Grid.Column="1" >
                     <app_view_controls:LoadStateNavigator Width="16" HorizontalAlignment="Left" ShowStateText="False">
                       <app_view_controls:LoadStateNavigator.Style>
                         <Style TargetType="app_view_controls:LoadStateNavigator">
@@ -465,8 +489,8 @@
                     </TextBlock>
                   </DockPanel>
 
-                  <TextBlock Grid.Row="1" Grid.Column="2" Text="コメント" />
-                  <DockPanel Grid.Row="1" Grid.Column="3">
+                  <TextBlock Grid.Row="2" Grid.Column="2" Text="コメント" />
+                  <DockPanel Grid.Row="2" Grid.Column="3">
                     <app_view_controls:LoadStateNavigator Width="16" HorizontalAlignment="Left" ShowStateText="False">
                       <app_view_controls:LoadStateNavigator.Style>
                         <Style TargetType="app_view_controls:LoadStateNavigator">
@@ -555,8 +579,6 @@
                   </DockPanel>
 
                 </Grid>
-
-                <TextBlock Grid.Column="1" DockPanel.Dock="Right" Text="status" />
               </Grid>
 
 
