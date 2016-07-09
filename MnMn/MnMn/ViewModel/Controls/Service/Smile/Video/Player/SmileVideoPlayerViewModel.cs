@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public CollectionModel<FilteringUserViewModel> FilteringUserList { get; } = new CollectionModel<FilteringUserViewModel>();
+        public CollectionModel<SmileVideoFilteringUserViewModel> FilteringUserList { get; } = new CollectionModel<SmileVideoFilteringUserViewModel>();
 
         public int CommentListCount
         {
@@ -1612,7 +1612,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .Where(c => !string.IsNullOrWhiteSpace(c.UserId))
                 .GroupBy(c => c.UserId)
                 .Select(g => new { Count = g.Count(), Comment = g.First() })
-                .Select(cc => new FilteringUserViewModel(cc.Comment.UserId, cc.Comment.UserKind, cc.Count))
+                .Select(cc => new SmileVideoFilteringUserViewModel(cc.Comment.UserId, cc.Comment.UserKind, cc.Count))
                 .OrderByDescending(fu => fu.Count)
                 .ThenBy(fu => fu.UserId)
             ;

@@ -8,9 +8,9 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class FilteringUserViewModel: ViewModelBase
+    public class SmileVideoFilteringUserViewModel: ViewModelBase
     {
-        public FilteringUserViewModel(string userId, SmileVideoUserKind userKind, int count)
+        public SmileVideoFilteringUserViewModel(string userId, SmileVideoUserKind userKind, int count)
         {
             UserId = userId;
             UserKind = userKind;
