@@ -187,7 +187,20 @@
           <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
-            <TextBlock Text="{Binding Type}" Style="{StaticResource TabHeaderText}" />
+            <Image>
+              <Image.Style>
+                <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Type}" Value="Keyword">
+                      <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Keyword.png" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="Tag">
+                      <Setter Property="Source" Value="/Resources/Service/Smile/Video/Search/Tag.png" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Image.Style>
+            </Image>
             <app_view_controls_service_smile_video:SmileVideoSearchContext
               SelectedMethod="{Binding SelectedMethod}"
               SelectedSort="{Binding SelectedSort}"
