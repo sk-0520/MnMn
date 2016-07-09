@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             ApplicationHistory = new SmileVideoApplicationHistoryFinderViewModel(Mediation);
 
             ItemsList = new CollectionModel<SmileVideoFinderViewModelBase>() {
-                AccountHistory,
                 ApplicationHistory,
+                AccountHistory,
             };
         }
 
