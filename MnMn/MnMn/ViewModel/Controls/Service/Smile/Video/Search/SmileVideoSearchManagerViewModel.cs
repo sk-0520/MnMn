@@ -195,6 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return CreateCommand(
                     o => {
                         SearchAsync().ConfigureAwait(false);
+                        InputQuery = string.Empty;
                     }
                 );
             }
@@ -209,6 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         SelectedSearchType = (SearchType)Enum.Parse(typeof(SearchType), (string)o);
                         ShowSearchTypeArea = false;
                         SearchAsync().ConfigureAwait(false);
+                        InputQuery = string.Empty;
                     }
                 );
             }
