@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 
         public const string tagRelation = "video-tag-relation";
 
+        public const string tagTrend = "video-tag-trend";
+
         public const string newarrival = "video-newarrival";
         public const string recent = "video-recent";
         public const string hotlist = "video-hotlist";

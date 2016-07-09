@@ -45,34 +45,65 @@
       <xctk:DropDownButton DockPanel.Dock="Right" IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
         <xctk:DropDownButton.DropDownContent>
           <Border>
-            <GroupBox>
-              <GroupBox.Header>
-                <StackPanel Orientation="Horizontal">
-                  <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
-                  <TextBlock Text="おすすめたぐ" />
-                  <Button Command="{Binding LoadRecommendTagCommand}" Content="reload"/>
-                </StackPanel>
-              </GroupBox.Header>
-              <ItemsControl ItemsSource="{Binding RecommendTagItems}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <StackPanel />
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock>
+            <StackPanel Orientation="Horizontal">
+              <GroupBox>
+                <GroupBox.Header>
+                  <StackPanel Orientation="Horizontal">
+                    <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
+                    <TextBlock Text="おすすめ" />
+                    <Button Command="{Binding LoadRecommendTagCommand}" Content="reload"/>
+                  </StackPanel>
+                </GroupBox.Header>
+                <ItemsControl ItemsSource="{Binding RecommendTagItems}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock>
                       <Hyperlink
                         Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                         CommandParameter="{Binding}"
                       >
                         <Run Text="{Binding TagName, Mode=OneTime}" />
                       </Hyperlink>
-                    </TextBlock>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </GroupBox>
+                      </TextBlock>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </GroupBox>
+
+              <GroupBox>
+                <GroupBox.Header>
+                  <StackPanel Orientation="Horizontal">
+                    <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding TrendTagLoadState}" />
+                    <TextBlock Text="トレンド" />
+                    <Button Command="{Binding LoadTrendTagCommand}" Content="reload"/>
+                  </StackPanel>
+                </GroupBox.Header>
+                <ItemsControl ItemsSource="{Binding TrendTagItems}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock>
+                      <Hyperlink
+                        Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}"
+                      >
+                        <Run Text="{Binding TagName, Mode=OneTime}" />
+                      </Hyperlink>
+                      </TextBlock>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </GroupBox>
+            </StackPanel>
           </Border>
         </xctk:DropDownButton.DropDownContent>
       </xctk:DropDownButton>

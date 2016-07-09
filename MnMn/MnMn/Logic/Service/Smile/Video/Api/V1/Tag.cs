@@ -22,8 +22,10 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
@@ -57,7 +59,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return result;
         }
 
-
+        /// <summary>
+        /// 関連タグを取得。
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
         public Task<RawSmileVideoTagListModel> LoadRelationTagListAsync(string tagName)
         {
             var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagRelation, ServiceType.SmileVideo);
@@ -67,6 +73,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.Dispose();
                 var response = task.Result;
                 var result = ConvertTagListFromRelation(response.Result);
+                return result;
+            });
+        }
+
+        RawSmileVideoTagListModel ConvertTagListFromTrend(string htmlSource)
+        {
+            var htmlDocument = new HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            htmlDocument.LoadHtml(htmlSource);
+
+            var result = new RawSmileVideoTagListModel();
+
+            var parents = htmlDocument.DocumentNode.SelectNodes("//*[@class='box']");
+
+            foreach(var patent in parents) {
+                var item = new RawSmileVideoTagItemModel();
+
+                var titleElement = patent.SelectSingleNode("./h2/a");
+                item.Text = titleElement.InnerText.Trim();
+
+                result.Tags.Add(item);
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// トレンドタグを取得。
+        /// </summary>
+        /// <returns></returns>
+        public Task<RawSmileVideoTagListModel> LoadTrendTagListAsync()
+        {
+            var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.tagTrend, ServiceType.SmileVideo);
+            return page.GetResponseTextAsync(PageLoaderMethod.Post).ContinueWith(task => {
+                page.Dispose();
+                var response = task.Result;
+                var result = ConvertTagListFromTrend(response.Result);
                 return result;
             });
         }

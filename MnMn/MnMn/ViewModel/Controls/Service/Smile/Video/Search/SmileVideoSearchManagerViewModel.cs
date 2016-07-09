@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         bool _showHistoryArea;
         bool _showTagArea;
         LoadState _recommendTagLoadState;
+        LoadState _trendTagLoadState;
         SmileVideoSearchHistoryViewModel _selectedQueryHistory;
 
         SearchType _selectedSearchType = SearchType.Tag;
@@ -171,6 +172,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         if(RecommendTagLoadState == LoadState.None) {
                             LoadRecommendTagItemsAsync().ConfigureAwait(false);
                         }
+                        if(TrendTagLoadState == LoadState.None) {
+                            LoadTrendTagAsync().ConfigureAwait(false);
+                        }
                     }
                 }
             }
@@ -182,7 +186,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._recommendTagLoadState, value); }
         }
 
+        public LoadState TrendTagLoadState
+        {
+            get { return this._trendTagLoadState; }
+            set { SetVariableValue(ref this._trendTagLoadState, value); }
+        }
+
         public CollectionModel<SmileVideoTagViewModel> RecommendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
+        public CollectionModel<SmileVideoTagViewModel> TrendTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
         #endregion
 
@@ -226,6 +237,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     }
                 );
             }
+        }
+
+        public ICommand LoadTrendTagCommand
+        {
+            get { return CreateCommand(o => { LoadTrendTagAsync().ConfigureAwait(false); }); }
         }
 
         public ICommand SearchTagCommand
@@ -418,6 +434,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 var list = task.Result;
                 RecommendTagItems.InitializeRange(list);
                 RecommendTagLoadState = LoadState.Loaded;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public Task LoadTrendTagAsync()
+        {
+            TrendTagLoadState = LoadState.Preparation;
+
+            var rec = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
+
+            TrendTagLoadState = LoadState.Loading;
+            return rec.LoadTrendTagListAsync().ContinueWith(task => {
+                var rawTagList = task.Result;
+                return rawTagList.Tags.Select(t => new SmileVideoTagViewModel(Mediation, t));
+            }).ContinueWith(task => {
+                var list = task.Result;
+                TrendTagItems.InitializeRange(list);
+                TrendTagLoadState = LoadState.Loaded;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
