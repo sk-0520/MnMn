@@ -5,6 +5,9 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -503,6 +506,7 @@
                   </Grid>
                 </GroupBox>
               </DockPanel>
+
               <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
                 <ListView.ItemContainerStyle>
                   <Style TargetType="ListViewItem">
