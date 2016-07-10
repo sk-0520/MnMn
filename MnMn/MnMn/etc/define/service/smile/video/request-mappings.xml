@@ -17,7 +17,7 @@
 		<item key="force_184" type="force-pair" name="force_184" bond="=" value="${force_184}" fail="">
 			<bracket target="value" open="&quot;" close="&quot;" />
 		</item>
-		
+
 		<item key="time-msg" type="force-pair" name="${time-size}" bond="," value="${all-size}" fail="" />
 
 		<item key="with_global"  type="simple" value="1"  />
@@ -37,7 +37,31 @@
 		</content>
 	</mapping>
 
-	<!-- 検索API -->
+	<!-- コメント投稿 -->
+	<mapping key="video-msg-post" content-type="text/xml">
+		<item key="thread" type="simple" value="${thread}"  />
+		<item key="vpos" type="simple" value="${vpos}"  />
+		<item key="commands" type="simple" value="${commands}"  />
+		<item key="ticket" type="simple" value="${ticket}"  />
+		<item key="user_id" type="simple" value="${user_id}"  />
+		<item key="postkey" type="simple" value="${postkey}"  />
+		<item key="premium" type="simple" value="${premium}"  />
+		<content trim="content" oneline="true">
+			<![CDATA[
+				<chat
+					thread=\"${thread}\"
+					vpos=\"${vpos}\"
+					mail=\"${commands}\"
+					ticket=\"${ticket}\"
+					user_id=\"${user_id}\"
+					postkey=\"${postkey}\"
+					premium=\"${premium}\"
+				>${content}</chat>
+			]]>
+		</content>
+	</mapping>
+
+		<!-- 検索API -->
 	<mapping key="video-snapshot">
 		<item key="query" type="simple" value="${query}">
 			<bracket target="value" open="&quot;" close="&quot;" />
@@ -55,23 +79,23 @@
 		<item key="issuer" type="simple" value="${issuer}">
 			<bracket target="value" open="&quot;" close="&quot;" />
 		</item>
-		
+
 		<content trim="none" oneline="false">
 			<![CDATA[
 				{
 					"query": ${query},
 					"service": [ "video" ],
 					"search": [ ${search} ],
-					"join": [ 
-						"cmsid", 
-						"title", 
-						"description", 
-						"start_time", 
-						"thumbnail_url", 
-						"view_counter", 
-						"comment_counter", 
-						"mylist_counter", 
-						"length_seconds" 
+					"join": [
+						"cmsid",
+						"title",
+						"description",
+						"start_time",
+						"thumbnail_url",
+						"view_counter",
+						"comment_counter",
+						"mylist_counter",
+						"length_seconds"
 					],
 					"from": ${from},
 					"size": ${size},
@@ -82,7 +106,7 @@
 			]]>
 		</content>
 	</mapping>
-	
+
 	<!-- 関連タグ -->
 	<mapping key="video-tag-relation">
 		<item key="query" type="simple" value="${query}">
@@ -93,7 +117,7 @@
 		<item key="size" type="simple" value="10" />
 		<item key="issuer" type="simple" value="pc" />
 		<item key="reason" type="simple" value="user" />
-		
+
 		<content trim="none" oneline="false">
 			<![CDATA[
 				{

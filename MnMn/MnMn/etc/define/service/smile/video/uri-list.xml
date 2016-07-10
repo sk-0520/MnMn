@@ -15,6 +15,7 @@
 	<item key="video-getrelation" uri="http://www.nicovideo.jp/api/getrelation" param="query" />
 
 	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
+	<item key="video-msg-post" uri="${msg-post-uri}" param="none" request-type="mapping" />
 
 	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
 
