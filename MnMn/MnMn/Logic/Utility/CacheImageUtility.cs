@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static BitmapSource GetBitmapSource(Stream stream)
         {
             BitmapSource bitmap = null;
-            Application.Current.Dispatcher.Invoke(new Action(() => {
+            Application.Current?.Dispatcher.Invoke(new Action(() => {
                 var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 FreezableUtility.SafeFreeze(image);
                 bitmap = image;

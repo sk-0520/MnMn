@@ -12,6 +12,7 @@
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
+  xmlns:app_view_logic_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Logic.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -26,6 +27,7 @@
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+      <app_view_logic_service_smile_video:SmileVideoFinderStyleSelector x:Key="SmileVideoFinderStyleSelector" />
 
       <Style x:Key="HeaderColumn" TargetType="TextBlock">
         <Setter Property="Padding" Value="2" />
@@ -35,7 +37,6 @@
         <Setter Property="Padding" Value="8, 2" />
         <Setter Property="TextAlignment" Value="Right" />
       </Style>
-
     </ResourceDictionary>
   </UserControl.Resources>
 
@@ -79,6 +80,8 @@
       </ListBox.Resources>-->
       <ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
+          <!--<Style.Triggers>
+          </Style.Triggers>-->
           <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
           <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
@@ -140,7 +143,7 @@
                     Grid.Row="0"
                     Grid.RowSpan="3"
                     Grid.Column="0"
-                    Grid.ColumnSpan="6"
+                    Grid.ColumnSpan="7"
                     ShowStateText="False"
                   >
                     <app_view_controls:LoadStateNavigator.Style>
@@ -525,6 +528,8 @@
                   </TextBlock>
 
                   <TextBlock Grid.Row="2" Grid.Column="4" Text="[todo]status" Style="{StaticResource HeaderColumn}" />
+
+                  <!--<Border ="" BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6" />-->
                 </Grid>
               </Grid>
 
