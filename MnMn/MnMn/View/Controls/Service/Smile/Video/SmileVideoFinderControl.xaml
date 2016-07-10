@@ -132,6 +132,8 @@
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="160" />
+                    <!-- dummy -->
+                    <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
                   <app_view_controls:LoadStateNavigator
@@ -155,7 +157,7 @@
                     </app_view_controls:LoadStateNavigator.Style>
                   </app_view_controls:LoadStateNavigator>
 
-                  <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Padding="2,1" FontWeight="Bold" Text="{Binding Title}" />
+                  <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Padding="2,1" FontWeight="Bold" Text="{Binding Title}" />
 
                   <TextBlock Grid.Row="1" Grid.Column="0" Text="再生数" Style="{StaticResource HeaderColumn}" />
                   <TextBlock Grid.Row="1" Grid.Column="1">
