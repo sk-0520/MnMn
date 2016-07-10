@@ -14,6 +14,9 @@
 >
   <UserControl.Resources>
     <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
+    <cttn_sl_view_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+    <cttn_sl_view_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
   </UserControl.Resources>
   <DockPanel>
     <StackPanel DockPanel.Dock="Bottom">
@@ -35,32 +38,70 @@
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Click="UpdateButton_Click">更新</Button>
-        <Button Grid.Column="1" Click="CreateButton_Click">挿入</Button>
-        <Button Grid.Column="2" Click="RemoveButton_Click">削除</Button>
+        <Button Grid.Column="0" Click="UpdateButton_Click">
+          <Button.IsEnabled>
+            <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
+              <Binding Path="SelectedFilteringEditItem" Converter="{StaticResource LogicalIsNotNullConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+              <Binding Path="SelectedFilteringEditItem.EditingSource" Converter="{StaticResource HasTextLengthConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+            </MultiBinding>
+          </Button.IsEnabled>
+          更新
+        </Button>
+        <Button Grid.Column="1" Click="CreateButton_Click" IsEnabled="{Binding Text, Converter={StaticResource HasTextLengthConverter}, ElementName=inputSource}" >挿入</Button>
+        <Button Grid.Column="2" Click="RemoveButton_Click" IsEnabled="{Binding SelectedFilteringEditItem, Converter={StaticResource LogicalIsNotNullConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">削除</Button>
         <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
       </Grid>
     </StackPanel>
 
-    <ListView
+    <ListBox
       x:Name="filterItems"
       ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
-     SelectionChanged="filterItems_SelectionChanged"
+      SelectionChanged="filterItems_SelectionChanged"
     >
-      <ListView.View>
-        <GridView>
-          <GridViewColumn>
-            <GridViewColumn.Header>
-              <TextBlock Text="ソース" />
-            </GridViewColumn.Header>
-            <GridViewColumn.CellTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding Source}" />
-              </DataTemplate>
-            </GridViewColumn.CellTemplate>
-          </GridViewColumn>
-        </GridView>
-      </ListView.View>
-    </ListView>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Width="60">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Type}" Value="PartialMatch">
+                      <Setter Property="Text" Value="部分一致" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="ForwardMatch">
+                      <Setter Property="Text" Value="前方一致" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="PerfectMatch">
+                      <Setter Property="Text" Value="完全一致" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="Regex">
+                      <Setter Property="Text" Value="正規表現" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Width="80">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Target}" Value="Comment">
+                      <Setter Property="Text" Value="コメント" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Target}" Value="Command">
+                      <Setter Property="Text" Value="コマンド" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Target}" Value="UserId">
+                      <Setter Property="Text" Value="ユーザーID" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Text="{Binding Source}" />
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
   </DockPanel>
 </UserControl>

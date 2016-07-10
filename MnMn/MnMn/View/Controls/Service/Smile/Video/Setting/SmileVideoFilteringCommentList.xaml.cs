@@ -128,7 +128,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         {
             var control = d as SmileVideoFilteringCommentList;
             if(control != null) {
+                var oldItem = control.SelectedFilteringEditItem;
                 control.SelectedFilteringEditItem = e.NewValue as SmileVideoFilteringEditItemViewModel;
+                if(oldItem!= null) {
+                    oldItem.Reset();
+                }
+                //if(control.SelectedFilteringEditItem == null) {
+                //    control.selectType.SelectedIndex = 0;
+                //    control.selectTarget.SelectedIndex = 0;
+                //    control.selectIgnoreCase.IsChecked = true;
+                //}
             }
         }
 

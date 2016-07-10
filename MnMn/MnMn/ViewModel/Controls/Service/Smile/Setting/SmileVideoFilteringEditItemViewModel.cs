@@ -104,6 +104,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             ResetChangeFlag();
         }
 
+        internal void Reset()
+        {
+            EditingIgnoreCase = IgnoreCase;
+            EditingSource = Source;
+            EditingTarget = Target;
+            Type = Type;
+            ResetChangeFlag();
+        }
+
         #endregion
     }
 }

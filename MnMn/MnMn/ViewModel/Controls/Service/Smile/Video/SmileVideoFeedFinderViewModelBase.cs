@@ -38,11 +38,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             : base(mediation)
         { }
 
-        protected abstract SmileVideoInformationFlags InformationFlags { get; }
-
         #region property
 
-        //public HttpUserAgentHost UserAgentHost { get; } = new HttpUserAgentHost();
+        protected abstract SmileVideoInformationFlags InformationFlags { get; }
 
         #endregion
 
