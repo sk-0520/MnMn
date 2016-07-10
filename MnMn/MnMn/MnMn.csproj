@@ -146,10 +146,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Attribute\DisplayAttribute.cs" />
     <Compile Include="Constants.Config.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\DisplayKind.cs" />
     <Compile Include="Define\Event\DownloadStartType.cs" />
     <Compile Include="Define\Event\DownloadStartEventArgs.cs" />
     <Compile Include="Define\Event\DownloadingErrorEventArgs.cs" />
