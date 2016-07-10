@@ -1374,7 +1374,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void StopMovie()
         {
             Mediation.Logger.Debug("stop");
-            Player.Stop();
+            if(IsSettedMedia) {
+                Player.Stop();
+            }
             //Player.BeginStop(() => {
             //    Mediation.Logger.Debug("stoped");
             //    PlayerState = PlayerState.Stop;
