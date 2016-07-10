@@ -893,7 +893,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.IsMute = IsMute;
             Player.Volume = Volume;
             return View.Dispatcher.BeginInvoke(new Action(() => {
-                Player.Play();
+                if(!IsViewClosed) {
+                    Player.Play();
+                }
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
