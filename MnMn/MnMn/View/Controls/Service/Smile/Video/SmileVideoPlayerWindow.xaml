@@ -417,8 +417,12 @@
                 </ComboBox>
               </DockPanel>
               <DockPanel DockPanel.Dock="Bottom">
-                <DockPanel>
-                  <CheckBox DockPanel.Dock="Left" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="6*" />
+                  </Grid.ColumnDefinitions>
+                  <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
                     <TextBlock>
                       <TextBlock>表示制限</TextBlock>
                       <TextBlock>(</TextBlock>
@@ -437,15 +441,17 @@
                       <TextBlock>)</TextBlock>
                     </TextBlock>
                   </CheckBox>
-                  <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
-                  <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
-                  <Slider
-                    Minimum="1"
-                    Maximum="50"
-                    Value="{Binding DisplayCommentLimitCount}"
-                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
-                  />
-                </DockPanel>
+                  <DockPanel Grid.Column="1">
+                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
+                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
+                    <Slider
+                      Minimum="1"
+                      Maximum="50"
+                      Value="{Binding DisplayCommentLimitCount}"
+                      IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
+                    />
+                  </DockPanel>
+                </Grid>
               </DockPanel>
               <DockPanel DockPanel.Dock="Bottom" Visibility="{Binding IsSelectedComment, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <GroupBox>
