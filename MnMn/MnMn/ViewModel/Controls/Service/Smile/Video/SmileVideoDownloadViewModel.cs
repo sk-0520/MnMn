@@ -484,7 +484,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             PropertyChangedEventHandler changedEvent = null;
 
             changedEvent = (sender, e) => {
-                if(e.PropertyName == nameof(VideoLoadState)) {
+                if(e.PropertyName == nameof(VideoLoadState) && VideoLoadState == LoadState.None) {
                     PropertyChanged -= changedEvent;
                     wait.Set();
                 }
