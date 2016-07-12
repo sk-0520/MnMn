@@ -36,6 +36,12 @@
     >
       <Image Source="/Resources/Pager/Left.png" Style="{StaticResource PagerImage}" />
     </RepeatButton>
+    <Button DockPanel.Dock="Left" Click="PrevButton_Click">
+      <Image Source="/Resources/Pager/Previous.png" Style="{StaticResource PagerImage}" />
+    </Button>
+    <Button DockPanel.Dock="Left" Click="NextButton_Click">
+      <Image Source="/Resources/Pager/Next.png" Style="{StaticResource PagerImage}" />
+    </Button>
     <RepeatButton
       DockPanel.Dock="Right"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"

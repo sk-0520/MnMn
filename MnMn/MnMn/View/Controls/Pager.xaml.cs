@@ -15,8 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
+using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -128,5 +130,59 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         #endregion
 
         #endregion
+
+        #region function
+
+        void ChangePagePositionFromCurrent(bool isNext)
+        {
+            if(PageItems == null) {
+                return;
+            }
+            if(!PageItems.OfType<object>().Any()) {
+                return;
+            }
+
+            var pageItems = PageItems
+                .Cast<PageViewModelBase>()
+                .ToList()
+            ;
+
+            var currentItem = pageItems.FirstOrDefault(p => p.IsChecked.GetValueOrDefault());
+            if(currentItem == null) {
+                return;
+            }
+
+            PageViewModelBase nextItem = null;
+            var index = pageItems.IndexOf(currentItem);
+            if(index == -1) {
+                return;
+            }
+
+            if(isNext) {
+                if(index != pageItems.Count - 1) {
+                    nextItem = pageItems[index + 1];
+                }
+            } else {
+                if(index != 0) {
+                    nextItem = pageItems[index - 1];
+                }
+            }
+            if(nextItem != null) {
+                Command.TryExecute(nextItem);
+                this.PART_Items.ScrollToCenterOfView(nextItem, false, true);
+            }
+        }
+
+        #endregion
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePagePositionFromCurrent(true);
+        }
+
+        private void PrevButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePagePositionFromCurrent(false);
+        }
     }
 }

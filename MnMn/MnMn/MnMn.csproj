@@ -661,6 +661,8 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Pager\Next.png" />
+    <Resource Include="Resources\Pager\Previous.png" />
     <Resource Include="Resources\Service\Smile\MyList\Folder.png" />
     <Resource Include="Resources\SearchType\Keyword.png" />
     <Resource Include="Resources\SearchType\Tag.png" />
