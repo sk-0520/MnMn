@@ -95,7 +95,7 @@
               </i:EventTrigger>
             </i:Interaction.Triggers>
 
-            <DockPanel>
+            <DockPanel Background="Transparent">
               <CheckBox DockPanel.Dock="Left" Width="32" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick" IsChecked="{Binding IsChecked}">
                 <CheckBox.Template>
                   <ControlTemplate TargetType="CheckBox">
@@ -529,7 +529,7 @@
 
                   <TextBlock Grid.Row="2" Grid.Column="4" Text="[todo]status" Style="{StaticResource HeaderColumn}" />
 
-                  <!--<Border ="" BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6" />-->
+                  <!--<Border IsHitTestVisible="True" BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6" />-->
                 </Grid>
               </Grid>
 
