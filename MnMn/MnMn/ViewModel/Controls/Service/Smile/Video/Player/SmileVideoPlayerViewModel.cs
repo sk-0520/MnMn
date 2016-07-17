@@ -1520,7 +1520,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan).ContinueWith(t => {
 
-                var historyModel = Setting.Histories.FirstOrDefault(f => f.VideoId == VideoInformation.VideoId);
+                var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == VideoInformation.VideoId);
                 if(historyModel == null) {
                     historyModel = new SmileVideoPlayHistoryModel() {
                         VideoId = VideoInformation.VideoId,
@@ -1528,14 +1528,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         Length = VideoInformation.Length,
                         FirstRetrieve = VideoInformation.FirstRetrieve,
                     };
+
                 } else {
-                    Setting.Histories.Remove(historyModel);
+                    Setting.History.Remove(historyModel);
                 }
                 historyModel.WatchUrl = VideoInformation.WatchUrl;
                 historyModel.LastTimestamp = DateTime.Now;
                 historyModel.Count = RangeUtility.Increment(historyModel.Count);
 
-                Setting.Histories.Insert(0, historyModel);
+                Setting.History.Insert(0, historyModel);
 
                 return t;
             });

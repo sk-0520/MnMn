@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var result = new FeedSmileVideoModel();
-            foreach(var model in Setting.Histories) {
+            foreach(var model in Setting.History) {
                 var item = new FeedSmileVideoItemModel();
 
                 item.Title = model.VideoTitle;
@@ -78,9 +78,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
             if(items.Any()) {
                 foreach(var item in items) {
-                    var model = Setting.Histories.FirstOrDefault(i => i.VideoId == item.VideoId);
+                    var model = Setting.History.FirstOrDefault(i => i.VideoId == item.VideoId);
                     if(model != null) {
-                        Setting.Histories.Remove(model);
+                        Setting.History.Remove(model);
                     }
                 }
                 return Task.FromResult(CheckModel.Success());
