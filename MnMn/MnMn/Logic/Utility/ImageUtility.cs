@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
     public static class ImageUtility
     {
+        [Obsolete]
         public static BitmapSource ColoringImage(BitmapSource rawBitmap, Color color)
         {
             var pixels = MediaUtility.GetPixels(rawBitmap);

@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
                 var color = SmileMyListUtility.GetColorsFromExtends(element.Extends).First();
                 var image = BitmapFrame.Create(SharedConstants.GetPackUri((string)parameter));
                 FreezableUtility.SafeFreeze(image);
-                return ImageUtility.ColoringImage(image, color);
+                return MediaUtility.ColoringImage(image, color);
             }
 
             return null;

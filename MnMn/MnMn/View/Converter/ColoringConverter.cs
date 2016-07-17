@@ -35,11 +35,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var color = (Color)value;
-            
+
             var image = BitmapFrame.Create(SharedConstants.GetPackUri((string)parameter));
             FreezableUtility.SafeFreeze(image);
 
-            return ImageUtility.ColoringImage(image, color);
+            return MediaUtility.ColoringImage(image, color);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
