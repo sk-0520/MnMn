@@ -42,12 +42,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public TModel CurrenItem { get; private set; }
 
+        /// <summary>
+        /// 現在アイテムインデックス。
+        /// </summary>
         int CurrenIndex { get; set; }
+
+        /// <summary>
+        /// 再生済みアイテム。
+        /// <para>ランダム時に使用される。</para>
+        /// </summary>
+        List<TModel> HistoryList { get; } = new List<TModel>();
 
         /// <summary>
         /// プレイリストはランダム移動か。
         /// </summary>
-        public bool IsRandomPlay { get; set; }
+        public bool IsRandom { get; set; }
 
         /// <summary>
         /// プレイリストは変更可能か。
@@ -111,6 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     CurrenItem = this.FirstOrDefault();
                 } else if(Items.IndexOf(CurrenItem) == -1) {
                     CurrenItem = this.FirstOrDefault();
+                    HistoryList.Clear();
                 }
                 CurrenIndex = Items.IndexOf(CurrenItem);
             }

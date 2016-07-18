@@ -104,8 +104,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         float _videoPosition;
         float _prevStateChangedPosition;
 
-        bool _isRandomPlay;
-
         WindowState _state = WindowState.Normal;
 
         TimeSpan _totalTime;
@@ -172,8 +170,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool IsRandomPlay
         {
-            get { return this._isRandomPlay; }
-            set { SetVariableValue(ref this._isRandomPlay, value); }
+            get { return PlayListItems.IsRandom; }
+            set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
         }
 
         public WindowState State
@@ -778,7 +776,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        if(1 < PlayListItems.Count) {
+                        if(PlayListItems.CanItemChange) {
                             LoadPrevPlayListItemAsync().ConfigureAwait(false);
                         }
                     }
