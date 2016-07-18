@@ -52,12 +52,22 @@
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
+      <CollectionViewSource x:Key="PlayListItems" Source="{Binding PlayListItems}" />
+
       <Style x:Key="ThumbnailImage" TargetType="Image" >
         <Setter Property="Width" Value="{StaticResource ImageWidth}" />
         <Setter Property="Height" Value="{StaticResource ImageHeight}" />
       </Style>
 
       <Style x:Key="PlayListChangeButton" TargetType="Button">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding PlayListItems.Count}" Value="1">
+            <Setter Property="IsEnabled" Value="False" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="IsEnabled" Value="True" />
+      </Style>
+      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem">
         <Style.Triggers>
           <DataTrigger Binding="{Binding PlayListItems.Count}" Value="1">
             <Setter Property="IsEnabled" Value="False" />
@@ -121,7 +131,24 @@
         <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
       </Button>
       <Menu>
-        <MenuItem Header="プレイリスト" ItemsSource="{Binding PlayListItems}">
+        <MenuItem Header="プレイリスト">
+          <MenuItem.ItemsSource>
+            <CompositeCollection>
+              <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
+              <Separator />
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
+                <MenuItem.Icon>
+                  <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource DefaultImage}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
+                <MenuItem.Icon>
+                  <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource DefaultImage}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Command="{Binding ToggleRandomPlayCommand}" Style="{StaticResource PlayListChangeMenuItem}" />
+            </CompositeCollection>
+          </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />

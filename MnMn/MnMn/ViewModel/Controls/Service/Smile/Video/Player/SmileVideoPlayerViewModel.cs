@@ -104,6 +104,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         float _videoPosition;
         float _prevStateChangedPosition;
 
+        bool _isRandomPlay;
+
         WindowState _state = WindowState.Normal;
 
         TimeSpan _totalTime;
@@ -167,6 +169,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         FlowDocumentScrollViewer DocumentDescription { get; set; }
 
         public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
+
+        bool IsRandomPlay
+        {
+            get { return this._isRandomPlay; }
+            set { SetVariableValue(ref this._isRandomPlay, value); }
+        }
 
         public WindowState State
         {
@@ -785,6 +793,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         if(1 < PlayListItems.Count) {
                             LoadNextPlayListItemAsync().ConfigureAwait(false);
+                        }
+                    }
+                );
+            }
+        }
+        public ICommand ToggleRandomPlayCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(1 < PlayListItems.Count) {
+                            ToggleRandomPlay();
                         }
                     }
                 );
@@ -1472,6 +1493,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
         }
 
+        void ToggleRandomPlay()
+        {
+            IsRandomPlay = !IsRandomPlay;
+        }
+
         Task LoadNextPlayListItemAsync()
         {
             // TODO: ランダム再生の考慮
@@ -1506,6 +1532,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return LoadAsync(targetViewModel, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
+        void AddHistory(SmileVideoPlayHistoryModel historyModel)
+        {
+            Setting.History.Insert(0, historyModel);
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1536,7 +1567,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 historyModel.LastTimestamp = DateTime.Now;
                 historyModel.Count = RangeUtility.Increment(historyModel.Count);
 
-                Setting.History.Insert(0, historyModel);
+                AddHistory(historyModel);
 
                 return t;
             });
