@@ -25,6 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
@@ -34,11 +35,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region property
 
         SmileSettingModel Setting { get; }
+        public SmileSessionViewModel Session { get; }
 
         public string AccountName
         {
@@ -55,8 +58,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region command
 
+        public ICommand LoginCommand
+        {
+            get
+            {
+                return CreateCommand(o => LoginAsync().ConfigureAwait(false));
+            }
+        }
+
         #endregion
 
+        #region function
+
+        Task LoginAsync()
+        {
+            return Session.ChangeUserAccountAsync(Setting.Account).ContinueWith(t => {
+                return Session.LoginAsync();
+            }).ContinueWith(t => {
+                Mediation.Smile.ManagerPack.VideoManager.InitializeAsync();
+            });
+        }
+
+        #endregion
 
         #region SmileVideoCustomManagerViewModelBase
 

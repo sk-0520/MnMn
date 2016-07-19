@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                     if(this._loginState == LoginState.Logged) {
                         RenewalLastLoginTime();
                     } else {
-                        LastLoginTime = NotLoginTime;
+                        ClearLastLoginTime();
                     }
                 }
             }
@@ -127,6 +127,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             if(LoginState == LoginState.Logged) {
                 LastLoginTime = DateTime.Now;
             }
+        }
+
+        public void ClearLastLoginTime()
+        {
+            LastLoginTime = NotLoginTime;
         }
 
         #endregion
