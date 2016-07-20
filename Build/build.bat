@@ -7,7 +7,7 @@ set ERROR=%BUILD%\@error
 set OUTPUT=Output\Release
 set OUTPUTx86=%OUTPUT%\x86
 set OUTPUTx64=%OUTPUT%\x64
-set VER_TARGET=%OUTPUTx86%\MnMnMain.exe
+set VER_TARGET=%OUTPUTx86%\MnMn.exe
 set ZIP=%BUILD%\zip.vbs
 set GV=%BUILD%\get-ver.vbs
 

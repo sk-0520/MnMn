@@ -1,6 +1,6 @@
 # MnMn
 
-MnMn は Windows 上で動作するサービス専用ブラウザです。
+MnMn は Windows 上で動作するWebサービス専用ブラウザです。
 
 
 ## CI
