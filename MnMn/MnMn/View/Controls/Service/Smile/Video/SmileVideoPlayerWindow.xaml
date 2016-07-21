@@ -67,7 +67,7 @@
         </Style.Triggers>
         <Setter Property="IsEnabled" Value="True" />
       </Style>
-      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem">
+      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="1">
             <Setter Property="IsEnabled" Value="False" />
