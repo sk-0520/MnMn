@@ -48,15 +48,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         int CurrenIndex { get; set; }
 
         /// <summary>
-        /// 再生済みアイテム。
-        /// <para>ランダム時に使用される。</para>
-        /// </summary>
-        List<TModel> HistoryList { get; } = new List<TModel>();
-
-        /// <summary>
         /// プレイリストはランダム移動か。
         /// </summary>
         public bool IsRandom { get; set; }
+
+        /// <summary>
+        /// プレイリストはループするか。
+        /// </summary>
+        public bool IsLoop { get; set; }
 
         /// <summary>
         /// プレイリストは変更可能か。
@@ -67,12 +66,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        public TModel ChangeNextItem()
+        static int ChangeSequentialNextIndex(int currentIndex, IReadOnlyCollection<TModel> items)
         {
-            CheckUtility.Enforce(CanItemChange);
-
-            var index = CurrenIndex;
-            if(index == Count - 1) {
+            var index = currentIndex;
+            if(index == items.Count - 1) {
                 index = 0;
             } else if(index >= 0) {
                 index += 1;
@@ -80,7 +77,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 index = 0;
             }
 
+            return index;
+        }
+
+        static int ChangeRandomNextIndex(int currenIndex, PlayListModel<TModel> items)
+        {
+            var random  =new Random();
+            var index = random.Next(0, items.Count);
+            while(index == currenIndex) {
+                index = random.Next(0, items.Count);
+            }
+
+            return index;
+        }
+
+        public TModel ChangeNextItem()
+        {
+            CheckUtility.Enforce(CanItemChange);
+
+            int index;
+            if(IsRandom) {
+                index = ChangeRandomNextIndex(CurrenIndex, this);
+            } else {
+                index = ChangeSequentialNextIndex(CurrenIndex, this);
+            }
+
             return ChangeItem(index);
+        }
+
+        int ChangeSequentialPrevIndex(int currenIndex, IReadOnlyCollection<TModel> items)
+        {
+            var index = currenIndex;
+            if(index == 0) {
+                index = Count - 1;
+            } else if(0 < index) {
+                index -= 1;
+            } else {
+                index = 0;
+            }
+
+            return index;
         }
 
         public TModel ChangePrevItem()
@@ -120,7 +156,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     CurrenItem = this.FirstOrDefault();
                 } else if(Items.IndexOf(CurrenItem) == -1) {
                     CurrenItem = this.FirstOrDefault();
-                    HistoryList.Clear();
                 }
                 CurrenIndex = Items.IndexOf(CurrenItem);
             }

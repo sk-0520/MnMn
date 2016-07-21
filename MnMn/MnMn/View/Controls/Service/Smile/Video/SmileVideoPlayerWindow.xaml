@@ -61,7 +61,7 @@
 
       <Style x:Key="PlayListChangeButton" TargetType="Button">
         <Style.Triggers>
-          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="1">
+          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="False">
             <Setter Property="IsEnabled" Value="False" />
           </DataTrigger>
         </Style.Triggers>
@@ -69,7 +69,23 @@
       </Style>
       <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
         <Style.Triggers>
-          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="1">
+          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="False">
+            <Setter Property="IsEnabled" Value="False" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="IsEnabled" Value="True" />
+      </Style>
+      <Style x:Key="PlayListPrevChangeButton" TargetType="Button" BasedOn="{StaticResource PlayListChangeButton}">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding IsRandomPlay}" Value="True">
+            <Setter Property="IsEnabled" Value="False" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="IsEnabled" Value="True" />
+      </Style>
+      <Style x:Key="PlayListPrevChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource PlayListChangeMenuItem}">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding IsRandomPlay}" Value="True">
             <Setter Property="IsEnabled" Value="False" />
           </DataTrigger>
         </Style.Triggers>
@@ -127,7 +143,7 @@
 
       <Separator />
 
-      <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">
+      <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeButton}">
         <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
       </Button>
       <Menu>
@@ -141,12 +157,12 @@
                   <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource DefaultImage}" />
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeMenuItem}">
                 <MenuItem.Icon>
                   <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource DefaultImage}" />
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="ランダム再生(未実装)" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Command="{Binding ToggleRandomPlayCommand}" Style="{StaticResource PlayListChangeMenuItem}" />
+              <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
             </CompositeCollection>
           </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>

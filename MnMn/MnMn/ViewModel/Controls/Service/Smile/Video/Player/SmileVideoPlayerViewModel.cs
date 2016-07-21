@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
 
-        bool IsRandomPlay
+        public bool IsRandomPlay
         {
             get { return PlayListItems.IsRandom; }
             set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
@@ -791,19 +791,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         if(PlayListItems.CanItemChange) {
                             LoadNextPlayListItemAsync().ConfigureAwait(false);
-                        }
-                    }
-                );
-            }
-        }
-        public ICommand ToggleRandomPlayCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        if(PlayListItems.CanItemChange) {
-                            ToggleRandomPlay();
                         }
                     }
                 );
@@ -1489,11 +1476,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ClearSelectedComment()
         {
             SelectedComment = null;
-        }
-
-        void ToggleRandomPlay()
-        {
-            IsRandomPlay = !IsRandomPlay;
         }
 
         Task LoadNextPlayListItemAsync()
