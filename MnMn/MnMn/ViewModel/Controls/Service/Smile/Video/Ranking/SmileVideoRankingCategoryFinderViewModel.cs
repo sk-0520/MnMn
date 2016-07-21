@@ -28,6 +28,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -72,12 +73,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         public DefinedElementModel SelectedPeriod
         {
             get { return this._selectedPeriod; }
-            set { SetVariableValue(ref this._selectedPeriod, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedPeriod, value)) {
+                    if(SelectedPeriod != null && Category != null) {
+                        ReloadCommand.TryExecute(null);
+                    }
+                }
+            }
         }
         public DefinedElementModel SelectedTarget
         {
             get { return this._selectedTarget; }
-            set { SetVariableValue(ref this._selectedTarget, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedTarget, value)) {
+                    if(SelectedTarget != null && Category != null) {
+                        ReloadCommand.TryExecute(null);
+                    }
+                }
+            }
         }
 
         public DefinedElementModel Category { get; private set; }
