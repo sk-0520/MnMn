@@ -453,7 +453,7 @@
                     <TextBlock>
                       <TextBlock>表示制限</TextBlock>
                       <TextBlock>(</TextBlock>
-                      <TextBlock Text="{Binding ShowingCommentList.CanItemChange, Mode=OneWay}" />
+                      <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
                       <TextBlock>
                         <TextBlock.Style>
                           <Style TargetType="TextBlock">
