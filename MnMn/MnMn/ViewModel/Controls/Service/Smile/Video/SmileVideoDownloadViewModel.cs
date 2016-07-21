@@ -221,14 +221,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadGetflvEnd()
         { }
 
+        Task<RawSmileVideoGetflvModel> LoadGetflvFromServiceAsync()
+        {
+            var getflv = new Getflv(Mediation);
+            return getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl, VideoInformation.MovieType);
+        }
+
         async Task LoadGetflvAsync(SmileSessionViewModel session)
         {
             OnLoadGetflvStart();
 
-            // こいつはキャッシュ参照しないけどキャッシュ自体は作っておく
-            var getflv = new Getflv(Mediation);
-
-            var rawVideoGetflvModel = await getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl, VideoInformation.MovieType);
+            var rawVideoGetflvModel = await LoadGetflvFromServiceAsync();
             VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
             var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));
@@ -320,8 +323,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var threadkeyModel = await getThreadkey.LoadAsync(
                 VideoInformation.ThreadId
             );
-
-
 
             var msg = new Msg(Mediation);
             var rawMessagePacket = await msg.LoadAsync(
