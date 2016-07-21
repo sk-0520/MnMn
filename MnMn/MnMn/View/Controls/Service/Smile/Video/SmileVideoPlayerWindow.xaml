@@ -500,7 +500,7 @@
                 <GroupBox>
                   <GroupBox.Header>
                     <DockPanel>
-                      <Button DockPanel.Dock="Right" Margin="8,0,0,0" Content="閉じる" Command="{Binding ClearSelectedCommentCommand}" />
+                      <Button DockPanel.Dock="Right" Margin="8,0,0,0" FontFamily="Webdings"  Content="r" Command="{Binding ClearSelectedCommentCommand}" />
                       <Label>コメント詳細</Label>
                     </DockPanel>
                   </GroupBox.Header>
