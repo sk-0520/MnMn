@@ -252,12 +252,12 @@
           <Style TargetType="Image" BasedOn="{StaticResource ButtonImage}">
             <Style.Triggers>
               <DataTrigger Binding="{Binding IsEconomyMode}" Value="True">
-                <Setter Property="Source" Value="/Resources/Service/Smile/Smile.png" />
+                <Setter Property="Source" Value="/Resources/Service/Smile/Video/Player/EconomyMode.png" />
                 <Setter Property="ToolTip" Value="エコノミーモード" />
               </DataTrigger>
               <DataTrigger Binding="{Binding IsEconomyMode}" Value="False">
-                <Setter Property="Source" Value="/Resources/Service/Smile/Finance.png" />
-                <Setter Property="ToolTip" Value="通常再生" />
+                <Setter Property="Source" Value="/Resources/Service/Smile/Video/Player/NormalMode.png" />
+                <Setter Property="ToolTip" Value="通常画質" />
               </DataTrigger>
             </Style.Triggers>
           </Style>

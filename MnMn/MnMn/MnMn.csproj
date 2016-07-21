@@ -662,6 +662,8 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Service\Smile\Video\Player\EconomyMode.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\NormalMode.png" />
     <Resource Include="Resources\Pager\Next.png" />
     <Resource Include="Resources\Pager\Previous.png" />
     <Resource Include="Resources\Service\Smile\MyList\Folder.png" />
