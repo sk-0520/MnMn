@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -96,12 +97,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public DefinedElementModel SelectedMethod
         {
             get { return this._selectedMethod; }
-            set { SetVariableValue(ref this._selectedMethod, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedMethod, value)) {
+                    if(SelectedMethod != null && SelectedPage != null) {
+                        ReloadCommand.TryExecute(null);
+                    }
+                }
+            }
         }
         public DefinedElementModel SelectedSort
         {
             get { return this._selectedSort; }
-            set { SetVariableValue(ref this._selectedSort, value); }
+            set {
+                if(SetVariableValue(ref this._selectedSort, value)) {
+                    if(SelectedSort != null && SelectedPage != null) {
+                        ReloadCommand.TryExecute(null);
+                    }
+                }
+            }
         }
 
         public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
@@ -247,6 +261,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public void SetContextElements(DefinedElementModel method, DefinedElementModel sort)
         {
+            SelectedPage = null;
+
             LoadingMethod = SelectedMethod = GetContextElemetFromChangeElement(MethodItems, method);
             LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
         }
