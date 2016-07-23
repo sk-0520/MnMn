@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
@@ -30,13 +31,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     public class SmileVideoManagerPackModel: ManagerPackModelBase
     {
-        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager)
+        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager, SmileVideoBookmarkManagerViewModel bookmarkManager)
         {
             RankingManager = rankingManager;
             SearchManager = searchManager;
             NewArrivalsManager = newArrivalsManager;
             MyListManager = myListManager;
             HistoryManager = historyManager;
+            BookmarkManager = bookmarkManager;
         }
 
         #region property
@@ -46,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager { get; }
         public SmileVideoHistoryManagerViewModel HistoryManager { get; }
+        public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
 
         #endregion
     }

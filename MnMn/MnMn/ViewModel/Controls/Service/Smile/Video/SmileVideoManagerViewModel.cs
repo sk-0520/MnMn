@@ -38,6 +38,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
@@ -70,6 +71,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             HistoryManager = new SmileVideoHistoryManagerViewModel(Mediation);
 
+            BookmarkManager = new SmileVideoBookmarkManagerViewModel(Mediation);
+
             Mediation.SetManager(
                 ServiceType.SmileVideo,
                 new SmileVideoManagerPackModel(
@@ -77,7 +80,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     RankingManager,
                     NewArrivalsManager,
                     MyListManager,
-                    HistoryManager
+                    HistoryManager,
+                    BookmarkManager
                 )
             );
         }
@@ -93,6 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager {get;}
         public SmileVideoHistoryManagerViewModel HistoryManager {get;}
+        public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
 
         public IEnumerable<SmileVideoCustomManagerViewModelBase> ManagerItems => new SmileVideoCustomManagerViewModelBase[] {
             SearchManager,
