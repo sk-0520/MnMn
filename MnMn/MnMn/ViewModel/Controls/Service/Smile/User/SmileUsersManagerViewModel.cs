@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
@@ -132,6 +133,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             return Task.CompletedTask;
         }
+
+        public override void InitializeView(MainWindow view)
+        { }
+        public override void UninitializeView(MainWindow view)
+        { }
+
 
         #endregion
     }

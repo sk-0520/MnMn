@@ -39,11 +39,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public int Count { get; set; }
         /// <summary>
-        /// 使用回数。
+        /// 視聴URL。
         /// </summary>
         [DataMember]
         public Uri WatchUrl { get; set; }
-
 
         #endregion
     }

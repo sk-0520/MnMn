@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
@@ -472,6 +473,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             return Task.CompletedTask;
         }
+
+        public override void InitializeView(MainWindow view)
+        { }
+        public override void UninitializeView(MainWindow view)
+        { }
 
         #endregion
     }

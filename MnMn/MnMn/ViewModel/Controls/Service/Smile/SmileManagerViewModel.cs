@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 {
@@ -114,6 +115,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                 await VideoManager.InitializeAsync();
             }
         }
+
+        public override void InitializeView(MainWindow view)
+        {
+            VideoManager.InitializeView(view);
+        }
+        public override void UninitializeView(MainWindow view)
+        {
+            VideoManager.UninitializeView(view);
+        }
+
 
         #endregion
 

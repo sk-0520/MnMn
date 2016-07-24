@@ -44,6 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -116,6 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             NewArrivalsManager,
             MyListManager,
             HistoryManager,
+            BookmarkManager,
         };
 
         #endregion
@@ -131,5 +133,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
         }
+
+        public override void InitializeView(MainWindow view)
+        {
+            foreach(var item in ManagerItems) {
+                item.InitializeView(view);
+            }
+        }
+
+        public override void UninitializeView(MainWindow view)
+        {
+            foreach(var item in ManagerItems) {
+                item.UninitializeView(view);
+            }
+        }
+
     }
 }

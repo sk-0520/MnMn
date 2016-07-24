@@ -43,7 +43,7 @@ using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
-    public class AppManagerViewModel: ManagerViewModelBase, ISetView
+    public class AppManagerViewModel: ManagerViewModelBase
     {
         #region variable
 
@@ -148,25 +148,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             return SmileManager.InitializeAsync();
         }
 
-        #endregion
-
-        #region ISetView
-
-        public  void SetView(FrameworkElement view)
+        public override void InitializeView(MainWindow view)
         {
             View = (MainWindow)view;
 
-            View.Closed += View_Closed;
+            SmileManager.InitializeView(view);
+        }
+
+        public override void UninitializeView(MainWindow view)
+        {
+            SaveSetting();
+
+            SmileManager.UninitializeView(view);
         }
 
         #endregion
-
-        private void View_Closed(object sender, EventArgs e)
-        {
-            View.Closed -= View_Closed;
-
-            SaveSetting();
-        }
-
     }
 }

@@ -22,11 +22,18 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
     public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
+        #region variable
+
+        SmileVideoFinderViewModelBase _selectedBookmarkNodeFinder;
+
+        #endregion
+
         public SmileVideoBookmarkManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -39,6 +46,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkNodeViewModel Node { get; }
 
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
+
+        public SmileVideoFinderViewModelBase SelectedBookmarkNodeFinder
+        {
+            get { return this._selectedBookmarkNodeFinder; }
+            set {
+                if(SetVariableValue(ref this._selectedBookmarkNodeFinder, value)) {
+                    if(SelectedBookmarkNodeFinder.CanLoad) {
+                        SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -112,6 +132,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return Task.CompletedTask;
         }
 
+        public override void InitializeView(MainWindow view)
+        {
+            view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
+        }
+
+        public override void UninitializeView(MainWindow view)
+        {
+            view.smile.bookmark.treeNodes.SelectedItemChanged -= TreeNodes_SelectedItemChanged;
+        }
+
         #endregion
+
+        void TreeNodes_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            var node = e.NewValue as SmileVideoBookmarkNodeViewModel;
+            if(node != null) {
+                var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, node);
+                SelectedBookmarkNodeFinder = finder;
+            }
+        }
+
     }
 }

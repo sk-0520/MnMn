@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History
 {
@@ -80,11 +81,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoCustomManagerViewModelBase
 
-        public override Task InitializeAsync()
-        {
-            return Task.CompletedTask;
-        }
-
         protected override void ShowView()
         {
             base.ShowView();
@@ -96,6 +92,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             SelectedItem = ItemsList.First();
             SelectedItem.LoadDefaultCacheAsync().ConfigureAwait(false);
         }
+
+        public override Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public override void InitializeView(MainWindow view)
+        { }
+        public override void UninitializeView(MainWindow view)
+        { }
 
         #endregion
     }

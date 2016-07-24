@@ -26,6 +26,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     [DataContract]
     public class SmileVideoVideoItemModel: SettingModelBase
     {
+        #region property
+
         /// <summary>
         /// 動画ID。
         /// </summary>
@@ -46,5 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public TimeSpan Length { get; set; }
+
+        #endregion
     }
 }
