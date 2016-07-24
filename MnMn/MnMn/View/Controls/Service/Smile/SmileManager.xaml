@@ -51,7 +51,7 @@
       <TabItem Header="ユーザー" DataContext="{Binding UsersManager}">
         <app_controls_service_smile:SmileUsersManager />
       </TabItem>
-      <TabItem Header="bookmark" DataContext="{Binding VideoManager.BookmarkManager}">
+      <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}">
         <app_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
       <TabItem Header="設定" DataContext="{Binding SettingManager}" >
