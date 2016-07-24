@@ -214,7 +214,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFiltering.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
-    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkSettingModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkManagerViewModel.cs" />
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoBookmarkManager.xaml.cs">
       <DependentUpon>SmileVideoBookmarkManager.xaml</DependentUpon>

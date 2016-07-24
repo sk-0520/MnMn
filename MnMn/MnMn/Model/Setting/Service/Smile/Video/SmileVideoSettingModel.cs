@@ -48,6 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public FixedSizeCollectionModel<SmileVideoPlayHistoryModel> History { get; set; } = new FixedSizeCollectionModel<SmileVideoPlayHistoryModel>(100, false);
 
+        [DataMember]
+        public SmileVideoBookmarkItemSettingModel Bookmark { get; } = new SmileVideoBookmarkItemSettingModel();
+
         #endregion
     }
 }

@@ -72,6 +72,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             HistoryManager = new SmileVideoHistoryManagerViewModel(Mediation);
 
             BookmarkManager = new SmileVideoBookmarkManagerViewModel(Mediation);
+            //var a1 = new SmileVideoBookmarkItemSettingModel() {
+            //    Name = "test-a",
+            //};
+            //var a2 = new SmileVideoBookmarkItemSettingModel() {
+            //    Name = "test-b",
+            //};
+            //a1.Nodes.Add(new SmileVideoBookmarkItemSettingModel() {
+            //    Name = "test-c",
+            //});
+            //BookmarkManager.Node.NodeList.Add(a1, null);
+            //BookmarkManager.Node.NodeList.Add(a2, null);
 
             Mediation.SetManager(
                 ServiceType.SmileVideo,

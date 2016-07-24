@@ -19,41 +19,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
-    public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoBookmarkNodeViewModel: SingleModelWrapperViewModelBase<SmileVideoBookmarkItemSettingModel>
     {
-        public SmileVideoBookmarkManagerViewModel(Mediation mediation)
-            : base(mediation)
+        public SmileVideoBookmarkNodeViewModel(SmileVideoBookmarkItemSettingModel model)
+            : base(model)
         {
-            Node = new SmileVideoBookmarkNodeViewModel(Setting.Bookmark);
-            NodeItems = Node.NodeList.ViewModelList;
+            NodeList = new MVMPairCreateDelegationCollection<SmileVideoBookmarkItemSettingModel, SmileVideoBookmarkNodeViewModel>(Model.Nodes, default(object), CreateItem);
+            NodeItems = NodeList.ViewModelList;
         }
 
         #region property
 
-        public SmileVideoBookmarkNodeViewModel Node { get; }
-
+        public MVMPairCreateDelegationCollection<SmileVideoBookmarkItemSettingModel, SmileVideoBookmarkNodeViewModel> NodeList { get; }
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
 
-        #endregion
-
-        #region command
-        #endregion
-
-        #region function
-        #endregion
-
-        #region SmileVideoCustomManagerViewModelBase
-
-        public override Task InitializeAsync()
-        {
-            return Task.CompletedTask;
+        public string Name {
+            get { return Model.Name; }
+            set { SetModelValue(value); }
         }
 
         #endregion
+
+        #region function
+
+        SmileVideoBookmarkNodeViewModel CreateItem(SmileVideoBookmarkItemSettingModel model, object data)
+        {
+            return new SmileVideoBookmarkNodeViewModel(model);
+        }
+
+        #endregion
+
     }
 }
