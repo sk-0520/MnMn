@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
@@ -42,9 +43,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         #endregion
 
         #region command
+
+        public ICommand RemoveNodeCommand
+        {
+            get {
+                return CreateCommand(o => {
+                    var nodeViewModel = (SmileVideoBookmarkNodeViewModel)o;
+                    RemoveNode(nodeViewModel);
+                });
+            }
+        }
+
         #endregion
 
         #region function
+
+        void RemoveNode(SmileVideoBookmarkNodeViewModel nodeViewModel)
+        {
+
+        }
+
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase

@@ -24,13 +24,24 @@
       <ColumnDefinition Width="65*" />
     </Grid.ColumnDefinitions>
 
-    <TreeView Grid.Column="0" ItemsSource="{Binding NodeItems}">
-      <TreeView.ItemTemplate>
-        <HierarchicalDataTemplate ItemsSource="{Binding NodeItems}">
-          <TextBlock Text="{Binding Name}" />
-        </HierarchicalDataTemplate>
-      </TreeView.ItemTemplate>
-    </TreeView>
+    <DockPanel Grid.Column="0">
+      <ToolBar DockPanel.Dock="Top">
+        <Button Command="{Binding RemoveNodeCommand}">add folder</Button>
+      </ToolBar>
+      <TreeView ItemsSource="{Binding NodeItems}" >
+        <TreeView.ItemContainerStyle>
+          <Style TargetType="TreeViewItem">
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
+            <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}"/>
+          </Style>
+        </TreeView.ItemContainerStyle>
+        <TreeView.ItemTemplate>
+          <HierarchicalDataTemplate ItemsSource="{Binding NodeItems}">
+            <TextBlock Text="{Binding Name}" />
+          </HierarchicalDataTemplate>
+        </TreeView.ItemTemplate>
+      </TreeView>
+    </DockPanel>
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 

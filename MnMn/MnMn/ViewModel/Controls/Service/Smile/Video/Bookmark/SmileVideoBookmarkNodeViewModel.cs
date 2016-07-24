@@ -28,6 +28,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 {
     public class SmileVideoBookmarkNodeViewModel: SingleModelWrapperViewModelBase<SmileVideoBookmarkItemSettingModel>
     {
+        #region variable
+
+        bool _isSelected = true;
+        bool _isExpanded = true;
+
+        #endregion
+
         public SmileVideoBookmarkNodeViewModel(SmileVideoBookmarkItemSettingModel model)
             : base(model)
         {
@@ -36,6 +43,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
 
         #region property
+
+        public bool IsSelected
+        {
+            get { return this._isSelected; }
+            set { SetVariableValue(ref this._isSelected, value); }
+        }
+        public bool IsExpanded
+        {
+            get { return this._isExpanded; }
+            set { SetVariableValue(ref this._isExpanded, value); }
+        }
 
         public MVMPairCreateDelegationCollection<SmileVideoBookmarkItemSettingModel, SmileVideoBookmarkNodeViewModel> NodeList { get; }
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
