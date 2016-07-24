@@ -157,6 +157,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void RemoveNode(SmileVideoBookmarkNodeViewModel nodeViewModel)
         {
+            var parentNode = GetNodes(n => n.NodeItems.Any(nv => nv == nodeViewModel)).FirstOrDefault();
+            if(parentNode != null) {
+                parentNode.NodeItems.Remove(nodeViewModel);
+            } else {
+                NodeItems.Remove(nodeViewModel);
+            }
         }
 
         #endregion
