@@ -51,6 +51,7 @@
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
+      <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
 
       <CollectionViewSource x:Key="PlayListItems" Source="{Binding PlayListItems}" />
 
@@ -139,7 +140,7 @@
             </DataTemplate>
           </MenuItem.ItemTemplate>
         </MenuItem>
-        <MenuItem Header="bookmark" ItemsSource="{Binding BookmarkItems}">
+        <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}">
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -148,7 +149,18 @@
           </MenuItem.ItemContainerStyle>
           <MenuItem.ItemTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding Name}" />
+              <StackPanel Orientation="Horizontal">
+                <Border>
+                  <Border.Width>
+                    <Binding Path="Level" Converter="{StaticResource BookmarkLevelConverter}">
+                      <Binding.ConverterParameter>
+                        <sys:Int32>8</sys:Int32>
+                      </Binding.ConverterParameter>
+                    </Binding>
+                  </Border.Width>
+                </Border>
+                <TextBlock Text="{Binding Name}" />
+              </StackPanel>
             </DataTemplate>
           </MenuItem.ItemTemplate>
         </MenuItem>

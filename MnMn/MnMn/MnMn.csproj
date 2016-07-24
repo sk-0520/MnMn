@@ -220,6 +220,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoBookmarkManager.xaml.cs">
       <DependentUpon>SmileVideoBookmarkManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Logic\Service\Smile\Video\SmileVideoFinderStyleSelector.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
