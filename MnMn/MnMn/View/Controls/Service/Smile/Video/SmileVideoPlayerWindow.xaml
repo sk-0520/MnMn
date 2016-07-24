@@ -60,26 +60,43 @@
         <Setter Property="Height" Value="{StaticResource ImageHeight}" />
       </Style>
 
-      <Style x:Key="PlayListChangeButton" TargetType="Button">
+      <Style x:Key="PlayListVisible">
         <Style.Triggers>
-          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="False">
-            <Setter Property="IsEnabled" Value="False" />
+          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
+            <Setter Property="Menu.IsEnabled" Value="True" />
+            <Setter Property="Menu.Visibility" Value="Visible" />
+            <Setter Property="Separator.Visibility" Value="Visible" />
           </DataTrigger>
         </Style.Triggers>
-        <Setter Property="IsEnabled" Value="True" />
+        <Setter Property="Menu.IsEnabled" Value="False" />
+        <Setter Property="Menu.Visibility" Value="Collapsed" />
+        <Setter Property="Separator.Visibility" Value="Collapsed" />
+      </Style>
+      <Style x:Key="PlayListChangeButton" TargetType="Button">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
+            <Setter Property="IsEnabled" Value="True" />
+            <Setter Property="Visibility" Value="Visible" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="IsEnabled" Value="False" />
+        <Setter Property="Visibility" Value="Collapsed" />
       </Style>
       <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
         <Style.Triggers>
-          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="False">
-            <Setter Property="IsEnabled" Value="False" />
+          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
+            <Setter Property="IsEnabled" Value="True" />
+            <Setter Property="Visibility" Value="Visible" />
           </DataTrigger>
         </Style.Triggers>
-        <Setter Property="IsEnabled" Value="True" />
+        <Setter Property="IsEnabled" Value="False" />
+        <Setter Property="Visibility" Value="Collapsed" />
       </Style>
       <Style x:Key="PlayListPrevChangeButton" TargetType="Button" BasedOn="{StaticResource PlayListChangeButton}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding IsRandomPlay}" Value="True">
             <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="Visibility" Value="Visible" />
           </DataTrigger>
         </Style.Triggers>
         <Setter Property="IsEnabled" Value="True" />
@@ -88,6 +105,7 @@
         <Style.Triggers>
           <DataTrigger Binding="{Binding IsRandomPlay}" Value="True">
             <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="Visibility" Value="Visible" />
           </DataTrigger>
         </Style.Triggers>
         <Setter Property="IsEnabled" Value="True" />
@@ -166,12 +184,11 @@
         </MenuItem>
       </Menu>
 
-      <Separator />
-
+      <Separator Style="{StaticResource PlayListVisible}" />
       <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeButton}">
         <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
       </Button>
-      <Menu>
+      <Menu Style="{StaticResource PlayListVisible}">
         <MenuItem Header="プレイリスト">
           <MenuItem.ItemsSource>
             <CompositeCollection>
