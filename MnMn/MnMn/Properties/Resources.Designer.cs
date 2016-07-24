@@ -61,6 +61,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Bookmark_NewName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アカウント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_History_AccountHistory_Title {

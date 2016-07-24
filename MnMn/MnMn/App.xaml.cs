@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -48,6 +49,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         SplashWindow SplashWindow { get; }
 
+        MainWindow View { get; set; }
+        AppManagerViewModel AppManager { get; set; }
+
         #endregion
 
         protected async override void OnStartup(StartupEventArgs e)
@@ -63,17 +67,24 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
             var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
             var mediation = new Mediation(setting, logger);
-            var viewModel = new AppManagerViewModel(mediation);
+            AppManager = new AppManagerViewModel(mediation);
 
             SplashWindow.Show();
 
-            await viewModel.InitializeAsync();
-            MainWindow = new MainWindow() {
-                DataContext = viewModel,
+            await AppManager.InitializeAsync();
+            View = new MainWindow() {
+                DataContext = AppManager,
             };
-            viewModel.SetView(MainWindow);
+            MainWindow = View;
+            MainWindow.Closed += MainWindow_Closed;
+            AppManager.InitializeView(View);
             MainWindow.Show();
             SplashWindow.Close();
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            AppManager.UninitializeView(View);
         }
     }
 }

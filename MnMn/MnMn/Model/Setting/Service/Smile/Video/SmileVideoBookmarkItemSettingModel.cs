@@ -20,34 +20,22 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoVideoItemModel: SettingModelBase
+    public class SmileVideoBookmarkItemSettingModel: SettingModelBase
     {
         #region property
 
-        /// <summary>
-        /// 動画ID。
-        /// </summary>
         [DataMember]
-        public string VideoId { get; set; }
-        /// <summary>
-        /// 動画タイトル。
-        /// </summary>
+        public string Name { get; set; }
+
         [DataMember]
-        public string VideoTitle { get; set; }
-        /// <summary>
-        /// 投稿日。
-        /// </summary>
+        public CollectionModel<SmileVideoBookmarkItemSettingModel> Nodes { get; } = new CollectionModel<SmileVideoBookmarkItemSettingModel>();
         [DataMember]
-        public DateTime FirstRetrieve { get; set; }
-        /// <summary>
-        /// 再生時間。
-        /// </summary>
-        [DataMember]
-        public TimeSpan Length { get; set; }
+        public CollectionModel<SmileVideoVideoItemModel> Items { get; } = new CollectionModel<SmileVideoVideoItemModel>();
 
         #endregion
     }

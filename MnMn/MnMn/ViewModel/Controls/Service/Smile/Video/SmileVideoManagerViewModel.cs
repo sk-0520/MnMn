@@ -38,11 +38,13 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
+using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -70,6 +72,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             HistoryManager = new SmileVideoHistoryManagerViewModel(Mediation);
 
+            BookmarkManager = new SmileVideoBookmarkManagerViewModel(Mediation);
+            //var a1 = new SmileVideoBookmarkItemSettingModel() {
+            //    Name = "test-a",
+            //};
+            //var a2 = new SmileVideoBookmarkItemSettingModel() {
+            //    Name = "test-b",
+            //};
+            //a1.Nodes.Add(new SmileVideoBookmarkItemSettingModel() {
+            //    Name = "test-c",
+            //});
+            //BookmarkManager.Node.NodeList.Add(a1, null);
+            //BookmarkManager.Node.NodeList.Add(a2, null);
+
             Mediation.SetManager(
                 ServiceType.SmileVideo,
                 new SmileVideoManagerPackModel(
@@ -77,7 +92,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     RankingManager,
                     NewArrivalsManager,
                     MyListManager,
-                    HistoryManager
+                    HistoryManager,
+                    BookmarkManager
                 )
             );
         }
@@ -93,6 +109,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoNewArrivalsManagerViewModel NewArrivalsManager { get; }
         public SmileVideoMyListManagerViewModel MyListManager {get;}
         public SmileVideoHistoryManagerViewModel HistoryManager {get;}
+        public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
 
         public IEnumerable<SmileVideoCustomManagerViewModelBase> ManagerItems => new SmileVideoCustomManagerViewModelBase[] {
             SearchManager,
@@ -100,6 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             NewArrivalsManager,
             MyListManager,
             HistoryManager,
+            BookmarkManager,
         };
 
         #endregion
@@ -115,5 +133,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
         }
+
+        public override void InitializeView(MainWindow view)
+        {
+            foreach(var item in ManagerItems) {
+                item.InitializeView(view);
+            }
+        }
+
+        public override void UninitializeView(MainWindow view)
+        {
+            foreach(var item in ManagerItems) {
+                item.UninitializeView(view);
+            }
+        }
+
     }
 }

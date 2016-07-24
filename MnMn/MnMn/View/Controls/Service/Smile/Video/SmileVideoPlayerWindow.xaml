@@ -129,13 +129,26 @@
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
-              <Setter Property="Command" Value="{Binding DataContext.AdditionMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+              <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
           </MenuItem.ItemContainerStyle>
           <MenuItem.ItemTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding MyListName}" />
+            </DataTemplate>
+          </MenuItem.ItemTemplate>
+        </MenuItem>
+        <MenuItem Header="bookmark" ItemsSource="{Binding BookmarkItems}">
+          <MenuItem.ItemContainerStyle>
+            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+              <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+              <Setter Property="CommandParameter" Value="{Binding}" />
+            </Style>
+          </MenuItem.ItemContainerStyle>
+          <MenuItem.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Name}" />
             </DataTemplate>
           </MenuItem.ItemTemplate>
         </MenuItem>
