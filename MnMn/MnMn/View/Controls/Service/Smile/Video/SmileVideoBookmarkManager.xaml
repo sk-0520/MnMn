@@ -28,6 +28,7 @@
     <DockPanel Grid.Column="0">
       <ToolBar DockPanel.Dock="Top">
         <Button Command="{Binding AddNodeCommand}">add</Button>
+        <Button Command="{Binding InsertNodeCommand}">ins</Button>
         <Button Command="{Binding RemoveNodeCommand}">del</Button>
       </ToolBar>
       <Grid DockPanel.Dock="Bottom">

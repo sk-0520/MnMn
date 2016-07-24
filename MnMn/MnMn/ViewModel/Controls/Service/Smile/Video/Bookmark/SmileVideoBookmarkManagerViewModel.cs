@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
@@ -82,8 +83,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
+                    InsertNode(null);
+                });
+            }
+        }
+        public ICommand InsertNodeCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
                     var parentNodeViewModel = GetSelectedNode();
-                    AddNode(parentNodeViewModel);
+                    InsertNode(parentNodeViewModel);
                 });
             }
         }
@@ -103,7 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodesCore(SmileVideoBookmarkNodeViewModel node, Func<SmileVideoBookmarkNodeViewModel, bool> expr)
         {
-            foreach(var child in node.NodeItems.Where(expr)) {
+            foreach(var child in node.NodeItems) {
                 foreach(var item in GetNodesCore(child, expr)) {
                     yield return item;
                 }
@@ -115,7 +125,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodes(Func<SmileVideoBookmarkNodeViewModel, bool> expr)
         {
-            return NodeItems.Select(n => GetNodesCore(n, expr)).SelectMany(ns => ns);
+            foreach(var node in NodeItems) {
+                foreach(var item in GetNodesCore(node, expr)) {
+                    yield return item;
+                }
+            }
         }
 
         /// <summary>
@@ -128,8 +142,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return item;
         }
 
-        void AddNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
+        void InsertNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
         {
+            var model = new SmileVideoBookmarkItemSettingModel() {
+                Name = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName,
+            };
+            var target = parentNodeViewModel == null
+                ? Node.NodeList
+                : parentNodeViewModel.NodeList
+            ;
+            var pair= target.Add(model, null);
+            pair.ViewModel.IsSelected = true;
         }
 
         void RemoveNode(SmileVideoBookmarkNodeViewModel nodeViewModel)
