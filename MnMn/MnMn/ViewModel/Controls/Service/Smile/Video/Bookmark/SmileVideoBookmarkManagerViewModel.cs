@@ -57,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     if(SelectedBookmarkNode != null) {
                         SelectedBookmarkNode.ClearEditingValue();
                     }
+                    var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
+                    SelectedBookmarkNodeFinder = finder;
                 }
             }
         }
@@ -174,6 +176,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return Task.CompletedTask;
         }
 
+        protected override void ShowView()
+        {
+            if(SelectedBookmarkNode != null && SelectedBookmarkNodeFinder.CanLoad) {
+                SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+            } else {
+                SelectedBookmarkNode = NodeItems.FirstOrDefault();
+            }
+            if(SelectedBookmarkNode != null) {
+                SelectedBookmarkNode.IsSelected = true;
+            }
+            base.ShowView();
+        }
+
         public override void InitializeView(MainWindow view)
         {
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
@@ -191,9 +206,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var node = e.NewValue as SmileVideoBookmarkNodeViewModel;
             if(node != null) {
                 SelectedBookmarkNode = node;
-
-                var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
-                SelectedBookmarkNodeFinder = finder;
             }
         }
 
