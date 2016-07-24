@@ -44,11 +44,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region command
 
+        public ICommand AddNodeCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var parentNodeViewModel = GetSelectedNode();
+                    AddNode(parentNodeViewModel);
+                });
+            }
+        }
         public ICommand RemoveNodeCommand
         {
             get {
                 return CreateCommand(o => {
-                    var nodeViewModel = (SmileVideoBookmarkNodeViewModel)o;
+                    var nodeViewModel = GetSelectedNode();
                     RemoveNode(nodeViewModel);
                 });
             }
@@ -58,9 +68,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region function
 
+        IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodesCore(SmileVideoBookmarkNodeViewModel node, Func<SmileVideoBookmarkNodeViewModel, bool> expr)
+        {
+            foreach(var child in node.NodeItems.Where(expr)) {
+                foreach(var item in GetNodesCore(child, expr)) {
+                    yield return item;
+                }
+            }
+
+            if(expr(node)) {
+                yield return node;
+            }
+        }
+        IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodes(Func<SmileVideoBookmarkNodeViewModel, bool> expr)
+        {
+            return NodeItems.Select(n => GetNodesCore(n, expr)).SelectMany(ns => ns);
+        }
+
+        /// <summary>
+        /// 選択中ノードの取得。
+        /// </summary>
+        /// <returns>選択されているノード。選択されていなければ null 。</returns>
+        SmileVideoBookmarkNodeViewModel GetSelectedNode()
+        {
+            var item = GetNodes(n => n.IsSelected).FirstOrDefault();
+            return item;
+        }
+
+        void AddNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
+        {
+        }
+
         void RemoveNode(SmileVideoBookmarkNodeViewModel nodeViewModel)
         {
-
         }
 
         #endregion

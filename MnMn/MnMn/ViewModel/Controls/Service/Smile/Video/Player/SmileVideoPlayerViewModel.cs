@@ -80,6 +80,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
 using System.Windows.Threading;
 using System.Runtime.ExceptionServices;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -131,6 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _isBufferingStop;
 
         IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
+        IReadOnlyList<SmileVideoBookmarkNodeViewModel> _bookmarkItems;
 
         SmileVideoFilteringCommentType _filteringCommentType;
         string _filteringUserId;
@@ -560,6 +562,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public IReadOnlyList<SmileVideoBookmarkNodeViewModel> BookmarkItems
+        {
+            get
+            {
+                if(this._bookmarkItems == null) {
+                    var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.NodeItems;
+                    this._bookmarkItems = MakeBookmarkItems(treeItems);
+                }
+
+                return this._bookmarkItems;
+            }
+        }
+
         public bool IsSelectedComment
         {
             get { return this._isSelectedComment; }
@@ -744,14 +759,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand AdditionMyListCommand
+        public ICommand AddMyListCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
                         var myListFinder = o as SmileVideoMyListFinderViewModelBase;
-                        AdditionMyListAsync(myListFinder).ConfigureAwait(false);
+                        AddMyListAsync(myListFinder).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        public ICommand AddBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var bookmarkNode = o as SmileVideoBookmarkNodeViewModel;
+                        AddBookmark(bookmarkNode);
                     }
                 );
             }
@@ -839,6 +867,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
 
         #region function
+
+        List<SmileVideoBookmarkNodeViewModel> MakeBookmarkItemsCore(IList<SmileVideoBookmarkNodeViewModel> nodes, int level)
+        {
+            var result = new List<SmileVideoBookmarkNodeViewModel>();
+
+            foreach(var node in nodes) {
+                node.Level = level;
+                result.Add(node);
+
+                if(node.NodeItems.Any()) {
+                    var items = MakeBookmarkItemsCore(node.NodeItems, level + 1);
+                    result.AddRange(items);
+                }
+            }
+
+            return result;
+        }
+
+        List<SmileVideoBookmarkNodeViewModel> MakeBookmarkItems(IList<SmileVideoBookmarkNodeViewModel> nodes)
+        {
+            var result = new List<SmileVideoBookmarkNodeViewModel>();
+
+            foreach(var node in nodes) {
+                node.Level = 0;
+                result.Add(node);
+
+                var list = MakeBookmarkItemsCore(node.NodeItems, 1);
+                result.AddRange(list);
+            }
+
+            return result;
+        }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
@@ -1308,24 +1368,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
         }
 
-        Task<SmileJsonResultModel> AdditionMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
+        {
+            var videoItem = VideoInformation.ToVideoItemModel();
+            bookmarkNode.VideoItems.Add(videoItem);
+        }
+
+        Task<SmileJsonResultModel> AddMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var defaultMyListFinder = myListFinder as SmileVideoAccountMyListDefaultFinderViewModel;
             if(defaultMyListFinder != null) {
-                return AdditionAccountDefaultMyListAsync(defaultMyListFinder);
+                return AddAccountDefaultMyListAsync(defaultMyListFinder);
             } else {
-                return AdditionAccountMyListAsync(myListFinder);
+                return AddAccountMyListAsync(myListFinder);
             }
         }
 
-        Task<SmileJsonResultModel> AdditionAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
+        Task<SmileJsonResultModel> AddAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
         }
 
-        Task<SmileJsonResultModel> AdditionAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
+        Task<SmileJsonResultModel> AddAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);

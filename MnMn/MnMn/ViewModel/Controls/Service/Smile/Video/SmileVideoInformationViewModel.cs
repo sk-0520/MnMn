@@ -610,6 +610,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
+        public SmileVideoVideoItemModel ToVideoItemModel()
+        {
+            var result = new SmileVideoVideoItemModel() {
+                FirstRetrieve = this.FirstRetrieve,
+                Length = this.Length,
+                VideoId = this.VideoId,
+                VideoTitle = this.Title,
+            };
+
+            return result;
+        }
+
         static string GetCacheFileName(string videoId, string roll, string extension)
         {
             return PathUtility.CreateFileName(videoId, roll, extension);

@@ -30,8 +30,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
     {
         #region variable
 
-        bool _isSelected = true;
+        bool _isSelected = false;
         bool _isExpanded = true;
+        int _level;
 
         #endregion
 
@@ -55,8 +56,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             set { SetVariableValue(ref this._isExpanded, value); }
         }
 
+        public int Level
+        {
+            get { return this._level; }
+            set { SetVariableValue(ref this._level, value); }
+        }
+
         public MVMPairCreateDelegationCollection<SmileVideoBookmarkItemSettingModel, SmileVideoBookmarkNodeViewModel> NodeList { get; }
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
+
+        public CollectionModel<SmileVideoVideoItemModel> VideoItems { get { return Model.Items; } }
 
         public string Name {
             get { return Model.Name; }
