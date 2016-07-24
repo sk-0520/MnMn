@@ -27,8 +27,19 @@
 
     <DockPanel Grid.Column="0">
       <ToolBar DockPanel.Dock="Top">
-        <Button Command="{Binding RemoveNodeCommand}">add folder</Button>
+        <Button Command="{Binding AddNodeCommand}">add</Button>
+        <Button Command="{Binding RemoveNodeCommand}">del</Button>
       </ToolBar>
+      <Grid DockPanel.Dock="Bottom">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0">名前:</Label>
+        <TextBox Grid.Column="1" Text="{Binding SelectedBookmarkNode.EditingName, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Column="2" Command="{Binding SelectedBookmarkNode.SaveEditCommand}">save</Button>
+      </Grid>
       <TreeView x:Name="treeNodes" ItemsSource="{Binding NodeItems}" >
         <TreeView.ItemContainerStyle>
           <Style TargetType="TreeViewItem">

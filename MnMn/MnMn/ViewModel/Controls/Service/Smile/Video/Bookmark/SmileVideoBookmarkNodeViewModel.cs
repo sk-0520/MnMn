@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -33,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         bool _isSelected = false;
         bool _isExpanded = true;
         int _level;
+
+        string _editingName;
 
         #endregion
 
@@ -67,18 +70,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         public CollectionModel<SmileVideoVideoItemModel> VideoItems { get { return Model.Items; } }
 
-        public string Name {
+        public string Name
+        {
             get { return Model.Name; }
             set { SetModelValue(value); }
+        }
+
+        public string EditingName
+        {
+            get { return this._editingName; }
+            set { SetVariableValue(ref this._editingName, value); }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand SaveEditCommand
+        {
+            get
+            {
+                return CreateCommand(o => SaveEdit());
+            }
         }
 
         #endregion
 
         #region function
 
-        SmileVideoBookmarkNodeViewModel CreateItem(SmileVideoBookmarkItemSettingModel model, object data)
+        static SmileVideoBookmarkNodeViewModel CreateItem(SmileVideoBookmarkItemSettingModel model, object data)
         {
             return new SmileVideoBookmarkNodeViewModel(model);
+        }
+
+        void SaveEdit()
+        {
+            Name = EditingName;
+            ResetChangeFlag();
+        }
+
+        public void ClearEditingValue()
+        {
+            EditingName = Name;
+
+            ResetChangeFlag();
         }
 
         #endregion

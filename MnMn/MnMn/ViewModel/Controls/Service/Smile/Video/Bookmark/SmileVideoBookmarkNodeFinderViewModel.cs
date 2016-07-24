@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region SmileVideoHistoryFinderViewModelBase
 
-        protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.FirstRetrieve | SmileVideoInformationFlags.Length;
+        protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.ViewCounter;
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {

@@ -30,7 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
     {
         #region variable
 
-        SmileVideoFinderViewModelBase _selectedBookmarkNodeFinder;
+        SmileVideoBookmarkNodeFinderViewModel _selectedBookmarkNodeFinder;
+        SmileVideoBookmarkNodeViewModel _selectedBookmarkNode;
 
         #endregion
 
@@ -47,7 +48,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
 
-        public SmileVideoFinderViewModelBase SelectedBookmarkNodeFinder
+        public SmileVideoBookmarkNodeViewModel SelectedBookmarkNode
+        {
+            get { return this._selectedBookmarkNode; }
+            set {
+                if(SetVariableValue(ref this._selectedBookmarkNode, value)) {
+                    if(SelectedBookmarkNode != null) {
+                        SelectedBookmarkNode.ClearEditingValue();
+                    }
+                }
+            }
+        }
+
+        public SmileVideoBookmarkNodeFinderViewModel SelectedBookmarkNodeFinder
         {
             get { return this._selectedBookmarkNodeFinder; }
             set {
@@ -148,7 +161,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             var node = e.NewValue as SmileVideoBookmarkNodeViewModel;
             if(node != null) {
-                var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, node);
+                SelectedBookmarkNode = node;
+
+                var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
                 SelectedBookmarkNodeFinder = finder;
             }
         }
