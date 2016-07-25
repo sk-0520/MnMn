@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
                 page.ReplaceUriParameters["sort"] = orderBy + sortField;
                 page.ReplaceUriParameters["offset"] = fromIndex.ToString();
                 page.ReplaceUriParameters["limit"] = getCount.ToString();
-                page.ReplaceUriParameters["context"] = "test";
+                page.ReplaceUriParameters["context"] = Constants.ServiceSmileContentsSearchContext;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(response.Result))) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileContentsSearchModel>(stream);

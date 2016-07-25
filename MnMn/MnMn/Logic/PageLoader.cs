@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     /// <summary>
     /// ページ取得からあれこれ解析まで一通り頑張る人。
-    /// <para>こまごま public だけど基本的に GetTextAsync のみで使い捨て。</para>
+    /// <para>こまごま public だけど基本的に <see cref="GetResponseTextAsync"/> のみで使い捨て。</para>
     /// </summary>
     public class PageLoader: DisposeFinalizeBase
     {
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public JudgeResponsePageScraping JudgeSuccessStatusCode { get; set; }
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool HeaderCheckOnly { get; set; }
         /// <summary>
@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ForceUri, () => {
                     var convertedUri = Mediation.ConvertUri(rawUri.Uri, ServiceType);
                     return new Uri(convertedUri);
-                }, 
+                },
                 uri => uri
             );
             Mediation.Logger.Trace($"{nameof(Uri)}-> {Uri}, {nameof(rawUri.RequestParameterType)} -> {rawUri.RequestParameterType}");
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 MakeRequestParameter();
 
                 var executor = GetExecutor(httpMethod);
-                
+
                 using(var response = await executor()) {
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {
