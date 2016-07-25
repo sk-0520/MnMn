@@ -1595,28 +1595,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             videoInformation.IsPlaying = true;
             IsSelectedVideoInformation = true;
 
-            return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan).ContinueWith(t => {
+            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == VideoInformation.VideoId);
+            if(historyModel == null) {
+                historyModel = new SmileVideoPlayHistoryModel() {
+                    VideoId = VideoInformation.VideoId,
+                    VideoTitle = VideoInformation.Title,
+                    Length = VideoInformation.Length,
+                    FirstRetrieve = VideoInformation.FirstRetrieve,
+                };
 
-                var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == VideoInformation.VideoId);
-                if(historyModel == null) {
-                    historyModel = new SmileVideoPlayHistoryModel() {
-                        VideoId = VideoInformation.VideoId,
-                        VideoTitle = VideoInformation.Title,
-                        Length = VideoInformation.Length,
-                        FirstRetrieve = VideoInformation.FirstRetrieve,
-                    };
+            } else {
+                Setting.History.Remove(historyModel);
+            }
+            historyModel.WatchUrl = VideoInformation.WatchUrl;
+            historyModel.LastTimestamp = DateTime.Now;
+            historyModel.Count = RangeUtility.Increment(historyModel.Count);
 
-                } else {
-                    Setting.History.Remove(historyModel);
-                }
-                historyModel.WatchUrl = VideoInformation.WatchUrl;
-                historyModel.LastTimestamp = DateTime.Now;
-                historyModel.Count = RangeUtility.Increment(historyModel.Count);
+            AddHistory(historyModel);
 
-                AddHistory(historyModel);
-
-                return t;
-            });
+            return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan);
         }
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
