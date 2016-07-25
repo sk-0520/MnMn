@@ -30,6 +30,10 @@
         <Button Command="{Binding AddNodeCommand}">add</Button>
         <Button Command="{Binding InsertNodeCommand}">ins</Button>
         <Button Command="{Binding RemoveNodeCommand}">del</Button>
+        <Separator />
+        <Button Command="{Binding UpNodeCommand}">up</Button>
+        <Button Command="{Binding DownNodeCommand}">down</Button>
+        <Button Command="{Binding UpParentNodeCommand}">parent</Button>
       </ToolBar>
       <Grid DockPanel.Dock="Bottom">
         <Grid.ColumnDefinitions>
