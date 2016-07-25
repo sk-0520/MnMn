@@ -19,7 +19,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -29,10 +33,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 {
     public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
+        #region define
+
+        static readonly string DragNodeFormat = Constants.ApplicationName + "**Node";
+
+        #endregion
+
         #region variable
 
         SmileVideoBookmarkNodeFinderViewModel _selectedBookmarkNodeFinder;
         SmileVideoBookmarkNodeViewModel _selectedBookmarkNode;
+
+        bool _isDragging = false;
+        Point _dragStartPosition;
+        TreeView _treeNodes;
 
         #endregion
 
@@ -75,6 +89,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        public bool IsDragging
+        {
+            get { return this._isDragging; }
+            set { SetVariableValue(ref this._isDragging, value); }
+        }
 
         #endregion
 
@@ -167,6 +186,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        /// <summary>
+        /// 座標からデータを取得。
+        /// </summary>
+        /// <param name="treeView">指定ツリービュー。</param>
+        /// <param name="position">ツリービューの原点を基点とした座標。</param>
+        /// <returns></returns>
+        SmileVideoBookmarkNodeViewModel GetToolbarNode(TreeView treeView, Point position)
+        {
+            var node = treeView.InputHitTest(position);
+
+            var hitTestResults = VisualTreeHelper.HitTest(treeView, position);
+            SmileVideoBookmarkNodeViewModel result = null;
+            if(hitTestResults != null) {
+                CastUtility.AsAction<FrameworkElement>(hitTestResults.VisualHit, element => {
+                    result = element.DataContext as SmileVideoBookmarkNodeViewModel;
+                });
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase
@@ -191,7 +231,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         public override void InitializeView(MainWindow view)
         {
+            this._treeNodes = view.smile.bookmark.treeNodes;
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
+            view.smile.bookmark.treeNodes.PreviewMouseLeftButtonDown += TreeNodes_PreviewMouseLeftButtonDown;
+            view.smile.bookmark.treeNodes.MouseMove += TreeNodes_MouseMove;
+            view.smile.bookmark.treeNodes.Drop += TreeNodes_Drop;
         }
 
         public override void UninitializeView(MainWindow view)
@@ -208,6 +252,63 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 SelectedBookmarkNode = node;
             }
         }
+
+        private void TreeNodes_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this._dragStartPosition = e.GetPosition(null);
+        }
+
+        private void TreeNodes_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.LeftButton != MouseButtonState.Pressed) {
+                return;
+            }
+
+            if(IsDragging) {
+                return;
+            }
+
+            var isScrollDrag = GetToolbarNode(this._treeNodes, e.GetPosition(this._treeNodes)) == null;
+            if(isScrollDrag) {
+                // スクロールバーD&DはアイテムD&Dしない
+                return;
+            }
+
+            var treeView = (TreeView)sender;
+            var node = treeView.SelectedItem as SmileVideoBookmarkNodeViewModel;
+
+            var nowPosition = e.GetPosition(null);
+            var size = new Size(10, 10);
+
+            var isDragX = Math.Abs(nowPosition.X - this._dragStartPosition.X) > size.Width;
+            var isDragY = Math.Abs(nowPosition.Y - this._dragStartPosition.Y) > size.Height;
+            if(isDragX || isDragY) {
+                //var treeView = (TreeView)sender;
+                treeView.AllowDrop = true;
+                CastUtility.AsAction<SmileVideoBookmarkNodeViewModel>(treeView.SelectedItem, selectedNode => {
+                    var item = new DataObject(DragNodeFormat, selectedNode);
+                    IsDragging = true;
+                    DragDrop.DoDragDrop(treeView, item, DragDropEffects.Move);
+                    IsDragging = false;
+                    treeView.AllowDrop = false;
+                });
+            }
+        }
+
+        private void TreeNodes_Drop(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+            e.Effects = DragDropEffects.None;
+
+            if(e.Data.GetDataPresent(DragNodeFormat)) {
+                var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
+                var dstNode = GetToolbarNode(this._treeNodes, e.GetPosition(this._treeNodes));
+                if(dstNode != null && srcNode != dstNode) {
+
+                }
+            }
+        }
+
 
     }
 }
