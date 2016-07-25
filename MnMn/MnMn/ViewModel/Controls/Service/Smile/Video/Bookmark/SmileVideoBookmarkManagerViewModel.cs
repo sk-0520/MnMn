@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -104,7 +105,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    InsertNode(null);
+                    var node = GetSelectedNode();
+                    if(node != null) {
+                        node = GetNodes(_ => true).FirstOrDefault(n => n.NodeItems.Any(nn => nn == node)) ?? Node;
+                    } else {
+                        node = Node;
+                    }
+                    AddNode(node);
                 });
             }
         }
@@ -163,16 +170,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return item;
         }
 
+        void AddNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
+        {
+            var model = new SmileVideoBookmarkItemSettingModel() {
+                Name = TextUtility.ToUniqueDefault(global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName, GetNodes(_ => true).Select(n => n.Name)),
+            };
+            var pair = parentNodeViewModel.NodeList.Add(model, null);
+            pair.ViewModel.IsSelected = true;
+        }
+
         void InsertNode(SmileVideoBookmarkNodeViewModel parentNodeViewModel)
         {
             var model = new SmileVideoBookmarkItemSettingModel() {
-                Name = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName,
+                Name = TextUtility.ToUniqueDefault(global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_NewName, GetNodes(_ => true).Select(n => n.Name)),
             };
-            var target = parentNodeViewModel == null
-                ? Node.NodeList
-                : parentNodeViewModel.NodeList
-            ;
-            var pair= target.Add(model, null);
+            //var target = parentNodeViewModel == null
+            //    ? Node.NodeList
+            //    : parentNodeViewModel.NodeList
+            //;
+            var pair= parentNodeViewModel.NodeList.Add(model, null);
             pair.ViewModel.IsSelected = true;
         }
 
@@ -180,9 +196,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             var parentNode = GetNodes(n => n.NodeItems.Any(nv => nv == nodeViewModel)).FirstOrDefault();
             if(parentNode != null) {
-                parentNode.NodeItems.Remove(nodeViewModel);
+                parentNode.NodeList.Remove(nodeViewModel);
             } else {
-                NodeItems.Remove(nodeViewModel);
+                Node.NodeList.Remove(nodeViewModel);
             }
         }
 
@@ -192,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         /// <param name="treeView">指定ツリービュー。</param>
         /// <param name="position">ツリービューの原点を基点とした座標。</param>
         /// <returns></returns>
-        SmileVideoBookmarkNodeViewModel GetToolbarNode(TreeView treeView, Point position)
+        SmileVideoBookmarkNodeViewModel GetNodeFromPosition(TreeView treeView, Point position)
         {
             var node = treeView.InputHitTest(position);
 
@@ -235,6 +251,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
             view.smile.bookmark.treeNodes.PreviewMouseLeftButtonDown += TreeNodes_PreviewMouseLeftButtonDown;
             view.smile.bookmark.treeNodes.MouseMove += TreeNodes_MouseMove;
+            view.smile.bookmark.treeNodes.DragEnter += TreeNodes_DragEnterAndOver;
+            view.smile.bookmark.treeNodes.DragOver += TreeNodes_DragEnterAndOver;
             view.smile.bookmark.treeNodes.Drop += TreeNodes_Drop;
         }
 
@@ -268,7 +286,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 return;
             }
 
-            var isScrollDrag = GetToolbarNode(this._treeNodes, e.GetPosition(this._treeNodes)) == null;
+            var isScrollDrag = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes)) == null;
             if(isScrollDrag) {
                 // スクロールバーD&DはアイテムD&Dしない
                 return;
@@ -295,6 +313,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        void TreeNodes_DragEnterAndOver(object sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DragNodeFormat)) {
+                var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
+                var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
+                if(dstNode != null && srcNode != dstNode) {
+                    var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
+                    if(isChildNode) {
+                        e.Effects = DragDropEffects.None;
+                    } else if(dstNode.NodeItems.Any(n => n == srcNode)) {
+                        e.Effects = DragDropEffects.None;
+                    }
+                } else {
+                    e.Effects = DragDropEffects.None;
+                }
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+        }
+
         private void TreeNodes_Drop(object sender, DragEventArgs e)
         {
             e.Handled = true;
@@ -302,9 +341,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             if(e.Data.GetDataPresent(DragNodeFormat)) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
-                var dstNode = GetToolbarNode(this._treeNodes, e.GetPosition(this._treeNodes));
+                var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
                 if(dstNode != null && srcNode != dstNode) {
-
+                        var srcModel = srcNode.Model;
+                        RemoveNode(srcNode);
+                        var item = dstNode.NodeList.Add(srcModel, null);
+                        item.ViewModel.IsSelected = true;
                 }
             }
         }
