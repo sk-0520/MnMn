@@ -1595,15 +1595,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             videoInformation.IsPlaying = true;
             IsSelectedVideoInformation = true;
 
-            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == VideoInformation.VideoId);
+            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);
             if(historyModel == null) {
                 historyModel = new SmileVideoPlayHistoryModel() {
-                    VideoId = VideoInformation.VideoId,
-                    VideoTitle = VideoInformation.Title,
-                    Length = VideoInformation.Length,
-                    FirstRetrieve = VideoInformation.FirstRetrieve,
+                    VideoId = videoInformation.VideoId,
+                    VideoTitle = videoInformation.Title,
+                    Length = videoInformation.Length,
+                    FirstRetrieve = videoInformation.FirstRetrieve,
                 };
-
             } else {
                 Setting.History.Remove(historyModel);
             }
