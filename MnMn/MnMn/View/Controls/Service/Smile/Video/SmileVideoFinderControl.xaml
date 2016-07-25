@@ -55,14 +55,14 @@
         <Button DockPanel.Dock="Left" Command="{Binding AllCheckCommand}">
           <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
         </Button>
-        <Button DockPanel.Dock="Left" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}">連続再生</Button>
+        <Button DockPanel.Dock="Left" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}">連続再生</Button>
         <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}" />
         <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsAscending}">
           <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
         </ToggleButton>
-        <Label DockPanel.Dock="Right">並べ替え</Label>
+        <Label DockPanel.Dock="Right" Margin="10,0,0,0" >並べ替え</Label>
         <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
-        <xctk:WatermarkTextBox Margin="20,0" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+        <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
       </DockPanel>
     </Grid>
 

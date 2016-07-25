@@ -1606,7 +1606,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             } else {
                 Setting.History.Remove(historyModel);
             }
-            historyModel.WatchUrl = VideoInformation.WatchUrl;
+            historyModel.WatchUrl = videoInformation.WatchUrl;
             historyModel.LastTimestamp = DateTime.Now;
             historyModel.Count = RangeUtility.Increment(historyModel.Count);
 
