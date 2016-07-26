@@ -48,6 +48,7 @@
       <sys:Double x:Key="VideoInfoHeight">120</sys:Double>
 
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
@@ -146,6 +147,7 @@
       </Button>
       <Menu>
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
+          <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -159,6 +161,15 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
         <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}">
+          <MenuItem.Style>
+            <Style TargetType="MenuItem">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding BookmarkItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
+                  <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </MenuItem.Style>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
