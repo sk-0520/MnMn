@@ -15,6 +15,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </UserControl.Resources>
@@ -27,13 +28,25 @@
 
     <DockPanel Grid.Column="0">
       <ToolBar DockPanel.Dock="Top">
-        <Button Command="{Binding AddNodeCommand}">add</Button>
-        <Button Command="{Binding InsertNodeCommand}">ins</Button>
-        <Button Command="{Binding RemoveNodeCommand}">del</Button>
+        <Button Command="{Binding AddNodeCommand}">
+          <Image Source="/Resources/Service/Smile/Video/Bookmark/AddBookmark.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
+        <Button Command="{Binding InsertNodeCommand}">
+          <Image Source="/Resources/Service/Smile/Video/Bookmark/InsertBookmark.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
+        <Button Command="{Binding RemoveNodeCommand}">
+          <Image Source="/Resources/Service/Smile/Video/Bookmark/RemoveBookmark.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
         <Separator />
-        <Button Command="{Binding UpNodeCommand}">up</Button>
-        <Button Command="{Binding DownNodeCommand}">down</Button>
-        <Button Command="{Binding UpParentNodeCommand}">parent</Button>
+        <Button Command="{Binding UpNodeCommand}">
+          <Image Source="/Resources/Service/Smile/Video/Bookmark/Up.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
+        <Button Command="{Binding DownNodeCommand}">
+          <Image Source="/Resources/Service/Smile/Video/Bookmark/Down.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
+        <Button Command="{Binding UpParentNodeCommand}">
+          <Image Source="/Resources/Service/Smile/Video/Bookmark/MoveParentBookmark.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
       </ToolBar>
       <Grid DockPanel.Dock="Bottom">
         <Grid.ColumnDefinitions>
@@ -43,7 +56,9 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0">名前:</Label>
         <TextBox Grid.Column="1" Text="{Binding SelectedBookmarkNode.EditingName, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Column="2" Command="{Binding SelectedBookmarkNode.SaveEditCommand}">save</Button>
+        <Button Grid.Column="2" Command="{Binding SelectedBookmarkNode.SaveEditCommand}">
+          <Image Source="/Resources/Common/Save.png" Style="{StaticResource SmallIconImage}" />
+        </Button>
       </Grid>
       <TreeView x:Name="treeNodes" ItemsSource="{Binding NodeItems}" >
         <TreeView.ItemContainerStyle>
@@ -73,9 +88,13 @@
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
-          <RepeatButton Grid.Column="0" Command="{Binding UpSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">up</RepeatButton>
-          <RepeatButton Grid.Column="1" Command="{Binding DownSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">down</RepeatButton>
-          <Button Grid.Column="2" Command="{Binding RemoveCheckedVideosCommand}">remove</Button>
+          <RepeatButton Grid.Column="0" Command="{Binding UpSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
+            <Image Source="/Resources/Service/Smile/Video/Bookmark/Up.png" Style="{StaticResource SmallIconImage}" />
+          </RepeatButton>
+          <RepeatButton Grid.Column="1" Command="{Binding DownSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
+            <Image Source="/Resources/Service/Smile/Video/Bookmark/Down.png" Style="{StaticResource SmallIconImage}" />
+          </RepeatButton>
+          <Button Grid.Column="2" Margin="20,0,0,0" Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
         </Grid>
       </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
     </app_view_controls_service_smile_video:SmileVideoFinderControl>

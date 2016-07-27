@@ -17,4 +17,11 @@
     <Setter Property="Margin" Value="1,1,2,1" />
   </Style>
 
+  <Style x:Key="SmallIconImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+    <Setter Property="Width" Value="16" />
+    <Setter Property="Height" Value="16" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+
 </ResourceDictionary>

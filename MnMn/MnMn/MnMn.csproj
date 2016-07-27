@@ -674,6 +674,13 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Common\Save.png" />
+    <Resource Include="Resources\Service\Smile\Video\Bookmark\AddBookmark.png" />
+    <Resource Include="Resources\Service\Smile\Video\Bookmark\RemoveBookmark.png" />
+    <Resource Include="Resources\Service\Smile\Video\Bookmark\Down.png" />
+    <Resource Include="Resources\Service\Smile\Video\Bookmark\InsertBookmark.png" />
+    <Resource Include="Resources\Service\Smile\Video\Bookmark\MoveParentBookmark.png" />
+    <Resource Include="Resources\Service\Smile\Video\Bookmark\Up.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\EconomyMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\NormalMode.png" />
     <Resource Include="Resources\Pager\Next.png" />
