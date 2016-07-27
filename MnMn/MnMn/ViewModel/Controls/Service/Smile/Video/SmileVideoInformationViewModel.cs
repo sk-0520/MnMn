@@ -622,6 +622,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return result;
         }
 
+        internal void ResetNumber(int number)
+        {
+            Number = number;
+            CallOnPropertyChange(nameof(Number));
+        }
+
         static string GetCacheFileName(string videoId, string roll, string extension)
         {
             return PathUtility.CreateFileName(videoId, roll, extension);

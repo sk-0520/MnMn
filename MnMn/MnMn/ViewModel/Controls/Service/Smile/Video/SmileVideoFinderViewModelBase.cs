@@ -195,6 +195,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoInformationList.InitializeRange(items);
             VideoInformationItems.Refresh();
             CallOnPropertyChange(nameof(VideoInformationItems));
+
+            ChangeSortItems();
         }
 
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -302,7 +304,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return task;
         }
 
-        internal void ChangeSortItems()
+        internal virtual void ChangeSortItems()
         {
             var map = new Dictionary<SmileVideoSortType, string>() {
                 { SmileVideoSortType.Number, nameof(SmileVideoInformationViewModel.Number) },

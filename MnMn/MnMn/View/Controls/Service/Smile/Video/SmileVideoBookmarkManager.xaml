@@ -62,7 +62,23 @@
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
-    <app_view_controls_service_smile_video:SmileVideoFinderControl Grid.Column="2" DataContext="{Binding SelectedBookmarkNodeFinder}" />
+    <app_view_controls_service_smile_video:SmileVideoFinderControl
+      Grid.Column="2"
+      DataContext="{Binding SelectedBookmarkNodeFinder}"
+    >
+      <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <RepeatButton Grid.Column="0" Command="{Binding UpSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">up</RepeatButton>
+          <RepeatButton Grid.Column="1" Command="{Binding DownSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">down</RepeatButton>
+          <Button Grid.Column="2" Command="{Binding RemoveCheckedVideosCommand}">remove</Button>
+        </Grid>
+      </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+    </app_view_controls_service_smile_video:SmileVideoFinderControl>
 
   </Grid>
 </UserControl>
