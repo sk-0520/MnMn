@@ -23,6 +23,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
@@ -38,13 +40,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ApplicationName { get; } = "MnMn";
 
         public static string AssemblyPath { get; } = Assembly.GetExecutingAssembly().Location;
-        public static string AssemblyParentDirectoryPath { get; } = Path.GetDirectoryName(AssemblyPath);
+        public static string AssemblyRootDirectoryPath { get; } = Path.GetDirectoryName(AssemblyPath);
 
 #if DEBUG
         public static string ApplicationDirectoryName { get; } = ApplicationName + "-debug";
 #else
         public static string ApplicationDirectoryName  { get; } =  ApplicationName;
 #endif
+
+        /// <summary>
+        /// バージョン番号。
+        /// </summary>
+        public static readonly Version ApplicationVersionNumber = Assembly.GetExecutingAssembly().GetName().Version;
+
+
         /// <summary>
         /// 最小XMLファイルサイズ。
         /// </summary>
@@ -74,6 +83,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
         public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
 
+        public static string SbinDirectoryName { get; } = "sbin";
+        public static string UpdateProgramDirectoryName { get; } = "Updater";
+        public static string UpdateProgramName { get; } = PathUtility.AppendExtension(UpdateProgramDirectoryName, "exe");
+
+        /// <summary>
+        /// etc/
+        /// </summary>
+        public static string ApplicationEtcDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "etc"); } }
+
+        public static string ScriptDirectoryName { get; } = "script";
+
+        public static string ArchiveSearchPattern { get; } = "*.zip";
+
+
         public static string SettingDirectoryName { get; } = "setting";
         public static string SettingFileName { get; } = "setting.json";
 
@@ -83,11 +106,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string BinaryDirectoryName { get; } = "bin";
 
-        public static string FfmpegApplicationPath { get; } = Path.Combine(AssemblyParentDirectoryPath, BinaryDirectoryName, "ffmpeg", "ffmpeg.exe");
+        public static string FfmpegApplicationPath { get; } = Path.Combine(AssemblyRootDirectoryPath, BinaryDirectoryName, "ffmpeg", "ffmpeg.exe");
 
         public static string DefineName { get; } = "define";
 
-        public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyParentDirectoryPath, "etc");
+        public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
 
         public static string DefineDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, DefineName);
 
@@ -149,6 +172,24 @@ namespace ContentTypeTextNet.MnMn.MnMn
         #endregion
 
         #region function
+
+        /// <summary>
+        /// 文字列リテラルを書式で変換。
+        ///
+        /// {...} を置き換える。
+        /// * TIMESTAMP: そんとき
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        private static string ReplaceAppConfig(string src)
+        {
+            var map = new Dictionary<string, string>() {
+                { "TIMESTAMP", DateTime.Now.ToBinary().ToString() },
+            };
+            var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
+
+            return replacedText;
+        }
 
         #endregion
     }

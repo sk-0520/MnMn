@@ -19,6 +19,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #endregion
 
+        public static string UriUpdate { get { return ReplaceAppConfig(appConfig.Get("uri-update")); } }
+        public static string UriChangelogRelease { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-release")); } }
+        public static string UriChangelogRc { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-rc")); } }
+
+        public static int BackupArchiveCount { get { return appConfig.Get("backup-archive", int.Parse); } }
+
         #region smile
 
         public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-ContentSearch-context"); } }
