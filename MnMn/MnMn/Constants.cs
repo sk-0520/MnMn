@@ -87,6 +87,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string UpdateProgramDirectoryName { get; } = "Updater";
         public static string UpdateProgramName { get; } = PathUtility.AppendExtension(UpdateProgramDirectoryName, "exe");
 
+#if DEBUG
+        public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
+#else
+		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(30);
+#endif
+
         /// <summary>
         /// etc/
         /// </summary>
@@ -99,6 +105,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SettingDirectoryName { get; } = "setting";
         public static string SettingFileName { get; } = "setting.json";
+
+        public static string ArchiveDirectoryName { get; } = "archive";
 
         public static string ServiceName { get; } = "service";
         public static string ServiceSmileName { get; } = "smile";

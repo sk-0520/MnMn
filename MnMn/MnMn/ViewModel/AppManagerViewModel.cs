@@ -18,7 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -52,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #endregion
 
         public AppManagerViewModel(Mediation mediation)
-            :base(mediation)
+            : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
@@ -137,6 +139,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
 
             SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
+        }
+
+        Updater CheckUpdate(bool force)
+        {
+            var dir = VariableConstants.GetSettingDirectory();
+            var dirPath = Path.Combine(dir.FullName, Constants.ArchiveDirectoryName);
+
+            var IsPause = false;
+            var checkRc = false;
+            var CheckUpdateRelease = true;
+            var updateData = new Updater(dirPath, checkRc, Mediation);
+            //CommonData.Logger.Debug(CommonData.Language["log/update/state"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
+            if(force || !IsPause && CheckUpdateRelease) {
+                var updateInfo = updateData.Check();
+            }
+            return updateData;
         }
 
         #endregion
