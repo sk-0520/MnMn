@@ -11,6 +11,7 @@
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="Stretch" Value="None" />
   </Style>
 
   <Style x:Key="ItemImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
@@ -20,8 +21,10 @@
   <Style x:Key="SmallIconImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
     <Setter Property="Width" Value="16" />
     <Setter Property="Height" Value="16" />
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+  <Style x:Key="SmallItemImage" TargetType="Image" BasedOn="{StaticResource ItemImage}">
+    <Setter Property="Width" Value="16" />
+    <Setter Property="Height" Value="16" />
   </Style>
 
 </ResourceDictionary>
