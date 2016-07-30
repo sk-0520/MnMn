@@ -134,6 +134,9 @@
         <Setter Property="Margin" Value="4,0,0,0" />
       </Style>
 
+      <Style x:Key="DummyMenu" TargetType="Menu"/>
+
+
     </ResourceDictionary>
   </Window.Resources>
   <DockPanel>
@@ -145,7 +148,7 @@
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
       </Button>
-      <Menu>
+      <Menu Style="{StaticResource DummyMenu}">
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
           <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
@@ -160,16 +163,18 @@
             </DataTemplate>
           </MenuItem.ItemTemplate>
         </MenuItem>
+      </Menu>
+      <Menu>
+        <Menu.Style>
+          <Style TargetType="Menu" BasedOn="{StaticResource DummyMenu}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding BookmarkItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Menu.Style>
         <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}">
-          <MenuItem.Style>
-            <Style TargetType="MenuItem">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding BookmarkItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
-                  <Setter Property="Visibility" Value="Collapsed" />
-                </DataTrigger>
-              </Style.Triggers>
-            </Style>
-          </MenuItem.Style>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -347,7 +352,7 @@
             </Style.Triggers>
           </Style>
         </ContentControl.Style>
-        </ContentControl>
+      </ContentControl>
     </StatusBar>
 
     <Grid>
