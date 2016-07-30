@@ -64,7 +64,7 @@
           </xctk:SplitButton.DropDownContent>
         </xctk:SplitButton>
 
-        <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
+        <ComboBox DockPanel.Dock="Right" MinWidth="100" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
