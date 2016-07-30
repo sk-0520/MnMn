@@ -52,7 +52,7 @@
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineLeftCommand"
               >
-                <Image Source="/Resources/Tab/Previous.png" Style="{StaticResource SmallIconImage}" />
+                <Image Source="/Resources/Common/View/Left.png" Style="{StaticResource SmallIconImage}" />
               </RepeatButton>
               <RepeatButton
                 Name="PART_TailMoveRight"
@@ -60,7 +60,7 @@
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineRightCommand"
               >
-                <Image Source="/Resources/Tab/Next.png" Style="{StaticResource SmallIconImage}" />
+                <Image Source="/Resources/Common/View/Right.png" Style="{StaticResource SmallIconImage}" />
               </RepeatButton>
               <RepeatButton
                 Name="PART_TailMoveLeft"
@@ -68,7 +68,7 @@
                 CommandTarget="{Binding ElementName=PART_ScrollViewer}"
                 Command="ScrollBar.LineLeftCommand"
               >
-                <Image Source="/Resources/Tab/Previous.png" Style="{StaticResource SmallIconImage}" />
+                <Image Source="/Resources/Common/View/Left.png" Style="{StaticResource SmallIconImage}" />
               </RepeatButton>
               <ScrollViewer
                 Name="PART_ScrollViewer"

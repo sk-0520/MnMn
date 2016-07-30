@@ -39,10 +39,10 @@
         </Button>
         <Separator />
         <Button Command="{Binding UpNodeCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Bookmark/Up.png" Style="{StaticResource SmallIconImage}" />
+          <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
         </Button>
         <Button Command="{Binding DownNodeCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Bookmark/Down.png" Style="{StaticResource SmallIconImage}" />
+          <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
         </Button>
         <Button Command="{Binding UpParentNodeCommand}">
           <Image Source="/Resources/Service/Smile/Video/Bookmark/MoveParentBookmark.png" Style="{StaticResource SmallIconImage}" />
@@ -89,10 +89,10 @@
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <RepeatButton Grid.Column="0" Command="{Binding UpSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
-            <Image Source="/Resources/Service/Smile/Video/Bookmark/Up.png" Style="{StaticResource SmallIconImage}" />
+            <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
           </RepeatButton>
           <RepeatButton Grid.Column="1" Command="{Binding DownSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
-            <Image Source="/Resources/Service/Smile/Video/Bookmark/Down.png" Style="{StaticResource SmallIconImage}" />
+            <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
           </RepeatButton>
           <Button Grid.Column="2" Margin="20,0,0,0" Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
         </Grid>

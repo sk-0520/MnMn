@@ -21,11 +21,6 @@
         </Style.Triggers>
       </Style>
 
-      <Style x:Key="PagerImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
-        <Setter Property="Width" Value="16" />
-        <Setter Property="Height" Value="16" />
-      </Style>
-
     </ResourceDictionary>
   </UserControl.Resources>
   <DockPanel>
@@ -34,20 +29,20 @@
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineLeftCommand"
     >
-      <Image Source="/Resources/Pager/Left.png" Style="{StaticResource PagerImage}" />
+      <Image Source="/Resources/Common/View/Left.png" Style="{StaticResource SmallIconImage}" />
     </RepeatButton>
     <Button DockPanel.Dock="Left" Click="PrevButton_Click">
-      <Image Source="/Resources/Pager/Previous.png" Style="{StaticResource PagerImage}" />
+      <Image Source="/Resources/Pager/Prev.png" Style="{StaticResource SmallIconImage}" />
     </Button>
     <Button DockPanel.Dock="Left" Click="NextButton_Click">
-      <Image Source="/Resources/Pager/Next.png" Style="{StaticResource PagerImage}" />
+      <Image Source="/Resources/Pager/Next.png" Style="{StaticResource SmallIconImage}" />
     </Button>
     <RepeatButton
       DockPanel.Dock="Right"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineRightCommand"
     >
-      <Image Source="/Resources/Pager/Right.png" Style="{StaticResource PagerImage}" />
+      <Image Source="/Resources/Common/View/Right.png" Style="{StaticResource SmallIconImage}" />
     </RepeatButton>
     <ScrollViewer
       x:Name="PART_ScrollViewer"
