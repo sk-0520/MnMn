@@ -243,7 +243,7 @@
 
       <Separator />
 
-      <Menu>
+      <Menu Style="{StaticResource DummyMenu}">
         <MenuItem Header="player size">
           <MenuItem>
             <MenuItem.Header>
