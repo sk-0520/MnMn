@@ -13,7 +13,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
-      <Style TargetType="RepeatButton">
+      <Style x:Key="CommandButton" TargetType="Control">
         <Style.Triggers>
           <DataTrigger Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">
             <Setter Property="Visibility" Value="Collapsed"/>
@@ -28,19 +28,21 @@
       DockPanel.Dock="Left"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineLeftCommand"
+      Style="{StaticResource CommandButton}"
     >
       <Image Source="/Resources/Common/View/Left.png" Style="{StaticResource SmallIconImage}" />
     </RepeatButton>
-    <Button DockPanel.Dock="Left" Click="PrevButton_Click">
+    <Button DockPanel.Dock="Left" Click="PrevButton_Click" Style="{StaticResource CommandButton}">
       <Image Source="/Resources/Pager/Prev.png" Style="{StaticResource SmallIconImage}" />
     </Button>
-    <Button DockPanel.Dock="Left" Click="NextButton_Click">
+    <Button DockPanel.Dock="Left" Click="NextButton_Click" Style="{StaticResource CommandButton}">
       <Image Source="/Resources/Pager/Next.png" Style="{StaticResource SmallIconImage}" />
     </Button>
     <RepeatButton
       DockPanel.Dock="Right"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineRightCommand"
+      Style="{StaticResource CommandButton}"
     >
       <Image Source="/Resources/Common/View/Right.png" Style="{StaticResource SmallIconImage}" />
     </RepeatButton>
