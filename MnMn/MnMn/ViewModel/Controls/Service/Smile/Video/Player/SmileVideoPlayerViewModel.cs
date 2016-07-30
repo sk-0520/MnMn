@@ -259,7 +259,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public int SharedNoGoodScore
         {
             get { return Setting.Comment.SharedNoGoodScore; }
-            set {
+            set
+            {
                 if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.SharedNoGoodScore))) {
                     ApprovalComment();
                 }
@@ -668,12 +669,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     Mediation.Logger.Debug("restart");
                                     SetMedia();
                                     PlayMovie().Task.ContinueWith(task => {
-                                    Player.Position = VideoPosition;
+                                        Player.Position = VideoPosition;
                                     });
                                 } else {
                                     Mediation.Logger.Debug("resume");
                                     View.Dispatcher.BeginInvoke(new Action(() => {
-                                    Player.PauseOrResume();
+                                        Player.PauseOrResume();
                                     }));
                                 }
                                 return;
@@ -844,7 +845,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o=> {
+                    o => {
                         ApprovalComment();
                     }
                 );
@@ -903,7 +904,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             PlayListItems.AddRange(videoInformations);
-            return LoadAsync(PlayListItems.First(), thumbCacheSpan, imageCacheSpan);
+            return LoadAsync(PlayListItems.GetFirstItem(), thumbCacheSpan, imageCacheSpan);
         }
 
 
@@ -932,7 +933,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ChangeBaseSize();
 
             if(RealVideoHeight < CommentAreaHeight) {
-                var realScale = RealVideoHeight/CommentAreaHeight;
+                var realScale = RealVideoHeight / CommentAreaHeight;
                 CommentAreaWidth *= realScale;
             }
         }
@@ -1035,7 +1036,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return start;
             }
 
-            for(var y = start; isAsc ? y < last: last < y;) {
+            for(var y = start; isAsc ? y < last : last < y;) {
                 var dupLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
                 if(dupLine == null) {
                     // 誰もいなければ入れる
@@ -1160,7 +1161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var newComments = list
                 .Where(c => c.Approval)
                 .Where(c => !c.NowShowing)
-                .Where(c => InShowTime(c, prevTime ,nowTime))
+                .Where(c => InShowTime(c, prevTime, nowTime))
                 .ToArray()
             ;
             if(newComments.Any()) {
@@ -1284,7 +1285,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 var map = TagItems.ToDictionary(tk => tk.TagName, tv => tv);
                 foreach(var tagItem in tagList) {
                     var tagName = tagItem.Value<string>("tag");
-                    var hasDic  = tagItem.Value<string>("dic");
+                    var hasDic = tagItem.Value<string>("dic");
                     if(RawValueUtility.ConvertBoolean(hasDic)) {
                         SmileVideoTagViewModel tag;
                         if(map.TryGetValue(tagName, out tag)) {
@@ -1639,7 +1640,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                 }
             }
-            e.Cancel = IsViewClosed || IsProcessCancel ;
+            e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
                 StopMovie();
             }
@@ -1786,7 +1787,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var processTask = base.StopPrevProcessAsync();
             var playerTask = Task.CompletedTask;
-            if(Player!= null) {
+            if(Player != null) {
                 if(Player.State != Meta.Vlc.Interop.Media.MediaState.Stopped) {
                     playerTask = Task.Run(() => {
                         var sleepTime = TimeSpan.FromMilliseconds(500);

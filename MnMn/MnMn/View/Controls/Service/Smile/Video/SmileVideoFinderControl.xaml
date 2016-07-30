@@ -53,9 +53,15 @@
     <Grid>
       <DockPanel>
         <Button DockPanel.Dock="Left" Command="{Binding AllCheckCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
+          <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
         </Button>
-        <Button DockPanel.Dock="Left" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}">連続再生</Button>
+        <xctk:SplitButton DockPanel.Dock="Left" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
+          <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
+          <xctk:SplitButton.DropDownContent>
+            <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" />
+          </xctk:SplitButton.DropDownContent>
+        </xctk:SplitButton>
+
         <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}" />
         <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsAscending}">
           <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />

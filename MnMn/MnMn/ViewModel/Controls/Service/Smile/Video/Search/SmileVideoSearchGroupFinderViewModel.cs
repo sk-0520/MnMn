@@ -109,7 +109,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public DefinedElementModel SelectedSort
         {
             get { return this._selectedSort; }
-            set {
+            set
+            {
                 if(SetVariableValue(ref this._selectedSort, value)) {
                     if(SelectedSort != null && SelectedPage != null) {
                         ReloadCommand.TryExecute(null);
@@ -125,7 +126,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
         {
             get { return this._selectedPage; }
-            set {
+            set
+            {
                 var oldSelectedPage = this._selectedPage;
                 if(SetVariableValue(ref this._selectedPage, value)) {
                     if(this._selectedPage != null) {
@@ -418,9 +420,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             DoSearchAction(nameof(ToggleAllCheck));
         }
 
-        internal override Task ContinuousPlaybackAsync()
+        internal override Task ContinuousPlaybackAsync(bool isRandom)
         {
-            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync));
+            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
         }
 
         #endregion

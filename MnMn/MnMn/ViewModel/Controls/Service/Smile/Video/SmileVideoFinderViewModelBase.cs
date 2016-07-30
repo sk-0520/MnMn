@@ -51,8 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         string _inputFilter;
         bool _isBlacklist;
 
-        bool _isAscending =  true;
+        bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
+        bool _showContinuousPlaybackMenu;
 
         #endregion
 
@@ -150,7 +151,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual bool CanLoad {
+        public virtual bool CanLoad
+        {
             get
             {
                 var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
@@ -159,6 +161,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         protected virtual bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
+
+        public bool ShowContinuousPlaybackMenu
+        {
+            get { return this._showContinuousPlaybackMenu; }
+            set { SetVariableValue(ref this._showContinuousPlaybackMenu, value); }
+        }
 
         #endregion
 
@@ -183,7 +191,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public ICommand ContinuousPlaybackCommand
         {
-            get { return CreateCommand(o => ContinuousPlaybackAsync()); }
+            get { return CreateCommand(o => ContinuousPlaybackAsync(false)); }
+        }
+
+        public ICommand RandomContinuousPlaybackCommand
+        {
+            get { return CreateCommand(o => ContinuousPlaybackAsync(true)); }
         }
 
         #endregion
@@ -282,8 +295,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        internal virtual Task ContinuousPlaybackAsync()
+        internal virtual Task ContinuousPlaybackAsync(bool isRandom)
         {
+            ShowContinuousPlaybackMenu = false;
+
             var items = VideoInformationItems.Cast<SmileVideoInformationViewModel>().ToArray();
 
             if(!items.Any(i => i.IsChecked.GetValueOrDefault())) {
@@ -294,12 +309,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .Where(i => i.IsChecked.GetValueOrDefault())
                 .ToArray()
             ;
+
+            foreach(var item in playList) {
+                item.IsChecked = false;
+            }
+
             var vm = new SmileVideoPlayerViewModel(Mediation);
-            var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(t => {
-                foreach(var item in playList) {
-                    item.IsChecked = false;
-                }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            vm.IsRandomPlay = isRandom;
+            var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
             return task;
         }

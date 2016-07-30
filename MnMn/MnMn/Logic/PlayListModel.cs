@@ -66,6 +66,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
+        public TModel GetFirstItem()
+        {
+            if(IsRandom) {
+                var random = new Random();
+                var index = random.Next(0, Count);
+
+                return ChangeItem(index);
+            } else {
+                return ChangeItem(0);
+            }
+        }
+
         static int ChangeSequentialNextIndex(int currentIndex, IReadOnlyCollection<TModel> items)
         {
             var index = currentIndex;
@@ -82,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static int ChangeRandomNextIndex(int currenIndex, PlayListModel<TModel> items)
         {
-            var random  =new Random();
+            var random = new Random();
             var index = random.Next(0, items.Count);
             while(index == currenIndex) {
                 index = random.Next(0, items.Count);
