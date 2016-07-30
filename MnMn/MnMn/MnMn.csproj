@@ -154,6 +154,7 @@
     </Compile>
     <Compile Include="Data\Temporary\UpdateInformation.cs" />
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\DefinedImageSourceKind.cs" />
     <Compile Include="Define\DisplayKind.cs" />
     <Compile Include="Define\Event\DownloadStartType.cs" />
     <Compile Include="Define\Event\DownloadStartEventArgs.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFiltering.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
     <Compile Include="Logic\Updater.cs" />
+    <Compile Include="Model\DefinedImageModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeViewModel.cs" />

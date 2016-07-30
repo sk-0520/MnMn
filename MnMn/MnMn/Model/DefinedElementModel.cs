@@ -103,6 +103,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
             }
         }
 
+        /// <summary>
+        /// 画像情報。
+        /// </summary>
+        [XmlElement("image")]
+        [IsDeepClone]
+        public DefinedImageModel Image { get; set; }
+
         #endregion
 
         #region ModelBase
@@ -117,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
                 }
 
                 var firstValue = Words.Values.First();
-                return string.IsNullOrEmpty(firstValue) ? Key: firstValue;
+                return string.IsNullOrEmpty(firstValue) ? Key : firstValue;
             }
         }
 
@@ -127,7 +134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         public IDeepClone DeepClone()
         {
-            return DeepCloneUtility.Copy<DefinedElementModel>(this);
+            return DeepCloneUtility.Copy(this);
         }
 
         #endregion
