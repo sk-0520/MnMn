@@ -20,18 +20,34 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
-    [ValueConversion(typeof(string), typeof(string))]
-    public class DisplayConverter: IValueConverter
+    [ValueConversion(typeof(Enum), typeof(string))]
+    public class EnumDisplayConverter: IValueConverter
     {
         #region IValueConverter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            System.Attribute.GetCustomAttribute(value, typeof(DisplayConverter));
+            if(value == null) {
+                return DependencyProperty.UnsetValue;
+            }
+
+            var type = value.GetType();
+            var memberInfo = type.GetMember(value.ToString()).FirstOrDefault();
+            if(memberInfo != null) {
+                var attrs = memberInfo.GetCustomAttributes(typeof(EnumDisplayAttributeBase), true);
+                if(attrs != null && attrs.Length > 0) {
+                    var display = ((EnumDisplayAttributeBase)attrs[0]);
+                    return display.Text;
+                }
+            }
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

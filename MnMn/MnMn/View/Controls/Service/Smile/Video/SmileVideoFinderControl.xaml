@@ -11,6 +11,7 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
   xmlns:app_view_logic_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Logic.Service.Smile.Video"
 
@@ -26,6 +27,7 @@
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_logic_service_smile_video:SmileVideoFinderStyleSelector x:Key="SmileVideoFinderStyleSelector" />
 
@@ -62,7 +64,13 @@
           </xctk:SplitButton.DropDownContent>
         </xctk:SplitButton>
 
-        <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}" />
+        <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
         <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsAscending}">
           <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
         </ToggleButton>

@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount" xml:space="preserve">
+    <value>コメント数</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_FirstRetrieve" xml:space="preserve">
+    <value>投稿日</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_Length" xml:space="preserve">
+    <value>長さ</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_MyListCount" xml:space="preserve">
+    <value>マイリスト数</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_Number" xml:space="preserve">
+    <value>番号</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_Title" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount" xml:space="preserve">
+    <value>再生数</value>
+  </data>
   <data name="String_Service_Smile_SmileVideo_Bookmark_NewName" xml:space="preserve">
     <value>新規ブックマーク</value>
   </data>

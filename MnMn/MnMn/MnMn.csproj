@@ -146,9 +146,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Attribute\DisplayAttributeBase.cs" />
-    <Compile Include="Attribute\ResourceDisplayAttribute.cs" />
-    <Compile Include="Attribute\TextDisplayAttribute.cs" />
+    <Compile Include="Attribute\EnumDisplayAttributeBase.cs" />
+    <Compile Include="Attribute\EnumResourceDisplayAttribute.cs" />
+    <Compile Include="Attribute\EnumTextDisplayAttribute.cs" />
     <Compile Include="Constants.Config.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
@@ -224,6 +224,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoBookmarkManager.xaml.cs">
       <DependentUpon>SmileVideoBookmarkManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\DisplayConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
     <Compile Include="View\Logic\Service\Smile\Video\SmileVideoFinderStyleSelector.cs" />

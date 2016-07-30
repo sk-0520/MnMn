@@ -23,10 +23,10 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public abstract class DisplayAttributeBase: System.Attribute
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    public abstract class EnumDisplayAttributeBase: System.Attribute
     {
-        protected DisplayAttributeBase(DisplayKind displayKind, string value)
+        protected EnumDisplayAttributeBase(DisplayKind displayKind, string value)
         {
             DisplayKind = displayKind;
             Value = value;

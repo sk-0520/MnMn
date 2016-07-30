@@ -61,6 +61,69 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   コメント数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿日 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_FirstRetrieve {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_FirstRetrieve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   長さ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_Length {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_Length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   マイリスト数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_MyListCount {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_MyListCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   番号 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_Number {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_Title {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再生数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {
