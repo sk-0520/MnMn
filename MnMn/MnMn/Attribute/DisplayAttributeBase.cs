@@ -19,12 +19,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 {
-    public enum DisplayKind
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public abstract class DisplayAttributeBase: System.Attribute
     {
-        Text,
-        Resource,
+        protected DisplayAttributeBase(DisplayKind displayKind, string value)
+        {
+            DisplayKind = displayKind;
+            Value = value;
+        }
+
+        #region property
+
+        public DisplayKind DisplayKind { get; }
+        public string Value { get; }
+
+        public abstract string Text { get; }
+
+        #endregion
     }
 }

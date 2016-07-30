@@ -23,19 +23,15 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class DisplayAttribute: System.Attribute
+    public class TextDisplayAttribute: DisplayAttributeBase
     {
-        public DisplayAttribute(DisplayKind displayKind, string value)
-        {
-            DisplayKind = displayKind;
-            Value = value;
-        }
+        public TextDisplayAttribute(string text)
+            : base(DisplayKind.Text, text)
+        { }
 
-        #region property
+        #region DisplayAttributeBase
 
-        public DisplayKind DisplayKind { get; }
-        public string Value { get; }
+        public override string Text { get { return Value; } }
 
         #endregion
     }

@@ -146,7 +146,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Attribute\DisplayAttribute.cs" />
+    <Compile Include="Attribute\DisplayAttributeBase.cs" />
+    <Compile Include="Attribute\ResourceDisplayAttribute.cs" />
+    <Compile Include="Attribute\TextDisplayAttribute.cs" />
     <Compile Include="Constants.Config.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
