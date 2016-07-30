@@ -29,8 +29,10 @@
       <app_view_converter:ColoringConverter x:Key="ColoringConverter" />
 
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+
       <app_view_converter:SourceLoadStateIsNotCompletedConverter x:Key="SourceLoadStateIsNotCompletedConverter" />
       <app_view_converter_service_smile_video:MyListFolderIdToColorConverter x:Key="MyLIstFolderIdToColorConverter" />
+      <app_view_converter_service_smile_video:MyListCanRemoveToVisibilityConverter x:Key="MyListCanRemoveToVisibilityConverter" />
 
       <Style x:Key="FolderImage" TargetType="Image" BasedOn="{StaticResource DefaultImage}">
         <Setter Property="Width" Value="16" />
@@ -161,9 +163,6 @@
 
               </Grid>
             </Expander>
-            <ToolBar DockPanel.Dock="Bottom">
-              <Button Command="{Binding RemoveCheckedAccountMyListVideoCommand}">選択ビデオ削除</Button>
-            </ToolBar>
 
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedAccountFinder}" ItemsSource="{Binding AccountMyListItems}" />
           </DockPanel>
@@ -243,7 +242,13 @@
 
     <Grid Grid.Column="2">
 
-      <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}" />
+      <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding SelectedCurrentFinder}">
+        <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+          <ContentControl Visibility="{Binding Converter={StaticResource MyListCanRemoveToVisibilityConverter}}">
+            <Button Command="{Binding DataContext.RemoveCheckedAccountMyListVideoCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoMyListManager}}">チェック項目を削除</Button>
+          </ContentControl>
+        </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+      </app_view_controls_service_smile_video:SmileVideoFinderControl>
 
     </Grid>
   </Grid>

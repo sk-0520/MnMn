@@ -58,13 +58,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public abstract string MyListId { get; }
         public abstract string MyListName { get; }
         public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
-        public bool IsAccountMyList {get; }
+        public bool IsAccountMyList { get; }
 
         protected DirectoryInfo CacheDirectory { get; private set; }
         protected FileInfo CacheFile { get; private set; }
 
         public virtual bool IsPublic { get; } = false;
         public virtual bool CanEdit { get; } = false;
+
+        public virtual bool CanRemove { get; } = false;
 
         public virtual Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
         public virtual bool HasMyListFolder { get; } = false;

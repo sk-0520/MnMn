@@ -121,7 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public bool IsSelectedBookmark
         {
             get { return this._isSelectedBookmark; }
-            set {
+            set
+            {
                 if(SetVariableValue(ref this._isSelectedBookmark, value)) {
                     if(value) {
                         var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
@@ -465,10 +466,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
-        async Task  RemoveAccountMyListAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
+        async Task RemoveAccountMyListAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
         {
             var defaultMyListFinder = accountFinder as SmileVideoAccountMyListDefaultFinderViewModel;
-            if(defaultMyListFinder!= null) {
+            if(defaultMyListFinder != null) {
                 // とりあえずマイリストは削除できない
                 return;
             }
@@ -480,7 +481,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         async Task<CheckModel> RemoveAccountMyListVideoAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
         {
-            var videoIdList = accountFinder.VideoInformationViewer
+            var videoIdList = accountFinder.VideoInformationItems
+                .Cast<SmileVideoInformationViewModel>()
                 .Where(v => v.IsChecked.GetValueOrDefault())
                 .Select(v => v.VideoId)
                 .ToArray()

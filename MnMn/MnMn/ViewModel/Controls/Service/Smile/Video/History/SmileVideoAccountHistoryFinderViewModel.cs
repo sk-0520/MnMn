@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected async override Task<CheckModel> RemoveCheckedItemsAsync()
         {
             var history = new Logic.Service.Smile.Video.Api.V1.History(Mediation);
-            if(!VideoInformationList.Any(v => v.IsChecked.GetValueOrDefault())) {
+            if(!VideoInformationItems.Cast<SmileVideoInformationViewModel>().Any(v => v.IsChecked.GetValueOrDefault())) {
                 return CheckModel.Failure();
             }
 

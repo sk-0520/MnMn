@@ -187,6 +187,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public override string MyListId { get { return GroupModel?.Id; } }
         public override string MyListName { get { return GroupModel.Name; } }
 
+        public override bool CanRemove { get; } = true;
+
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
         public override Color MyListFolderColor
