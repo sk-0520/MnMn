@@ -1521,7 +1521,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ApprovalCommentCustomOverlap(bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
         {
-            //throw new NotImplementedException();
+            if(!ignoreOverlapWord) {
+                return;
+            }
+
+            var groupingComments = CommentList
+                .Where(c => c.Approval)
+                .OrderBy(c => c.ElapsedTime)
+                .GroupBy(c => c.Content.Trim())
+            ;
+            foreach(var groupingComment in groupingComments) {
+                var length = groupingComment.Count();
+                for(var i = 1; i < length; i++) {
+                    var prevItem = groupingComment.ElementAt(i - 1);
+                    var nowItem = groupingComment.ElementAt(i);
+                    if(nowItem.ElapsedTime - prevItem.ElapsedTime <= ignoreOverlapTime) {
+                        nowItem.Approval = false;
+                    }
+                }
+            }
         }
 
         void ApprovalCommentCustomDefineKeys(IReadOnlyList<string> defineKeys)
