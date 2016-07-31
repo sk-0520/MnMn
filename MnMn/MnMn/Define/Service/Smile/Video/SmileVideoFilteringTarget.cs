@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
@@ -27,14 +28,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// <summary>
         /// コメント。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Comment))]
         Comment,
         /// <summary>
         /// コマンド。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command))]
         Command,
         /// <summary>
         /// ユーザー。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_UserId))]
         UserId,
     }
 }

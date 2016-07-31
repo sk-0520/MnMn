@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -30,18 +31,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// 部分一致。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_FilteringType_PartialMatch))]
         PartialMatch,
         /// <summary>
         /// 前方一致。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_FilteringType_ForwardMatch))]
         ForwardMatch,
         /// <summary>
         /// 完全一致。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_FilteringType_PerfectMatch))]
         PerfectMatch,
         /// <summary>
         /// 正規表現。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_FilteringType_Regex))]
         Regex,
     }
 }

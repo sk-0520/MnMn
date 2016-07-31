@@ -228,7 +228,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoBookmarkManager.xaml.cs">
       <DependentUpon>SmileVideoBookmarkManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Converter\DisplayConverter.cs" />
+    <Compile Include="View\Converter\EnumDisplayConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
     <Compile Include="View\Logic\Service\Smile\Video\SmileVideoFinderStyleSelector.cs" />

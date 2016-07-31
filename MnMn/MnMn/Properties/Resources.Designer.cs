@@ -61,6 +61,69 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   前方一致 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_FilteringType_ForwardMatch {
+            get {
+                return ResourceManager.GetString("String_App_Define_FilteringType_ForwardMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   部分一致 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_FilteringType_PartialMatch {
+            get {
+                return ResourceManager.GetString("String_App_Define_FilteringType_PartialMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   完全一致 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_FilteringType_PerfectMatch {
+            get {
+                return ResourceManager.GetString("String_App_Define_FilteringType_PerfectMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正規表現 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_FilteringType_Regex {
+            get {
+                return ResourceManager.GetString("String_App_Define_FilteringType_Regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンド に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Comment {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_UserId {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_UserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コメント数 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount {

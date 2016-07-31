@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="String_App_Define_FilteringType_ForwardMatch" xml:space="preserve">
+    <value>前方一致</value>
+  </data>
+  <data name="String_App_Define_FilteringType_PartialMatch" xml:space="preserve">
+    <value>部分一致</value>
+  </data>
+  <data name="String_App_Define_FilteringType_PerfectMatch" xml:space="preserve">
+    <value>完全一致</value>
+  </data>
+  <data name="String_App_Define_FilteringType_Regex" xml:space="preserve">
+    <value>正規表現</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Comment" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_UserId" xml:space="preserve">
+    <value>ユーザーID</value>
+  </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount" xml:space="preserve">
     <value>コメント数</value>
   </data>
