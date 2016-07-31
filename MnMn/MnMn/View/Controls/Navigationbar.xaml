@@ -5,7 +5,7 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
 
   xmlns:sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-  
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="30" d:DesignWidth="300"
@@ -37,7 +37,7 @@
     >
       <Image>
         <Image.Style>
-          <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+          <Style TargetType="Image" BasedOn="{StaticResource SmallIconImage}">
             <!--<Setter Property="Source" Value="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />-->
 
             <Style.Triggers>
@@ -62,7 +62,7 @@
       Command="{Binding StopCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding StopCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
-      <Image Source="/Resources/Navigationbar/Stop.png" Style="{StaticResource DefaultImage}" />
+      <Image Source="/Resources/Navigationbar/Stop.png" Style="{StaticResource SmallIconImage}" />
     </Button>
     <Slider
       x:Name="seekbar"
@@ -131,7 +131,7 @@
         Command="{Binding ReplayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
         CommandParameter="{Binding ReplayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
       >
-        <Image Source="/Resources/Navigationbar/Repeat.png" Style="{StaticResource DefaultImage}" />
+        <Image Source="/Resources/Navigationbar/Repeat.png" Style="{StaticResource SmallIconImage}" />
       </ToggleButton>
       <ToggleButton
         x:Name="PART_AudioMute"
@@ -140,7 +140,7 @@
       >
         <Image>
           <Image.Style>
-            <Style TargetType="Image" BasedOn="{StaticResource DefaultImage}">
+            <Style TargetType="Image" BasedOn="{StaticResource SmallIconImage}">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding IsChecked, ElementName=PART_AudioMute}" Value="True">
                   <Setter Property="Source" Value="/Resources/Navigationbar/AudioOn.png" />
