@@ -46,8 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoMediation: MediationCustomBase
     {
-        public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel  setting)
-            :base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
+        public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel setting)
+            : base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
             Setting = setting;
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
             Filtering = LoadModelFromFile<SmileVideoFilteringModel>(Constants.SmileVideoFilteringPath);
 
-            GlobalCommentFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering);
+            GlobalCommentFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering, Filtering);
         }
 
         #region property
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
         SmileVideoMyListModel AccountMyList { get; }
-        SmileVideoFilteringModel Filtering { get; }
+        internal SmileVideoFilteringModel Filtering { get; }
 
         internal SmileVideoManagerPackModel ManagerPack { get; private set; }
 

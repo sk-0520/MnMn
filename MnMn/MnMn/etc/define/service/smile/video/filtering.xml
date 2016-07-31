@@ -1,23 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <filtering>
-	<element key="^\s*[wWｗＷ][wWｗＷ\s]\s*$">
+	<element key="lol">
 		<words>
 			<word key="ja-jp" value="笑ってるだけのコメント" />
 		</words>
+		<extends>
+			<extend key="pattern" value="^\s*[wWｗＷ][wWｗＷ\s]\s*$" />
+		</extends>
 	</element>
-	<element key="(うぽつ|う(ｐ|p)乙)|(^[8８]$)">
+	<element key="sympathy">
 		<words>
 			<word key="ja-jp" value="投稿者への労り" />
 		</words>
+		<extends>
+			<extend key="pattern" value="(うぽつ|う(ｐ|p)乙)|(^[8８]$)" />
+		</extends>
 	</element>
-	<element key="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あっ?$)|($[！？!\?)]$)">
+	<element key="sense-of-unity">
 		<words>
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>
+		<extends>
+			<extend key="pattern" value="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あっ?$)|($[！？!\?)]$)" />
+		</extends>
 	</element>
-	<element key=".{5,}">
+	<element key="char4">
 		<words>
-			<word key="ja-jp" value="四文字熟語" />
+			<word key="ja-jp" value="四文字熟語のみ" />
 		</words>
+		<extends>
+			<extend key="pattern" value=".{5,}" />
+		</extends>
 	</element>
 </filtering>

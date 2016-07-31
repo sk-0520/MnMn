@@ -44,5 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public TimeSpan IgnoreOverlapTime { get; set; } = TimeSpan.FromSeconds(3);
+
+        [DataMember]
+        public CollectionModel<string> DefineKeys { get; set; } = new CollectionModel<string>();
     }
 }

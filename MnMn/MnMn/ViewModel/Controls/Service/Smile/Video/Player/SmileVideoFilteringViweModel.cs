@@ -20,8 +20,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
@@ -29,15 +32,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 {
     public class SmileVideoFilteringViweModel: SingleModelWrapperViewModelBase<SmileVideoFilteringSettingModel>
     {
-        public SmileVideoFilteringViweModel(SmileVideoFilteringSettingModel model)
+        public SmileVideoFilteringViweModel(SmileVideoFilteringSettingModel model, SmileVideoFilteringModel filtering)
             : base(model)
         {
+            Filtering = filtering;
+
             CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+
+            DefineItems = filtering.Element;
         }
 
         #region property
 
+        SmileVideoFilteringModel Filtering { get; }
+
         public MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilterList { get; }
+
+        public bool IgnoreOverlapWord
+        {
+            get { return Model.IgnoreOverlapWord; }
+            set { SetModelValue(value); }
+        }
+
+        public TimeSpan IgnoreOverlapTime
+        {
+            get { return Model.IgnoreOverlapTime; }
+            set { SetModelValue(value); }
+        }
+
+        public CollectionModel<DefinedElementModel> DefineItems { get; }
+
+        public CollectionModel<string> DefineKeys
+        {
+            get { return Model.DefineKeys; }
+        }
 
         #endregion
     }

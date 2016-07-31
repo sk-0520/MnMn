@@ -3,6 +3,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app_define="crl-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
@@ -19,6 +21,33 @@
     <cttn_sl_view_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
   </UserControl.Resources>
   <DockPanel>
+    <Expander DockPanel.Dock="Top" Header="特別設定">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <CheckBox x:Name="selectIgnoreOverlapWord" Grid.Row="0" Grid.Column="0" Checked="selectIgnoreOverlapWord_Checked_Unchecked" Unchecked="selectIgnoreOverlapWord_Checked_Unchecked">重複コメントを破棄</CheckBox>
+        <xctk:TimeSpanUpDown x:Name="inputIgnoreOverlapTime" Grid.Row="0" Grid.Column="1" ValueChanged="inputIgnoreOverlapTime_ValueChanged" />
+
+        <ItemsControl x:Name="filteringList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  >
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" Checked="DefinedItemCheckBox_Checked_Unchecked"  />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+      </Grid>
+    </Expander>
+
     <StackPanel DockPanel.Dock="Bottom">
       <TextBlock Text="細かい挙動はあとまわし" FontSize="9" />
       <Grid>

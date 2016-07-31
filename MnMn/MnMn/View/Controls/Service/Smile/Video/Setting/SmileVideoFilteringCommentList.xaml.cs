@@ -16,9 +16,11 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -38,6 +40,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         {
             InitializeComponent();
         }
+
+        #region property
+
+        #endregion
 
         #region function
 
@@ -78,6 +84,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             CastUtility.AsAction<SmileVideoFilteringCommentList>(d, control => {
                 control.Filtering = e.NewValue as SmileVideoFilteringViweModel;
                 control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
+                control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
+                control.inputIgnoreOverlapTime.Value = control.Filtering.IgnoreOverlapTime;
+                var defineItems = control.Filtering.DefineItems.Select(de => new SmileVideoFilteringElementViewModel(de)).ToArray();
+                foreach(var item in defineItems) {
+                    item.IsChecked = control.Filtering.DefineKeys.Any(k => k == item.Key);
+                }
+                control.filteringList.ItemsSource = defineItems;
             });
         }
 
@@ -130,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             if(control != null) {
                 var oldItem = control.SelectedFilteringEditItem;
                 control.SelectedFilteringEditItem = e.NewValue as SmileVideoFilteringEditItemViewModel;
-                if(oldItem!= null) {
+                if(oldItem != null) {
                     oldItem.Reset();
                 }
                 //if(control.SelectedFilteringEditItem == null) {
@@ -177,6 +190,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(e.AddedItems.Count != 1) {
+                this.selectType.SelectedIndex = 0;
+                this.selectTarget.SelectedIndex = 0;
+                this.selectIgnoreCase.IsChecked = false;
                 return;
             }
             var selectedItem = e.AddedItems[0];
@@ -207,7 +223,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 model.Source = src.EditingSource;
                 model.IgnoreCase = src.EditingIgnoreCase;
             } else {
-                model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem: default(FilteringType);
+                model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
                 model.Target = selectTarget.SelectedItem != null ? (SmileVideoFilteringTarget)selectTarget.SelectedItem : default(SmileVideoFilteringTarget);
                 model.Source = inputSource.Text;
                 model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
@@ -224,6 +240,68 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             }
             var a = Filtering.CommentFilterList.Remove(SelectedFilteringEditItem);
             SelectedFilteringEditItem = null;
+            OnFilteringChanged();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            var checkbox = (CheckBox)sender;
+            Filtering.IgnoreOverlapWord = checkbox.IsChecked.GetValueOrDefault();
+            e.Handled = true;
+
+            OnFilteringChanged();
+        }
+
+        private void selectIgnoreOverlapWord_Checked_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            Filtering.IgnoreOverlapWord = this.selectIgnoreOverlapWord.IsChecked.GetValueOrDefault();
+            e.Handled = true;
+
+            OnFilteringChanged();
+        }
+
+        private void inputIgnoreOverlapTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            Filtering.IgnoreOverlapTime = this.inputIgnoreOverlapTime.Value.GetValueOrDefault(); ;
+            e.Handled = true;
+
+            OnFilteringChanged();
+        }
+
+        private void DefinedItemCheckBox_Checked_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            var checkbox = (CheckBox)sender;
+            var isChecked = checkbox.IsChecked.GetValueOrDefault();
+            var element = (SmileVideoFilteringElementViewModel)checkbox.DataContext;
+
+            var settingIndex = Filtering.DefineKeys.IndexOf(element.Key);
+            if(isChecked) {
+                if(settingIndex == -1) {
+                    Filtering.DefineKeys.Add(element.Key);
+                }
+            } else {
+                if(settingIndex != -1) {
+                    Filtering.DefineKeys.RemoveAt(settingIndex);
+                }
+            }
+
+            e.Handled = true;
             OnFilteringChanged();
         }
 

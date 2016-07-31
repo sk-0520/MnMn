@@ -34,13 +34,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             : base(model)
         { }
 
-        #region
+        #region property
 
         public override string DisplayText
         {
             get
             {
                 return Model.DisplayText;
+            }
+        }
+
+        public string Key
+        {
+            get
+            {
+                return Model.Key;
             }
         }
 

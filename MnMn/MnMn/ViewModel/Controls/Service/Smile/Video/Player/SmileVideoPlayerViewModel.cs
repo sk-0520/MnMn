@@ -1738,7 +1738,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             LoadRelationVideoAsync();
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering);
+            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering, Mediation.Smile.VideoMediation.Filtering);
             var propertyNames = new[] {
                 nameof(LocalCommentFilering),
                 nameof(VideoId),
