@@ -28,6 +28,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
     public class SmileVideoFilteringModel: ModelBase
     {
         [XmlElement("element")]
-        public CollectionModel<DefinedElementModel> Element { get; set; } = new CollectionModel<DefinedElementModel>();
+        public CollectionModel<DefinedElementModel> Elements { get; set; } = new CollectionModel<DefinedElementModel>();
     }
 }

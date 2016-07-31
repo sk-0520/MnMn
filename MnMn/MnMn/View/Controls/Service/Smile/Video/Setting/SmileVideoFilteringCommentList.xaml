@@ -39,7 +39,7 @@
         <ItemsControl x:Name="filteringList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  >
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" Checked="DefinedItemCheckBox_Checked_Unchecked"  />
+              <CheckBox Checked="DefinedItemCheckBox_Checked_Unchecked" Unchecked="DefinedItemCheckBox_Checked_Unchecked" IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>

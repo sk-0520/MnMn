@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
 
-            DefineItems = filtering.Element;
+            DefineItems = filtering.Elements;
         }
 
         #region property

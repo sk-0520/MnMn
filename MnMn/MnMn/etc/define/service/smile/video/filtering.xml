@@ -6,6 +6,7 @@
 		</words>
 		<extends>
 			<extend key="pattern" value="^\s*[wWｗＷ][wWｗＷ\s]\s*$" />
+			<extend key="ignore-case" value="true" />
 		</extends>
 	</element>
 	<element key="sympathy">
@@ -13,7 +14,8 @@
 			<word key="ja-jp" value="投稿者への労り" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(うぽつ|う(ｐ|p)乙)|(^[8８]$)" />
+			<extend key="pattern" value="(うぽつ|う(ｐ|p)乙)|(^[8８]+$)" />
+			<extend key="ignore-case" value="true" />
 		</extends>
 	</element>
 	<element key="sense-of-unity">
@@ -22,14 +24,16 @@
 		</words>
 		<extends>
 			<extend key="pattern" value="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あっ?$)|($[！？!\?)]$)" />
+			<extend key="ignore-case" value="true" />
 		</extends>
 	</element>
 	<element key="char4">
 		<words>
-			<word key="ja-jp" value="四文字熟語のみ" />
+			<word key="ja-jp" value="四文字まで" />
 		</words>
 		<extends>
 			<extend key="pattern" value=".{5,}" />
+			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
 </filtering>

@@ -1519,16 +1519,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        private void ApprovalCommentCustom(IReadOnlyList<SmileVideoFilteringItemSettingModel> filterList)
+        void ApprovalCommentCustomOverlap(bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
         {
-            if(filterList.Any()) {
-                var filters = filterList.Select(f => new SmileVideoFiltering(f));
-                foreach(var filter in filters.AsParallel()) {
-                    foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
-                        item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
-                    }
+            //throw new NotImplementedException();
+        }
+
+        void ApprovalCommentCustomDefineKeys(IReadOnlyList<string> defineKeys)
+        {
+            if(!defineKeys.Any()) {
+                return;
+            }
+
+            var filterList = defineKeys
+                .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
+                .Select(e => new SmileVideoFilteringItemSettingModel() {
+                    Target = SmileVideoFilteringTarget.Comment,
+                    IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
+                    Type = FilteringType.Regex,
+                    Source = e.Extends["pattern"],
+                })
+                .ToList()
+            ;
+
+            ApprovalCommentCustomFilterItems(filterList);
+        }
+
+        void ApprovalCommentCustomFilterItems(IReadOnlyList<SmileVideoFilteringItemSettingModel> filterList)
+        {
+            if(!filterList.Any()) {
+                return;
+            }
+
+            var filters = filterList.Select(f => new SmileVideoFiltering(f));
+            foreach(var filter in filters.AsParallel()) {
+                foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
+                    item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
                 }
             }
+        }
+
+        private void ApprovalCommentCustom(SmileVideoFilteringViweModel filter)
+        {
+            ApprovalCommentCustomOverlap(filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
+            ApprovalCommentCustomDefineKeys(filter.DefineKeys);
+            ApprovalCommentCustomFilterItems(filter.CommentFilterList.ModelList);
         }
 
         void ApprovalComment()
@@ -1536,8 +1570,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentSet(CommentList, true);
 
             ApprovalCommentSharedNoGood();
-            ApprovalCommentCustom(LocalCommentFilering.CommentFilterList.ModelList);
-            ApprovalCommentCustom(GlobalCommentFilering.CommentFilterList.ModelList);
+
+            ApprovalCommentCustom(LocalCommentFilering);
+            ApprovalCommentCustom(GlobalCommentFilering);
         }
 
         void ClearSelectedComment()

@@ -37,13 +37,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected FilteringItemSettingModel Setting { get; }
         Regex RegexChecker { get; set; } = null;
-        bool InvlidRegex { get; set; } = false;
+        bool IsInvalidRegex { get; set; } = false;
 
         #endregion
 
         #region function
 
-        protected bool CheckPartial(string target, string filterSource,bool ignoreCase)
+        protected bool CheckPartial(string target, string filterSource, bool ignoreCase)
         {
             Debug.Assert(target != null);
 
@@ -70,10 +70,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 option |= RegexOptions.IgnoreCase;
             }
             try {
-                if(RegexChecker == null && !InvlidRegex) {
+                if(RegexChecker == null && !IsInvalidRegex) {
                     RegexChecker = new Regex(filterSource, option);
                 }
-                if(!InvlidRegex) {
+                if(!IsInvalidRegex) {
                     return RegexChecker.IsMatch(target);
                 } else {
                     return false;
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             } catch(ArgumentException ex) {
                 // 解析エラー
                 Debug.WriteLine(ex);
-                InvlidRegex = true;
+                IsInvalidRegex = true;
                 return false;
             }
         }
