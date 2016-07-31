@@ -121,6 +121,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _commentAreaWidth = 640;
         double _commentAreaHeight = 386;
 
+        int _commentEnabledArea = 100;
+        double _commentEnabledHeight;
+
         [Obsolete]
         GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
         [Obsolete]
@@ -603,6 +606,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._isSettedMedia; }
             set { SetVariableValue(ref this._isSettedMedia, value); }
+        }
+
+        public int CommentEnabledArea
+        {
+            get { return this._commentEnabledArea; }
+            set
+            {
+                if(SetVariableValue(ref this._commentEnabledArea, value)) {
+                    ChangeEnabledCommentArea();
+                }
+            }
+        }
+
+        public double CommentEnabledHeight
+        {
+            get { return this._commentEnabledHeight; }
+            set { SetVariableValue(ref this._commentEnabledHeight, value); }
         }
 
         #endregion
@@ -1635,6 +1655,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void AddHistory(SmileVideoPlayHistoryModel historyModel)
         {
             Setting.History.Insert(0, historyModel);
+        }
+
+        void ChangeEnabledCommentArea()
+        {
+            var height = NormalCommentArea.ActualHeight / 100.0 * CommentEnabledArea;
+            CommentEnabledHeight = height;
         }
 
         #endregion

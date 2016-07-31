@@ -402,6 +402,14 @@
             <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
               <Canvas x:Name="normalCommentArea" />
               <Canvas x:Name="originalPosterCommentArea" />
+              <Rectangle
+
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                Fill="AliceBlue"
+                Width="{Binding CommentAreaWidth}"
+                Height="{Binding CommentEnabledHeight}"
+              />
             </Grid>
           </Viewbox>
 
@@ -427,7 +435,30 @@
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
+                    <StackPanel>
+                      <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
+                      <Popup
+                        Placement="Relative"
+                        VerticalOffset="-95"
+                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                        PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                      >
+                        <Popup.IsOpen>
+                          <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                            <Binding Path="IsMouseOver" Mode="OneWay" RelativeSource="{RelativeSource AncestorType=ToggleButton}" />
+                            <Binding Path="IsMouseOver" Mode="OneWay" RelativeSource="{RelativeSource Self}" />
+                          </MultiBinding>
+                        </Popup.IsOpen>
+                        <Slider
+                          Orientation="Vertical"
+                          Height="100"
+                          Minimum="0"
+                          Maximum="100"
+                          Value="{Binding CommentEnabledArea}"
+                        />
+                      </Popup>
+
+                    </StackPanel>
                   </ToggleButton>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
