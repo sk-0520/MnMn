@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetVariableValue(ref this._isChecked, value); }
         }
 
+        public string Source
+        {
+            get { return Model.Extends["pattern"]; }
+        }
+
+
         #endregion
     }
 }

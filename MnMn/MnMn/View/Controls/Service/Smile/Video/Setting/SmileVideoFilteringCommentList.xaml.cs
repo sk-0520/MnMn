@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 control.Filtering = e.NewValue as SmileVideoFilteringViweModel;
                 control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
                 control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
-                control.inputIgnoreOverlapTime.Value = control.Filtering.IgnoreOverlapTime;
+                control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
                 var defineItems = control.Filtering.DefineItems.Select(de => new SmileVideoFilteringElementViewModel(de)).ToArray();
                 foreach(var item in defineItems) {
                     item.IsChecked = control.Filtering.DefineKeys.Any(k => k == item.Key);
@@ -274,7 +274,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 return;
             }
 
-            Filtering.IgnoreOverlapTime = this.inputIgnoreOverlapTime.Value.GetValueOrDefault(); ;
+            Filtering.IgnoreOverlapTime = TimeSpan.FromSeconds(this.inputIgnoreOverlapTime.Value.GetValueOrDefault());
             e.Handled = true;
 
             OnFilteringChanged();

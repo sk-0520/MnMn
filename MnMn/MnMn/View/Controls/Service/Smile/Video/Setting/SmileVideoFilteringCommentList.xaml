@@ -34,12 +34,15 @@
         </Grid.ColumnDefinitions>
 
         <CheckBox x:Name="selectIgnoreOverlapWord" Grid.Row="0" Grid.Column="0" Checked="selectIgnoreOverlapWord_Checked_Unchecked" Unchecked="selectIgnoreOverlapWord_Checked_Unchecked">重複コメントを破棄</CheckBox>
-        <xctk:TimeSpanUpDown x:Name="inputIgnoreOverlapTime" Grid.Row="0" Grid.Column="1" ValueChanged="inputIgnoreOverlapTime_ValueChanged" />
+        <DockPanel Grid.Row="0" Grid.Column="1">
+          <TextBlock DockPanel.Dock="Right">秒以内を重複と判断</TextBlock>
+          <xctk:IntegerUpDown x:Name="inputIgnoreOverlapTime" ValueChanged="inputIgnoreOverlapTime_ValueChanged" Minimum="1" Maximum="30"  />
+        </DockPanel>
 
         <ItemsControl x:Name="filteringList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  >
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <CheckBox Checked="DefinedItemCheckBox_Checked_Unchecked" Unchecked="DefinedItemCheckBox_Checked_Unchecked" IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" />
+              <CheckBox Checked="DefinedItemCheckBox_Checked_Unchecked" Unchecked="DefinedItemCheckBox_Checked_Unchecked" IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" ToolTip="{Binding Source}" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
