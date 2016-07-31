@@ -685,6 +685,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Common\View\Down.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\OriginalPoster.png" />
     <Resource Include="Resources\Common\View\Up.png" />
     <Resource Include="Resources\Common\Item\Right.png" />
     <Resource Include="Resources\Common\Item\Left.png" />

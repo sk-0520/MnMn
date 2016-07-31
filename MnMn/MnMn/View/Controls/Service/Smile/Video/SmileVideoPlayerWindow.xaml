@@ -450,7 +450,9 @@
                           </MultiBinding>
                         </Popup.IsOpen>
                         <StackPanel HorizontalAlignment="Center">
-                          <ToggleButton Height="20" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}" ToolTip="投稿者コメントも対象とする" Content="OP" />
+                          <ToggleButton Height="20" ToolTip="投稿者コメントもコメント位置制限対象とする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
+                            <Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />
+                          </ToggleButton>
                           <Slider
                             Orientation="Vertical"
                             Height="80"
@@ -767,7 +769,7 @@
               <!--<TextBlock Text="{Binding UserNickname}" />-->
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
-                <TextBlock>
+                <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
                   <Hyperlink Command="{Binding OpenUserIdCommand}">
                     <Run>
                       <Run.Resources>
