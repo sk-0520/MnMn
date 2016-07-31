@@ -81,6 +81,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
 using System.Windows.Threading;
 using System.Runtime.ExceptionServices;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
+using System.Windows.Controls.Primitives;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -121,8 +122,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _commentAreaWidth = 640;
         double _commentAreaHeight = 386;
 
-        int _commentEnabledArea = 100;
+        double _commentEnabledArea = 100;
         double _commentEnabledHeight;
+        bool _showEnabledCommentPreview = false;
+        bool _isEnabledOriginalPosterCommentArea = false;
 
         [Obsolete]
         GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
@@ -170,6 +173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Canvas OriginalPosterCommentArea { get; set; }
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
+        Popup EnabledCommentPopup { get; set; }
 
         public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
 
@@ -608,7 +612,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isSettedMedia, value); }
         }
 
-        public int CommentEnabledArea
+        public double CommentEnabledArea
         {
             get { return this._commentEnabledArea; }
             set
@@ -623,6 +627,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._commentEnabledHeight; }
             set { SetVariableValue(ref this._commentEnabledHeight, value); }
+        }
+
+        public bool ShowEnabledCommentPreview
+        {
+            get { return this._showEnabledCommentPreview; }
+            set { SetVariableValue(ref this._showEnabledCommentPreview, value); }
+        }
+
+        public bool IsEnabledOriginalPosterCommentArea
+        {
+            get { return this._isEnabledOriginalPosterCommentArea; }
+            set { SetVariableValue(ref this._isEnabledOriginalPosterCommentArea, value); }
         }
 
         #endregion
@@ -1169,12 +1185,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        static void FireShowCommentCore(Canvas commentParentElement, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        static void FireShowCommentCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
         {
-            var commentArea = new Size(
-               commentParentElement.ActualWidth,
-               commentParentElement.ActualHeight
-            );
+            //var commentArea = new Size(
+            //   commentParentElement.ActualWidth,
+            //   commentParentElement.ActualHeight
+            //);
 
             var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
@@ -1239,8 +1255,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Mediation.Logger.Trace($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
-            FireShowCommentCore(NormalCommentArea, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
-            FireShowCommentCore(OriginalPosterCommentArea, PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
+            var normalCommentAreaSize = new Size(NormalCommentArea.ActualWidth, CommentEnabledHeight);
+            FireShowCommentCore(NormalCommentArea, normalCommentAreaSize, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
+            var opCommentAreaSize = IsEnabledOriginalPosterCommentArea
+                ? normalCommentAreaSize
+                : new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight)
+            ;
+            FireShowCommentCore(OriginalPosterCommentArea, opCommentAreaSize, PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
         }
 
         void ScrollCommentList()
@@ -1387,6 +1408,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             BaseWidth = VisualVideoSize.Width * baseScale;
             BaseHeight = VisualVideoSize.Height * baseScale;
+
+            ChangeEnabledCommentArea();
         }
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
@@ -1657,10 +1680,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.History.Insert(0, historyModel);
         }
 
+        double GetEnabledCommentHeight(double baseHeight, double percent)
+        {
+            return baseHeight / 100.0 * percent;
+        }
+
         void ChangeEnabledCommentArea()
         {
-            var height = NormalCommentArea.ActualHeight / 100.0 * CommentEnabledArea;
-            CommentEnabledHeight = height;
+            CommentEnabledHeight = GetEnabledCommentHeight(NormalCommentArea.ActualHeight, CommentEnabledArea);
         }
 
         #endregion
@@ -1899,6 +1926,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // 初期設定
             Player.Volume = Volume;
 
+            var content = Navigationbar.ExstendsContent as Panel;
+            EnabledCommentPopup = UIUtility.FindLogicalChildren<Popup>(content).First();
+
+            EnabledCommentPopup.Opened += EnabledCommentPopup_Opened;
+            EnabledCommentPopup.Closed += EnabledCommentPopup_Closed;
+
             // あれこれイベント
             View.Loaded += View_Loaded;
             View.Closing += View_Closing;
@@ -1975,12 +2008,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void View_Closing(object sender, CancelEventArgs e)
         {
+            //TODO: closingはまずくね…?
+
             View.Loaded -= View_Loaded;
             View.Closing -= View_Closing;
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
             Player.StateChanged -= Player_StateChanged;
             Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+
+            if(EnabledCommentPopup != null) {
+                EnabledCommentPopup.Opened -= EnabledCommentPopup_Opened;
+                EnabledCommentPopup.Closed -= EnabledCommentPopup_Closed;
+            }
 
             IsViewClosed = true;
 
@@ -2121,6 +2161,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
             }
         }
+
+        private void EnabledCommentPopup_Opened(object sender, EventArgs e)
+        {
+            ShowEnabledCommentPreview = true;
+        }
+
+        private void EnabledCommentPopup_Closed(object sender, EventArgs e)
+        {
+            ShowEnabledCommentPreview = false;
+        }
+
 
         #endregion
     }

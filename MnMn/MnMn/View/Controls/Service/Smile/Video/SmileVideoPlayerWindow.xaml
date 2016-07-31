@@ -403,12 +403,12 @@
               <Canvas x:Name="normalCommentArea" />
               <Canvas x:Name="originalPosterCommentArea" />
               <Rectangle
-
                 VerticalAlignment="Top"
                 HorizontalAlignment="Stretch"
-                Fill="AliceBlue"
+                Fill="#80ffffff"
                 Width="{Binding CommentAreaWidth}"
                 Height="{Binding CommentEnabledHeight}"
+                Visibility="{Binding ShowEnabledCommentPreview, Converter={StaticResource BooleanToVisibilityConverter}}"
               />
             </Grid>
           </Viewbox>
@@ -449,13 +449,17 @@
                             <Binding Path="IsMouseOver" Mode="OneWay" RelativeSource="{RelativeSource Self}" />
                           </MultiBinding>
                         </Popup.IsOpen>
-                        <Slider
-                          Orientation="Vertical"
-                          Height="100"
-                          Minimum="0"
-                          Maximum="100"
-                          Value="{Binding CommentEnabledArea}"
-                        />
+                        <StackPanel HorizontalAlignment="Center">
+                          <ToggleButton Height="20" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}" ToolTip="投稿者コメントも対象とする" Content="OP" />
+                          <Slider
+                            Orientation="Vertical"
+                            Height="80"
+                            Minimum="50"
+                            Maximum="100"
+                            IsDirectionReversed="True"
+                            Value="{Binding CommentEnabledArea}"
+                          />
+                        </StackPanel>
                       </Popup>
 
                     </StackPanel>
