@@ -408,7 +408,7 @@
                 Fill="#80ffffff"
                 Width="{Binding CommentAreaWidth}"
                 Height="{Binding CommentEnabledHeight}"
-                Visibility="{Binding ShowEnabledCommentPreview, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
               />
             </Grid>
           </Viewbox>
@@ -459,7 +459,7 @@
                             Minimum="50"
                             Maximum="100"
                             IsDirectionReversed="True"
-                            Value="{Binding CommentEnabledArea}"
+                            Value="{Binding CommentEnabledPercent}"
                           />
                         </StackPanel>
                       </Popup>

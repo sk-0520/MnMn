@@ -122,9 +122,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _commentAreaWidth = 640;
         double _commentAreaHeight = 386;
 
-        double _commentEnabledArea = 100;
+        double _commentEnabledPercent = 100;
         double _commentEnabledHeight;
-        bool _showEnabledCommentPreview = false;
+        bool _showEnabledCommentPreviewArea = false;
         bool _isEnabledOriginalPosterCommentArea = false;
 
         [Obsolete]
@@ -612,29 +612,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isSettedMedia, value); }
         }
 
-        public double CommentEnabledArea
+        /// <summary>
+        /// コメント有効表示領域の比率。
+        /// </summary>
+        public double CommentEnabledPercent
         {
-            get { return this._commentEnabledArea; }
+            get { return this._commentEnabledPercent; }
             set
             {
-                if(SetVariableValue(ref this._commentEnabledArea, value)) {
-                    ChangeEnabledCommentArea();
+                if(SetVariableValue(ref this._commentEnabledPercent, value)) {
+                    ChangeEnabledCommentPercent();
                 }
             }
         }
 
+        /// <summary>
+        /// コメント有効表示領域の高さ。
+        /// </summary>
         public double CommentEnabledHeight
         {
             get { return this._commentEnabledHeight; }
             set { SetVariableValue(ref this._commentEnabledHeight, value); }
         }
 
-        public bool ShowEnabledCommentPreview
+        /// <summary>
+        /// コメント有効表示領域のプレビューを表示するか。
+        /// </summary>
+        public bool ShowEnabledCommentPreviewArea
         {
-            get { return this._showEnabledCommentPreview; }
-            set { SetVariableValue(ref this._showEnabledCommentPreview, value); }
+            get { return this._showEnabledCommentPreviewArea; }
+            set { SetVariableValue(ref this._showEnabledCommentPreviewArea, value); }
         }
 
+        /// <summary>
+        /// 動画投稿者もコメント有効領域に従うか。
+        /// </summary>
         public bool IsEnabledOriginalPosterCommentArea
         {
             get { return this._isEnabledOriginalPosterCommentArea; }
@@ -1409,7 +1421,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseWidth = VisualVideoSize.Width * baseScale;
             BaseHeight = VisualVideoSize.Height * baseScale;
 
-            ChangeEnabledCommentArea();
+            ChangeEnabledCommentPercent();
         }
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
@@ -1685,9 +1697,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return baseHeight / 100.0 * percent;
         }
 
-        void ChangeEnabledCommentArea()
+        void ChangeEnabledCommentPercent()
         {
-            CommentEnabledHeight = GetEnabledCommentHeight(NormalCommentArea.ActualHeight, CommentEnabledArea);
+            CommentEnabledHeight = GetEnabledCommentHeight(NormalCommentArea.ActualHeight, CommentEnabledPercent);
         }
 
         #endregion
@@ -2164,12 +2176,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void EnabledCommentPopup_Opened(object sender, EventArgs e)
         {
-            ShowEnabledCommentPreview = true;
+            ShowEnabledCommentPreviewArea = true;
         }
 
         private void EnabledCommentPopup_Closed(object sender, EventArgs e)
         {
-            ShowEnabledCommentPreview = false;
+            ShowEnabledCommentPreviewArea = false;
         }
 
 
