@@ -48,12 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 太字。
         /// </summary>
         [DataMember]
-        public bool FontBold { get; set; }
+        public bool FontBold { get; set; } = Constants.CommentFontBold;
         /// <summary>
         /// イタリック。
         /// </summary>
         [DataMember]
-        public bool FontItalic { get; set; }
+        public bool FontItalic { get; set; } = Constants.CommentFontItalic;
         /// <summary>
         /// コメント表示時間。
         /// </summary>
@@ -63,25 +63,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントの/と対になるx05cをバックスラッシュに置き換えるか。
         /// </summary>
         [DataMember]
-        public bool ConvertPairYenSlash { get; set; } = true;
+        public bool ConvertPairYenSlash { get; set; } = Constants.CommentConvertPairYenSlash;
 
         /// <summary>
         /// コメントの共有NGを有効にするか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledSharedNoGood { get; set; } = true;
+        public bool IsEnabledSharedNoGood { get; set; } = Constants.CommentIsEnabledSharedNoGood;
 
         /// <summary>
         /// コメントの共有NGレベル。
         /// </summary>
         [DataMember]
-        public int SharedNoGoodScore { get; set; } = -1500;
+        public int SharedNoGoodScore { get; set; } = Constants.CommentSharedNoGoodScore;
 
         /// <summary>
         /// コメント投稿を匿名にするか。
         /// </summary>
         [DataMember]
-        public bool PostAnonymous { get; set; } = true;
+        public bool PostAnonymous { get; set; } = Constants.CommentPostAnonymous;
 
         /// <summary>
         /// フィルタリングデータ。

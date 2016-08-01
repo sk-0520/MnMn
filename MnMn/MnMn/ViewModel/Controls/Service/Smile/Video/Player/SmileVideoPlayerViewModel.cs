@@ -984,6 +984,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ResetCommentSettingCommand
+        {
+            get { return CreateCommand(o => ResetCommentSetting()); }
+        }
+
         #endregion
 
 
@@ -1788,6 +1793,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ResetCommentSetting()
+        {
+            Setting.Comment.FontFamily = Constants.CommentFontFamily;
+            Setting.Comment.FontSize = Constants.CommentFontSize;
+            Setting.Comment.FontBold = Constants.CommentFontBold;
+            Setting.Comment.FontItalic = Constants.CommentFontItalic;
+            Setting.Comment.FontAlpha = Constants.CommentFontAlpha;
+            Setting.Comment.ShowTime = Constants.CommentShowTime;
+            Setting.Comment.ConvertPairYenSlash = Constants.CommentConvertPairYenSlash;
+
+            ChangedCommentFont();
+            ChangedCommentContent();
+
+            var propertyNames = new[] {
+                nameof(CommentFontFamily),
+                nameof(CommentFontSize),
+                nameof(CommentFontBold),
+                nameof(CommentFontItalic),
+                nameof(CommentFontAlpha),
+                nameof(CommentShowTime),
+                nameof(CommentConvertPairYenSlash),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
 
         #endregion
 

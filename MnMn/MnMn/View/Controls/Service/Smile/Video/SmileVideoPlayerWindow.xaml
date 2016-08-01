@@ -487,7 +487,7 @@
           Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}"
         />
 
-        <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
+        <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}" Margin="0,-10,0,10">
           <TabItem Header="コメント">
             <DockPanel>
               <DockPanel DockPanel.Dock="Top">
@@ -744,6 +744,8 @@
           </TabItem>
           <TabItem Header="設定">
             <StackPanel>
+              <Button Command="{Binding ResetCommentSettingCommand}">コメント設定の初期化</Button>
+              <Separator />
               <app_view_controls:FontSelectControl
                 FamilyName="{Binding CommentFontFamily}"
                 IsEnabledBold="False"
