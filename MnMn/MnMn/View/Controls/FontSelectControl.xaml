@@ -23,11 +23,10 @@
       <RowDefinition />
       <RowDefinition />
     </Grid.RowDefinitions>
-    <ComboBox x:Name="listFont" Grid.Row="0" SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+    <ComboBox x:Name="listFont" Grid.Row="0" VerticalContentAlignment="Center"  SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
       <ComboBox.ItemsPanel>
         <ItemsPanelTemplate>
-          <!-- TODO: サイズ固定-->
-          <VirtualizingStackPanel Width="200" ScrollUnit="Item" />
+          <VirtualizingStackPanel ScrollUnit="Item" />
         </ItemsPanelTemplate>
       </ComboBox.ItemsPanel>
       <ComboBox.ItemTemplate>
@@ -38,8 +37,8 @@
     </ComboBox>
 
     <DockPanel Grid.Row="1">
-      <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}">bold</CheckBox>
-      <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}">italic</CheckBox>
+      <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}">太字</CheckBox>
+      <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}">斜体</CheckBox>
       <ContentControl DockPanel.Dock="Left" Content="{Binding AdditionalContent, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <xctk:DoubleUpDown DockPanel.Dock="Right" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </DockPanel>

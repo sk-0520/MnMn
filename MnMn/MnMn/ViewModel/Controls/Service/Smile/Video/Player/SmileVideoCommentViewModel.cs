@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             Content = Model.Content ?? string.Empty;
             Anonymity = RawValueUtility.ConvertBoolean(Model.Anonymity);
-            IsOriginalPoster= RawValueUtility.ConvertBoolean(Model.Fork);
+            IsOriginalPoster = RawValueUtility.ConvertBoolean(Model.Fork);
             Timestamp = RawValueUtility.ConvertUnixTime(Model.Date);
             UserId = Model.UserId;
             Number = RawValueUtility.ConvertInteger(Model.No);
@@ -70,17 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ActualForeground = Foreground;
             ActualShadow = Shadow;
 
-            switch(SmileVideoCommentUtility.GetFontSize(Commands)) {
-                case SmileVideoCommentSize.Medium:
-                    FontSize = Setting.Comment.FontSize;
-                    break;
-                case SmileVideoCommentSize.Small:
-                    FontSize = Setting.Comment.FontSize * 0.8;
-                    break;
-                case SmileVideoCommentSize.Big:
-                    FontSize = Setting.Comment.FontSize * 1.2;
-                    break;
-            }
+            FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
 
             Vertical = SmileVideoCommentUtility.GetVerticalAlign(Commands);
         }
@@ -129,7 +119,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 発言日時。
         /// </summary>
-        public DateTime Timestamp{ get; }
+        public DateTime Timestamp { get; }
 
         public string UserId { get; }
 
@@ -146,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return SmileVideoMsgUtility.ConvertElapsedTime(Model.VPos); }
         }
 
-        public IList<string> Commands{ get; }
+        public IList<string> Commands { get; }
 
         /// <summary>
         /// コメント内容。
@@ -155,8 +145,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 実際に表示するコメント内容。
         /// </summary>
-        public string ActualContent {
-            get {
+        public string ActualContent
+        {
+            get
+            {
                 var s = Content;
                 if(Setting.Comment.ConvertPairYenSlash) {
                     s = ReplaceYenToBackslash(s);
@@ -178,7 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// フォントサイズ。
         /// </summary>
-        public double FontSize { get; }
+        public double FontSize { get; private set; }
         /// <summary>
         /// フォント名。
         /// </summary>
@@ -217,6 +209,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
+        static double GetFontSize(double baseSize, IList<string> commands)
+        {
+            switch(SmileVideoCommentUtility.GetFontSize(commands)) {
+                case SmileVideoCommentSize.Medium:
+                    return baseSize;
+
+                case SmileVideoCommentSize.Small:
+                    return baseSize * 0.8;
+
+                case SmileVideoCommentSize.Big:
+                    return baseSize * 1.2;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         string ReplaceYenToBackslash(string s)
         {
             if(s.Any(c => c == '\\') && s.Any(c => c == '/')) {
@@ -230,6 +239,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public void ChangeDefaultCommand(Brush foreground, Color backcolor)
         {
             // not imple
+        }
+
+        public void ChangeActualContent()
+        {
+            var propertyNames = new[] {
+                nameof(ActualContent),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
+
+        public void ChangeFontStyle()
+        {
+            FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
+
+            var propertyNames = new[] {
+                nameof(FontSize),
+                nameof(FontFamily),
+                nameof(FontBold),
+                nameof(FontItalic),
+                nameof(Opacity),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion

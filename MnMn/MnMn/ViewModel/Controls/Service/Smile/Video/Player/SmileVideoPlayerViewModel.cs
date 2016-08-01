@@ -621,7 +621,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._commentEnabledPercent, value)) {
-                    ChangeEnabledCommentPercent();
+                    ChangedEnabledCommentPercent();
                 }
             }
         }
@@ -651,6 +651,78 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._isEnabledOriginalPosterCommentArea; }
             set { SetVariableValue(ref this._isEnabledOriginalPosterCommentArea, value); }
+        }
+
+        public FontFamily CommentFontFamily
+        {
+            get { return FontUtility.MakeFontFamily(Setting.Comment.FontFamily, SystemFonts.MessageFontFamily); }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, FontUtility.GetOriginalFontFamilyName(value), nameof(Setting.Comment.FontFamily))) {
+                    ChangedCommentFont();
+                }
+            }
+        }
+
+        public bool CommentFontBold
+        {
+            get { return Setting.Comment.FontBold; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontBold))) {
+                    ChangedCommentFont();
+                }
+            }
+        }
+
+        public bool CommentFontItalic
+        {
+            get { return Setting.Comment.FontItalic; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontItalic))) {
+                    ChangedCommentFont();
+                }
+            }
+        }
+
+        public double CommentFontSize
+        {
+            get { return Setting.Comment.FontSize; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontSize))) {
+                    ChangedCommentFont();
+                }
+            }
+        }
+
+        public double CommentFontAlpha
+        {
+            get { return Setting.Comment.FontAlpha; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontAlpha))) {
+                    ChangedCommentFont();
+                }
+            }
+        }
+
+        public TimeSpan CommentShowTime
+        {
+            get { return Setting.Comment.ShowTime; }
+            set { SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.ShowTime)); }
+        }
+
+        public bool CommentConvertPairYenSlash
+        {
+            get { return Setting.Comment.ConvertPairYenSlash; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.ConvertPairYenSlash))) {
+                    ChangedCommentContent();
+                }
+            }
         }
 
         #endregion
@@ -1421,7 +1493,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseWidth = VisualVideoSize.Width * baseScale;
             BaseHeight = VisualVideoSize.Height * baseScale;
 
-            ChangeEnabledCommentPercent();
+            ChangedEnabledCommentPercent();
         }
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
@@ -1697,10 +1769,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return baseHeight / 100.0 * percent;
         }
 
-        void ChangeEnabledCommentPercent()
+        void ChangedEnabledCommentPercent()
         {
             CommentEnabledHeight = GetEnabledCommentHeight(NormalCommentArea.ActualHeight, CommentEnabledPercent);
         }
+
+        void ChangedCommentFont()
+        {
+            foreach(var comment in CommentList) {
+                comment.ChangeFontStyle();
+            }
+        }
+
+        void ChangedCommentContent()
+        {
+            foreach(var comment in ShowingCommentList.ToArray()) {
+                comment.ViewModel.ChangeActualContent();
+            }
+        }
+
 
         #endregion
 

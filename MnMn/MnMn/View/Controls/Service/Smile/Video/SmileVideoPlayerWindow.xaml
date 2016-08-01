@@ -50,6 +50,7 @@
 
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
+      <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
@@ -742,6 +743,30 @@
             </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
           </TabItem>
           <TabItem Header="設定">
+            <StackPanel>
+              <app_view_controls:FontSelectControl
+                FamilyName="{Binding CommentFontFamily}"
+                IsEnabledBold="False"
+                IsEnabledItalic="False"
+                IsBold="{Binding CommentFontBold}"
+                IsItalic="{Binding CommentFontItalic}"
+                Size="{Binding CommentFontSize}"
+                SizeMinimum="10"
+                SizeMaximum="50"
+              />
+              <DockPanel>
+                <Label DockPanel.Dock="Left">透明度</Label>
+                <Slider Minimum="0.1" Maximum="1" Value="{Binding CommentFontAlpha}" />
+              </DockPanel>
+              <DockPanel>
+                <Label DockPanel.Dock="Left">表示時間</Label>
+                <!-- TODO: UI側で制限 -->
+                <Slider Minimum="1000" Maximum="10000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
+              </DockPanel>
+              <CheckBox IsChecked="{Binding CommentConvertPairYenSlash}">
+                <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
+              </CheckBox>
+            </StackPanel>
           </TabItem>
         </TabControl>
       </Grid>
