@@ -711,7 +711,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public TimeSpan CommentShowTime
         {
             get { return Setting.Comment.ShowTime; }
-            set { SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.ShowTime)); }
+            set
+            {
+                var prevTime = CommentShowTime;
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.ShowTime))) {
+                    ChangedCommentShowTime(prevTime);
+                }
+            }
         }
 
         public bool CommentConvertPairYenSlash
@@ -1791,6 +1797,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             foreach(var comment in ShowingCommentList.ToArray()) {
                 comment.ViewModel.ChangeActualContent();
             }
+        }
+
+        void ChangedCommentShowTime(TimeSpan prevTime)
+        {
+#if false // ややっこしいんじゃふざけんな
+            foreach(var comment in ShowingCommentList.ToArray()) {
+                var time = comment.Clock.CurrentTime.Value;
+                var nowElapsedTime = prevTime - time;
+                var percent = nowElapsedTime.TotalMilliseconds / prevTime.TotalMilliseconds;
+                var animation = new DoubleAnimation();
+
+                if(comment.ViewModel.Vertical == SmileVideoCommentVertical.Normal) {
+                    var nowLeft = Canvas.GetLeft(comment.Element);
+                    animation.From = nowLeft;
+                    animation.To = -comment.Element.ActualWidth;
+                    var useTime = TimeSpan.FromMilliseconds(CommentShowTime.TotalMilliseconds * percent);
+                    animation.Duration = new Duration(useTime);
+
+                    //comment.Clock.Controller.Stop();
+                    comment.Animation.Duration = CommentShowTime;
+                    comment.Element.ApplyAnimationClock(Canvas.LeftProperty, animation.CreateClock());
+                }
+            }
+#endif
         }
 
         void ResetCommentSetting()
