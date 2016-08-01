@@ -38,6 +38,7 @@
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -485,7 +486,7 @@
           Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}"
         />
 
-        <TabControl Grid.Row="0" Grid.Column="2"  Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
           <TabItem Header="コメント">
             <DockPanel>
               <DockPanel DockPanel.Dock="Top">
@@ -739,6 +740,8 @@
                 </i:EventTrigger>
               </i:Interaction.Triggers>
             </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
+          </TabItem>
+          <TabItem Header="設定">
           </TabItem>
         </TabControl>
       </Grid>
