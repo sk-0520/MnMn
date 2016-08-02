@@ -54,5 +54,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 yield return (Color)ColorConverter.ConvertFromString(colorCode);
             }
         }
+
+        public static string TrimTitle(string rawTitle)
+        {
+            var target = "マイリスト ";
+
+            if(rawTitle.IndexOf(target) == 0) {
+                return rawTitle.Substring(target.Length);
+            }
+
+            return rawTitle;
+        }
     }
 }
