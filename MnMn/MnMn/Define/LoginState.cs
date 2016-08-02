@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -30,22 +31,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// ログインしていない。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoginState_None))]
         None,
         /// <summary>
         /// ログイン中。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoginState_In))]
         In,
         /// <summary>
         /// ログインチェック中。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoginState_Check))]
         Check,
         /// <summary>
         /// ログイン済み。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoginState_LoggedIn))]
         LoggedIn,
         /// <summary>
         /// ログイン失敗。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoginState_Failure))]
         Failure,
     }
 }

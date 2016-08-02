@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -31,22 +32,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// 何もしてない。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoadState_None))]
         None,
         /// <summary>
         /// 準備中。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoadState_Preparation))]
         Preparation,
         /// <summary>
         /// 読み込み中。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoadState_Loading))]
         Loading,
         /// <summary>
         /// 読み込んだ。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoadState_Loaded))]
         Loaded,
         /// <summary>
         /// 読み込み失敗。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_LoadState_Failure))]
         Failure,
     }
 }

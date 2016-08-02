@@ -129,6 +129,36 @@
   <data name="String_App_Define_FilteringType_Regex" xml:space="preserve">
     <value>正規表現</value>
   </data>
+  <data name="String_App_Define_LoadState_Failure" xml:space="preserve">
+    <value>読込失敗</value>
+  </data>
+  <data name="String_App_Define_LoadState_Loaded" xml:space="preserve">
+    <value>読込済み</value>
+  </data>
+  <data name="String_App_Define_LoadState_Loading" xml:space="preserve">
+    <value>読込中</value>
+  </data>
+  <data name="String_App_Define_LoadState_None" xml:space="preserve">
+    <value>未処理</value>
+  </data>
+  <data name="String_App_Define_LoadState_Preparation" xml:space="preserve">
+    <value>準備中</value>
+  </data>
+  <data name="String_App_Define_LoginState_Check" xml:space="preserve">
+    <value>ログイン確認</value>
+  </data>
+  <data name="String_App_Define_LoginState_Failure" xml:space="preserve">
+    <value>ログイン失敗</value>
+  </data>
+  <data name="String_App_Define_LoginState_In" xml:space="preserve">
+    <value>ログイン開始</value>
+  </data>
+  <data name="String_App_Define_LoginState_LoggedIn" xml:space="preserve">
+    <value>ログイン済み</value>
+  </data>
+  <data name="String_App_Define_LoginState_None" xml:space="preserve">
+    <value>未ログイン</value>
+  </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command" xml:space="preserve">
     <value>コマンド</value>
   </data>
@@ -158,6 +188,24 @@
   </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount" xml:space="preserve">
     <value>再生数</value>
+  </data>
+  <data name="String_App_Define_SourceLoadState_Completed" xml:space="preserve">
+    <value>完了</value>
+  </data>
+  <data name="String_App_Define_SourceLoadState_Failure" xml:space="preserve">
+    <value>失敗</value>
+  </data>
+  <data name="String_App_Define_SourceLoadState_InformationLoading" xml:space="preserve">
+    <value>情報取得中</value>
+  </data>
+  <data name="String_App_Define_SourceLoadState_None" xml:space="preserve">
+    <value>未処理</value>
+  </data>
+  <data name="String_App_Define_SourceLoadState_SourceChecking" xml:space="preserve">
+    <value>ソースチェック</value>
+  </data>
+  <data name="String_App_Define_SourceLoadState_SourceLoading" xml:space="preserve">
+    <value>ソース読込</value>
   </data>
   <data name="String_Service_Smile_SmileVideo_Bookmark_NewName" xml:space="preserve">
     <value>新規ブックマーク</value>

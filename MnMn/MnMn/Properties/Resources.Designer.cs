@@ -97,6 +97,96 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   読込失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoadState_Failure {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoadState_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   読込済み に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoadState_Loaded {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoadState_Loaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   読込中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoadState_Loading {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoadState_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoadState_None {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoadState_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   準備中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoadState_Preparation {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoadState_Preparation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ログイン確認 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoginState_Check {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoginState_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ログイン失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoginState_Failure {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoginState_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ログイン開始 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoginState_In {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoginState_In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ログイン済み に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoginState_LoggedIn {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoginState_LoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未ログイン に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_LoginState_None {
+            get {
+                return ResourceManager.GetString("String_App_Define_LoginState_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command {
@@ -183,6 +273,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount {
             get {
                 return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SourceLoadState_Completed {
+            get {
+                return ResourceManager.GetString("String_App_Define_SourceLoadState_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SourceLoadState_Failure {
+            get {
+                return ResourceManager.GetString("String_App_Define_SourceLoadState_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   情報取得中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SourceLoadState_InformationLoading {
+            get {
+                return ResourceManager.GetString("String_App_Define_SourceLoadState_InformationLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SourceLoadState_None {
+            get {
+                return ResourceManager.GetString("String_App_Define_SourceLoadState_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ソースチェック に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SourceLoadState_SourceChecking {
+            get {
+                return ResourceManager.GetString("String_App_Define_SourceLoadState_SourceChecking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ソース読込 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SourceLoadState_SourceLoading {
+            get {
+                return ResourceManager.GetString("String_App_Define_SourceLoadState_SourceLoading", resourceCulture);
             }
         }
         

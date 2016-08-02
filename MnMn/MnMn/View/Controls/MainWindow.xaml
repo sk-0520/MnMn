@@ -4,6 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
 
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_app="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.App"
   xmlns:app_view_controls_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile"
@@ -27,17 +28,18 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </Window.Resources>
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
-      <TextBox>test</TextBox>
-      <TextBlock>
-        <Run>smile:</Run>
-        <Run Text="{Binding SmileSession.LoginState, Mode=OneWay}" />
-        <Run Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
-      </TextBlock>
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <Image Source="/Resources/Service/Smile/Smile.png" Style="{StaticResource SmallItemImage}" />
+        <TextBlock Text="{Binding SmileSession.LoginState, Converter={StaticResource EnumDisplayConverter}, Mode=OneWay}" />
+        <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
+      </StackPanel>
     </StatusBar>
 
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
