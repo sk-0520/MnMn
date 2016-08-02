@@ -658,9 +658,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override Task InitializeAsync()
         {
-            Debug.Assert(Session.IsLoggedIn);
+            if(Session.IsLoggedIn) {
+                return LoadAccountMyListAsync(false, null);
+            }
 
-            return LoadAccountMyListAsync(false, null);
+            return Task.CompletedTask;
         }
 
         public override void InitializeView(MainWindow view)

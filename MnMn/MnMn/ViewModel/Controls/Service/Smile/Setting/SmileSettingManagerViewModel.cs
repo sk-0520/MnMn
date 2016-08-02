@@ -76,7 +76,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             return Session.ChangeUserAccountAsync(Setting.Account).ContinueWith(t => {
                 return Session.LoginAsync();
             }).ContinueWith(t => {
-                Mediation.Smile.ManagerPack.VideoManager.InitializeAsync();
+                //if(Session.IsLoggedIn) {
+                var tasks = new[] {
+                        Mediation.Smile.ManagerPack.UsersManager.InitializeAsync(),
+                        Mediation.Smile.ManagerPack.VideoManager.InitializeAsync(),
+                    };
+                return Task.WhenAll(tasks);
+                //}
+
+                //return Task.CompletedTask;
             });
         }
 
