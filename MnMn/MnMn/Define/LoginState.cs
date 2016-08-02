@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// ログイン済み。
         /// </summary>
-        Logged,
+        LoggedIn,
         /// <summary>
         /// ログイン失敗。
         /// </summary>

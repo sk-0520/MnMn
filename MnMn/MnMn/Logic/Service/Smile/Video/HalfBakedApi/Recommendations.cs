@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
 
         Task<HtmlDocument> LoadPageAsync()
         {
-            Debug.Assert(Session.LoginState == LoginState.Logged);
+            Debug.Assert(Session.LoginState == LoginState.LoggedIn);
 
             var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.recommendationPage, ServiceType.SmileVideo);
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {

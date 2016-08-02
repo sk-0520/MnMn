@@ -64,7 +64,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
 
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-
         }
 
         #region property

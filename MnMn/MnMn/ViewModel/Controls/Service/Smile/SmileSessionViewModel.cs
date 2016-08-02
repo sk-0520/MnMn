@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         public Task ChangeUserAccountAsync(SmileUserAccountModel userAccount)
         {
-            if(LoginState == LoginState.Logged) {
+            if(LoginState == LoginState.LoggedIn) {
                 return LogoutAsync().ContinueWith(_ => {
                     UserAccount = userAccount;
                 });
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         public override async Task LoginAsync()
         {
-            if(LoginState == LoginState.In || LoginState == LoginState.Check || LoginState == LoginState.Logged) {
+            if(LoginState == LoginState.In || LoginState == LoginState.Check || LoginState == LoginState.LoggedIn) {
                 return;
             }
 
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                     ;
 
                     if(successLogin) {
-                        LoginState = LoginState.Logged;
+                        LoginState = LoginState.LoggedIn;
                         return CheckModel.Success();
                     }
 
@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                         .Value.Any(s => s == "1" || s == "3")
                     ;
                     if(successLogin) {
-                        LoginState = LoginState.Logged;
+                        LoginState = LoginState.LoggedIn;
                         return CheckModel.Success();
                     }
 

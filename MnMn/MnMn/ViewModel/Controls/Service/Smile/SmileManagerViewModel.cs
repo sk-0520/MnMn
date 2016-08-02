@@ -47,16 +47,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         #endregion
 
         public SmileManagerViewModel(Mediation mediation)
-            :base(mediation)
+            : base(mediation)
         {
             VideoManager = new SmileVideoManagerViewModel(Mediation);
             UsersManager = new SmileUsersManagerViewModel(Mediation);
             SettingManager = new SmileSettingManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, SettingManager));
+
+            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region property
+
+        public SessionViewModelBase Session { get; }
 
         public SmileVideoManagerViewModel VideoManager { get; set; }
         public SmileUsersManagerViewModel UsersManager { get; }
@@ -109,7 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             await session.LoginAsync();
             // TODO: ログインできない場合は設定画面へ
-            if(session.LoginState != LoginState.Logged) {
+            if(session.LoginState != LoginState.LoggedIn) {
 
             } else {
                 await VideoManager.InitializeAsync();

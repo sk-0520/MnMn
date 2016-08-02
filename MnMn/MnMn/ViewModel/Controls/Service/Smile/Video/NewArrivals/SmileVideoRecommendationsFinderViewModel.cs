@@ -53,19 +53,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
 
+        public override bool NeedSession { get { return true; } }
+
         private FeedSmileVideoItemModel ConvertItemFromRaw(RawSmileVideoRecommendItemModel raw)
         {
             var result = new FeedSmileVideoItemModel();
 
             result.Title = raw.TitleShort;
+            //TODO: うおおお
             result.Link = "/" + raw.Id;
 
             var detailModel = new RawSmileVideoFeedDetailModel();
             detailModel.ThumbnailUrl = raw.ThumbnailUrl;
             detailModel.MylistCounter = raw.MylistCounter;
             detailModel.ViewCounter = raw.ViewCounter;
-            detailModel.CommentNum= raw.NumRes;
-            detailModel.FirstRetrieve= RawValueUtility.ConvertUnixTime(raw.FirstRetrieve).ToString("s");
+            detailModel.CommentNum = raw.NumRes;
+            detailModel.FirstRetrieve = RawValueUtility.ConvertUnixTime(raw.FirstRetrieve).ToString("s");
             detailModel.Length = raw.Length;
 
             result.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);

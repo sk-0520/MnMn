@@ -7,6 +7,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_contrls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
@@ -29,7 +30,7 @@
       Style="{StaticResource FinderTab}"
     >
       <TabControl.ItemTemplate>
-        <DataTemplate>
+        <DataTemplate DataType="TabItem">
           <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
             <TextBlock Text="{Binding Title}" Style="{StaticResource TabHeaderText}" />
@@ -37,6 +38,15 @@
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>
+      <TabControl.ItemContainerStyle>
+        <Style TargetType="TabItem">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding NeedSession}" Value="True">
+              <Setter Property="IsEnabled" Value="{Binding DataContext.Session.IsLoggedIn, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </TabControl.ItemContainerStyle>
       <TabControl.ContentTemplate>
         <DataTemplate>
           <app_contrls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}" />

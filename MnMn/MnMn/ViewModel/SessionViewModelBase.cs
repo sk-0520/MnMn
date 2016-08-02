@@ -73,14 +73,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             set
             {
                 if(SetVariableValue(ref this._loginState, value)) {
-                    if(this._loginState == LoginState.Logged) {
+                    if(this._loginState == LoginState.LoggedIn) {
                         RenewalLastLoginTime();
                     } else {
                         ClearLastLoginTime();
                     }
+                    CallOnPropertyChange(nameof(IsLoggedIn));
                 }
             }
         }
+
+        public bool IsLoggedIn { get { return LoginState == LoginState.LoggedIn; } }
 
         /// <summary>
         /// ログイン時間。
@@ -111,7 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <returns></returns>
         public async Task LoginIfNotLoginAsync()
         {
-            if(LoginState == LoginState.Logged) {
+            if(LoginState == LoginState.LoggedIn) {
                 if(DateTime.Now - LastLoginTime < RegardLoginTime) {
                     RenewalLastLoginTime();
                     return;
@@ -124,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public void RenewalLastLoginTime()
         {
-            if(LoginState == LoginState.Logged) {
+            if(LoginState == LoginState.LoggedIn) {
                 LastLoginTime = DateTime.Now;
             }
         }

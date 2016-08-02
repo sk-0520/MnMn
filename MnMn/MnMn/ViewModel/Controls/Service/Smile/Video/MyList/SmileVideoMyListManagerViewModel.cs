@@ -77,7 +77,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public SmileVideoMyListManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
             var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
@@ -91,7 +90,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region property
 
-        SmileSessionViewModel Session { get; }
         SmileVideoMyListModel MyList { get; }
 
         CollectionModel<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoAccountMyListFinderViewModel>();
@@ -647,14 +645,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         protected override void ShowView()
         {
-            if(SelectedAccountFinder == null && AccountMyListViewer.Any()) {
-                SelectedAccountFinder = AccountMyListViewer.First();
+            if(SelectedAccountFinder == null) {
+                if(AccountMyListViewer.Any()) {
+                    SelectedAccountFinder = AccountMyListViewer.First();
+                } else {
+                    IsSelectedSearch = true;
+                }
             }
+
             base.ShowView();
         }
 
         public override Task InitializeAsync()
         {
+            Debug.Assert(Session.IsLoggedIn);
+
             return LoadAccountMyListAsync(false, null);
         }
 

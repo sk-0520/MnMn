@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         string Key { get; }
         public string Title { get; }
 
+        public virtual bool NeedSession { get { return false; } }
+
         #endregion
 
         #region command

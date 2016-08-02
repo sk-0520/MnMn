@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public Task LoadLoginUserAsync()
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-            if(session.LoginState == LoginState.Logged) {
+            if(session.LoginState == LoginState.LoggedIn) {
                 LoginUser = new SmileLoginUserInformationViewModel(Mediation, session.UserId);
                 return LoginUser.LoadDefaultAsync().ContinueWith(_ => {
                     UserItems.Add(LoginUser);

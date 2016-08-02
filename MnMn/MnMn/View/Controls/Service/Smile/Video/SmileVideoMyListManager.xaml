@@ -105,7 +105,7 @@
     <Grid Grid.Column="0">
       <!-- 各データコンテキストは選択用で下位はUserControlのデータコンテキストを参照する -->
       <TabControl Style="{StaticResource FinderTab}">
-        <TabItem x:Name="viewAccount" Header="アカウント" IsSelected="{Binding IsSelectedAccount}">
+        <TabItem x:Name="viewAccount" Header="アカウント" IsSelected="{Binding IsSelectedAccount}" IsEnabled="{Binding Session.IsLoggedIn}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
               <Button Command="{Binding LoadAccountMyListCommand}">読込</Button>
