@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
     public class MyList: SessionApiBase<SmileSessionViewModel>
     {
         public MyList(Mediation mediation)
-            :base(mediation, ServiceType.Smile)
+            : base(mediation, ServiceType.Smile)
         { }
 
         /// <summary>
@@ -99,7 +99,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
 
                 var rawJson = response.Result;
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
-                    return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                    var result = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+
+                    result.Channel.Title = SmileMyListUtility.TrimTitle(result.Channel.Title);
+
+                    return result;
                 }
             }
         }
@@ -111,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             using(var page = new PageLoader(Mediation, SessionBase, SmileMediationKey.mylistSearch, ServiceType.Smile)) {
                 page.ReplaceUriParameters["query"] = query;
                 page.ReplaceUriParameters["page"] = pageNumber.ToString();
-                
+
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var htmlDocument = new HtmlDocument() {

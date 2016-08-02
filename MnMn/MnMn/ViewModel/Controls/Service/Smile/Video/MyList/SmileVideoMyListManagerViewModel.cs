@@ -552,7 +552,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
             if(group == null) {
                 group = await mylist.LoadGroupAsync(myListId);
-                group.Channel.Title = SmileMyListUtility.TrimTitle(group.Channel.Title);
                 SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
             }
 
