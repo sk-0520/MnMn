@@ -9,82 +9,96 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     /// <summary>
     /// <para>http://stackoverflow.com/questions/93650/apply-stroke-to-a-textblock-in-wpf?answertab=votes#tab-top</para>
     /// </summary>
-    [ContentProperty("Text")]
+    [ContentProperty(nameof(OutlinedTextBlock.Text))]
     public class OutlinedTextBlock: FrameworkElement
     {
         public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
-            "Fill",
+            DependencyPropertyUtility.GetName(nameof(FillProperty)),
             typeof(Brush),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+            new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender)
+        );
 
         public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
-            "Stroke",
+            DependencyPropertyUtility.GetName(nameof(StrokeProperty)),
             typeof(Brush),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+            new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender)
+        );
 
         public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
-            "StrokeThickness",
+            DependencyPropertyUtility.GetName(nameof(StrokeThicknessProperty)),
             typeof(double),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(1d, FrameworkPropertyMetadataOptions.AffectsRender));
+            new FrameworkPropertyMetadata(1d, FrameworkPropertyMetadataOptions.AffectsRender)
+        );
 
         public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty FontSizeProperty = TextElement.FontSizeProperty.AddOwner(
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty FontStretchProperty = TextElement.FontStretchProperty.AddOwner(
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty FontStyleProperty = TextElement.FontStyleProperty.AddOwner(
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text",
+            DependencyPropertyUtility.GetName(nameof(TextProperty)),
             typeof(string),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextInvalidated));
+            new FrameworkPropertyMetadata(OnFormattedTextInvalidated)
+        );
 
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
-            "TextAlignment",
+            DependencyPropertyUtility.GetName(nameof(TextAlignmentProperty)),
             typeof(TextAlignment),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty TextDecorationsProperty = DependencyProperty.Register(
-            "TextDecorations",
+            DependencyPropertyUtility.GetName(nameof(TextDecorationsProperty)),
             typeof(TextDecorationCollection),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty TextTrimmingProperty = DependencyProperty.Register(
-            "TextTrimming",
+            DependencyPropertyUtility.GetName(nameof(TextTrimmingProperty)),
             typeof(TextTrimming),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(OnFormattedTextUpdated)
+        );
 
         public static readonly DependencyProperty TextWrappingProperty = DependencyProperty.Register(
-            "TextWrapping",
+            DependencyPropertyUtility.GetName(nameof(TextWrappingProperty)),
             typeof(TextWrapping),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated)
+        );
 
         private FormattedText formattedText;
         private Geometry textGeometry;
