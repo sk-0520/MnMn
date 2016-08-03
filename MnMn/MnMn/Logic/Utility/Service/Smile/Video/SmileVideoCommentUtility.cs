@@ -29,6 +29,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
     public static class SmileVideoCommentUtility
     {
+        internal static readonly Color[] normalCommentColors = new[] {
+            Colors.White,
+            Colors.Red,
+            Colors.Pink,
+            Colors.Orange,
+            Colors.Yellow,
+            Colors.Green,
+            Colors.Cyan,
+            Colors.Blue,
+            Colors.Purple,
+            Colors.Black,
+        };
+        internal static readonly Color[] premiumCommentColors = new[] {
+            (Color)ColorConverter.ConvertFromString("#CCCC99"),
+            (Color)ColorConverter.ConvertFromString("#CC0033"),
+            (Color)ColorConverter.ConvertFromString("#FF6600"),
+            (Color)ColorConverter.ConvertFromString("#999900"),
+            (Color)ColorConverter.ConvertFromString("#00CC66"),
+            (Color)ColorConverter.ConvertFromString("#33FFFC"),
+            (Color)ColorConverter.ConvertFromString("#6633CC"),
+        };
+
+        public static bool GetIsAnonymous(IEnumerable<string> commands)
+        {
+            foreach(var command in commands) {
+                if(command == "184") {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static string ConvertRawIsAnonymous(bool isAnonymous)
+        {
+            if(isAnonymous) {
+                return "184";
+            }
+
+            return string.Empty; ;
+        }
+
+
         public static SmileVideoCommentVertical GetVerticalAlign(IEnumerable<string> commands)
         {
             var map = new Dictionary<string, SmileVideoCommentVertical>() {
@@ -49,6 +92,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return SmileVideoCommentVertical.Normal;
         }
 
+        public static string ConvertRawVerticalAlign(SmileVideoCommentVertical verticalAlign)
+        {
+            var map = new Dictionary<SmileVideoCommentVertical, string>() {
+                { SmileVideoCommentVertical.Normal, "naka" },
+                { SmileVideoCommentVertical.Top, "ue" },
+                { SmileVideoCommentVertical.Bottom, "shita" },
+            };
+
+            return map[verticalAlign];
+        }
+
         public static SmileVideoCommentSize GetFontSize(IEnumerable<string> commands)
         {
             var map = new Dictionary<string, SmileVideoCommentSize>() {
@@ -67,6 +121,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
 
             return SmileVideoCommentSize.Medium;
+        }
+
+        public static string ConvertRawFontSize(SmileVideoCommentSize fontSize)
+        {
+            var map = new Dictionary<SmileVideoCommentSize, string>() {
+                { SmileVideoCommentSize.Medium, "medium" },
+                { SmileVideoCommentSize.Small, "small" },
+                { SmileVideoCommentSize.Big, "big" },
+            };
+
+            return map[fontSize];
         }
 
         public static Color GetForeColor(IEnumerable<string> commands, bool isPremium)
@@ -133,7 +198,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return Colors.White;
         }
 
-        public static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringItemSettingModel model, object data)
+        public static string ConvertRawForeColor(Color color)
+        {
+            var colorMap = new Dictionary<Color, string>() {
+                { Colors.White,  "white"  },
+                { Colors.Red,    "red"    },
+                { Colors.Pink,   "pink"   },
+                { Colors.Orange, "orange" },
+                { Colors.Yellow, "yellow" },
+                { Colors.Green,  "green"  },
+                { Colors.Cyan,   "cyan"   },
+                { Colors.Blue,   "blue"   },
+                { Colors.Purple, "purple" },
+                { Colors.Black,  "black"  },
+
+                { (Color)ColorConverter.ConvertFromString("#CCCC99"), "niconicowhite" },
+                //{ (Color)ColorConverter.ConvertFromString("#CCCC99"), "white2"},
+
+                { (Color)ColorConverter.ConvertFromString("#CC0033"), "truered" },
+                //{ (Color)ColorConverter.ConvertFromString("#CC0033"), "red2" },
+
+                { (Color)ColorConverter.ConvertFromString("#FF6600"), "passionorange" },
+                //{ (Color)ColorConverter.ConvertFromString("#FF6600"), "orange2" },
+
+                { (Color)ColorConverter.ConvertFromString("#999900"), "madyellow" },
+                //{ (Color)ColorConverter.ConvertFromString("#999900"), "yellow2" },
+
+                { (Color)ColorConverter.ConvertFromString("#00CC66"), "elementalgreen" },
+                //{ (Color)ColorConverter.ConvertFromString("#00CC66"), "green2" },
+
+                { (Color)ColorConverter.ConvertFromString("#33FFFC"), "marineblue" },
+                //{ (Color)ColorConverter.ConvertFromString("#33FFFC"), "blue2" },
+
+                { (Color)ColorConverter.ConvertFromString("#6633CC"), "nobleviolet" },
+                //{ (Color)ColorConverter.ConvertFromString("#6633CC"), "purple2" },
+            };
+            string result;
+            if(colorMap.TryGetValue(color, out result)) {
+                return result;
+            }
+
+            return BitConverter.ToString(new byte[] { color.R, color.G, color.B }).Replace("-", "");
+        }
+
+        internal static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoFilteringItemSettingModel model, object data)
         {
             return new SmileVideoFilteringEditItemViewModel(model);
         }

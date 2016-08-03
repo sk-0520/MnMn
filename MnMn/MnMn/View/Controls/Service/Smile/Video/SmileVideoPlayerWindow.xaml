@@ -478,7 +478,86 @@
           </Grid>
 
           <Grid Grid.Row="2">
-            <TextBox></TextBox>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="3*" />
+              <ColumnDefinition Width="7*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <xctk:DropDownButton Grid.Column="0">
+              <xctk:DropDownButton.DropDownContent>
+                <StackPanel>
+                  <StackPanel Orientation="Horizontal">
+                    <Label>サイズ</Label>
+                    <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Small}}">少</RadioButton>
+                    <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Medium}}">中</RadioButton>
+                    <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Big}}">大</RadioButton>
+                  </StackPanel>
+
+                  <StackPanel Orientation="Horizontal">
+                    <Label>位置</Label>
+                    <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Top}}">上</RadioButton>
+                    <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Normal}}">中</RadioButton>
+                    <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Bottom}}">下</RadioButton>
+                  </StackPanel>
+
+                  <StackPanel Orientation="Horizontal">
+                    <Label>色</Label>
+                    <!-- 通常用 -->
+                    <ListBox Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding CommandColorItems}" SelectedItem="{Binding PostCommandColor}" >
+                      <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                      </ListBox.ItemsPanel>
+                      <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                          <Setter Property="Template">
+                            <Setter.Value>
+                              <ControlTemplate TargetType="ListBoxItem">
+                                <RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}">
+                                  <Rectangle Width="16" Height="16">
+                                    <Rectangle.Fill>
+                                      <SolidColorBrush Color="{Binding}" />
+                                    </Rectangle.Fill>
+                                  </Rectangle>
+                                </RadioButton>
+                              </ControlTemplate>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </ListBox.ItemContainerStyle>
+                    </ListBox>
+                  </StackPanel>
+                  <CheckBox IsChecked="{Binding IsPostAnonymous}">184投稿</CheckBox>
+                  <Separator />
+                  <StackPanel Orientation="Horizontal">
+                    <Label>先頭追加</Label>
+                    <TextBox Text="{Binding PostBeforeCommand}"></TextBox>
+                    <Label>後続追加</Label>
+                    <TextBox Text="{Binding PostAfterCommand}"></TextBox>
+                  </StackPanel>
+                  <Separator />
+                  <StackPanel Orientation="Horizontal">
+                    <Label>COMMAND:</Label>
+                    <ItemsControl ItemsSource="{Binding PostCommandItems}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                  </StackPanel>
+                </StackPanel>
+              </xctk:DropDownButton.DropDownContent>
+              コマンド
+            </xctk:DropDownButton>
+            <TextBox Grid.Column="1"></TextBox>
+            <Button Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
           </Grid>
         </Grid>
 

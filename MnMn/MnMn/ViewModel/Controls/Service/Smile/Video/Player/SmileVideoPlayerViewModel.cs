@@ -146,10 +146,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         int _originalPosterCommentListCount;
 
         bool _isSelectedComment;
-
         bool _isSelectedVideoInformation;
-
         bool _isSettedMedia;
+
+        SmileVideoCommentVertical _postCommandVertical = SmileVideoCommentVertical.Normal;
+        SmileVideoCommentSize _postCommandSize = SmileVideoCommentSize.Medium;
+        Color _postCommandColor = Colors.White;
+        string _postBeforeCommand;
+        string _postAfterCommand;
 
         #endregion
 
@@ -162,6 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             GlobalCommentFilering = filteringResult.Filtering;
 
+            ChangedPostCommands();
         }
 
         #region property
@@ -176,6 +181,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Popup EnabledCommentPopup { get; set; }
 
         public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
+
+        public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoCommentUtility.normalCommentColors);
 
         public bool IsRandomPlay
         {
@@ -743,6 +750,69 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public SmileVideoCommentVertical PostCommandVertical
+        {
+            get { return this._postCommandVertical; }
+            set
+            {
+                if(SetVariableValue(ref this._postCommandVertical, value)) {
+                    ChangedPostCommands();
+                }
+            }
+        }
+        public SmileVideoCommentSize PostCommandSize
+        {
+            get { return this._postCommandSize; }
+            set
+            {
+                if(SetVariableValue(ref this._postCommandSize, value)) {
+                    ChangedPostCommands();
+                }
+            }
+        }
+        public Color PostCommandColor
+        {
+            get { return this._postCommandColor; }
+            set
+            {
+                if(SetVariableValue(ref this._postCommandColor, value)) {
+                    ChangedPostCommands();
+                }
+            }
+        }
+        public bool IsPostAnonymous
+        {
+            get { return Setting.Comment.PostAnonymous; }
+            set
+            {
+                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.PostAnonymous))) {
+                    ChangedPostCommands();
+                }
+            }
+        }
+        public string PostBeforeCommand
+        {
+            get { return this._postBeforeCommand; }
+            set
+            {
+                if(SetVariableValue(ref this._postBeforeCommand, value)) {
+                    ChangedPostCommands();
+                }
+            }
+        }
+        public string PostAfterCommand
+        {
+            get { return this._postAfterCommand; }
+            set
+            {
+                if(SetVariableValue(ref this._postAfterCommand, value)) {
+                    ChangedPostCommands();
+                }
+            }
+        }
+
+        public CollectionModel<string> PostCommandItems { get; } = new CollectionModel<string>();
+
         #endregion
 
         #region command
@@ -1005,6 +1075,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICommand ResetCommentSettingCommand
         {
             get { return CreateCommand(o => ResetCommentSetting()); }
+        }
+
+        public ICommand PostCommentCommand
+        {
+            get { return CreateCommand(o => PostComment()); }
         }
 
         #endregion
@@ -1861,6 +1936,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(PlayerTextShowKind),
             };
             CallOnPropertyChange(propertyNames);
+        }
+
+        IEnumerable<string> CreatePostCommandsCore()
+        {
+            yield return PostBeforeCommand;
+
+            yield return SmileVideoCommentUtility.ConvertRawIsAnonymous(IsPostAnonymous);
+
+            yield return SmileVideoCommentUtility.ConvertRawVerticalAlign(PostCommandVertical);
+            yield return SmileVideoCommentUtility.ConvertRawFontSize(PostCommandSize);
+            yield return SmileVideoCommentUtility.ConvertRawForeColor(PostCommandColor);
+
+            yield return PostAfterCommand;
+        }
+
+        IEnumerable<string> CreatePostCommands()
+        {
+            return CreatePostCommandsCore()
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Select(s => s.Trim())
+            ;
+        }
+
+        void ChangedPostCommands()
+        {
+            var commands = CreatePostCommands();
+            PostCommandItems.InitializeRange(commands);
+        }
+
+        void PostComment()
+        {
         }
 
         #endregion
