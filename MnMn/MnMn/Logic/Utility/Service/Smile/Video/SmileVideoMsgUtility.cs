@@ -47,6 +47,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return SmileVideoUserKind.Noraml;
         }
 
+        public static string ConvertRawUserKind(SmileVideoUserKind kind)
+        {
+            var map = new Dictionary<SmileVideoUserKind, string>() {
+                { SmileVideoUserKind.Noraml, "0" },
+                { SmileVideoUserKind.Premium, "1" },
+                { SmileVideoUserKind.Alert, "2" },
+                { SmileVideoUserKind.Real, "3" },
+                { SmileVideoUserKind.Official, "6" },
+            };
+
+            return map[kind];
+        }
+
+        public static string ConvertRawIsPremium(bool isPremium)
+        {
+            return isPremium ? "1" : "0";
+        }
+
         /// <summary>
         /// 1/100秒に変換。
         /// </summary>

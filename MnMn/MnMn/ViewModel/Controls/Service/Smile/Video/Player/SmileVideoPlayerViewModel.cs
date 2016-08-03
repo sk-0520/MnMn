@@ -82,6 +82,7 @@ using System.Windows.Threading;
 using System.Runtime.ExceptionServices;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using System.Windows.Controls.Primitives;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -180,6 +181,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         ListView CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Popup EnabledCommentPopup { get; set; }
+
+        RawSmileVideoMsgThreadModel CommentThread { get; set; }
 
         public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
 
@@ -1087,7 +1090,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public ICommand PostCommentCommand
         {
-            get { return CreateCommand(o => PostCommentAsync().ConfigureAwait(false)); }
+            get { return CreateCommand(o => PostCommentAsync(PlayTime).ConfigureAwait(false)); }
         }
 
         #endregion
@@ -1973,8 +1976,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
-        Task PostCommentAsync()
+        Task PostCommentAsync(TimeSpan videoPosition)
         {
+            var getThreadkey = new Getthreadkey(Mediation);
+            getThreadkey.LoadAsync(VideoInformation.ThreadId).ContinueWith(t => {
+                var threadkeyModel = t.Result;
+                var msg = new Msg(Mediation);
+
+
+                return msg.PostAsync(
+                    VideoInformation.MessageServerUrl,
+                    VideoInformation.ThreadId,
+                    UserId,
+                    videoPosition,
+                    CommentThread.Ticket,
+                    "#",//postkey
+                    VideoInformation.IsPremium,
+                    PostCommandItems,
+                    PostCommentBody
+                );
+            });
 
             //VideoInformation.ThreadId;
 
@@ -2093,6 +2114,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
+            //CommentThread = rawMsgPacket.Thread.First(t => !string.IsNullOrWhiteSpace(t.Ticket) && t.Ticket.Trim() != "0");
+            CommentThread = rawMsgPacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+
             var comments = rawMsgPacket.Chat
                 .Where(c => !string.IsNullOrEmpty(c.Content))
                 .GroupBy(c => new { c.No, c.Fork })

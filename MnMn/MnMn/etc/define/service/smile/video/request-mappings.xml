@@ -39,7 +39,7 @@
 
 	<!-- コメント投稿 -->
 	<mapping key="video-msg-post" content-type="text/xml">
-		<item key="thread" type="simple" value="${thread}"  />
+		<item key="thread" type="simple" value="${thread-id}"  />
 		<item key="vpos" type="simple" value="${vpos}"  />
 		<item key="commands" type="simple" value="${commands}"  />
 		<item key="ticket" type="simple" value="${ticket}"  />
@@ -61,7 +61,7 @@
 		</content>
 	</mapping>
 
-		<!-- 検索API -->
+	<!-- 検索API -->
 	<mapping key="video-snapshot">
 		<item key="query" type="simple" value="${query}">
 			<bracket target="value" open="&quot;" close="&quot;" />

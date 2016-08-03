@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         public SmileVideoInformationViewModel(Mediation mediation, RawSmileContentsSearchItemModel search, int number)
-            : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter| SmileVideoInformationFlags.ViewCounter)
+            : this(mediation, number, SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.ViewCounter)
         {
             Search = search;
 
@@ -264,7 +264,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public Uri ThumbnailUri {
+        public Uri ThumbnailUri
+        {
             get
             {
                 switch(VideoInformationSource) {
@@ -323,7 +324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
-        public long SizeLow{ get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
+        public long SizeLow { get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
         public int ViewCounter
         {
             get
@@ -384,7 +385,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
         public Uri WatchUrl
         {
-            get {
+            get
+            {
                 switch(VideoInformationSource) {
                     case SmileVideoVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertUri(Thumb.WatchUrl);
@@ -538,6 +540,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 ThrowHasNotGetflv();
                 return Getflv.OptionalThreadId;
+            }
+        }
+
+        public bool IsPremium
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return Getflv.IsPremium == "1";
             }
         }
 

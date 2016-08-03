@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -75,16 +76,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public Task PostComment(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
+        public async Task PostAsync(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
 
                 page.ReplaceRequestParameters["thread-id"] = threadId;
-                page.ReplaceRequestParameters["vpos"] = threadId;
+                page.ReplaceRequestParameters["ticket"] = ticket;
+                page.ReplaceRequestParameters["postkey"] = postkey;
+                page.ReplaceRequestParameters["vpos"] = SmileVideoMsgUtility.ConvertRawElapsedTime(vpos);
+                page.ReplaceRequestParameters["premium"] = SmileVideoMsgUtility.ConvertRawIsPremium(isPremium);
+                page.ReplaceRequestParameters["user_id"] = userId;
+                page.ReplaceRequestParameters["commands"] = string.Join(" ", commands);
+                page.ReplaceRequestParameters["content"] = comment;
+
+                var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
             }
-            // video-msg-post
-            return Task.CompletedTask;
         }
 
         #endregion

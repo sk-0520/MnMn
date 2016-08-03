@@ -24,7 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class RawSmileVideoMsgThreadModel:ModelBase
+    public class RawSmileVideoMsgThreadModel: ModelBase
     {
         [XmlAttribute("server_time")]
         public string ServerTime { get; set; }
@@ -43,5 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 
         [XmlAttribute("resultcode")]
         public string ResultCode { get; set; }
+
+        [XmlAttribute("fork")]
+        public string Fork { get; set; }
     }
 }
