@@ -229,6 +229,7 @@
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\OutlinedTextBlock.cs" />
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoBookmarkManager.xaml.cs">
       <DependentUpon>SmileVideoBookmarkManager.xaml</DependentUpon>
     </Compile>
