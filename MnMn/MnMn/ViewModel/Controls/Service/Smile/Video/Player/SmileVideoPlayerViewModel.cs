@@ -1979,7 +1979,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var getThreadkey = new Getthreadkey(Mediation);
             //var threadkeyModel = getThreadkey.LoadAsync(VideoInformation.ThreadId);
 
-            var rawMessagePacket = await LoadMsgCoreAsync(1, 0, 0, 0, 0);
+            var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
             var commentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
             var commentCount = RawValueUtility.ConvertInteger(commentThread.LastRes);
             Debug.Assert(commentThread.Thread == VideoInformation.ThreadId);
