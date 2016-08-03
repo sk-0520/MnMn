@@ -770,10 +770,10 @@
                 <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
               </CheckBox>
               <DockPanel>
-                <Label Content="テキスト描画" />
-                <StackPanel>
-                  <RadioButton Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
-                  <RadioButton Content="影付き" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
+                <Label Content="テキスト描画" DockPanel.Dock="Left" />
+                <StackPanel Orientation="Horizontal">
+                  <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
+                  <RadioButton VerticalAlignment="Center" Content="影付き" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
                 </StackPanel>
               </DockPanel>
             </StackPanel>
