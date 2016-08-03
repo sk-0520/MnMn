@@ -57,5 +57,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var time = RawValueUtility.ConvertLong(s);
             return TimeSpan.FromMilliseconds(time * 10);
         }
+
+        public static string ConvertRawElapsedTime(TimeSpan time)
+        {
+            var ms = (int)(time.TotalMilliseconds) / 10;
+            return ms.ToString();
+        }
     }
 }

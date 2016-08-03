@@ -1087,7 +1087,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public ICommand PostCommentCommand
         {
-            get { return CreateCommand(o => PostComment()); }
+            get { return CreateCommand(o => PostCommentAsync().ConfigureAwait(false)); }
         }
 
         #endregion
@@ -1973,8 +1973,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
-        void PostComment()
+        Task PostCommentAsync()
         {
+
+            //VideoInformation.ThreadId;
+
+            return Task.CompletedTask;
         }
 
         #endregion

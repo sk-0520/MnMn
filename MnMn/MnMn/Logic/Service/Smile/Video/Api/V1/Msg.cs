@@ -34,7 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     /// <summary>
-    /// セッションが必要なのか不明。
+    ///
     /// </summary>
     public class Msg: SessionApiBase<SmileSessionViewModel>
     {
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                     page.ReplaceRequestParameters["threadkey"] = threadkeyModel.Threadkey;
                     page.ReplaceRequestParameters["force_184"] = threadkeyModel.Force184;
                 }
-                
+
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawMessage.Result))) {
@@ -73,8 +73,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                     return result;
                 }
             }
-
-            #endregion
         }
+
+        public Task PostComment(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, Define.ServiceType.SmileVideo)) {
+                page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
+
+                page.ReplaceRequestParameters["thread-id"] = threadId;
+                page.ReplaceRequestParameters["vpos"] = threadId;
+            }
+            // video-msg-post
+            return Task.CompletedTask;
+        }
+
+        #endregion
     }
 }
