@@ -27,6 +27,7 @@ using System.Windows.Media.Effects;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -188,6 +189,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool FontItalic { get { return Setting.Comment.FontItalic; } }
 
+        public TextShowKind TextShowKind
+        {
+            get { return Setting.Player.TextShowKind; }
+        }
+
         /// <summary>
         /// 前景ブラシ。
         /// </summary>
@@ -271,6 +277,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(FontBold),
                 nameof(FontItalic),
                 nameof(Opacity),
+            };
+            CallOnPropertyChange(propertyNames);
+        }
+
+        internal void ChangeTextShow()
+        {
+            var propertyNames = new[] {
+                nameof(TextShowKind),
+                nameof(Shadow),
             };
             CallOnPropertyChange(propertyNames);
         }

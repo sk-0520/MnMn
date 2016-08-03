@@ -25,6 +25,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
@@ -164,6 +165,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SmileVideoAutoPlay { get; } = true;
         public static bool SmileVideoLoadVideoInformation { get; } = true;
         public static int SmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
+        public static TextShowKind SmileVideoPlayerTextShowKind { get; } = TextShowKind.Outline;
         public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
         public static bool SmileVideoPlayerShowDetailArea { get; } = true;
         public static bool SmileVideoPlayerShowCommentList { get; } = true;

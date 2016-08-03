@@ -187,6 +187,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="Define\SourceLoadState.cs" />
+    <Compile Include="Define\TextShowType.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="IF\Control\ICheckable.cs" />
     <Compile Include="IF\Control\ISetView.cs" />

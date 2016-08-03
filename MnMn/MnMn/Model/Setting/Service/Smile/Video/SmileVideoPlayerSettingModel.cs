@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -60,6 +61,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool VisibleComment { get; set; } = Constants.PlayerVisibleComment;
+
+        /// <summary>
+        /// コメント描画方法。
+        /// </summary>
+        [DataMember]
+        public TextShowKind TextShowKind { get; set; } = Constants.SmileVideoPlayerTextShowKind;
 
         /// <summary>
         /// リプレイ再生するか。

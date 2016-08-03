@@ -626,6 +626,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public TextShowKind PlayerTextShowKind
+        {
+            get { return Setting.Player.TextShowKind; }
+            set
+            {
+                if(SetPropertyValue(Setting.Player, value, nameof(Setting.Player.TextShowKind))) {
+                    ChangedCommentContent();
+                }
+
+            }
+        }
+
         /// <summary>
         /// コメント有効表示領域の高さ。
         /// </summary>
@@ -1796,6 +1808,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             foreach(var comment in ShowingCommentList.ToArray()) {
                 comment.ViewModel.ChangeActualContent();
+                comment.ViewModel.ChangeTextShow();
             }
         }
 
