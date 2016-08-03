@@ -302,6 +302,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         { }
 
 
+        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
+        {
+            var getThreadkey = new Getthreadkey(Mediation);
+            var threadkeyModel = await getThreadkey.LoadAsync(
+                VideoInformation.ThreadId
+            );
+
+            var msg = new Msg(Mediation);
+            return await msg.LoadAsync(
+                VideoInformation.MessageServerUrl,
+                //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
+                VideoInformation.ThreadId,
+                VideoInformation.UserId,
+                getCount,
+                rangeHeadMinutes, rangeTailMinutes, rangeGetCount,
+                rangeGetAllCount,
+                threadkeyModel
+            );
+        }
+
         protected async Task<RawSmileVideoMsgPacketModel> LoadMsgAsync(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
@@ -323,22 +343,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Loading;
 
-            var getThreadkey = new Getthreadkey(Mediation);
-            var threadkeyModel = await getThreadkey.LoadAsync(
-                VideoInformation.ThreadId
-            );
+            //var getThreadkey = new Getthreadkey(Mediation);
+            //var threadkeyModel = await getThreadkey.LoadAsync(
+            //    VideoInformation.ThreadId
+            //);
 
-            var msg = new Msg(Mediation);
-            var rawMessagePacket = await msg.LoadAsync(
-                VideoInformation.MessageServerUrl,
-                //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
-                VideoInformation.ThreadId,
-                VideoInformation.UserId,
-                1000,
-                1, (int)VideoInformation.Length.TotalMinutes, 100,
-                500,
-                threadkeyModel
-            );
+            //var msg = new Msg(Mediation);
+            //var rawMessagePacket = await msg.LoadAsync(
+            //    VideoInformation.MessageServerUrl,
+            //    //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
+            //    VideoInformation.ThreadId,
+            //    VideoInformation.UserId,
+            //    1000,
+            //    1, (int)VideoInformation.Length.TotalMinutes, 100,
+            //    500,
+            //    threadkeyModel
+            //);
+            var rawMessagePacket = await LoadMsgCoreAsync(1000, 1, (int)VideoInformation.Length.TotalMinutes, 100, 500);
 
             // キャッシュ構築
             if(rawMessagePacket.Chat.Any()) {

@@ -108,6 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceRequestParameters["comment"] = comment;
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                Mediation.Logger.Trace(rawMessage.Result);
             }
         }
 

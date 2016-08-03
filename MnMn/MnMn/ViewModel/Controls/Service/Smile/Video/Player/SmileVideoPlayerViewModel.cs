@@ -182,8 +182,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Popup EnabledCommentPopup { get; set; }
 
-        RawSmileVideoMsgThreadModel CommentThread { get; set; }
-
         public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
 
         public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoCommentUtility.normalCommentColors);
@@ -1981,7 +1979,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var getThreadkey = new Getthreadkey(Mediation);
             //var threadkeyModel = getThreadkey.LoadAsync(VideoInformation.ThreadId);
 
-            Debug.Assert(CommentThread.Thread == VideoInformation.ThreadId);
+            var rawMessagePacket = await LoadMsgCoreAsync(1, 0, 0, 0, 0);
+            var commentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+            var commentCount = RawValueUtility.ConvertInteger(commentThread.LastRes);
+            Debug.Assert(commentThread.Thread == VideoInformation.ThreadId);
 
             var msg = new Msg(Mediation);
 
@@ -1995,7 +1996,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 VideoInformation.ThreadId,
                 Session.UserId,
                 videoPosition,
-                CommentThread.Ticket,
+                commentThread.Ticket,
                 postKey,
                 VideoInformation.IsPremium,
                 PostCommandItems,
@@ -2119,9 +2120,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
-            //CommentThread = rawMsgPacket.Thread.First(t => !string.IsNullOrWhiteSpace(t.Ticket) && t.Ticket.Trim() != "0");
-            CommentThread = rawMsgPacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
-
             var comments = rawMsgPacket.Chat
                 .Where(c => !string.IsNullOrEmpty(c.Content))
                 .GroupBy(c => new { c.No, c.Fork })
