@@ -7,6 +7,8 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
   Opacity="{Binding Opacity}"
 
@@ -17,9 +19,10 @@
   <UserControl.Resources>
     <cttn_sl_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
     <cttn_sl_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+    <app_view_converter:OutlinedTextBlockFontSizeToStrokeConverter x:Key="OutlinedTextBlockFontSizeToStrokeConverter" />
   </UserControl.Resources>
   <Grid>
-    <TextBlock
+    <!--<app_view_controls:OutlinedTextBlock
       FontSize="{Binding FontSize}"
       FontFamily="{Binding FontFamily}"
       FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
@@ -29,21 +32,25 @@
       VerticalAlignment="Stretch"
       HorizontalAlignment="Center"
     >
-      <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
-      <TextBlock.Foreground>
+      <app_view_controls:OutlinedTextBlock.Margin>1,1,0,0</app_view_controls:OutlinedTextBlock.Margin>
+      <app_view_controls:OutlinedTextBlock.Foreground>
         <SolidColorBrush Color="{Binding Shadow}" />
-      </TextBlock.Foreground>
-      <TextBlock.Effect>
+      </app_view_controls:OutlinedTextBlock.Foreground>
+      <app_view_controls:OutlinedTextBlock.Effect>
         <BlurEffect
           Radius="2"
           RenderingBias="Performance"
         />
-      </TextBlock.Effect>
-    </TextBlock>
-    <TextBlock
+      </app_view_controls:OutlinedTextBlock.Effect>
+    </app_view_controls:OutlinedTextBlock>-->
+    <app_view_controls:OutlinedTextBlock
       FontSize="{Binding FontSize}"
       FontFamily="{Binding FontFamily}"
-      Foreground="{Binding ActualForeground}"
+      Fill="{Binding ActualForeground}"
+      Stroke="{Binding Stroke}"
+      StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
+      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
       Text="{Binding ActualContent}"
       VerticalAlignment="Stretch"
       HorizontalAlignment="Center"

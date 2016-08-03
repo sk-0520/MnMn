@@ -66,9 +66,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Foreground = new SolidColorBrush(foreColor);
             FreezableUtility.SafeFreeze(Foreground);
             Shadow = MediaUtility.GetAutoColor(foreColor);
+            var strokeColor = MediaUtility.GetAutoColor(foreColor);
+            Stroke = new SolidColorBrush(Color.FromArgb(0x7e, strokeColor.R, strokeColor.G, strokeColor.B));
+            FreezableUtility.SafeFreeze(Stroke);
 
             ActualForeground = Foreground;
             ActualShadow = Shadow;
+            ActualStroke = Stroke;
 
             FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
 
@@ -197,9 +201,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public Color Shadow { get; }
         /// <summary>
+        /// 縁取り。
+        /// </summary>
+        public Brush Stroke { get; }
+        /// <summary>
         /// 実際に使用する背景色。
         /// </summary>
         public Color ActualShadow { get; private set; }
+        /// <summary>
+        /// 実際に使用する縁取り。
+        /// </summary>
+        public Brush ActualStroke { get; private set; }
 
         public double Opacity { get { return Setting.Comment.FontAlpha; } }
 

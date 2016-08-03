@@ -724,7 +724,7 @@
               </ListView>
             </DockPanel>
           </TabItem>
-          <TabItem Header="ローカルNG">
+          <TabItem Header="ローカルNG" Margin="0">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding LocalCommentFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
@@ -748,8 +748,8 @@
               <Separator />
               <app_view_controls:FontSelectControl
                 FamilyName="{Binding CommentFontFamily}"
-                IsEnabledBold="False"
-                IsEnabledItalic="False"
+                IsEnabledBold="True"
+                IsEnabledItalic="True"
                 IsBold="{Binding CommentFontBold}"
                 IsItalic="{Binding CommentFontItalic}"
                 Size="{Binding CommentFontSize}"
