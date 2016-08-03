@@ -1976,30 +1976,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
-        Task PostCommentAsync(TimeSpan videoPosition)
+        async Task PostCommentAsync(TimeSpan videoPosition)
         {
             var getThreadkey = new Getthreadkey(Mediation);
-            getThreadkey.LoadAsync(VideoInformation.ThreadId).ContinueWith(t => {
-                var threadkeyModel = t.Result;
-                var msg = new Msg(Mediation);
+            //var threadkeyModel = getThreadkey.LoadAsync(VideoInformation.ThreadId);
 
+            Debug.Assert(CommentThread.Thread == VideoInformation.ThreadId);
 
-                return msg.PostAsync(
-                    VideoInformation.MessageServerUrl,
-                    VideoInformation.ThreadId,
-                    UserId,
-                    videoPosition,
-                    CommentThread.Ticket,
-                    "#",//postkey
-                    VideoInformation.IsPremium,
-                    PostCommandItems,
-                    PostCommentBody
-                );
-            });
+            var msg = new Msg(Mediation);
+
+            var postKey = await msg.LoadPostKey(VideoInformation.ThreadId, VideoInformation.CommentCounter);
+            if(postKey == null) {
+                return;
+            }
+
+            await msg.PostAsync(
+                VideoInformation.MessageServerUrl,
+                VideoInformation.ThreadId,
+                Session.UserId,
+                videoPosition,
+                CommentThread.Ticket,
+                postKey,
+                VideoInformation.IsPremium,
+                PostCommandItems,
+                PostCommentBody
+            );
 
             //VideoInformation.ThreadId;
 
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
 
         #endregion

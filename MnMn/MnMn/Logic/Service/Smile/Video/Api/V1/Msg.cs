@@ -76,6 +76,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
+        public async Task<string> LoadPostKey(string threadId, int commentCount)
+        {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPostKey, Define.ServiceType.SmileVideo)) {
+                page.ReplaceUriParameters["block-no"] = (commentCount / 100).ToString();
+                page.ReplaceUriParameters["thread-id"] = threadId;
+
+                var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
+                if(rawMessage.IsSuccess) {
+                    var head = "postkey=";
+                    if(rawMessage.Result.IndexOf(head) == 0) {
+                        return rawMessage.Result.Substring(head.Length);
+                    }
+                }
+
+                return null;
+            }
+        }
         public async Task PostAsync(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, Define.ServiceType.SmileVideo)) {
@@ -88,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceRequestParameters["premium"] = SmileVideoMsgUtility.ConvertRawIsPremium(isPremium);
                 page.ReplaceRequestParameters["user_id"] = userId;
                 page.ReplaceRequestParameters["commands"] = string.Join(" ", commands);
-                page.ReplaceRequestParameters["content"] = comment;
+                page.ReplaceRequestParameters["comment"] = comment;
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
             }

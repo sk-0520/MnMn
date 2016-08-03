@@ -46,17 +46,18 @@
 		<item key="user_id" type="simple" value="${user_id}"  />
 		<item key="postkey" type="simple" value="${postkey}"  />
 		<item key="premium" type="simple" value="${premium}"  />
-		<content trim="content" oneline="true">
+		<item key="comment" type="simple" value="${comment}"  />
+		<content trim="content" oneline="false">
 			<![CDATA[
 				<chat
-					thread=\"${thread}\"
-					vpos=\"${vpos}\"
-					mail=\"${commands}\"
-					ticket=\"${ticket}\"
-					user_id=\"${user_id}\"
-					postkey=\"${postkey}\"
-					premium=\"${premium}\"
-				>${content}</chat>
+					thread="${thread}"
+					vpos="${vpos}"
+					mail="${commands}"
+					ticket="${ticket}"
+					user_id="${user_id}"
+					postkey="${postkey}"
+					premium="${premium}"
+				>${comment}</chat>
 			]]>
 		</content>
 	</mapping>

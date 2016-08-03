@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
@@ -84,11 +85,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var response = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)response.Result;
+
+            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
         }
 
         #region property
 
         protected Mediation Mediation { get; }
+        protected SmileSessionViewModel Session { get; }
 
         protected SmileVideoSettingModel Setting { get; }
 
@@ -227,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl, VideoInformation.MovieType);
         }
 
-        async Task LoadGetflvAsync(SmileSessionViewModel session)
+        async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
 
@@ -245,7 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadVideoEnd()
         { }
 
-        protected async Task LoadVideoAsync(SmileSessionViewModel session, FileInfo donwloadFile, long headPosition)
+        protected async Task LoadVideoAsync(FileInfo donwloadFile, long headPosition)
         {
             OnLoadVideoStart();
 
@@ -253,7 +257,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoTotalSize = VideoInformation.VideoSize;
             VideoFile = donwloadFile;
 
-            using(var downloader = new SmileVideoDownloader(VideoInformation.MovieServerUrl, session, VideoInformation.WatchUrl) {
+            using(var downloader = new SmileVideoDownloader(VideoInformation.MovieServerUrl, Session, VideoInformation.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
@@ -298,7 +302,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         { }
 
 
-        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgAsync(SmileSessionViewModel session, CacheSpan msgCacheSpan)
+        protected async Task<RawSmileVideoMsgPacketModel> LoadMsgAsync(CacheSpan msgCacheSpan)
         {
             OnLoadMsgStart();
 
@@ -385,18 +389,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             OnLoadDataWithSessionStart();
 
-            var request = new RequestModel(RequestKind.Session, ServiceType.Smile);
-            var response = Mediation.Request(request);
-            var session = (SmileSessionViewModel)response.Result;
             var tcs = new CancellationTokenSource();
-            await LoadGetflvAsync(session);
+            await LoadGetflvAsync();
 
             if(VideoInformation.HasGetflvError) {
                 InformationLoadState = LoadState.Failure;
                 return;
             }
 
-            var commentTask = LoadMsgAsync(session, Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
+            var commentTask = LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
 
             // キャッシュとかエコノミー確認であれこれ分岐
             Debug.Assert(DownloadDirectory != null);
@@ -436,7 +437,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 donwloadFile = normalVideoFile;
             }
 
-            await LoadVideoAsync(session, donwloadFile, headPosition);
+            await LoadVideoAsync(donwloadFile, headPosition);
         }
 
         protected virtual void OnLoadStart()

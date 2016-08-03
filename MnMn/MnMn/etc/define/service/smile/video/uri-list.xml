@@ -16,6 +16,7 @@
 
 	<item key="video-msg" uri="${msg-uri}" param="none" request-type="mapping" />
 	<item key="video-msg-post" uri="${msg-uri}" param="none" request-type="mapping" />
+	<item key="video-msg-post-key" uri="http://flapi.nicovideo.jp/api/getpostkey/" param="query" />
 
 	<item key="video-snapshot" uri="http://api.search.nicovideo.jp/api/snapshot/" param="none" />
 

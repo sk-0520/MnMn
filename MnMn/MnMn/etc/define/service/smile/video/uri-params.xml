@@ -28,7 +28,7 @@
 		<item key="rss" value="2.0" />
 		<item key="lang" value="${lang}" />
 	</param>
-	
+
 	<param key="video-getrelation">
 		<item key="page" value="${page}" />
 		<item key="sort" value="${sort}" />
@@ -45,4 +45,12 @@
 		<item key="page" value="${page}" />
 	</param>
 
+	<param key="video-msg-post-key">
+		<item key="version" value="1" />
+		<item key="yugi" value="" />
+		<item key="device" value="1" />
+		<item key="block_no" value="${block-no}" />
+		<item key="thread" value="${thread-id}" />
+		<item key="version_sub" value="2" />
+	</param>
 </parameters>
