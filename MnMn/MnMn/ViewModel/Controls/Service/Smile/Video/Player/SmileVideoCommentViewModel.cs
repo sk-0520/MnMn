@@ -66,14 +66,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var foreColor = SmileVideoCommentUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
             Foreground = new SolidColorBrush(foreColor);
             FreezableUtility.SafeFreeze(Foreground);
-            Shadow = MediaUtility.GetAutoColor(foreColor);
+
             var strokeColor = MediaUtility.GetAutoColor(foreColor);
-            Stroke = new SolidColorBrush(Color.FromArgb(0x7e, strokeColor.R, strokeColor.G, strokeColor.B));
-            FreezableUtility.SafeFreeze(Stroke);
+            Outline = new SolidColorBrush(Color.FromArgb(0x80, strokeColor.R, strokeColor.G, strokeColor.B));
+            FreezableUtility.SafeFreeze(Outline);
 
             ActualForeground = Foreground;
-            ActualShadow = Shadow;
-            ActualStroke = Stroke;
+            ActualOutline = Outline;
 
             FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
 
@@ -203,21 +202,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public Brush ActualForeground { get; private set; }
         /// <summary>
-        /// 背景色。
+        /// 背景色/縁取り。
         /// </summary>
-        public Color Shadow { get; }
+        public Brush Outline { get; }
         /// <summary>
-        /// 縁取り。
+        /// 実際に使用する背景色/背景色。
         /// </summary>
-        public Brush Stroke { get; }
-        /// <summary>
-        /// 実際に使用する背景色。
-        /// </summary>
-        public Color ActualShadow { get; private set; }
-        /// <summary>
-        /// 実際に使用する縁取り。
-        /// </summary>
-        public Brush ActualStroke { get; private set; }
+        public Brush ActualOutline { get; private set; }
 
         public double Opacity { get { return Setting.Comment.FontAlpha; } }
 
@@ -285,7 +276,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var propertyNames = new[] {
                 nameof(TextShowKind),
-                nameof(Shadow),
+                nameof(ActualOutline),
             };
             CallOnPropertyChange(propertyNames);
         }

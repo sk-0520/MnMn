@@ -33,7 +33,7 @@
                   FontSize="{Binding FontSize}"
                   FontFamily="{Binding FontFamily}"
                   Fill="{Binding ActualForeground}"
-                  Stroke="{Binding Stroke}"
+                  Stroke="{Binding ActualOutline}"
                   StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
                   FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
                   FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
@@ -49,19 +49,17 @@
               <Setter.Value>
                 <Grid>
                   <TextBlock
-                      FontSize="{Binding FontSize}"
-                      FontFamily="{Binding FontFamily}"
-                      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                      Text="{Binding ActualContent}"
-                      Opacity="0.8"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Center"
-                    >
+                    FontSize="{Binding FontSize}"
+                    FontFamily="{Binding FontFamily}"
+                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
+                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+                    Foreground="{Binding ActualOutline}"
+                    Text="{Binding ActualContent}"
+                    Opacity="0.8"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center"
+                  >
                     <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
-                    <TextBlock.Foreground>
-                      <SolidColorBrush Color="{Binding Shadow}" />
-                    </TextBlock.Foreground>
                     <TextBlock.Effect>
                       <BlurEffect
                           Radius="2"
@@ -70,15 +68,15 @@
                     </TextBlock.Effect>
                   </TextBlock>
                   <TextBlock
-                      FontSize="{Binding FontSize}"
-                      FontFamily="{Binding FontFamily}"
-                      Foreground="{Binding ActualForeground}"
-                      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                      Text="{Binding ActualContent}"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Center"
-                    />
+                    FontSize="{Binding FontSize}"
+                    FontFamily="{Binding FontFamily}"
+                    Foreground="{Binding ActualForeground}"
+                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
+                    Text="{Binding ActualContent}"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center"
+                  />
                 </Grid>
               </Setter.Value>
             </Setter>

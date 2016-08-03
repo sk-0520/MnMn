@@ -1845,6 +1845,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Comment.FontAlpha = Constants.CommentFontAlpha;
             Setting.Comment.ShowTime = Constants.CommentShowTime;
             Setting.Comment.ConvertPairYenSlash = Constants.CommentConvertPairYenSlash;
+            Setting.Player.TextShowKind = Constants.SmileVideoPlayerTextShowKind;
 
             ChangedCommentFont();
             ChangedCommentContent();
@@ -1857,6 +1858,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentFontAlpha),
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
+                nameof(PlayerTextShowKind),
             };
             CallOnPropertyChange(propertyNames);
         }
