@@ -49,6 +49,8 @@
       Fill="{Binding ActualForeground}"
       Stroke="{Binding Stroke}"
       StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
+      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
       Text="{Binding ActualContent}"
       VerticalAlignment="Stretch"
       HorizontalAlignment="Center"
