@@ -772,8 +772,8 @@
               <DockPanel>
                 <Label Content="テキスト描画" DockPanel.Dock="Left" />
                 <StackPanel Orientation="Horizontal">
-                  <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
                   <RadioButton VerticalAlignment="Center" Content="影付き" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
+                  <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
                 </StackPanel>
               </DockPanel>
             </StackPanel>

@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SmileVideoAutoPlay { get; } = true;
         public static bool SmileVideoLoadVideoInformation { get; } = true;
         public static int SmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
-        public static TextShowKind SmileVideoPlayerTextShowKind { get; } = TextShowKind.Outline;
+        public static TextShowKind SmileVideoPlayerTextShowKind { get; } = TextShowKind.Shadow;
         public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
         public static bool SmileVideoPlayerShowDetailArea { get; } = true;
         public static bool SmileVideoPlayerShowCommentList { get; } = true;
