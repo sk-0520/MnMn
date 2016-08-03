@@ -199,8 +199,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             this.EnsureFormattedText();
 
             // update the formatted text with the final size
-            this.formattedText.MaxTextWidth = finalSize.Width;
-            this.formattedText.MaxTextHeight = finalSize.Height;
+            if(finalSize.Width > 0) {
+                this.formattedText.MaxTextWidth = finalSize.Width;
+            }
+            if(finalSize.Height > 0) {
+                this.formattedText.MaxTextHeight = finalSize.Height;
+            }
 
             // need to re-generate the geometry now that the dimensions have changed
             this.textGeometry = null;
@@ -230,12 +234,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void EnsureFormattedText()
         {
-            if(this.formattedText != null || this.Text == null) {
+            if(this.formattedText != null) {
                 return;
             }
 
             this.formattedText = new FormattedText(
-                this.Text,
+                this.Text ?? string.Empty,
                 CultureInfo.CurrentUICulture,
                 this.FlowDirection,
                 new Typeface(this.FontFamily, this.FontStyle, this.FontWeight, FontStretches.Normal),
