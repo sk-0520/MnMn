@@ -154,6 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Color _postCommandColor = Colors.White;
         string _postBeforeCommand;
         string _postAfterCommand;
+        string _postCommentBody;
 
         #endregion
 
@@ -812,6 +813,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         public CollectionModel<string> PostCommandItems { get; } = new CollectionModel<string>();
+
+        public string PostCommentBody
+        {
+            get { return this._postCommentBody; }
+            set { SetVariableValue(ref this._postCommentBody, value); }
+        }
+
 
         #endregion
 
