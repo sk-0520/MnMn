@@ -8,6 +8,7 @@
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
   Opacity="{Binding Opacity}"
 
@@ -18,6 +19,7 @@
   <UserControl.Resources>
     <cttn_sl_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
     <cttn_sl_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
+    <app_view_converter:OutlinedTextBlockFontSizeToStrokeConverter x:Key="OutlinedTextBlockFontSizeToStrokeConverter" />
   </UserControl.Resources>
   <Grid>
     <!--<app_view_controls:OutlinedTextBlock
@@ -45,6 +47,8 @@
       FontSize="{Binding FontSize}"
       FontFamily="{Binding FontFamily}"
       Fill="{Binding ActualForeground}"
+      Stroke="{Binding Stroke}"
+      StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
       Text="{Binding ActualContent}"
       VerticalAlignment="Stretch"
       HorizontalAlignment="Center"

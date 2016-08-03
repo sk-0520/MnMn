@@ -191,7 +191,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             this.EnsureGeometry();
 
-            drawingContext.DrawGeometry(this.Fill, new Pen(this.Stroke, this.StrokeThickness), this.textGeometry);
+            drawingContext.DrawGeometry(null, new Pen(this.Stroke, this.StrokeThickness), this.textGeometry);
+            drawingContext.DrawGeometry(Fill, null, this.textGeometry);
         }
 
         protected override Size MeasureOverride(Size availableSize)

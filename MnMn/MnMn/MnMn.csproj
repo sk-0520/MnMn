@@ -235,6 +235,7 @@
     </Compile>
     <Compile Include="View\Converter\EnumDisplayConverter.cs" />
     <Compile Include="View\Converter\FontFamilyToNameConverter.cs" />
+    <Compile Include="View\Converter\OutlinedTextBlockFontSizeToStrokeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
     <Compile Include="View\Logic\Service\Smile\Video\SmileVideoFinderStyleSelector.cs" />
