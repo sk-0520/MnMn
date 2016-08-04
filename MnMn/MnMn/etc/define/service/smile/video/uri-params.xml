@@ -46,11 +46,11 @@
 	</param>
 
 	<param key="video-msg-post-key">
-		<item key="version" value="1" />
-		<item key="yugi" value="" />
 		<item key="device" value="1" />
-		<item key="block_no" value="${block-no}" />
 		<item key="thread" value="${thread-id}" />
+		<item key="block_no" value="${block-no}" />
+		<item key="version" value="1" />
 		<item key="version_sub" value="2" />
+		<item key="yugi" value="" />
 	</param>
 </parameters>

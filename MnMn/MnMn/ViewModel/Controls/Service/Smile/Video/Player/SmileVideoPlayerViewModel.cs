@@ -1999,7 +1999,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Session.UserId,
                 videoPosition,
                 CommentThread.Ticket,
-                postKey,
+                postKey.PostKey,
                 VideoInformation.IsPremium,
                 PostCommandItems,
                 PostCommentBody

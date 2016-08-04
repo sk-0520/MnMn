@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<string> LoadPostKey(string threadId, int commentCount)
+        public async Task<RawSmileVideoPostKeyModel> LoadPostKey(string threadId, int commentCount)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPostKey, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["block-no"] = (Math.Floor((commentCount + 1) / 100.0)).ToString();
@@ -84,10 +84,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(rawMessage.IsSuccess) {
-                    var head = "postkey=";
-                    if(rawMessage.Result.IndexOf(head) == 0) {
-                        return rawMessage.Result.Substring(head.Length);
-                    }
+                    //var head = "postkey=";
+                    //if(rawMessage.Result.IndexOf(head) == 0) {
+                    //    return rawMessage.Result.Substring(head.Length);
+                    //}
+                    var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoPostKeyModel>(rawMessage.Result);
+                    return result;
                 }
 
                 return null;

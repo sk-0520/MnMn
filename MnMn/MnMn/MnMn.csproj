@@ -222,6 +222,7 @@
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Logic\Utility\FontPropertyUtility.cs" />
     <Compile Include="Model\DefinedImageModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoPostKeyModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringElementViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeFinderViewModel.cs" />
