@@ -167,8 +167,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             GlobalCommentFilering = filteringResult.Filtering;
-
-            ChangedPostCommands();
         }
 
         #region property
@@ -324,12 +322,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             private set { SetVariableValue(ref this._originalPosterCommentListCount, value); }
         }
 
-
-
         public string VideoId
         {
             get { return VideoInformation.VideoId; }
         }
+
+        public bool IsEnabledPostAnonymous { get { return VideoInformation?.IsOfficialVideo ?? false; } }
 
         /// <summary>
         /// 初回再生か。
@@ -1951,11 +1949,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             yield return PostBeforeCommand;
 
-            yield return SmileVideoCommentUtility.ConvertRawIsAnonymous(IsPostAnonymous);
-
-            yield return SmileVideoCommentUtility.ConvertRawVerticalAlign(PostCommandVertical);
-            yield return SmileVideoCommentUtility.ConvertRawFontSize(PostCommandSize);
-            yield return SmileVideoCommentUtility.ConvertRawForeColor(PostCommandColor);
+            if(!IsEnabledPostAnonymous) {
+                yield return SmileVideoCommentUtility.ConvertRawIsAnonymous(IsPostAnonymous);
+            }
+            if(PostCommandVertical != SmileVideoCommentVertical.Normal) {
+                yield return SmileVideoCommentUtility.ConvertRawVerticalAlign(PostCommandVertical);
+            }
+            if(PostCommandSize != SmileVideoCommentSize.Medium) {
+                yield return SmileVideoCommentUtility.ConvertRawFontSize(PostCommandSize);
+            }
+            if(PostCommandColor != Colors.White) {
+                yield return SmileVideoCommentUtility.ConvertRawForeColor(PostCommandColor);
+            }
 
             yield return PostAfterCommand;
         }
@@ -1988,12 +1993,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var msg = new Msg(Mediation);
 
-            var postKey = await msg.LoadPostKey(VideoInformation.ThreadId, VideoInformation.CommentCounter);
+            var postKey = await msg.LoadPostKeyAsync(VideoInformation.ThreadId, commentCount);
             if(postKey == null) {
                 return;
             }
 
-            await msg.PostAsync(
+            var resultPost = await msg.PostAsync(
                 VideoInformation.MessageServerUrl,
                 VideoInformation.ThreadId,
                 Session.UserId,
@@ -2154,6 +2159,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnLoadGetthumbinfoEnd()
         {
+            ChangedPostCommands();
+
             if(!PlayListItems.Any()) {
                 PlayListItems.Add(VideoInformation);
             }
@@ -2169,6 +2176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(LocalCommentFilering),
                 nameof(VideoId),
                 nameof(Title),
+                nameof(IsEnabledPostAnonymous),
                 nameof(VideoInformation),
             };
             CallOnPropertyChange(propertyNames);

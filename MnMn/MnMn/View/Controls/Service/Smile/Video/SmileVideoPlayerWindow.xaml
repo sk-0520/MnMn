@@ -52,6 +52,7 @@
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
+      <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
@@ -528,7 +529,7 @@
                       </ListBox.ItemContainerStyle>
                     </ListBox>
                   </StackPanel>
-                  <CheckBox IsChecked="{Binding IsPostAnonymous}">184投稿</CheckBox>
+                  <CheckBox IsEnabled="{Binding IsEnabledPostAnonymous, Converter={StaticResource LogicalNotConverter}}" IsChecked="{Binding IsPostAnonymous}">184投稿</CheckBox>
                   <Separator />
                   <StackPanel Orientation="Horizontal">
                     <Label>先頭追加</Label>

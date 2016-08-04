@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<RawSmileVideoPostKeyModel> LoadPostKey(string threadId, int commentCount)
+        public async Task<RawSmileVideoPostKeyModel> LoadPostKeyAsync(string threadId, int commentCount)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPostKey, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["block-no"] = (Math.Floor((commentCount + 1) / 100.0)).ToString();

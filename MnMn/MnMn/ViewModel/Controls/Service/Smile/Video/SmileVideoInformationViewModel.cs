@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
@@ -446,6 +447,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 ThrowNotGetthumbinfoSource();
                 return Thumb.UserId;
+            }
+        }
+
+        public bool IsOfficialVideo
+        {
+            get
+            {
+                object resultIsWeb;
+                if(Mediation.ConvertValue(out resultIsWeb, typeof(bool), SmileMediationKey.inputIsScrapingVideoId, VideoId, typeof(string), ServiceType.Smile)) {
+                    var result = (bool)resultIsWeb;
+                    return result;
+                } else {
+                    throw new NotSupportedException(VideoId);
+                }
             }
         }
 
