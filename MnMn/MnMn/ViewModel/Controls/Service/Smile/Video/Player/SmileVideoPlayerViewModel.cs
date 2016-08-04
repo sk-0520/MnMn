@@ -1979,10 +1979,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var getThreadkey = new Getthreadkey(Mediation);
             //var threadkeyModel = getThreadkey.LoadAsync(VideoInformation.ThreadId);
 
-            var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
-            var commentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
-            var commentCount = RawValueUtility.ConvertInteger(commentThread.LastRes);
-            Debug.Assert(commentThread.Thread == VideoInformation.ThreadId);
+            if(CommentThread == null) {
+                var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
+                ImportCommentThread(rawMessagePacket);
+            }
+            var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes);
+            Debug.Assert(CommentThread.Thread == VideoInformation.ThreadId);
 
             var msg = new Msg(Mediation);
 
@@ -1996,7 +1998,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 VideoInformation.ThreadId,
                 Session.UserId,
                 videoPosition,
-                commentThread.Ticket,
+                CommentThread.Ticket,
                 postKey,
                 VideoInformation.IsPremium,
                 PostCommandItems,

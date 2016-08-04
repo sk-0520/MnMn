@@ -106,6 +106,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected long DonwloadStartPosition { get; private set; }
 
+        protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
+
         public LoadState InformationLoadState
         {
             get { return this._informationLoadState; }
@@ -301,6 +303,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadMsgEnd()
         { }
 
+        protected void ImportCommentThread(RawSmileVideoMsgPacketModel rawMessagePacket)
+        {
+            CommentThread = rawMessagePacket.Thread.First(t => string.IsNullOrWhiteSpace(t.Fork));
+        }
 
         protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
         {
@@ -360,6 +366,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //    threadkeyModel
             //);
             var rawMessagePacket = await LoadMsgCoreAsync(1000, 1, (int)VideoInformation.Length.TotalMinutes, 100, 500);
+            ImportCommentThread(rawMessagePacket);
 
             // キャッシュ構築
             if(rawMessagePacket.Chat.Any()) {

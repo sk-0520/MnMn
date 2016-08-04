@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         public async Task<string> LoadPostKey(string threadId, int commentCount)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPostKey, Define.ServiceType.SmileVideo)) {
-                page.ReplaceUriParameters["block-no"] = ((commentCount + 1) / 100).ToString();
+                page.ReplaceUriParameters["block-no"] = (Math.Floor((commentCount + 1) / 100.0)).ToString();
                 page.ReplaceUriParameters["thread-id"] = threadId;
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
