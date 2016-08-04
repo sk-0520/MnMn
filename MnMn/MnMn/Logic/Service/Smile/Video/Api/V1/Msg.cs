@@ -45,9 +45,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoMsgPacketModel ConvertFromRawData(Stream stream)
+        public static RawSmileVideoMsgPacketModel ConvertFromRawPacketData(Stream stream)
         {
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketModel>(stream);
+        }
+
+        public static RawSmileVideoMsgPacketResultModel ConvertFromRawPacketResultData(Stream stream)
+        {
+            return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoMsgPacketResultModel>(stream);
         }
 
         public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
@@ -70,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawMessage.Result))) {
-                    var result = ConvertFromRawData(stream);
+                    var result = ConvertFromRawPacketData(stream);
                     return result;
                 }
             }
@@ -95,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 return null;
             }
         }
-        public async Task PostAsync(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
+        public async Task<RawSmileVideoMsgPacketResultModel> PostAsync(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
         {
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
@@ -109,8 +114,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceRequestParameters["commands"] = string.Join(" ", commands);
                 page.ReplaceRequestParameters["comment"] = comment;
 
-                var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
-                Mediation.Logger.Trace(rawMessage.Result);
+                var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
+                if(response.IsSuccess) {
+                    Mediation.Logger.Trace(response.Result);
+                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(response.Result))) {
+                        var result = ConvertFromRawPacketResultData(stream);
+                        return result;
+                    }
+                }
+
+                return null;
             }
         }
 

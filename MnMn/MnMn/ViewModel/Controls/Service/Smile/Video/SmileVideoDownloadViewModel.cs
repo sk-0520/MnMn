@@ -340,7 +340,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
                     CommentLoadState = LoadState.Loading;
                     using(var stream = new FileStream(cacheFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        var result = Msg.ConvertFromRawData(stream);
+                        var result = Msg.ConvertFromRawPacketData(stream);
                         OnLoadMsgEnd();
                         return result;
                     }
