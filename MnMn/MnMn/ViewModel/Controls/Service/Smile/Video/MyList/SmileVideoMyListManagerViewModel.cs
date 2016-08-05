@@ -641,26 +641,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkMyListAsync(string myListId)
         {
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
-            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheVideosDirectoryName);
-            var cachedFile = new FileInfo(Path.Combine(cachedDirPath, PathUtility.CreateFileName(myListId, "xml")));
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var newMyListTask = myList.LoadGroupAsync(myListId);
 
-            if(!cachedFile.Exists || cachedFile.Length <= Constants.MinimumXmlFileSize) {
+            var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
+            var nowMyList = smileSetting.MyList.Bookmark.FirstOrDefault(m => m.MyListId == myListId);
+            if(nowMyList == null) {
                 return Task.FromResult(Enumerable.Empty<SmileVideoVideoItemModel>());
             }
 
-            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-            var newMyListTask = myList.LoadGroupAsync(myListId);
-            var cachedModel = RestrictUtility.Block(() => {
-                using(var stream = new FileStream(cachedFile.FullName, FileMode.Open, FileAccess.Read)) {
-                    return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
-                }
-            });
-
-            var cachedViewModels = cachedModel.Channel.Items
-                .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None))
-                .ToArray();
-            ;
 
             return newMyListTask.ContinueWith(t => {
                 var newModels = t.Result.Channel.Items;
@@ -671,16 +660,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
                 var exceptVideoViewModel = newViewModels
                     .Select(i => i.VideoId)
-                    .Except(cachedViewModels.Select(i => i.VideoId))
+                    .Except(nowMyList.Videos)
                     .Select(v => newViewModels.First(i => i.VideoId == v))
                     .Select(i => i.ToVideoItemModel())
                     .ToArray()
                 ;
 
                 if(exceptVideoViewModel.Any()) {
-                    using(var stream = new FileStream(cachedFile.FullName, FileMode.Create, FileAccess.Write)) {
-                        SerializeUtility.SaveXmlSerializeToStream(stream, newModels);
-                    }
+                    nowMyList.Videos.InitializeRange(newViewModels.Select(i => i.VideoId));
                 }
 
                 return (IEnumerable<SmileVideoVideoItemModel>)exceptVideoViewModel;
