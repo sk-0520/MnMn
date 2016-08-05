@@ -182,15 +182,8 @@
                 </Button>
               </DockPanel>
               <DockPanel>
-                <TextBlock DockPanel.Dock="Right" Margin="2">
-                  <Run>回数: </Run>
-                  <Run Text="{Binding Count, Mode=OneWay}" />
-                </TextBlock>
-
-                <TextBlock DockPanel.Dock="Right" Margin="2">
-                  <Run>結果: </Run>
-                  <Run Text="{Binding TotalCount, Mode=OneWay}" />
-                </TextBlock>
+                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding Count, StringFormat=回数: {0:#,#.}}" />
+                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding TotalCount, StringFormat=結果: {0:#,#.}}" />
 
                 <StackPanel Orientation="Horizontal" Margin="2,2">
                   <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">タグ検索</Button>
