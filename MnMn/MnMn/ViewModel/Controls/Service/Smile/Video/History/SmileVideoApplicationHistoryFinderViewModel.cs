@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
                 var detailModel = new RawSmileVideoFeedDetailModel();
                 detailModel.Title = model.VideoTitle;
                 detailModel.VideoId = model.VideoId;
+                detailModel.FirstRetrieve = model.FirstRetrieve.ToString("s");
                 detailModel.Length = SmileVideoFeedUtility.ConvertM3H2TimeFromTimeSpan(model.Length);
 
                 item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
