@@ -67,12 +67,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Foreground = new SolidColorBrush(foreColor);
             FreezableUtility.SafeFreeze(Foreground);
 
-            var strokeColor = MediaUtility.GetAutoColor(foreColor);
-            Outline = new SolidColorBrush(Color.FromArgb(0x80, strokeColor.R, strokeColor.G, strokeColor.B));
-            FreezableUtility.SafeFreeze(Outline);
+            var outlineColor = MediaUtility.GetAutoColor(foreColor);
+            ShadowColor = outlineColor;
+            StrokeColor = Color.FromArgb(0x80, outlineColor.R, outlineColor.G, outlineColor.B);
 
             ActualForeground = Foreground;
-            ActualOutline = Outline;
+            ActualShadowColor = ShadowColor;
+            ActualStrokeColor = StrokeColor;
 
             FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
 
@@ -202,13 +203,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public Brush ActualForeground { get; private set; }
         /// <summary>
-        /// 背景色/縁取り。
+        /// 影色。
         /// </summary>
-        public Brush Outline { get; }
+        public Color ShadowColor { get; }
         /// <summary>
-        /// 実際に使用する背景色/背景色。
+        /// 縁色。
         /// </summary>
-        public Brush ActualOutline { get; private set; }
+        public Color StrokeColor { get; }
+        /// <summary>
+        /// 実際に使用する影色。
+        /// </summary>
+        public Color ActualShadowColor { get; private set; }
+        /// <summary>
+        /// 実際に使用する縁色。
+        /// </summary>
+        public Color ActualStrokeColor { get; private set; }
 
         public double Opacity { get { return Setting.Comment.FontAlpha; } }
 
@@ -276,7 +285,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var propertyNames = new[] {
                 nameof(TextShowKind),
-                nameof(ActualOutline),
+                nameof(ActualShadowColor),
+                nameof(ActualStrokeColor),
             };
             CallOnPropertyChange(propertyNames);
         }

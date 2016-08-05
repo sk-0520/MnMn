@@ -33,14 +33,17 @@
                   FontSize="{Binding FontSize}"
                   FontFamily="{Binding FontFamily}"
                   Fill="{Binding ActualForeground}"
-                  Stroke="{Binding ActualOutline}"
                   StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
                   FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
                   FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
                   Text="{Binding ActualContent}"
                   VerticalAlignment="Stretch"
                   HorizontalAlignment="Center"
-                />
+                >
+                  <app_view_controls:OutlinedTextBlock.Stroke>
+                    <SolidColorBrush Color="{Binding ActualStrokeColor}" />
+                  </app_view_controls:OutlinedTextBlock.Stroke>
+                </app_view_controls:OutlinedTextBlock>
               </Setter.Value>
             </Setter>
           </DataTrigger>
@@ -53,12 +56,14 @@
                     FontFamily="{Binding FontFamily}"
                     FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
                     FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                    Foreground="{Binding ActualOutline}"
                     Text="{Binding ActualContent}"
                     Opacity="0.8"
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Center"
                   >
+                    <TextBlock.Foreground>
+                      <SolidColorBrush Color="{Binding ActualShadowColor}" />
+                    </TextBlock.Foreground>
                     <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
                     <TextBlock.Effect>
                       <BlurEffect
