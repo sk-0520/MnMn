@@ -1,4 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <components>
 	<component kind="Library" Name="" Uri="" License="" />
+	<component kind="Library" Name="" Uri="" License="" />
+	<Component kind="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
+	<Component kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
+	<component kind="Library" Name="" Uri="" License="" />
+	<component kind="Library" Name="" Uri="" License="" />
+	<component kind="Library" Name="" Uri="" License="" />
+	<Component Kind="Image" Name="MICROSOFT VISUAL STUDIO 2015 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
+	<component kind="Library" Name="" Uri="" License="" />
 </components>

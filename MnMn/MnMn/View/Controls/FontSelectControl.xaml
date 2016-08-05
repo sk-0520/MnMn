@@ -4,7 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
-  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -15,7 +15,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml"/>
       </ResourceDictionary.MergedDictionaries>
-      <app_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+      <cttn_sl_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>

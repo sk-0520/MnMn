@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
     /// <summary>
     /// コマンドライン引数を分解したりなんやしたり。
-    /// 
+    ///
     /// 想定しているのは /xx=xx みたいな キーと値がセパレータでくっついているデータ。
     /// </summary>
     public class CommandLine
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 
         /// <summary>
         /// KeyValueHeader + option が存在するかを確認。
-        /// 
+        ///
         /// データが単独かペアかは問はない。
         /// </summary>
         /// <param name="option"></param>
