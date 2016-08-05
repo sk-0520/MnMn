@@ -229,6 +229,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         Task<RawSmileVideoGetflvModel> LoadGetflvFromServiceAsync()
         {
+            if(VideoInformation.InformationLoadState == LoadState.Failure) {
+                return Task.FromResult(default(RawSmileVideoGetflvModel));
+            }
+
             var getflv = new Getflv(Mediation);
             return getflv.LoadAsync(VideoInformation.VideoId, VideoInformation.WatchUrl, VideoInformation.MovieType);
         }
@@ -238,10 +242,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadGetflvStart();
 
             var rawVideoGetflvModel = await LoadGetflvFromServiceAsync();
-            VideoInformation.SetGetflvModel(rawVideoGetflvModel);
+            if(rawVideoGetflvModel != null) {
+                VideoInformation.SetGetflvModel(rawVideoGetflvModel);
 
-            var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));
-            SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+                var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoInformation.VideoId, "getflv", "xml"));
+                SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+            }
 
             OnLoadGetflvEnd();
         }
@@ -420,7 +426,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var tcs = new CancellationTokenSource();
             await LoadGetflvAsync();
 
-            if(VideoInformation.HasGetflvError) {
+            if(VideoInformation.InformationLoadState == LoadState.Failure || VideoInformation.HasGetflvError) {
                 InformationLoadState = LoadState.Failure;
                 return;
             }

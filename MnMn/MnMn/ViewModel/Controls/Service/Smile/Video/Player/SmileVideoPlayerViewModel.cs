@@ -324,7 +324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public string VideoId
         {
-            get { return VideoInformation.VideoId; }
+            get { return VideoInformation?.VideoId; }
         }
 
         public bool IsEnabledPostAnonymous { get { return VideoInformation?.IsOfficialVideo ?? false; } }

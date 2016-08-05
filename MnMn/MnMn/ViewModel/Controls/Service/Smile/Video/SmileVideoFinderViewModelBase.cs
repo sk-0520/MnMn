@@ -205,7 +205,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected virtual void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
         {
-            VideoInformationList.InitializeRange(items);
+            VideoInformationList.InitializeRange(items.Where(i => i != null));
             VideoInformationItems.Refresh();
             CallOnPropertyChange(nameof(VideoInformationItems));
 

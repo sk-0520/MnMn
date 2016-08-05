@@ -410,6 +410,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 if(this._tagList == null) {
+                    if(InformationLoadState == LoadState.Failure) {
+                        return new CollectionModel<SmileVideoTagViewModel>();
+                    }
                     switch(VideoInformationSource) {
                         case SmileVideoVideoInformationSource.Getthumbinfo: {
                                 // TODO: 言語未考慮
@@ -794,6 +797,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             return LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
                 var rawGetthumbinfo = task.Result;
+                if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
+                //SmileVideoTh
+                //if(rawGetthumbinfo.Status)
                 Thumb = rawGetthumbinfo.Thumb;
                 InformationLoadState = LoadState.Loaded;
                 VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
