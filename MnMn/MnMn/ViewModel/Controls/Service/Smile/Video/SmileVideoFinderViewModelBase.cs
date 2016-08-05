@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        bool FilterItems(object obj)
+        protected virtual bool FilterItems(object obj)
         {
             var filter = InputFilter;
             if(string.IsNullOrEmpty(filter)) {

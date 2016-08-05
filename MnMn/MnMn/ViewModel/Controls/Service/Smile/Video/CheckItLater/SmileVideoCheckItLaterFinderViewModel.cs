@@ -9,6 +9,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater
 {
@@ -17,6 +18,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public SmileVideoCheckItLaterFinderViewModel(Mediation mediation)
             : base(mediation)
         { }
+
+        #region property
+
+        Dictionary<string, SmileVideoCheckItLaterModel> IdLaterMap { get; } = new Dictionary<string, SmileVideoCheckItLaterModel>();
+
+        #endregion
 
         #region command
 
@@ -46,6 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                         model.IsChecked = true;
                     }
                 }
+                VideoInformationItems.Refresh();
             }
         }
 
@@ -55,10 +63,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
+        protected override bool FilterItems(object obj)
+        {
+            var baseResult = base.FilterItems(obj);
+            if(!baseResult) {
+                return baseResult;
+            }
+
+            var viewModel = (SmileVideoInformationViewModel)obj;
+
+            return !IdLaterMap[viewModel.VideoId].IsChecked;
+        }
+
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
+            IdLaterMap.Clear();
+
             var result = new FeedSmileVideoModel();
             foreach(var model in Setting.CheckItLater.Where(c => !c.IsChecked)) {
+                IdLaterMap.Add(model.VideoId, model);
+
                 var item = new FeedSmileVideoItemModel();
 
                 item.Title = model.VideoTitle;
