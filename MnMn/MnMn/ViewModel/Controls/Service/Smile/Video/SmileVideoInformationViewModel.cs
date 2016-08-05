@@ -643,6 +643,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Length = this.Length,
                 VideoId = this.VideoId,
                 VideoTitle = this.Title,
+                WatchUrl = this.WatchUrl,
             };
 
             return result;

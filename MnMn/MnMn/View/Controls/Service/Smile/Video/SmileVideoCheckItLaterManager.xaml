@@ -1,0 +1,18 @@
+﻿<!--
+  呼び出し元から DataContext を設定して使用。
+-->
+<UserControl
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoCheckItLaterManager"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="300" d:DesignWidth="300"
+>
+  <Grid>
+    <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding CheckItLaterFinder}">
+    </app_view_controls_service_smile_video:SmileVideoFinderControl>
+  </Grid>
+</UserControl>

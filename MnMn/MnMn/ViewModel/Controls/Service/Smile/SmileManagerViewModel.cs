@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -59,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         }
 
         #region property
+
+        MainWindow View { get; set; }
 
         public SessionViewModelBase Session { get; }
 
@@ -104,6 +107,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             return true;
         }
 
+        Task CheckUpdateAsync()
+        {
+            var mylistTask = VideoManager.MyListManager.CheckMyListAsync();
+
+            return Task.WhenAll(mylistTask).ContinueWith(t => {
+                var myListItems = mylistTask.Result;
+            });
+        }
 
         #endregion
 
@@ -123,8 +134,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override void InitializeView(MainWindow view)
         {
+            View = view;
+            view.Loaded += View_Loaded;
+
             VideoManager.InitializeView(view);
         }
+
         public override void UninitializeView(MainWindow view)
         {
             VideoManager.UninitializeView(view);
@@ -132,6 +147,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
 
         #endregion
+
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_Loaded;
+
+            CheckUpdateAsync();
+        }
 
     }
 }

@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     public class SmileVideoManagerPackModel: ManagerPackModelBase
     {
-        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager, SmileVideoBookmarkManagerViewModel bookmarkManager)
+        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager, SmileVideoBookmarkManagerViewModel bookmarkManager, SmileVideoCheckItLaterManagerViewModel checkItLaterManager)
         {
             RankingManager = rankingManager;
             SearchManager = searchManager;
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
             MyListManager = myListManager;
             HistoryManager = historyManager;
             BookmarkManager = bookmarkManager;
+            CheckItLaterManager = checkItLaterManager;
         }
 
         #region property
@@ -49,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         public SmileVideoMyListManagerViewModel MyListManager { get; }
         public SmileVideoHistoryManagerViewModel HistoryManager { get; }
         public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
+        public SmileVideoCheckItLaterManagerViewModel CheckItLaterManager { get; }
 
         #endregion
     }

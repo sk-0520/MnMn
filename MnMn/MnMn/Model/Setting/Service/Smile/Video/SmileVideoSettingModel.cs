@@ -51,6 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoBookmarkItemSettingModel Bookmark { get; } = new SmileVideoBookmarkItemSettingModel();
 
+        [DataMember]
+        public FixedSizeCollectionModel<SmileVideoCheckItLaterModel> CheckItLater { get; set; } = new FixedSizeCollectionModel<SmileVideoCheckItLaterModel>(200, false);
+
         #endregion
     }
 }

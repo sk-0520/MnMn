@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var nextIndex = isUp ? srcIndex - 1 : srcIndex + 1;
             if(isUp && srcIndex == 0) {
                 return;
-            } else if(!isUp && VideoInformationList.Count -1 ==  srcIndex) {
+            } else if(!isUp && VideoInformationList.Count - 1 == srcIndex) {
                 return;
             }
             var srcVideo = VideoInformationList[srcIndex];
@@ -148,8 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 var item = new FeedSmileVideoItemModel();
 
                 item.Title = model.VideoTitle;
-                //TODO: ああああああ
-                item.Link =  "/" + model.VideoId;
+                item.Link = "/" + model.WatchUrl.OriginalString;
 
                 var detailModel = new RawSmileVideoFeedDetailModel();
                 detailModel.Title = model.VideoTitle;

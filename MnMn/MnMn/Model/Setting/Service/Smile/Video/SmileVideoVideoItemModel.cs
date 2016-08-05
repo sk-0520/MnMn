@@ -49,6 +49,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public TimeSpan Length { get; set; }
 
+        /// <summary>
+        /// 視聴URL。
+        /// </summary>
+        [DataMember]
+        public Uri WatchUrl { get; set; }
+
         #endregion
     }
 }

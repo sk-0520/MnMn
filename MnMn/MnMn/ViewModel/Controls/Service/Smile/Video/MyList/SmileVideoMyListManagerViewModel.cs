@@ -48,6 +48,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using MnMn.View.Controls;
 
@@ -637,6 +638,76 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             BookmarkUserMyListItems.Refresh();
         }
 
+        Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkMyListAsync(string myListId)
+        {
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheVideosDirectoryName);
+            var cachedFile = new FileInfo(Path.Combine(cachedDirPath, PathUtility.CreateFileName(myListId, "xml")));
+
+            if(!cachedFile.Exists || cachedFile.Length <= Constants.MinimumXmlFileSize) {
+                return Task.FromResult(Enumerable.Empty<SmileVideoVideoItemModel>());
+            }
+
+            var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+            var newMyListTask = myList.LoadGroupAsync(myListId);
+            var cachedModel = RestrictUtility.Block(() => {
+                using(var stream = new FileStream(cachedFile.FullName, FileMode.Open, FileAccess.Read)) {
+                    return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                }
+            });
+
+            var cachedViewModels = cachedModel.Channel.Items
+                .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None))
+                .ToArray();
+            ;
+
+            return newMyListTask.ContinueWith(t => {
+                var newModels = t.Result.Channel.Items;
+                var newViewModels = newModels
+                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None))
+                    .ToArray()
+                ;
+
+                var exceptVideoViewModel = newViewModels
+                    .Select(i => i.VideoId)
+                    .Except(cachedViewModels.Select(i => i.VideoId))
+                    .Select(v => newViewModels.First(i => i.VideoId == v))
+                    .Select(i => i.ToVideoItemModel())
+                    .ToArray()
+                ;
+
+                if(exceptVideoViewModel.Any()) {
+                    using(var stream = new FileStream(cachedFile.FullName, FileMode.Create, FileAccess.Write)) {
+                        //SerializeUtility.SaveXmlSerializeToStream(stream, newModel);
+                    }
+                }
+
+                return (IEnumerable<SmileVideoVideoItemModel>)exceptVideoViewModel;
+            });
+        }
+
+        /// <summary>
+        /// マイリストの状態をチェックする。
+        /// <para>対象はブックマーク。</para>
+        /// </summary>
+        /// <returns></returns>
+        public Task<IList<SmileVideoVideoItemModel>> CheckMyListAsync()
+        {
+            var newVideoItems = new List<SmileVideoVideoItemModel>();
+            var tasks = new List<Task>();
+            foreach(var bookmark in BookmarkUserMyListPairs.ModelList) {
+                var task = CheckBookmarkMyListAsync(bookmark.MyListId).ContinueWith(t => {
+                    if(t.Result != null && t.Result.Any()) {
+                        newVideoItems.AddRange(t.Result);
+                    }
+                });
+                tasks.Add(task);
+            }
+
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                return (IList<SmileVideoVideoItemModel>)newVideoItems;
+            });
+        }
 
 
         #endregion
