@@ -86,7 +86,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
                             OpenVideoPlayerAsync(InputVideoId.Trim()).ConfigureAwait(false);
                             InputVideoId = string.Empty;
                         }
-                    }
+                    },
+                    o => Session.IsLoggedIn
                 );
             }
         }

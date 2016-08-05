@@ -26,12 +26,12 @@
   </UserControl.Resources>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top">
-      <xctk:WatermarkTextBox VerticalAlignment="Center" Width="140" Watermark="動画ID: smXXXXXX" Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Session.IsLoggedIn}">
+      <xctk:WatermarkTextBox VerticalAlignment="Center" Width="140" Watermark="動画ID: smXXXXXX" Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}">
         <xctk:WatermarkTextBox.InputBindings>
           <KeyBinding Key="Enter" Command="{Binding OpenVideoPlayerCommand}" />
         </xctk:WatermarkTextBox.InputBindings>
       </xctk:WatermarkTextBox>
-      <Button IsEnabled="{Binding Session.IsLoggedIn}" Command="{Binding OpenVideoPlayerCommand}">開く</Button>
+      <Button Command="{Binding OpenVideoPlayerCommand}">開く</Button>
     </ToolBar>
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
       <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}">
