@@ -2044,6 +2044,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AddHistory(historyModel);
 
+            var later = Setting.CheckItLater
+                .Where(c => !c.IsChecked)
+                .FirstOrDefault(c => c.VideoId == videoInformation.VideoId)
+            ;
+            if(later != null) {
+                later.IsChecked = true;
+                later.CheckTimestamp = DateTime.Now;
+            }
+
             return base.LoadAsync(videoInformation, thumbCacheSpan, imageCacheSpan);
         }
 

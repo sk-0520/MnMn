@@ -13,6 +13,9 @@
 >
   <Grid>
     <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding CheckItLaterFinder}">
+      <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
+        <Button Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
+      </app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
     </app_view_controls_service_smile_video:SmileVideoFinderControl>
   </Grid>
 </UserControl>
