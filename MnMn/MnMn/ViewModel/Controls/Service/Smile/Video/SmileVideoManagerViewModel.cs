@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -94,6 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
+        MainWindow View { get; set; }
 
         public SessionViewModelBase Session { get; }
 
@@ -122,7 +124,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region function
-        #endregion
+
+        Task CheckUpdateAsync()
+        {
+            var mylistTask = MyListManager.CheckMyListAsync();
+
+            return Task.WhenAll(mylistTask).ContinueWith(t => {
+                var addItemList = new List<SmileVideoVideoItemModel>();
+
+                var myListItems = mylistTask.Result;
+
+                foreach(var item in myListItems) {
+                    var addItem = CheckItLaterManager.AddLater(item);
+                    addItemList.Add(addItem);
+                }
+            });
+        }
 
         public override Task InitializeAsync()
         {
@@ -131,6 +148,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override void InitializeView(MainWindow view)
         {
+            View = view;
+            View.Loaded += View_Loaded;
+
             foreach(var item in ManagerItems) {
                 item.InitializeView(view);
             }
@@ -142,6 +162,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 item.UninitializeView(view);
             }
         }
+
+        #endregion
+
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_Loaded;
+
+            CheckUpdateAsync();
+        }
+
 
     }
 }

@@ -61,8 +61,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         #region property
 
-        MainWindow View { get; set; }
-
         public SessionViewModelBase Session { get; }
 
         public SmileVideoManagerViewModel VideoManager { get; set; }
@@ -107,15 +105,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             return true;
         }
 
-        Task CheckUpdateAsync()
-        {
-            var mylistTask = VideoManager.MyListManager.CheckMyListAsync();
-
-            return Task.WhenAll(mylistTask).ContinueWith(t => {
-                var myListItems = mylistTask.Result;
-            });
-        }
-
         #endregion
 
         #region ManagerViewModelBase
@@ -134,9 +123,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override void InitializeView(MainWindow view)
         {
-            View = view;
-            view.Loaded += View_Loaded;
-
             VideoManager.InitializeView(view);
         }
 
@@ -147,13 +133,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
 
         #endregion
-
-        private void View_Loaded(object sender, RoutedEventArgs e)
-        {
-            View.Loaded -= View_Loaded;
-
-            CheckUpdateAsync();
-        }
 
     }
 }

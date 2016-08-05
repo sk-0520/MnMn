@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater
@@ -35,6 +36,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         #region property
 
         public SmileVideoCheckItLaterFinderViewModel CheckItLaterFinder { get; }
+
+        #endregion
+
+        #region command
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// 後で見るに追加。
+        /// </summary>
+        /// <param name="videoItem"></param>
+        /// <returns>追加できなかった場合は null。</returns>
+        public SmileVideoCheckItLaterModel AddLater(SmileVideoVideoItemModel videoItem)
+        {
+            // 既に存在する場合は追加も順序変更も行わない
+            if(Setting.CheckItLater.Any(c => c.VideoId == videoItem.VideoId)) {
+                return null;
+            }
+
+            var addItem = new SmileVideoCheckItLaterModel() {
+                VideoId = videoItem.VideoId,
+                VideoTitle = videoItem.VideoTitle,
+                FirstRetrieve = videoItem.FirstRetrieve,
+                Length = videoItem.Length,
+                WatchUrl = videoItem.WatchUrl,
+                CheckTimestamp = DateTime.Now,
+                IsChecked = false,
+            };
+            Setting.CheckItLater.Insert(0, addItem);
+
+            return addItem;
+        }
 
         #endregion
 
