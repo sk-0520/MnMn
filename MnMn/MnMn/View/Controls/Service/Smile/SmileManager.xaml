@@ -55,7 +55,7 @@
       <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}">
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
-      <TabItem Header="check it later" DataContext="{Binding VideoManager.CheckItLaterManager}">
+      <TabItem Header="あとで見る" DataContext="{Binding VideoManager.CheckItLaterManager}">
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
       </TabItem>
       <TabItem Header="設定" DataContext="{Binding SettingManager}" >

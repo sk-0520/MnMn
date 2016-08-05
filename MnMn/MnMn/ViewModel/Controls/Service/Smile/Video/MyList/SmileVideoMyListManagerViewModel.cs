@@ -676,11 +676,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     .ToArray()
                 ;
 
-                //if(exceptVideoViewModel.Any()) {
-                //    using(var stream = new FileStream(cachedFile.FullName, FileMode.Create, FileAccess.Write)) {
-                //        SerializeUtility.SaveXmlSerializeToStream(stream, newModels);
-                //    }
-                //}
+                if(exceptVideoViewModel.Any()) {
+                    using(var stream = new FileStream(cachedFile.FullName, FileMode.Create, FileAccess.Write)) {
+                        SerializeUtility.SaveXmlSerializeToStream(stream, newModels);
+                    }
+                }
 
                 return (IEnumerable<SmileVideoVideoItemModel>)exceptVideoViewModel;
             });
