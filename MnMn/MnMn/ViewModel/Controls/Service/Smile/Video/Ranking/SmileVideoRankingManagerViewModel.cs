@@ -47,10 +47,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             : base(mediation)
         {
             RankingModel = rankingModel;
-            CategoryItems = new CollectionModel<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
+
             SelectedPeriod = PeriodItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultPeriodKey) ?? PeriodItems.First();
             SelectedTarget = TargetItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultTargetKey) ?? TargetItems.First();
-            SelectedCategory = CategoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? CategoryItems.First();
+
+            // 初期化で読み込みが動いちゃう対応
+            var categoryItems = new CollectionModel<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
+            SelectedCategory = categoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? CategoryItems.First();
+            CategoryItems = categoryItems;
         }
 
         #region property
@@ -83,10 +87,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         public SmileVideoRankingCategoryDefinedElementViewModel SelectedCategory
         {
             get { return this._selectedCategory; }
-            set {
+            set
+            {
                 if(SetVariableValue(ref this._selectedCategory, value)) {
                     Setting.Ranking.DefaultCategoryKey = SelectedCategory.Model.Key;
-                    if(this._selectedCategory != null) {
+                    // CategoryItems が null だとコンストラクタ中！
+                    if(this._selectedCategory != null && CategoryItems != null) {
                         LoadRankingCategoryAsync().ConfigureAwait(false);
                     }
                 }
