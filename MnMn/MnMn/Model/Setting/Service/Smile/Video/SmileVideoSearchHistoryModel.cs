@@ -40,6 +40,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SearchType SearchType { get; set; }
         /// <summary>
+        /// 検索結果数。
+        /// </summary>
+        [DataMember]
+        public int TotalCount { get; set; }
+        /// <summary>
         /// 最終使用日時。
         /// </summary>
         [DataMember]

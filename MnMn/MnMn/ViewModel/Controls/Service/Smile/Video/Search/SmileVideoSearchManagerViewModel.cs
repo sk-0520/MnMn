@@ -132,7 +132,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public SmileVideoSearchGroupFinderViewModel SelectedSearchGroup
         {
             get { return this._selectedSearchGroup; }
-            set {
+            set
+            {
                 if(SetVariableValue(ref this._selectedSearchGroup, value)) {
                     if(this._selectedSearchGroup != null) {
                         //var items = this._selectedSearchGroup.SearchItems;
@@ -415,8 +416,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 SearchHistoryList.Remove(history);
             }
             var historyPair = SearchHistoryList.Insert(0, history, null);
-            historyPair.ViewModel.Count = RangeUtility.Increment(historyPair.ViewModel.Count);
-            historyPair.ViewModel.LastTimestamp = DateTime.Now;
+            var historyViewModel = historyPair.ViewModel;
+            historyViewModel.Count = RangeUtility.Increment(historyViewModel.Count);
+            historyViewModel.LastTimestamp = DateTime.Now;
+            selectViewModel.History = historyViewModel;
 
             return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
         }

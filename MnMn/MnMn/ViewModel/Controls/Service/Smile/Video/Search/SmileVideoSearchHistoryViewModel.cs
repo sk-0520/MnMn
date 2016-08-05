@@ -43,6 +43,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return Model.SearchType; }
         }
 
+        public int TotalCount
+        {
+            get { return Model.TotalCount; }
+            set { SetModelValue(value); }
+        }
+
         public int Count
         {
             get { return Model.Count; }

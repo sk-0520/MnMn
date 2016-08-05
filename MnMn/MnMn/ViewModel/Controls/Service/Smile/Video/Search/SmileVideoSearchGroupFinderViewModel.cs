@@ -123,6 +123,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public CollectionModel<SmileVideoTagViewModel> RelationTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
+        public SmileVideoSearchHistoryViewModel History { get; set; }
+
         public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
         {
             get { return this._selectedPage; }
@@ -443,6 +445,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                     TotalCount = searchFinder.TotalCount;
+                    History.TotalCount = searchFinder.TotalCount;
 
                     var usingList = Enumerable.Empty<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
