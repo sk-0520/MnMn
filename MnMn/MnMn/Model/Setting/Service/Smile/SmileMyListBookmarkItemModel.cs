@@ -25,21 +25,15 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 {
     [DataContract]
-    public class SmileMyListSettingModel: ModelBase
+    public class SmileMyListBookmarkItemModel: SmileMyListItemModel
     {
         #region property
 
         /// <summary>
-        /// ブックマーク。
+        /// 登録動画。
         /// </summary>
         [DataMember]
-        public CollectionModel<SmileMyListBookmarkItemModel> Bookmark { get; set; } = new CollectionModel<SmileMyListBookmarkItemModel>();
-
-        /// <summary>
-        /// 履歴。
-        /// </summary>
-        [DataMember]
-        public FixedSizeCollectionModel<SmileMyListItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileMyListItemModel>(Constants.SmileMyListHistoryCount, false);
+        public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
 
         #endregion
     }

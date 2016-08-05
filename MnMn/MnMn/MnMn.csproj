@@ -226,6 +226,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoPostKeyModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\SmileMyListBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCheckItLaterModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringElementViewModel.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkItemsMyListFinderViewModel.cs" />
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>

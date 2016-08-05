@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         #region variable
 
         SmileVideoAccountMyListFinderViewModel _selectedAccountFinder;
-        SmileVideoItemsMyListFinderViewModel _selectedBookmarkFinder;
+        SmileVideoBookmarkItemsMyListFinderViewModel _selectedBookmarkFinder;
         SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
 
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
             var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
-            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel>(smileSetting.MyList.Bookmark, default(object), (model, data) => new SmileVideoItemsMyListFinderViewModel(Mediation, model));
+            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkItemsMyListFinderViewModel>(smileSetting.MyList.Bookmark, default(object), (model, data) => new SmileVideoBookmarkItemsMyListFinderViewModel(Mediation, model));
 
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public ICollectionView SearchUserMyListItems { get; }
         public CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>> PageItems { get; } = new CollectionModel<PageViewModel<SmileVideoMyListFinderPageViewModel>>();
 
-        MVMPairCreateDelegationCollection<SmileMyListItemModel, SmileVideoItemsMyListFinderViewModel> BookmarkUserMyListPairs { get; }
+        MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkItemsMyListFinderViewModel> BookmarkUserMyListPairs { get; }
         public ICollectionView BookmarkUserMyListItems { get; }
 
         CollectionModel<SmileVideoItemsMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoItemsMyListFinderViewModel>();
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
         }
-        public SmileVideoItemsMyListFinderViewModel SelectedBookmarkFinder
+        public SmileVideoBookmarkItemsMyListFinderViewModel SelectedBookmarkFinder
         {
             get { return this._selectedBookmarkFinder; }
             set
@@ -363,7 +363,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, true));
+                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoBookmarkItemsMyListFinderViewModel)o, true));
             }
         }
 
@@ -371,7 +371,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, false));
+                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoBookmarkItemsMyListFinderViewModel)o, false));
             }
         }
 
@@ -608,7 +608,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             BookmarkUserMyListPairs.Remove(SelectedBookmarkFinder);
         }
 
-        void ChangePositionBookmarkUserMyList(SmileVideoItemsMyListFinderViewModel viewModel, bool isUp)
+        void ChangePositionBookmarkUserMyList(SmileVideoBookmarkItemsMyListFinderViewModel viewModel, bool isUp)
         {
             var srcIndex = BookmarkUserMyListPairs.ViewModelList.IndexOf(viewModel);
             if(isUp && srcIndex == 0) {
@@ -629,10 +629,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             // TODO 情報読み込み待ち
             //finder.FinderLoadState == SourceLoadState.None || SourceLoadState.SourceLoading || SourceLoadState.SourceChecking
 
-            var model = new SmileMyListItemModel() {
+            var model = new SmileMyListBookmarkItemModel() {
                 MyListId = finder.MyListId,
                 MyListName = finder.MyListName,
             };
+            model.Videos.InitializeRange(finder.VideoInformationViewer.Select(i => i.VideoId));
             // 見た目履歴と違うけどまぁいいや
             BookmarkUserMyListPairs.Add(model, null);
             BookmarkUserMyListItems.Refresh();
