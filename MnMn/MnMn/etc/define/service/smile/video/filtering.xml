@@ -5,8 +5,8 @@
 			<word key="ja-jp" value="笑ってるだけのコメント" />
 		</words>
 		<extends>
-			<extend key="pattern" value="^(\s|　*)[wWｗＷ草][wWｗＷ草\s　]*$" />
-			<extend key="ignore-case" value="true" />
+			<extend key="pattern" value="^\s*[wWｗＷ草][wWｗＷ草\s]*$" />
+			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
 	<element key="sympathy">
@@ -15,7 +15,7 @@
 		</words>
 		<extends>
 			<extend key="pattern" value="(うぽつ|う(ｐ|p)乙)|(^[8８]+$)" />
-			<extend key="ignore-case" value="true" />
+			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
 	<element key="sense-of-unity">
@@ -23,8 +23,8 @@
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(ざわ)|(^ノ|ﾉｼ?$)|(^(来|く)るぞ)|(鳥\s肌)|(^あ(っ|…|・)?$)|($[！？!\?)]$)" />
-			<extend key="ignore-case" value="true" />
+			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あ(っ|…|・)?$)|(^[！？!\?)]+$)" />
+			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
 	<element key="char4">
@@ -33,6 +33,24 @@
 		</words>
 		<extends>
 			<extend key="pattern" value=".{5,}" />
+			<extend key="ignore-case" value="false" />
+		</extends>
+	</element>
+	<element key="chat">
+		<words>
+			<word key="ja-jp" value="話されても困る" />
+		</words>
+		<extends>
+			<extend key="pattern" value="([↑↓←→])|(挙手)|(^ノ|ﾉｼ?$)" />
+			<extend key="ignore-case" value="false" />
+		</extends>
+	</element>
+	<element key="command">
+		<words>
+			<word key="ja-jp" value="無意味なコマンド的な何か" />
+		</words>
+		<extends>
+			<extend key="pattern" value="(^eco=)|(/ksk)|(/hidden)|(@|＠倍速)|(/逆再生)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
