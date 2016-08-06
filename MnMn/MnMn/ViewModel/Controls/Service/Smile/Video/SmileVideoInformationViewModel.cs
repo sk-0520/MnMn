@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
@@ -673,17 +674,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return PathUtility.CreateFileName(VideoId, extension);
         }
 
+        static DirectoryInfo GetCahceDirectory(Mediation mediation, string videoId)
+        {
+            var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
+
+            return Directory.CreateDirectory(cachedDirPath);
+        }
+
         static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
         {
-            var response = mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            var dirInfo = (DirectoryInfo)response.Result;
-            var cachedDirPath = dirInfo.FullName;
-            if(!Directory.Exists(cachedDirPath)) {
-                Directory.CreateDirectory(cachedDirPath);
-            }
+            var cacheDir = GetCahceDirectory(mediation, videoId);
 
             RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
-            var cachedThumbFilePath = Path.Combine(cachedDirPath, GetCacheFileName(videoId, "thumb", "xml"));
+            var cachedThumbFilePath = Path.Combine(cacheDir.FullName, GetCacheFileName(videoId, "thumb", "xml"));
             if(File.Exists(cachedThumbFilePath)) {
                 var fileInfo = new FileInfo(cachedThumbFilePath);
                 if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
@@ -715,15 +719,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void Initialize()
         {
-            var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            var dirInfo = (DirectoryInfo)response.Result;
-            //var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, VideoId);
-            var cachedDirPath = Path.Combine(dirInfo.FullName, VideoId);
-            if(Directory.Exists(cachedDirPath)) {
-                CacheDirectory = new DirectoryInfo(cachedDirPath);
-            } else {
-                CacheDirectory = Directory.CreateDirectory(cachedDirPath);
-            }
+            CacheDirectory = GetCahceDirectory(Mediation, VideoId);
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;

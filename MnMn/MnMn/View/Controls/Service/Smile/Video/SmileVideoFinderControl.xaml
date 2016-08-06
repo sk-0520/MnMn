@@ -88,15 +88,8 @@
       ItemsSource="{Binding VideoInformationItems}"
       SelectedItem="{Binding SelectedVideoInformation}"
     >
-      <!--<ListBox.Resources>
-        <Style TargetType="ListBoxItem">
-          <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        </Style>
-      </ListBox.Resources>-->
       <ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
-          <!--<Style.Triggers>
-          </Style.Triggers>-->
           <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
           <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
