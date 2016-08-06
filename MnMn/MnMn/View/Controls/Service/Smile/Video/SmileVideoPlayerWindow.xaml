@@ -20,6 +20,7 @@
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 
   ResizeMode="CanResizeWithGrip"
+  Icon="/Resources/Service/Smile/Service-Smile.ico"
 
   Title="{Binding Title}"
   Left="{Binding Left, Mode=TwoWay}"

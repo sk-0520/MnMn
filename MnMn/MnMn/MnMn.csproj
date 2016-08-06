@@ -56,6 +56,9 @@
     <NoWarn>RECS0154</NoWarn>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>Resources\MnMn.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.22\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
@@ -712,6 +715,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Common\View\Down.png" />
+    <Resource Include="Resources\Service\Smile\Service-Smile.ico" />
+    <Resource Include="Resources\MnMn.ico" />
     <Resource Include="Resources\Service\Smile\Video\Player\OriginalPoster.png" />
     <Resource Include="Resources\Common\View\Up.png" />
     <Resource Include="Resources\Common\Item\Right.png" />

@@ -10,8 +10,8 @@
   xmlns:app_view_controls_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
-
-  Title="MainWindow"
+  Title="MnMn: メインウィンドウ"
+  Icon="/Resources/MnMn.ico"
   Left="{Binding Left, Mode=TwoWay}"
   Top="{Binding Top, Mode=TwoWay}"
   Width="{Binding Width, Mode=TwoWay}"
