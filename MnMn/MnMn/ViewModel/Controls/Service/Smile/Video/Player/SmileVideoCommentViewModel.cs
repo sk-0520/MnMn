@@ -72,8 +72,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             StrokeColor = Color.FromArgb(0x80, outlineColor.R, outlineColor.G, outlineColor.B);
 
             ActualForeground = Foreground;
-            ActualShadowColor = ShadowColor;
-            ActualStrokeColor = StrokeColor;
+            ActualShadow = new SolidColorBrush(ShadowColor);
+            ActualStroke = new SolidColorBrush(StrokeColor);
+            FreezableUtility.SafeFreeze(ActualShadow);
+            FreezableUtility.SafeFreeze(ActualStroke);
 
             FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
 
@@ -83,6 +85,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #region property
 
         SmileVideoSettingModel Setting { get; }
+
+        /// <summary>
+        /// 自身の投稿コメントか。
+        /// <para>投稿時のみ有効。</para>
+        /// </summary>
+        public bool IsMyPost { get; set; }
 
         public bool Approval
         {
@@ -213,11 +221,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 実際に使用する影色。
         /// </summary>
-        public Color ActualShadowColor { get; private set; }
+        public Brush ActualShadow { get; private set; }
         /// <summary>
         /// 実際に使用する縁色。
         /// </summary>
-        public Color ActualStrokeColor { get; private set; }
+        public Brush ActualStroke { get; private set; }
 
         public double Opacity { get { return Setting.Comment.FontAlpha; } }
 
@@ -285,8 +293,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var propertyNames = new[] {
                 nameof(TextShowKind),
-                nameof(ActualShadowColor),
-                nameof(ActualStrokeColor),
+                nameof(ActualShadow),
+                nameof(ActualStroke),
             };
             CallOnPropertyChange(propertyNames);
         }

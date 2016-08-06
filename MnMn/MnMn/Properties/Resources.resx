@@ -159,6 +159,35 @@
   <data name="String_App_Define_LoginState_None" xml:space="preserve">
     <value>未ログイン</value>
   </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Failure" xml:space="preserve">
+    <value>投稿拒否</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidPostkey" xml:space="preserve">
+    <value>ポストキーがおかしい or ユーザーIDがおかしい</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidThread" xml:space="preserve">
+    <value>スレッドIDがおかしい</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidTicket" xml:space="preserve">
+    <value>投稿チケットが違う</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Locked" xml:space="preserve">
+    <value>コメントはブロックされている</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Readonly" xml:space="preserve">
+    <value>コメントは書き込めない</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Success" xml:space="preserve">
+    <value>投稿完了</value>
+    <comment>http://qiita.com/tor4kichi/items/be55e177f0e4a0753f5d</comment>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_TooLong" xml:space="preserve">
+    <value>コメント内容が長すぎる</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Unknown" xml:space="preserve">
+    <value>不明</value>
+    <comment>実装側で使用、サービスからはこない</comment>
+  </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command" xml:space="preserve">
     <value>コマンド</value>
   </data>

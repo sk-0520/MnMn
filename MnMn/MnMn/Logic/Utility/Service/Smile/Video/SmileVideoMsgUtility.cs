@@ -23,6 +23,9 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
+    /// <summary>
+    /// <para><see cref="SmileVideoCommentUtility"/>との役割分担が分からん!</para>
+    /// </summary>
     public static class SmileVideoMsgUtility
     {
         public static SmileVideoUserKind ConvertUserKind(string s)

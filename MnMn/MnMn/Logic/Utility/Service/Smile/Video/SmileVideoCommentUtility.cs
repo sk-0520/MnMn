@@ -264,5 +264,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             return result;
         }
+
+        public static SmileVideoCommentResultStatus ConvertResultStatus(string rawStatus)
+        {
+            var map = new Dictionary<string, SmileVideoCommentResultStatus>() {
+                { "0", SmileVideoCommentResultStatus.Success  },
+                { "1", SmileVideoCommentResultStatus.Failure  },
+                { "2", SmileVideoCommentResultStatus.InvalidThread  },
+                { "3", SmileVideoCommentResultStatus.InvalidTicket  },
+                { "4", SmileVideoCommentResultStatus.InvalidPostkey  },
+                { "5", SmileVideoCommentResultStatus.Locked  },
+                { "6", SmileVideoCommentResultStatus.Readonly  },
+                { "7", SmileVideoCommentResultStatus.TooLong  },
+            };
+            SmileVideoCommentResultStatus result;
+            if(map.TryGetValue(rawStatus, out result)) {
+                return result;
+            }
+            return SmileVideoCommentResultStatus.Unknown;
+        }
     }
 }

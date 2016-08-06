@@ -21,74 +21,79 @@
     <cttn_sl_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
     <app_view_converter:OutlinedTextBlockFontSizeToStrokeConverter x:Key="OutlinedTextBlockFontSizeToStrokeConverter" />
   </UserControl.Resources>
-  <!--<Grid>-->
-  <ContentControl>
-    <ContentControl.Style>
-      <Style TargetType="ContentControl">
+  <Border>
+    <Border.Style>
+      <Style TargetType="Border">
         <Style.Triggers>
-          <DataTrigger Binding="{Binding TextShowKind}" Value="Outline">
-            <Setter Property="Content">
-              <Setter.Value>
-                <app_view_controls:OutlinedTextBlock
-                  FontSize="{Binding FontSize}"
-                  FontFamily="{Binding FontFamily}"
-                  Fill="{Binding ActualForeground}"
-                  StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
-                  FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                  FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                  Text="{Binding ActualContent}"
-                  VerticalAlignment="Stretch"
-                  HorizontalAlignment="Center"
-                >
-                  <app_view_controls:OutlinedTextBlock.Stroke>
-                    <SolidColorBrush Color="{Binding ActualStrokeColor}" />
-                  </app_view_controls:OutlinedTextBlock.Stroke>
-                </app_view_controls:OutlinedTextBlock>
-              </Setter.Value>
-            </Setter>
-          </DataTrigger>
-          <DataTrigger Binding="{Binding TextShowKind}" Value="Shadow">
-            <Setter Property="Content">
-              <Setter.Value>
-                <Grid>
-                  <TextBlock
-                    FontSize="{Binding FontSize}"
-                    FontFamily="{Binding FontFamily}"
-                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                    Text="{Binding ActualContent}"
-                    Opacity="0.8"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Center"
-                  >
-                    <TextBlock.Foreground>
-                      <SolidColorBrush Color="{Binding ActualShadowColor}" />
-                    </TextBlock.Foreground>
-                    <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
-                    <TextBlock.Effect>
-                      <BlurEffect
-                          Radius="2"
-                          RenderingBias="Performance"
-                        />
-                    </TextBlock.Effect>
-                  </TextBlock>
-                  <TextBlock
-                    FontSize="{Binding FontSize}"
-                    FontFamily="{Binding FontFamily}"
-                    Foreground="{Binding ActualForeground}"
-                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                    Text="{Binding ActualContent}"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Center"
-                  />
-                </Grid>
-              </Setter.Value>
-            </Setter>
+          <DataTrigger Binding="{Binding IsMyPost}" Value="True">
+            <Setter Property="BorderBrush" Value="Red" />
+            <Setter Property="BorderThickness" Value="2" />
           </DataTrigger>
         </Style.Triggers>
       </Style>
-    </ContentControl.Style>
-  </ContentControl>
-  <!--</Grid>-->
+    </Border.Style>
+    <ContentControl>
+      <ContentControl.Style>
+        <Style TargetType="ContentControl">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding TextShowKind}" Value="Outline">
+              <Setter Property="Content">
+                <Setter.Value>
+                  <app_view_controls:OutlinedTextBlock
+                    FontSize="{Binding FontSize}"
+                    FontFamily="{Binding FontFamily}"
+                    Fill="{Binding ActualForeground}"
+                    StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
+                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
+                    Text="{Binding ActualContent}"
+                    Stroke="{Binding ActualStroke}"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center"
+                  />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TextShowKind}" Value="Shadow">
+              <Setter Property="Content">
+                <Setter.Value>
+                  <Grid>
+                    <TextBlock
+                      FontSize="{Binding FontSize}"
+                      FontFamily="{Binding FontFamily}"
+                      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
+                      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+                      Text="{Binding ActualContent}"
+                      Opacity="0.8"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Center"
+                      Foreground="{Binding ActualShadow}"
+                    >
+                      <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
+                      <TextBlock.Effect>
+                        <BlurEffect
+                            Radius="2"
+                            RenderingBias="Performance"
+                          />
+                      </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock
+                      FontSize="{Binding FontSize}"
+                      FontFamily="{Binding FontFamily}"
+                      Foreground="{Binding ActualForeground}"
+                      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
+                      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
+                      Text="{Binding ActualContent}"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Center"
+                    />
+                  </Grid>
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ContentControl.Style>
+    </ContentControl>
+  </Border>
 </UserControl>

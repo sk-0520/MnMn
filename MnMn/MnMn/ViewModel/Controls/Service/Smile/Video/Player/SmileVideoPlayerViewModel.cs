@@ -1374,7 +1374,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        static void FireShowCommentCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        {
+            var element = CreateCommentElement(commentViewModel, commentArea, setting);
+
+            commentViewModel.NowShowing = true;
+
+            commentParentElement.Children.Add(element);
+            commentParentElement.UpdateLayout();
+
+            SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+
+            // アニメーション設定
+            var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
+
+            var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
+            showingCommentList.Add(data);
+
+            EventDisposer<EventHandler> ev = null;
+            data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                if(element != null) {
+                    commentParentElement.Children.Remove(element);
+                }
+                element = null;
+
+                if(ev != null) {
+                    ev.Dispose();
+                }
+                ev = null;
+
+                showingCommentList.Remove(data);
+                data.ViewModel.NowShowing = false;
+
+            }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+
+            element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+        }
+
+        static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
         {
             //var commentArea = new Size(
             //   commentParentElement.ActualWidth,
@@ -1391,39 +1428,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ;
             if(newComments.Any()) {
                 foreach(var commentViewModel in newComments) {
-                    var element = CreateCommentElement(commentViewModel, commentArea, setting);
+                    FireShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
+                    //var element = CreateCommentElement(commentViewModel, commentArea, setting);
 
-                    commentViewModel.NowShowing = true;
+                    //commentViewModel.NowShowing = true;
 
-                    commentParentElement.Children.Add(element);
-                    commentParentElement.UpdateLayout();
+                    //commentParentElement.Children.Add(element);
+                    //commentParentElement.UpdateLayout();
 
-                    SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    //SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
 
-                    // アニメーション設定
-                    var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
+                    //// アニメーション設定
+                    //var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
 
-                    var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
-                    showingCommentList.Add(data);
+                    //var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
+                    //showingCommentList.Add(data);
 
-                    EventDisposer<EventHandler> ev = null;
-                    data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
-                        if(element != null) {
-                            commentParentElement.Children.Remove(element);
-                        }
-                        element = null;
+                    //EventDisposer<EventHandler> ev = null;
+                    //data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                    //    if(element != null) {
+                    //        commentParentElement.Children.Remove(element);
+                    //    }
+                    //    element = null;
 
-                        if(ev != null) {
-                            ev.Dispose();
-                        }
-                        ev = null;
+                    //    if(ev != null) {
+                    //        ev.Dispose();
+                    //    }
+                    //    ev = null;
 
-                        showingCommentList.Remove(data);
-                        data.ViewModel.NowShowing = false;
+                    //    showingCommentList.Remove(data);
+                    //    data.ViewModel.NowShowing = false;
 
-                    }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+                    //}, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
 
-                    element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+                    //element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
                 }
                 // 超過分のコメントを破棄
                 if(setting.Player.IsEnabledDisplayCommentLimit && 0 < setting.Player.DisplayCommentLimitCount) {
@@ -1440,17 +1478,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void FireShowComment()
+        void FireShowComments()
         {
             Mediation.Logger.Trace($"{PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
-            var normalCommentAreaSize = new Size(NormalCommentArea.ActualWidth, CommentEnabledHeight);
-            FireShowCommentCore(NormalCommentArea, normalCommentAreaSize, PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
-            var opCommentAreaSize = IsEnabledOriginalPosterCommentArea
-                ? normalCommentAreaSize
-                : new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight)
-            ;
-            FireShowCommentCore(OriginalPosterCommentArea, opCommentAreaSize, PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
+            FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
+            FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
+        }
+
+        Size GetCommentArea(bool OriginalPoster)
+        {
+            if(OriginalPoster && !IsEnabledOriginalPosterCommentArea) {
+                return new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight);
+            }
+
+            return new Size(NormalCommentArea.ActualWidth, CommentEnabledHeight);
         }
 
         void ScrollCommentList()
@@ -1981,13 +2023,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         async Task PostCommentAsync(TimeSpan videoPosition)
         {
-            var getThreadkey = new Getthreadkey(Mediation);
-            //var threadkeyModel = getThreadkey.LoadAsync(VideoInformation.ThreadId);
-
             if(CommentThread == null) {
                 var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
                 ImportCommentThread(rawMessagePacket);
             }
+
             var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
             Debug.Assert(CommentThread.Thread == VideoInformation.ThreadId);
 
@@ -2007,10 +2047,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommandItems,
                 PostCommentBody
             );
+            if(resultPost == null) {
+                Mediation.Logger.Error($"fail: {nameof(msg.PostAsync)}");
+                return;
+            }
+            var status = SmileVideoCommentUtility.ConvertResultStatus(resultPost.ChatResult.Status);
+            if(status != SmileVideoCommentResultStatus.Success) {
+                //TODO: ユーザー側に通知
+                Mediation.Logger.Warning($"fail: {status}");
+                return;
+            }
 
-            //VideoInformation.ThreadId;
+            //投稿コメントを画面上に流す
+            //TODO: 投稿者判定なし
+            //var commentModel = new CommentModel
 
-            //return Task.CompletedTask;
+
+            var commentModel = new RawSmileVideoMsgChatModel() {
+                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
+                Mail = string.Join(" ", PostCommandItems),
+                Content = PostCommentBody,
+                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
+                No = resultPost.ChatResult.No,
+                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
+                Thread = resultPost.ChatResult.Thread,
+            };
+            var commentViewModel = new SmileVideoCommentViewModel(commentModel, Setting) {
+                IsMyPost = true,
+                Approval = true,
+            };
+            FireShowSingleComment(commentViewModel, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, Setting);
+
+            NormalCommentList.Add(commentViewModel);
+            CommentList.Add(commentViewModel);
+            CommentItems.Refresh();
+
+            // コメント再取得
+            await LoadMsgAsync(CacheSpan.NoCache);
         }
 
         #endregion
@@ -2381,7 +2454,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
-                FireShowComment();
+                FireShowComments();
                 ScrollCommentList();
                 PrevPlayedTime = PlayTime;
             }

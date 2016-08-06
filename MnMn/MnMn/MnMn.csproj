@@ -178,6 +178,7 @@
     <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
     <Compile Include="Define\Service\Smile\SmileJsonResultState.cs" />
     <Compile Include="Define\Service\Smile\Video\Parameter\SmileVideoSearchMyListQueryType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoCommentResultStatus.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCustomSettingKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentSize.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentVertical.cs" />

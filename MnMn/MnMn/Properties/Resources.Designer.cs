@@ -187,6 +187,90 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   投稿拒否 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Failure {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ポストキーがおかしい or ユーザーIDがおかしい に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidPostkey {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidPostke" +
+                        "y", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スレッドIDがおかしい に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidThread {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidThread" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿チケットが違う に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidTicket {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_InvalidTicket" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメントはブロックされている に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Locked {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Locked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメントは書き込めない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Readonly {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Readonly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Success {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメント内容が長すぎる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_TooLong {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_TooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Unknown {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command {

@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         }
 
         public static TResultModel ConvertNameModelFromWWWFormData<TResultModel>(string rawWwwFormData)
-            where TResultModel: new()
+            where TResultModel : new()
         {
             var rawParameters = HttpUtility.ParseQueryString(rawWwwFormData);
             var parameters = rawParameters.AllKeys
@@ -148,7 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             return result;
         }
-        
+
         public static DateTime ConvertUnixTime(long unixTime)
         {
             return unixTimeBase.AddSeconds(unixTime).ToLocalTime();
@@ -158,6 +158,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return ConvertUnixTime(ConvertLong(s));
         }
 
+        public static long ConvertRawUnixTime(DateTime time)
+        {
+            TimeSpan elapsedTime = time.ToUniversalTime() - unixTimeBase.ToUniversalTime();
+
+            return (long)elapsedTime.TotalSeconds;
+        }
         #endregion
     }
 }
