@@ -738,7 +738,14 @@
                 </GroupBox>
               </DockPanel>
 
-              <DataGrid x:Name="commentView" AutoGenerateColumns="False" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
+              <DataGrid
+                x:Name="commentView"
+                AutoGenerateColumns="False"
+                HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}"
+                SelectedItem="{Binding SelectedComment}"
+                ItemsSource="{Binding CommentItems}"
+              >
                 <DataGrid.ItemContainerStyle>
                   <Style TargetType="DataGridRow">
                     <Style.Triggers>
@@ -749,7 +756,7 @@
                   </Style>
                 </DataGrid.ItemContainerStyle>
                 <DataGrid.Columns>
-                  <DataGridTemplateColumn Header="時間">
+                  <DataGridTemplateColumn Header="時間" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
                         <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
@@ -757,7 +764,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                   </DataGridTemplateColumn>
 
-                  <DataGridTemplateColumn Header="コメント">
+                  <DataGridTemplateColumn Header="コメント" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
                         <TextBlock Text="{Binding Content}">
@@ -781,13 +788,13 @@
                     </DataGridTemplateColumn.CellTemplate>
                   </DataGridTemplateColumn>
 
-                  <DataGridTemplateColumn Header="投稿時間">
+                  <!--<DataGridTemplateColumn Header="投稿時間" Width="2*">
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
                         <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
                       </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                  </DataGridTemplateColumn>
+                  </DataGridTemplateColumn>-->
 
                 </DataGrid.Columns>
               </DataGrid>
