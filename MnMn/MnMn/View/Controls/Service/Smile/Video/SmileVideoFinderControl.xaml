@@ -10,6 +10,8 @@
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
+  xmlns:cttn_sl_view_controls="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
@@ -28,16 +30,19 @@
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_controls:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_logic_service_smile_video:SmileVideoFinderStyleSelector x:Key="SmileVideoFinderStyleSelector" />
+
+      <Thickness x:Key="ValueCell">8,2</Thickness>
 
       <Style x:Key="HeaderColumn" TargetType="TextBlock">
         <Setter Property="Padding" Value="2" />
       </Style>
 
       <Style x:Key="NumberColumn" TargetType="TextBlock">
-        <Setter Property="Padding" Value="8, 2" />
+        <Setter Property="Padding" Value="{StaticResource ValueCell}" />
         <Setter Property="TextAlignment" Value="Right" />
       </Style>
     </ResourceDictionary>
@@ -462,7 +467,7 @@
                     </TextBlock.Style>
                   </TextBlock>
 
-                  <TextBlock Grid.Row="2" Grid.Column="2" Text="コメント" />
+                  <TextBlock Grid.Row="2" Grid.Column="2" Text="コメント" Style="{StaticResource HeaderColumn}" />
                   <TextBlock Grid.Row="2" Grid.Column="3">
                     <TextBlock.Style>
                       <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
@@ -535,7 +540,58 @@
                     </TextBlock.Style>
                   </TextBlock>
 
-                  <TextBlock Grid.Row="2" Grid.Column="4" Text="[todo]status" Style="{StaticResource HeaderColumn}" />
+                  <TextBlock Grid.Row="2" Grid.Column="4" Text="状態" Style="{StaticResource HeaderColumn}" />
+                  <Border Grid.Row="2" Grid.Column="5" Padding="{StaticResource ValueCell}">
+                    <DockPanel>
+                      <TextBlock DockPanel.Dock="Right">
+                        <TextBlock.Style>
+                          <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                              <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                  <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                    <Binding Path="LoadedNormalVideo" />
+                                    <Binding Path="LoadedEconomyVideo" />
+                                  </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Text" Value="済" />
+                              </DataTrigger>
+                              <DataTrigger Value="False">
+                                <DataTrigger.Binding>
+                                  <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                    <Binding Path="LoadedNormalVideo" />
+                                    <Binding Path="LoadedEconomyVideo" />
+                                  </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Text" Value="未" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBlock.Style>
+                      </TextBlock>
+                      <TextBlock DockPanel.Dock="Right">キャッシュ:</TextBlock>
+
+                      <Border DockPanel.Dock="Right" Width="12" />
+
+                      <TextBlock DockPanel.Dock="Right">
+                        <TextBlock.Style>
+                          <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding ViewingAlready}" Value="True">
+                                <Setter Property="Text" Value="済" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding ViewingAlready}" Value="False">
+                                <Setter Property="Text" Value="未" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBlock.Style>
+                      </TextBlock>
+                      <TextBlock DockPanel.Dock="Right">視聴:</TextBlock>
+
+                      <Border/>
+                    </DockPanel>
+                  </Border>
 
                   <!--<Border IsHitTestVisible="True" BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6" />-->
                 </Grid>

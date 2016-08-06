@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public SmileVideoRankingSettingModel Ranking { get; set; } = new SmileVideoRankingSettingModel();
 
         [DataMember]
-        public FixedSizeCollectionModel<SmileVideoPlayHistoryModel> History { get; set; } = new FixedSizeCollectionModel<SmileVideoPlayHistoryModel>(400, false);
+        public FixedSizeCollectionModel<SmileVideoPlayHistoryModel> History { get; set; } = new FixedSizeCollectionModel<SmileVideoPlayHistoryModel>(1000, false);
 
         [DataMember]
         public SmileVideoBookmarkItemSettingModel Bookmark { get; } = new SmileVideoBookmarkItemSettingModel();

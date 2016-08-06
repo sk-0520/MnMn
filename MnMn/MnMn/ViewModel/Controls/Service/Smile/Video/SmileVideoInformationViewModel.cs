@@ -618,7 +618,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return IndividualVideoSetting.ConvertedSwf; }
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
+        /// <summary>
+        /// 視聴済みか。
+        /// </summary>
+        public bool ViewingAlready
+        {
+            get
+            {
+                return Setting.History.Any(v => v.VideoId == VideoId);
+            }
+        }
+        public DateTime ViewingTimestamp
+        {
+            get
+            {
+                var history = Setting.History.FirstOrDefault(v => v.VideoId == VideoId);
+                if(history != null) {
+                    return history.LastTimestamp;
+                }
 
+                return DateTime.MinValue;
+            }
+        }
 
         #endregion
 
