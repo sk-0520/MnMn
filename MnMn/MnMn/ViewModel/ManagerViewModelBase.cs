@@ -21,7 +21,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
-using MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {

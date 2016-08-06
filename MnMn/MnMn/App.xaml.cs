@@ -31,7 +31,6 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
-using MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {

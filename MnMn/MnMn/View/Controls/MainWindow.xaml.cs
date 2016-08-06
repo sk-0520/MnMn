@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 
-namespace MnMn.View.Controls
+namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

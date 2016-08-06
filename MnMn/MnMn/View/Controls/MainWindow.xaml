@@ -1,5 +1,5 @@
 ﻿<Window
-  x:Class="MnMn.View.Controls.MainWindow"
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
