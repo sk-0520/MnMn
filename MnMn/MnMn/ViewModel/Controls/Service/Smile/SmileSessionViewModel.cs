@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
@@ -61,12 +62,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         public bool IsPremium
         {
-            get { return SimpleUserAccount.IsPremium == "1"; }
+            get { return RawValueUtility.ConvertBoolean(SimpleUserAccount.IsPremium); }
         }
 
         public bool IsOver18
         {
-            get { return SimpleUserAccount.IsOver18 == "1"; }
+            get { return RawValueUtility.ConvertBoolean(SimpleUserAccount.IsOver18); }
         }
 
         #endregion

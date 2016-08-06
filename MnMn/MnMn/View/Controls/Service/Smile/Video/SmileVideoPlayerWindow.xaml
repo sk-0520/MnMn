@@ -508,7 +508,7 @@
                       <ListBox Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding CommandColorItems}" SelectedItem="{Binding PostCommandColor}" >
                         <ListBox.ItemsPanel>
                           <ItemsPanelTemplate>
-                            <UniformGrid Columns="10" />
+                            <UniformGrid Rows="2" Columns="10" />
                           </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>

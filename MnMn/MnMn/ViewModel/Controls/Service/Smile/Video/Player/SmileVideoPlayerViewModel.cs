@@ -1988,7 +1988,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
                 ImportCommentThread(rawMessagePacket);
             }
-            var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes);
+            var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
             Debug.Assert(CommentThread.Thread == VideoInformation.ThreadId);
 
             var msg = new Msg(Mediation);
@@ -2170,6 +2170,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(!PlayListItems.Any()) {
                 PlayListItems.Add(VideoInformation);
+            }
+            if(Session.IsPremium && CommandColorItems.Count == SmileVideoCommentUtility.normalCommentColors.Length) {
+                CommandColorItems.AddRange(SmileVideoCommentUtility.premiumCommentColors);
             }
 
             TotalTime = VideoInformation.Length;
