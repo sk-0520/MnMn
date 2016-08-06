@@ -25,6 +25,7 @@
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
@@ -60,7 +61,7 @@
         <xctk:SplitButton DockPanel.Dock="Left" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
           <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
           <xctk:SplitButton.DropDownContent>
-            <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" />
+            <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
           </xctk:SplitButton.DropDownContent>
         </xctk:SplitButton>
 
