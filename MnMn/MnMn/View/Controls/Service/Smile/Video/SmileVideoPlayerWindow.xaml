@@ -808,7 +808,7 @@
             </DockPanel>
           </TabItem>
           <TabItem Header="ローカルNG" Margin="0">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding LocalCommentFilering}">
+            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList x:Name="localFilter">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
                   <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />

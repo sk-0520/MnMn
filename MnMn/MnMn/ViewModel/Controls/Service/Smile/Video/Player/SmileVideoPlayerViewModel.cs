@@ -2086,6 +2086,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             await LoadMsgAsync(CacheSpan.NoCache);
         }
 
+        void SetLocalFiltering()
+        {
+            if(View != null) {
+                View.localFilter.Filtering = LocalCommentFilering;
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -2097,6 +2104,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             videoInformation.IsPlaying = true;
             IsSelectedVideoInformation = true;
+
+            // プレイヤー立ち上げ時は null
+            if(VideoInformation != null) {
+                VideoInformation.SaveSetting(false);
+            }
 
             var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);
             if(historyModel == null) {
@@ -2254,15 +2266,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             LoadRelationVideoAsync();
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering, Mediation.Smile.VideoMediation.Filtering);
             var propertyNames = new[] {
-                nameof(LocalCommentFilering),
                 nameof(VideoId),
                 nameof(Title),
                 nameof(IsEnabledPostAnonymous),
                 nameof(VideoInformation),
             };
             CallOnPropertyChange(propertyNames);
+
+            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering, Mediation.Smile.VideoMediation.Filtering);
+            SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();
         }
@@ -2336,14 +2349,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // 初期設定
             Player.Volume = Volume;
+            SetLocalFiltering();
 
             var content = Navigationbar.ExstendsContent as Panel;
             EnabledCommentPopup = UIUtility.FindLogicalChildren<Popup>(content).First();
 
+            // あれこれイベント
             EnabledCommentPopup.Opened += EnabledCommentPopup_Opened;
             EnabledCommentPopup.Closed += EnabledCommentPopup_Closed;
 
-            // あれこれイベント
             View.Loaded += View_Loaded;
             View.Closing += View_Closing;
             Player.PositionChanged += Player_PositionChanged;

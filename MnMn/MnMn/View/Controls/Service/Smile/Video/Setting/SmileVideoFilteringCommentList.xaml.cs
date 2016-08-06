@@ -288,7 +288,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
             var checkbox = (CheckBox)sender;
             var isChecked = checkbox.IsChecked.GetValueOrDefault();
-            var element = (SmileVideoFilteringElementViewModel)checkbox.DataContext;
+            var element = checkbox.DataContext as SmileVideoFilteringElementViewModel;
+            if(element == null) {
+                return;
+            }
 
             var settingIndex = Filtering.DefineKeys.IndexOf(element.Key);
             if(isChecked) {
