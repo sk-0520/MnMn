@@ -60,6 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return map[kind];
         }
 
+
         public static string ConvertRawIsPremium(bool isPremium)
         {
             return isPremium ? "1" : "0";

@@ -59,6 +59,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             get { return SimpleUserAccount.UserId; }
         }
 
+        public bool IsPremium
+        {
+            get { return SimpleUserAccount.IsPremium == "1"; }
+        }
+
+        public bool IsOver18
+        {
+            get { return SimpleUserAccount.IsOver18 == "1"; }
+        }
 
         #endregion
 

@@ -2001,11 +2001,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var resultPost = await msg.PostAsync(
                 VideoInformation.MessageServerUrl,
                 VideoInformation.ThreadId,
-                Session.UserId,
                 videoPosition,
                 CommentThread.Ticket,
                 postKey.PostKey,
-                VideoInformation.IsPremium,
                 PostCommandItems,
                 PostCommentBody
             );

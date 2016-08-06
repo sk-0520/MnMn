@@ -503,31 +503,33 @@
 
                   <StackPanel Orientation="Horizontal">
                     <Label>色</Label>
-                    <!-- 通常用 -->
-                    <ListBox Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding CommandColorItems}" SelectedItem="{Binding PostCommandColor}" >
-                      <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                          <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                      </ListBox.ItemsPanel>
-                      <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                          <Setter Property="Template">
-                            <Setter.Value>
-                              <ControlTemplate TargetType="ListBoxItem">
-                                <RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}">
-                                  <Rectangle Width="16" Height="16">
-                                    <Rectangle.Fill>
-                                      <SolidColorBrush Color="{Binding}" />
-                                    </Rectangle.Fill>
-                                  </Rectangle>
-                                </RadioButton>
-                              </ControlTemplate>
-                            </Setter.Value>
-                          </Setter>
-                        </Style>
-                      </ListBox.ItemContainerStyle>
-                    </ListBox>
+                    <StackPanel>
+                      <!-- 通常用 -->
+                      <ListBox Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding CommandColorItems}" SelectedItem="{Binding PostCommandColor}" >
+                        <ListBox.ItemsPanel>
+                          <ItemsPanelTemplate>
+                            <UniformGrid Columns="10" />
+                          </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                          <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                              <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                  <RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}">
+                                    <Rectangle Width="16" Height="16">
+                                      <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding}" />
+                                      </Rectangle.Fill>
+                                    </Rectangle>
+                                  </RadioButton>
+                                </ControlTemplate>
+                              </Setter.Value>
+                            </Setter>
+                          </Style>
+                        </ListBox.ItemContainerStyle>
+                      </ListBox>
+                    </StackPanel>
                   </StackPanel>
                   <CheckBox IsEnabled="{Binding IsEnabledPostAnonymous, Converter={StaticResource LogicalNotConverter}}" IsChecked="{Binding IsPostAnonymous}">184投稿</CheckBox>
                   <Separator />

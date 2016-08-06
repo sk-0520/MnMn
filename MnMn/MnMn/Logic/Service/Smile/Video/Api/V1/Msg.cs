@@ -100,8 +100,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 return null;
             }
         }
-        public async Task<RawSmileVideoMsgPacketResultModel> PostAsync(Uri msgServer, string threadId, string userId, TimeSpan vpos, string ticket, string postkey, bool isPremium, IEnumerable<string> commands, string comment)
+        public async Task<RawSmileVideoMsgPacketResultModel> PostAsync(Uri msgServer, string threadId, TimeSpan vpos, string ticket, string postkey, IEnumerable<string> commands, string comment)
         {
+            await LoginIfNotLoginAsync();
+
             using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
 
@@ -109,8 +111,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceRequestParameters["ticket"] = ticket;
                 page.ReplaceRequestParameters["postkey"] = postkey;
                 page.ReplaceRequestParameters["vpos"] = SmileVideoMsgUtility.ConvertRawElapsedTime(vpos);
-                page.ReplaceRequestParameters["premium"] = SmileVideoMsgUtility.ConvertRawIsPremium(isPremium);
-                page.ReplaceRequestParameters["user_id"] = userId;
+                page.ReplaceRequestParameters["premium"] = SmileVideoMsgUtility.ConvertRawIsPremium(Session.IsPremium);
+                page.ReplaceRequestParameters["user_id"] = Session.UserId;
                 page.ReplaceRequestParameters["commands"] = string.Join(" ", commands);
                 page.ReplaceRequestParameters["comment"] = comment;
 
