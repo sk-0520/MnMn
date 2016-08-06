@@ -133,7 +133,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override void GarbageCollection()
         {
+            UsersManager.GarbageCollection();
             VideoManager.GarbageCollection();
+            SettingManager.GarbageCollection();
         }
 
         #endregion

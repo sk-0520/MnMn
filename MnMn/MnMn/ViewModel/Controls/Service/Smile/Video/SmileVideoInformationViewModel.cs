@@ -677,7 +677,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var response = mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var dirInfo = (DirectoryInfo)response.Result;
-            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId);
+            var cachedDirPath = dirInfo.FullName;
             if(!Directory.Exists(cachedDirPath)) {
                 Directory.CreateDirectory(cachedDirPath);
             }
@@ -717,7 +717,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var dirInfo = (DirectoryInfo)response.Result;
-            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, VideoId);
+            //var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileVideoCacheVideosDirectoryName, VideoId);
+            var cachedDirPath = Path.Combine(dirInfo.FullName, VideoId);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
             } else {

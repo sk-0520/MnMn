@@ -102,7 +102,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         { }
 
         public override void GarbageCollection()
-        { }
+        {
+            var span = Constants.ServiceSmileVideoCheckItLaterCacheSpan;
+            var gcItems = Setting.CheckItLater
+                .Where(c => !span.IsCacheTime(c.CheckTimestamp))
+                .ToArray()
+            ;
+            foreach(var gcItem in gcItems) {
+                Setting.CheckItLater.Remove(gcItem);
+            }
+        }
 
         #endregion
 

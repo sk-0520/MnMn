@@ -170,6 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             View = (MainWindow)view;
 
             SmileManager.InitializeView(view);
+            GarbageCollection();
         }
 
         public override void UninitializeView(MainWindow view)

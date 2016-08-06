@@ -56,6 +56,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
+        /// <summary>
+        /// キャッシュ時間内か。
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         public bool IsCacheTime(DateTime dateTime)
         {
             return IsEnabled && BaseTime - dateTime < Expires;

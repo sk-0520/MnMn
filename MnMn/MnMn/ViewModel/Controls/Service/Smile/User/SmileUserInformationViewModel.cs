@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             IsMyAccount = isMyAccount;
 
             var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
-            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileUserCacheVideosDirectoryName, UserId);
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileUserCacheDirectoryName, UserId);
             if(Directory.Exists(cachedDirPath)) {
                 CacheDirectory = new DirectoryInfo(cachedDirPath);
             } else {

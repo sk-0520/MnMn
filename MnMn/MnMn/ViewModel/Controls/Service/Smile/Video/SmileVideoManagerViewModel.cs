@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
@@ -141,6 +143,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        #endregion
+
+        #region ManagerViewModelBase
+
+        void GarbageCollectionCahceVideos()
+        {
+            var videoExts = new[] {
+                SmileVideoMovieType.Mp4,
+                SmileVideoMovieType.Swf,
+                SmileVideoMovieType.Flv,
+            }
+                .Select(t => SmileVideoGetthumbinfoUtility.GetFileExtension(t))
+                .Select(s => "." + s)
+                .ToArray()
+            ;
+
+            var appSetting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            if(appSetting.CacheLifeTime == TimeSpan.Zero) {
+                return;
+            }
+
+            var cacheSpan = new CacheSpan(DateTime.Now, appSetting.CacheLifeTime);
+
+            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            var gcFiles = dirInfo.EnumerateFileSystemInfos("*", SearchOption.AllDirectories)
+                .Where(f => videoExts.Any(v => string.Equals(f.Extension, v, StringComparison.OrdinalIgnoreCase)))
+                .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
+            ;
+            foreach(var item in gcFiles) {
+                try {
+                    Mediation.Logger.Trace($"GC:SMILE:VIDEO: {item.FullName}");
+                    File.Delete(item.FullName);
+                } catch(Exception ex) {
+                    Mediation.Logger.Warning(ex);
+                }
+            }
+        }
+
         public override Task InitializeAsync()
         {
             return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
@@ -168,6 +208,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             foreach(var item in ManagerItems) {
                 item.GarbageCollection();
             }
+
+            GarbageCollectionCahceVideos();
         }
 
         #endregion

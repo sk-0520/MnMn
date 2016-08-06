@@ -491,7 +491,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
                 return (DirectoryInfo)response.Result;
             });
-            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId));
+            //TODO: キャッシュディレクトリ処理重複
+            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId));
+            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
 
             OnLoadGetthumbinfoStart();
             //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
@@ -559,7 +561,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
                 return (DirectoryInfo)response.Result;
             });
-            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoInformation.VideoId));
+            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoInformation.VideoId));
+            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoInformation.VideoId));
 
             OnLoadGetthumbinfoStart();
             VideoInformation = videoInformation;

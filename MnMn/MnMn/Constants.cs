@@ -83,6 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
         public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+        public static CacheSpan ServiceSmileVideoCheckItLaterCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
 
         public static string SbinDirectoryName { get; } = "sbin";
         public static string UpdateProgramDirectoryName { get; } = "Updater";
@@ -146,9 +147,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static TimeSpan ApplicationCacheLifeTime { get; } = TimeSpan.FromDays(3);
 
-        public static string SmileUserCacheVideosDirectoryName { get; } = "users";
-        public static string SmileMyListCacheVideosDirectoryName { get; } = "mylist";
-        public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
+        public static string SmileUserCacheDirectoryName { get; } = "user";
+        public static string SmileMyListCacheDirectoryName { get; } = "mylist";
+        //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
         public static double SmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
         public static string SmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
