@@ -479,7 +479,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override void InitializeView(MainWindow view)
         { }
+
         public override void UninitializeView(MainWindow view)
+        { }
+
+        public override void GarbageCollection()
         { }
 
         #endregion

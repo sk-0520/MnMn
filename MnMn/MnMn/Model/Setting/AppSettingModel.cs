@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// キャッシュ有効期間。
         /// </summary>
         [DataMember]
-        public TimeSpan CacheLifeTime { get; set; }
+        public TimeSpan CacheLifeTime { get; set; } = Constants.ApplicationCacheLifeTime;
 
         [DataMember]
         public WindowStatusModel Window { get; set; } = new WindowStatusModel() {

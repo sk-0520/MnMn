@@ -1962,13 +1962,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResetCommentSetting()
         {
-            Setting.Comment.FontFamily = Constants.CommentFontFamily;
-            Setting.Comment.FontSize = Constants.CommentFontSize;
-            Setting.Comment.FontBold = Constants.CommentFontBold;
-            Setting.Comment.FontItalic = Constants.CommentFontItalic;
-            Setting.Comment.FontAlpha = Constants.CommentFontAlpha;
-            Setting.Comment.ShowTime = Constants.CommentShowTime;
-            Setting.Comment.ConvertPairYenSlash = Constants.CommentConvertPairYenSlash;
+            Setting.Comment.FontFamily = Constants.SmileVideoCommentFontFamily;
+            Setting.Comment.FontSize = Constants.SmileVideoCommentFontSize;
+            Setting.Comment.FontBold = Constants.SmileVideoCommentFontBold;
+            Setting.Comment.FontItalic = Constants.SmileVideoCommentFontItalic;
+            Setting.Comment.FontAlpha = Constants.SmileVideoCommentFontAlpha;
+            Setting.Comment.ShowTime = Constants.SmileVideoCommentShowTime;
+            Setting.Comment.ConvertPairYenSlash = Constants.SmileVideoCommentConvertPairYenSlash;
             Setting.Player.TextShowKind = Constants.SmileVideoPlayerTextShowKind;
 
             ChangedCommentFont();

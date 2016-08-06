@@ -46,7 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public ManagerViewModelBase SelectedManager
         {
             get { return this._selectedManager; }
-            set {
+            set
+            {
                 var prevSelectedManager = this._selectedManager;
                 if(SetVariableValue(ref this._selectedManager, value)) {
                     if(this._selectedManager != null) {
@@ -88,6 +89,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public abstract void InitializeView(MainWindow view);
         public abstract void UninitializeView(MainWindow view);
+
+        /// <summary>
+        /// キャッシュなどのゴミ処理を行う。
+        /// </summary>
+        public abstract void GarbageCollection();
 
         #endregion
     }

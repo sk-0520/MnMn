@@ -179,6 +179,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             SmileManager.UninitializeView(view);
         }
 
+        public override void GarbageCollection()
+        {
+            SmileManager.GarbageCollection();
+        }
+
         #endregion
     }
 }

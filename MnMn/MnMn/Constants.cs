@@ -144,20 +144,22 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoMyListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
         public static string SmileVideoFilteringPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "filtering.xml");
 
+        public static TimeSpan ApplicationCacheLifeTime { get; } = TimeSpan.FromDays(3);
+
         public static string SmileUserCacheVideosDirectoryName { get; } = "users";
         public static string SmileMyListCacheVideosDirectoryName { get; } = "mylist";
         public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
-        public static double CommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
-        public static string CommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
-        public static double CommentFontAlpha { get; } = 1;
-        public static bool CommentFontBold { get; } = false;
-        public static bool CommentFontItalic { get; } = false;
-        public static TimeSpan CommentShowTime { get; } = TimeSpan.FromSeconds(3);
-        public static bool CommentConvertPairYenSlash { get; } = true;
-        public static bool CommentIsEnabledSharedNoGood { get; } = true;
-        public static int CommentSharedNoGoodScore { get; } = -1500;
-        public static bool CommentPostAnonymous { get; } = true;
+        public static double SmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
+        public static string SmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
+        public static double SmileVideoCommentFontAlpha { get; } = 1;
+        public static bool SmileVideoCommentFontBold { get; } = false;
+        public static bool SmileVideoCommentFontItalic { get; } = false;
+        public static TimeSpan SmileVideoCommentShowTime { get; } = TimeSpan.FromSeconds(3);
+        public static bool SmileVideoCommentConvertPairYenSlash { get; } = true;
+        public static bool SmileVideoCommentIsEnabledSharedNoGood { get; } = true;
+        public static int SmileVideoCommentSharedNoGoodScore { get; } = -1500;
+        public static bool SmileVideoCommentPostAnonymous { get; } = true;
 
         public static int SmileMyListHistoryCount { get; } = 50;
 

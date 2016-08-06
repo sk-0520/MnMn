@@ -67,7 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkNodeViewModel SelectedBookmarkNode
         {
             get { return this._selectedBookmarkNode; }
-            set {
+            set
+            {
                 if(SetVariableValue(ref this._selectedBookmarkNode, value)) {
                     if(SelectedBookmarkNode != null) {
                         SelectedBookmarkNode.ClearEditingValue();
@@ -81,7 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkNodeFinderViewModel SelectedBookmarkNodeFinder
         {
             get { return this._selectedBookmarkNodeFinder; }
-            set {
+            set
+            {
                 if(SetVariableValue(ref this._selectedBookmarkNodeFinder, value)) {
                     if(SelectedBookmarkNodeFinder.CanLoad) {
                         SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
@@ -126,7 +128,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         public ICommand RemoveNodeCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(o => {
                     RemoveNode(SelectedBookmarkNode);
                 });
@@ -224,7 +227,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             //    ? Node.NodeList
             //    : parentNodeViewModel.NodeList
             //;
-            var pair= parentNodeViewModel.NodeList.Add(model, null);
+            var pair = parentNodeViewModel.NodeList.Add(model, null);
             pair.ViewModel.IsSelected = true;
         }
 
@@ -232,7 +235,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             var parentNode = GetParentNode(nodeViewModel);
             //if(parentNode != null) {
-                parentNode.NodeList.Remove(nodeViewModel);
+            parentNode.NodeList.Remove(nodeViewModel);
             //} else {
             //    Node.NodeList.Remove(nodeViewModel);
             //}
@@ -281,7 +284,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             var parentNode = GetParentNode(node);
             if(parentNode != Node) {
-            var ancestorNode = GetParentNode(parentNode);
+                var ancestorNode = GetParentNode(parentNode);
                 RemoveNode(node);
                 var parentIndex = ancestorNode.NodeItems.IndexOf(parentNode);
                 var nextIndex = parentIndex + 1;
@@ -329,6 +332,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             view.smile.bookmark.treeNodes.SelectedItemChanged -= TreeNodes_SelectedItemChanged;
         }
+
+        public override void GarbageCollection()
+        { }
 
         #endregion
 
@@ -412,10 +418,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
                 var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
                 if(dstNode != null && srcNode != dstNode) {
-                        var srcModel = srcNode.Model;
-                        RemoveNode(srcNode);
-                        var item = dstNode.NodeList.Add(srcModel, null);
-                        item.ViewModel.IsSelected = true;
+                    var srcModel = srcNode.Model;
+                    RemoveNode(srcNode);
+                    var item = dstNode.NodeList.Add(srcModel, null);
+                    item.ViewModel.IsSelected = true;
                 }
             }
         }

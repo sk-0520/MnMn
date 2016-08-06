@@ -163,6 +163,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public override void GarbageCollection()
+        {
+            foreach(var item in ManagerItems) {
+                item.GarbageCollection();
+            }
+        }
+
         #endregion
 
         private void View_Loaded(object sender, RoutedEventArgs e)

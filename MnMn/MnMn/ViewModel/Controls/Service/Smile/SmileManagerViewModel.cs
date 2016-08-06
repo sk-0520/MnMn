@@ -131,6 +131,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             VideoManager.UninitializeView(view);
         }
 
+        public override void GarbageCollection()
+        {
+            VideoManager.GarbageCollection();
+        }
 
         #endregion
 
