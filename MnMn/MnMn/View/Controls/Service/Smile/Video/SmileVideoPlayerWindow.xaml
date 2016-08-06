@@ -738,75 +738,59 @@
                 </GroupBox>
               </DockPanel>
 
-              <ListView x:Name="commentView" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
-                <ListView.ItemContainerStyle>
-                  <Style TargetType="ListViewItem">
+              <DataGrid x:Name="commentView" AutoGenerateColumns="False" SelectedItem="{Binding SelectedComment}" ItemsSource="{Binding CommentItems}">
+                <DataGrid.ItemContainerStyle>
+                  <Style TargetType="DataGridRow">
                     <Style.Triggers>
                       <DataTrigger Binding="{Binding NowShowing}" Value="True">
                         <Setter Property="FontWeight" Value="Bold" />
                       </DataTrigger>
                     </Style.Triggers>
                   </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                  <GridView>
-                    <GridViewColumn>
-                      <GridViewColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="時間" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.HeaderTemplate>
-                      <GridViewColumn.CellTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                </DataGrid.ItemContainerStyle>
+                <DataGrid.Columns>
+                  <DataGridTemplateColumn Header="時間">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
 
-                    <GridViewColumn>
-                      <GridViewColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="コメント" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.HeaderTemplate>
-                      <GridViewColumn.CellTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="{Binding Content}">
-                            <TextBlock.Style>
-                              <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                  <DataTrigger Binding="{Binding Approval}" Value="False">
-                                    <Setter Property="TextDecorations">
-                                      <Setter.Value>
-                                        <TextDecorationCollection>
-                                          <TextDecoration Location="Strikethrough" />
-                                        </TextDecorationCollection>
-                                      </Setter.Value>
-                                    </Setter>
-                                  </DataTrigger>
-                                </Style.Triggers>
-                              </Style>
-                            </TextBlock.Style>
-                          </TextBlock>
-                        </ItemContainerTemplate>
-                      </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                  <DataGridTemplateColumn Header="コメント">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding Content}">
+                          <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding Approval}" Value="False">
+                                  <Setter Property="TextDecorations">
+                                    <Setter.Value>
+                                      <TextDecorationCollection>
+                                        <TextDecoration Location="Strikethrough" />
+                                      </TextDecorationCollection>
+                                    </Setter.Value>
+                                  </Setter>
+                                </DataTrigger>
+                              </Style.Triggers>
+                            </Style>
+                          </TextBlock.Style>
+                        </TextBlock>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
 
-                    <GridViewColumn>
-                      <GridViewColumn.HeaderTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="投稿時間" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.HeaderTemplate>
-                      <GridViewColumn.CellTemplate>
-                        <ItemContainerTemplate>
-                          <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
-                        </ItemContainerTemplate>
-                      </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                  </GridView>
-                </ListView.View>
-              </ListView>
+                  <DataGridTemplateColumn Header="投稿時間">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+              </DataGrid>
             </DockPanel>
           </TabItem>
           <TabItem Header="ローカルNG" Margin="0">
