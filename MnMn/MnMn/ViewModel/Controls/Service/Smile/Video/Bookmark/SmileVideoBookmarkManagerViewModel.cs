@@ -333,8 +333,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             view.smile.bookmark.treeNodes.SelectedItemChanged -= TreeNodes_SelectedItemChanged;
         }
 
-        public override void GarbageCollection()
-        { }
+        public override Task GarbageCollectionAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
 

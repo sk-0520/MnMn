@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// キャッシュなどのゴミ処理を行う。
         /// </summary>
-        public abstract void GarbageCollection();
+        public abstract Task GarbageCollectionAsync();
 
         #endregion
     }

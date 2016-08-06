@@ -96,8 +96,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
         public override void UninitializeView(MainWindow view)
         { }
 
-        public override void GarbageCollection()
-        { }
+        public override Task GarbageCollectionAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

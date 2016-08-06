@@ -131,11 +131,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             VideoManager.UninitializeView(view);
         }
 
-        public override void GarbageCollection()
+        public override Task GarbageCollectionAsync()
         {
-            UsersManager.GarbageCollection();
-            VideoManager.GarbageCollection();
-            SettingManager.GarbageCollection();
+            var tasks = new[] {
+                UsersManager.GarbageCollectionAsync(),
+                VideoManager.GarbageCollectionAsync(),
+                SettingManager.GarbageCollectionAsync(),
+            };
+            return Task.WhenAll(tasks);
         }
 
         #endregion

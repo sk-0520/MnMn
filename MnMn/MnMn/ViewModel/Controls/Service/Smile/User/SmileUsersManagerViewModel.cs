@@ -146,8 +146,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public override void UninitializeView(MainWindow view)
         { }
 
-        public override void GarbageCollection()
-        { }
+        public override Task GarbageCollectionAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

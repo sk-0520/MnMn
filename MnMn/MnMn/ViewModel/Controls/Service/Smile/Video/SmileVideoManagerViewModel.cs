@@ -147,38 +147,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region ManagerViewModelBase
 
-        void GarbageCollectionCahceVideos()
+        Task GarbageCollectionCahceVideosAsync()
         {
-            var videoExts = new[] {
+            var appSetting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
+            if(appSetting.CacheLifeTime == TimeSpan.Zero) {
+                return Task.CompletedTask;
+            }
+
+            return Task.Run(() => {
+                var videoExts = new[] {
                 SmileVideoMovieType.Mp4,
                 SmileVideoMovieType.Swf,
                 SmileVideoMovieType.Flv,
             }
-                .Select(t => SmileVideoGetthumbinfoUtility.GetFileExtension(t))
-                .Select(s => "." + s)
-                .ToArray()
-            ;
+                    .Select(t => SmileVideoGetthumbinfoUtility.GetFileExtension(t))
+                    .Select(s => "." + s)
+                    .ToArray()
+                ;
 
-            var appSetting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            if(appSetting.CacheLifeTime == TimeSpan.Zero) {
-                return;
-            }
 
-            var cacheSpan = new CacheSpan(DateTime.Now, appSetting.CacheLifeTime);
+                var cacheSpan = new CacheSpan(DateTime.Now, appSetting.CacheLifeTime);
 
-            var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            var gcFiles = dirInfo.EnumerateFileSystemInfos("*", SearchOption.AllDirectories)
-                .Where(f => videoExts.Any(v => string.Equals(f.Extension, v, StringComparison.OrdinalIgnoreCase)))
-                .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
-            ;
-            foreach(var item in gcFiles) {
-                try {
-                    Mediation.Logger.Trace($"GC:SMILE:VIDEO: {item.FullName}");
-                    File.Delete(item.FullName);
-                } catch(Exception ex) {
-                    Mediation.Logger.Warning(ex);
+                var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+                var gcFiles = dirInfo.EnumerateFileSystemInfos("*", SearchOption.AllDirectories)
+                    .Where(f => videoExts.Any(v => string.Equals(f.Extension, v, StringComparison.OrdinalIgnoreCase)))
+                    .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
+                ;
+                foreach(var item in gcFiles) {
+                    try {
+                        Mediation.Logger.Trace($"GC:SMILE:VIDEO: {item.FullName}");
+                        File.Delete(item.FullName);
+                    } catch(Exception ex) {
+                        Mediation.Logger.Warning(ex);
+                    }
                 }
-            }
+            });
         }
 
         public override Task InitializeAsync()
@@ -203,13 +206,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public override void GarbageCollection()
+        public override Task GarbageCollectionAsync()
         {
-            foreach(var item in ManagerItems) {
-                item.GarbageCollection();
-            }
+            var items = ManagerItems
+                .Select(m => m.GarbageCollectionAsync())
+                .ToList()
+            ;
+            items.Add(GarbageCollectionCahceVideosAsync());
 
-            GarbageCollectionCahceVideos();
+            return Task.WhenAll(items);
         }
 
         #endregion

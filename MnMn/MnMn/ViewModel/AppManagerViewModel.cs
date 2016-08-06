@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             View = (MainWindow)view;
 
             SmileManager.InitializeView(view);
-            GarbageCollection();
+            GarbageCollectionAsync();
         }
 
         public override void UninitializeView(MainWindow view)
@@ -180,9 +180,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             SmileManager.UninitializeView(view);
         }
 
-        public override void GarbageCollection()
+        public override Task GarbageCollectionAsync()
         {
-            SmileManager.GarbageCollection();
+            return SmileManager.GarbageCollectionAsync();
         }
 
         #endregion
