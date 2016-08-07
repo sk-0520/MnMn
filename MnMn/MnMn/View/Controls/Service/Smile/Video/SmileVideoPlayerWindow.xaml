@@ -773,7 +773,6 @@
                 <ListBox
                   x:Name="commentView"
                   Grid.Row="1"
-                  Grid.ColumnSpan="3"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   HorizontalContentAlignment="Stretch"
                   SelectedItem="{Binding SelectedComment}"
@@ -783,7 +782,32 @@
                     <Style TargetType="ListBoxItem">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding NowShowing}" Value="True">
-                          <Setter Property="FontWeight" Value="Bold" />
+                          <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                              <Storyboard>
+                                <ColorAnimation
+                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                  From="Transparent"
+                                  To="#80ffaaaa"
+                                  Duration="00:00:00.2"
+                                  AutoReverse="False"
+                                  FillBehavior="HoldEnd"
+                                />
+                              </Storyboard>
+                            </BeginStoryboard>
+                          </DataTrigger.EnterActions>
+                          <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                              <Storyboard>
+                                <ColorAnimation
+                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                  To="Transparent"
+                                  Duration="00:00:01"
+                                  AutoReverse="False"
+                                />
+                              </Storyboard>
+                            </BeginStoryboard>
+                          </DataTrigger.ExitActions>
                         </DataTrigger>
                       </Style.Triggers>
                     </Style>
