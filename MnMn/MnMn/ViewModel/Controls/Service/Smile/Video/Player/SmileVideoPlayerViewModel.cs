@@ -826,6 +826,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowPostTimestamp)); }
         }
 
+        public bool IsEnabledGlobalCommentFilering
+        {
+            get { return VideoInformation?.IndividualVideoSetting.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
+            set
+            {
+                if(VideoInformation != null) {
+                    if(SetPropertyValue(VideoInformation.IndividualVideoSetting, value, nameof(VideoInformation.IndividualVideoSetting.IsEnabledGlobalCommentFilering))) {
+                        ApprovalComment();
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region command
@@ -1870,7 +1883,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentSharedNoGood();
 
             ApprovalCommentCustom(LocalCommentFilering);
-            ApprovalCommentCustom(GlobalCommentFilering);
+            if(IsEnabledGlobalCommentFilering) {
+                ApprovalCommentCustom(GlobalCommentFilering);
+            }
         }
 
         void ClearSelectedComment()

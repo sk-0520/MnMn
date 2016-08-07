@@ -174,6 +174,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SmileVideoPlayerShowCommentList { get; } = true;
         public static bool SmileVideoPlayerShowPostTimestamp { get; } = false;
         public static bool PlayerVisibleComment { get; } = true;
+        public static bool SmileVideoIsEnabledGlobalCommentFilering { get; } = true;
 
         public static string CurrentLanguageCode => "ja-jp";
 

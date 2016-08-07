@@ -903,7 +903,13 @@
               </i:Interaction.Triggers>
             </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
           </TabItem>
-          <TabItem Header="全体NG">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>全体NG</TextBlock>
+                <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
+              </StackPanel>
+            </TabItem.Header>
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding GlobalCommentFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">

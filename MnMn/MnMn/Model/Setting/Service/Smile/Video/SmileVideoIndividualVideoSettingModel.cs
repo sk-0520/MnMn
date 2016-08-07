@@ -50,5 +50,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoFilteringSettingModel Filtering { get; set; } = new SmileVideoFilteringSettingModel();
 
+        /// <summary>
+        /// 全体設定のフィルタリングを使用するか。
+        /// </summary>
+        [DataMember]
+        public bool IsEnabledGlobalCommentFilering { get; set; } = Constants.SmileVideoIsEnabledGlobalCommentFilering;
     }
 }
