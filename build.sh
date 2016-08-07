@@ -1,5 +1,5 @@
 
-VERSION_PATH='MnMn/MnMn/Properties/AssemblyInfo.cs'
+VERSION_PATH='Source/MnMn/Properties/AssemblyInfo.cs'
 
 # CIで止まられるとなんもできん
 if [ -z "${CI+x}" ] ; then
