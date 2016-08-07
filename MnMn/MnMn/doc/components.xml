@@ -9,4 +9,8 @@
 	<component kind="Library" Name="" Uri="" License="" />
 	<Component Kind="Image" Name="MICROSOFT VISUAL STUDIO 2015 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
 	<component kind="Library" Name="" Uri="" License="" />
+	<Component Kind="WebPage" Name="MSDN" Uri="https://msdn.microsoft.com/" License="" />
+	<Component Kind="WebPage" Name="Stack Overflow" Uri="http://stackoverflow.com/" License="" />
+	<Component Kind="WebPage" Name="Iconfinder" Uri="https://www.iconfinder.com/" License="" />
+	<Component Kind="WebPage" Name="Google Apps Script" Uri="https://developers.google.com/apps-script/" License="" />
 </components>
