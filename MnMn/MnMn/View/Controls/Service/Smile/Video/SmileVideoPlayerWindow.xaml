@@ -713,8 +713,8 @@
 
                 <Grid Grid.Row="1">
                   <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="8*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                   </Grid.RowDefinitions>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
@@ -880,11 +880,9 @@
                             <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
                           </DockPanel>
                         </ListBoxItem>
+                        <Separator/>
                         <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>コメント</TextBlock>
-                            <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
-                          </DockPanel>
+                          <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
                         </ListBoxItem>
                       </ListBox>
                     </DockPanel>
