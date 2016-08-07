@@ -176,9 +176,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Navigationbar Navigationbar { get; set; }
         Canvas NormalCommentArea { get; set; }
         Canvas OriginalPosterCommentArea { get; set; }
-        //ListView CommentView { get; set; }
-        //DataGrid CommentView { get; set; }
         ListBox CommentView { get; set; }
+        Border DetailComment { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Popup EnabledCommentPopup { get; set; }
 
@@ -470,9 +469,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 var prevSelectedComment = this._selectedComment;
                 if(SetVariableValue(ref this._selectedComment, value)) {
-                    IsSelectedComment = this._selectedComment != null;
+                    IsSelectedComment = SelectedComment != null;
                     if(IsSelectedComment) {
-                        this._selectedComment.IsSelected = true;
+                        SelectedComment.IsSelected = true;
                     }
                     if(prevSelectedComment != null) {
                         prevSelectedComment.IsSelected = false;
@@ -2352,6 +2351,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             OriginalPosterCommentArea = playerView.originalPosterCommentArea;
             Navigationbar = playerView.seekbar;
             CommentView = playerView.commentView;
+            DetailComment = playerView.detailComment;
             DocumentDescription = playerView.documentDescription;
 
             // 初期設定
@@ -2371,6 +2371,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
             Navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+            DetailComment.LostFocus += DetailComment_LostFocus;
         }
 
         #endregion
@@ -2602,6 +2603,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void EnabledCommentPopup_Closed(object sender, EventArgs e)
         {
             ShowEnabledCommentPreviewArea = false;
+        }
+
+        private void DetailComment_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //TODO: コメント詳細部の挙動はまぁどうでもいいや、あとまわし
+            //ClearSelectedComment();
         }
 
 

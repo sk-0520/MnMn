@@ -150,6 +150,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public IList<string> Commands { get; }
 
+        public string CommandsText { get { return string.Join(" ", Commands); } }
+
         /// <summary>
         /// コメント内容。
         /// </summary>
