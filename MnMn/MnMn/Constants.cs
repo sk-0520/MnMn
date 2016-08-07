@@ -172,6 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
         public static bool SmileVideoPlayerShowDetailArea { get; } = true;
         public static bool SmileVideoPlayerShowCommentList { get; } = true;
+        public static bool SmileVideoPlayerShowPostTimestamp { get; } = false;
         public static bool PlayerVisibleComment { get; } = true;
 
         public static string CurrentLanguageCode => "ja-jp";

@@ -821,6 +821,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._postCommentBody, value); }
         }
 
+        public bool PlayerShowPostTimestamp
+        {
+            get { return Setting.Player.ShowPostTimestamp; }
+            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowPostTimestamp)); }
+        }
 
         #endregion
 

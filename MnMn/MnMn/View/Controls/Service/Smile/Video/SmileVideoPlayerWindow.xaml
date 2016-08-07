@@ -50,8 +50,8 @@
       <sys:Double x:Key="VideoInfoWidth">120</sys:Double>
       <sys:Double x:Key="VideoInfoHeight">120</sys:Double>
 
-      <sys:Double x:Key="CommentShowTimestampWidth">50</sys:Double>
-      <sys:Double x:Key="CommentPostTimestampWidth">NaN</sys:Double>
+      <sys:Double x:Key="CommentShowTimestampMinWidth">60</sys:Double>
+      <sys:Double x:Key="CommentShowColorSize">8</sys:Double>
 
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
@@ -748,9 +748,26 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel Grid.Row="0" >
-                  <TextBlock DockPanel.Dock="Left" Width="{StaticResource CommentShowTimestampWidth}" >time</TextBlock>
-                  <TextBlock DockPanel.Dock="Right" Width="{StaticResource CommentPostTimestampWidth}">post</TextBlock>
-                  <TextBlock>comment</TextBlock>
+                  <DockPanel.Resources>
+                    <Style TargetType="Border">
+                      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                      <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                      <Setter Property="BorderThickness" Value="1" />
+                      <Setter Property="Padding" Value="1" />
+                    </Style>
+                    <Style TargetType="TextBlock">
+                      <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                  </DockPanel.Resources>
+                  <Border DockPanel.Dock="Left" MinWidth="{StaticResource CommentShowTimestampMinWidth}">
+                    <TextBlock>時間</TextBlock>
+                  </Border>
+                  <Border>
+                    <DockPanel>
+                      <CheckBox DockPanel.Dock="Right" IsChecked="{Binding PlayerShowPostTimestamp}" Content="投稿時間の表示" />
+                      <TextBlock>コメント</TextBlock>
+                    </DockPanel>
+                  </Border>
                 </DockPanel>
 
                 <ListBox
@@ -774,8 +791,19 @@
                   <ListBox.ItemTemplate>
                     <DataTemplate>
                       <DockPanel>
-                        <TextBlock DockPanel.Dock="Left" Width="{StaticResource CommentShowTimestampWidth}" Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                        <TextBlock DockPanel.Dock="Right" Width="{StaticResource CommentPostTimestampWidth}" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
+                        <DockPanel DockPanel.Dock="Left" MinWidth="{StaticResource CommentShowTimestampMinWidth}">
+                          <Rectangle DockPanel.Dock="Left" StrokeThickness="1" RadiusX="2" RadiusY="2" Width="{StaticResource CommentShowColorSize}" Height="{StaticResource CommentShowColorSize}">
+                            <Rectangle.Fill>
+                              <SolidColorBrush Color="{Binding ForegroundColor}" />
+                            </Rectangle.Fill>
+                            <Rectangle.Stroke>
+                              <SolidColorBrush Color="{Binding OutlineColor}" />
+                            </Rectangle.Stroke>
+                          </Rectangle>
+                          <TextBlock Margin="3,0" Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                        </DockPanel>
+
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" Visibility="{Binding DataContext.PlayerShowPostTimestamp, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
 
                         <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Content}">
                           <TextBlock.Style>

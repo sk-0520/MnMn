@@ -107,6 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 
         /// <summary>
         /// コメント非表示領域を使用するか。
+        /// <para>予約: 今のところ設定に持たせない。</para>
         /// </summary>
         [DataMember]
         public bool IsEnabledNonCommentArea { get; set; } = false;
@@ -114,9 +115,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// コメント非表示領域の高さ。
         /// <para>全体領域の下辺を0として正の値分を非表示領域とする。</para>
+        /// <para>予約: 今のところ設定に持たせない。</para>
         /// </summary>
         [DataMember]
         public double NoneCommentBottomHeight { get; set; } = 0;
+
+        /// <summary>
+        /// コメントリストの投稿時間を表示するか。
+        /// </summary>
+        [DataMember]
+        public bool ShowPostTimestamp { get; set; } = Constants.SmileVideoPlayerShowPostTimestamp;
 
         #endregion
     }

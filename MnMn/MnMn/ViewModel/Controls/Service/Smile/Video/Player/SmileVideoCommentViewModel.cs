@@ -63,15 +63,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Commands = SmileVideoCommentUtility.ConvertCommands(Model.Mail);
             Score = SmileVideoCommentUtility.ConvertScore(Model.Score);
 
-            var foreColor = SmileVideoCommentUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
-            Foreground = new SolidColorBrush(foreColor);
-            FreezableUtility.SafeFreeze(Foreground);
+            ForegroundColor = SmileVideoCommentUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
+            ActualForeground = new SolidColorBrush(ForegroundColor);
+            FreezableUtility.SafeFreeze(ActualForeground);
 
-            var outlineColor = MediaUtility.GetAutoColor(foreColor);
-            ShadowColor = outlineColor;
-            StrokeColor = Color.FromArgb(0x80, outlineColor.R, outlineColor.G, outlineColor.B);
+            OutlineColor = MediaUtility.GetAutoColor(ForegroundColor);
+            ShadowColor = OutlineColor;
+            StrokeColor = Color.FromArgb(0x80, OutlineColor.R, OutlineColor.G, OutlineColor.B);
 
-            ActualForeground = Foreground;
             ActualShadow = new SolidColorBrush(ShadowColor);
             ActualStroke = new SolidColorBrush(StrokeColor);
             FreezableUtility.SafeFreeze(ActualShadow);
@@ -205,11 +204,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 前景ブラシ。
         /// </summary>
-        public Brush Foreground { get; }
+        public Color ForegroundColor { get; }
         /// <summary>
         /// 実際に使用する前景ブラシ。
         /// </summary>
         public Brush ActualForeground { get; private set; }
+        /// <summary>
+        /// 影色・縁色の基本色。
+        /// </summary>
+        public Color OutlineColor { get; }
         /// <summary>
         /// 影色。
         /// </summary>
