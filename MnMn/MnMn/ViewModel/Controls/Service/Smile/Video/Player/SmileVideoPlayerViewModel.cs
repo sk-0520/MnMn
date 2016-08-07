@@ -177,7 +177,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Canvas NormalCommentArea { get; set; }
         Canvas OriginalPosterCommentArea { get; set; }
         //ListView CommentView { get; set; }
-        DataGrid CommentView { get; set; }
+        //DataGrid CommentView { get; set; }
+        ListBox CommentView { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Popup EnabledCommentPopup { get; set; }
 

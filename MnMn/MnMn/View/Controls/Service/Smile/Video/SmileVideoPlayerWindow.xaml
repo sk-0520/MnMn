@@ -50,6 +50,9 @@
       <sys:Double x:Key="VideoInfoWidth">120</sys:Double>
       <sys:Double x:Key="VideoInfoHeight">120</sys:Double>
 
+      <sys:Double x:Key="CommentShowTimestampWidth">50</sys:Double>
+      <sys:Double x:Key="CommentPostTimestampWidth">NaN</sys:Double>
+
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
@@ -738,36 +741,43 @@
                 </GroupBox>
               </DockPanel>
 
-              <DataGrid
-                x:Name="commentView"
-                AutoGenerateColumns="False"
-                HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
-                VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}"
-                SelectedItem="{Binding SelectedComment}"
-                ItemsSource="{Binding CommentItems}"
-              >
-                <DataGrid.ItemContainerStyle>
-                  <Style TargetType="DataGridRow">
-                    <Style.Triggers>
-                      <DataTrigger Binding="{Binding NowShowing}" Value="True">
-                        <Setter Property="FontWeight" Value="Bold" />
-                      </DataTrigger>
-                    </Style.Triggers>
-                  </Style>
-                </DataGrid.ItemContainerStyle>
-                <DataGrid.Columns>
-                  <DataGridTemplateColumn Header="時間" Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                      <DataTemplate>
-                        <TextBlock Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                      </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                  </DataGridTemplateColumn>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                  <DataGridTemplateColumn Header="コメント" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                      <DataTemplate>
-                        <TextBlock Text="{Binding Content}">
+                <DockPanel Grid.Row="0" >
+                  <TextBlock DockPanel.Dock="Left" Width="{StaticResource CommentShowTimestampWidth}" >time</TextBlock>
+                  <TextBlock DockPanel.Dock="Right" Width="{StaticResource CommentPostTimestampWidth}">post</TextBlock>
+                  <TextBlock>comment</TextBlock>
+                </DockPanel>
+
+                <ListBox
+                  x:Name="commentView"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="3"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  HorizontalContentAlignment="Stretch"
+                  SelectedItem="{Binding SelectedComment}"
+                  ItemsSource="{Binding CommentItems}"
+                >
+                  <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding NowShowing}" Value="True">
+                          <Setter Property="FontWeight" Value="Bold" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ListBox.ItemContainerStyle>
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Width="{StaticResource CommentShowTimestampWidth}" Text="{Binding ElapsedTime, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                        <TextBlock DockPanel.Dock="Right" Width="{StaticResource CommentPostTimestampWidth}" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
+
+                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Content}">
                           <TextBlock.Style>
                             <Style TargetType="TextBlock">
                               <Style.Triggers>
@@ -784,20 +794,11 @@
                             </Style>
                           </TextBlock.Style>
                         </TextBlock>
-                      </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                  </DataGridTemplateColumn>
-
-                  <!--<DataGridTemplateColumn Header="投稿時間" Width="2*">
-                    <DataGridTemplateColumn.CellTemplate>
-                      <DataTemplate>
-                        <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
-                      </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                  </DataGridTemplateColumn>-->
-
-                </DataGrid.Columns>
-              </DataGrid>
+                      </DockPanel>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+              </Grid>
             </DockPanel>
           </TabItem>
           <TabItem Header="ローカルNG" Margin="0">
