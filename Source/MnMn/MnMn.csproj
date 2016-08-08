@@ -245,6 +245,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDynamicInformationViewModel.cs" />
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>

@@ -29,5 +29,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     /// </summary>
     public class SmileVideoInformationCaching: Caching<string, SmileVideoInformationViewModel>
     {
+        public SmileVideoInformationCaching()
+            : base(true)
+        { }
+
+
     }
 }
