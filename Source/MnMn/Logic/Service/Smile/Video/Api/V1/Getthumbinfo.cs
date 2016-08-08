@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
     public class Getthumbinfo: ApiBase
     {
         public Getthumbinfo(Mediation mediation)
-            :base(mediation)
+            : base(mediation)
         { }
 
         #region function
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoThumbResponseModel>(stream);
         }
 
-        async Task<RawSmileVideoThumbResponseModel> LoadAsync_Impl(PageLoader page, string videoId)
+        async Task<RawSmileVideoThumbResponseModel> LoadAsyncCore(PageLoader page, string videoId)
         {
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         public async Task<RawSmileVideoThumbResponseModel> LoadAsync(string videoId)
         {
             using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthumbinfo, Define.ServiceType.SmileVideo)) {
-                return await LoadAsync_Impl(page, videoId);
+                return await LoadAsyncCore(page, videoId);
             }
         }
 

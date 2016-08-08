@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             return new ResponseModel(request, Session);
         }
 
-        bool ConvertValue_Impl(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
+        bool ConvertValueCore(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
             switch(inputKey) {
                 case SmileMediationKey.inputIsScrapingVideoId:
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return GetUri_Impl(key, replaceMap, serviceType);
+                    return GetUriCore(key, replaceMap, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetUri(key, replaceMap, serviceType);
@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return GetRequestParameter_Impl(key, replaceMap, serviceType);
+                    return GetRequestParameterCore(key, replaceMap, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetRequestParameter(key, replaceMap, serviceType);
@@ -222,7 +222,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return GetRequestMapping_Impl(key, replaceMap, serviceType);
+                    return GetRequestMappingCore(key, replaceMap, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetRequestMapping(key, replaceMap, serviceType);
@@ -327,7 +327,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return ConvertValue_Impl(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
+                    return ConvertValueCore(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);

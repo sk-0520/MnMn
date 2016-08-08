@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
-            
+
             Logger.LoggerConfig.EnabledAll = true;
             Logger.LoggerConfig.PutsDebug = true;
             Logger.LoggerConfig.PutsConsole = true;
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        private ResponseModel Request_CacheDirectory_Impl(RequestModel request)
+        private ResponseModel Request_CacheDirectoryCore(RequestModel request)
         {
             Debug.Assert(request.RequestKind == RequestKind.CacheDirectory);
 
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             path.AddRange(map[request.ServiceType]);
 
             var directoryPath = Environment.ExpandEnvironmentVariables(Path.Combine(path.ToArray()));
-            
+
             if(Directory.Exists(directoryPath)) {
                 var response = new ResponseModel(request, new DirectoryInfo(directoryPath));
                 return response;
@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             CheckUtility.DebugEnforceNotNull(request);
 
             if(request.RequestKind == RequestKind.CacheDirectory) {
-                return Request_CacheDirectory_Impl(request);
+                return Request_CacheDirectoryCore(request);
             }
 
             if(request.RequestKind == RequestKind.ShowView) {

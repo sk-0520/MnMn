@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region function
 
         protected static TModel LoadModelFromFile<TModel>(string path)
-            where TModel: IModel, new()
+            where TModel : IModel, new()
         {
             if(path != null) {
                 return SerializeUtility.LoadXmlSerializeFromFile<TModel>(path);
@@ -259,7 +259,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected UriResultModel GetUri_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected UriResultModel GetUriCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var uriItem = GetUriItem(key);
             if(uriItem != null) {
@@ -269,7 +269,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected IDictionary<string, string> GetRequestParameter_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IDictionary<string, string> GetRequestParameterCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var targetParameter = RequestParameterList.Parameters
                 .FirstOrDefault(up => up.Key == key)
@@ -307,7 +307,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case MappingItemType.Pair: {
                         var name = ReplaceString(item.Name, replaceMap);
                         var bond = ReplaceString(item.Bond, replaceMap);
-                        
+
                         return $"{BuildMapping(name, MappingItemModel.targetName, item)}{BuildMapping(bond, MappingItemModel.targetBond, item)}{BuildMapping(value, MappingItemModel.targetValue, item)}";
                     }
 
@@ -327,7 +327,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected MappingResultModel GetRequestMapping_Impl(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected MappingResultModel GetRequestMappingCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
             var mapping = RequestMappingList.Mappings
@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var trimedContent = trimMap[mapping.Content.Trim](replacedContent);
             if(mapping.Content.Oneline) {
                 result.Result = string.Join(string.Empty, trimedContent.SplitLines());
-            }else {
+            } else {
                 result.Result = trimedContent;
             }
 
