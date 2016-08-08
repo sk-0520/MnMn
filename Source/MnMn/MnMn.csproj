@@ -197,6 +197,7 @@
     <Compile Include="IF\Control\ICheckable.cs" />
     <Compile Include="IF\Control\ISetView.cs" />
     <Compile Include="IF\ILoadPageHtml.cs" />
+    <Compile Include="IF\Service\Smile\Video\ISmileVideoInformation.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoScrapingPageHtmlToFeedApi.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoDescription.cs" />
     <Compile Include="Logic\CacheSpan.cs" />

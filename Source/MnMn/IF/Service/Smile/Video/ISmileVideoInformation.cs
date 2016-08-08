@@ -20,9 +20,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
 {
-    //public sealed class SmileVideoDynamicInformationViewModel: SmileVideoInformationViewModel
-    //{
-    //}
+    public interface ISmileVideoInformation
+    {
+    }
 }

@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoInformationFlags InformationFlags { get; }
         public bool NeedLoadInformationFlag { get { return InformationFlags != SmileVideoInformationFlags.All; } }
 
-        internal SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; private set; } = new SmileVideoIndividualVideoSettingModel();
+        SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
         FileInfo IndividualVideoSettingFile { get; set; }
 
         RawSmileVideoThumbModel Thumb { get; set; }
@@ -603,6 +603,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public bool HasGetflv => Getflv != null;
 
+        #region IndividualVideoSetting
+
         public bool LoadedNormalVideo
         {
             get { return IndividualVideoSetting.LoadedNormal; }
@@ -618,6 +620,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return IndividualVideoSetting.ConvertedSwf; }
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
+
+        public bool IsEnabledGlobalCommentFilering
+        {
+            get { return IndividualVideoSetting.IsEnabledGlobalCommentFilering; }
+            set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.IsEnabledGlobalCommentFilering)); }
+        }
+
+        /// <summary>
+        /// この動画に対するフィルタ。
+        /// </summary>
+        public SmileVideoFilteringSettingModel Filtering
+        {
+            get { return IndividualVideoSetting.Filtering; }
+        }
+
+        #endregion
+
         /// <summary>
         /// 視聴済みか。
         /// </summary>

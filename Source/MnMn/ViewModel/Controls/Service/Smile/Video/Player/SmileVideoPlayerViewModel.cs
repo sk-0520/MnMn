@@ -828,11 +828,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool IsEnabledGlobalCommentFilering
         {
-            get { return VideoInformation?.IndividualVideoSetting.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
+            get { return VideoInformation?.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
             set
             {
                 if(VideoInformation != null) {
-                    if(SetPropertyValue(VideoInformation.IndividualVideoSetting, value, nameof(VideoInformation.IndividualVideoSetting.IsEnabledGlobalCommentFilering))) {
+                    if(VideoInformation.IsEnabledGlobalCommentFilering != value) {
+                        VideoInformation.IsEnabledGlobalCommentFilering = value;
                         ApprovalComment();
                     }
                 }
@@ -2295,7 +2296,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             };
             CallOnPropertyChange(propertyNames);
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering, Mediation.Smile.VideoMediation.Filtering);
+            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.Filtering, Mediation.Smile.VideoMediation.Filtering);
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();
