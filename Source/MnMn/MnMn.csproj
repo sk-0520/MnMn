@@ -224,9 +224,12 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFiltering.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
+    <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationCaching.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Logic\Utility\FontPropertyUtility.cs" />
     <Compile Include="Model\DefinedImageModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoInformationCacheResultModel.cs" />
+    <Compile Include="Model\Request\CacheRequestModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoPostKeyModel.cs" />

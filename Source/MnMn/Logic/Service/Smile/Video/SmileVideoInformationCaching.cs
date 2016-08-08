@@ -19,24 +19,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class SmileVideoAccountMyListSettingResultModel: ModelBase
+    /// <summary>
+    /// 動画IDとそれに紐付く情報を保持。
+    /// </summary>
+    public class SmileVideoInformationCaching: Caching<string, SmileVideoInformationViewModel>
     {
-        public SmileVideoAccountMyListSettingResultModel(IReadOnlyList<SmileVideoAccountMyListFinderViewModel> accountMyListViewer)
-        {
-            AccountMyList = accountMyListViewer;
-        }
-
-        #region property
-
-        public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; }
-
-        #endregion
     }
 }

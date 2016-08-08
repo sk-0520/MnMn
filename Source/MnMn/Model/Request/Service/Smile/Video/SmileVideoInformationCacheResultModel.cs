@@ -20,22 +20,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
-    public class SmileVideoAccountMyListSettingResultModel: ModelBase
+    public class SmileVideoInformationCacheResultModel: ModelBase
     {
-        public SmileVideoAccountMyListSettingResultModel(IReadOnlyList<SmileVideoAccountMyListFinderViewModel> accountMyListViewer)
+        public SmileVideoInformationCacheResultModel(SmileVideoInformationViewModel information)
         {
-            AccountMyList = accountMyListViewer;
+            Information = information;
         }
 
         #region property
 
-        public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; }
+        public SmileVideoInformationViewModel Information { get; }
 
         #endregion
     }
