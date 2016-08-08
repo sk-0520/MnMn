@@ -197,7 +197,6 @@
     <Compile Include="IF\Control\ICheckable.cs" />
     <Compile Include="IF\Control\ISetView.cs" />
     <Compile Include="IF\ILoadPageHtml.cs" />
-    <Compile Include="IF\Service\Smile\Video\ISmileVideoInformation.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoScrapingPageHtmlToFeedApi.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoDescription.cs" />
     <Compile Include="Logic\CacheSpan.cs" />
@@ -246,7 +245,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoDynamicInformationViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderItem.cs" />
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>
