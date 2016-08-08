@@ -97,7 +97,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
         }
 
-        ResponseModel Request_Impl(RequestModel request)
+        ResponseModel Request_CacheData(SmileVideoInformationCacheRequestModel request)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        ResponseModel RequestCore(RequestModel request)
         {
             switch(request.RequestKind) {
                 case RequestKind.RankingDefine:
@@ -114,6 +120,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 case RequestKind.CustomSetting:
                     return Request_CustomSetting((SmileVideoCustomSettingRequestModel)request);
+
+                case RequestKind.CacheData:
+                    return Request_CacheData((SmileVideoInformationCacheRequestModel)request);
 
                 default:
                     throw new NotImplementedException();
@@ -150,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportRequest(request);
             }
 
-            return Request_Impl(request);
+            return RequestCore(request);
         }
 
         public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)

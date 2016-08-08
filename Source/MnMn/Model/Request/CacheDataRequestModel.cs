@@ -22,20 +22,21 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
-    public class CacheRequestModel: ViewRequestModelBase
+    public class CacheDataRequestModel: RequestModel
     {
-        public CacheRequestModel(RequestKind requestKind, ServiceType serviceType, object parameter, bool isReload)
-            : base(requestKind, serviceType, parameter)
+        public CacheDataRequestModel(RequestKind requestKind, ServiceType serviceType, CacheDataParameterModel parameter)
+            : base(requestKind, serviceType)
         {
-            IsReload = isReload;
+            Parameter = parameter;
         }
 
         #region property
 
-        public bool IsReload { get; }
+        protected CacheDataParameterModel Parameter { get; }
 
         #endregion
     }

@@ -228,8 +228,11 @@
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Logic\Utility\FontPropertyUtility.cs" />
     <Compile Include="Model\DefinedImageModel.cs" />
-    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoInformationCacheResultModel.cs" />
-    <Compile Include="Model\Request\CacheRequestModel.cs" />
+    <Compile Include="Model\Request\CustomCacheDataRequestModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\CacheDataParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoInformationCacheParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoInformationCacheRequestModel.cs" />
+    <Compile Include="Model\Request\CacheDataRequestModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoPostKeyModel.cs" />

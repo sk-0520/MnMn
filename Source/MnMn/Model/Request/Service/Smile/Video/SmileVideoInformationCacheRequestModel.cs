@@ -20,21 +20,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
-    public class SmileVideoInformationCacheResultModel: ModelBase
+    public class SmileVideoInformationCacheRequestModel: CustomCacheDataRequestModelBase
     {
-        public SmileVideoInformationCacheResultModel(SmileVideoInformationViewModel information)
+        public SmileVideoInformationCacheRequestModel(SmileVideoInformationCacheParameterModel parameter)
+            : base(Define.ServiceType.SmileVideo, parameter)
         {
-            Information = information;
         }
-
-        #region property
-
-        public SmileVideoInformationViewModel Information { get; }
-
-        #endregion
     }
 }

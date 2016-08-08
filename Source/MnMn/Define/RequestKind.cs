@@ -66,6 +66,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// キャッシュデータ。
         /// </summary>
-        Cache,
+        CacheData,
     }
 }
