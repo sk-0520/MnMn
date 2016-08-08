@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -107,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void UpDownVideo(SmileVideoInformationViewModel videoInformation, bool isUp)
         {
-            var srcIndex = VideoInformationList.IndexOf(videoInformation);
+            var srcIndex = VideoInformationList.FindIndex(i => i.Information == videoInformation);
             var nextIndex = isUp ? srcIndex - 1 : srcIndex + 1;
             if(isUp && srcIndex == 0) {
                 return;
@@ -118,8 +119,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var nextVideo = VideoInformationList[nextIndex];
 
             var srcNumber = srcVideo.Number;
-            srcVideo.ResetNumber(nextVideo.Number);
-            nextVideo.ResetNumber(srcNumber);
+            //srcVideo.ResetNumber(nextVideo.Number);
+            //nextVideo.ResetNumber(srcNumber);
+            srcVideo.Number = nextVideo.Number;
+            nextVideo.Number = srcNumber;
 
             VideoInformationList.SwapIndex(srcIndex, nextIndex);
             Node.VideoItems.SwapIndex(srcIndex, nextIndex);
@@ -128,7 +131,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         void RemoveCheckedVideos(IEnumerable<SmileVideoInformationViewModel> videoInformation)
         {
             foreach(var video in videoInformation.ToArray()) {
-                var index = VideoInformationList.IndexOf(video);
+                var index = VideoInformationList.FindIndex(i => i.Information == video);
                 VideoInformationList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
             }

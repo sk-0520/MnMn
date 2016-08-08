@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _nowLoading;
         SmileVideoInformationViewModel _selectedVideoInformation;
+        SmileVideoFinderItem _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
         string _inputFilter;
@@ -76,8 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected CancellationTokenSource CancelLoading { get; set; }
         protected SmileVideoSettingModel Setting { get; }
 
-        protected CollectionModel<SmileVideoInformationViewModel> VideoInformationList { get; } = new CollectionModel<SmileVideoInformationViewModel>();
-        public IReadOnlyList<SmileVideoInformationViewModel> VideoInformationViewer => VideoInformationList;
+        protected CollectionModel<SmileVideoFinderItem> VideoInformationList { get; } = new CollectionModel<SmileVideoFinderItem>();
+        public IReadOnlyList<SmileVideoFinderItem> VideoInformationViewer => VideoInformationList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView VideoInformationItems { get; }
 
@@ -113,6 +114,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._selectedVideoInformation; }
             set { SetVariableValue(ref this._selectedVideoInformation, value); }
+        }
+
+        public SmileVideoFinderItem SelectedFinderItem
+        {
+            get { return this._selectedFinderItem; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedFinderItem, value)) {
+                    SelectedVideoInformation = SelectedFinderItem?.Information;
+                }
+            }
         }
 
         public virtual SourceLoadState FinderLoadState
@@ -205,7 +217,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected virtual void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
         {
-            VideoInformationList.InitializeRange(items.Where(i => i != null));
+            var finderItems = items
+                .Select((v, i) => new { Information = v, Index = i })
+                .Where(v => v.Information != null)
+                .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
+            ;
+            VideoInformationList.InitializeRange(finderItems);
             VideoInformationItems.Refresh();
             CallOnPropertyChange(nameof(VideoInformationItems));
 
@@ -216,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.Run(() => {
                 FinderLoadState = SourceLoadState.InformationLoading;
-                var loader = new SmileVideoInformationLoader(VideoInformationList);
+                var loader = new SmileVideoInformationLoader(VideoInformationList.Select(i => i.Information));
                 var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
                 return Task.WhenAll(imageTask, infoTask);
@@ -241,7 +258,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return true;
             }
 
-            var viewModel = (SmileVideoInformationViewModel)obj;
+            var finderItem = (SmileVideoFinderItem)obj;
+            var viewModel = finderItem.Information;
             var isHit = viewModel.Title.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1;
             if(IsBlacklist) {
                 return !isHit;
@@ -323,15 +341,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         internal virtual void ChangeSortItems()
         {
-            var map = new Dictionary<SmileVideoSortType, string>() {
-                { SmileVideoSortType.Number, nameof(SmileVideoInformationViewModel.Number) },
-                { SmileVideoSortType.Title, nameof(SmileVideoInformationViewModel.Title) },
-                //{ SmileVideoSortType.Length, nameof(SmileVideoInformationViewModel.Length) },
-                { SmileVideoSortType.FirstRetrieve, nameof(SmileVideoInformationViewModel.FirstRetrieve) },
-                { SmileVideoSortType.ViewCount, nameof(SmileVideoInformationViewModel.ViewCounter) },
-                { SmileVideoSortType.CommentCount, nameof(SmileVideoInformationViewModel.CommentCounter) },
-                { SmileVideoSortType.MyListCount, nameof(SmileVideoInformationViewModel.MylistCounter) },
-            };
+            var map = new[] {
+                new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItem.Number) },
+                new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
+                //new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
+                new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
+                new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
+                new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },
+                new { Type = SmileVideoSortType.MyListCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.MylistCounter) },
+            }.ToDictionary(
+                ak => ak.Type,
+                av => $"{av.Parent}.{av.Property}"
+            );
             var propertyName = map[SelectedSortType];
             var direction = IsAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
             var sort = new SortDescription(propertyName, direction);

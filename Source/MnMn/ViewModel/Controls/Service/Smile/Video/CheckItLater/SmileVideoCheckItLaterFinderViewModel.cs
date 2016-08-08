@@ -70,7 +70,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 return baseResult;
             }
 
-            var viewModel = (SmileVideoInformationViewModel)obj;
+            var finderItem = (SmileVideoFinderItem)obj;
+            var viewModel = finderItem.Information;
 
             return !IdLaterMap[viewModel.VideoId].IsChecked;
         }

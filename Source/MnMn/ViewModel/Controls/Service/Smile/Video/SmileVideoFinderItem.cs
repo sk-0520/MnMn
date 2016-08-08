@@ -42,9 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoFinderItem(SmileVideoInformationViewModel information)
+        public SmileVideoFinderItem(SmileVideoInformationViewModel information, int number)
         {
             Information = information;
+            Number = number;
         }
 
         #region property

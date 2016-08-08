@@ -634,7 +634,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 MyListId = finder.MyListId,
                 MyListName = finder.MyListName,
             };
-            model.Videos.InitializeRange(finder.VideoInformationViewer.Select(i => i.VideoId));
+            model.Videos.InitializeRange(finder.VideoInformationViewer.Select(i => i.Information.VideoId));
             // 見た目履歴と違うけどまぁいいや
             BookmarkUserMyListPairs.Add(model, null);
             BookmarkUserMyListItems.Refresh();
