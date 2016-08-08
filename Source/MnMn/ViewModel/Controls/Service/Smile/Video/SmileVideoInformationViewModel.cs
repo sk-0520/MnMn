@@ -57,7 +57,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoInformationViewModel: ViewModelBase, ICheckable
+    public class SmileVideoInformationViewModel: ViewModelBase
     {
         #region define
 
@@ -78,7 +78,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         CollectionModel<SmileVideoTagViewModel> _tagList;
 
-        bool? _isChecked = false;
         bool _isPlaying = false;
 
         #endregion
@@ -975,16 +974,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
             return task;
-        }
-
-        #endregion
-
-        #region ICheckable
-
-        public bool? IsChecked
-        {
-            get { return this._isChecked; }
-            set { SetVariableValue(ref this._isChecked, value); }
         }
 
         #endregion

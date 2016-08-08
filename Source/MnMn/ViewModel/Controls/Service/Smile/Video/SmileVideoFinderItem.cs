@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     /// <summary>
     /// <see cref="View.Controls.Service.Smile.Video.SmileVideoFinderControl"/>に設定するアイテム。
+    /// <para><see cref="SmileVideoInformationViewModel"/>を<see cref="View.Controls.Service.Smile.Video.SmileVideoFinderControl"/>に設定するために超頑張ったのである。</para>
     /// </summary>
     public sealed class SmileVideoFinderItem: ViewModelBase, ICheckable
     {

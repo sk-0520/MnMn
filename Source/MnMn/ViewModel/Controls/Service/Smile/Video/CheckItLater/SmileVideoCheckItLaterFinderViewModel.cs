@@ -39,9 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         void RemoveCheckedVideos()
         {
-            var items = VideoInformationItems
-                .Cast<SmileVideoInformationViewModel>()
-                .Where(v => v.IsChecked.GetValueOrDefault())
+            var items = GetCheckedItems()
+                .Select(i => i.Information)
                 .ToArray();
             ;
 

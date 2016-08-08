@@ -90,9 +90,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videos = VideoInformationItems
-                        .Cast<SmileVideoInformationViewModel>()
-                        .Where(v => v.IsChecked.GetValueOrDefault())
+                    var videos = GetCheckedItems()
+                        .Select(i => i.Information)
                     ;
                     if(videos.Any()) {
                         RemoveCheckedVideos(videos);

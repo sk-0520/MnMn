@@ -481,10 +481,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         async Task<CheckModel> RemoveAccountMyListVideoAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
         {
-            var videoIdList = accountFinder.VideoInformationItems
-                .Cast<SmileVideoInformationViewModel>()
-                .Where(v => v.IsChecked.GetValueOrDefault())
-                .Select(v => v.VideoId)
+            var videoIdList = accountFinder.GetCheckedItems()
+                .Select(v => v.Information.VideoId)
                 .ToArray()
             ;
             if(videoIdList.Length == 0) {

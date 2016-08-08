@@ -268,7 +268,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        //protected abstract PageLoader CreatePageLoader();
+        public IEnumerable<SmileVideoFinderItem> GetCheckedItems()
+        {
+            return VideoInformationViewer
+                .Cast<SmileVideoFinderItem>()
+                .Where(i => i.IsChecked.GetValueOrDefault())
+            ;
+        }
 
         protected abstract Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
 
@@ -305,7 +311,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         internal virtual void ToggleAllCheck()
         {
-            var items = VideoInformationItems.Cast<SmileVideoInformationViewModel>().ToArray();
+            var items = VideoInformationItems.Cast<SmileVideoFinderItem>().ToArray();
             var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
             foreach(var item in items) {
@@ -317,18 +323,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ShowContinuousPlaybackMenu = false;
 
-            var items = VideoInformationItems.Cast<SmileVideoInformationViewModel>().ToArray();
+            var items = GetCheckedItems().ToArray();
 
-            if(!items.Any(i => i.IsChecked.GetValueOrDefault())) {
+            if(!items.Any()) {
                 return Task.CompletedTask;
             }
 
             var playList = items
-                .Where(i => i.IsChecked.GetValueOrDefault())
+                .Select(i => i.Information)
                 .ToArray()
             ;
 
-            foreach(var item in playList) {
+            foreach(var item in items) {
                 item.IsChecked = false;
             }
 

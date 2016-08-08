@@ -71,9 +71,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         protected override Task<CheckModel> RemoveCheckedItemsAsync()
         {
-            var items = VideoInformationItems
-                .Cast<SmileVideoInformationViewModel>()
-                .Where(v => v.IsChecked.GetValueOrDefault())
+            var items = GetCheckedItems()
+                .Select(i => i.Information)
                 .ToArray();
             ;
 
