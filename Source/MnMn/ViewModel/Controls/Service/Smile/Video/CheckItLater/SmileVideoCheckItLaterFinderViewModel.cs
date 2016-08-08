@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                         model.IsChecked = true;
                     }
                 }
-                VideoInformationItems.Refresh();
+                FinderItems.Refresh();
             }
         }
 

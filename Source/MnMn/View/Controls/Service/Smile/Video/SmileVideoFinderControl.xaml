@@ -90,7 +90,7 @@
       x:Name="PART_List"
       Grid.Row="2"
       Style="{StaticResource ContentListBox}"
-      ItemsSource="{Binding VideoInformationItems}"
+      ItemsSource="{Binding FinderItems}"
       SelectedItem="{Binding SelectedFinderItem}"
     >
       <ListBox.ItemContainerStyle>

@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region variable
 
         bool _nowLoading;
-        SmileVideoInformationViewModel _selectedVideoInformation;
+
         SmileVideoFinderItem _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
@@ -67,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
-            VideoInformationItems = CollectionViewSource.GetDefaultView(VideoInformationList);
-            VideoInformationItems.Filter = FilterItems;
+            FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
+            FinderItems.Filter = FilterItems;
         }
 
         #region property
@@ -77,10 +77,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected CancellationTokenSource CancelLoading { get; set; }
         protected SmileVideoSettingModel Setting { get; }
 
-        protected CollectionModel<SmileVideoFinderItem> VideoInformationList { get; } = new CollectionModel<SmileVideoFinderItem>();
-        public IReadOnlyList<SmileVideoFinderItem> VideoInformationViewer => VideoInformationList;
+        protected CollectionModel<SmileVideoFinderItem> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItem>();
+        public IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
-        public virtual ICollectionView VideoInformationItems { get; }
+        public virtual ICollectionView FinderItems { get; }
 
         public bool IsAscending
         {
@@ -110,21 +110,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._nowLoading, value); }
         }
 
-        public SmileVideoInformationViewModel SelectedVideoInformation
-        {
-            get { return this._selectedVideoInformation; }
-            set { SetVariableValue(ref this._selectedVideoInformation, value); }
-        }
-
         public SmileVideoFinderItem SelectedFinderItem
         {
             get { return this._selectedFinderItem; }
-            set
-            {
-                if(SetVariableValue(ref this._selectedFinderItem, value)) {
-                    SelectedVideoInformation = SelectedFinderItem?.Information;
-                }
-            }
+            set { SetVariableValue(ref this._selectedFinderItem, value); }
         }
 
         public virtual SourceLoadState FinderLoadState
@@ -148,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._inputFilter, value)) {
-                    VideoInformationItems.Refresh();
+                    FinderItems.Refresh();
                 }
             }
         }
@@ -158,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set
             {
                 if(SetVariableValue(ref this._isBlacklist, value)) {
-                    VideoInformationItems.Refresh();
+                    FinderItems.Refresh();
                 }
             }
         }
@@ -222,9 +211,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .Where(v => v.Information != null)
                 .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
             ;
-            VideoInformationList.InitializeRange(finderItems);
-            VideoInformationItems.Refresh();
-            CallOnPropertyChange(nameof(VideoInformationItems));
+            FinderItemList.InitializeRange(finderItems);
+            FinderItems.Refresh();
+            CallOnPropertyChange(nameof(FinderItems));
 
             ChangeSortItems();
         }
@@ -233,7 +222,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.Run(() => {
                 FinderLoadState = SourceLoadState.InformationLoading;
-                var loader = new SmileVideoInformationLoader(VideoInformationList.Select(i => i.Information));
+                var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
                 var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
                 var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
                 return Task.WhenAll(imageTask, infoTask);
@@ -270,7 +259,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public IEnumerable<SmileVideoFinderItem> GetCheckedItems()
         {
-            return VideoInformationViewer
+            return FinderItemsViewer
                 .Cast<SmileVideoFinderItem>()
                 .Where(i => i.IsChecked.GetValueOrDefault())
             ;
@@ -311,7 +300,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         internal virtual void ToggleAllCheck()
         {
-            var items = VideoInformationItems.Cast<SmileVideoFinderItem>().ToArray();
+            var items = FinderItems.Cast<SmileVideoFinderItem>().ToArray();
             var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
             foreach(var item in items) {
@@ -363,9 +352,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var direction = IsAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
             var sort = new SortDescription(propertyName, direction);
 
-            VideoInformationItems.SortDescriptions.Clear();
-            VideoInformationItems.SortDescriptions.Add(sort);
-            VideoInformationItems.Refresh();
+            FinderItems.SortDescriptions.Clear();
+            FinderItems.SortDescriptions.Add(sort);
+            FinderItems.Refresh();
         }
 
         #endregion

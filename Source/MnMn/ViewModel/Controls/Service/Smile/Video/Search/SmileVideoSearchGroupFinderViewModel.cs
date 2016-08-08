@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #region define
 
         static IEnumerable<string> ChangePagePropertyNames => new[] {
-            nameof(VideoInformationItems),
+            nameof(FinderItems),
             nameof(FinderLoadState),
             nameof(CanLoad),
             nameof(NowLoading),
@@ -146,24 +146,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     if(this._selectedPage != null && oldSelectedPage != null) {
                         this._selectedPage.ViewModel.InputFilter = oldSelectedPage.ViewModel.InputFilter;
                         this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
-                        this._selectedPage.ViewModel.VideoInformationItems.Refresh();
+                        this._selectedPage.ViewModel.FinderItems.Refresh();
                     }
                 }
             }
         }
 
-        public override ICollectionView VideoInformationItems
+        public override ICollectionView FinderItems
         {
             get
             {
                 if(SelectedPage == null) {
                     if(SearchFinder != null) {
-                        return SearchFinder.VideoInformationItems;
+                        return SearchFinder.FinderItems;
                     } else {
-                        return base.VideoInformationItems;
+                        return base.FinderItems;
                     }
                 }
-                return SelectedPage.ViewModel.VideoInformationItems;
+                return SelectedPage.ViewModel.FinderItems;
             }
         }
 

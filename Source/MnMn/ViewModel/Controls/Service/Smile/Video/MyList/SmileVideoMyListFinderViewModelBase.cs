@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         protected SmileSessionViewModel Session { get; }
         public abstract string MyListId { get; }
         public abstract string MyListName { get; }
-        public virtual int MyListItemCount { get { return VideoInformationList.Count; } }
+        public virtual int MyListItemCount { get { return FinderItemList.Count; } }
         public bool IsAccountMyList { get; }
 
         protected DirectoryInfo CacheDirectory { get; private set; }
