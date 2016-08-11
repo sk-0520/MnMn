@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -127,6 +128,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #endregion
 
         #region command
+
+        public ICommand ExecuteCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var s = (string)o;
+                    try {
+                        Process.Start(s);
+                    } catch(Exception ex) {
+                        Mediation.Logger.Warning(ex);
+                    }
+                });
+            }
+        }
 
         #endregion
 
