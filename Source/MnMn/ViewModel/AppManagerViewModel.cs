@@ -27,6 +27,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -128,6 +129,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #endregion
 
         #region command
+
+        public ICommand HelpCommand
+        {
+            get { return CreateCommand(o => { ExecuteCommand.TryExecute(Constants.HelpFilePath); }); }
+        }
 
         public ICommand ExecuteCommand
         {

@@ -56,6 +56,7 @@
               <Setter Property="Margin" Value="5" />
             </Style>
           </StackPanel.Resources>
+          <Button Command="{Binding HelpCommand}">help</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="http://content-type-text.net/">Webサイト</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://groups.google.com/d/forum/mnmn-forum">フォーラム</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn">リポジトリ</Button>

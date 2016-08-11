@@ -99,6 +99,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// etc/
         /// </summary>
         public static string ApplicationEtcDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "etc"); } }
+        /// <summary>
+        /// doc/
+        /// </summary>
+        public static string ApplicationDocDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "doc"); } }
+
+        public static string HelpFilePath { get { return Path.Combine(ApplicationDocDirectoryPath, "help.html"); } }
 
         public static string ScriptDirectoryName { get; } = "script";
 
