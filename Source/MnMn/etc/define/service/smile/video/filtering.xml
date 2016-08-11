@@ -27,15 +27,6 @@
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
-	<element key="char4">
-		<words>
-			<word key="ja-jp" value="四文字まで" />
-		</words>
-		<extends>
-			<extend key="pattern" value=".{5,}" />
-			<extend key="ignore-case" value="false" />
-		</extends>
-	</element>
 	<element key="chat">
 		<words>
 			<word key="ja-jp" value="話されても困る" />
