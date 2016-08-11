@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return list;
             }).ContinueWith(task => {
                 var list = task.Result;
-                SetItems(list);
+                SetItemsAsync(list);
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        protected virtual void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
+        protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items)
         {
             var finderItems = items
                 .Select((v, i) => new { Information = v, Index = i })
@@ -216,6 +216,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             CallOnPropertyChange(nameof(FinderItems));
 
             ChangeSortItems();
+
+            return Task.CompletedTask;
         }
 
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)

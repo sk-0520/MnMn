@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }).ContinueWith(task => {
                 var items = task.Result;
                 if(items != null) {
-                    SetItems(items);
+                    SetItemsAsync(items);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

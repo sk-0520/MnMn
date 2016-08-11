@@ -128,10 +128,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region SmileVideoFeedFinderViewModelBase
 
-        protected override void SetItems(IEnumerable<SmileVideoInformationViewModel> items)
+        protected override Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items)
         {
-            base.SetItems(items);
-            CallOnPropertyChange(nameof(MyListItemCount));
+            return base.SetItemsAsync(items).ContinueWith(t => {
+                CallOnPropertyChange(nameof(MyListItemCount));
+            });
         }
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
