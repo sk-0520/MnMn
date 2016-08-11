@@ -712,38 +712,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Directory.CreateDirectory(cachedDirPath);
         }
 
-        static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
-        {
-            var cacheDir = GetCahceDirectory(mediation, videoId);
+        //static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        //{
+        //    var cacheDir = GetCahceDirectory(mediation, videoId);
 
-            RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
-            var cachedThumbFilePath = Path.Combine(cacheDir.FullName, GetCacheFileName(videoId, "thumb", "xml"));
-            if(File.Exists(cachedThumbFilePath)) {
-                var fileInfo = new FileInfo(cachedThumbFilePath);
-                if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-                    using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
-                    }
-                }
-            }
-            if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
-                var getthumbinfo = new Getthumbinfo(mediation);
-                rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
-            }
+        //    RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
+        //    var cachedThumbFilePath = Path.Combine(cacheDir.FullName, GetCacheFileName(videoId, "thumb", "xml"));
+        //    if(File.Exists(cachedThumbFilePath)) {
+        //        var fileInfo = new FileInfo(cachedThumbFilePath);
+        //        if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+        //            using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+        //                rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
+        //            }
+        //        }
+        //    }
+        //    if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+        //        var getthumbinfo = new Getthumbinfo(mediation);
+        //        rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
+        //    }
 
-            // キャッシュ構築
-            try {
-                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
-            } catch(FileNotFoundException) {
-                // BUGS: いかんのう
-            }
+        //    // キャッシュ構築
+        //    try {
+        //        SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
+        //    } catch(FileNotFoundException) {
+        //        // BUGS: いかんのう
+        //    }
 
-            return rawGetthumbinfo;
-        }
+        //    return rawGetthumbinfo;
+        //}
 
         public static async Task<SmileVideoInformationViewModel> CreateFromVideoIdAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
         {
-            var rawGetthumbinfo = await LoadGetthumbinfoAsync(mediation, videoId, thumbCacheSpan);
+            var rawGetthumbinfo = await SmileVideoInformationUtility.LoadGetthumbinfoAsync(mediation, videoId, thumbCacheSpan);
             return new SmileVideoInformationViewModel(mediation, rawGetthumbinfo.Thumb, NoOrderd);
         }
 
@@ -822,7 +822,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             InformationLoadState = LoadState.Loading;
 
-            return LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
+            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
                 var rawGetthumbinfo = task.Result;
                 if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
                     InformationLoadState = LoadState.Failure;

@@ -20,9 +20,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -43,6 +46,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
 
             return Directory.CreateDirectory(cachedDirPath);
+        }
+
+        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        {
+            var cacheDir = SmileVideoInformationUtility.GetCacheDirectory(mediation, videoId);
+
+            RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
+            var fileName = PathUtility.CreateFileName(videoId, "thumb", "xml");
+            var cachedThumbFilePath = Path.Combine(cacheDir.FullName, fileName);
+            if(File.Exists(cachedThumbFilePath)) {
+                var fileInfo = new FileInfo(cachedThumbFilePath);
+                if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
+                    using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                        rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
+                    }
+                }
+            }
+            if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+                var getthumbinfo = new Getthumbinfo(mediation);
+                rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
+            }
+
+            // キャッシュ構築
+            try {
+                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
+            } catch(Exception ex) {
+                mediation.Logger.Warning(ex);
+            }
+
+            return rawGetthumbinfo;
+
         }
 
         #endregion

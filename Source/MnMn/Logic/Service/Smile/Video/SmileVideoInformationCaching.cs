@@ -65,37 +65,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return videoId;
         }
 
-        async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(string videoId, CacheSpan thumbCacheSpan)
-        {
-            var cacheDir = SmileVideoInformationUtility.GetCacheDirectory(Mediation, videoId);
-
-            RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
-            var fileName = PathUtility.CreateFileName(videoId, "thumb", "xml");
-            var cachedThumbFilePath = Path.Combine(cacheDir.FullName, fileName);
-            if(File.Exists(cachedThumbFilePath)) {
-                var fileInfo = new FileInfo(cachedThumbFilePath);
-                if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-                    using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
-                    }
-                }
-            }
-            if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
-                var getthumbinfo = new Getthumbinfo(Mediation);
-                rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
-            }
-
-            // キャッシュ構築
-            try {
-                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
-            } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
-            }
-
-            return rawGetthumbinfo;
-
-        }
-
         public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
         {
             var usingVideoId = GetSafeVideoId(videoId);
@@ -105,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 return Task.FromResult(result);
             }
 
-            return LoadGetthumbinfoAsync(usingVideoId, thumbCacheSpan).ContinueWith(t => {
+            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, usingVideoId, thumbCacheSpan).ContinueWith(t => {
                 var rawGetthumbinfo = t.Result;
                 result = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
                 Add(usingVideoId, result);
