@@ -20,48 +20,27 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    /// <summary>
-    /// 設定基底。
-    /// </summary>
     [DataContract]
-    public class AppSettingModel: SettingModelBase
+    public class RunningInformationSettingModel: SettingModelBase
     {
         #region property
 
+        [DataMember]
+        public bool Accept { get; set; }
+
         /// <summary>
-        /// キャッシュディレクトリ。
+        /// 前回終了時のバージョン。
         /// </summary>
         [DataMember]
-        public string CacheDirectoryPath { get; set; }
-        /// <summary>
-        /// キャッシュ有効期間。
-        /// </summary>
-        [DataMember]
-        public TimeSpan CacheLifeTime { get; set; } = Constants.ApplicationCacheLifeTime;
+        public Version LastExecuteVersion { get; set; }
 
         [DataMember]
-        public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
-            Left = 100,
-            Top = 100,
-            Width = 720,
-            Height = 450,
-        };
-
+        public Version FirstVersion { get; set; }
         [DataMember]
-        public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
-
-
-        #region service
-
-        [DataMember]
-        public SmileSettingModel ServiceSmileSetting { get; set; } = new SmileSettingModel();
-
-        #endregion
+        public DateTime FirstTimestamp { get; set; }
 
         #endregion
     }

@@ -65,6 +65,22 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var dir = VariableConstants.GetSettingDirectory();
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
             var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
+            if(!setting.RunningInformation.Accept) {
+                var isFirst = setting.RunningInformation.FirstVersion == null;
+
+                var accept = new AcceptWindow();
+                var acceptResult = accept.ShowDialog();
+                if(!acceptResult.GetValueOrDefault()) {
+                    Application.Current.Shutdown();
+                    return;
+                }
+                setting.RunningInformation.Accept = true;
+                if(isFirst) {
+                    setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
+                    setting.RunningInformation.FirstTimestamp = DateTime.Now;
+                }
+            }
+
             var mediation = new Mediation(setting, logger);
             AppManager = new AppManagerViewModel(mediation);
 
