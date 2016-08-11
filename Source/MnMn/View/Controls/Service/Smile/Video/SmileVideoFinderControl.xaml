@@ -118,7 +118,7 @@
                         <RowDefinition />
                       </Grid.RowDefinitions>
                       <TextBlock Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" Text="{Binding Number}" />
-                      <CheckBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{TemplateBinding IsChecked}" />
+                      <CheckBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}" />
                     </Grid>
                   </ControlTemplate>
                 </CheckBox.Template>
