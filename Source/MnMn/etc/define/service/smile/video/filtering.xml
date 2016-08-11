@@ -23,7 +23,7 @@
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あ(っ|…|・)?$)|(^[！？!\?)]+$)" />
+			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あ(っ?…|・)?$)|(^[！？!\?)]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
