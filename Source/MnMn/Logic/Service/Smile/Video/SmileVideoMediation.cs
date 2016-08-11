@@ -285,6 +285,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     Players.Add(window);
                     return window;
                 }
+                var information = request.ViewModel as SmileVideoInformationViewModel;
+                if(information != null) {
+                    var plaingItem = Players
+                        .Select(w => new { View = w, ViewModel = w.DataContext as SmileVideoPlayerViewModel })
+                        .Where(p => p.ViewModel != null)
+                        .FirstOrDefault(p => p.ViewModel.VideoId == information.VideoId)
+                    ;
+
+                    return plaingItem.View;
+                }
             } else {
                 var finder = request.ShowRequestParameter as SmileVideoSearchParameterModel;
                 if(finder != null) {

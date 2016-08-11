@@ -2477,6 +2477,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             IsViewClosed = true;
 
+            Information.IsPlaying = false;
+
             Information.SaveSetting(true);
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
