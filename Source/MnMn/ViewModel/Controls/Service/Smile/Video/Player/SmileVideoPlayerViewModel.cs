@@ -1222,7 +1222,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         static bool InShowTime(SmileVideoCommentViewModel comment, TimeSpan prevTime, TimeSpan nowTime)
         {
-            return prevTime <= (comment.ElapsedTime - correctionTime) && (comment.ElapsedTime - correctionTime) <= nowTime;
+            var correction = nowTime < correctionTime ? TimeSpan.Zero : correctionTime;
+            return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
         }
 
         void MoveVideoPostion(float targetPosition)
