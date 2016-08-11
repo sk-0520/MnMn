@@ -37,6 +37,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public SmileVideoCheckItLaterFinderViewModel CheckItLaterFinder { get; }
 
+        public bool HasItem
+        {
+            get { return ItemCount > 0; }
+        }
+
+        public int ItemCount
+        {
+            get { return Setting.CheckItLater.Count(i => !i.IsChecked); }
+        }
+
         #endregion
 
         #region command
@@ -72,6 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 Setting.CheckItLater.Remove(item);
             }
             Setting.CheckItLater.Insert(0, item);
+
+            CallOnPropertyChangeDisplayItem();
 
             return item;
         }
@@ -111,8 +123,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             foreach(var gcItem in gcItems) {
                 Setting.CheckItLater.Remove(gcItem);
             }
+            CallOnPropertyChangeDisplayItem();
 
             return Task.CompletedTask;
+        }
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            base.CallOnPropertyChangeDisplayItem();
+
+            var propertyName = new[] {
+                nameof(ItemCount),
+                nameof(HasItem),
+            };
+            CallOnPropertyChange(propertyName);
         }
 
         #endregion
