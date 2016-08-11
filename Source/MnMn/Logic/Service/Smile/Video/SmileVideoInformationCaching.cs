@@ -23,11 +23,14 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
@@ -56,6 +59,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         #endregion
 
         #region function
+
+        string GetSafeVideoId(string videoId)
+        {
+            return videoId;
+        }
 
         async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(string videoId, CacheSpan thumbCacheSpan)
         {
@@ -88,13 +96,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         }
 
-        //public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
-        //{
-        //    //return Get(videoId, async () => {
-        //    //    var rawGetthumbinfo = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
-        //    //    return new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
-        //    //});
-        //}
+        public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
+        {
+            var usingVideoId = GetSafeVideoId(videoId);
+
+            SmileVideoInformationViewModel result;
+            if(TryGetValue(usingVideoId, out result)) {
+                return Task.FromResult(result);
+            }
+
+            return LoadGetthumbinfoAsync(usingVideoId, thumbCacheSpan).ContinueWith(t => {
+                var rawGetthumbinfo = t.Result;
+                result = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
+                Add(usingVideoId, result);
+                return result;
+            });
+        }
+
+        public SmileVideoInformationViewModel Get(RawSmileVideoThumbModel thumb)
+        {
+            var usingVideoId = GetSafeVideoId(thumb.VideoId);
+
+            return Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, thumb, UnOrdered));
+        }
+
+        public SmileVideoInformationViewModel Get(RawSmileContentsSearchItemModel search)
+        {
+            var usingVideoId = GetSafeVideoId(search.ContentId);
+
+            return Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+        }
+
+        public SmileVideoInformationViewModel Get(FeedSmileVideoItemModel feed, SmileVideoInformationFlags informationFlags)
+        {
+            //TODO: 動画ID取得意外と面倒なのね
+            var tempResult = new SmileVideoInformationViewModel(Mediation, feed, UnOrdered, informationFlags);
+            var usingVideoId = GetSafeVideoId(tempResult.VideoId);
+            return Get(usingVideoId, () => tempResult);
+        }
 
         #endregion
     }
