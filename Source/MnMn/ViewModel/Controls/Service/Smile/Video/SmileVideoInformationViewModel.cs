@@ -85,7 +85,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
         {
             Mediation = mediation;
-            Number = number;
             ThumbnailLoadState = LoadState.None;
             InformationFlags = informationFlags;
         }
@@ -141,8 +140,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         RawSmileVideoGetflvModel Getflv { get; set; }
 
         public DirectoryInfo CacheDirectory { get; private set; }
-
-        public int Number { get; private set; }
 
 
         public string PageHtml { get; private set; }
@@ -690,12 +687,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             };
 
             return result;
-        }
-
-        internal void ResetNumber(int number)
-        {
-            Number = number;
-            CallOnPropertyChange(nameof(Number));
         }
 
         static string GetCacheFileName(string videoId, string roll, string extension)
