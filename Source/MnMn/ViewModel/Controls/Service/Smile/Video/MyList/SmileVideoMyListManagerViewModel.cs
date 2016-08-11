@@ -44,6 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -481,10 +482,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         async Task<CheckModel> RemoveAccountMyListVideoAsync(SmileVideoAccountMyListFinderViewModel accountFinder)
         {
-            var videoIdList = accountFinder.VideoInformationItems
-                .Cast<SmileVideoInformationViewModel>()
-                .Where(v => v.IsChecked.GetValueOrDefault())
-                .Select(v => v.VideoId)
+            var videoIdList = accountFinder.GetCheckedItems()
+                .Select(v => v.Information.VideoId)
                 .ToArray()
             ;
             if(videoIdList.Length == 0) {
@@ -634,7 +633,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 MyListId = finder.MyListId,
                 MyListName = finder.MyListName,
             };
-            model.Videos.InitializeRange(finder.VideoInformationViewer.Select(i => i.VideoId));
+            model.Videos.InitializeRange(finder.FinderItemsViewer.Select(i => i.Information.VideoId));
             // 見た目履歴と違うけどまぁいいや
             BookmarkUserMyListPairs.Add(model, null);
             BookmarkUserMyListItems.Refresh();
@@ -655,7 +654,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             return newMyListTask.ContinueWith(t => {
                 var newModels = t.Result.Channel.Items;
                 var newViewModels = newModels
-                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None))
+                    .Select(item => {
+                        var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.None));
+                        return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    })
                     .ToArray()
                 ;
 

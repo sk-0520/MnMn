@@ -51,6 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             Setting = setting;
 
+            InformationCaching = new SmileVideoInformationCaching(Mediation);
+
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
@@ -62,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
+
+        SmileVideoInformationCaching InformationCaching { get; }
 
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
@@ -97,7 +101,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
         }
 
-        ResponseModel Request_Impl(RequestModel request)
+        ResponseModel Request_CacheData(SmileVideoInformationCacheRequestModel request)
+        {
+            switch(request.InformationSource) {
+                case SmileVideoVideoInformationSource.VideoId:
+                    return new ResponseModel(request, InformationCaching.LoadFromVideoIdAsync(request.VideoId, request.ThumbCacheSpan));
+
+                case SmileVideoVideoInformationSource.Getthumbinfo:
+                    return new ResponseModel(request, InformationCaching.Get(request.Thumb));
+
+                case SmileVideoVideoInformationSource.Search:
+                    return new ResponseModel(request, InformationCaching.Get(request.ContentsSearch));
+
+                case SmileVideoVideoInformationSource.Feed:
+                    return new ResponseModel(request, InformationCaching.Get(request.Feed, request.InformationFlags));
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+
+        ResponseModel RequestCore(RequestModel request)
         {
             switch(request.RequestKind) {
                 case RequestKind.RankingDefine:
@@ -115,12 +140,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 case RequestKind.CustomSetting:
                     return Request_CustomSetting((SmileVideoCustomSettingRequestModel)request);
 
+                case RequestKind.CacheData:
+                    return Request_CacheData((SmileVideoInformationCacheRequestModel)request);
+
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        bool ValueConvert_Impl(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        bool ValueConvertCore(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
         {
             switch(inputKey) {
                 case SmileVideoMediationKey.inputEconomyMode:
@@ -150,7 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportRequest(request);
             }
 
-            return Request_Impl(request);
+            return RequestCore(request);
         }
 
         public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -159,7 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
             }
 
-            return GetUri_Impl(key, replaceMap, serviceType);
+            return GetUriCore(key, replaceMap, serviceType);
         }
 
         public override string ConvertUri(string uri, ServiceType serviceType)
@@ -177,7 +205,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
             }
 
-            return GetRequestParameter_Impl(key, replaceMap, serviceType);
+            return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
         public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -186,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
             }
 
-            return GetRequestMapping_Impl(key, replaceMap, serviceType);
+            return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
@@ -235,7 +263,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
             switch(serviceType) {
                 case ServiceType.SmileVideo:
-                    return ValueConvert_Impl(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
+                    return ValueConvertCore(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);

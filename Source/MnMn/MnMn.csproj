@@ -66,7 +66,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.64\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.68\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -224,9 +224,16 @@
     <Compile Include="Logic\Service\Smile\Video\SmileVideoDownloader.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFiltering.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationLoader.cs" />
+    <Compile Include="Logic\Service\Smile\Video\SmileVideoInformationCaching.cs" />
     <Compile Include="Logic\Updater.cs" />
     <Compile Include="Logic\Utility\FontPropertyUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoInformationUtility.cs" />
     <Compile Include="Model\DefinedImageModel.cs" />
+    <Compile Include="Model\Request\CustomCacheDataRequestModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\CacheDataParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoInformationCacheParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoInformationCacheRequestModel.cs" />
+    <Compile Include="Model\Request\CacheDataRequestModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgChatResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoMsgPacketResultModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoPostKeyModel.cs" />
@@ -239,6 +246,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderItem.cs" />
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>
@@ -253,7 +261,6 @@
     <Compile Include="View\Converter\OutlinedTextBlockFontSizeToStrokeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
-    <Compile Include="View\Logic\Service\Smile\Video\SmileVideoFinderStyleSelector.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
     <Compile Include="Logic\Utility\CacheImageUtility.cs" />
@@ -917,6 +924,7 @@
     <Folder Include="etc\image\service\smile\video\" />
     <Folder Include="etc\script\smile\" />
     <Folder Include="Resources\Service\Smile\Video\Search\" />
+    <Folder Include="View\Logic\Service\Smile\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

@@ -828,11 +828,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool IsEnabledGlobalCommentFilering
         {
-            get { return VideoInformation?.IndividualVideoSetting.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
+            get { return VideoInformation?.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
             set
             {
                 if(VideoInformation != null) {
-                    if(SetPropertyValue(VideoInformation.IndividualVideoSetting, value, nameof(VideoInformation.IndividualVideoSetting.IsEnabledGlobalCommentFilering))) {
+                    if(VideoInformation.IsEnabledGlobalCommentFilering != value) {
+                        VideoInformation.IsEnabledGlobalCommentFilering = value;
                         ApprovalComment();
                     }
                 }
@@ -1723,8 +1724,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Task OpenVideoLinkAsync(string videoId)
         {
             var cancel = new CancellationTokenSource();
-            return SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(task => {
-                var videoInformation = task.Result;
+            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
+            return Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request).ContinueWith(t => {
+                var videoInformation = t.Result;
                 return LoadAsync(videoInformation, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -2295,7 +2297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             };
             CallOnPropertyChange(propertyNames);
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.IndividualVideoSetting.Filtering, Mediation.Smile.VideoMediation.Filtering);
+            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.Filtering, Mediation.Smile.VideoMediation.Filtering);
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();

@@ -39,9 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         void RemoveCheckedVideos()
         {
-            var items = VideoInformationItems
-                .Cast<SmileVideoInformationViewModel>()
-                .Where(v => v.IsChecked.GetValueOrDefault())
+            var items = GetCheckedItems()
+                .Select(i => i.Information)
                 .ToArray();
             ;
 
@@ -53,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                         model.IsChecked = true;
                     }
                 }
-                VideoInformationItems.Refresh();
+                FinderItems.Refresh();
             }
         }
 
@@ -70,7 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 return baseResult;
             }
 
-            var viewModel = (SmileVideoInformationViewModel)obj;
+            var finderItem = (SmileVideoFinderItem)obj;
+            var viewModel = finderItem.Information;
 
             return !IdLaterMap[viewModel.VideoId].IsChecked;
         }

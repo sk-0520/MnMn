@@ -26,12 +26,15 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
@@ -45,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #endregion
 
         public SmileVideoSearchItemFinderViewModel(Mediation mediation, SmileVideoSearchModel searchModel, DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, int index, int count)
-            :base(mediation)
+            : base(mediation)
         {
             SearchModel = searchModel;
 
@@ -102,7 +105,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 FinderLoadState = SourceLoadState.SourceChecking;
                 var result = task.Result;
                 TotalCount = RawValueUtility.ConvertInteger(result.Meta.TotalCount);
-                var list = result.Data.Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + Index + 1));
+
+                var list = result.Data.Select(item => {
+                    var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item));
+                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                });
                 return list;
             }).ContinueWith(task => {
                 var list = task.Result;

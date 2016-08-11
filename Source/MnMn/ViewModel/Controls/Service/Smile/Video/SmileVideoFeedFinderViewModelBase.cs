@@ -26,8 +26,11 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
@@ -53,8 +56,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected IEnumerable<SmileVideoInformationViewModel> ConvertInformationFromChannelItems(IEnumerable<FeedSmileVideoItemModel> channelItems)
         {
             return channelItems
-                .AsParallel()
-                .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags))
+                //.AsParallel()
+                .Select((item, index) => {
+                    //new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags)
+                    var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, InformationFlags));
+                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                })
             ;
         }
 

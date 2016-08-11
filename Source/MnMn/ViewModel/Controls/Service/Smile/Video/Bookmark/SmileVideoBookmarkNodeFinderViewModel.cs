@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -63,9 +64,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videoInformation = SelectedVideoInformation;
-                    if(videoInformation != null) {
-                        UpDownVideo(videoInformation, IsAscending);
+                    var information = SelectedFinderItem?.Information;
+                    if(information != null) {
+                        UpDownVideo(information, IsAscending);
                     }
                 });
             }
@@ -76,9 +77,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videoInformation = SelectedVideoInformation;
-                    if(videoInformation != null) {
-                        UpDownVideo(videoInformation, !IsAscending);
+                    var information = SelectedFinderItem?.Information;
+                    if(information != null) {
+                        UpDownVideo(information, !IsAscending);
                     }
                 });
             }
@@ -89,9 +90,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videos = VideoInformationItems
-                        .Cast<SmileVideoInformationViewModel>()
-                        .Where(v => v.IsChecked.GetValueOrDefault())
+                    var videos = GetCheckedItems()
+                        .Select(i => i.Information)
                     ;
                     if(videos.Any()) {
                         RemoveCheckedVideos(videos);
@@ -107,29 +107,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void UpDownVideo(SmileVideoInformationViewModel videoInformation, bool isUp)
         {
-            var srcIndex = VideoInformationList.IndexOf(videoInformation);
+            var srcIndex = FinderItemList.FindIndex(i => i.Information == videoInformation);
             var nextIndex = isUp ? srcIndex - 1 : srcIndex + 1;
             if(isUp && srcIndex == 0) {
                 return;
-            } else if(!isUp && VideoInformationList.Count - 1 == srcIndex) {
+            } else if(!isUp && FinderItemList.Count - 1 == srcIndex) {
                 return;
             }
-            var srcVideo = VideoInformationList[srcIndex];
-            var nextVideo = VideoInformationList[nextIndex];
+            var srcVideo = FinderItemList[srcIndex];
+            var nextVideo = FinderItemList[nextIndex];
 
             var srcNumber = srcVideo.Number;
-            srcVideo.ResetNumber(nextVideo.Number);
-            nextVideo.ResetNumber(srcNumber);
+            //srcVideo.ResetNumber(nextVideo.Number);
+            //nextVideo.ResetNumber(srcNumber);
+            srcVideo.Number = nextVideo.Number;
+            nextVideo.Number = srcNumber;
 
-            VideoInformationList.SwapIndex(srcIndex, nextIndex);
+            FinderItemList.SwapIndex(srcIndex, nextIndex);
             Node.VideoItems.SwapIndex(srcIndex, nextIndex);
         }
 
         void RemoveCheckedVideos(IEnumerable<SmileVideoInformationViewModel> videoInformation)
         {
             foreach(var video in videoInformation.ToArray()) {
-                var index = VideoInformationList.IndexOf(video);
-                VideoInformationList.RemoveAt(index);
+                var index = FinderItemList.FindIndex(i => i.Information == video);
+                FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
             }
         }
@@ -166,7 +168,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             base.ChangeSortItems();
 
-            IsUpDownEnabled = SelectedSortType == SmileVideoSortType.Number && VideoInformationItems.Cast<object>().Count() == VideoInformationList.Count;
+            IsUpDownEnabled = SelectedSortType == SmileVideoSortType.Number && FinderItems.Cast<object>().Count() == FinderItemList.Count;
 
         }
 

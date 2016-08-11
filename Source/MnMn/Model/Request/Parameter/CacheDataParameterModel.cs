@@ -20,22 +20,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter
 {
-    public class SmileVideoAccountMyListSettingResultModel: ModelBase
+    public class CacheDataParameterModel: ModelBase
     {
-        public SmileVideoAccountMyListSettingResultModel(IReadOnlyList<SmileVideoAccountMyListFinderViewModel> accountMyListViewer)
-        {
-            AccountMyList = accountMyListViewer;
-        }
-
         #region property
 
-        public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; }
+        public bool IsReload { get; set; }
 
         #endregion
     }

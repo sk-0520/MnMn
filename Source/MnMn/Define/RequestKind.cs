@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public enum RequestKind
     {
@@ -63,5 +63,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 独自設定。
         /// </summary>
         CustomSetting,
+        /// <summary>
+        /// キャッシュデータ。
+        /// </summary>
+        CacheData,
     }
 }
