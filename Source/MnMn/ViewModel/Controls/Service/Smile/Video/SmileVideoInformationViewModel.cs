@@ -741,11 +741,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    return rawGetthumbinfo;
         //}
 
-        public static async Task<SmileVideoInformationViewModel> CreateFromVideoIdAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
-        {
-            var rawGetthumbinfo = await SmileVideoInformationUtility.LoadGetthumbinfoAsync(mediation, videoId, thumbCacheSpan);
-            return new SmileVideoInformationViewModel(mediation, rawGetthumbinfo.Thumb, NoOrderd);
-        }
+        //[Obsolete]
+        //public static async Task<SmileVideoInformationViewModel> CreateFromVideoIdAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        //{
+        //    var rawGetthumbinfo = await SmileVideoInformationUtility.LoadGetthumbinfoAsync(mediation, videoId, thumbCacheSpan);
+        //    return new SmileVideoInformationViewModel(mediation, rawGetthumbinfo.Thumb, NoOrderd);
+        //}
 
         void Initialize()
         {

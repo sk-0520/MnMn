@@ -40,6 +40,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -498,7 +500,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadGetthumbinfoStart();
             //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
             //VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
-            VideoInformation = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, thumbCacheSpan);
+            //VideoInformation = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, thumbCacheSpan);
+            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
+            VideoInformation = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+
             OnLoadGetthumbinfoEnd();
 
             await LoadAsync(VideoInformation, thumbCacheSpan, imageCacheSpan);
