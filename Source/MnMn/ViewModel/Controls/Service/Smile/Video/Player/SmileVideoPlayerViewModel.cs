@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         int _originalPosterCommentListCount;
 
         bool _isSelectedComment;
-        bool _isSelectedVideoInformation;
+        bool _isSelectedInformation;
         bool _isSettedMedia;
 
         SmileVideoCommentVertical _postCommandVertical = SmileVideoCommentVertical.Normal;
@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Popup EnabledCommentPopup { get; set; }
 
-        public string Title { get { return $"SmileVideo [{VideoId}]: {VideoInformation.Title}"; } }
+        public string Title { get { return $"SmileVideo [{VideoId}]: {Information.Title}"; } }
 
         public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoCommentUtility.normalCommentColors);
 
@@ -325,10 +325,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public string VideoId
         {
-            get { return VideoInformation?.VideoId; }
+            get { return Information?.VideoId; }
         }
 
-        public bool IsEnabledPostAnonymous { get { return VideoInformation?.IsOfficialVideo ?? false; } }
+        public bool IsEnabledPostAnonymous { get { return Information?.IsOfficialVideo ?? false; } }
 
         /// <summary>
         /// 初回再生か。
@@ -557,11 +557,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public string UserNickname
         {
-            get { return VideoInformation.UserNickname; }
+            get { return Information.UserNickname; }
         }
         public string UserId
         {
-            get { return VideoInformation.UserId; }
+            get { return Information.UserId; }
         }
 
         public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
@@ -608,10 +608,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(Setting.Player, value); }
         }
 
-        public bool IsSelectedVideoInformation
+        public bool IsSelectedInformation
         {
-            get { return this._isSelectedVideoInformation; }
-            set { SetVariableValue(ref this._isSelectedVideoInformation, value); }
+            get { return this._isSelectedInformation; }
+            set { SetVariableValue(ref this._isSelectedInformation, value); }
         }
 
         public bool IsSettedMedia
@@ -828,12 +828,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool IsEnabledGlobalCommentFilering
         {
-            get { return VideoInformation?.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
+            get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
             set
             {
-                if(VideoInformation != null) {
-                    if(VideoInformation.IsEnabledGlobalCommentFilering != value) {
-                        VideoInformation.IsEnabledGlobalCommentFilering = value;
+                if(Information != null) {
+                    if(Information.IsEnabledGlobalCommentFilering != value) {
+                        Information.IsEnabledGlobalCommentFilering = value;
                         ApprovalComment();
                     }
                 }
@@ -987,8 +987,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        if(VideoInformation.CacheDirectory.Exists) {
-                            Process.Start(VideoInformation.CacheDirectory.FullName);
+                        if(Information.CacheDirectory.Exists) {
+                            Process.Start(Information.CacheDirectory.FullName);
                         }
                     }
                 );
@@ -1545,7 +1545,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             RelationVideoLoadState = LoadState.Preparation;
 
             RelationVideoLoadState = LoadState.Loading;
-            return VideoInformation.LoadRelationVideosAsync(Constants.ServiceSmileVideoRelationCacheSpan).ContinueWith(task => {
+            return Information.LoadRelationVideosAsync(Constants.ServiceSmileVideoRelationCacheSpan).ContinueWith(task => {
                 var items = task.Result;
                 if(items == null) {
                     RelationVideoLoadState = LoadState.Failure;
@@ -1562,15 +1562,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void CheckTagPedia()
         {
-            Debug.Assert(VideoInformation.PageHtmlLoadState == LoadState.Loaded);
+            Debug.Assert(Information.PageHtmlLoadState == LoadState.Loaded);
 
             IsCheckedTagPedia = true;
 
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            htmlDocument.LoadHtml(VideoInformation.PageHtml);
-            var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(VideoInformation.PageHtml);
+            htmlDocument.LoadHtml(Information.PageHtml);
+            var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(Information.PageHtml);
             var videoDetail = json?.SelectToken("videoDetail");
             var tagList = videoDetail?.SelectToken("tagList");
             if(tagList != null) {
@@ -1592,7 +1592,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             IsMakedDescription = true;
 
-            var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, VideoInformation.DescriptionHtml);
+            var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtml);
 #if false
 #if DEBUG
             var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
@@ -1665,7 +1665,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
         {
-            var videoItem = VideoInformation.ToVideoItemModel();
+            var videoItem = Information.ToVideoItemModel();
             bookmarkNode.VideoItems.Add(videoItem);
         }
 
@@ -1683,14 +1683,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-            return myList.AdditionAccountDefaultMyListFromVideo(VideoId, VideoInformation.PageVideoToken);
+            return myList.AdditionAccountDefaultMyListFromVideo(VideoId, Information.PageVideoToken);
         }
 
         Task<SmileJsonResultModel> AddAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
-            return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, VideoInformation.ThreadId, VideoInformation.PageVideoToken);
+            return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, Information.ThreadId, Information.PageVideoToken);
         }
 
         void SearchTag(SmileVideoTagViewModel tagViewModel)
@@ -2052,18 +2052,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 
             var commentCount = RawValueUtility.ConvertInteger(CommentThread.LastRes ?? "0");
-            Debug.Assert(CommentThread.Thread == VideoInformation.ThreadId);
+            Debug.Assert(CommentThread.Thread == Information.ThreadId);
 
             var msg = new Msg(Mediation);
 
-            var postKey = await msg.LoadPostKeyAsync(VideoInformation.ThreadId, commentCount);
+            var postKey = await msg.LoadPostKeyAsync(Information.ThreadId, commentCount);
             if(postKey == null) {
                 return;
             }
 
             var resultPost = await msg.PostAsync(
-                VideoInformation.MessageServerUrl,
-                VideoInformation.ThreadId,
+                Information.MessageServerUrl,
+                Information.ThreadId,
                 videoPosition,
                 CommentThread.Ticket,
                 postKey.PostKey,
@@ -2128,11 +2128,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 item.IsPlaying = false;
             }
             videoInformation.IsPlaying = true;
-            IsSelectedVideoInformation = true;
+            IsSelectedInformation = true;
 
             // プレイヤー立ち上げ時は null
-            if(VideoInformation != null) {
-                VideoInformation.SaveSetting(false);
+            if(Information != null) {
+                Information.SaveSetting(false);
             }
 
             var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);
@@ -2178,7 +2178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
         {
-            if(VideoInformation.MovieType != SmileVideoMovieType.Swf) {
+            if(Information.MovieType != SmileVideoMovieType.Swf) {
                 if(!CanVideoPlay) {
                     // とりあえず待って
                     VideoFile.Refresh();
@@ -2205,7 +2205,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void OnLoadVideoEnd()
         {
             if(!IsProcessCancel) {
-                if(VideoInformation.PageHtmlLoadState == LoadState.Loaded) {
+                if(Information.PageHtmlLoadState == LoadState.Loaded) {
                     if(!IsMakedDescription) {
                         MakeDescription();
                     }
@@ -2214,21 +2214,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                 }
 
-                if(VideoInformation.MovieType == SmileVideoMovieType.Swf && !VideoInformation.ConvertedSwf) {
+                if(Information.MovieType == SmileVideoMovieType.Swf && !Information.ConvertedSwf) {
                     // 変換が必要
                     var ffmpeg = new Ffmpeg();
                     var s = $"-i \"{VideoFile.FullName}\" -vcodec flv \"{PlayFile.FullName}\"";
                     ffmpeg.ExecuteAsync(s).ContinueWith(task => {
                         if(!IsViewClosed) {
-                            VideoInformation.ConvertedSwf = true;
-                            VideoInformation.SaveSetting(true);
+                            Information.ConvertedSwf = true;
+                            Information.SaveSetting(true);
                             ResetSwf();
                             CanVideoPlay = true;
                             StartIfAutoPlay();
                         }
                     });
                 } else {
-                    if(VideoInformation.MovieType == SmileVideoMovieType.Swf) {
+                    if(Information.MovieType == SmileVideoMovieType.Swf) {
                         ResetSwf();
                     }
                     // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
@@ -2279,15 +2279,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ChangedPostCommands();
 
             if(!PlayListItems.Any()) {
-                PlayListItems.Add(VideoInformation);
+                PlayListItems.Add(Information);
             }
             if(Session.IsPremium && CommandColorItems.Count == SmileVideoCommentUtility.normalCommentColors.Length) {
                 CommandColorItems.AddRange(SmileVideoCommentUtility.premiumCommentColors);
             }
 
-            TotalTime = VideoInformation.Length;
+            TotalTime = Information.Length;
 
-            TagItems.InitializeRange(VideoInformation.TagList);
+            TagItems.InitializeRange(Information.TagList);
 
             LoadRelationVideoAsync();
 
@@ -2295,11 +2295,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(VideoId),
                 nameof(Title),
                 nameof(IsEnabledPostAnonymous),
-                nameof(VideoInformation),
+                nameof(Information),
             };
             CallOnPropertyChange(propertyNames);
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(VideoInformation.Filtering, Mediation.Smile.VideoMediation.Filtering);
+            LocalCommentFilering = new SmileVideoFilteringViweModel(Information.Filtering, Mediation.Smile.VideoMediation.Filtering);
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();
@@ -2476,7 +2476,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             IsViewClosed = true;
 
-            VideoInformation.SaveSetting(true);
+            Information.SaveSetting(true);
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();

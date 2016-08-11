@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Thumb = thumb;
 
-            VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+            InformationSource = SmileVideoInformationSource.Getthumbinfo;
             InformationLoadState = LoadState.Loaded;
 
             Initialize();
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             Search = search;
 
-            VideoInformationSource = SmileVideoVideoInformationSource.Search;
+            InformationSource = SmileVideoInformationSource.Search;
             Initialize();
         }
 
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             FeedDetail.VideoId = SmileVideoFeedUtility.GetVideoId(Feed);
             FeedDetail.Title = SmileVideoFeedUtility.GetTitle(Feed.Title);
 
-            VideoInformationSource = SmileVideoVideoInformationSource.Feed;
+            InformationSource = SmileVideoInformationSource.Feed;
             Initialize();
         }
 
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public string DescriptionHtml { get; private set; }
         public string PageVideoToken { get; private set; }
 
-        public SmileVideoVideoInformationSource VideoInformationSource { get; private set; }
+        public SmileVideoInformationSource InformationSource { get; private set; }
 
         public LoadState ThumbnailLoadState
         {
@@ -212,14 +212,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return Thumb.VideoId;
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return FeedDetail.VideoId;
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return Search.ContentId;
 
                     default:
@@ -232,14 +232,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return Thumb.Title;
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return FeedDetail.Title ?? Feed.Title;
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return Search.Title;
 
                     default:
@@ -252,14 +252,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return Thumb.Description;
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return FeedDetail.Description ?? Feed.Description;
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return Search.Description;
 
                     default:
@@ -272,14 +272,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertUri(Thumb.ThumbnailUrl);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertUri(FeedDetail.ThumbnailUrl);
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return RawValueUtility.ConvertUri(Search.ThumbnailUrl);
 
                     default:
@@ -292,14 +292,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertDateTime(Thumb.FirstRetrieve);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertDateTime(FeedDetail.FirstRetrieve);
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return RawValueUtility.ConvertDateTime(Search.StartTime);
 
                     default:
@@ -312,14 +312,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(Thumb.Length);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return SmileVideoGetthumbinfoUtility.ConvertTimeSpan(FeedDetail.Length);
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                     default:
                         throw new NotImplementedException();
                 }
@@ -333,14 +333,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.ViewCounter);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(FeedDetail.ViewCounter);
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.ViewCounter);
 
                     default:
@@ -352,14 +352,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.CommentNum);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(FeedDetail.CommentNum);
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.CommentCounter);
 
                     default:
@@ -372,14 +372,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertInteger(Thumb.MylistCounter);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertInteger(FeedDetail.MylistCounter);
 
-                    case SmileVideoVideoInformationSource.Search:
+                    case SmileVideoInformationSource.Search:
                         return RawValueUtility.ConvertInteger(Search.MylistCounter);
 
                     default:
@@ -391,11 +391,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get
             {
-                switch(VideoInformationSource) {
-                    case SmileVideoVideoInformationSource.Getthumbinfo:
+                switch(InformationSource) {
+                    case SmileVideoInformationSource.Getthumbinfo:
                         return RawValueUtility.ConvertUri(Thumb.WatchUrl);
 
-                    case SmileVideoVideoInformationSource.Feed:
+                    case SmileVideoInformationSource.Feed:
                         return RawValueUtility.ConvertUri(Feed.Link);
 
                     default:
@@ -416,8 +416,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     if(InformationLoadState == LoadState.Failure) {
                         return new CollectionModel<SmileVideoTagViewModel>();
                     }
-                    switch(VideoInformationSource) {
-                        case SmileVideoVideoInformationSource.Getthumbinfo: {
+                    switch(InformationSource) {
+                        case SmileVideoInformationSource.Getthumbinfo: {
                                 // TODO: 言語未考慮
                                 this._tagList = new CollectionModel<SmileVideoTagViewModel>();
                                 var tagItems = Thumb.Tags.FirstOrDefault();
@@ -776,8 +776,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void ThrowNotGetthumbinfoSource()
         {
-            if(VideoInformationSource != SmileVideoVideoInformationSource.Getthumbinfo) {
-                throw new InvalidOperationException($"{nameof(VideoInformationSource)}: {VideoInformationSource}");
+            if(InformationSource != SmileVideoInformationSource.Getthumbinfo) {
+                throw new InvalidOperationException($"{nameof(InformationSource)}: {InformationSource}");
             }
         }
 
@@ -837,7 +837,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 //if(rawGetthumbinfo.Status)
                 Thumb = rawGetthumbinfo.Thumb;
                 InformationLoadState = LoadState.Loaded;
-                VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+                InformationSource = SmileVideoInformationSource.Getthumbinfo;
                 var propertyNames = new[] {
                     nameof(Length),
                     nameof(HasLength),

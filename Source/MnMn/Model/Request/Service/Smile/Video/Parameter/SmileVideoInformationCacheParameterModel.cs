@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
     {
         public SmileVideoInformationCacheParameterModel(string videoId, CacheSpan thumbCacheSpan)
         {
-            InformationSource = SmileVideoVideoInformationSource.VideoId;
+            InformationSource = SmileVideoInformationSource.VideoId;
 
             VideoId = videoId;
             ThumbCacheSpan = thumbCacheSpan;
@@ -24,21 +24,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
 
         public SmileVideoInformationCacheParameterModel(RawSmileVideoThumbModel thumb)
         {
-            InformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
+            InformationSource = SmileVideoInformationSource.Getthumbinfo;
 
             Thumb = thumb;
         }
 
         public SmileVideoInformationCacheParameterModel(RawSmileContentsSearchItemModel contentsSearch)
         {
-            InformationSource = SmileVideoVideoInformationSource.Search;
+            InformationSource = SmileVideoInformationSource.Search;
 
             ContentsSearch = contentsSearch;
         }
 
         public SmileVideoInformationCacheParameterModel(FeedSmileVideoItemModel feed, SmileVideoInformationFlags informationFlags)
         {
-            InformationSource = SmileVideoVideoInformationSource.Feed;
+            InformationSource = SmileVideoInformationSource.Feed;
 
             Feed = feed;
             InformationFlags = informationFlags;
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
 
         #region property
 
-        public SmileVideoVideoInformationSource InformationSource { get; }
+        public SmileVideoInformationSource InformationSource { get; }
 
         public string VideoId { get; set; }
         public CacheSpan ThumbCacheSpan { get; set; }

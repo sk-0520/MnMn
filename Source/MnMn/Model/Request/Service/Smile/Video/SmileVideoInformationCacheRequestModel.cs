@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 
         SmileVideoInformationCacheParameterModel CacheParameter { get; }
 
-        public SmileVideoVideoInformationSource InformationSource
+        public SmileVideoInformationSource InformationSource
         {
             get { return CacheParameter.InformationSource; }
         }

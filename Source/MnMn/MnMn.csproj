@@ -553,7 +553,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoMediationKey.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoFinderLoadState.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoThumbType.cs" />
-    <Compile Include="Define\Service\Smile\Video\SmileVideoVideoInformationSource.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoInformationSource.cs" />
     <Compile Include="Define\RequestKind.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Define\UriParameterType.cs" />
@@ -751,7 +751,7 @@
     <Resource Include="Resources\Service\Smile\Video\Player\ImageState.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\CommentState.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\VideoState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\VideoInformation.png" />
+    <Resource Include="Resources\Service\Smile\Video\Player\Information.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\CommentList.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\CommentShow.png" />
     <Resource Include="Resources\Common\View\Right.png" />

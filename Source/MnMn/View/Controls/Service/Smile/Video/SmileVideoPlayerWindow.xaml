@@ -288,7 +288,7 @@
       </StatusBar.Resources>
       <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea}">
         <Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/VideoInformation.png" Style="{StaticResource ButtonImage}" />
+          <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
         </Canvas>
       </ToggleButton>
@@ -350,10 +350,10 @@
                           <Setter Property="Margin" Value="0,0,8,0" />
                         </Style>
                       </StackPanel.Resources>
-                      <TextBlock Text="{Binding VideoInformation.FirstRetrieve, Mode=OneWay, StringFormat=投稿日時: {0:yyyy/MM/dd HH:mm:ss}}" />
-                      <TextBlock Text="{Binding VideoInformation.ViewCounter, Mode=OneWay, StringFormat=再生数: {0:#,#.}}" />
-                      <TextBlock Text="{Binding VideoInformation.CommentCounter, Mode=OneWay, StringFormat=コメント数: {0:#,#.}}" />
-                      <TextBlock Text="{Binding VideoInformation.MylistCounter, Mode=OneWay, StringFormat=マイリスト数: {0:#,#.}}" />
+                      <TextBlock Text="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat=投稿日時: {0:yyyy/MM/dd HH:mm:ss}}" />
+                      <TextBlock Text="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=再生数: {0:#,#.}}" />
+                      <TextBlock Text="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=コメント数: {0:#,#.}}" />
+                      <TextBlock Text="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=マイリスト数: {0:#,#.}}" />
                     </StackPanel>
                   </Setter.Value>
                 </Setter>
@@ -966,7 +966,7 @@
         TabStripPlacement="Left"
         Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
-        <TabItem Header="動画情報" IsSelected="{Binding IsSelectedVideoInformation}">
+        <TabItem Header="動画情報" IsSelected="{Binding IsSelectedInformation}">
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />

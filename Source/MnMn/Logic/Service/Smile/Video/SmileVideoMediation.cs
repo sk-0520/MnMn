@@ -104,16 +104,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         ResponseModel Request_CacheData(SmileVideoInformationCacheRequestModel request)
         {
             switch(request.InformationSource) {
-                case SmileVideoVideoInformationSource.VideoId:
+                case SmileVideoInformationSource.VideoId:
                     return new ResponseModel(request, InformationCaching.LoadFromVideoIdAsync(request.VideoId, request.ThumbCacheSpan));
 
-                case SmileVideoVideoInformationSource.Getthumbinfo:
+                case SmileVideoInformationSource.Getthumbinfo:
                     return new ResponseModel(request, InformationCaching.Get(request.Thumb));
 
-                case SmileVideoVideoInformationSource.Search:
+                case SmileVideoInformationSource.Search:
                     return new ResponseModel(request, InformationCaching.Get(request.ContentsSearch));
 
-                case SmileVideoVideoInformationSource.Feed:
+                case SmileVideoInformationSource.Feed:
                     return new ResponseModel(request, InformationCaching.Get(request.Feed, request.InformationFlags));
 
                 default:

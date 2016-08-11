@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     /// <summary>
     /// 動画の入力元。
     /// </summary>
-    public enum SmileVideoVideoInformationSource
+    public enum SmileVideoInformationSource
     {
         /// <summary>
         /// 動画ID。
