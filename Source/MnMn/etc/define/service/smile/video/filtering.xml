@@ -14,7 +14,7 @@
 			<word key="ja-jp" value="投稿者への労り" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(うぽつ|う(ｐ|p)乙)|(^[8８]+$)" />
+			<extend key="pattern" value="(うぽつ|っ)|(う(ｐ|p)乙)|(^[8８]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
@@ -23,7 +23,7 @@
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あ(っ|…|・)?$)|(^[！？!\?)]+$)" />
+			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あ(っ?…|・)?$)|(^[！？!\?)]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
@@ -32,7 +32,7 @@
 			<word key="ja-jp" value="話されても困る" />
 		</words>
 		<extends>
-			<extend key="pattern" value="([↑↓←→])|(挙手)|(^ノ|ﾉｼ?$)" />
+			<extend key="pattern" value="(^[↑↓←→])|(.+→)|(挙手)|(^ノ|ﾉｼ?$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
