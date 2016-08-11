@@ -87,7 +87,7 @@
 	*/
 	{
 		'date': 'YYYY/MM/DD',
-		'version': '0.81.1',
+		'version': '0.01.0',
 		'isRc': true,
 		'contents': [
 			{
@@ -95,7 +95,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'とりあえずここらで master にマージ'
 					},
 					{
 						'revision': '',
@@ -164,4 +164,4 @@
 			}
 		]
 	}
-};
+];

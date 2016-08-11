@@ -33,7 +33,24 @@ var menuList = [
 		title: {
 			'ja-jp': 'はじめに'
 		}
+	},
+	{
+		name: 'smile',
+		localize: true,
+		level: 0,
+		title: {
+			'ja-jp': 'ニコニコ動画'
+		}
+	},
+	{
+		name: 'changelog',
+		localize: false,
+		level: 0,
+		title: {
+			'ja-jp': '更新履歴'
+		}
 	}
+
 	//
 ];
 //----------------------------------------------------------------------
