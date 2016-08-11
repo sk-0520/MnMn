@@ -112,6 +112,10 @@
 				'logs': [
 					{
 						'revision': '',
+						'subject': '#15: デフォルトフィルタの整理'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					},
 					{
@@ -129,7 +133,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#14: 四文字フィルタ破棄'
 					},
 					{
 						'revision': '',
