@@ -41,9 +41,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ApplicationName { get; } = "MnMn";
 
 #if DEBUG
-        public static string ApplicationUsingName { get; } = ApplicationName;
-#else
         public static string ApplicationUsingName { get; } = ApplicationName + "-debug";
+#else
+        public static string ApplicationUsingName { get; } = ApplicationName;
 #endif
         public static string AssemblyPath { get; } = Assembly.GetExecutingAssembly().Location;
         public static string AssemblyRootDirectoryPath { get; } = Path.GetDirectoryName(AssemblyPath);
