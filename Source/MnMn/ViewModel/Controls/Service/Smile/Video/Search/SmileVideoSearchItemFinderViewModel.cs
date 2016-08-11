@@ -106,8 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 var result = task.Result;
                 TotalCount = RawValueUtility.ConvertInteger(result.Meta.TotalCount);
 
-                var list = result.Data.Select((item, index) => {
-                    //new SmileVideoInformationViewModel(Mediation, item, index + Index + 1)
+                var list = result.Data.Select(item => {
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item));
                     return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 });

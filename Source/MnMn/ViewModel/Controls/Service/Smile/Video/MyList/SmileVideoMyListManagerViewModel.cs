@@ -654,8 +654,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             return newMyListTask.ContinueWith(t => {
                 var newModels = t.Result.Channel.Items;
                 var newViewModels = newModels
-                    .Select((item, index) => {
-                        //new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None)
+                    .Select(item => {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.None));
                         return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                     })
