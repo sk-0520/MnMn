@@ -32,7 +32,7 @@
 			<word key="ja-jp" value="話されても困る" />
 		</words>
 		<extends>
-			<extend key="pattern" value="([↑↓←→])|(挙手)|(^ノ|ﾉｼ?$)" />
+			<extend key="pattern" value="(^[↑↓←→])|(.+→)|(挙手)|(^ノ|ﾉｼ?$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
