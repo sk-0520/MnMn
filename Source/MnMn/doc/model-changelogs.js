@@ -137,7 +137,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#26: 二重起動の抑制'
 					},
 					{
 						'revision': '',
