@@ -44,6 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -653,7 +654,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             return newMyListTask.ContinueWith(t => {
                 var newModels = t.Result.Channel.Items;
                 var newViewModels = newModels
-                    .Select((item, index) => new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None))
+                    .Select((item, index) => {
+                        //new SmileVideoInformationViewModel(Mediation, item, index + 1, SmileVideoInformationFlags.None)
+                        var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.None));
+                        return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                    })
                     .ToArray()
                 ;
 
