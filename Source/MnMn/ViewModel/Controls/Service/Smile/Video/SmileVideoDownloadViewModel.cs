@@ -278,6 +278,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         downloader.DownloadStart += Downloader_DownloadStart;
                         downloader.DownloadingError += Downloader_DownloadingError;
                         downloader.Downloading += Downloader_Downloading;
+                        downloader.Downloaded += Downloader_Downloaded;
 
                         await downloader.StartAsync();
                         if(downloader.Completed) {
@@ -299,6 +300,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         downloader.DownloadStart -= Downloader_DownloadStart;
                         downloader.DownloadingError -= Downloader_DownloadingError;
                         downloader.Downloading -= Downloader_Downloading;
+                        downloader.Downloaded -= Downloader_Downloaded;
 
                         //OnLoadVideoEnd();
                     }
@@ -485,6 +487,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadGetthumbinfoStart() { }
         protected virtual void OnLoadGetthumbinfoEnd() { }
 
+        [Obsolete]
         public async Task LoadAsync(string videoId, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             InformationLoadState = LoadState.Loading;
@@ -506,7 +509,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             OnLoadGetthumbinfoEnd();
 
-            await LoadAsync(VideoInformation, thumbCacheSpan, imageCacheSpan);
+            await LoadAsync(VideoInformation, false, thumbCacheSpan, imageCacheSpan);
         }
 
         protected virtual void InitializeStatus()
@@ -554,7 +557,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
 
-        public virtual async Task LoadAsync(SmileVideoInformationViewModel videoInformation, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        public virtual async Task LoadAsync(SmileVideoInformationViewModel videoInformation, bool forceEconomy, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             await StopPrevProcessAsync();
 
@@ -593,6 +596,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnDownloading(object sender, DownloadingEventArgs e)
         { }
 
+        protected virtual void OnDownloaded(object sender, DownloaderEventArgs e)
+        { }
+
         protected virtual void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
         { }
 
@@ -619,8 +625,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             Mediation.Logger.Trace($"{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
 
+            VideoInformation.IsDownloading = true;
+
             OnDownloading(sender, e);
             e.Cancel |= IsProcessCancel;
+        }
+
+        private void Downloader_Downloaded(object sender, DownloaderEventArgs e)
+        {
+            VideoInformation.IsDownloading = false;
+
+            OnDownloaded(sender, e);
         }
 
         private void Downloader_DownloadingError(object sender, DownloadingErrorEventArgs e)
@@ -632,6 +647,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;
+                VideoInformation.IsDownloading = false;
             } else {
                 var time = Constants.ServiceSmileVideoDownloadingErrorWaitTime;
                 Thread.Sleep(time);

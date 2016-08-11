@@ -214,6 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     }
 
                     Completed = true;
+                    OnDownloaded();
                 }
             });
         }

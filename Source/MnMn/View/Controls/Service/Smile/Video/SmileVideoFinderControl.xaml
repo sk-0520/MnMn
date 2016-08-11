@@ -102,7 +102,7 @@
           <ContentControl x:Name="detail">
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="MouseDoubleClick">
-                <i:InvokeCommandAction Command="{Binding Information.OpenVideoCommand}" CommandParameter="{Binding Information}"/>
+                <i:InvokeCommandAction Command="{Binding Information.OpenVideoCommand}" />
               </i:EventTrigger>
             </i:Interaction.Triggers>
 

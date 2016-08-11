@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
             var videoInformation = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
-            await videoInformation.OpenPlayerAsync();
+            await videoInformation.OpenPlayerAsync(false);
             return true;
         }
 

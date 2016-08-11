@@ -61,12 +61,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
     public class SmileVideoInformationViewModel: ViewModelBase
     {
-        #region define
-
-        public static int NoOrderd => -1;
-
-        #endregion
-
         #region variable
 
         LoadState _thumbnailLoadState;
@@ -81,6 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         CollectionModel<SmileVideoTagViewModel> _tagList;
 
         bool _isPlaying = false;
+        bool _isDownloading = false;
 
         #endregion
 
@@ -193,6 +188,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
 
+        /// <summary>
+        /// 動画をダウンロード中か。
+        /// <para>ダウンロード中かどうかを示すためダウンロード済みは偽となる。</para>
+        /// </summary>
+        public bool IsDownloading
+        {
+            get { return this._isDownloading; }
+            set { SetVariableValue(ref this._isDownloading, value); }
+        }
         /// <summary>
         /// 動画をプレイヤーで表示中か。
         /// </summary>
@@ -664,14 +668,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public ICommand OpenVideoCommand
         {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        OpenPlayerAsync();
-                    }
-                );
-            }
+            get { return CreateCommand(o => { OpenPlayerAsync(false); }); }
+        }
+
+        public ICommand OpeneconomyVideoCommand
+        {
+            get { return CreateCommand(o => { OpenPlayerAsync(true); }); }
         }
 
         #endregion
@@ -963,10 +965,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return true;
         }
 
-        public Task OpenPlayerAsync()
+        public Task OpenPlayerAsync(bool forceEconomy)
         {
             var vm = new SmileVideoPlayerViewModel(Mediation);
-            var task = vm.LoadAsync(this, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+            var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
