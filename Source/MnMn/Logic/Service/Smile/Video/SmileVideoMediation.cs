@@ -51,6 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             Setting = setting;
 
+            InformationCaching = new SmileVideoInformationCaching(Mediation);
+
             Ranking = LoadModelFromFile<SmileVideoRankingModel>(Constants.SmileVideoRankingPath);
             Search = LoadModelFromFile<SmileVideoSearchModel>(Constants.SmileVideoSearchPath);
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
@@ -62,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
+
+        SmileVideoInformationCaching InformationCaching { get; }
 
         SmileVideoRankingModel Ranking { get; }
         SmileVideoSearchModel Search { get; }
@@ -99,7 +103,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         ResponseModel Request_CacheData(SmileVideoInformationCacheRequestModel request)
         {
-            throw new NotImplementedException();
+            switch(request.InformationSource) {
+                case SmileVideoVideoInformationSource.VideoId:
+                    return new ResponseModel(request, InformationCaching.LoadFromVideoIdAsync(request.VideoId, request.ThumbCacheSpan));
+
+                case SmileVideoVideoInformationSource.Getthumbinfo:
+                    return new ResponseModel(request, InformationCaching.Get(request.Thumb));
+
+                case SmileVideoVideoInformationSource.Search:
+                    return new ResponseModel(request, InformationCaching.Get(request.ContentsSearch));
+
+                case SmileVideoVideoInformationSource.Feed:
+                    return new ResponseModel(request, InformationCaching.Get(request.Feed, request.InformationFlags));
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
 

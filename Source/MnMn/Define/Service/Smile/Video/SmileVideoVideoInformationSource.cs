@@ -28,6 +28,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     public enum SmileVideoVideoInformationSource
     {
         /// <summary>
+        /// 動画ID。
+        /// <para>明示的に使用することはない。</para>
+        /// </summary>
+        VideoId,
+        /// <summary>
         /// getthumbinfo api を使用。
         /// </summary>
         Getthumbinfo,
