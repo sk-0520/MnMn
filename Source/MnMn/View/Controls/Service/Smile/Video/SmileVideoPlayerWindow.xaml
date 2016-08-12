@@ -892,7 +892,7 @@
               </Grid>
             </DockPanel>
           </TabItem>
-          <TabItem Header="ローカルNG" Margin="0">
+          <TabItem Header="個別フィルタ" Margin="0">
             <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList x:Name="localFilter">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
@@ -904,7 +904,7 @@
           <TabItem>
             <TabItem.Header>
               <StackPanel Orientation="Horizontal">
-                <TextBlock>全体NG</TextBlock>
+                <TextBlock>全体フィルタ</TextBlock>
                 <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
               </StackPanel>
             </TabItem.Header>

@@ -9,6 +9,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 {
     public class User: SessionApiBase<SmileSessionViewModel>
     {
-        public User(Mediation mediation) 
+        public User(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         { }
 
@@ -59,12 +60,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             }
 
             var match = regUser.Match(userElement);
-            var rawUser = match.Groups["VALUE"];
+
+            // #34
+            var rawUser = Regex.Replace(
+                match.Groups["VALUE"].Value,
+                @"
+                isOver18
+                \s*
+                :
+                \s*
+                !
+                \s*
+                !
+                \s*
+                document
+                \s*
+                \.
+                \s*
+                cookie
+                \s*
+                \.
+                match
+                \s*
+                \(
+                    .+
+                \)
+                ",
+                "isOver18: false",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase
+            );
 
             var jsonUser = "{" + rawUser + "}";
 
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonUser))) {
-                return SerializeUtility.LoadJsonDataFromStream<RawSmileUserAccountSimpleModel>(stream);
+                var result = SerializeUtility.LoadJsonDataFromStream<RawSmileUserAccountSimpleModel>(stream);
+                // 暫定対処だが現時点で年齢が18歳以上ならそう補正する
+                var age = RawValueUtility.ConvertInteger(result.Age);
+                if(18 <= age && !RawValueUtility.ConvertBoolean(result.IsOver18)) {
+                    result.IsOver18 = true.ToString();
+                }
+
+                return result;
             }
         }
 

@@ -20,6 +20,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
@@ -46,6 +47,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region property
 
+        Mutex Mutex { get; } = new Mutex(false, Constants.ApplicationUsingName);
+
         SplashWindow SplashWindow { get; }
 
         MainWindow View { get; set; }
@@ -55,6 +58,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         protected async override void OnStartup(StartupEventArgs e)
         {
+            if(!Mutex.WaitOne(0, false)) {
+                Shutdown();
+                return;
+            }
+
             base.OnStartup(e);
 
 #if DEBUG
@@ -71,7 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 var accept = new AcceptWindow();
                 var acceptResult = accept.ShowDialog();
                 if(!acceptResult.GetValueOrDefault()) {
-                    Application.Current.Shutdown();
+                    Shutdown();
                     return;
                 }
                 setting.RunningInformation.Accept = true;
@@ -100,6 +108,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             AppManager.UninitializeView(View);
+
+            Mutex.Dispose();
         }
     }
 }
