@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
             var match = regUser.Match(userElement);
 
+            // #34
             var rawUser = Regex.Replace(
                 match.Groups["VALUE"].Value,
                 @"

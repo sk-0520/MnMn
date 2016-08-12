@@ -86,45 +86,16 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.01.1',
-		'isRc': true,
+		'date': '2016/08/12',
+		'version': '0.02.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e1f40ae26697f22cb31cf9df0fd36699014a1993',
 						'subject': '#15: デフォルトフィルタの整理'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -132,41 +103,20 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'a749107f7c6ef87c1e7611d5ef0cc0202361ed8f',
 						'subject': '#14: 四文字フィルタ破棄'
 					},
 					{
-						'revision': '',
+						'revision': '3e453647bc250c1760871bb78531f5bebd840f14',
 						'subject': '#26: 二重起動の抑制'
 					},
 					{
-						'revision': '',
+						'revision': '7e8897275c976cf16377a2f7ee7c107bef8991ff',
 						'subject': '#10: フィルタリングタブをNGからフィルタに変更'
 					},
 					{
-						'revision': '',
+						'revision': '65a09fabb28f39017097bb6c047bcbadf80e2602',
 						'subject': '#34: 18歳未満のログイン処理が不完全'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
