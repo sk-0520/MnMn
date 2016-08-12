@@ -145,7 +145,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#34: 18歳未満のログイン処理が不完全'
 					},
 					{
 						'revision': '',
