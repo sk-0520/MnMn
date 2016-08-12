@@ -150,7 +150,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#37: 非ハンドリング例外の補足'
 					},
 					{
 						'revision': '',

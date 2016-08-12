@@ -18,12 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -51,10 +53,26 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         SplashWindow SplashWindow { get; }
 
+        Mediation Mediation { get; set; }
         MainWindow View { get; set; }
         AppManagerViewModel AppManager { get; set; }
 
         #endregion
+
+        #region function
+
+        void CatchUnhandleException(Exception ex, bool callerUiThread)
+        {
+            if(Mediation != null && Mediation.Logger != null) {
+                Mediation.Logger.Fatal(ex);
+            } else {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        #endregion
+
+        #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
@@ -89,8 +107,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 }
             }
 
-            var mediation = new Mediation(setting, logger);
-            AppManager = new AppManagerViewModel(mediation);
+            Mediation = new Mediation(setting, logger);
+            AppManager = new AppManagerViewModel(Mediation);
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             SplashWindow.Show();
 
@@ -103,6 +123,34 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             MainWindow.Show();
             SplashWindow.Close();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+
+            base.OnExit(e);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// UIスレッド
+        /// </summary>
+        void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            CatchUnhandleException(e.Exception, true);
+            //e.Handled = true;
+        }
+
+        /// <summary>
+        /// 非UIスレッド
+        /// </summary>
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            CatchUnhandleException((Exception)e.ExceptionObject, false);
+
+            Shutdown();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
