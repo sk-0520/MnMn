@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 {
     public class User: SessionApiBase<SmileSessionViewModel>
     {
-        public User(Mediation mediation) 
+        public User(Mediation mediation)
             : base(mediation, ServiceType.Smile)
         { }
 
@@ -59,7 +59,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
             }
 
             var match = regUser.Match(userElement);
-            var rawUser = match.Groups["VALUE"];
+
+            var rawUser = Regex.Replace(
+                match.Groups["VALUE"].Value,
+                @"
+                isOver18
+                \s*
+                :
+                \s*
+                !
+                \s*
+                !
+                \s*
+                document
+                \s*
+                \.
+                \s*
+                cookie
+                \s*
+                \.
+                match
+                \s*
+                \(
+                    .+
+                \)
+                ",
+                "isOver18: false",
+                RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase
+            );
 
             var jsonUser = "{" + rawUser + "}";
 
