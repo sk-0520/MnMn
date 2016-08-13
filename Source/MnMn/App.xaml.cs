@@ -27,13 +27,16 @@ using System.Windows;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -70,6 +73,40 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
         }
 
+        CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
+        {
+            var dir = VariableConstants.GetSettingDirectory();
+            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+            var existsFile = File.Exists(filePath);
+
+            var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
+
+            return new CheckResultModel<AppSettingModel>(existsFile, setting, null, null);
+        }
+
+        public static bool CheckAccept(RunningInformationSettingModel model, ILogger logger)
+        {
+            if(!model.Accept) {
+                // 完全に初回
+                logger.Debug("first");
+                return false;
+            }
+
+            if(model.LastExecuteVersion == null) {
+                // 何らかの理由で前回実行時のバージョン格納されていない
+                logger.Debug("last version == null");
+                return false;
+            }
+
+            if(model.LastExecuteVersion < Constants.AcceptVersion) {
+                // 前回バージョンから強制定期に使用許諾が必要
+                logger.Debug("last version < accept version");
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Application
@@ -88,12 +125,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #endif
             var logger = new Pe.PeMain.Logic.AppLogger();
             logger.Information(Constants.ApplicationName);
-            var dir = VariableConstants.GetSettingDirectory();
-            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
-            var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
-            if(!setting.RunningInformation.Accept) {
-                var isFirst = setting.RunningInformation.FirstVersion == null;
+            //var dir = VariableConstants.GetSettingDirectory();
+            //var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+            //var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
+            var settingResult = LoadSetting(logger);
+            var setting = settingResult.Result;
 
+            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+            logger.Information("IE version: " + ieVersion);
+            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+
+            if(!CheckAccept(setting.RunningInformation, logger)) {
                 var accept = new AcceptWindow();
                 var acceptResult = accept.ShowDialog();
                 if(!acceptResult.GetValueOrDefault()) {
@@ -101,11 +143,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
                     return;
                 }
                 setting.RunningInformation.Accept = true;
+
+                var isFirst = settingResult.IsSuccess;
                 if(isFirst) {
                     setting.RunningInformation.FirstVersion = Constants.ApplicationVersionNumber;
                     setting.RunningInformation.FirstTimestamp = DateTime.Now;
                 }
             }
+            setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
+            setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
             Mediation = new Mediation(setting, logger);
             AppManager = new AppManagerViewModel(Mediation);
@@ -128,6 +174,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         protected override void OnExit(ExitEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+
+            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
 
             base.OnExit(e);
         }

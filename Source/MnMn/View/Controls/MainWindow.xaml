@@ -49,8 +49,9 @@
       <TabItem Header="SETTING" DataContext="{Binding AppSettingManager}">
         <app_view_controls_app:AppSettingManager VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  />
       </TabItem>
-      <TabItem Header="MnMn">
-        <StackPanel>
+      <TabItem Header="ABOUT" DataContext="{Binding AppInformationManager}">
+        <app_view_controls_app:AppInformationManager x:Name="about" />
+        <!--<StackPanel>
           <StackPanel.Resources>
             <Style TargetType="Button">
               <Setter Property="Margin" Value="5" />
@@ -62,8 +63,9 @@
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn">リポジトリ</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn/downloads">最新版</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="content.type.text.net@gmail.com">メール</Button>
-        </StackPanel>
+        </StackPanel>-->
       </TabItem>
+
     </TabControl>
   </DockPanel>
 </Window>
