@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
             SmileManager = new SmileManagerViewModel(Mediation);
+            AppUpdateManager = new AppUpdateManagerViewModel(Mediation);
             AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
             AppInformationManager = new AppInformationManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
@@ -76,6 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
+        public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppLoggingManagerViewModel AppLoggingManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }

@@ -50,27 +50,10 @@
       <TabItem Header="SETTING" DataContext="{Binding AppSettingManager}">
         <app_view_controls_app:AppSettingManager VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  />
       </TabItem>
-
-      <TabItem Header="ヘルプ" DataContext="{Binding AppInformationManager}">
-        <WebBrowser x:Name="helpBrowser" />
+      <TabItem Header="MnMn" DataContext="{Binding}">
+        <app_view_controls_app:AppInformationManager x:Name="information" DataContext="{Binding}" />
       </TabItem>
-
-      <TabItem Header="MnMn" DataContext="{Binding AppInformationManager}">
-        <StackPanel>
-          <StackPanel.Resources>
-            <Style TargetType="Button">
-              <Setter Property="Margin" Value="5" />
-            </Style>
-          </StackPanel.Resources>
-          <Button Command="{Binding ExecuteCommand}" CommandParameter="http://content-type-text.net/">Webサイト</Button>
-          <Button Command="{Binding ExecuteCommand}" CommandParameter="https://groups.google.com/d/forum/mnmn-forum">フォーラム</Button>
-          <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn">リポジトリ</Button>
-          <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn/downloads">最新版</Button>
-          <Button Command="{Binding ExecuteCommand}" CommandParameter="content.type.text.net@gmail.com">メール</Button>
-        </StackPanel>
-      </TabItem>
-
-      <TabItem DataContext="{Binding AppInformationManager}">
+      <TabItem DataContext="{Binding AppUpdateManager}">
         <TabItem.Header>
           <StackPanel>
             <TextBlock Text="アップデート" />
@@ -97,7 +80,6 @@
 
         </Grid>
       </TabItem>
-
     </TabControl>
   </DockPanel>
 </Window>
