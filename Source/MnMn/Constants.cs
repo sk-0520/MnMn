@@ -53,8 +53,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// バージョン番号。
         /// </summary>
-        public static readonly Version ApplicationVersionNumber = Assembly.GetExecutingAssembly().GetName().Version;
+        public static Version ApplicationVersionNumber { get; } = Assembly.GetExecutingAssembly().GetName().Version;
 
+        /// <summary>
+        /// 前回バージョンがこれ未満なら使用許諾を表示
+        /// </summary>
+        public static Version AcceptVersion { get; } = new Version(0, 2, 0, 0);
 
         /// <summary>
         /// 最小XMLファイルサイズ。
@@ -89,6 +93,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SbinDirectoryName { get; } = "sbin";
         public static string UpdateProgramDirectoryName { get; } = "Updater";
         public static string UpdateProgramName { get; } = PathUtility.AppendExtension(UpdateProgramDirectoryName, "exe");
+        public static string UpdaterExecuteFilePath
+        {
+            get { return Path.Combine(Constants.AssemblyRootDirectoryPath, Constants.SbinDirectoryName, Constants.UpdateProgramDirectoryName, Constants.UpdateProgramName); }
+        }
 
 #if DEBUG
         public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);

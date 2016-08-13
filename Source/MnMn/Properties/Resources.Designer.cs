@@ -415,6 +415,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   新バージョン(${NEW-VERSION})がリリースされています。
+        ///現バージョン(${NOW-VERSION})から更新を行いますか。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Update_Format {
+            get {
+                return ResourceManager.GetString("String_App_Update_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {

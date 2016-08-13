@@ -28,6 +28,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     {
         #region property
 
+        /// <summary>
+        /// 使用許諾OK。
+        /// </summary>
         [DataMember]
         public bool Accept { get; set; }
 
@@ -37,10 +40,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public Version LastExecuteVersion { get; set; }
 
+        /// <summary>
+        /// 使用回数。
+        /// </summary>
+        [DataMember]
+        public int ExecuteCount { get; set; }
+        /// <summary>
+        /// 初回起動バージョン。
+        /// </summary>
         [DataMember]
         public Version FirstVersion { get; set; }
+        /// <summary>
+        /// 初回起動時間。
+        /// </summary>
         [DataMember]
         public DateTime FirstTimestamp { get; set; }
+
+        /// <summary>
+        /// アップデートチェックを行うか。
+        /// </summary>
+        [DataMember]
+        public bool CheckUpdateRelease { get; set; }
+        ///// <summary>
+        ///// RCアップデートチェックを行うか。
+        ///// </summary>
+        //[DataMember]
+        //public bool CheckUpdateRC { get; set; }
+        /// <summary>
+        /// アップデートチェックで無視するバージョン。
+        /// </summary>
+        [DataMember]
+        public Version IgnoreUpdateVersion { get; set; }
 
         #endregion
     }

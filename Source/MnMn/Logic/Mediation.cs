@@ -209,6 +209,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
+                case ServiceType.Application:
+                    return GetUriCore(key, replaceMap, serviceType);
+
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                     return Smile.GetUri(key, replaceMap, serviceType);

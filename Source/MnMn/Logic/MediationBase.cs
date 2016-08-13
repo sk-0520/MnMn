@@ -29,6 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
@@ -102,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
         {
-            return s?.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map) ?? string.Empty;
+            return AppUtility.ReplaceString(s ?? string.Empty, map) ?? string.Empty;
         }
 
         #region ThrowNotSupport
