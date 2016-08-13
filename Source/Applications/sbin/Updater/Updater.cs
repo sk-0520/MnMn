@@ -21,7 +21,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 namespace ContentTypeTextNet.Pe.SystemApplications.Updater
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <list type="table">
     /// <listheader>
@@ -85,14 +85,14 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
                 }
 
                 update = new UpdateProcess(commandLine);
-                update.Check();
-                if(update.IsVersionUp) {
-                    if(update.CheckOnly) {
-                        Console.WriteLine(">> UPDATE:{0} {1}", update.VersionText, update.IsRCVersion ? "RC" : "RELEASE");
-                    } else {
-                        update.Execute();
-                        Console.WriteLine(">> SUCCESS");
-                    }
+                //update.Check();
+                if(!string.IsNullOrWhiteSpace(update.DownloadFileUrl)) {
+                    //if(update.CheckOnly) {
+                    //    Console.WriteLine(">> UPDATE:{0} {1}", update.VersionText, update.IsRCVersion ? "RC" : "RELEASE");
+                    //} else {
+                    update.Execute();
+                    Console.WriteLine(">> SUCCESS");
+                    //}
                 } else {
                     Console.WriteLine(">> NONE");
                 }
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
                 result = -1;
             }
 
-            if(update != null && !update.CheckOnly) {
+            if(update != null /*&& !update.CheckOnly*/) {
                 Console.WriteLine(";-)");
                 Thread.Sleep(TimeSpan.FromSeconds(5));
             }

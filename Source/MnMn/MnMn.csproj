@@ -200,7 +200,9 @@
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="Define\SourceLoadState.cs" />
     <Compile Include="Define\TextShowType.cs" />
-    <Compile Include="etc\script\Updater\UpdaterScript.cs" />
+    <Content Include="etc\script\Updater\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="IF\Control\ICheckable.cs" />
     <Compile Include="IF\Control\ISetView.cs" />
