@@ -205,20 +205,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        void LoadChangelog()
+        Task LoadChangelogAsync()
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
-                UpdateBrowser.Source = new Uri(Constants.UriChangelogRelease);
+                var client = new HttpClient();
+                return client.GetStringAsync(Constants.UriChangelogRelease).ContinueWith(t => {
+                    var htmlSource = t.Result;
+                    UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
+                        UpdateBrowser.NavigateToString(htmlSource);
+                    }));
+                });
             } else {
-                UpdateBrowser.Source = null;
+                return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
+                    UpdateBrowser.NavigateToString("<html><head></head><body></body></html>");
+                })).Task;
             }
         }
 
         Task UpdateCheckAsync()
         {
             return CheckVersionAsync().ContinueWith(t => {
-                LoadChangelog();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                LoadChangelogAsync();
+            });
         }
 
         Process CreateProcess(Dictionary<string, string> map)
@@ -339,7 +347,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 HelpBrowser.Source = new Uri(Constants.HelpFilePath);
             }
             if(UpdateBrowser.Source == null) {
-                LoadChangelog();
+                LoadChangelogAsync().ConfigureAwait(false);
             }
         }
 
