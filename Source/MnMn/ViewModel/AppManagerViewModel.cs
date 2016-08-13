@@ -86,6 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             get
             {
                 return new ManagerViewModelBase[] {
+                    AppUpdateManager,
                     AppInformationManager,
                     AppSettingManager,
                     SmileManager

@@ -56,6 +56,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppLoggingManagerViewModel AppLoggingManager { get; }
         public AppHelpManagerViewModel AppHelpManager { get; }
 
+        public IEnumerable<ManagerViewModelBase> ManagerChildren
+        {
+            get
+            {
+                return new ManagerViewModelBase[] {
+                    AppAboutManager,
+                    AppLoggingManager,
+                    AppHelpManager,
+                };
+            }
+        }
+
         #endregion
 
         #region command
@@ -70,18 +82,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override Task InitializeAsync()
         {
-            return Task.CompletedTask;
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
-        { }
+        {
+            foreach(var child in ManagerChildren) {
+                child.InitializeView(view);
+            }
+        }
 
         public override void UninitializeView(MainWindow view)
-        { }
+        {
+            foreach(var child in ManagerChildren) {
+                child.UninitializeView(view);
+            }
+        }
 
         public override Task GarbageCollectionAsync()
         {
-            return Task.CompletedTask;
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync()));
         }
 
         #endregion
