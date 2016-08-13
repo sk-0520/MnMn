@@ -33,42 +33,32 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 using Microsoft.Win32.SafeHandles;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppInformationManagerViewModel: ManagerViewModelBase
     {
-        public AppInformationManagerViewModel(Mediation mediation)
+        public AppInformationManagerViewModel(Mediation mediation, AppLogger appLogger)
             : base(mediation)
-        { }
+        {
+            AppAboutManager = new AppAboutManagerViewModel(Mediation);
+            AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
+            AppHelpManager = new AppHelpManagerViewModel(Mediation);
+        }
 
         #region property
 
         WebBrowser HelpBrowser { get; set; }
 
-
+        public AppAboutManagerViewModel AppAboutManager { get; }
+        public AppLoggingManagerViewModel AppLoggingManager { get; }
+        public AppHelpManagerViewModel AppHelpManager { get; }
 
         #endregion
 
         #region command
-
-
-
-        public ICommand ExecuteCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    var s = (string)o;
-                    try {
-                        Process.Start(s);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
-                    }
-                });
-            }
-        }
 
         #endregion
 
@@ -84,9 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         public override void InitializeView(MainWindow view)
-        {
-            HelpBrowser = view.information.helpBrowser;
-        }
+        { }
 
         public override void UninitializeView(MainWindow view)
         { }
@@ -94,15 +82,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override Task GarbageCollectionAsync()
         {
             return Task.CompletedTask;
-        }
-
-        protected override void ShowView()
-        {
-            base.ShowView();
-
-            if(HelpBrowser.Source == null) {
-                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
-            }
         }
 
         #endregion

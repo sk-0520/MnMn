@@ -251,6 +251,8 @@
     <Compile Include="Model\Setting\Service\Smile\SmileMyListBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCheckItLaterModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppHelpManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppAboutManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppInformationManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppLoggingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppUpdateManagerViewModel.cs" />
