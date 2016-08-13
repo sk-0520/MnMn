@@ -4,7 +4,7 @@ var defaultLanguageKey = 'ja-jp';
 
 var helpLanguage = {
 	'ja-jp': {
-		title: ' : Pe ヘルプ',
+		title: ' : MnMn ヘルプ',
 		outLink: '外部リンク',
 		hint: {
 			icon: '📝',
