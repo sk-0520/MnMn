@@ -27,6 +27,7 @@
     </TabItem>
 
     <TabItem Header="help">
+      <WebBrowser x:Name="helpBrowser" />
     </TabItem>
   </TabControl>
 </UserControl>

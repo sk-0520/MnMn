@@ -76,8 +76,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public AppInformationManagerViewModel AppInformationManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
-
         public SmileManagerViewModel SmileManager { get; }
+
+        public IEnumerable<ManagerViewModelBase> ManagerItems
+        {
+            get
+            {
+                return new ManagerViewModelBase[] {
+                    AppInformationManager,
+                    AppSettingManager,
+                    SmileManager
+                };
+            }
+        }
 
         public SessionViewModelBase SmileSession { get; }
 
@@ -186,14 +197,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return SmileManager.InitializeAsync();
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
         {
             View = (MainWindow)view;
 
-            SmileManager.InitializeView(view);
+            foreach(var manager in ManagerItems) {
+                manager.InitializeView(view);
+            }
+
             GarbageCollectionAsync();
         }
 
@@ -201,12 +215,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             SaveSetting();
 
-            SmileManager.UninitializeView(view);
+            foreach(var manager in ManagerItems) {
+                manager.UninitializeView(view);
+            }
         }
 
         public override Task GarbageCollectionAsync()
         {
-            return SmileManager.GarbageCollectionAsync();
+            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync()));
         }
 
         #endregion

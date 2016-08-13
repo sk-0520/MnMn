@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -31,6 +32,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         { }
 
         #region property
+
+        WebBrowser HelpBrowser { get; set; }
+
         #endregion
 
         #region command
@@ -47,7 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         public override void InitializeView(MainWindow view)
-        { }
+        {
+            HelpBrowser = view.about.helpBrowser;
+        }
 
         public override void UninitializeView(MainWindow view)
         { }
@@ -55,6 +61,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override Task GarbageCollectionAsync()
         {
             return Task.CompletedTask;
+        }
+
+        protected override void ShowView()
+        {
+            base.ShowView();
+
+            if(HelpBrowser.Source == null) {
+                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
+            }
         }
 
         #endregion
