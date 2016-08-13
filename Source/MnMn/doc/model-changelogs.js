@@ -114,7 +114,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#33: ファイルへのログ出力'
 					},
 					{
 						'revision': '',

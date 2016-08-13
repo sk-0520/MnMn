@@ -240,6 +240,9 @@
     <value>新バージョン(${NEW-VERSION})がリリースされています。
 現バージョン(${NOW-VERSION})から更新を行いますか。</value>
   </data>
+  <data name="String_Log_Filter_Log" xml:space="preserve">
+    <value>ログファイル</value>
+  </data>
   <data name="String_Service_Smile_SmileVideo_Bookmark_NewName" xml:space="preserve">
     <value>新規ブックマーク</value>
   </data>
