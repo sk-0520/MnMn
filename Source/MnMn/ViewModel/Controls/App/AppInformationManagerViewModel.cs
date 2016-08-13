@@ -16,18 +16,24 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Linq;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using Microsoft.Win32.SafeHandles;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
@@ -87,7 +93,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public ICommand UpdateExecuteCommand
         {
-            get { return CreateCommand(o => UpdateExecuteAsync().ConfigureAwait(false)); }
+            get
+            {
+                return CreateCommand(o => {
+                    var result = UpdateExecute();
+                    if(result) {
+                        Application.Current.Shutdown();
+                    }
+                });
+            }
         }
 
         #endregion
@@ -180,9 +194,91 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        Task UpdateExecuteAsync()
+        Process CreateProcess(Dictionary<string, string> map)
         {
-            return Task.CompletedTask;
+            var process = new Process();
+            var startInfo = process.StartInfo;
+            startInfo.FileName = Constants.UpdaterExecuteFilePath;
+
+            var defaultMap = new Dictionary<string, string>() {
+                { "pid",      string.Format("{0}", Process.GetCurrentProcess().Id) },
+                { "version",  Constants.ApplicationVersionNumber.ToString() },
+                //{ "uri",      Constants.UriUpdate },
+                { "platform", Environment.Is64BitProcess ? "x64": "x86" },
+                //{ "rc",       this._donwloadRc ? "true": "false" },
+            };
+
+            foreach(var pair in map) {
+                defaultMap[pair.Key] = pair.Value;
+            }
+            startInfo.Arguments = string.Join(" ", defaultMap.Select(p => string.Format("\"/{0}={1}\"", p.Key, p.Value)));
+
+            return process;
+        }
+
+        bool UpdateExecute()
+        {
+            var eventName = "mnmn-event";
+
+            var settingDir = VariableConstants.GetSettingDirectory();
+            var archiveDirPath = Path.Combine(settingDir.FullName, Constants.ArchiveDirectoryName);
+
+            var lines = new List<string>();
+            var map = new Dictionary<string, string>() {
+                { "download",       archiveDirPath },
+                { "expand",         Constants.AssemblyRootDirectoryPath },
+                { "wait",           "true" },
+                { "no-wait-update", "true" },
+                { "event",           eventName },
+                { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.ScriptDirectoryName, "Updater", "UpdaterScript.cs") },
+                { "uri",             ArchiveUri.OriginalString },
+            };
+            FileUtility.MakeFileParentDirectory(archiveDirPath);
+            if(!Directory.Exists(archiveDirPath)) {
+                Directory.CreateDirectory(archiveDirPath);
+            }
+            // #158
+            FileUtility.RotateFiles(archiveDirPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
+                Mediation.Logger.Warning(e);
+                return true;
+            });
+
+            //var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
+            var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
+
+            using(var process = CreateProcess(map)) {
+                //this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
+                Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
+
+                var result = false;
+
+                process.Start();
+                var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
+                    SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
+                };
+                var handles = new[] { waitEvent, processEvent };
+                var waitResult = WaitHandle.WaitAny(handles, TimeSpan.FromMinutes(3));
+                Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
+                if(0 <= waitResult && waitResult < handles.Length) {
+                    if(handles[waitResult] == waitEvent) {
+                        // イベントが立てられたので終了
+                        Mediation.Logger.Information("exit", process.StartInfo.Arguments);
+                        result = true;
+                    } else if(handles[waitResult] == processEvent) {
+                        // Updaterがイベント立てる前に死んだ
+                        Mediation.Logger.Information("error-process", process.ExitCode);
+                    }
+                } else {
+                    // タイムアウト
+                    if(!process.HasExited) {
+                        // まだ生きてるなら強制的に殺す
+                        process.Kill();
+                    }
+                    Mediation.Logger.Information("error-timeout", process.ExitCode);
+                }
+
+                return result;
+            }
         }
 
         #endregion

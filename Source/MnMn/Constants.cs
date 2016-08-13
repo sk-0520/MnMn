@@ -93,6 +93,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SbinDirectoryName { get; } = "sbin";
         public static string UpdateProgramDirectoryName { get; } = "Updater";
         public static string UpdateProgramName { get; } = PathUtility.AppendExtension(UpdateProgramDirectoryName, "exe");
+        public static string UpdaterExecuteFilePath
+        {
+            get { return Path.Combine(Constants.AssemblyRootDirectoryPath, Constants.SbinDirectoryName, Constants.UpdateProgramDirectoryName, Constants.UpdateProgramName); }
+        }
 
 #if DEBUG
         public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
