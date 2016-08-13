@@ -37,5 +37,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <para>つまりはまぁ最新版があった。</para>
         /// </summary>
         CurrentIsOld,
+        /// <summary>
+        /// エラー。
+        /// </summary>
+        Error,
     }
 }

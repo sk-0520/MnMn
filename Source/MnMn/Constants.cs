@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// バージョン番号。
         /// </summary>
-        public static readonly Version ApplicationVersionNumber = Assembly.GetExecutingAssembly().GetName().Version;
+        public static Version ApplicationVersionNumber { get; } = Assembly.GetExecutingAssembly().GetName().Version;
 
         /// <summary>
         /// 前回バージョンがこれ未満なら使用許諾を表示
