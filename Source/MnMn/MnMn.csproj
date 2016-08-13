@@ -251,7 +251,11 @@
     <Compile Include="Model\Setting\Service\Smile\SmileMyListBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCheckItLaterModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppHelpManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppAboutManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppInformationManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppLoggingManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppUpdateManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringElementViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeViewModel.cs" />
@@ -261,6 +265,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderItem.cs" />
     <Compile Include="View\Controls\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\App\AppInformationManager.xaml.cs">
+      <DependentUpon>AppInformationManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
@@ -478,6 +485,10 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Page Include="View\Controls\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\App\AppInformationManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

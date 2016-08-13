@@ -1,0 +1,95 @@
+﻿<!--
+  呼び出し元から DataContext を設定して使用。
+-->
+<UserControl
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.App.AppInformationManager"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="300" d:DesignWidth="300"
+>
+  <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
+    <TabItem Header="情報" DataContext="{Binding AppAboutManager}">
+      <StackPanel>
+        <StackPanel.Resources>
+          <Style TargetType="Button">
+            <Setter Property="Margin" Value="5" />
+          </Style>
+        </StackPanel.Resources>
+        <Button Command="{Binding ExecuteCommand}" CommandParameter="http://content-type-text.net/">Webサイト</Button>
+        <Button Command="{Binding ExecuteCommand}" CommandParameter="https://groups.google.com/d/forum/mnmn-forum">フォーラム</Button>
+        <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn">リポジトリ</Button>
+        <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn/downloads">最新版</Button>
+        <Button Command="{Binding ExecuteCommand}" CommandParameter="content.type.text.net@gmail.com">メール</Button>
+      </StackPanel>
+    </TabItem>
+
+    <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}">
+      <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+          <Button Command="{Binding SaveLogCommand}">全件保存</Button>
+          <Button Command="{Binding CopyLogCommand}">全件コピー</Button>
+          <Separator />
+          <Button Command="{Binding ClearLogCommand}">クリア</Button>
+        </ToolBar>
+        <ListBox x:Name="listLog" ItemsSource="{Binding LogItems}">
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            </Style>
+          </ListBox.ItemContainerStyle>
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="140" />
+                  <ColumnDefinition Width="60" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Timestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
+                <TextBlock Grid.Column="1" >
+                  <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding LogKind}" Value="None">
+                          <Setter Property="Text" Value="☺" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LogKind}" Value="Debug">
+                          <Setter Property="Text" Value="デバッグ" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LogKind}" Value="Trace">
+                          <Setter Property="Text" Value="トレース" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LogKind}" Value="Information">
+                          <Setter Property="Text" Value="情報" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LogKind}" Value="Warning">
+                          <Setter Property="Text" Value="警報" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LogKind}" Value="Error">
+                          <Setter Property="Text" Value="異常" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LogKind}" Value="Fatal">
+                          <Setter Property="Text" Value="致命" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Grid.Column="2" Text="{Binding Message}" />
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </DockPanel>
+    </TabItem>
+
+    <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
+      <WebBrowser x:Name="helpBrowser" />
+    </TabItem>
+
+
+  </TabControl>
+</UserControl>

@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.PeMain.IF;
 //using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
     {
         #region variable
 
-        //ILogAppender _logCollector;
+        ILogAppender _logCollector;
         bool _isStock;
 
         #endregion
@@ -45,24 +46,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
         #region property
 
-        //public ILogAppender LogCollector
-        //{
-        //    get { return this._logCollector; }
-        //    set
-        //    {
-        //        if(this._logCollector != null) {
-        //            // イベントとか切る用
-        //        }
+        public ILogAppender LogCollector
+        {
+            get { return this._logCollector; }
+            set
+            {
+                if(this._logCollector != null) {
+                    // イベントとか切る用
+                }
 
-        //        this._logCollector = value;
+                this._logCollector = value;
 
-        //        if(this._logCollector == null) {
-        //            LoggerConfig.PutsCustom = false;
-        //        } else {
-        //            LoggerConfig.PutsCustom = true;
-        //        }
-        //    }
-        //}
+                if(this._logCollector == null) {
+                    LoggerConfig.PutsCustom = false;
+                } else {
+                    LoggerConfig.PutsCustom = true;
+                }
+            }
+        }
 
         public List<LogItemModel> StockItems { get; private set; }
 
@@ -99,12 +100,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
             base.Dispose(disposing);
         }
 
-        //protected override void PutsCustom(LogItemModel item)
-        //{
-        //    if(LogCollector != null) {
-        //        LogCollector.AddLog(item);
-        //    }
-        //}
+        protected override void PutsCustom(LogItemModel item)
+        {
+            if(LogCollector != null) {
+                LogCollector.AddLog(item);
+            }
+        }
 
         protected override void Puts(LogItemModel item)
         {
