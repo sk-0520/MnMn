@@ -86,27 +86,10 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.02.1',
-		'isRc': true,
+		'date': '2016/08/13',
+		'version': '0.03.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
@@ -116,14 +99,6 @@
 						'comments': [
 							'かなりざっくり対応なので追々調整するんです'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -133,18 +108,6 @@
 					{
 						'revision': '',
 						'subject': '#35: 投稿者への労りがONで「っ」を含むコメントがフィルタリングに引っ掛かる'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -154,14 +117,6 @@
 					{
 						'revision': '',
 						'subject': '#37: 非ハンドリング例外の補足'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
