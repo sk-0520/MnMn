@@ -284,7 +284,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
                 };
                 var handles = new[] { waitEvent, processEvent };
-                var waitResult = WaitHandle.WaitAny(handles, TimeSpan.FromMinutes(3));
+                var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
                 Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
                 if(0 <= waitResult && waitResult < handles.Length) {
                     if(handles[waitResult] == waitEvent) {
