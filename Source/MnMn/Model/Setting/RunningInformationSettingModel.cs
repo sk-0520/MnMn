@@ -61,11 +61,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// </summary>
         [DataMember]
         public bool CheckUpdateRelease { get; set; }
-        /// <summary>
-        /// RCアップデートチェックを行うか。
-        /// </summary>
-        [DataMember]
-        public bool CheckUpdateRC { get; set; }
+        ///// <summary>
+        ///// RCアップデートチェックを行うか。
+        ///// </summary>
+        //[DataMember]
+        //public bool CheckUpdateRC { get; set; }
         /// <summary>
         /// アップデートチェックで無視するバージョン。
         /// </summary>
