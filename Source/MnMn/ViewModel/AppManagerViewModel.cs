@@ -44,6 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
@@ -55,12 +56,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public AppManagerViewModel(Mediation mediation)
+        public AppManagerViewModel(Mediation mediation, AppLogger appLogger)
             : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
             SmileManager = new SmileManagerViewModel(Mediation);
+            AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
             AppInformationManager = new AppInformationManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
@@ -74,6 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
+        public AppLoggingManagerViewModel AppLoggingManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
         public SmileManagerViewModel SmileManager { get; }

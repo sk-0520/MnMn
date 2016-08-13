@@ -252,6 +252,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCheckItLaterModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppInformationManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppLoggingManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFilteringElementViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkNodeViewModel.cs" />

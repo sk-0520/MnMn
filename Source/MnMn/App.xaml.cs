@@ -124,6 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             DoDebug();
 #endif
             var logger = new Pe.PeMain.Logic.AppLogger();
+            logger.IsStock = true;
             logger.Information(Constants.ApplicationName);
             //var dir = VariableConstants.GetSettingDirectory();
             //var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
@@ -154,7 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
             Mediation = new Mediation(setting, logger);
-            AppManager = new AppManagerViewModel(Mediation);
+            AppManager = new AppManagerViewModel(Mediation, logger);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
