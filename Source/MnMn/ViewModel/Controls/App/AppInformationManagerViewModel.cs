@@ -85,6 +85,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get { return CreateCommand(o => UpdateCheckAsync().ConfigureAwait(false)); }
         }
 
+        public ICommand UpdateExecuteCommand
+        {
+            get { return CreateCommand(o => UpdateExecuteAsync().ConfigureAwait(false)); }
+        }
+
         #endregion
 
         #region function
@@ -173,6 +178,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return CheckVersionAsync().ContinueWith(t => {
                 LoadChangelog();
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        Task UpdateExecuteAsync()
+        {
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -108,7 +108,7 @@
             </StackPanel.Style>
 
             <TextBlock Text="{Binding UpdateText}" />
-            <Button>update</Button>
+            <Button Command="{Binding UpdateExecuteCommand}">update</Button>
           </StackPanel>
 
         </Grid>
