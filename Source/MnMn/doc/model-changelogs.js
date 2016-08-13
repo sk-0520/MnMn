@@ -150,7 +150,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '0.03.0 のリビジョン抜け修正'
 					},
 					{
 						'revision': '',
@@ -173,7 +173,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'c3188ffb982a4a46b6a5da767689631192cbeab0',
 						'subject': '#3: 自動アップデート機能',
 						'comments': [
 							'かなりざっくり対応なので追々調整するんです'
@@ -185,7 +185,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '66ce6fa3d08e694def4d2916e80b813048d03301',
 						'subject': '#35: 投稿者への労りがONで「っ」を含むコメントがフィルタリングに引っ掛かる'
 					}
 				]
@@ -194,7 +194,7 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '6704c08ea52b360e0ae53a743a01111090dd3428',
 						'subject': '#37: 非ハンドリング例外の補足'
 					}
 				]
