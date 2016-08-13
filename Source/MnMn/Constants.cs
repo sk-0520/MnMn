@@ -55,6 +55,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static readonly Version ApplicationVersionNumber = Assembly.GetExecutingAssembly().GetName().Version;
 
+        /// <summary>
+        /// 前回バージョンがこれ未満なら使用許諾を表示
+        /// </summary>
+        public static Version AcceptVersion { get; } = new Version(0, 2, 0, 0);
 
         /// <summary>
         /// 最小XMLファイルサイズ。
