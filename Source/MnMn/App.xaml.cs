@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -130,6 +131,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var settingResult = LoadSetting(logger);
             var setting = settingResult.Result;
 
+            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+            logger.Information("IE version: " + ieVersion);
+            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+
             if(!CheckAccept(setting.RunningInformation, logger)) {
                 var accept = new AcceptWindow();
                 var acceptResult = accept.ShowDialog();
@@ -169,6 +174,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         protected override void OnExit(ExitEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+
+            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
 
             base.OnExit(e);
         }
