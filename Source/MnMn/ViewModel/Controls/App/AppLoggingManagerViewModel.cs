@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -36,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             //TODO: 件数即値
             LogList = new FixedSizeCollectionModel<LogItemModel>(appLogge.StockItems, 5000);
+            BindingOperations.EnableCollectionSynchronization(LogList, new object());
             appLogge.IsStock = false;
             appLogge.LogCollector = this;
 
@@ -46,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         FixedSizeCollectionModel<LogItemModel> LogList { get; }
         public ICollectionView LogItems { get; }
+
+        ListBox LogListBox { get; set; }
 
         #endregion
 
@@ -68,10 +72,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         public override void InitializeView(MainWindow view)
-        { }
+        {
+            LogListBox = view.information.listLog;
+        }
 
         public override void UninitializeView(MainWindow view)
         { }
+
+        protected override void ShowView()
+        {
+            base.ShowView();
+
+            if(LogList.Any()) {
+                LogListBox.Dispatcher.BeginInvoke(new Action(() => {
+                    LogListBox.ScrollIntoView(LogList.Last());
+                }));
+            }
+        }
 
         #endregion
 
@@ -80,6 +97,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public void AddLog(LogItemModel item)
         {
             LogList.Add(item);
+            if(IsVisible) {
+                LogListBox?.Dispatcher.BeginInvoke(new Action(() => {
+                    LogListBox.ScrollIntoView(item);
+                }));
+            }
         }
 
         #endregion
