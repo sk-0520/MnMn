@@ -112,7 +112,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#3: 自動アップデート機能',
+						'comments': [
+							'かなりざっくり対応なので追々調整するんです'
+						]
 					},
 					{
 						'revision': '',

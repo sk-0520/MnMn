@@ -143,26 +143,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region command
 
-        public ICommand HelpCommand
-        {
-            get { return CreateCommand(o => { ExecuteCommand.TryExecute(Constants.HelpFilePath); }); }
-        }
-
-        public ICommand ExecuteCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    var s = (string)o;
-                    try {
-                        Process.Start(s);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
-                    }
-                });
-            }
-        }
-
         #endregion
 
         #region function

@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         UpdateCheckState _updateCheckState;
 
         string _updateText;
+        bool _hasUpdate;
 
         #endregion
 
@@ -73,7 +74,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public UpdateCheckState UpdateCheckState
         {
             get { return this._updateCheckState; }
-            set { SetVariableValue(ref this._updateCheckState, value); }
+            set
+            {
+                if(SetVariableValue(ref this._updateCheckState, value)) {
+                    HasUpdate = UpdateCheckState == UpdateCheckState.CurrentIsOld;
+                }
+            }
+        }
+
+        public bool HasUpdate
+        {
+            get { return this._hasUpdate; }
+            set { SetVariableValue(ref this._hasUpdate, value); }
         }
 
         public string UpdateText
@@ -99,6 +111,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     var result = UpdateExecute();
                     if(result) {
                         Application.Current.Shutdown();
+                    }
+                });
+            }
+        }
+
+        public ICommand ExecuteCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var s = (string)o;
+                    try {
+                        Process.Start(s);
+                    } catch(Exception ex) {
+                        Mediation.Logger.Warning(ex);
                     }
                 });
             }

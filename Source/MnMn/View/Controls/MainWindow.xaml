@@ -30,6 +30,7 @@
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </Window.Resources>
@@ -49,28 +50,33 @@
       <TabItem Header="SETTING" DataContext="{Binding AppSettingManager}">
         <app_view_controls_app:AppSettingManager VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  />
       </TabItem>
-      <TabItem Header="ABOUT" DataContext="{Binding AppInformationManager}">
-        <!--<app_view_controls_app:AppInformationManager x:Name="about" />-->
-        <!--<StackPanel>
+
+      <TabItem Header="ヘルプ" DataContext="{Binding AppInformationManager}">
+        <WebBrowser x:Name="helpBrowser" />
+      </TabItem>
+
+      <TabItem Header="MnMn" DataContext="{Binding AppInformationManager}">
+        <StackPanel>
           <StackPanel.Resources>
             <Style TargetType="Button">
               <Setter Property="Margin" Value="5" />
             </Style>
           </StackPanel.Resources>
-          <Button Command="{Binding HelpCommand}">help</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="http://content-type-text.net/">Webサイト</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://groups.google.com/d/forum/mnmn-forum">フォーラム</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn">リポジトリ</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn/downloads">最新版</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="content.type.text.net@gmail.com">メール</Button>
-        </StackPanel>-->
+        </StackPanel>
       </TabItem>
 
-      <TabItem Header="help" DataContext="{Binding AppInformationManager}">
-        <WebBrowser x:Name="helpBrowser" />
-      </TabItem>
-
-      <TabItem Header="check" DataContext="{Binding AppInformationManager}">
+      <TabItem DataContext="{Binding AppInformationManager}">
+        <TabItem.Header>
+          <StackPanel>
+            <TextBlock Text="アップデート" />
+            <TextBlock TextAlignment="Center" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">あるよ！</TextBlock>
+          </StackPanel>
+        </TabItem.Header>
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -79,36 +85,14 @@
           </Grid.RowDefinitions>
 
           <StackPanel Grid.Row="0">
-            <Button Command="{Binding UpdateCheckCommand}">check</Button>
+            <Button Command="{Binding UpdateCheckCommand}">アップデートチェック</Button>
           </StackPanel>
 
-          <WebBrowser Grid.Row="1" x:Name="updateBrowser">
-            <WebBrowser.Style>
-              <Style TargetType="WebBrowser">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding UpdateCheckState}" Value="CurrentIsOld">
-                    <Setter Property="IsEnabled" Value="True" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="IsEnabled" Value="False" />
-              </Style>
-            </WebBrowser.Style>
-          </WebBrowser>
+          <WebBrowser Grid.Row="1" x:Name="updateBrowser" IsEnabled="{Binding HasUpdate}" />
 
-          <StackPanel Grid.Row="2">
-            <StackPanel.Style>
-              <Style TargetType="StackPanel">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding UpdateCheckState}" Value="CurrentIsOld">
-                    <Setter Property="IsEnabled" Value="True" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="IsEnabled" Value="False" />
-              </Style>
-            </StackPanel.Style>
-
+          <StackPanel Grid.Row="2" IsEnabled="{Binding HasUpdate}">
             <TextBlock Text="{Binding UpdateText}" />
-            <Button Command="{Binding UpdateExecuteCommand}">update</Button>
+            <Button Command="{Binding UpdateExecuteCommand}">アップデートを行う</Button>
           </StackPanel>
 
         </Grid>
