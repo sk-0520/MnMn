@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
             SmileManager = new SmileManagerViewModel(Mediation);
+            AppInformationManager = new AppInformationManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
@@ -73,9 +74,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
+        public AppInformationManagerViewModel AppInformationManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
-
         public SmileManagerViewModel SmileManager { get; }
+
+        public IEnumerable<ManagerViewModelBase> ManagerItems
+        {
+            get
+            {
+                return new ManagerViewModelBase[] {
+                    AppInformationManager,
+                    AppSettingManager,
+                    SmileManager
+                };
+            }
+        }
 
         public SessionViewModelBase SmileSession { get; }
 
@@ -130,26 +143,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region command
 
-        public ICommand HelpCommand
-        {
-            get { return CreateCommand(o => { ExecuteCommand.TryExecute(Constants.HelpFilePath); }); }
-        }
-
-        public ICommand ExecuteCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    var s = (string)o;
-                    try {
-                        Process.Start(s);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
-                    }
-                });
-            }
-        }
-
         #endregion
 
         #region function
@@ -184,14 +177,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return SmileManager.InitializeAsync();
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
         {
             View = (MainWindow)view;
 
-            SmileManager.InitializeView(view);
+            foreach(var manager in ManagerItems) {
+                manager.InitializeView(view);
+            }
+
             GarbageCollectionAsync();
         }
 
@@ -199,12 +195,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             SaveSetting();
 
-            SmileManager.UninitializeView(view);
+            foreach(var manager in ManagerItems) {
+                manager.UninitializeView(view);
+            }
         }
 
         public override Task GarbageCollectionAsync()
         {
-            return SmileManager.GarbageCollectionAsync();
+            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync()));
         }
 
         #endregion

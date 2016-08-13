@@ -16,23 +16,30 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
+namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public static class AppUtility
+    public enum UpdateCheckState
     {
-        public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
-        {
-            return s.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map);
-        }
+        /// <summary>
+        /// 未チェック。
+        /// </summary>
+        UnChecked,
+        /// <summary>
+        /// 現行は最新版。
+        /// </summary>
+        CurrentIsNew,
+        /// <summary>
+        /// 現行は古い。
+        /// <para>つまりはまぁ最新版があった。</para>
+        /// </summary>
+        CurrentIsOld,
+        /// <summary>
+        /// エラー。
+        /// </summary>
+        Error,
     }
 }

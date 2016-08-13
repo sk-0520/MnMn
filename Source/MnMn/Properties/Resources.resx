@@ -236,6 +236,10 @@
   <data name="String_App_Define_SourceLoadState_SourceLoading" xml:space="preserve">
     <value>ソース読込</value>
   </data>
+  <data name="String_App_Update_Format" xml:space="preserve">
+    <value>新バージョン(${NEW-VERSION})がリリースされています。
+現バージョン(${NOW-VERSION})から更新を行いますか。</value>
+  </data>
   <data name="String_Service_Smile_SmileVideo_Bookmark_NewName" xml:space="preserve">
     <value>新規ブックマーク</value>
   </data>

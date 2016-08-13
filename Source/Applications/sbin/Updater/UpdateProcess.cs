@@ -47,6 +47,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
 
         ArgumentValue<int> _pid = new ArgumentValue<int>();
 
+        [Obsolete("MnMNでは使用しない")]
         ArgumentValue<Tuple<ushort, ushort, ushort>> _version = new ArgumentValue<Tuple<ushort, ushort, ushort>>();
 
         ArgumentValue<string> _uri = new ArgumentValue<string>();
@@ -54,6 +55,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
         ArgumentValue<string> _expandDir = new ArgumentValue<string>();
         ArgumentValue<string> _platform = new ArgumentValue<string>();
         ArgumentValue<bool> _getRC = new ArgumentValue<bool>();
+        [Obsolete("MnMNでは使用しない")]
         ArgumentValue<bool> _checkOnly = new ArgumentValue<bool>();
         ArgumentValue<bool> _wait = new ArgumentValue<bool>();
         ArgumentValue<bool> _noWaitUpdate = new ArgumentValue<bool>();
@@ -63,6 +65,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
         /// <summary>
         /// アップデートチェックのみを行うか。
         /// </summary>
+        [Obsolete("MnMNでは使用しない")]
         public bool CheckOnly { get { return this._checkOnly.Data; } }
         public bool Wait { get { return this._wait.Data; } }
         public bool WaitSkip { get; private set; }
@@ -79,21 +82,25 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
             this._commandLine = commandLine;
 
             Set("pid", this._pid);
-            Set("version", this._version, (value, s) => {
-                //var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
-                //value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
-                value.Data = Functions.ConvertVersionTuple(s);
-            });
+            //Set("version", this._version, (value, s) => {
+            //    //var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
+            //    //value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
+            //    value.Data = Functions.ConvertVersionTuple(s);
+            //});
             Set("uri", this._uri);
             Set("download", this._downloadDir);
             Set("expand", this._expandDir);
             Set("platform", this._platform);
             Set("rc", this._getRC);
-            Set("checkonly", this._checkOnly);
+            //Set("checkonly", this._checkOnly);
             Set("wait", this._wait);
             Set("no-wait-update", this._noWaitUpdate);
             Set("event", this._eventName);
             Set("script", this._scriptPath);
+
+            if(this._uri.HasValue) {
+                DownloadFileUrl = this._uri.Data;
+            }
         }
 
         void OutputErrorMessage(string s)
@@ -137,6 +144,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
             }
         }
 
+        [Obsolete("MnMNでは使用しない")]
         public void Check()
         {
             XElement xml = null;
@@ -417,13 +425,14 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
     /// 互換性用。
     /// <para>この処理もう消したいんだけど動いてるからさわりたくない。</para>
     /// </summary>
+    [Obsolete("MnMnでは使用しない")]
     public static class Functions
     {
         /// <summary>
         /// バージョン文字列をタプルに変換。
-        /// 
+        ///
         /// *.*.* までが対象となる。
-        /// 
+        ///
         /// <para>Versionでいいじゃん(いいじゃん)</para>
         /// </summary>
         /// <param name="versionText"></param>
@@ -443,7 +452,7 @@ namespace ContentTypeTextNet.Pe.SystemApplications.Updater
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>

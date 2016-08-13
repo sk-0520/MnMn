@@ -14,7 +14,7 @@
 			<word key="ja-jp" value="投稿者への労り" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(うぽつ|っ)|(う(ｐ|p)乙)|(^[8８]+$)" />
+			<extend key="pattern" value="(うぽ(つ|っ))|(う(ｐ|p)乙)|(^[8８]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>

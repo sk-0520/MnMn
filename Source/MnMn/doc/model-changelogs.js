@@ -86,6 +86,43 @@
 	},
 	*/
 	{
+		'date': '2016/08/13',
+		'version': '0.03.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#3: 自動アップデート機能',
+						'comments': [
+							'かなりざっくり対応なので追々調整するんです'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#35: 投稿者への労りがONで「っ」を含むコメントがフィルタリングに引っ掛かる'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#37: 非ハンドリング例外の補足'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2016/08/12',
 		'version': '0.02.0',
 		'isRc': false,
