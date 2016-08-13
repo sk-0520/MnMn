@@ -23,6 +23,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string UriChangelogRelease { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-release")); } }
         public static string UriChangelogRc { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-rc")); } }
 
+        public static TimeSpan UpdateAppExitWaitTime { get { return appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse); } }
+
+
         public static int BackupArchiveCount { get { return appConfig.Get("backup-archive", int.Parse); } }
 
         #region smile
