@@ -1,6 +1,6 @@
-﻿var targetName = 'PE_BROWSER';
-var issueLink = 'https://bitbucket.org/sk_0520/pe/issue/';
-var revisionLink = 'https://bitbucket.org/sk_0520/pe/commits/';
+﻿var targetName = 'MNMN_BROWSER';
+var issueLink = 'https://bitbucket.org/sk_0520/mnmn/issue/';
+var revisionLink = 'https://bitbucket.org/sk_0520/mnmn/commits/';
 
 var changelogTypeMap = {
 	'features': '機能',
