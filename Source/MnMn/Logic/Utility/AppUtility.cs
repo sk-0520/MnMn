@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -29,5 +30,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
     public static class AppUtility
     {
+        public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
+        {
+            return s.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map);
+        }
     }
 }

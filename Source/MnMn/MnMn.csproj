@@ -259,9 +259,6 @@
     <Compile Include="View\Controls\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\App\AppInformationManager.xaml.cs">
-      <DependentUpon>AppInformationManager.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Controls\FontSelectControl.xaml.cs">
       <DependentUpon>FontSelectControl.xaml</DependentUpon>
     </Compile>
@@ -480,10 +477,6 @@
     <Page Include="View\Controls\AcceptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controls\App\AppInformationManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Controls\App\AppSettingManager.xaml">
       <SubType>Designer</SubType>

@@ -50,7 +50,7 @@
         <app_view_controls_app:AppSettingManager VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  />
       </TabItem>
       <TabItem Header="ABOUT" DataContext="{Binding AppInformationManager}">
-        <app_view_controls_app:AppInformationManager x:Name="about" />
+        <!--<app_view_controls_app:AppInformationManager x:Name="about" />-->
         <!--<StackPanel>
           <StackPanel.Resources>
             <Style TargetType="Button">
@@ -64,6 +64,54 @@
           <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn/downloads">最新版</Button>
           <Button Command="{Binding ExecuteCommand}" CommandParameter="content.type.text.net@gmail.com">メール</Button>
         </StackPanel>-->
+      </TabItem>
+
+      <TabItem Header="help" DataContext="{Binding AppInformationManager}">
+        <WebBrowser x:Name="helpBrowser" />
+      </TabItem>
+
+      <TabItem Header="check" DataContext="{Binding AppInformationManager}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <StackPanel Grid.Row="0">
+            <Button Command="{Binding UpdateCheckCommand}">check</Button>
+          </StackPanel>
+
+          <WebBrowser Grid.Row="1" x:Name="updateBrowser">
+            <WebBrowser.Style>
+              <Style TargetType="WebBrowser">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding UpdateCheckState}" Value="CurrentIsOld">
+                    <Setter Property="IsEnabled" Value="True" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="IsEnabled" Value="False" />
+              </Style>
+            </WebBrowser.Style>
+          </WebBrowser>
+
+          <StackPanel Grid.Row="2">
+            <StackPanel.Style>
+              <Style TargetType="StackPanel">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding UpdateCheckState}" Value="CurrentIsOld">
+                    <Setter Property="IsEnabled" Value="True" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="IsEnabled" Value="False" />
+              </Style>
+            </StackPanel.Style>
+
+            <TextBlock Text="{Binding UpdateText}" />
+            <Button>update</Button>
+          </StackPanel>
+
+        </Grid>
       </TabItem>
 
     </TabControl>

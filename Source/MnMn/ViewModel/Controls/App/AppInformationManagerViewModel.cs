@@ -21,9 +21,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml.Linq;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
@@ -35,6 +38,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         Uri _archiveUri;
         Version _archiveVersion;
         UpdateCheckState _updateCheckState;
+
+        string _updateText;
 
         #endregion
 
@@ -65,9 +70,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetVariableValue(ref this._updateCheckState, value); }
         }
 
+        public string UpdateText
+        {
+            get { return this._updateText; }
+            set { SetVariableValue(ref this._updateText, value); }
+        }
+
         #endregion
 
         #region command
+
+        public ICommand UpdateCheckCommand
+        {
+            get { return CreateCommand(o => UpdateCheckAsync().ConfigureAwait(false)); }
+        }
+
         #endregion
 
         #region function
@@ -77,65 +94,85 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             UpdateCheckState = UpdateCheckState.UnChecked;
             ArchiveVersion = null;
             ArchiveUri = null;
+            UpdateText = string.Empty;
 
-            var client = new HttpClient();
-            Mediation.Logger.Trace("update check: " + Constants.UriUpdate);
-            var response = await client.GetAsync(Constants.UriUpdate);
+            try {
+                var client = new HttpClient();
+                Mediation.Logger.Trace("update check: " + Constants.UriUpdate);
+                var response = await client.GetAsync(Constants.UriUpdate);
 
-            Mediation.Logger.Trace("update response state: " + response.StatusCode);
-            if(!response.IsSuccessStatusCode) {
-                UpdateCheckState = UpdateCheckState.Error;
-                return;
+                Mediation.Logger.Trace("update response state: " + response.StatusCode);
+                if(!response.IsSuccessStatusCode) {
+                    UpdateCheckState = UpdateCheckState.Error;
+                    return;
+                }
+
+                var resultText = await response.Content.ReadAsStringAsync();
+
+                var xml = XElement.Parse(resultText);
+
+                var item = xml
+                    .Elements()
+                    .Select(
+                        x => new {
+                            Version = new Version(x.Attribute("version").Value),
+                            //IsRC = x.Attribute("type").Value == "rc",
+                            ArchiveElements = x.Elements(),
+                        }
+                    )
+                    .Where(x => Constants.ApplicationVersionNumber <= x.Version)
+                    .OrderByDescending(x => x.Version)
+                    .FirstOrDefault()
+                ;
+
+                if(item == null) {
+                    UpdateCheckState = UpdateCheckState.CurrentIsNew;
+                    return;
+                }
+
+                var archive = item.ArchiveElements
+                    .Select(x => new {
+                        Uri = new Uri(x.Attribute("uri").Value),
+                        Platform = x.Attribute("platform").Value,
+                        Version = item.Version,
+                    })
+                    .FirstOrDefault(x => x.Platform == (Environment.Is64BitProcess ? "x64" : "x86"))
+                ;
+
+                if(archive == null) {
+                    UpdateCheckState = UpdateCheckState.CurrentIsNew;
+                    return;
+                }
+
+                ArchiveUri = archive.Uri;
+                ArchiveVersion = archive.Version;
+
+                var map = new Dictionary<string, string>() {
+                    { "NEW-VERSION", ArchiveVersion.ToString() },
+                    { "NOW-VERSION", Constants.ApplicationVersionNumber.ToString() },
+                };
+                UpdateText = AppUtility.ReplaceString(Properties.Resources.String_App_Update_Format, map);
+
+                UpdateCheckState = UpdateCheckState.CurrentIsOld;
+            } catch(Exception ex) {
+                Mediation.Logger.Warning(ex);
             }
-
-            var resultText = await response.Content.ReadAsStringAsync();
-
-            var xml = XElement.Parse(resultText);
-
-            var item = xml
-                .Elements()
-                .Select(
-                    x => new {
-                        Version = new Version(x.Attribute("version").Value),
-                        //IsRC = x.Attribute("type").Value == "rc",
-                        ArchiveElements = x.Elements(),
-                    }
-                )
-                .Where(x => Constants.ApplicationVersionNumber <= x.Version)
-                .OrderByDescending(x => x.Version)
-                .FirstOrDefault()
-            ;
-
-            if(item == null) {
-                UpdateCheckState = UpdateCheckState.CurrentIsNew;
-                return;
-            }
-
-            var archive = item.ArchiveElements
-                .Select(x => new {
-                    Uri = new Uri(x.Attribute("uri").Value),
-                    Platform = x.Attribute("platform").Value,
-                    Version = item.Version,
-                })
-                .FirstOrDefault(x => x.Platform == (Environment.Is64BitProcess ? "x64" : "x86"))
-            ;
-
-            if(archive == null) {
-                UpdateCheckState = UpdateCheckState.CurrentIsNew;
-                return;
-            }
-
-            ArchiveUri = archive.Uri;
-            ArchiveVersion = archive.Version;
-
-            UpdateCheckState = UpdateCheckState.CurrentIsOld;
         }
 
         void LoadChangelog()
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
                 UpdateBrowser.Source = new Uri(Constants.UriChangelogRelease);
+            } else {
+                UpdateBrowser.Source = null;
             }
+        }
+
+        Task UpdateCheckAsync()
+        {
+            return CheckVersionAsync().ContinueWith(t => {
+                LoadChangelog();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion
@@ -149,8 +186,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override void InitializeView(MainWindow view)
         {
-            HelpBrowser = view.about.helpBrowser;
-            UpdateBrowser = view.about.updateBrowser;
+            HelpBrowser = view.helpBrowser;
+            UpdateBrowser = view.updateBrowser;
         }
 
         public override void UninitializeView(MainWindow view)
