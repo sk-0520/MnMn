@@ -88,15 +88,14 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.04.1',
-		'isRc': true,
+		'date': '2016/08/14',
+		'version': '0.05.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
-						'revision': '',
 						'subject': '一応アップデートは出来るけど不安定なので諸々調整'
 					}
 				]
@@ -105,7 +104,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'a1029f1d3827b88076cc1d76158157751286c80d',
 						'subject': '#39: 自動アップデート時の更新履歴取得がファイルダウンロードになる',
 						'comments': [
 							'ついでに待ち時間も長くした'
@@ -132,7 +131,11 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'b5ad3d7e61b366e0a64df50fce1b4c9ae1cdec3d',
+						'subject': '#38: ヘルプの各種情報が Pe のままになっている'
+					},
+					{
+						'revision': '258feafd93a366e4667e0244ec6dbd72675eb8f9',
 						'subject': '0.03.0 のリビジョン抜け修正'
 					}
 				]
