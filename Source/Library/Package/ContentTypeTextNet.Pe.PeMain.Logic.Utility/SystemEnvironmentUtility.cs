@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
 
         static string GetExecutingAssemblyFileName()
         {
-            var path = Assembly.GetExecutingAssembly().Location;
+            var path = Assembly.GetEntryAssembly().Location;
             var name = Path.GetFileName(path);
 
             return name;
