@@ -136,6 +136,7 @@
       <ToggleButton
         x:Name="PART_AudioMute"
         Grid.Column="1"
+        MouseEnter="PART_AudioMute_MouseEnter"
         IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
       >
         <Image>
@@ -155,9 +156,7 @@
       </ToggleButton>
       <Popup
         x:Name="PART_AudioSlider"
-        Placement="Relative"
-        VerticalOffset="-95"
-        Width="{Binding ActualWidth, ElementName=PART_AudioMute}"
+        Placement="Center"
         PlacementTarget="{Binding ElementName=PART_AudioMute}"
       >
         <Popup.IsOpen>
