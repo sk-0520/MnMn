@@ -88,27 +88,10 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.05.1',
-		'isRc': true,
+		'date': '2016/08/14',
+		'version': '0.06.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
@@ -123,10 +106,6 @@
 							'参照カウンタ機能のみ追加',
 							'この情報を元に追々なんかやるべ'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -144,31 +123,6 @@
 							'だっさいけど一元化しておいた',
 							'動作不安定より堅実に。。。'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
