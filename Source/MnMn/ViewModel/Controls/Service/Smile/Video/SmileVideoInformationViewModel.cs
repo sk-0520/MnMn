@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         /// <summary>
         /// キャッシュ上の参照カウンタ。
-        /// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で設定しようと考えてる。</para>
+        /// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で減算して<see cref="Logic.Service.Smile.Video.SmileVideoInformationCaching"/>で加算するイメージ。</para>
         /// </summary>
         public int ReferenceCount
         {
@@ -989,6 +989,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
                 return task;
+            }
+        }
+
+        /// <summary>
+        /// <see cref="ReferenceCount"/>を加算。
+        /// </summary>
+        public void IncrementReference()
+        {
+            ReferenceCount = RangeUtility.Increment(ReferenceCount);
+        }
+
+        /// <summary>
+        /// <see cref="ReferenceCount"/>を減算。
+        /// </summary>
+        public void DecrementReference()
+        {
+            if(ReferenceCount > 0) {
+                ReferenceCount -= 1;
             }
         }
 

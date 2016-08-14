@@ -211,9 +211,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .ToArray()
             ;
             foreach(var item in prevInformations) {
-                if(item.ReferenceCount > 0) {
-                    item.ReferenceCount -= 1;
-                }
+                item.DecrementReference();
             }
 
             var finderItems = items
