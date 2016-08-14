@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         ListBox CommentView { get; set; }
         Border DetailComment { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
-        Popup EnabledCommentPopup { get; set; }
+        Slider EnabledCommentSlider { get; set; }
 
         public string Title { get { return $"SmileVideo [{VideoId}]: {Information.Title}"; } }
 
@@ -2379,11 +2379,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetLocalFiltering();
 
             var content = Navigationbar.ExstendsContent as Panel;
-            EnabledCommentPopup = UIUtility.FindLogicalChildren<Popup>(content).First();
+            EnabledCommentSlider = UIUtility.FindLogicalChildren<Slider>(content).First();
 
             // あれこれイベント
-            EnabledCommentPopup.Opened += EnabledCommentPopup_Opened;
-            EnabledCommentPopup.Closed += EnabledCommentPopup_Closed;
+            EnabledCommentSlider.MouseEnter += EnabledCommentSlider_MouseEnter;
+            EnabledCommentSlider.MouseLeave += EnabledCommentSlider_MouseLeave;
 
             View.Loaded += View_Loaded;
             View.Closing += View_Closing;
@@ -2470,9 +2470,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.StateChanged -= Player_StateChanged;
             Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
 
-            if(EnabledCommentPopup != null) {
-                EnabledCommentPopup.Opened -= EnabledCommentPopup_Opened;
-                EnabledCommentPopup.Closed -= EnabledCommentPopup_Closed;
+            if(EnabledCommentSlider != null) {
+                EnabledCommentSlider.MouseEnter -= EnabledCommentSlider_MouseEnter;
+                EnabledCommentSlider.MouseLeave -= EnabledCommentSlider_MouseLeave;
             }
 
             IsViewClosed = true;
@@ -2617,12 +2617,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        private void EnabledCommentPopup_Opened(object sender, EventArgs e)
+        //private void EnabledCommentPopup_Opened(object sender, EventArgs e)
+        //{
+        //    ShowEnabledCommentPreviewArea = true;
+        //}
+
+        //private void EnabledCommentPopup_Closed(object sender, EventArgs e)
+        //{
+        //    ShowEnabledCommentPreviewArea = false;
+        //}
+
+        private void EnabledCommentSlider_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = true;
         }
 
-        private void EnabledCommentPopup_Closed(object sender, EventArgs e)
+        private void EnabledCommentSlider_MouseLeave(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = false;
         }
