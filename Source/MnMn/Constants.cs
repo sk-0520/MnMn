@@ -207,26 +207,5 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #endregion
 
-        #region function
-
-        /// <summary>
-        /// 文字列リテラルを書式で変換。
-        ///
-        /// {...} を置き換える。
-        /// * TIMESTAMP: そんとき
-        /// </summary>
-        /// <param name="src"></param>
-        /// <returns></returns>
-        private static string ReplaceAppConfig(string src)
-        {
-            var map = new Dictionary<string, string>() {
-                { "TIMESTAMP", DateTime.Now.ToBinary().ToString() },
-            };
-            var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
-
-            return replacedText;
-        }
-
-        #endregion
     }
 }
