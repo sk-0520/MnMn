@@ -77,6 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isPlaying = false;
         bool _isDownloading = false;
 
+        int _referenceCount;
+
         #endregion
 
         SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
@@ -204,6 +206,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._isPlaying; }
             set { SetVariableValue(ref this._isPlaying, value); }
+        }
+
+        /// <summary>
+        /// キャッシュ上の参照カウンタ。
+        /// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で減算して<see cref="Logic.Service.Smile.Video.SmileVideoInformationCaching"/>で加算するイメージ。</para>
+        /// </summary>
+        public int ReferenceCount
+        {
+            get { return this._referenceCount; }
+            set { SetVariableValue(ref this._referenceCount, value); }
         }
 
         #region 生データから取得
@@ -977,6 +989,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
                 return task;
+            }
+        }
+
+        /// <summary>
+        /// <see cref="ReferenceCount"/>を加算。
+        /// </summary>
+        public void IncrementReference()
+        {
+            ReferenceCount = RangeUtility.Increment(ReferenceCount);
+        }
+
+        /// <summary>
+        /// <see cref="ReferenceCount"/>を減算。
+        /// </summary>
+        public void DecrementReference()
+        {
+            if(ReferenceCount > 0) {
+                ReferenceCount -= 1;
             }
         }
 

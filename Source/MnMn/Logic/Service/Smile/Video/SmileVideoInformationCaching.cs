@@ -71,12 +71,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
             SmileVideoInformationViewModel result;
             if(TryGetValue(usingVideoId, out result)) {
+                result.IncrementReference();
                 return Task.FromResult(result);
             }
 
             return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, usingVideoId, thumbCacheSpan).ContinueWith(t => {
                 var rawGetthumbinfo = t.Result;
                 result = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
+                result.IncrementReference();
                 Add(usingVideoId, result);
                 return result;
             });
@@ -86,14 +88,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var usingVideoId = GetSafeVideoId(thumb.VideoId);
 
-            return Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, thumb, UnOrdered));
+            var result = Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, thumb, UnOrdered));
+            result.IncrementReference();
+
+            return result;
         }
 
         public SmileVideoInformationViewModel Get(RawSmileContentsSearchItemModel search)
         {
             var usingVideoId = GetSafeVideoId(search.ContentId);
 
-            return Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+            var result = Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+            result.IncrementReference();
+
+            return result;
         }
 
         public SmileVideoInformationViewModel Get(FeedSmileVideoItemModel feed, SmileVideoInformationFlags informationFlags)
@@ -101,7 +109,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             //TODO: 動画ID取得意外と面倒なのね
             var tempResult = new SmileVideoInformationViewModel(Mediation, feed, UnOrdered, informationFlags);
             var usingVideoId = GetSafeVideoId(tempResult.VideoId);
-            return Get(usingVideoId, () => tempResult);
+            var result = Get(usingVideoId, () => tempResult);
+            result.IncrementReference();
+
+            return result;
         }
 
         #endregion
