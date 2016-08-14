@@ -515,5 +515,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region function
+        #endregion
     }
 }

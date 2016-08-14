@@ -44,6 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
@@ -55,13 +56,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        public AppManagerViewModel(Mediation mediation)
+        public AppManagerViewModel(Mediation mediation, AppLogger appLogger)
             : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
             SmileManager = new SmileManagerViewModel(Mediation);
-            AppInformationManager = new AppInformationManagerViewModel(Mediation);
+            AppUpdateManager = new AppUpdateManagerViewModel(Mediation);
+            AppInformationManager = new AppInformationManagerViewModel(Mediation, appLogger);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
@@ -74,6 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
+        public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
         public SmileManagerViewModel SmileManager { get; }
@@ -83,6 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             get
             {
                 return new ManagerViewModelBase[] {
+                    AppUpdateManager,
                     AppInformationManager,
                     AppSettingManager,
                     SmileManager
@@ -92,6 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public SessionViewModelBase SmileSession { get; }
 
+        #region window
         public WindowState State
         {
             get { return this._state; }
@@ -137,7 +142,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 }
             }
         }
-
+        #endregion
 
         #endregion
 
@@ -153,22 +158,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
 
             SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
-        }
-
-        Updater CheckUpdate(bool force)
-        {
-            var dir = VariableConstants.GetSettingDirectory();
-            var dirPath = Path.Combine(dir.FullName, Constants.ArchiveDirectoryName);
-
-            var IsPause = false;
-            var checkRc = false;
-            var CheckUpdateRelease = true;
-            var updateData = new Updater(dirPath, checkRc, Mediation);
-            //CommonData.Logger.Debug(CommonData.Language["log/update/state"], string.Format("force = {0}, setting = {1}", force, CommonData.MainSetting.RunningInformation.CheckUpdateRelease));
-            if(force || !IsPause && CheckUpdateRelease) {
-                var updateInfo = updateData.Check();
-            }
-            return updateData;
         }
 
         #endregion

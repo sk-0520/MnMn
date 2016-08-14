@@ -52,7 +52,7 @@ using Meta.Vlc;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.05.0.*")]
+[assembly: AssemblyVersion("0.06.0.*")]
 [assembly: AssemblyInformationalVersion("xxxxxxxxxxxxxxDEVELOPMENTxxxxxxxxxxxxxxx")]
 
 [assembly: VlcSettings(@"lib\LibVlc")]

@@ -444,36 +444,17 @@
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
-                    <StackPanel>
-                      <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
-                      <Popup
-                        Placement="Relative"
-                        VerticalOffset="-95"
-                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
-                        PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}}"
-                      >
-                        <Popup.IsOpen>
-                          <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
-                            <Binding Path="IsMouseOver" Mode="OneWay" RelativeSource="{RelativeSource AncestorType=ToggleButton}" />
-                            <Binding Path="IsMouseOver" Mode="OneWay" RelativeSource="{RelativeSource Self}" />
-                          </MultiBinding>
-                        </Popup.IsOpen>
-                        <StackPanel HorizontalAlignment="Center">
-                          <ToggleButton Height="20" ToolTip="投稿者コメントもコメント位置制限対象とする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
-                            <Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />
-                          </ToggleButton>
-                          <Slider
-                            Orientation="Vertical"
-                            Height="80"
-                            Minimum="50"
-                            Maximum="100"
-                            IsDirectionReversed="True"
-                            Value="{Binding CommentEnabledPercent}"
-                          />
-                        </StackPanel>
-                      </Popup>
-
-                    </StackPanel>
+                    <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
+                  </ToggleButton>
+                  <Slider
+                    Orientation="Vertical"
+                    Minimum="50"
+                    Maximum="100"
+                    IsDirectionReversed="True"
+                    Value="{Binding CommentEnabledPercent}"
+                  />
+                  <ToggleButton Height="20" ToolTip="投稿者コメントもコメント位置制限対象とする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
+                    <Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />
                   </ToggleButton>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />

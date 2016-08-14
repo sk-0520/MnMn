@@ -425,6 +425,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ログファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Log_Filter_Log {
+            get {
+                return ResourceManager.GetString("String_Log_Filter_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {

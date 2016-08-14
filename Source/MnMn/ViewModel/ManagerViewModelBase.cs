@@ -30,7 +30,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
     {
         #region variable
 
-        bool _visible;
+        //bool _visible;
+        bool _isVisible;
         ManagerViewModelBase _selectedManager;
 
         #endregion
@@ -43,6 +44,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         #region property
 
         protected Mediation Mediation { get; set; }
+
+        public bool IsVisible
+        {
+            get { return this._isVisible; }
+            private set { SetVariableValue(ref this._isVisible, value); }
+        }
 
         public ManagerViewModelBase SelectedManager
         {
@@ -61,30 +68,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
-        public bool Visible
-        {
-            get { return this._visible; }
-            set
-            {
-                if(SetVariableValue(ref this._visible, value)) {
-                    if(this._visible) {
-                        ShowView();
-                    } else {
-                        HideView();
-                    }
-                }
-            }
-        }
+        //[Obsolete]
+        //public bool Visible
+        //{
+        //    get { return this._visible; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._visible, value)) {
+        //            if(this._visible) {
+        //                ShowView();
+        //            } else {
+        //                HideView();
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
 
         #region function
 
         protected virtual void ShowView()
-        { }
+        {
+            IsVisible = true;
+        }
 
         protected virtual void HideView()
-        { }
+        {
+            IsVisible = false;
+        }
 
         public abstract Task InitializeAsync();
 

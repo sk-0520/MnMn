@@ -19,6 +19,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #endregion
 
+
+        public static int TextFileSaveBuffer { get { return appConfig.Get("text-file-save-buffer", int.Parse); } }
+
         public static string UriUpdate { get { return ReplaceAppConfig(appConfig.Get("uri-update")); } }
         public static string UriChangelogRelease { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-release")); } }
         public static string UriChangelogRc { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-rc")); } }

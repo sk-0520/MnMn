@@ -33,288 +33,48 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 using Microsoft.Win32.SafeHandles;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppInformationManagerViewModel: ManagerViewModelBase
     {
-        #region variable
-
-        Uri _archiveUri;
-        Version _archiveVersion;
-        UpdateCheckState _updateCheckState;
-
-        string _updateText;
-        bool _hasUpdate;
-
-        #endregion
-
-        public AppInformationManagerViewModel(Mediation mediation)
+        public AppInformationManagerViewModel(Mediation mediation, AppLogger appLogger)
             : base(mediation)
-        { }
+        {
+            AppAboutManager = new AppAboutManagerViewModel(Mediation);
+            AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
+            AppHelpManager = new AppHelpManagerViewModel(Mediation);
+        }
 
         #region property
 
         WebBrowser HelpBrowser { get; set; }
-        WebBrowser UpdateBrowser { get; set; }
 
-        public Uri ArchiveUri
-        {
-            get { return this._archiveUri; }
-            set { SetVariableValue(ref this._archiveUri, value); }
-        }
+        public AppAboutManagerViewModel AppAboutManager { get; }
+        public AppLoggingManagerViewModel AppLoggingManager { get; }
+        public AppHelpManagerViewModel AppHelpManager { get; }
 
-        public Version ArchiveVersion
+        public IEnumerable<ManagerViewModelBase> ManagerChildren
         {
-            get { return this._archiveVersion; }
-            set { SetVariableValue(ref this._archiveVersion, value); }
-        }
-
-        public UpdateCheckState UpdateCheckState
-        {
-            get { return this._updateCheckState; }
-            set
+            get
             {
-                if(SetVariableValue(ref this._updateCheckState, value)) {
-                    HasUpdate = UpdateCheckState == UpdateCheckState.CurrentIsOld;
-                }
+                return new ManagerViewModelBase[] {
+                    AppAboutManager,
+                    AppLoggingManager,
+                    AppHelpManager,
+                };
             }
-        }
-
-        public bool HasUpdate
-        {
-            get { return this._hasUpdate; }
-            set { SetVariableValue(ref this._hasUpdate, value); }
-        }
-
-        public string UpdateText
-        {
-            get { return this._updateText; }
-            set { SetVariableValue(ref this._updateText, value); }
         }
 
         #endregion
 
         #region command
 
-        public ICommand UpdateCheckCommand
-        {
-            get { return CreateCommand(o => UpdateCheckAsync().ConfigureAwait(false)); }
-        }
-
-        public ICommand UpdateExecuteCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    var result = UpdateExecute();
-                    if(result) {
-                        Application.Current.Shutdown();
-                    }
-                });
-            }
-        }
-
-        public ICommand ExecuteCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    var s = (string)o;
-                    try {
-                        Process.Start(s);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
-                    }
-                });
-            }
-        }
-
         #endregion
 
         #region function
-
-        async Task CheckVersionAsync()
-        {
-            UpdateCheckState = UpdateCheckState.UnChecked;
-            ArchiveVersion = null;
-            ArchiveUri = null;
-            UpdateText = string.Empty;
-
-            try {
-                var client = new HttpClient();
-                Mediation.Logger.Trace("update check: " + Constants.UriUpdate);
-                var response = await client.GetAsync(Constants.UriUpdate);
-
-                Mediation.Logger.Trace("update response state: " + response.StatusCode);
-                if(!response.IsSuccessStatusCode) {
-                    UpdateCheckState = UpdateCheckState.Error;
-                    return;
-                }
-
-                var resultText = await response.Content.ReadAsStringAsync();
-
-                var xml = XElement.Parse(resultText);
-
-                var item = xml
-                    .Elements()
-                    .Select(
-                        x => new {
-                            Version = new Version(x.Attribute("version").Value),
-                            //IsRC = x.Attribute("type").Value == "rc",
-                            ArchiveElements = x.Elements(),
-                        }
-                    )
-                    .Where(x => Constants.ApplicationVersionNumber <= x.Version)
-                    .OrderByDescending(x => x.Version)
-                    .FirstOrDefault()
-                ;
-
-                if(item == null) {
-                    UpdateCheckState = UpdateCheckState.CurrentIsNew;
-                    return;
-                }
-
-                var archive = item.ArchiveElements
-                    .Select(x => new {
-                        Uri = new Uri(x.Attribute("uri").Value),
-                        Platform = x.Attribute("platform").Value,
-                        Version = item.Version,
-                    })
-                    .FirstOrDefault(x => x.Platform == (Environment.Is64BitProcess ? "x64" : "x86"))
-                ;
-
-                if(archive == null) {
-                    UpdateCheckState = UpdateCheckState.CurrentIsNew;
-                    return;
-                }
-
-                ArchiveUri = archive.Uri;
-                ArchiveVersion = archive.Version;
-
-                var map = new Dictionary<string, string>() {
-                    { "NEW-VERSION", ArchiveVersion.ToString() },
-                    { "NOW-VERSION", Constants.ApplicationVersionNumber.ToString() },
-                };
-                UpdateText = AppUtility.ReplaceString(Properties.Resources.String_App_Update_Format, map);
-
-                UpdateCheckState = UpdateCheckState.CurrentIsOld;
-            } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
-            }
-        }
-
-        Task LoadChangelogAsync()
-        {
-            if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
-                var client = new HttpClient();
-                return client.GetStringAsync(Constants.UriChangelogRelease).ContinueWith(t => {
-                    var htmlSource = t.Result;
-                    UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                        UpdateBrowser.NavigateToString(htmlSource);
-                    }));
-                });
-            } else {
-                return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                    UpdateBrowser.NavigateToString("<html><head></head><body></body></html>");
-                })).Task;
-            }
-        }
-
-        Task UpdateCheckAsync()
-        {
-            return CheckVersionAsync().ContinueWith(t => {
-                LoadChangelogAsync();
-            });
-        }
-
-        Process CreateProcess(Dictionary<string, string> map)
-        {
-            var process = new Process();
-            var startInfo = process.StartInfo;
-            startInfo.FileName = Constants.UpdaterExecuteFilePath;
-
-            var defaultMap = new Dictionary<string, string>() {
-                { "pid",      string.Format("{0}", Process.GetCurrentProcess().Id) },
-                { "version",  Constants.ApplicationVersionNumber.ToString() },
-                //{ "uri",      Constants.UriUpdate },
-                { "platform", Environment.Is64BitProcess ? "x64": "x86" },
-                //{ "rc",       this._donwloadRc ? "true": "false" },
-            };
-
-            foreach(var pair in map) {
-                defaultMap[pair.Key] = pair.Value;
-            }
-            startInfo.Arguments = string.Join(" ", defaultMap.Select(p => string.Format("\"/{0}={1}\"", p.Key, p.Value)));
-
-            return process;
-        }
-
-        bool UpdateExecute()
-        {
-            var eventName = "mnmn-event";
-
-            var settingDir = VariableConstants.GetSettingDirectory();
-            var archiveDirPath = Path.Combine(settingDir.FullName, Constants.ArchiveDirectoryName);
-
-            var lines = new List<string>();
-            var map = new Dictionary<string, string>() {
-                { "download",       archiveDirPath },
-                { "expand",         Constants.AssemblyRootDirectoryPath },
-                { "wait",           "true" },
-                { "no-wait-update", "true" },
-                { "event",           eventName },
-                { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.ScriptDirectoryName, "Updater", "UpdaterScript.cs") },
-                { "uri",             ArchiveUri.OriginalString },
-            };
-            FileUtility.MakeFileParentDirectory(archiveDirPath);
-            if(!Directory.Exists(archiveDirPath)) {
-                Directory.CreateDirectory(archiveDirPath);
-            }
-            // #158
-            FileUtility.RotateFiles(archiveDirPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
-                Mediation.Logger.Warning(e);
-                return true;
-            });
-
-            //var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
-            var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
-
-            using(var process = CreateProcess(map)) {
-                //this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
-                Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
-
-                var result = false;
-
-                process.Start();
-                var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
-                    SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
-                };
-                var handles = new[] { waitEvent, processEvent };
-                var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
-                Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
-                if(0 <= waitResult && waitResult < handles.Length) {
-                    if(handles[waitResult] == waitEvent) {
-                        // イベントが立てられたので終了
-                        Mediation.Logger.Information("exit", process.StartInfo.Arguments);
-                        result = true;
-                    } else if(handles[waitResult] == processEvent) {
-                        // Updaterがイベント立てる前に死んだ
-                        Mediation.Logger.Information("error-process", process.ExitCode);
-                    }
-                } else {
-                    // タイムアウト
-                    if(!process.HasExited) {
-                        // まだ生きてるなら強制的に殺す
-                        process.Kill();
-                    }
-                    Mediation.Logger.Information("error-timeout", process.ExitCode);
-                }
-
-                return result;
-            }
-        }
 
         #endregion
 
@@ -322,33 +82,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override Task InitializeAsync()
         {
-            return CheckVersionAsync();
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
         {
-            HelpBrowser = view.helpBrowser;
-            UpdateBrowser = view.updateBrowser;
+            foreach(var child in ManagerChildren) {
+                child.InitializeView(view);
+            }
         }
 
         public override void UninitializeView(MainWindow view)
-        { }
+        {
+            foreach(var child in ManagerChildren) {
+                child.UninitializeView(view);
+            }
+        }
 
         public override Task GarbageCollectionAsync()
         {
-            return Task.CompletedTask;
-        }
-
-        protected override void ShowView()
-        {
-            base.ShowView();
-
-            if(HelpBrowser.Source == null) {
-                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
-            }
-            if(UpdateBrowser.Source == null) {
-                LoadChangelogAsync().ConfigureAwait(false);
-            }
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync()));
         }
 
         #endregion
