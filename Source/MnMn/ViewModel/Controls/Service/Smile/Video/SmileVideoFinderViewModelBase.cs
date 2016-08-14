@@ -206,12 +206,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items)
         {
+            var prevInformations = FinderItemList
+                .Select(i => i.Information)
+                .ToArray()
+            ;
+            foreach(var item in prevInformations) {
+                if(item.ReferenceCount > 0) {
+                    item.ReferenceCount -= 1;
+                }
+            }
+
             var finderItems = items
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
                 .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
             ;
             FinderItemList.InitializeRange(finderItems);
+
             FinderItems.Refresh();
             CallOnPropertyChange(nameof(FinderItems));
 

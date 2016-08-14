@@ -77,6 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isPlaying = false;
         bool _isDownloading = false;
 
+        int _referenceCount;
+
         #endregion
 
         SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
@@ -204,6 +206,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._isPlaying; }
             set { SetVariableValue(ref this._isPlaying, value); }
+        }
+
+        /// <summary>
+        /// キャッシュ上の参照カウンタ。
+        /// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で設定しようと考えてる。</para>
+        /// </summary>
+        public int ReferenceCount
+        {
+            get { return this._referenceCount; }
+            set { SetVariableValue(ref this._referenceCount, value); }
         }
 
         #region 生データから取得
