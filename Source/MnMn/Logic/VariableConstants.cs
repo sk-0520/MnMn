@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         public static CommandLine CommandLine => new CommandLine();
 
-        #region 
+        #region property
 
         const string optionSettingRootDirectoryPath = "setting-root";
         public static bool HasOptionSettingRootDirectoryPath => CommandLine.HasValue(optionSettingRootDirectoryPath);
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        public static DirectoryInfo GetSettingDirectory()
+        static string GetSettingBaseDirectory()
         {
             var baseDir = HasOptionSettingRootDirectoryPath
                 ? Path.Combine(OptionValueSettingRootDirectoryPath, Constants.ApplicationDirectoryName)
@@ -44,13 +44,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.ApplicationDirectoryName);
             }
 
+            return baseDir;
+        }
+
+        public static DirectoryInfo GetSettingDirectory()
+        {
+            var baseDir = GetSettingBaseDirectory();
             var path = Path.Combine(baseDir, Constants.SettingDirectoryName);
 
-            if(Directory.Exists(path)) {
-                return new DirectoryInfo(path);
-            } else {
-                return Directory.CreateDirectory(path);
-            }
+            return Directory.CreateDirectory(path);
+        }
+
+        public static DirectoryInfo GetArchiveDirectory()
+        {
+            var baseDir = GetSettingBaseDirectory();
+            var path = Path.Combine(baseDir, Constants.ArchiveDirectoryName);
+
+            return Directory.CreateDirectory(path);
         }
 
         #endregion

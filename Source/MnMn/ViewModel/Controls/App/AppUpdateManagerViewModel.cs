@@ -236,12 +236,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             var eventName = "mnmn-event";
 
-            var settingDir = VariableConstants.GetSettingDirectory();
-            var archiveDirPath = Path.Combine(settingDir.FullName, Constants.ArchiveDirectoryName);
+            var archiveDir = VariableConstants.GetArchiveDirectory();
 
             var lines = new List<string>();
             var map = new Dictionary<string, string>() {
-                { "download",       archiveDirPath },
+                { "download",       archiveDir.FullName },
                 { "expand",         Constants.AssemblyRootDirectoryPath },
                 { "wait",           "true" },
                 { "no-wait-update", "true" },
@@ -249,12 +248,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.ScriptDirectoryName, "Updater", "UpdaterScript.cs") },
                 { "uri",             ArchiveUri.OriginalString },
             };
-            FileUtility.MakeFileParentDirectory(archiveDirPath);
-            if(!Directory.Exists(archiveDirPath)) {
-                Directory.CreateDirectory(archiveDirPath);
-            }
+            //FileUtility.MakeFileParentDirectory(archiveDirPath);
+            //if(!Directory.Exists(archiveDirPath)) {
+            //    Directory.CreateDirectory(archiveDirPath);
+            //}
             // #158
-            FileUtility.RotateFiles(archiveDirPath, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
+            FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
                 Mediation.Logger.Warning(e);
                 return true;
             });
