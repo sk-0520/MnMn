@@ -28,36 +28,63 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         #region property
 
+        #region service
+
         /// <summary>
         /// コンテンツサーチで使用するサービス名。UAみたいなもん。
         /// </summary>
-        public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-content_search-context"); } }
+        public static string ServiceSmileContentsSearchContext => appConfig.Get("service-smile-content_search-context");
+
+        /// <summary>
+        /// マイリスト削除後再読み込みを行う際の待ち時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
+
+
         /// <summary>
         /// 動画データ取得中になんかエラー発生から再開までの待ち時間。
         /// </summary>
-        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-downloading_error-wait-time", TimeSpan.Parse); } }
+        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime => appConfig.Get("service-smile-smilevideo-downloading_error-wait-time", TimeSpan.Parse);
         /// <summary>
         /// 動画データ取得中になんかエラー発生から再開のリトライ数。
         /// </summary>
-        public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return appConfig.Get("service-smile-smilevideo-downloading_Error-retry-count", int.Parse); } }
+        public static int ServiceSmileVideoDownloadingErrorRetryCount => appConfig.Get("service-smile-smilevideo-downloading_Error-retry-count", int.Parse);
         /// <summary>
         /// 視聴ページから動画データ取得までの待ち時間。
         /// </summary>
-        public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime { get { return appConfig.Get("service-smile-smilevideo-watch-to-movie-wait-time", TimeSpan.Parse); } }
+        public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime => appConfig.Get("service-smile-smilevideo-watch-to-movie-wait-time", TimeSpan.Parse);
         /// <summary>
         /// 再生可能判定までの動画サイズ。
         /// </summary>
-        public static long ServiceSmileVideoPlayLowestSize { get { return appConfig.Get("service-smile-smilevideo-play-lowest-size", long.Parse); } }
+        public static long ServiceSmileVideoPlayLowestSize => appConfig.Get("service-smile-smilevideo-play-lowest-size", long.Parse);
         /// <summary>
         /// 動画受信時のバッファサイズ。
         /// <para>確保するだけで受け取るかどうかはサーバー次第。</para>
         /// </summary>
-        public static int ServiceSmileVideoReceiveBuffer { get { return appConfig.Get("service-smile-smilevideo-receive-buffer", int.Parse); } }
-
+        public static int ServiceSmileVideoReceiveBuffer => appConfig.Get("service-smile-smilevideo-receive-buffer", int.Parse);
         /// <summary>
         /// マイリスト履歴数。
         /// </summary>
-        public static int SettingServiceSmileMyListHistoryCount { get; } = 50;
+        public static int ServiceSmileMyListHistoryCount { get; } = 50;
+        /// <summary>
+        /// アカウント履歴削除待ち時間。
+        /// <para>複数アイテム削除時間の削除間隔。</para>
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoHistoryRemoveWaitTime => appConfig.Get("service-smile-smilevideo-history-remove-wait-time", TimeSpan.Parse);
+        /// <summary>
+        /// アカウント履歴削除後再読み込みを行う際の待ち時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoHistoryReloadWaitTime => appConfig.Get("service-smile-smilevideo-history-reload-wait-time", TimeSpan.Parse);
+        /// <summary>
+        ///オススメ動画の次ページ取得までの待機時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoRecommendationsPageContinueWaitTime => appConfig.Get("service-smile-smilevideo-recommendations-page-continue-wait-time", TimeSpan.Parse);
+
+
+        #endregion
+
+        #region setting
+
         public static double SettingServiceSmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
         public static string SettingServiceSmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
         public static double SettingServiceSmileVideoCommentFontAlpha { get; } = 1;
@@ -81,6 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SettingServiceSmileVideoPlayerVisibleComment { get; } = true;
         public static bool SettingServiceSmileVideoIsEnabledGlobalCommentFilering { get; } = true;
 
+        #endregion
 
         #endregion
     }

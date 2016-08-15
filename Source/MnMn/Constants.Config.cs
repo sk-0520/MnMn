@@ -37,16 +37,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region property
 
-        public static int TextFileSaveBuffer { get { return appConfig.Get("text-file-save-buffer", int.Parse); } }
+        public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
 
-        public static string UriUpdate { get { return ReplaceAppConfig(appConfig.Get("uri-update")); } }
-        public static string UriChangelogRelease { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-release")); } }
-        public static string UriChangelogRc { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-rc")); } }
+        public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 
-        public static TimeSpan UpdateAppExitWaitTime { get { return appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse); } }
+        public static string UriUpdate => ReplaceAppConfig(appConfig.Get("uri-update"));
+        public static string UriChangelogRelease => ReplaceAppConfig(appConfig.Get("uri-changelog-release"));
+        public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("uri-changelog-rc"));
+
+        public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
 
-        public static int BackupArchiveCount { get { return appConfig.Get("backup-archive", int.Parse); } }
+        public static int BackupArchiveCount => appConfig.Get("backup-archive", int.Parse);
 
         #endregion
     }

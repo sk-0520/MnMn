@@ -112,9 +112,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             var errors = new List<CheckModel>();
 
             foreach(var removeItem in removeItems) {
-                // TODO: 即値
-                var sleepTime = TimeSpan.FromMilliseconds(250);
-                Thread.Sleep(sleepTime);
+                Thread.Sleep(Constants.ServiceSmileVideoHistoryRemoveWaitTime);
                 var result = await history.RemoveVideoAsync(model, removeItem.VideoId);
                 Mediation.Logger.Trace(result.Status.ToString());
                 if(!result.IsSuccess) {
