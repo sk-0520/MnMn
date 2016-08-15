@@ -38,16 +38,33 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         #region proeprty
 
+        /// <summary>
+        /// アプリケーション名。
+        /// </summary>
         public static string ApplicationName { get; } = "MnMn";
 
 #if DEBUG
+        /// <summary>
+        /// アプリケーション使用名。
+        /// </summary>
         public static string ApplicationUsingName { get; } = ApplicationName + "-debug";
 #else
+        /// <summary>
+        /// アプリケーション使用名。
+        /// </summary>
         public static string ApplicationUsingName { get; } = ApplicationName;
 #endif
+        /// <summary>
+        /// アプリケーションパス。
+        /// </summary>
         public static string AssemblyPath { get; } = Assembly.GetExecutingAssembly().Location;
+        /// <summary>
+        /// アプリケーション親ディレクトリパス。
+        /// </summary>
         public static string AssemblyRootDirectoryPath { get; } = Path.GetDirectoryName(AssemblyPath);
-
+        /// <summary>
+        /// アプリケーションが使用するディレクトリ名。
+        /// </summary>
         public static string ApplicationDirectoryName { get; } = ApplicationUsingName;
 
         /// <summary>
@@ -79,30 +96,47 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static long MinimumHtmlFileSize { get; } = "<!DOCTYPE html><title></title>h".Length;
 
+        /// <summary>
+        /// ニコニコ動画: ユーザーデータキャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileUserDataCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        /// <summary>
+        /// ニコニコ動画: ユーザー画像キャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileUserImageCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(3));
-
+        /// <summary>
+        /// ニコニコ動画: マイリストキャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileMyListCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
-
+        /// <summary>
+        /// ニコニコ動画: 動画情報キャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileVideoThumbCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        /// <summary>
+        /// ニコニコ動画: 動画サムネイルキャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileVideoImageCacheSpan => CacheSpan.InfinityCache;
+        /// <summary>
+        /// ニコニコ動画: コメントキャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileVideoMsgCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+        /// <summary>
+        /// ニコニコ動画: 関連動画情報キャッシュ時間。
+        /// </summary>
         public static CacheSpan ServiceSmileVideoRelationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(1));
+        /// <summary>
+        /// ニコニコ動画: あとで見る の保持有効期間。
+        /// </summary>
         public static CacheSpan ServiceSmileVideoCheckItLaterCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
+        /// <summary>
+        /// sbin/
+        /// </summary>
+        public static string SbinDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "sbin"); } }
 
-        public static string SbinDirectoryName { get; } = "sbin";
-        public static string UpdateProgramDirectoryName { get; } = "Updater";
-        public static string UpdateProgramName { get; } = PathUtility.AppendExtension(UpdateProgramDirectoryName, "exe");
-        public static string UpdaterExecuteFilePath
-        {
-            get { return Path.Combine(Constants.AssemblyRootDirectoryPath, Constants.SbinDirectoryName, Constants.UpdateProgramDirectoryName, Constants.UpdateProgramName); }
-        }
-
-#if DEBUG
-        public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
-#else
-		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(30);
-#endif
+        /// <summary>
+        /// 更新プログラムファイルパス。
+        /// </summary>
+        public static string UpdaterExecuteFilePath { get { return Path.Combine(SbinDirectoryPath, "Updater", "Updater.exe"); } }
 
         /// <summary>
         /// etc/
@@ -112,35 +146,69 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// doc/
         /// </summary>
         public static string ApplicationDocDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "doc"); } }
+        /// <summary>
+        /// etc/
+        /// </summary>
+        public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
 
+        /// <summary>
+        /// ヘルプファイルパス。
+        /// </summary>
         public static string HelpFilePath { get { return Path.Combine(ApplicationDocDirectoryPath, "help.html"); } }
-
+        /// <summary>
+        /// スクリプトディレクトリ名。
+        /// </summary>
         public static string ScriptDirectoryName { get; } = "script";
-
+        /// <summary>
+        /// アーカイブファイル検索パターン。
+        /// <para>ワイルドカード。</para>
+        /// </summary>
         public static string ArchiveSearchPattern { get; } = "*.zip";
 
-
+        /// <summary>
+        /// 設定ディレクトリ名。
+        /// </summary>
         public static string SettingDirectoryName { get; } = "setting";
+        /// <summary>
+        /// 設定ファイル名。
+        /// </summary>
         public static string SettingFileName { get; } = "setting.json";
-
+        /// <summary>
+        /// アーカイブディレクトリ名。
+        /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
-
+        /// <summary>
+        /// /サービス名。
+        /// </summary>
         public static string ServiceName { get; } = "service";
+        /// <summary>
+        /// サービス名: ニコニコ。
+        /// </summary>
         public static string ServiceSmileName { get; } = "smile";
+        /// <summary>
+        /// サービス名: ニコニコ動画。
+        /// </summary>
         public static string ServiceSmileVideoName { get; } = "video";
+        /// <summary>
+        ///
+        /// </summary>
+        public static string BinaryDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "bin"); } }
 
-        public static string BinaryDirectoryName { get; } = "bin";
-
-        public static string FfmpegApplicationPath { get; } = Path.Combine(AssemblyRootDirectoryPath, BinaryDirectoryName, "ffmpeg", "ffmpeg.exe");
+        public static string FfmpegApplicationPath { get; } = Path.Combine(BinaryDirectoryPath, "ffmpeg", "ffmpeg.exe");
 
         public static string DefineName { get; } = "define";
 
-        public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
-
+        /// <summary>
+        /// etc/define
+        /// </summary>
         public static string DefineDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, DefineName);
-
+        /// <summary>
+        /// etc/define/service
+        /// </summary>
         public static string DefineServiceDirectoryPath { get; } = Path.Combine(DefineDirectoryPath, ServiceName);
-
+        /// <summary>
+        /// etc/define/smile
+        /// </summary>
         public static string DefineSmileDirectoryPath { get; } = Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
 
         public static string SmileUriListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
@@ -160,36 +228,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoMyListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
         public static string SmileVideoFilteringPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "filtering.xml");
 
-        public static TimeSpan ApplicationCacheLifeTime { get; } = TimeSpan.FromDays(3);
+        /// <summary>
+        /// キャッシュファイル有効期間。
+        /// </summary>
+        public static TimeSpan SettingApplicationCacheLifeTime { get; } = TimeSpan.FromDays(3);
 
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
-
-        public static double SmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
-        public static string SmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
-        public static double SmileVideoCommentFontAlpha { get; } = 1;
-        public static bool SmileVideoCommentFontBold { get; } = false;
-        public static bool SmileVideoCommentFontItalic { get; } = false;
-        public static TimeSpan SmileVideoCommentShowTime { get; } = TimeSpan.FromSeconds(3);
-        public static bool SmileVideoCommentConvertPairYenSlash { get; } = true;
-        public static bool SmileVideoCommentIsEnabledSharedNoGood { get; } = true;
-        public static int SmileVideoCommentSharedNoGoodScore { get; } = -1500;
-        public static bool SmileVideoCommentPostAnonymous { get; } = true;
-
-        public static int SmileMyListHistoryCount { get; } = 50;
-
-        public static int SmileVideoSearchCount { get; } = 100;
-        public static bool SmileVideoAutoPlay { get; } = true;
-        public static bool SmileVideoLoadVideoInformation { get; } = true;
-        public static int SmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
-        public static TextShowKind SmileVideoPlayerTextShowKind { get; } = TextShowKind.Shadow;
-        public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
-        public static bool SmileVideoPlayerShowDetailArea { get; } = true;
-        public static bool SmileVideoPlayerShowCommentList { get; } = true;
-        public static bool SmileVideoPlayerShowPostTimestamp { get; } = false;
-        public static bool PlayerVisibleComment { get; } = true;
-        public static bool SmileVideoIsEnabledGlobalCommentFilering { get; } = true;
 
         public static string CurrentLanguageCode => "ja-jp";
 

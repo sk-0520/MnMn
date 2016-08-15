@@ -16,9 +16,12 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -29,6 +32,30 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-ContentSearch-context"); } }
 
         #region smile-video
+        public static double SmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
+        public static string SmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
+        public static double SmileVideoCommentFontAlpha { get; } = 1;
+        public static bool SmileVideoCommentFontBold { get; } = false;
+        public static bool SmileVideoCommentFontItalic { get; } = false;
+        public static TimeSpan SmileVideoCommentShowTime { get; } = TimeSpan.FromSeconds(3);
+        public static bool SmileVideoCommentConvertPairYenSlash { get; } = true;
+        public static bool SmileVideoCommentIsEnabledSharedNoGood { get; } = true;
+        public static int SmileVideoCommentSharedNoGoodScore { get; } = -1500;
+        public static bool SmileVideoCommentPostAnonymous { get; } = true;
+
+        public static int SmileMyListHistoryCount { get; } = 50;
+
+        public static int SmileVideoSearchCount { get; } = 100;
+        public static bool SmileVideoAutoPlay { get; } = true;
+        public static bool SmileVideoLoadVideoInformation { get; } = true;
+        public static int SmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
+        public static TextShowKind SmileVideoPlayerTextShowKind { get; } = TextShowKind.Shadow;
+        public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
+        public static bool SmileVideoPlayerShowDetailArea { get; } = true;
+        public static bool SmileVideoPlayerShowCommentList { get; } = true;
+        public static bool SmileVideoPlayerShowPostTimestamp { get; } = false;
+        public static bool PlayerVisibleComment { get; } = true;
+        public static bool SmileVideoIsEnabledGlobalCommentFilering { get; } = true;
 
         public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-DownloadingErrorWaitTime", TimeSpan.Parse); } }
         public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return appConfig.Get("service-smile-smilevideo-DownloadingErrorRetryCount", int.Parse); } }
