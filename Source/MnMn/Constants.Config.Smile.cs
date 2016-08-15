@@ -69,7 +69,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 検索履歴数。
         /// </summary>
-        public static int ServiceSmileVideoSearchHistoryHistoryCount => appConfig.Get("service-smile-smilevideo-search-history-count", int.Parse);
+        public static int ServiceSmileVideoSearchHistoryCount => appConfig.Get("service-smile-smilevideo-search-history-count", int.Parse);
+        /// <summary>
+        /// 再生履歴数。
+        /// </summary>
+        public static int ServiceSmileVideoPlayHistoryCount => appConfig.Get("service-smile-smilevideo-play-history-count", int.Parse);
+        /// <summary>
+        /// あとで見るの保持数。
+        /// <para>非表示を含めた全体数。</para>
+        /// </summary>
+        public static int ServiceSmileVideoCheckItLaterCount => appConfig.Get("service-smile-smilevideo-check_it_later-count", int.Parse);
         /// <summary>
         /// アカウント履歴削除待ち時間。
         /// <para>複数アイテム削除時間の削除間隔。</para>
