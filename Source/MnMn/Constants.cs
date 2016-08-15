@@ -228,15 +228,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileVideoMyListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "mylist.xml");
         public static string SmileVideoFilteringPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "filtering.xml");
 
-        /// <summary>
-        /// キャッシュファイル有効期間。
-        /// </summary>
-        public static TimeSpan SettingApplicationCacheLifeTime { get; } = TimeSpan.FromDays(3);
-
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
+        /// <summary>
+        /// TODO: カルチャからどうこうしたい。
+        /// </summary>
         public static string CurrentLanguageCode => "ja-jp";
 
         public static string ExtensionTemporaryFile { get; } = "tmp";

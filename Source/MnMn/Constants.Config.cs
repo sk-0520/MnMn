@@ -50,6 +50,27 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static int BackupArchiveCount => appConfig.Get("backup-archive", int.Parse);
 
+        /// <summary>
+        /// キャッシュファイル有効期間。
+        /// </summary>
+        public static TimeSpan SettingApplicationCacheLifeTime => appConfig.Get("setting-application-cache-life-time", TimeSpan.Parse);
+        /// <summary>
+        /// ウィンドウ: 左
+        /// </summary>
+        public static int SettingApplicationWindowLeft => appConfig.Get("setting-application-window-top", int.Parse);
+        /// <summary>
+        /// ウィンドウ: 上
+        /// </summary>
+        public static int SettingApplicationWindowTop => appConfig.Get("setting-application-window-left", int.Parse);
+        /// <summary>
+        /// ウィンドウ: 幅
+        /// </summary>
+        public static int SettingApplicationWindowWidth => appConfig.Get("setting-application-window-width", int.Parse);
+        /// <summary>
+        /// ウィンドウ: 高さ
+        /// </summary>
+        public static int SettingApplicationWindowHeight => appConfig.Get("setting-application-window-height", int.Parse);
+
         #endregion
     }
 }
