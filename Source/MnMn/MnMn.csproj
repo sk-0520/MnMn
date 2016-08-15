@@ -163,6 +163,12 @@
     <Compile Include="Constants.Config.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Constants.Config.Smile.cs">
+      <DependentUpon>Constants.Config.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Constants.Function.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\UpdateCheckState.cs" />
     <Compile Include="Define\DefinedImageSourceKind.cs" />

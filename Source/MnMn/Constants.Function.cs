@@ -17,29 +17,33 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn
 {
-    [DataContract]
-    public class SmileMyListSettingModel: ModelBase
+    partial class Constants
     {
-        #region property
+        #region function
 
         /// <summary>
-        /// ブックマーク。
+        /// 文字列リテラルを書式で変換。
+        ///
+        /// {...} を置き換える。
+        /// * TIMESTAMP: そんとき
         /// </summary>
-        [DataMember]
-        public CollectionModel<SmileMyListBookmarkItemModel> Bookmark { get; set; } = new CollectionModel<SmileMyListBookmarkItemModel>();
+        /// <param name="src"></param>
+        /// <returns></returns>
+        private static string ReplaceAppConfig(string src)
+        {
+            var map = new Dictionary<string, string>() {
+                { "TIMESTAMP", DateTime.Now.ToBinary().ToString() },
+            };
+            var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
 
-        /// <summary>
-        /// 履歴。
-        /// </summary>
-        [DataMember]
-        public FixedSizeCollectionModel<SmileMyListItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileMyListItemModel>(Constants.ServiceSmileMyListHistoryCount, false);
+            return replacedText;
+        }
 
         #endregion
     }

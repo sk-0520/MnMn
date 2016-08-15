@@ -32,13 +32,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 動画検索で一度に取得する数。
         /// </summary>
         [DataMember]
-        public int Count { get; set; } = Constants.SmileVideoSearchCount;
+        public int Count { get; set; } = Constants.SettingServiceSmileVideoSearchCount;
         /// <summary>
         /// 一覧データから動画情報を取得するか。
         /// <para>※元データが一覧表示情報を持っていない場合に使用。</para>
         /// </summary>
         [DataMember]
-        public bool LoadInformation { get; set; } = Constants.SmileVideoLoadVideoInformation;
+        public bool LoadInformation { get; set; } = Constants.SettingServiceSmileVideoLoadVideoInformation;
 
         [DataMember]
         public string DefaultMethodKey { get; set; }
@@ -51,6 +51,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 検索履歴。
         /// </summary>
         [DataMember]
-        public FixedSizeCollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new FixedSizeCollectionModel<SmileVideoSearchHistoryModel>(100);
+        public FixedSizeCollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new FixedSizeCollectionModel<SmileVideoSearchHistoryModel>(Constants.ServiceSmileVideoSearchHistoryCount);
     }
 }

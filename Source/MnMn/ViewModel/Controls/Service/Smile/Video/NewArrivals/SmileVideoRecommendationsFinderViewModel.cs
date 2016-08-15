@@ -95,9 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
                 result.Channel.Items.AddRange(items);
                 isContinue = !RawValueUtility.ConvertBoolean(rawData.Information.EndOfRecommend);
                 if(isContinue) {
-                    // TODO: 即値
-                    var wait = TimeSpan.FromMilliseconds(250);
-                    Thread.Sleep(wait);
+                    Thread.Sleep(Constants.ServiceSmileVideoRecommendationsPageContinueWaitTime);
                 }
             } while(isContinue);
 

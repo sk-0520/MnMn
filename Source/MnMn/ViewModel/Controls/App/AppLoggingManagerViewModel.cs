@@ -41,8 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppLoggingManagerViewModel(Mediation mediation, AppLogger appLogge)
             : base(mediation)
         {
-            //TODO: 件数即値
-            LogList = new FixedSizeCollectionModel<LogItemModel>(appLogge.StockItems, 5000);
+            LogList = new FixedSizeCollectionModel<LogItemModel>(appLogge.StockItems, Constants.LogViewCount);
             BindingOperations.EnableCollectionSynchronization(LogList, new object());
             appLogge.IsStock = false;
             appLogge.LogCollector = this;

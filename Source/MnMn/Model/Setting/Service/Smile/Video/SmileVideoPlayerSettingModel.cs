@@ -30,101 +30,102 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         #region property
 
         [DataMember]
-        public bool IsEnabledDisplayCommentLimit { get; set; } = false;
+        public bool IsEnabledDisplayCommentLimit { get; set; } = Constants.SettingServiceSmileVideoPlayerDisplayCommentLimitIsEnabled;
 
         /// <summary>
         /// 画面上に一度に表示するコメント数。
         /// </summary>
         [DataMember]
-        public int DisplayCommentLimitCount { get; set; } = Constants.SmileVideoPlayerDisplayCommentLimitCount;
+        public int DisplayCommentLimitCount { get; set; } = Constants.SettingServiceSmileVideoPlayerDisplayCommentLimitCount;
 
         /// <summary>
         /// プレイヤーの動画情報欄を表示するか。
         /// </summary>
         [DataMember]
-        public bool ShowDetailArea { get; set; } = Constants.SmileVideoPlayerShowDetailArea;
+        public bool ShowDetailArea { get; set; } = Constants.SettingServiceSmileVideoPlayerShowDetailArea;
 
         /// <summary>
         /// プレイヤーのコメント欄を表示するか。
         /// </summary>
         [DataMember]
-        public bool ShowCommentList { get; set; } = Constants.SmileVideoPlayerShowCommentList;
+        public bool ShowCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerShowCommentList;
 
         /// <summary>
         /// コメント欄を自動スクロールするか。
         /// </summary>
         [DataMember]
-        public bool AutoScrollCommentList { get; set; } = true;
+        public bool AutoScrollCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerAutoScrollCommentList;
 
         /// <summary>
         /// コメントを表示するか。
         /// </summary>
         [DataMember]
-        public bool VisibleComment { get; set; } = Constants.PlayerVisibleComment;
+        public bool VisibleComment { get; set; } = Constants.SettingServiceSmileVideoPlayerVisibleComment;
 
         /// <summary>
         /// コメント描画方法。
         /// </summary>
         [DataMember]
-        public TextShowKind TextShowKind { get; set; } = Constants.SmileVideoPlayerTextShowKind;
+        public TextShowKind TextShowKind { get; set; } = Constants.SettingServiceSmileVideoPlayerTextShowKind;
 
         /// <summary>
         /// リプレイ再生するか。
         /// </summary>
         [DataMember]
-        public bool ReplayVideo { get; set; } = false;
+        public bool ReplayVideo { get; set; } = Constants.SettingServiceSmileVideoPlayerReplay;
 
         /// <summary>
         /// 再生音声。
         /// </summary>
         [DataMember]
-        public int Volume { get; set; } = 100;
+        public int Volume { get; set; } = Constants.SettingServiceSmileVideoPlayerVolume;
 
         /// <summary>
         /// ミュート。
         /// </summary>
         [DataMember]
-        public bool IsMute { get; set; } = false;
+        public bool IsMute { get; set; } = Constants.SettingServiceSmileVideoPlayerMute;
 
         /// <summary>
         /// 自動再生を行うか。
         /// </summary>
         [DataMember]
-        public bool AutoPlay { get; set; } = Constants.SmileVideoAutoPlay;
+        public bool AutoPlay { get; set; } = Constants.SettingServiceSmileVideoPlayerAutoPlay;
+
         /// <summary>
         /// プレイリスト実行中に動画読込がどれだけ停止したら次に進むか。
         /// </summary>
         [DataMember]
-        public TimeSpan PlayListBufferingSkipTime { get; set; }
+        public TimeSpan PlayListBufferingSkipTime { get; set; } = Constants.SettingServiceSmileVideoPlayerBufferingStopSkipTime;
 
         [DataMember]
         public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
-            Left = 150,
-            Top = 150,
-            Width = 800,
-            Height = 600,
+            Left = Constants.SettingServiceSmileVideoWindowLeft,
+            Top = Constants.SettingServiceSmileVideoWindowTop,
+            Width = Constants.SettingServiceSmileVideoWindowWidth,
+            Height = Constants.SettingServiceSmileVideoWindowHeight,
         };
 
         /// <summary>
-        /// コメント非表示領域を使用するか。
+        /// コメント有効表示領域を使用するか。
         /// <para>予約: 今のところ設定に持たせない。</para>
         /// </summary>
         [DataMember]
-        public bool IsEnabledNonCommentArea { get; set; } = false;
+        public bool CommentEnabledAreaIsEnabled { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentEnableAreaIsEnabled;
 
         /// <summary>
-        /// コメント非表示領域の高さ。
+        /// コメント有効表示領域の高さ。
         /// <para>全体領域の下辺を0として正の値分を非表示領域とする。</para>
         /// <para>予約: 今のところ設定に持たせない。</para>
         /// </summary>
         [DataMember]
-        public double NoneCommentBottomHeight { get; set; } = 0;
+        public double CommentEnabledPercent { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentEnableAreaPercent;
 
         /// <summary>
         /// コメントリストの投稿時間を表示するか。
         /// </summary>
         [DataMember]
-        public bool ShowPostTimestamp { get; set; } = Constants.SmileVideoPlayerShowPostTimestamp;
+        public bool ShowPostTimestamp { get; set; } = Constants.SettingServiceSmileVideoPlayerShowPostTimestamp;
 
         #endregion
     }

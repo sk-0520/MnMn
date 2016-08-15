@@ -42,14 +42,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// キャッシュ有効期間。
         /// </summary>
         [DataMember]
-        public TimeSpan CacheLifeTime { get; set; } = Constants.ApplicationCacheLifeTime;
-
+        public TimeSpan CacheLifeTime { get; set; } = Constants.SettingApplicationCacheLifeTime;
+        /// <summary>
+        /// メインウィンドウ。
+        /// </summary>
         [DataMember]
         public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
-            Left = 100,
-            Top = 100,
-            Width = 720,
-            Height = 450,
+            Left = Constants.SettingApplicationWindowLeft,
+            Top = Constants.SettingApplicationWindowTop,
+            Width = Constants.SettingApplicationWindowWidth,
+            Height = Constants.SettingApplicationWindowHeight,
         };
 
         [DataMember]

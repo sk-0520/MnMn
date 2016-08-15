@@ -47,9 +47,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
+        /// <summary>
+        /// 有効か。
+        /// </summary>
         public bool IsEnabled { get; }
-
+        /// <summary>
+        /// 基準時間。
+        /// </summary>
         public DateTime BaseTime { get; }
+        /// <summary>
+        /// 基準時間からの有効範囲時間。
+        /// </summary>
         public TimeSpan Expires { get; }
 
         #endregion
@@ -64,6 +72,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public bool IsCacheTime(DateTime dateTime)
         {
             return IsEnabled && BaseTime - dateTime < Expires;
+        }
+
+        #endregion
+
+        #region ModelBase
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name}: {nameof(IsEnabled)} = {IsEnabled}, {nameof(BaseTime)} = {BaseTime}, {nameof(Expires)} = {Expires}";
         }
 
         #endregion

@@ -152,7 +152,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#22: 固定値を app.config に移す',
+						'comments': [
+							'App.config と static class とメンバ初期値におんぶ抱っこでなぁなぁ実装',
+							'本実装ではとりあえず目につくものレベルなので今後見つけた際には随時実装していく'
+						]
 					},
 					{
 						'revision': '',
