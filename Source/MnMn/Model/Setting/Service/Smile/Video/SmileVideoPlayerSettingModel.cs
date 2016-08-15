@@ -36,19 +36,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 画面上に一度に表示するコメント数。
         /// </summary>
         [DataMember]
-        public int DisplayCommentLimitCount { get; set; } = Constants.SmileVideoPlayerDisplayCommentLimitCount;
+        public int DisplayCommentLimitCount { get; set; } = Constants.SettingServiceSmileVideoPlayerDisplayCommentLimitCount;
 
         /// <summary>
         /// プレイヤーの動画情報欄を表示するか。
         /// </summary>
         [DataMember]
-        public bool ShowDetailArea { get; set; } = Constants.SmileVideoPlayerShowDetailArea;
+        public bool ShowDetailArea { get; set; } = Constants.SettingServiceSmileVideoPlayerShowDetailArea;
 
         /// <summary>
         /// プレイヤーのコメント欄を表示するか。
         /// </summary>
         [DataMember]
-        public bool ShowCommentList { get; set; } = Constants.SmileVideoPlayerShowCommentList;
+        public bool ShowCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerShowCommentList;
 
         /// <summary>
         /// コメント欄を自動スクロールするか。
@@ -60,13 +60,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントを表示するか。
         /// </summary>
         [DataMember]
-        public bool VisibleComment { get; set; } = Constants.PlayerVisibleComment;
+        public bool VisibleComment { get; set; } = Constants.SettingServiceSmileVideoPlayerVisibleComment;
 
         /// <summary>
         /// コメント描画方法。
         /// </summary>
         [DataMember]
-        public TextShowKind TextShowKind { get; set; } = Constants.SmileVideoPlayerTextShowKind;
+        public TextShowKind TextShowKind { get; set; } = Constants.SettingServiceSmileVideoPlayerTextShowKind;
 
         /// <summary>
         /// リプレイ再生するか。
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 自動再生を行うか。
         /// </summary>
         [DataMember]
-        public bool AutoPlay { get; set; } = Constants.SmileVideoAutoPlay;
+        public bool AutoPlay { get; set; } = Constants.SettingServiceSmileVideoAutoPlay;
         /// <summary>
         /// プレイリスト実行中に動画読込がどれだけ停止したら次に進むか。
         /// </summary>
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントリストの投稿時間を表示するか。
         /// </summary>
         [DataMember]
-        public bool ShowPostTimestamp { get; set; } = Constants.SmileVideoPlayerShowPostTimestamp;
+        public bool ShowPostTimestamp { get; set; } = Constants.SettingServiceSmileVideoPlayerShowPostTimestamp;
 
         #endregion
     }

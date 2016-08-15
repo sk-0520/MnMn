@@ -16,7 +16,6 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,41 +28,44 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         #region property
 
-        public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-ContentSearch-context"); } }
+        /// <summary>
+        /// コンテンツサーチで使用するサービス名。UAみたいなもん。
+        /// </summary>
+        public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-content_search-context"); } }
 
-        #region smile-video
-        public static double SmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
-        public static string SmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
-        public static double SmileVideoCommentFontAlpha { get; } = 1;
-        public static bool SmileVideoCommentFontBold { get; } = false;
-        public static bool SmileVideoCommentFontItalic { get; } = false;
-        public static TimeSpan SmileVideoCommentShowTime { get; } = TimeSpan.FromSeconds(3);
-        public static bool SmileVideoCommentConvertPairYenSlash { get; } = true;
-        public static bool SmileVideoCommentIsEnabledSharedNoGood { get; } = true;
-        public static int SmileVideoCommentSharedNoGoodScore { get; } = -1500;
-        public static bool SmileVideoCommentPostAnonymous { get; } = true;
+        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-doenloading_error-wait-time", TimeSpan.Parse); } }
+        public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return appConfig.Get("service-smile-smilevideo-downloading_Error-retry-count", int.Parse); } }
+        public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime { get { return appConfig.Get("service-smile-smilevideo-watch-to-movie-wait-time", TimeSpan.Parse); } }
+        public static long ServiceSmileVideoPlayLowestSize { get { return appConfig.Get("service-smile-smilevideo-play-lowest-size", long.Parse); } }
+        public static int ServiceSmileVideoReceiveBuffer { get { return appConfig.Get("service-smile-smilevideo-receive-buffer", int.Parse); } }
 
-        public static int SmileMyListHistoryCount { get; } = 50;
+        /// <summary>
+        /// マイリスト履歴数。
+        /// </summary>
+        public static int SettingServiceSmileMyListHistoryCount { get; } = 50;
+        public static double SettingServiceSmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
+        public static string SettingServiceSmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
+        public static double SettingServiceSmileVideoCommentFontAlpha { get; } = 1;
+        public static bool SettingServiceSmileVideoCommentFontBold { get; } = false;
+        public static bool SettingServiceSmileVideoCommentFontItalic { get; } = false;
+        public static TimeSpan SettingServiceSmileVideoCommentShowTime { get; } = TimeSpan.FromSeconds(3);
+        public static bool SettingServiceSmileVideoCommentConvertPairYenSlash { get; } = true;
+        public static bool SettingServiceSmileVideoCommentIsEnabledSharedNoGood { get; } = true;
+        public static int SettingServiceSmileVideoCommentSharedNoGoodScore { get; } = -1500;
+        public static bool SettingServiceSmileVideoCommentPostAnonymous { get; } = true;
 
-        public static int SmileVideoSearchCount { get; } = 100;
-        public static bool SmileVideoAutoPlay { get; } = true;
-        public static bool SmileVideoLoadVideoInformation { get; } = true;
-        public static int SmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
-        public static TextShowKind SmileVideoPlayerTextShowKind { get; } = TextShowKind.Shadow;
-        public static Color SmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
-        public static bool SmileVideoPlayerShowDetailArea { get; } = true;
-        public static bool SmileVideoPlayerShowCommentList { get; } = true;
-        public static bool SmileVideoPlayerShowPostTimestamp { get; } = false;
-        public static bool PlayerVisibleComment { get; } = true;
-        public static bool SmileVideoIsEnabledGlobalCommentFilering { get; } = true;
+        public static int SettingServiceSmileVideoSearchCount { get; } = 100;
+        public static bool SettingServiceSmileVideoAutoPlay { get; } = true;
+        public static bool SettingServiceSmileVideoLoadVideoInformation { get; } = true;
+        public static int SettingServiceSmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
+        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind { get; } = TextShowKind.Shadow;
+        public static Color SettingServiceSmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
+        public static bool SettingServiceSmileVideoPlayerShowDetailArea { get; } = true;
+        public static bool SettingServiceSmileVideoPlayerShowCommentList { get; } = true;
+        public static bool SettingServiceSmileVideoPlayerShowPostTimestamp { get; } = false;
+        public static bool SettingServiceSmileVideoPlayerVisibleComment { get; } = true;
+        public static bool SettingServiceSmileVideoIsEnabledGlobalCommentFilering { get; } = true;
 
-        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-DownloadingErrorWaitTime", TimeSpan.Parse); } }
-        public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return appConfig.Get("service-smile-smilevideo-DownloadingErrorRetryCount", int.Parse); } }
-        public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime { get { return appConfig.Get("service-smile-smilevideo-WatchToMovieWaitTime", TimeSpan.Parse); } }
-        public static long ServiceSmileVideoPlayLowestSize { get { return appConfig.Get("service-smile-smilevideo-PlayLowestSize", long.Parse); } }
-        public static int ServiceSmileVideoReceiveBuffer { get { return appConfig.Get("service-smile-smilevideo-ReceiveBuffer", int.Parse); } }
-
-        #endregion
 
         #endregion
     }
