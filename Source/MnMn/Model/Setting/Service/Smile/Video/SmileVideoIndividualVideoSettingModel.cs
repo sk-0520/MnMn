@@ -54,6 +54,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 全体設定のフィルタリングを使用するか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledGlobalCommentFilering { get; set; } = Constants.SettingServiceSmileVideoIsEnabledGlobalCommentFilering;
+        public bool IsEnabledGlobalCommentFilering { get; set; } = Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled;
     }
 }

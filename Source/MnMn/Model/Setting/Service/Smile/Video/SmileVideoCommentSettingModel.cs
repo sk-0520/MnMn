@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメントの共有NGを有効にするか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledSharedNoGood { get; set; } = Constants.SettingServiceSmileVideoCommentIsEnabledSharedNoGood;
+        public bool IsEnabledSharedNoGood { get; set; } = Constants.SettingServiceSmileVideoCommentSharedNoGoodIsEnabled;
 
         /// <summary>
         /// コメントの共有NGレベル。

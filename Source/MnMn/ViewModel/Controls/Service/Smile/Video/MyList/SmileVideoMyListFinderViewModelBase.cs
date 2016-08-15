@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public virtual bool CanRemove { get; } = false;
 
-        public virtual Color MyListFolderColor { get { return Constants.SettingServiceSmileVideoMyListFolderColor; } }
+        public virtual Color MyListFolderColor { get { return Constants.ServiceSmileVideoMyListFolderColor; } }
         public virtual bool HasMyListFolder { get; } = false;
 
         /// <summary>

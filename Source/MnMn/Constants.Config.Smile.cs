@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 動画データ取得中になんかエラー発生から再開のリトライ数。
         /// </summary>
-        public static int ServiceSmileVideoDownloadingErrorRetryCount => appConfig.Get("service-smile-smilevideo-downloading_Error-retry-count", int.Parse);
+        public static int ServiceSmileVideoDownloadingErrorRetryCount => appConfig.Get("service-smile-smilevideo-downloading_error-retry-count", int.Parse);
         /// <summary>
         /// 視聴ページから動画データ取得までの待ち時間。
         /// </summary>
@@ -79,34 +79,97 @@ namespace ContentTypeTextNet.MnMn.MnMn
         ///オススメ動画の次ページ取得までの待機時間。
         /// </summary>
         public static TimeSpan ServiceSmileVideoRecommendationsPageContinueWaitTime => appConfig.Get("service-smile-smilevideo-recommendations-page-continue-wait-time", TimeSpan.Parse);
+        /// <summary>
+        /// マイリストのフォルダ色。
+        /// </summary>
+        public static Color ServiceSmileVideoMyListFolderColor => appConfig.Get("service-smile-mylist-folder-color", s => (Color)ColorConverter.ConvertFromString(s));
 
 
         #endregion
 
         #region setting
-
+        /// <summary>
+        /// コメントのフォントサイズ。
+        /// <para>システムから取得。</para>
+        /// </summary>
         public static double SettingServiceSmileVideoCommentFontSize { get; } = System.Windows.SystemFonts.MessageFontSize * 1.8;
+        /// <summary>
+        /// コメントのフォントファミリ。
+        /// <para>システムから取得。</para>
+        /// </summary>
         public static string SettingServiceSmileVideoCommentFontFamily { get; } = System.Windows.SystemFonts.MessageFontFamily.FamilyNames.Values.First();
-        public static double SettingServiceSmileVideoCommentFontAlpha { get; } = 1;
-        public static bool SettingServiceSmileVideoCommentFontBold { get; } = false;
-        public static bool SettingServiceSmileVideoCommentFontItalic { get; } = false;
-        public static TimeSpan SettingServiceSmileVideoCommentShowTime { get; } = TimeSpan.FromSeconds(3);
-        public static bool SettingServiceSmileVideoCommentConvertPairYenSlash { get; } = true;
-        public static bool SettingServiceSmileVideoCommentIsEnabledSharedNoGood { get; } = true;
-        public static int SettingServiceSmileVideoCommentSharedNoGoodScore { get; } = -1500;
-        public static bool SettingServiceSmileVideoCommentPostAnonymous { get; } = true;
-
-        public static int SettingServiceSmileVideoSearchCount { get; } = 100;
-        public static bool SettingServiceSmileVideoAutoPlay { get; } = true;
-        public static bool SettingServiceSmileVideoLoadVideoInformation { get; } = true;
-        public static int SettingServiceSmileVideoPlayerDisplayCommentLimitCount { get; } = 25;
-        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind { get; } = TextShowKind.Shadow;
-        public static Color SettingServiceSmileVideoMyListFolderColor { get; } = Colors.SkyBlue;
-        public static bool SettingServiceSmileVideoPlayerShowDetailArea { get; } = true;
-        public static bool SettingServiceSmileVideoPlayerShowCommentList { get; } = true;
-        public static bool SettingServiceSmileVideoPlayerShowPostTimestamp { get; } = false;
-        public static bool SettingServiceSmileVideoPlayerVisibleComment { get; } = true;
-        public static bool SettingServiceSmileVideoIsEnabledGlobalCommentFilering { get; } = true;
+        /// <summary>
+        /// コメントtの透明度。
+        /// </summary>
+        public static double SettingServiceSmileVideoCommentFontAlpha => appConfig.Get("setting-service-smile-smilevideo-comment-font-alpha", double.Parse);
+        /// <summary>
+        /// コメントを太字にするか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentFontBold => appConfig.Get("setting-service-smile-smilevideo-comment-font-bold", bool.Parse);
+        /// <summary>
+        /// コメントを斜体にするか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentFontItalic => appConfig.Get("setting-service-smile-smilevideo-comment-font-italic", bool.Parse);
+        /// <summary>
+        /// コメントの表示時間。
+        /// </summary>
+        public static TimeSpan SettingServiceSmileVideoCommentShowTime => appConfig.Get("setting-service-smile-smilevideo-comment-show-time", TimeSpan.Parse);
+        /// <summary>
+        /// コメント中の円マークがスラッシュと対になる場合はバックスラッシュに置き換えるか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentConvertPairYenSlash => appConfig.Get("setting-service-smile-smilevideo-comment-pair-yen-slash", bool.Parse);
+        /// <summary>
+        /// 共有NGを使用するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentSharedNoGoodIsEnabled => appConfig.Get("setting-service-smile-smilevideo-comment-shared-no-good-is-enabled", bool.Parse);
+        /// <summary>
+        /// 共有NGレベル。
+        /// </summary>
+        public static int SettingServiceSmileVideoCommentSharedNoGoodScore => appConfig.Get("setting-service-smile-smilevideo-comment-shared-no-good-score", int.Parse);
+        /// <summary>
+        /// コメント投稿を匿名で行うか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentPostAnonymous => appConfig.Get("setting-service-smile-smilevideo-comment-post-anonymous", bool.Parse);
+        /// <summary>
+        /// 検索で一度に取得する数。
+        /// </summary>
+        public static int SettingServiceSmileVideoSearchCount => appConfig.Get("setting-service-smile-smilevideo-search-count", int.Parse);
+        /// <summary>
+        /// 動画情報を取得するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoLoadVideoInformation => appConfig.Get("setting-service-smile-smilevideo-load-video-information", bool.Parse);
+        /// <summary>
+        /// 自動再生を行うか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-auto-play", bool.Parse);
+        /// <summary>
+        /// コメント表示数。
+        /// </summary>
+        public static int SettingServiceSmileVideoPlayerDisplayCommentLimitCount => appConfig.Get("setting-service-smile-smilevideo-player-display-comment-limit-count", int.Parse);
+        /// <summary>
+        /// コメントのテキスト描画方法。
+        /// </summary>
+        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind => appConfig.Get("setting-service-smile-smilevideo-player-TextShowKind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
+        /// <summary>
+        /// 詳細部を表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerShowDetailArea => appConfig.Get("setting-service-smile-smilevideo-player-show-detail-area", bool.Parse);
+        /// <summary>
+        /// コメントリストを表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerShowCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-comment-list", bool.Parse);
+        /// <summary>
+        /// コメント投稿時間を表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerShowPostTimestamp => appConfig.Get("setting-service-smile-smilevideo-player-show-post-timestamp", bool.Parse);
+        /// <summary>
+        /// コメントを表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerVisibleComment => appConfig.Get("setting-service-smile-smilevideo-player-comment-visible", bool.Parse);
+        /// <summary>
+        /// 全体フィルタリングを有効にするか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoGlobalCommentFileringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
 
         #endregion
 

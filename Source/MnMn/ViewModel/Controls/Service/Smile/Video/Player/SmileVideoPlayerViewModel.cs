@@ -828,7 +828,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool IsEnabledGlobalCommentFilering
         {
-            get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SettingServiceSmileVideoIsEnabledGlobalCommentFilering; }
+            get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled; }
             set
             {
                 if(Information != null) {
