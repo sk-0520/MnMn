@@ -65,7 +65,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// マイリスト履歴数。
         /// </summary>
-        public static int ServiceSmileMyListHistoryCount { get; } = 50;
+        public static int ServiceSmileMyListHistoryCount => appConfig.Get("service-smile-mylist-history-count", int.Parse);
+        /// <summary>
+        /// 検索履歴数。
+        /// </summary>
+        public static int ServiceSmileVideoSearchHistoryHistoryCount => appConfig.Get("service-smile-smilevideo-search-history-count", int.Parse);
         /// <summary>
         /// アカウント履歴削除待ち時間。
         /// <para>複数アイテム削除時間の削除間隔。</para>
