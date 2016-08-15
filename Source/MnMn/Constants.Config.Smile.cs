@@ -32,11 +32,26 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// コンテンツサーチで使用するサービス名。UAみたいなもん。
         /// </summary>
         public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-content_search-context"); } }
-
-        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-doenloading_error-wait-time", TimeSpan.Parse); } }
+        /// <summary>
+        /// 動画データ取得中になんかエラー発生から再開までの待ち時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-downloading_error-wait-time", TimeSpan.Parse); } }
+        /// <summary>
+        /// 動画データ取得中になんかエラー発生から再開のリトライ数。
+        /// </summary>
         public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return appConfig.Get("service-smile-smilevideo-downloading_Error-retry-count", int.Parse); } }
+        /// <summary>
+        /// 視聴ページから動画データ取得までの待ち時間。
+        /// </summary>
         public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime { get { return appConfig.Get("service-smile-smilevideo-watch-to-movie-wait-time", TimeSpan.Parse); } }
+        /// <summary>
+        /// 再生可能判定までの動画サイズ。
+        /// </summary>
         public static long ServiceSmileVideoPlayLowestSize { get { return appConfig.Get("service-smile-smilevideo-play-lowest-size", long.Parse); } }
+        /// <summary>
+        /// 動画受信時のバッファサイズ。
+        /// <para>確保するだけで受け取るかどうかはサーバー次第。</para>
+        /// </summary>
         public static int ServiceSmileVideoReceiveBuffer { get { return appConfig.Get("service-smile-smilevideo-receive-buffer", int.Parse); } }
 
         /// <summary>
