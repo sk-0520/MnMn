@@ -37,13 +37,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 重複したコメントを無視するか。
         /// </summary>
         [DataMember]
-        public bool IgnoreOverlapWord { get; set; }
+        public bool IgnoreOverlapWord { get; set; } = Constants.SettingServiceSmileVideoFilteringIgnoreOverlapWord;
 
         /// <summary>
         /// <see cref="IgnoreOverlapWord"/>が有効な際の重複判定時間。
         /// </summary>
         [DataMember]
-        public TimeSpan IgnoreOverlapTime { get; set; } = TimeSpan.FromSeconds(3);
+        public TimeSpan IgnoreOverlapTime { get; set; } = Constants.SettingServiceSmileVideoFilteringIgnoreOverlapTime;
 
         [DataMember]
         public CollectionModel<string> DefineKeys { get; set; } = new CollectionModel<string>();

@@ -88,6 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         #endregion
 
         #region setting
+
         /// <summary>
         /// コメントのフォントサイズ。
         /// <para>システムから取得。</para>
@@ -170,6 +171,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 全体フィルタリングを有効にするか。
         /// </summary>
         public static bool SettingServiceSmileVideoGlobalCommentFileringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
+        /// <summary>
+        /// 重複したコメントを無視するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoFilteringIgnoreOverlapWord => appConfig.Get("setting-service-smile-smilevideo-filtering-ignore-overlap-word", bool.Parse);
+        /// <summary>
+        /// 重複判定時間。
+        /// </summary>
+        public static TimeSpan SettingServiceSmileVideoFilteringIgnoreOverlapTime => appConfig.Get("setting-service-smile-smilevideo-filtering-ignore-overlap-time", TimeSpan.Parse);
 
         #endregion
 
