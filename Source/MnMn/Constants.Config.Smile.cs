@@ -144,13 +144,61 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-auto-play", bool.Parse);
         /// <summary>
-        /// コメント表示数。
+        /// リプレイを行うか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerReplay => appConfig.Get("setting-service-smile-smilevideo-player-replay", bool.Parse);
+        /// <summary>
+        /// 音量。
+        /// </summary>
+        public static int SettingServiceSmileVideoPlayerVolume => appConfig.Get("setting-service-smile-smilevideo-player-volume", int.Parse);
+        /// <summary>
+        /// ミュート。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerMute => appConfig.Get("setting-service-smile-smilevideo-player-mute", bool.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 左。
+        /// </summary>
+        public static double SettingServiceSmileVideoWindowLeft => appConfig.Get("setting-service-smile-smilevideo-player-window-left", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 上。
+        /// </summary>
+        public static double SettingServiceSmileVideoWindowTop => appConfig.Get("setting-service-smile-smilevideo-player-window-top", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 幅。
+        /// </summary>
+        public static double SettingServiceSmileVideoWindowWidth => appConfig.Get("setting-service-smile-smilevideo-player-window-width", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 高さ。
+        /// </summary>
+        public static double SettingServiceSmileVideoWindowHeight => appConfig.Get("setting-service-smile-smilevideo-player-window-height", double.Parse);
+        /// <summary>
+        /// 予期せぬ停止から次の動画へ移るまでの待機時間。
+        /// </summary>
+        public static TimeSpan SettingServiceSmileVideoPlayerBufferingStopSkipTime => appConfig.Get("setting-service-smile-smilevideo-player-buffering-stop-skip-time", TimeSpan.Parse);
+        /// <summary>
+        /// コメント表示上限を使用するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerDisplayCommentLimitIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-display-comment-limit-is-enabled", bool.Parse);
+        /// <summary>
+        /// コメント表示上限数。
         /// </summary>
         public static int SettingServiceSmileVideoPlayerDisplayCommentLimitCount => appConfig.Get("setting-service-smile-smilevideo-player-display-comment-limit-count", int.Parse);
+        /// <summary>
+        /// コメント有効領域を使用するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerCommentEnableAreaIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-comment-enable-area-is-enabled", bool.Parse);
+        /// <summary>
+        /// コメント有効領域の割合。
+        /// </summary>
+        public static double SettingServiceSmileVideoPlayerCommentEnableAreaPercent => appConfig.Get("setting-service-smile-smilevideo-player-comment-enable-area-percent", double.Parse);
         /// <summary>
         /// コメントのテキスト描画方法。
         /// </summary>
         public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind => appConfig.Get("setting-service-smile-smilevideo-player-TextShowKind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
+        /// <summary>
+        /// コメントを自動スクロールするか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerAutoScrollCommentList => appConfig.Get("setting-service-smile-smilevideo-player-auto-scroll-comment-list", bool.Parse);
         /// <summary>
         /// 詳細部を表示するか。
         /// </summary>
