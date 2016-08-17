@@ -178,7 +178,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool OrderCore_Exit(OrderModel order)
         {
-            Application.Current.Shutdown();
+            //Application.Current.Dispatcher.InvokeShutdown;
+            Application.Current.Dispatcher.Invoke(() => {
+                Application.Current.Shutdown();
+            });
             return true;
         }
 
