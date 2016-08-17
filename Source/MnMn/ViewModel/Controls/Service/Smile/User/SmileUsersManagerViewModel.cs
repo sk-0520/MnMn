@@ -133,7 +133,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public override Task InitializeAsync()
         {
             if(LoginUser != null) {
-                UserItems.Remove(UserItems.Last());
+                var user = UserItems.LastOrDefault();
+                if(user != null) {
+                    UserItems.Remove(user);
+                }
                 LoginUser = null;
                 SelectedUser = null;
             }

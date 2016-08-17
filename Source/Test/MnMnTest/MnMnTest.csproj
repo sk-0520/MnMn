@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -57,11 +58,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ConstantsTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoMsgUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Library\Package\Package.csproj">
+      <Project>{922d77b4-f3b7-4685-b6dc-6ecb0f4bbe8f}</Project>
+      <Name>Package</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MnMn\MnMn.csproj">
       <Project>{96623185-24f0-4a71-8429-560ac8a5f172}</Project>
       <Name>MnMn</Name>
@@ -87,6 +93,9 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)MnMn\App.config" "$(ProjectDir)$(OutDir)MnMnTest.dll.config"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

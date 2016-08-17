@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public override string MyListFolderId { get { return string.Empty; } }
         public override string MyListSort { get { return string.Empty; } }
 
-        public override Color MyListFolderColor { get { return Constants.SmileVideoMyListFolderColor; } }
+        public override Color MyListFolderColor { get { return Constants.ServiceSmileVideoMyListFolderColor; } }
 
         protected async override Task<FeedSmileVideoModel> LoadFeedAsync()
         {

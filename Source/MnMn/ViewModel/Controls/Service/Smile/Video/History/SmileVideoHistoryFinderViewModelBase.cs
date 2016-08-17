@@ -58,9 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
                     o => {
                         RemoveCheckedItemsAsync().ContinueWith(task => {
                             if(task.Result.IsSuccess) {
-                                // TODO: 即値
-                                var sleepTime = TimeSpan.FromMilliseconds(500);
-                                System.Threading.Thread.Sleep(sleepTime);
+                                System.Threading.Thread.Sleep(Constants.ServiceSmileVideoHistoryReloadWaitTime);
                             }
                             return task.Result;
                         }).ContinueWith(task => {

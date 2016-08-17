@@ -105,10 +105,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    var result = UpdateExecute();
-                    if(result) {
-                        Application.Current.Shutdown();
-                    }
+                    UpdateExecuteAsunc().ContinueWith(t => {
+                        if(t.Result) {
+                            Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
+                        }
+                    });
                 });
             }
         }
@@ -232,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return process;
         }
 
-        bool UpdateExecute()
+        Task<bool> UpdateExecuteAsunc()
         {
             var eventName = "mnmn-event";
 
@@ -260,19 +261,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             //var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
             var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
+            var process = CreateProcess(map);
+            //this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
+            Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 
-            using(var process = CreateProcess(map)) {
-                //this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
-                Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
-
+            process.Start();
+            return Task.Run(() => {
                 var result = false;
-
-                process.Start();
                 var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
                     SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
                 };
                 var handles = new[] { waitEvent, processEvent };
                 var waitResult = WaitHandle.WaitAny(handles, Constants.UpdateAppExitWaitTime);
+
                 Mediation.Logger.Debug("WaitHandle.WaitAny", waitResult);
                 if(0 <= waitResult && waitResult < handles.Length) {
                     if(handles[waitResult] == waitEvent) {
@@ -293,7 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 }
 
                 return result;
-            }
+            });
         }
 
 

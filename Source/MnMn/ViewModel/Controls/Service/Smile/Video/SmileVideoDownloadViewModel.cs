@@ -541,8 +541,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             IsProcessCancel = true;
             if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
                 return Task.Run(() => {
-                    // TODO: 即値
-                    var waitTime = TimeSpan.FromSeconds(5);
                     wait.WaitOne();
                     wait.Dispose();
                     PropertyChanged -= changedEvent;

@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -176,6 +177,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        bool OrderCore_Exit(OrderModel order)
+        {
+            //Application.Current.Dispatcher.InvokeShutdown;
+            Application.Current.Dispatcher.Invoke(() => {
+                Application.Current.Shutdown();
+            });
+            return true;
+        }
+
+        bool OrderCore_Save(OrderModel order)
+        {
+            var backupDirectory = VariableConstants.GetBackupDirectory();
+            FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
+                Logger.Warning(e);
+                return true;
+            });
+
+            var settingDirectory = VariableConstants.GetSettingDirectory();
+            var settingFilePath = Path.Combine(settingDirectory.FullName, Constants.SettingFileName);
+            SerializeUtility.SaveSetting(settingFilePath, Setting, SerializeFileType.Json, true, Logger);
+
+            var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
+            var fileName = PathUtility.AppendExtension(baseName, "json.gz");
+            var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
+            FileUtility.MakeFileParentDirectory(backupFilePath);
+            //File.Copy(settingFilePath, backupFilePath, true);
+            // 1ファイル集約の元 gzip でポン!
+            using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
+                using(var input = File.OpenRead(settingFilePath)) {
+                    input.CopyTo(output);
+                }
+            }
+
+            return true;
+        }
+
+        bool OrderCore(OrderModel order)
+        {
+            switch(order.OrderKind) {
+                case OrderKind.Exit:
+                    return OrderCore_Exit(order);
+
+                case OrderKind.Save:
+                    return OrderCore_Save(order);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         #endregion
 
         #region MediationBase
@@ -202,6 +253,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 default:
                     ThrowNotSupportRequest(request);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override bool Order(OrderModel order)
+        {
+            CheckUtility.DebugEnforceNotNull(order);
+
+            switch(order.ServiceType) {
+                case ServiceType.Application:
+                    return OrderCore(order);
+
+                default:
+                    ThrowNotSupportOrder(order);
                     throw new NotImplementedException();
             }
         }

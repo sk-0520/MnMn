@@ -86,7 +86,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView
     {
         #region define
 
@@ -828,7 +828,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public bool IsEnabledGlobalCommentFilering
         {
-            get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SmileVideoIsEnabledGlobalCommentFilering; }
+            get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled; }
             set
             {
                 if(Information != null) {
@@ -1986,14 +1986,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResetCommentSetting()
         {
-            Setting.Comment.FontFamily = Constants.SmileVideoCommentFontFamily;
-            Setting.Comment.FontSize = Constants.SmileVideoCommentFontSize;
-            Setting.Comment.FontBold = Constants.SmileVideoCommentFontBold;
-            Setting.Comment.FontItalic = Constants.SmileVideoCommentFontItalic;
-            Setting.Comment.FontAlpha = Constants.SmileVideoCommentFontAlpha;
-            Setting.Comment.ShowTime = Constants.SmileVideoCommentShowTime;
-            Setting.Comment.ConvertPairYenSlash = Constants.SmileVideoCommentConvertPairYenSlash;
-            Setting.Player.TextShowKind = Constants.SmileVideoPlayerTextShowKind;
+            Setting.Comment.FontFamily = Constants.SettingServiceSmileVideoCommentFontFamily;
+            Setting.Comment.FontSize = Constants.SettingServiceSmileVideoCommentFontSize;
+            Setting.Comment.FontBold = Constants.SettingServiceSmileVideoCommentFontBold;
+            Setting.Comment.FontItalic = Constants.SettingServiceSmileVideoCommentFontItalic;
+            Setting.Comment.FontAlpha = Constants.SettingServiceSmileVideoCommentFontAlpha;
+            Setting.Comment.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
+            Setting.Comment.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
+            Setting.Player.TextShowKind = Constants.SettingServiceSmileVideoPlayerTextShowKind;
 
             ChangedCommentFont();
             ChangedCommentContent();
@@ -2392,6 +2392,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.StateChanged += Player_StateChanged;
             Navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
             DetailComment.LostFocus += DetailComment_LostFocus;
+        }
+
+        #endregion
+
+        #region ICloseView
+
+        public void Close()
+        {
+            if(!IsViewClosed) {
+                View.Close();
+            }
         }
 
         #endregion

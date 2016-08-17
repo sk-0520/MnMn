@@ -17,29 +17,26 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
-    [DataContract]
-    public class SmileMyListSettingModel: ModelBase
+    public class OrderModel: ModelBase
     {
+        public OrderModel(OrderKind orderKind, ServiceType serviceType)
+        {
+            OrderKind = orderKind;
+            ServiceType = serviceType;
+        }
+
         #region property
 
-        /// <summary>
-        /// ブックマーク。
-        /// </summary>
-        [DataMember]
-        public CollectionModel<SmileMyListBookmarkItemModel> Bookmark { get; set; } = new CollectionModel<SmileMyListBookmarkItemModel>();
+        public OrderKind OrderKind { get; }
 
-        /// <summary>
-        /// 履歴。
-        /// </summary>
-        [DataMember]
-        public FixedSizeCollectionModel<SmileMyListItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileMyListItemModel>(Constants.ServiceSmileMyListHistoryCount, false);
+        public ServiceType ServiceType { get; }
 
         #endregion
     }

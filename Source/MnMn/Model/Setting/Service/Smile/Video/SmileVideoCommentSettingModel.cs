@@ -34,55 +34,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// フォント種別。
         /// </summary>
         [DataMember]
-        public string FontFamily { get; set; } = Constants.SmileVideoCommentFontFamily;
+        public string FontFamily { get; set; } = Constants.SettingServiceSmileVideoCommentFontFamily;
         /// <summary>
         /// フォントサイズ。
         /// </summary>
         [DataMember]
-        public double FontSize { get; set; } = Constants.SmileVideoCommentFontSize;
+        public double FontSize { get; set; } = Constants.SettingServiceSmileVideoCommentFontSize;
         /// <summary>
         /// フォント透明度。
         /// </summary>
         [DataMember]
-        public double FontAlpha { get; set; } = Constants.SmileVideoCommentFontAlpha;
+        public double FontAlpha { get; set; } = Constants.SettingServiceSmileVideoCommentFontAlpha;
         /// <summary>
         /// 太字。
         /// </summary>
         [DataMember]
-        public bool FontBold { get; set; } = Constants.SmileVideoCommentFontBold;
+        public bool FontBold { get; set; } = Constants.SettingServiceSmileVideoCommentFontBold;
         /// <summary>
         /// イタリック。
         /// </summary>
         [DataMember]
-        public bool FontItalic { get; set; } = Constants.SmileVideoCommentFontItalic;
+        public bool FontItalic { get; set; } = Constants.SettingServiceSmileVideoCommentFontItalic;
         /// <summary>
         /// コメント表示時間。
         /// </summary>
         [DataMember]
-        public TimeSpan ShowTime { get; set; } = Constants.SmileVideoCommentShowTime;
+        public TimeSpan ShowTime { get; set; } = Constants.SettingServiceSmileVideoCommentShowTime;
         /// <summary>
         /// コメントの/と対になるx05cをバックスラッシュに置き換えるか。
         /// </summary>
         [DataMember]
-        public bool ConvertPairYenSlash { get; set; } = Constants.SmileVideoCommentConvertPairYenSlash;
+        public bool ConvertPairYenSlash { get; set; } = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
 
         /// <summary>
         /// コメントの共有NGを有効にするか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledSharedNoGood { get; set; } = Constants.SmileVideoCommentIsEnabledSharedNoGood;
+        public bool IsEnabledSharedNoGood { get; set; } = Constants.SettingServiceSmileVideoCommentSharedNoGoodIsEnabled;
 
         /// <summary>
         /// コメントの共有NGレベル。
         /// </summary>
         [DataMember]
-        public int SharedNoGoodScore { get; set; } = Constants.SmileVideoCommentSharedNoGoodScore;
+        public int SharedNoGoodScore { get; set; } = Constants.SettingServiceSmileVideoCommentSharedNoGoodScore;
 
         /// <summary>
         /// コメント投稿を匿名にするか。
         /// </summary>
         [DataMember]
-        public bool PostAnonymous { get; set; } = Constants.SmileVideoCommentPostAnonymous;
+        public bool PostAnonymous { get; set; } = Constants.SettingServiceSmileVideoCommentPostAnonymous;
 
         /// <summary>
         /// フィルタリングデータ。

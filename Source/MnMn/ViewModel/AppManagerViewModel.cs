@@ -152,13 +152,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region function
 
-        void SaveSetting()
-        {
-            var dir = VariableConstants.GetSettingDirectory();
-            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+        //void SaveSetting()
+        //{
+        //    var dir = VariableConstants.GetSettingDirectory();
+        //    var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
 
-            SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
-        }
+        //    SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
+        //}
 
         #endregion
 
@@ -178,11 +178,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
 
             GarbageCollectionAsync();
+
+            View.Closing += View_Closing;
+            View.Closed += View_Closed;
         }
 
         public override void UninitializeView(MainWindow view)
         {
-            SaveSetting();
+            Mediation.Order(new OrderModel(OrderKind.Save, ServiceType.Application));
 
             foreach(var manager in ManagerItems) {
                 manager.UninitializeView(view);
@@ -195,5 +198,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
 
         #endregion
+
+        private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<ICloseView>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+
+            var closeItems = new[] {
+                players,
+            }.SelectMany(i => i);
+
+            if(closeItems.Any()) {
+                //e.Cancel = true;
+                foreach(var item in closeItems.ToArray()) {
+                    item.Close();
+                }
+            }
+        }
+
+        private void View_Closed(object sender, EventArgs e)
+        {
+            View.Closing -= View_Closing;
+            View.Closed -= View_Closed;
+        }
+
     }
 }

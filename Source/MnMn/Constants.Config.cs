@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+This file is part of MnMn.
+
+MnMn is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MnMn is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -19,31 +35,41 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #endregion
 
+        #region property
 
-        public static int TextFileSaveBuffer { get { return appConfig.Get("text-file-save-buffer", int.Parse); } }
+        public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
 
-        public static string UriUpdate { get { return ReplaceAppConfig(appConfig.Get("uri-update")); } }
-        public static string UriChangelogRelease { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-release")); } }
-        public static string UriChangelogRc { get { return ReplaceAppConfig(appConfig.Get("uri-changelog-rc")); } }
+        public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 
-        public static TimeSpan UpdateAppExitWaitTime { get { return appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse); } }
+        public static string UriUpdate => ReplaceAppConfig(appConfig.Get("uri-update"));
+        public static string UriChangelogRelease => ReplaceAppConfig(appConfig.Get("uri-changelog-release"));
+        //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("uri-changelog-rc"));
 
+        public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
-        public static int BackupArchiveCount { get { return appConfig.Get("backup-archive", int.Parse); } }
+        public static int BackupArchiveCount => appConfig.Get("backup-archive-count", int.Parse);
+        public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);
 
-        #region smile
-
-        public static string ServiceSmileContentsSearchContext { get { return appConfig.Get("service-smile-ContentSearch-context"); } }
-
-        #region smile-video
-
-        public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime { get { return appConfig.Get("service-smile-smilevideo-DownloadingErrorWaitTime", TimeSpan.Parse); } }
-        public static int ServiceSmileVideoDownloadingErrorRetryCount { get { return appConfig.Get("service-smile-smilevideo-DownloadingErrorRetryCount", int.Parse); } }
-        public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime { get { return appConfig.Get("service-smile-smilevideo-WatchToMovieWaitTime", TimeSpan.Parse); } }
-        public static long ServiceSmileVideoPlayLowestSize { get { return appConfig.Get("service-smile-smilevideo-PlayLowestSize", long.Parse); } }
-        public static int ServiceSmileVideoReceiveBuffer { get { return appConfig.Get("service-smile-smilevideo-ReceiveBuffer", int.Parse); } }
-
-        #endregion
+        /// <summary>
+        /// キャッシュファイル有効期間。
+        /// </summary>
+        public static TimeSpan SettingApplicationCacheLifeTime => appConfig.Get("setting-application-cache-life-time", TimeSpan.Parse);
+        /// <summary>
+        /// ウィンドウ: 左
+        /// </summary>
+        public static int SettingApplicationWindowLeft => appConfig.Get("setting-application-window-top", int.Parse);
+        /// <summary>
+        /// ウィンドウ: 上
+        /// </summary>
+        public static int SettingApplicationWindowTop => appConfig.Get("setting-application-window-left", int.Parse);
+        /// <summary>
+        /// ウィンドウ: 幅
+        /// </summary>
+        public static int SettingApplicationWindowWidth => appConfig.Get("setting-application-window-width", int.Parse);
+        /// <summary>
+        /// ウィンドウ: 高さ
+        /// </summary>
+        public static int SettingApplicationWindowHeight => appConfig.Get("setting-application-window-height", int.Parse);
 
         #endregion
     }

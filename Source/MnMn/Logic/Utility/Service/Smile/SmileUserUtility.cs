@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
                 }
             }
 
-            return CheckResultModel.Failure< Gender>();
+            return CheckResultModel.Failure<Gender>();
         }
 
         public static CheckResultModel<DateTime> GetBirthday(string accountElementInnerText)
@@ -215,7 +215,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         {
             var reg = new Regex(@"
                 (?<NUM>
-                    [\d,]
+                    [\d,]+
                 )
                 \s*
                 件

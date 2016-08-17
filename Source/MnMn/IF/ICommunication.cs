@@ -25,8 +25,24 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
+    /// <summary>
+    /// 通信用IF。
+    /// </summary>
     public interface ICommunication
     {
+        /// <summary>
+        /// 何かしら要求して何かしらを返してもらう。
+        /// </summary>
+        /// <param name="request">要求。</param>
+        /// <returns>応答。</returns>
         ResponseModel Request(RequestModel request);
+
+        /// <summary>
+        /// 何かしらを命令する。
+        /// <para><<see cref="Request(RequestModel)"/>とは異なり命令を実施したか拒否されたかのみが結果となる。</para>
+        /// </summary>
+        /// <param name="order">命令。</param>
+        /// <returns>真で実施、偽で拒否。</returns>
+        bool Order(OrderModel order);
     }
 }
