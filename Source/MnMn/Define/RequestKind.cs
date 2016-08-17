@@ -55,10 +55,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 表示要素へのアクセス。
         /// </summary>
         ShowView,
-        /// <summary>
-        /// 表示要素の破棄。
-        /// </summary>
-        HideView,
+        ///// <summary>
+        ///// 表示要素の破棄。
+        ///// </summary>
+        //HideView,
         /// <summary>
         /// 独自設定。
         /// </summary>
@@ -67,5 +67,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// キャッシュデータ。
         /// </summary>
         CacheData,
+        /// <summary>
+        /// 表示ウィンドウ取得。
+        /// </summary>
+        WindowViewModels,
     }
 }

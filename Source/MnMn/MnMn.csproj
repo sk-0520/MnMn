@@ -211,6 +211,7 @@
     </Content>
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="IF\Control\ICheckable.cs" />
+    <Compile Include="IF\Control\ICloseView.cs" />
     <Compile Include="IF\Control\ISetView.cs" />
     <Compile Include="IF\ILoadPageHtml.cs" />
     <Compile Include="IF\Service\Smile\Video\ISmileVideoScrapingPageHtmlToFeedApi.cs" />

@@ -178,6 +178,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
 
             GarbageCollectionAsync();
+
+            View.Closing += View_Closing;
+            View.Closed += View_Closed;
         }
 
         public override void UninitializeView(MainWindow view)
@@ -195,5 +198,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
 
         #endregion
+
+        private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<ICloseView>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+
+            var closeItems = new[] {
+                players,
+            }.SelectMany(i => i);
+
+            if(closeItems.Any()) {
+                //e.Cancel = true;
+                foreach(var item in closeItems.ToArray()) {
+                    item.Close();
+                }
+            }
+        }
+
+        private void View_Closed(object sender, EventArgs e)
+        {
+            View.Closing -= View_Closing;
+            View.Closed -= View_Closed;
+        }
+
     }
 }
