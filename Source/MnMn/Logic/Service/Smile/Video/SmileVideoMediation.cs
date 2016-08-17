@@ -121,6 +121,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
         }
 
+        ResponseModel Request_WindowViewModels(RequestModel request)
+        {
+            var windowViewModels = Players.Select(p => (SmileVideoPlayerViewModel)p.DataContext).ToList();
+            return new ResponseModel(request, windowViewModels);
+        }
 
         ResponseModel RequestCore(RequestModel request)
         {
@@ -142,6 +147,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 case RequestKind.CacheData:
                     return Request_CacheData((SmileVideoInformationCacheRequestModel)request);
+
+                case RequestKind.WindowViewModels:
+                    return Request_WindowViewModels(request);
 
                 default:
                     throw new NotImplementedException();

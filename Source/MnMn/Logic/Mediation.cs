@@ -176,6 +176,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        bool OrderCore_Exit(OrderModel order)
+        {
+            Application.Current.Shutdown();
+            return true;
+        }
+
+        bool OrderCore_Save(OrderModel order)
+        {
+            var dir = VariableConstants.GetSettingDirectory();
+            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+            SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Logger);
+            return true;
+        }
+
+        bool OrderCore(OrderModel order)
+        {
+            switch(order.OrderKind) {
+                case OrderKind.Exit:
+                    return OrderCore_Exit(order);
+
+                case OrderKind.Save:
+                    return OrderCore_Save(order);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         #endregion
 
         #region MediationBase
@@ -202,6 +230,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 default:
                     ThrowNotSupportRequest(request);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override bool Order(OrderModel order)
+        {
+            CheckUtility.DebugEnforceNotNull(order);
+
+            switch(order.ServiceType) {
+                case ServiceType.Application:
+                    return OrderCore(order);
+
+                default:
+                    ThrowNotSupportOrder(order);
                     throw new NotImplementedException();
             }
         }

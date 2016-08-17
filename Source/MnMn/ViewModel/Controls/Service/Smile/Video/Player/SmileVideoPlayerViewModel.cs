@@ -86,7 +86,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView
     {
         #region define
 
@@ -2392,6 +2392,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.StateChanged += Player_StateChanged;
             Navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
             DetailComment.LostFocus += DetailComment_LostFocus;
+        }
+
+        #endregion
+
+        #region ICloseView
+
+        public void Close()
+        {
+            if(!IsViewClosed) {
+                View.Close();
+            }
         }
 
         #endregion

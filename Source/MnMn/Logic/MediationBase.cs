@@ -113,6 +113,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(ICommunication)} => {nameof(request)}: {request}");
         }
 
+        protected void ThrowNotSupportOrder(OrderModel order)
+        {
+            throw new NotSupportedException($"{nameof(ICommunication)} => {nameof(order)}: {order}");
+        }
+
         protected void ThrowNotSupportGetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
@@ -371,6 +376,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region ICommunication
 
         public virtual ResponseModel Request(RequestModel request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool Order(OrderModel order)
         {
             throw new NotImplementedException();
         }
