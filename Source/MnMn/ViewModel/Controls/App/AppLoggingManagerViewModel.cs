@@ -159,7 +159,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public void AddLog(LogItemModel item)
         {
-            LogList.Add(item);
+            lock(LogList) {
+                LogList.Add(item);
+            }
+
             if(IsVisible) {
                 LogListBox?.Dispatcher.BeginInvoke(new Action(() => {
                     LogListBox.ScrollIntoView(item);

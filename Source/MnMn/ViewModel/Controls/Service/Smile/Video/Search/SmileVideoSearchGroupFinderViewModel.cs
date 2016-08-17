@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             nameof(NowLoading),
             nameof(PageItems),
             nameof(PageChangeCommand),
+            nameof(IsAscending),
+            nameof(SelectedSortType),
         };
 
         #endregion
@@ -206,6 +208,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             }
         }
+
+
 
         #endregion
 
@@ -425,6 +429,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         internal override Task ContinuousPlaybackAsync(bool isRandom)
         {
             return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
+        }
+
+        public override bool IsAscending
+        {
+            get { return GetSearchProperty<bool>(); }
+            set { SetSearchProperty(value); }
+        }
+
+        public override SmileVideoSortType SelectedSortType
+        {
+            get { return GetSearchProperty<SmileVideoSortType>(); }
+            set { SetSearchProperty(value); }
         }
 
         #endregion

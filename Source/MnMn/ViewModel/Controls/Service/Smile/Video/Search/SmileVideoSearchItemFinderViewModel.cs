@@ -113,8 +113,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return list;
             }).ContinueWith(task => {
                 var list = task.Result;
-                SetItemsAsync(list);
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                return SetItemsAsync(list, thumbCacheSpan);
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
         }
 
         #endregion
