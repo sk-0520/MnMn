@@ -19,30 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Model;
-using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     /// <summary>
-    /// 通信用IF。
+    /// 命令種別。
     /// </summary>
-    public interface ICommunication
+    public enum OrderKind
     {
         /// <summary>
-        /// 何かしら要求して何かしらを返してもらう。
+        /// データ保存。
         /// </summary>
-        /// <param name="request">要求。</param>
-        /// <returns>応答。</returns>
-        ResponseModel Request(RequestModel request);
-
+        Save,
         /// <summary>
-        /// 何かしらを命令する。
-        /// <para><<see cref="Request(RequestModel)"/>とは異なり命令を実施したか拒否されたかのみが結果となる。</para>
+        /// 終了。
         /// </summary>
-        /// <param name="order">命令。</param>
-        /// <returns>真で実施、偽で拒否。</returns>
-        bool Order(OrderModel order);
+        Exit,
     }
 }

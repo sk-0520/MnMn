@@ -170,6 +170,7 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\OrderKind.cs" />
     <Compile Include="Define\UpdateCheckState.cs" />
     <Compile Include="Define\DefinedImageSourceKind.cs" />
     <Compile Include="Define\DisplayKind.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoInformationUtility.cs" />
     <Compile Include="Model\DefinedImageModel.cs" />
     <Compile Include="Model\Request\CustomCacheDataRequestModelBase.cs" />
+    <Compile Include="Model\Request\OrderModel.cs" />
     <Compile Include="Model\Request\Parameter\CacheDataParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoInformationCacheParameterModel.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoInformationCacheRequestModel.cs" />
