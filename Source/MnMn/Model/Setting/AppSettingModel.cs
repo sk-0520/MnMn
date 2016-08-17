@@ -27,6 +27,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
     /// <summary>
     /// 設定基底。
+    /// <para>一ファイルにすべて集約させる。</para>
+    /// <para>Peみたいに分割するのもいいけどなんかだるい。</para>
     /// </summary>
     [DataContract]
     public class AppSettingModel: SettingModelBase

@@ -47,8 +47,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
-
-        public static int BackupArchiveCount => appConfig.Get("backup-archive", int.Parse);
+        public static int BackupArchiveCount => appConfig.Get("backup-archive-count", int.Parse);
+        public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);
 
         /// <summary>
         /// キャッシュファイル有効期間。

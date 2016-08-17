@@ -45,6 +45,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return replacedText;
         }
 
+        public static string GetTimestampFileName(DateTime dateTime)
+        {
+            return dateTime.ToString(FormatTimestampFileName);
+        }
+
+        public static string GetNowTimestampFileName()
+        {
+            return GetTimestampFileName(DateTime.Now);
+        }
+
         #endregion
     }
 }

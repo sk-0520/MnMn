@@ -77,6 +77,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Version AcceptVersion { get; } = new Version(0, 2, 0, 0);
 
+        public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
+
+
         /// <summary>
         /// 最小XMLファイルサイズ。
         /// </summary>
@@ -177,6 +180,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// アーカイブディレクトリ名。
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
+        /// <summary>
+        /// バックアップディレクトリ名。
+        /// </summary>
+        public static string BackupDirectoryName { get; } = "backup";
+        /// <summary>
+        /// バックアップファイルローテートパターン。
+        /// </summary>
+        public static string BackupSearchPattern { get; } = "*.json.gz";
         /// <summary>
         /// /サービス名。
         /// </summary>
