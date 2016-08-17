@@ -88,41 +88,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.06.1',
-		'isRc': true,
+		'date': '2016/08/17',
+		'version': '0.07.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '0ac5d7bed02fec1706561b0382fa7bdb7810d829',
 						'subject': '#49: 設定ファイルのバックアップ',
 						'comments': [
 							'30世代でローテートした',
 							'１ファイルに全部集約する思想の元 gzip にした。zipだるい'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -130,7 +109,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'ddf6567c44e6ad37c3bef599f5c3027336c58183',
 						'subject': '#8: プレイヤーウィンドウより先にメインウィンドウを閉じた場合にあまりよくない状態になる',
 						'comments': [
 							'現状では全ウィンドウを閉じることにした',
@@ -138,26 +117,22 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '21bb44abde0ba857a1c1308848a7929210d95562',
 						'subject': '#54: マイリストのアイテム数は何表示してんの？',
 						'comments': [
 							'ユーザー側のマイリスト件数取得がバグってた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '17b3abbd70d767bc8f24ed889efe432e90443871',
 						'subject': '#52: 自動アップデートのダウンロード待ち中にUI操作可能にする',
 						'comments': [
 							'単純にTaskに切り替えたからもっかしダメかもね'
 						]
 					},
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'revision': '92371328ef3e866db30bacb985c7ea3912894059',
+						'subject': '#53: ユーザー切り替えを複数回行った際にユーザータブの現在ログイン者が変になる'
 					}
 				]
 			},
@@ -165,20 +140,12 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'a1277eb6c9e09efd10acc1bc63cb4ecc477abe68',
 						'subject': '#22: 固定値を app.config に移す',
 						'comments': [
 							'App.config と static class とメンバ初期値におんぶ抱っこでなぁなぁ実装',
 							'本実装ではとりあえず目につくものレベルなので今後見つけた際には随時実装していく'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
