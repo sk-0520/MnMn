@@ -130,8 +130,11 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
-						'subject': ''
+						'revision': '5d0b634b81d41d34e3e3480d9e7c99afedc923bc',
+						'subject': 'ログメッセージの出力が IndexOutOfRangeException してた',
+						'comments': [
+							'多分ね！'
+						]
 					},
 					{
 						'revision': '',
