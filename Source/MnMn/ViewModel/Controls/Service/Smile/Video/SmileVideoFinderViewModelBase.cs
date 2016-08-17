@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
 
-        public bool IsAscending
+        public virtual bool IsAscending
         {
             get { return this._isAscending; }
             set
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public SmileVideoSortType SelectedSortType
+        public virtual SmileVideoSortType SelectedSortType
         {
             get { return this._selectedSortType; }
             set
@@ -352,7 +352,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var map = new[] {
                 new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItem.Number) },
                 new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
-                //new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
+                new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
                 new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
                 new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
                 new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },

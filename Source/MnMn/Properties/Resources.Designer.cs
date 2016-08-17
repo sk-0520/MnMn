@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   長さ に類似しているローカライズされた文字列を検索します。
+        ///   時間 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_Length {
             get {
