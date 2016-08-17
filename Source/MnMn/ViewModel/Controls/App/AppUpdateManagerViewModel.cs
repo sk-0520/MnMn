@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(o => {
                     var result = UpdateExecute();
                     if(result) {
-                        Application.Current.Shutdown();
+                        Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
                     }
                 });
             }

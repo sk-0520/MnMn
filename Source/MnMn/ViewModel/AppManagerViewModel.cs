@@ -152,13 +152,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region function
 
-        void SaveSetting()
-        {
-            var dir = VariableConstants.GetSettingDirectory();
-            var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
+        //void SaveSetting()
+        //{
+        //    var dir = VariableConstants.GetSettingDirectory();
+        //    var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
 
-            SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
-        }
+        //    SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
+        //}
 
         #endregion
 
@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override void UninitializeView(MainWindow view)
         {
-            SaveSetting();
+            Mediation.Order(new OrderModel(OrderKind.Save, ServiceType.Application));
 
             foreach(var manager in ManagerItems) {
                 manager.UninitializeView(view);
