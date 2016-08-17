@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -66,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Setting = (SmileVideoSettingModel)settingResult.Result;
 
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
+
+            //BindingOperations.EnableCollectionSynchronization(FinderItemList, new object());
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -204,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items)
+        protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items, CacheSpan thumbCacheSpan)
         {
             var prevInformations = FinderItemList
                 .Select(i => i.Information)
@@ -218,15 +221,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
                 .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
+                .ToArray()
             ;
-            FinderItemList.InitializeRange(finderItems);
 
-            FinderItems.Refresh();
-            CallOnPropertyChange(nameof(FinderItems));
-
-            ChangeSortItems();
-
-            return Task.CompletedTask;
+            var loader = new SmileVideoInformationLoader(finderItems.Select(i => i.Information));
+            return loader.LoadInformationAsync(thumbCacheSpan).ContinueWith(t => {
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    FinderItemList.InitializeRange(finderItems);
+                    ChangeSortItems();
+                }));
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
         }
 
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -234,9 +238,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.Run(() => {
                 FinderLoadState = SourceLoadState.InformationLoading;
                 var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
-                var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
-                var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
-                return Task.WhenAll(imageTask, infoTask);
+                return loader.LoadThumbnaiImageAsync(imageCacheSpan);
             }, CancelLoading.Token).ContinueWith(t => {
                 FinderLoadState = SourceLoadState.Completed;
                 NowLoading = false;

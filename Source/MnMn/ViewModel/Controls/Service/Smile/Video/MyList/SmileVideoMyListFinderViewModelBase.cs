@@ -128,9 +128,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region SmileVideoFeedFinderViewModelBase
 
-        protected override Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items)
+        protected override Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items, CacheSpan thumbCacheSpan)
         {
-            return base.SetItemsAsync(items).ContinueWith(t => {
+            return base.SetItemsAsync(items, thumbCacheSpan).ContinueWith(t => {
                 CallOnPropertyChange(nameof(MyListItemCount));
             });
         }
