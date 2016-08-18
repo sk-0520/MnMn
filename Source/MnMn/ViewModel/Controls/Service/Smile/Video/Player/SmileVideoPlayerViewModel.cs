@@ -323,11 +323,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             private set { SetVariableValue(ref this._originalPosterCommentListCount, value); }
         }
 
-        public string VideoId
-        {
-            get { return Information?.VideoId; }
-        }
-
         public bool IsEnabledPostAnonymous { get { return Information?.IsOfficialVideo ?? false; } }
 
         /// <summary>

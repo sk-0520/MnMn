@@ -110,6 +110,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
 
+        public string VideoId
+        {
+            get { return Information?.VideoId; }
+        }
+
         public LoadState InformationLoadState
         {
             get { return this._informationLoadState; }
@@ -236,7 +241,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             var getflv = new Getflv(Mediation);
-            return getflv.LoadAsync(Information.VideoId, Information.WatchUrl, Information.MovieType);
+            return getflv.LoadAsync(VideoId, Information.WatchUrl, Information.MovieType);
         }
 
         async Task LoadGetflvAsync()
@@ -247,7 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(rawVideoGetflvModel != null) {
                 Information.SetGetflvModel(rawVideoGetflvModel);
 
-                var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(Information.VideoId, "getflv", "xml"));
+                var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
                 SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
             }
 
@@ -344,7 +349,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Preparation;
 
-            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(Information.VideoId, "msg", "xml"));
+            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoId, "msg", "xml"));
             if(File.Exists(cacheFilePath)) {
                 var fileInfo = new FileInfo(cacheFilePath);
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
@@ -621,7 +626,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
-            Mediation.Logger.Trace($"{Information.VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
+            Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
 
             Information.IsDownloading = true;
 
