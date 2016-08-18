@@ -60,10 +60,6 @@
 					{
 						'revision': '',
 						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -88,9 +84,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.07.1',
-		'isRc': true,
+		'date': '2016/08/18',
+		'version': '0.08.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -113,7 +109,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '755db59368218be6a80e6dbdb941ae62023186e8',
 						'subject': '#7: ファインダーのリスト設定時に全情報を取得する',
 						'comments': [
 							'今まであれやこれや可能な限り情報取得は後に回してたけど動画時間とかでフィルタリングするにはデータが足りないこともあり歯がゆかったので読み込み時に全情報取得するようにした',
@@ -121,18 +117,18 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c7ebc98baea993c82d681696d62a36a8cd56365d',
 						'subject': '#7実装によりフィルタリングに「時間」を追加',
 						'comments': [
 							'内部実装は前々からあったから活用できるようになったというべきか',
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'dc13619b4a61872af99038c41df855405731839d',
 						'subject': '#43: ダウンロード中の速度表示'
 					},
 					{
-						'revision': '',
+						'revision': '66fb81e4d943d5d97f94d1fbc2f062f9e248e467',
 						'subject': '#46: 一定間隔でデータ保存を行う',
 						'comments': [
 							'30分間隔',
@@ -140,7 +136,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2402b341d582cd9a7aa2c704f36c8f123b798dcd',
 						'subject': '#40: アップデート時に設定保存を明示的に行う',
 						'comments': [
 							'アップデート処理前に保存を行うようにした'
@@ -157,18 +153,6 @@
 						'comments': [
 							'多分ね！'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -176,16 +160,8 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '24b6be87f4041feac5ac2d0e0d7aa7b4d91fb62b',
 						'subject': 'データ保存と終了処理を明示的に分離した'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
