@@ -224,10 +224,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
 
             Mediation.Order(new AppSaveOrderModel(true));
+            AutoSaveTimer.Stop();
+            AutoSaveTimer.Tick -= AutoSaveTimer_Tick;
         }
 
         private void View_Closed(object sender, EventArgs e)
         {
+
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
         }
