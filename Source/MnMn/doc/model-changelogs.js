@@ -174,7 +174,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'データ保存と終了処理を明示的に分離した'
 					},
 					{
 						'revision': '',

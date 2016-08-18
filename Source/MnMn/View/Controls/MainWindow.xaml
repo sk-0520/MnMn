@@ -1,8 +1,9 @@
-﻿<Window
+﻿<cttn_sl_view_window:UserClosableWindowWindowBase
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:cttn_sl_view_window="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Window;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_app="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.App"
@@ -23,7 +24,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <Window.Resources>
+  <cttn_sl_view_window:UserClosableWindowWindowBase.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
@@ -32,7 +33,7 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
-  </Window.Resources>
+  </cttn_sl_view_window:UserClosableWindowWindowBase.Resources>
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -81,4 +82,4 @@
       </TabItem>
     </TabControl>
   </DockPanel>
-</Window>
+</cttn_sl_view_window:UserClosableWindowWindowBase>

@@ -170,6 +170,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         //    SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
         //}
+        IEnumerable<ViewModelBase> GetChildWindowViewModels()
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+
+            var windows = new[] {
+                players,
+            }.SelectMany(i => i);
+
+            return windows;
+        }
 
         #endregion
 
@@ -190,6 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
             GarbageCollectionAsync();
 
+            View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
             View.Closed += View_Closed;
         }
@@ -208,29 +219,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var players = Mediation.GetResultFromRequest<IEnumerable<ICloseView>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+            var viewModels = GetChildWindowViewModels();
 
-            var closeItems = new[] {
-                players,
-            }.SelectMany(i => i);
-
-            if(closeItems.Any()) {
+            if(viewModels.Any()) {
+                // TODO: 将来何かに使いましょうさ
                 //e.Cancel = true;
-                foreach(var item in closeItems.ToArray()) {
-                    item.Close();
-                }
             }
 
-            Mediation.Order(new AppSaveOrderModel(true));
-            AutoSaveTimer.Stop();
-            AutoSaveTimer.Tick -= AutoSaveTimer_Tick;
+            if(!e.Cancel) {
+                Mediation.Order(new AppSaveOrderModel(true));
+            }
         }
+
+        private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var closeItems = GetChildWindowViewModels().Cast<ICloseView>();
+
+            foreach(var closeItem in closeItems) {
+                closeItem.Close();
+            }
+        }
+
 
         private void View_Closed(object sender, EventArgs e)
         {
-
+            AutoSaveTimer.Stop();
+            AutoSaveTimer.Tick -= AutoSaveTimer_Tick;
+            View.UserClosing -= View_UserClosing;
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
         }
