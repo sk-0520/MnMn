@@ -204,7 +204,7 @@
     <value>投稿日</value>
   </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_Length" xml:space="preserve">
-    <value>長さ</value>
+    <value>時間</value>
   </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_MyListCount" xml:space="preserve">
     <value>マイリスト数</value>

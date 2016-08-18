@@ -30,12 +30,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     {
         public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> list)
         {
-            List = list.ToArray();
+            List = new List<SmileVideoInformationViewModel>(list);
         }
 
         #region property
 
-        IEnumerable<SmileVideoInformationViewModel> List { get; }
+        IReadOnlyList<SmileVideoInformationViewModel> List { get; }
 
         public CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
 
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var tasks = new List<Task>();
             var groups = List
-                .GroupBy(i => i.ThumbnailUri.IsAbsoluteUri ? i.ThumbnailUri.Host: string.Empty)
+                .GroupBy(i => i.ThumbnailUri.IsAbsoluteUri ? i.ThumbnailUri.Host : string.Empty)
                 .OrderByDescending(g => g.Count())
                 .ToArray()
             ;

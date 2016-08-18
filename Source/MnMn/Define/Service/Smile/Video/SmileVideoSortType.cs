@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         Number,
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoSortType_Title))]
         Title,
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoSortType_Length))]
-        //Length,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoSortType_Length))]
+        Length,
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoSortType_FirstRetrieve))]
         FirstRetrieve,
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount))]

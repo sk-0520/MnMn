@@ -37,15 +37,18 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region property
 
-        public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
-
-        public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
-
         public static string UriUpdate => ReplaceAppConfig(appConfig.Get("uri-update"));
         public static string UriChangelogRelease => ReplaceAppConfig(appConfig.Get("uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("uri-changelog-rc"));
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
+
+        /// <summary>
+        /// 設定ファイルの自動保存タイミング。
+        /// </summary>
+        public static TimeSpan AutoSaveSettingTime => appConfig.Get("auto-save-setting-time", TimeSpan.Parse);
+        public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
+        public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 
         public static int BackupArchiveCount => appConfig.Get("backup-archive-count", int.Parse);
         public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);

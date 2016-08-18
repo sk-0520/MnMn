@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -36,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -69,12 +71,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
 
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            AutoSaveTimer = new DispatcherTimer() {
+                Interval = Constants.AutoSaveSettingTime,
+            };
+            AutoSaveTimer.Tick += AutoSaveTimer_Tick;
+            AutoSaveTimer.Start();
         }
 
         #region property
 
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
+
+        DispatcherTimer AutoSaveTimer { get; }
+
 
         public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
@@ -159,6 +170,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         //    SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
         //}
+        IEnumerable<ViewModelBase> GetChildWindowViewModels()
+        {
+            var players = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+
+            var windows = new[] {
+                players,
+            }.SelectMany(i => i);
+
+            return windows;
+        }
 
         #endregion
 
@@ -179,14 +200,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
             GarbageCollectionAsync();
 
+            View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
             View.Closed += View_Closed;
         }
 
         public override void UninitializeView(MainWindow view)
         {
-            Mediation.Order(new OrderModel(OrderKind.Save, ServiceType.Application));
-
             foreach(var manager in ManagerItems) {
                 manager.UninitializeView(view);
             }
@@ -199,26 +219,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var players = Mediation.GetResultFromRequest<IEnumerable<ICloseView>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+            var viewModels = GetChildWindowViewModels();
 
-            var closeItems = new[] {
-                players,
-            }.SelectMany(i => i);
-
-            if(closeItems.Any()) {
+            if(viewModels.Any()) {
+                // TODO: 将来何かに使いましょうさ
                 //e.Cancel = true;
-                foreach(var item in closeItems.ToArray()) {
-                    item.Close();
-                }
+            }
+
+            if(!e.Cancel) {
+                Mediation.Order(new AppSaveOrderModel(true));
             }
         }
 
+        private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var closeItems = GetChildWindowViewModels().Cast<ICloseView>();
+
+            foreach(var closeItem in closeItems) {
+                closeItem.Close();
+            }
+        }
+
+
         private void View_Closed(object sender, EventArgs e)
         {
+            AutoSaveTimer.Stop();
+            AutoSaveTimer.Tick -= AutoSaveTimer_Tick;
+            View.UserClosing -= View_UserClosing;
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
+        }
+
+        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            Mediation.Logger.Debug($"timer: {sender}, {e}");
+            try {
+                AutoSaveTimer.Stop();
+                Mediation.Order(new AppSaveOrderModel(false));
+            } finally {
+                AutoSaveTimer.Start();
+            }
+
         }
 
     }

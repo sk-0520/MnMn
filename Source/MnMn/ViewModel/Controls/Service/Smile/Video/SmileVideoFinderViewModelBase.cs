@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -67,6 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
+            //BindingOperations.EnableCollectionSynchronization(FinderItemList, new object());
+
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
         }
@@ -82,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
 
-        public bool IsAscending
+        public virtual bool IsAscending
         {
             get { return this._isAscending; }
             set
@@ -93,7 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public SmileVideoSortType SelectedSortType
+        public virtual SmileVideoSortType SelectedSortType
         {
             get { return this._selectedSortType; }
             set
@@ -204,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items)
+        protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items, CacheSpan thumbCacheSpan)
         {
             var prevInformations = FinderItemList
                 .Select(i => i.Information)
@@ -218,15 +221,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
                 .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
+                .ToArray()
             ;
-            FinderItemList.InitializeRange(finderItems);
 
-            FinderItems.Refresh();
-            CallOnPropertyChange(nameof(FinderItems));
-
-            ChangeSortItems();
-
-            return Task.CompletedTask;
+            var loader = new SmileVideoInformationLoader(finderItems.Select(i => i.Information));
+            return loader.LoadInformationAsync(thumbCacheSpan).ContinueWith(t => {
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    FinderItemList.InitializeRange(finderItems);
+                    ChangeSortItems();
+                }));
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
         }
 
         protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -234,9 +238,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.Run(() => {
                 FinderLoadState = SourceLoadState.InformationLoading;
                 var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
-                var imageTask = loader.LoadThumbnaiImageAsync(imageCacheSpan);
-                var infoTask = IsLoadVideoInformation ? loader.LoadInformationAsync(thumbCacheSpan) : Task.CompletedTask;
-                return Task.WhenAll(imageTask, infoTask);
+                return loader.LoadThumbnaiImageAsync(imageCacheSpan);
             }, CancelLoading.Token).ContinueWith(t => {
                 FinderLoadState = SourceLoadState.Completed;
                 NowLoading = false;
@@ -350,7 +352,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var map = new[] {
                 new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItem.Number) },
                 new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
-                //new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
+                new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
                 new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
                 new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
                 new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },

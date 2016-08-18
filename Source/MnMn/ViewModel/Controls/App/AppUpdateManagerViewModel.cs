@@ -31,6 +31,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using Microsoft.Win32.SafeHandles;
 
@@ -105,6 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
+                    Mediation.Order(new AppSaveOrderModel(true));
                     UpdateExecuteAsunc().ContinueWith(t => {
                         if(t.Result) {
                             Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
