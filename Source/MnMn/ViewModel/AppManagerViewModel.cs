@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -185,8 +186,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override void UninitializeView(MainWindow view)
         {
-            Mediation.Order(new OrderModel(OrderKind.Save, ServiceType.Application));
-
             foreach(var manager in ManagerItems) {
                 manager.UninitializeView(view);
             }
@@ -213,6 +212,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                     item.Close();
                 }
             }
+
+            Mediation.Order(new AppSaveOrderModel(true));
         }
 
         private void View_Closed(object sender, EventArgs e)

@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -186,27 +187,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
-        bool OrderCore_Save(OrderModel order)
+        bool OrderCore_Save(AppSaveOrderModel order)
         {
-            var backupDirectory = VariableConstants.GetBackupDirectory();
-            FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
-                Logger.Warning(e);
-                return true;
-            });
-
             var settingDirectory = VariableConstants.GetSettingDirectory();
             var settingFilePath = Path.Combine(settingDirectory.FullName, Constants.SettingFileName);
             SerializeUtility.SaveSetting(settingFilePath, Setting, SerializeFileType.Json, true, Logger);
 
-            var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
-            var fileName = PathUtility.AppendExtension(baseName, "json.gz");
-            var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
-            FileUtility.MakeFileParentDirectory(backupFilePath);
-            //File.Copy(settingFilePath, backupFilePath, true);
-            // 1ファイル集約の元 gzip でポン!
-            using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
-                using(var input = File.OpenRead(settingFilePath)) {
-                    input.CopyTo(output);
+            if(order.IsBackup) {
+                var baseName = $"{Constants.GetNowTimestampFileName()}_ver.{Constants.ApplicationVersionNumber.ToString()}";
+                var fileName = PathUtility.AppendExtension(baseName, "json.gz");
+                var backupDirectory = VariableConstants.GetBackupDirectory();
+                FileUtility.RotateFiles(backupDirectory.FullName, Constants.BackupSearchPattern, OrderBy.Descending, Constants.BackupSettingCount, e => {
+                    Logger.Warning(e);
+                    return true;
+                });
+                var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
+                FileUtility.MakeFileParentDirectory(backupFilePath);
+                //File.Copy(settingFilePath, backupFilePath, true);
+                // 1ファイル集約の元 gzip でポン!
+                using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
+                    using(var input = File.OpenRead(settingFilePath)) {
+                        input.CopyTo(output);
+                    }
                 }
             }
 
@@ -220,7 +222,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return OrderCore_Exit(order);
 
                 case OrderKind.Save:
-                    return OrderCore_Save(order);
+                    return OrderCore_Save((AppSaveOrderModel)order);
 
                 default:
                     throw new NotImplementedException();

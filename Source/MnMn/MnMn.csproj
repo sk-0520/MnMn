@@ -245,6 +245,7 @@
     <Compile Include="Logic\Utility\FontPropertyUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoInformationUtility.cs" />
     <Compile Include="Model\DefinedImageModel.cs" />
+    <Compile Include="Model\Order\AppSaveOrderModel.cs" />
     <Compile Include="Model\Request\CustomCacheDataRequestModelBase.cs" />
     <Compile Include="Model\Request\OrderModel.cs" />
     <Compile Include="Model\Request\Parameter\CacheDataParameterModel.cs" />
