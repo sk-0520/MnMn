@@ -316,7 +316,7 @@
             <Style TargetType="TextBlock">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
-                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}}" />
+                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
               </Style.Triggers>

@@ -220,6 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         long secondsDownlodingSize = prevSecondsDownloadingSize;
 
                         if(secondsBaseTime <= elapsedTime) {
+                            //DODO: 超過分をきちんと割合比較
                             secondsDownlodingSize = secondsReadSize;
                             prevSecondsDownloadingSize = secondsDownlodingSize;
                             secondsReadSize = 0;
