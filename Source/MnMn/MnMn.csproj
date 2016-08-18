@@ -287,6 +287,7 @@
       <DependentUpon>SmileVideoCheckItLaterManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\EnumDisplayConverter.cs" />
+    <Compile Include="View\Converter\HumanLikeByteConverter.cs" />
     <Compile Include="View\Converter\OutlinedTextBlockFontSizeToStrokeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
@@ -975,7 +976,6 @@
     <Folder Include="etc\image\service\smile\video\" />
     <Folder Include="etc\script\smile\" />
     <Folder Include="Resources\Service\Smile\Video\Search\" />
-    <Folder Include="View\Logic\Service\Smile\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">

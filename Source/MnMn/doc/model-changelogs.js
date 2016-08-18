@@ -129,6 +129,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#43: ダウンロード中の速度表示'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

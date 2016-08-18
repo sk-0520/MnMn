@@ -59,6 +59,7 @@
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
+      <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
 
@@ -310,6 +311,19 @@
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <TextBlock ToolTip="動画サイズ">
+        <TextBlock>
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
+                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
         <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
         <TextBlock>x</TextBlock>
         <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />

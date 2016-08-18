@@ -150,6 +150,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _isSelectedInformation;
         bool _isSettedMedia;
 
+        long _secondsDownloadingSize;
+
         SmileVideoCommentVertical _postCommandVertical = SmileVideoCommentVertical.Normal;
         SmileVideoCommentSize _postCommandSize = SmileVideoCommentSize.Medium;
         Color _postCommandColor = Colors.White;
@@ -321,11 +323,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._originalPosterCommentListCount; }
             private set { SetVariableValue(ref this._originalPosterCommentListCount, value); }
-        }
-
-        public string VideoId
-        {
-            get { return Information?.VideoId; }
         }
 
         public bool IsEnabledPostAnonymous { get { return Information?.IsOfficialVideo ?? false; } }
@@ -838,6 +835,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                 }
             }
+        }
+
+        public long SecondsDownloadingSize
+        {
+            get { return this._secondsDownloadingSize; }
+            set { SetVariableValue(ref this._secondsDownloadingSize, value); }
         }
 
         #endregion
@@ -2193,6 +2196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(e.Cancel) {
                 StopMovie();
             }
+            SecondsDownloadingSize = e.SecondsDownlodingSize;
 
             base.OnDownloading(sender, e);
         }

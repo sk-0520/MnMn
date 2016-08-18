@@ -24,10 +24,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
 {
     public class DownloadingEventArgs: DownloaderEventArgs
     {
-        public DownloadingEventArgs(ArraySegment<byte> data, int counter)
+        public DownloadingEventArgs(ArraySegment<byte> data, int counter, long secondsDownlodingSize)
         {
             Data = data;
             Counter = counter;
+            SecondsDownlodingSize = secondsDownlodingSize;
         }
 
         #region property
@@ -37,7 +38,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
         /// </summary>
         public ArraySegment<byte> Data { get; }
 
-        public int Counter{ get; }
+        public int Counter { get; }
+        /// <summary>
+        /// 1秒間の受信データサイズ。
+        /// </summary>
+        public long SecondsDownlodingSize { get; }
         //
         // 概要:
         //     イベントをキャンセルするかどうかを示す値を取得または設定します。

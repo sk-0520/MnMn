@@ -164,6 +164,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             return (long)elapsedTime.TotalSeconds;
         }
+
+        public static string ConvertHumanLikeByte(long byteSize)
+        {
+            var terms = new[] { "byte", "KB", "MB", "GB" };
+            double size = byteSize;
+            int order = 0;
+            while(size >= 1024 && ++order < terms.Length) {
+                size = size / 1024;
+            }
+
+            return $"{size:0.##} {terms[order]}";
+        }
+
         #endregion
     }
 }
