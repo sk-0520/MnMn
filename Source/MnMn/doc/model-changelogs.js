@@ -144,7 +144,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'AssemblyCopyright追記'
 					},
 					{
 						'revision': '',
@@ -163,23 +163,6 @@
 		'version': '0.08.0',
 		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
