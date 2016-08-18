@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -113,13 +114,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return e.Cancel;
         }
 
-        protected bool OnDonwloading(ArraySegment<byte> data, int counter)
+        protected bool OnDonwloading(ArraySegment<byte> data, int counter, long secondsDownlodingSize)
         {
             if(Downloading == null) {
                 return false;
             }
 
-            var e = new DownloadingEventArgs(data, counter);
+            var e = new DownloadingEventArgs(data, counter, secondsDownlodingSize);
             Downloading(this, e);
 
             return e.Cancel;
@@ -184,13 +185,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     byte[] buffer = new byte[ReceiveBufferSize];
                     int counter = 1;
 
+                    var secondsStopWatch = new Stopwatch();
+                    var secondsBaseTime = TimeSpan.FromSeconds(1);
+                    long secondsReadSize = 0;
+                    long prevSecondsDownloadingSize = 0;
+
                     while(true) {
-                        int readSize = 0;
+                        if(secondsReadSize == 0) {
+                            secondsStopWatch.Restart();
+                        }
+
+                        int currentReadSize = 0;
 
                         int errorCounter = 1;
                         while(true) {
                             try {
-                                readSize = reader.Read(buffer, 0, buffer.Length);
+                                currentReadSize = reader.Read(buffer, 0, buffer.Length);
+                                secondsReadSize += currentReadSize;
                                 break;
                             } catch(IOException ex) {
                                 var cancel = OnDownloadingError(errorCounter++, ex);
@@ -200,14 +211,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 }
                             }
                         }
-                        if(readSize == 0) {
+                        if(currentReadSize == 0) {
                             // TODO: 最後かどうかわからんけどとりあえず今のところは最後認識。イベントでも作るべし
                             break;
                         }
 
-                        DownloadedSize += readSize;
-                        var slice = new ArraySegment<byte>(buffer, 0, readSize);
-                        if(OnDonwloading(slice, counter++)) {
+                        var elapsedTime = secondsStopWatch.Elapsed;
+                        long secondsDownlodingSize = prevSecondsDownloadingSize;
+
+                        if(secondsBaseTime <= elapsedTime) {
+                            secondsDownlodingSize = secondsReadSize;
+                            prevSecondsDownloadingSize = secondsDownlodingSize;
+                            secondsReadSize = 0;
+                        }
+
+                        DownloadedSize += currentReadSize;
+                        var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);
+                        if(OnDonwloading(slice, counter++, secondsDownlodingSize)) {
                             Cancled = true;
                             return;
                         }

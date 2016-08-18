@@ -626,7 +626,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
-            Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}");
+            Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}, {e.SecondsDownlodingSize}");
 
             Information.IsDownloading = true;
 
