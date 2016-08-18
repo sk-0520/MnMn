@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -70,12 +71,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
 
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            AutoSaveTimer = new DispatcherTimer() {
+                Interval = Constants.AutoSaveSettingTime,
+            };
+            AutoSaveTimer.Tick += AutoSaveTimer_Tick;
+            AutoSaveTimer.Start();
         }
 
         #region property
 
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
+
+        DispatcherTimer AutoSaveTimer { get; }
+
 
         public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
@@ -220,6 +230,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
+        }
+
+        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            Mediation.Logger.Debug($"timer: {sender}, {e}");
+            try {
+                AutoSaveTimer.Stop();
+                Mediation.Order(new AppSaveOrderModel(false));
+            } finally {
+                AutoSaveTimer.Start();
+            }
+
         }
 
     }
