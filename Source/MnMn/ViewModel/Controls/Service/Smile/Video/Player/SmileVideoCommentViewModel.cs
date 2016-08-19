@@ -25,7 +25,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -156,6 +158,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメント内容。
         /// </summary>
         public string Content { get; }
+
+        /// <summary>
+        /// コメント内容。
+        /// <para>改行区切り。</para>
+        /// </summary>
+        public string[] ContentLines { get { return Content?.SplitLines().ToArray() ?? new string[0]; } }
+
         /// <summary>
         /// 実際に表示するコメント内容。
         /// </summary>
