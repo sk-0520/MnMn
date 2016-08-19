@@ -72,7 +72,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.68\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.69\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -289,7 +289,6 @@
     </Compile>
     <Compile Include="View\Converter\EnumDisplayConverter.cs" />
     <Compile Include="View\Converter\HumanLikeByteConverter.cs" />
-    <Compile Include="View\Converter\NullToVisibilityConverter.cs" />
     <Compile Include="View\Converter\OutlinedTextBlockFontSizeToStrokeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
