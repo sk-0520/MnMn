@@ -57,9 +57,11 @@
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
+      <app_view_converter:SpaceJoinConverter x:Key="SpaceJoinConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
 
@@ -778,7 +780,7 @@
 
                           <TextBlock DockPanel.Dock="Right" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" Visibility="{Binding DataContext.PlayerShowPostTimestamp, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
 
-                          <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Content}">
+                          <!--<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Content}">
                             <TextBlock.Style>
                               <Style TargetType="TextBlock">
                                 <Style.Triggers>
@@ -794,7 +796,23 @@
                                 </Style.Triggers>
                               </Style>
                             </TextBlock.Style>
-                          </TextBlock>
+                          </TextBlock>-->
+                          <ItemsControl ItemsSource="{Binding ContentLines}">
+                            <ItemsControl.ItemsPanel>
+                              <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                              </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                  <TextBlock Visibility="{Binding RelativeSource={RelativeSource PreviousData}, Converter={StaticResource NullToVisibilityConverter}}">↵</TextBlock>
+                                  <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource SpaceJoinConverter}, ConverterParameter=˽}" />
+                                </StackPanel>
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+
                         </DockPanel>
                       </DataTemplate>
                     </ListBox.ItemTemplate>
