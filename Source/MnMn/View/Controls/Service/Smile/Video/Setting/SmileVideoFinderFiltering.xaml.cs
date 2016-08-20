@@ -76,9 +76,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         private static void OnFilteringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CastUtility.AsAction<SmileVideoFinderFiltering>(d, control => {
-                //TODO: すりあわせ
                 control.Filtering = e.NewValue as SmileVideoFilteringViweModel;
-                //control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
+                control.FilteringViewModelItemsSource = control.Filtering.FinderFilterList.ViewModelList;
                 //control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
                 //control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
                 //var defineItems = control.Filtering.CommentDefineItems.Select(de => new SmileVideoFinderFilteringElementViewModel(de)).ToArray();

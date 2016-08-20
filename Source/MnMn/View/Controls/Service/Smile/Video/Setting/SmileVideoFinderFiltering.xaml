@@ -21,29 +21,7 @@
     <cttn_sl_view_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
     <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
   </UserControl.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-    </Grid.RowDefinitions>
-
-    <ListBox
-      x:Name="filterItems"
-      Grid.Row="0"
-      ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
-      SelectionChanged="filterItems_SelectionChanged"
-    >
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Width="60" Text="{Binding Type, Converter={StaticResource EnumDisplayConverter}}" />
-            <TextBlock Width="80" Text="{Binding Target, Converter={StaticResource EnumDisplayConverter}}" />
-            <TextBlock Text="{Binding Source}" />
-          </StackPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+  <DockPanel>
 
     <StackPanel DockPanel.Dock="Bottom">
       <Grid>
@@ -90,6 +68,21 @@
       </Grid>
     </StackPanel>
 
+    <ListBox
+      x:Name="filterItems"
+      ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      SelectionChanged="filterItems_SelectionChanged"
+    >
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Width="60" Text="{Binding Type, Converter={StaticResource EnumDisplayConverter}}" />
+            <TextBlock Width="80" Text="{Binding Target, Converter={StaticResource EnumDisplayConverter}}" />
+            <TextBlock Text="{Binding Source}" />
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
 
-  </Grid>
+  </DockPanel>
 </UserControl>

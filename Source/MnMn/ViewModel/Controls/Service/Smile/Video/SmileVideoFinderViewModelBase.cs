@@ -32,9 +32,11 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
@@ -71,6 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
             //BindingOperations.EnableCollectionSynchronization(FinderItemList, new object());
+            var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
+            FinderFilering = filteringResult.Filtering;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -86,6 +90,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
+
+        //public virtual SmileVideoFilteringViweModel Filtering { get; }
+        public SmileVideoFilteringViweModel FinderFilering { get; }
 
         public virtual bool IsAscending
         {
@@ -226,6 +233,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public ICommand RandomContinuousPlaybackCommand
         {
             get { return CreateCommand(o => ContinuousPlaybackAsync(true)); }
+        }
+
+        public ICommand ChangedFilteringCommand
+        {
+            get { return CreateCommand(o => ChangedFiltering()); }
         }
 
         #endregion
@@ -393,6 +405,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             FinderItems.SortDescriptions.Clear();
             FinderItems.SortDescriptions.Add(sort);
             FinderItems.Refresh();
+        }
+
+        void ChangedFiltering()
+        {
+            Mediation.Logger.Information("not impl");
         }
 
         #endregion
