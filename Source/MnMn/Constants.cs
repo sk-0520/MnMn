@@ -179,11 +179,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// doc/
         /// </summary>
         public static string ApplicationDocDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "doc"); } }
+
         /// <summary>
         /// etc/
         /// </summary>
         public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
 
+        /// <summary>
+        /// 外部ライブラリファイルパス。
+        /// </summary>
+        public static string ComponentListFileName { get { return Path.Combine(ApplicationDocDirectoryPath, "components.xml"); } }
         /// <summary>
         /// ヘルプファイルパス。
         /// </summary>

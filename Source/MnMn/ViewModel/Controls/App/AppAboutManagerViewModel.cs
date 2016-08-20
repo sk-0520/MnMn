@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
@@ -24,9 +26,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
+        #region variable
+
+        ComponentItemCollectionModel _componentCollection;
+
+        #endregion
+
         public AppAboutManagerViewModel(Mediation mediation)
             : base(mediation)
         { }
+
+        #region property
+
+        public ComponentItemCollectionModel ComponentCollection
+        {
+            get
+            {
+                if(this._componentCollection == null) {
+                    this._componentCollection = SerializeUtility.LoadXmlSerializeFromFile<ComponentItemCollectionModel>(Constants.ComponentListFileName);
+                }
+
+                return this._componentCollection;
+            }
+        }
+
+        #endregion
 
         #region command
 
@@ -135,6 +159,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region ManagerViewModelBase
+
+        protected override void ShowView()
+        {
+            base.ShowView();
+        }
 
         public override Task GarbageCollectionAsync()
         {
