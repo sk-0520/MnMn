@@ -52,6 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         string _inputTitleFilter;
         bool _isBlacklist;
+        bool _showSettingFilter;
         bool _isEnabledSettingFilter;
 
         bool _isAscending = true;
@@ -156,10 +157,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// 設定フィルタを使用するか。
+        /// </summary>
         public bool IsEnabledSettingFilter
         {
             get { return this._isEnabledSettingFilter; }
-            set { SetVariableValue(ref this._isEnabledSettingFilter, value); }
+            set
+            {
+                if(SetVariableValue(ref this._isEnabledSettingFilter, value)) {
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 設定フィルタ有効無効UI表示。
+        /// </summary>
+        public bool ShowSettingFilter
+        {
+            get { return this._showSettingFilter; }
+            set { SetVariableValue(ref this._showSettingFilter, value); }
         }
 
         public virtual bool CanLoad

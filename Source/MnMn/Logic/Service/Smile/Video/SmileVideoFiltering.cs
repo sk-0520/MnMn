@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoFiltering: Filtering
     {
-        public SmileVideoFiltering(SmileVideoFilteringItemSettingModel setting) 
+        public SmileVideoFiltering(SmileVideoCommentFilteringItemSettingModel setting) 
             : base(setting)
         {
             SubSetting = setting;
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region property
 
-        SmileVideoFilteringItemSettingModel SubSetting { get; }
+        SmileVideoCommentFilteringItemSettingModel SubSetting { get; }
 
         #endregion
 
@@ -44,13 +44,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public bool Check(string comment, string userId, IEnumerable<string> command)
         {
             switch(SubSetting.Target) {
-                case SmileVideoFilteringTarget.Comment:
+                case SmileVideoCommentFilteringTarget.Comment:
                     return Check(comment);
 
-                case SmileVideoFilteringTarget.UserId:
+                case SmileVideoCommentFilteringTarget.UserId:
                     return Check(userId);
 
-                case SmileVideoFilteringTarget.Command:
+                case SmileVideoCommentFilteringTarget.Command:
                     return command.Any(c => Check(c));
 
                 default:

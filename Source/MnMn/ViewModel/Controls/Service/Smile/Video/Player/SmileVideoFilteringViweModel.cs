@@ -30,23 +30,23 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoFilteringViweModel: SingleModelWrapperViewModelBase<SmileVideoFilteringSettingModel>
+    public class SmileVideoFilteringViweModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringSettingModel>
     {
-        public SmileVideoFilteringViweModel(SmileVideoFilteringSettingModel model, SmileVideoFilteringModel filtering)
+        public SmileVideoFilteringViweModel(SmileVideoCommentFilteringSettingModel model, SmileVideoFilteringModel filteringDefine)
             : base(model)
         {
-            Filtering = filtering;
+            FilteringDefine = filteringDefine;
 
-            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
 
-            DefineItems = filtering.Elements;
+            DefineItems = filteringDefine.Elements;
         }
 
         #region property
 
-        SmileVideoFilteringModel Filtering { get; }
+        SmileVideoFilteringModel FilteringDefine { get; }
 
-        public MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilterList { get; }
+        public MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilterList { get; }
 
         public bool IgnoreOverlapWord
         {

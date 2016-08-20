@@ -65,9 +65,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         static readonly DependencyProperty FilteringTargetItemsProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(FilteringTargetItemsProperty)),
-            typeof(IEnumerable<SmileVideoFilteringTarget>),
+            typeof(IEnumerable<SmileVideoCommentFilteringTarget>),
             typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(EnumUtility.GetMembers<SmileVideoFilteringTarget>())
+            new FrameworkPropertyMetadata(EnumUtility.GetMembers<SmileVideoCommentFilteringTarget>())
         );
 
         #region FilteringItemSourceProperty
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             DependencyPropertyUtility.GetName(nameof(FilteringProperty)),
             typeof(SmileVideoFilteringViweModel),
             typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>), new PropertyChangedCallback(OnFilteringChanged))
+            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoCommentFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>), new PropertyChangedCallback(OnFilteringChanged))
         );
 
         private static void OnFilteringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -215,7 +215,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            var model = new SmileVideoFilteringItemSettingModel();
+            var model = new SmileVideoCommentFilteringItemSettingModel();
             if(SelectedFilteringEditItem != null) {
                 var src = SelectedFilteringEditItem;
                 model.Type = src.EditingType;
@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 model.IgnoreCase = src.EditingIgnoreCase;
             } else {
                 model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
-                model.Target = selectTarget.SelectedItem != null ? (SmileVideoFilteringTarget)selectTarget.SelectedItem : default(SmileVideoFilteringTarget);
+                model.Target = selectTarget.SelectedItem != null ? (SmileVideoCommentFilteringTarget)selectTarget.SelectedItem : default(SmileVideoCommentFilteringTarget);
                 model.Source = inputSource.Text;
                 model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
             }

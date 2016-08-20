@@ -664,7 +664,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// この動画に対するフィルタ。
         /// </summary>
-        public SmileVideoFilteringSettingModel Filtering
+        public SmileVideoCommentFilteringSettingModel Filtering
         {
             get { return IndividualVideoSetting.Filtering; }
         }

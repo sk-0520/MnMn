@@ -26,18 +26,18 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoFilteringEditItemViewModel: SingleModelWrapperViewModelBase<SmileVideoFilteringItemSettingModel>
+    public class SmileVideoFilteringEditItemViewModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringItemSettingModel>
     {
         #region variable
 
         FilteringType _editingType;
-        SmileVideoFilteringTarget _editingTarget;
+        SmileVideoCommentFilteringTarget _editingTarget;
         string _editingSource;
         bool _editingIgnoreCase;
 
         #endregion
 
-        public SmileVideoFilteringEditItemViewModel(SmileVideoFilteringItemSettingModel model)
+        public SmileVideoFilteringEditItemViewModel(SmileVideoCommentFilteringItemSettingModel model)
             : base(model)
         {
             EditingType = model.Type;
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return Model.Type; }
             set { SetModelValue(value); }
         }
-        public SmileVideoFilteringTarget Target
+        public SmileVideoCommentFilteringTarget Target
         {
             get { return Model.Target; }
             set { SetModelValue(value); }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return this._editingType; }
             set { SetVariableValue(ref this._editingType, value); }
         }
-        public SmileVideoFilteringTarget EditingTarget
+        public SmileVideoCommentFilteringTarget EditingTarget
         {
             get { return this._editingTarget; }
             set { SetVariableValue(ref this._editingTarget, value); }

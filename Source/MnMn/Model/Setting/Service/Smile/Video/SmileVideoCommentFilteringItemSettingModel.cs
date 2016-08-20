@@ -17,28 +17,24 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Attribute;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    public enum SmileVideoFilteringTarget
+    [DataContract]
+    public class SmileVideoCommentFilteringItemSettingModel: FilteringItemSettingModel
     {
+        #region property
+
         /// <summary>
-        /// コメント。
+        /// 対象。
         /// </summary>
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Comment))]
-        Comment,
-        /// <summary>
-        /// コマンド。
-        /// </summary>
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command))]
-        Command,
-        /// <summary>
-        /// ユーザー。
-        /// </summary>
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_UserId))]
-        UserId,
+        [DataMember]
+        public SmileVideoCommentFilteringTarget Target { get; set; }
+
+        #endregion
     }
 }

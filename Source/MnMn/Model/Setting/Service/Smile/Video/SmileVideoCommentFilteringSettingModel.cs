@@ -25,13 +25,13 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoFilteringSettingModel: SettingModelBase
+    public class SmileVideoCommentFilteringSettingModel: SettingModelBase
     {
         /// <summary>
         /// フィルタリングデータ。
         /// </summary>
         [DataMember]
-        public CollectionModel<SmileVideoFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoFilteringItemSettingModel>();
+        public CollectionModel<SmileVideoCommentFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoCommentFilteringItemSettingModel>();
 
         /// <summary>
         /// 重複したコメントを無視するか。

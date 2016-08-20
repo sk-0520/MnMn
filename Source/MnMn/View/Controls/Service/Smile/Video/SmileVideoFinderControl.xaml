@@ -57,31 +57,49 @@
     <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
     <Grid>
-      <DockPanel>
-        <Button DockPanel.Dock="Left" Command="{Binding AllCheckCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
-        </Button>
-        <xctk:SplitButton DockPanel.Dock="Left" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
-          <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
-          <xctk:SplitButton.DropDownContent>
-            <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
-          </xctk:SplitButton.DropDownContent>
-        </xctk:SplitButton>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
 
-        <ComboBox DockPanel.Dock="Right" MinWidth="100" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
-          <ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsAscending}">
-          <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
-        </ToggleButton>
-        <Label DockPanel.Dock="Right" Margin="10,0,0,0" >並べ替え</Label>
-        <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
-        <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
-      </DockPanel>
+      <Button Grid.Column="0" Command="{Binding AllCheckCommand}">
+        <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
+      </Button>
+      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
+        <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
+        <xctk:SplitButton.DropDownContent>
+          <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
+        </xctk:SplitButton.DropDownContent>
+      </xctk:SplitButton>
+
+      <xctk:WatermarkTextBox Grid.Column="2" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+
+      <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
+      <Label Grid.Column="4" Margin="10,0,0,0" >並べ替え</Label>
+      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
+        <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
+      </ToggleButton>
+      <ComboBox Grid.Column="6" MinWidth="100" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <xctk:DropDownButton Grid.Column="7">
+        <xctk:DropDownButton.Content>設定フィルタ</xctk:DropDownButton.Content>
+        <xctk:DropDownButton.DropDownContent>
+          <StackPanel>
+            <CheckBox IsChecked="{Binding IsEnabledSettingFilter}">使用する</CheckBox>
+          </StackPanel>
+        </xctk:DropDownButton.DropDownContent>
+      </xctk:DropDownButton>
     </Grid>
 
     <ListBox
