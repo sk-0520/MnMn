@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\OrderKind.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoFinderFilteringTarget.cs" />
     <Compile Include="Define\UpdateCheckState.cs" />
     <Compile Include="Define\DefinedImageSourceKind.cs" />
     <Compile Include="Define\DisplayKind.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Define\SourceLoadState.cs" />
     <Compile Include="Define\TextShowType.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="View\Converter\SpaceJoinConverter.cs" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

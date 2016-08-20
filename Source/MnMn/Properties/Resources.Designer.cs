@@ -298,6 +298,80 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   チャンネルID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelId {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   チャンネル名 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelName {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelName" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Description {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Description" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Tag {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Title {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserId {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザー名 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserName {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   動画ID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_VideoId {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_VideoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コメント数 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount {
