@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get
             {
                 return CreateCommand(o => LoginAsync().ConfigureAwait(false));
+            }
+        }
+
+        public ICommand OpenUriCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var uri = (string)o;
+                    try {
+                        Process.Start(uri);
+                    } catch(Exception ex) {
+                        Mediation.Logger.Error(ex);
+                    }
+                });
             }
         }
 
