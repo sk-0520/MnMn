@@ -26,18 +26,18 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoFilteringEditItemViewModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringItemSettingModel>
+    public class SmileVideoFinderFilteringItemEditViewModel: SingleModelWrapperViewModelBase<SmileVideoFinderFilteringItemSettingModel>
     {
         #region variable
 
         FilteringType _editingType;
-        SmileVideoCommentFilteringTarget _editingTarget;
+        SmileVideoFinderFilteringTarget _editingTarget;
         string _editingSource;
         bool _editingIgnoreCase;
 
         #endregion
 
-        public SmileVideoFilteringEditItemViewModel(SmileVideoCommentFilteringItemSettingModel model)
+        public SmileVideoFinderFilteringItemEditViewModel(SmileVideoFinderFilteringItemSettingModel model)
             : base(model)
         {
             EditingType = model.Type;
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return Model.Type; }
             set { SetModelValue(value); }
         }
-        public SmileVideoCommentFilteringTarget Target
+        public SmileVideoFinderFilteringTarget Target
         {
             get { return Model.Target; }
             set { SetModelValue(value); }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return this._editingType; }
             set { SetVariableValue(ref this._editingType, value); }
         }
-        public SmileVideoCommentFilteringTarget EditingTarget
+        public SmileVideoFinderFilteringTarget EditingTarget
         {
             get { return this._editingTarget; }
             set { SetVariableValue(ref this._editingTarget, value); }
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #endregion
 
-        #region property
+        #region function
 
         internal void Update()
         {

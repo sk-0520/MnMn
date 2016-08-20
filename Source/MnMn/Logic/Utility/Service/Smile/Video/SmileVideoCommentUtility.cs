@@ -241,9 +241,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return BitConverter.ToString(new byte[] { color.R, color.G, color.B }).Replace("-", "");
         }
 
-        internal static SmileVideoFilteringEditItemViewModel CreateVideoCommentFilter(SmileVideoCommentFilteringItemSettingModel model, object data)
+        internal static SmileVideoCommentFilteringItemEditViewModel CreateVideoCommentFilter(SmileVideoCommentFilteringItemSettingModel model, object data)
         {
-            return new SmileVideoFilteringEditItemViewModel(model);
+            return new SmileVideoCommentFilteringItemEditViewModel(model);
         }
 
         public static string[] ConvertCommands(string rawCommand)

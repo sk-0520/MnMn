@@ -8,7 +8,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoFilteringElementViewModel: DefinedElementViewModelBase
+    public class SmileVideoCommentFilteringElementViewModel: DefinedElementViewModelBase
     {
         #region variable
 
@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #endregion
 
-        public SmileVideoFilteringElementViewModel(DefinedElementModel model)
+        public SmileVideoCommentFilteringElementViewModel(DefinedElementModel model)
             : base(model)
         { }
 

@@ -30,41 +30,44 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoFilteringViweModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringSettingModel>
+    public class SmileVideoFilteringViweModel: ViewModelBase
     {
-        public SmileVideoFilteringViweModel(SmileVideoCommentFilteringSettingModel model, SmileVideoFilteringModel filteringDefine)
-            : base(model)
+        public SmileVideoFilteringViweModel(SmileVideoCommentFilteringSettingModel commentModel, SmileVideoFilteringModel filteringDefine)
         {
+            CommentModel = commentModel;
+
             FilteringDefine = filteringDefine;
 
-            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>(CommentModel.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
 
-            DefineItems = filteringDefine.Elements;
+            CommentDefineItems = filteringDefine.Elements;
         }
 
         #region property
 
+        SmileVideoCommentFilteringSettingModel CommentModel { get; }
+
         SmileVideoFilteringModel FilteringDefine { get; }
 
-        public MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilterList { get; }
+        public MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
 
         public bool IgnoreOverlapWord
         {
-            get { return Model.IgnoreOverlapWord; }
-            set { SetModelValue(value); }
+            get { return CommentModel.IgnoreOverlapWord; }
+            set { SetPropertyValue(CommentModel, value); }
         }
 
         public TimeSpan IgnoreOverlapTime
         {
-            get { return Model.IgnoreOverlapTime; }
-            set { SetModelValue(value); }
+            get { return CommentModel.IgnoreOverlapTime; }
+            set { SetPropertyValue(CommentModel, value); }
         }
 
-        public CollectionModel<DefinedElementModel> DefineItems { get; }
+        public CollectionModel<DefinedElementModel> CommentDefineItems { get; }
 
         public CollectionModel<string> DefineKeys
         {
-            get { return Model.DefineKeys; }
+            get { return CommentModel.DefineKeys; }
         }
 
         #endregion

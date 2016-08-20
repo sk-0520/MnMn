@@ -25,9 +25,9 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class SmileVideoFiltering: Filtering
+    public class SmileVideoCommentFiltering: Filtering
     {
-        public SmileVideoFiltering(SmileVideoCommentFilteringItemSettingModel setting) 
+        public SmileVideoCommentFiltering(SmileVideoCommentFilteringItemSettingModel setting)
             : base(setting)
         {
             SubSetting = setting;

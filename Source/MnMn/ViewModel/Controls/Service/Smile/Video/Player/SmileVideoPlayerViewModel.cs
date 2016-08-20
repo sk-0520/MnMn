@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems = CollectionViewSource.GetDefaultView(CommentList);
             CommentItems.Filter = FilterCommentItems;
 
-            var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
+            var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             GlobalCommentFilering = filteringResult.Filtering;
         }
 
@@ -1867,7 +1867,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            var filters = filterList.Select(f => new SmileVideoFiltering(f));
+            var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
                 foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
                     item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
