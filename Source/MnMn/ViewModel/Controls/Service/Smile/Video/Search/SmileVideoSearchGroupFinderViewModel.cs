@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     CallPageItemOnPropertyChange();
 
                     if(this._selectedPage != null && oldSelectedPage != null) {
-                        this._selectedPage.ViewModel.InputFilter = oldSelectedPage.ViewModel.InputFilter;
+                        this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
                         this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
                         this._selectedPage.ViewModel.FinderItems.Refresh();
                     }
@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public override string InputFilter
+        public override string InputTitleFilter
         {
             get { return GetSearchProperty<string>(); }
             set { SetSearchProperty(value); }

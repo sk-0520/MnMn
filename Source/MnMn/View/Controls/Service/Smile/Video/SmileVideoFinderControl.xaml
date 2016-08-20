@@ -80,7 +80,7 @@
         </ToggleButton>
         <Label DockPanel.Dock="Right" Margin="10,0,0,0" >並べ替え</Label>
         <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
-        <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+        <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
       </DockPanel>
     </Grid>
 

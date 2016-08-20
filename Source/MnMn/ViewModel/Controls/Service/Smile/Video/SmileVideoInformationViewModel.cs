@@ -468,6 +468,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string ChannelId
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return Thumb.ChannelId;
+            }
+        }
+
+        public bool IsChannelVideo
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+
+                return string.IsNullOrEmpty(UserId);
+            }
+        }
+
+
         public bool IsOfficialVideo
         {
             get

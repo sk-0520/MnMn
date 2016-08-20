@@ -50,8 +50,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoFinderItem _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
-        string _inputFilter;
+        string _inputTitleFilter;
         bool _isBlacklist;
+        bool _isEnabledSettingFilter;
 
         bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
@@ -134,12 +135,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual string InputFilter
+        public virtual string InputTitleFilter
         {
-            get { return this._inputFilter; }
+            get { return this._inputTitleFilter; }
             set
             {
-                if(SetVariableValue(ref this._inputFilter, value)) {
+                if(SetVariableValue(ref this._inputTitleFilter, value)) {
                     FinderItems.Refresh();
                 }
             }
@@ -153,6 +154,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     FinderItems.Refresh();
                 }
             }
+        }
+
+        public bool IsEnabledSettingFilter
+        {
+            get { return this._isEnabledSettingFilter; }
+            set { SetVariableValue(ref this._isEnabledSettingFilter, value); }
         }
 
         public virtual bool CanLoad
@@ -255,7 +262,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected virtual bool FilterItems(object obj)
         {
-            var filter = InputFilter;
+            var filter = InputTitleFilter;
             if(string.IsNullOrEmpty(filter)) {
                 return true;
             }

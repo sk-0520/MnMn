@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
+    [Serializable]
     public class RawSmileVideoThumbModel: ModelBase
     {
         #region property
@@ -138,17 +139,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [XmlElement("user_icon_url")]
         public string UserIconUrl { get; set; }
         /// <summary>
-        ///     チャンネルID
+        /// チャンネルID
         /// </summary>
-        public string ch_id { get; set; }
+        [XmlElement("ch_id")]
+        public string ChannelId { get; set; }
         /// <summary>
         /// チャンネル名
         /// </summary>
-        public string ch_name { get; set; }
+        [XmlElement("ch_name")]
+        public string ChannelName { get; set; }
         /// <summary>
         /// チャンネルアイコン
         /// </summary>
-        public string ch_icon_url { get; set; }
+        [XmlElement("ch_icon_url")]
+        public string ChannelIconUrl { get; set; }
+
         #endregion
     }
 }
