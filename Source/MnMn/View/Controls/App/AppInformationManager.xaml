@@ -88,11 +88,16 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-          <StackPanel Orientation="Horizontal">
+          <UniformGrid Rows="1" Columns="6">
+            <UniformGrid.Resources>
+              <Style TargetType="Button">
+                <Setter Property="Margin" Value="4,0" />
+              </Style>
+            </UniformGrid.Resources>
             <Button Command="{Binding OpenAppDirectoryCommand}">本体</Button>
             <Button Command="{Binding OpenSettingDirectoryCommand}">データ</Button>
             <Button Command="{Binding OpenCacheDirectoryCommand}">キャッシュ</Button>
-          </StackPanel>
+          </UniformGrid>
         </StackPanel>
       </Grid>
     </TabItem>
