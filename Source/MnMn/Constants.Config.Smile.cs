@@ -31,6 +31,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         #region service
 
         /// <summary>
+        /// アカウント登録先URI。
+        /// </summary>
+        public static string ServiceSmileAccountRegister => appConfig.Get("service-smile-account-register");
+        /// <summary>
+        /// パスワードリセット先URI。
+        /// </summary>
+        public static string ServiceSmileAccountReset => appConfig.Get("service-smile-account-reset");
+
+        /// <summary>
         /// コンテンツサーチで使用するサービス名。UAみたいなもん。
         /// </summary>
         public static string ServiceSmileContentsSearchContext => appConfig.Get("service-smile-content_search-context");
