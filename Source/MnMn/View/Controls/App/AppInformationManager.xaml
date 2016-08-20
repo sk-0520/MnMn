@@ -60,8 +60,8 @@
           <StackPanel Margin="{StaticResource ContentMargin}">
             <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
             <TextBlock>
-                <Hyperlink>短い情報</Hyperlink>
-                <Hyperlink>長い情報</Hyperlink>
+                <Hyperlink Command="{Binding CopyShortInformationCommand}">短い情報</Hyperlink>
+                <Hyperlink Command="{Binding CopyLongInformationCommand}">長い情報</Hyperlink>
             </TextBlock>
           </StackPanel>
 
