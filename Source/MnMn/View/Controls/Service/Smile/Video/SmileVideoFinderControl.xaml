@@ -86,7 +86,7 @@
       <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
         <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
       </ToggleButton>
-      <ComboBox Grid.Column="6" MinWidth="100" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
+      <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
