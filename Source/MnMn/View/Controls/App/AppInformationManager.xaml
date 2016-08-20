@@ -6,24 +6,100 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300" d:DesignWidth="300"
+  d:DesignWidth="600"
+  d:DesignHeight="300"
 >
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
   <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
     <TabItem Header="情報" DataContext="{Binding AppAboutManager}">
-      <StackPanel>
-        <StackPanel.Resources>
-          <Style TargetType="Button">
-            <Setter Property="Margin" Value="5" />
-          </Style>
-        </StackPanel.Resources>
-        <Button Command="{Binding ExecuteCommand}" CommandParameter="http://content-type-text.net/">Webサイト</Button>
-        <Button Command="{Binding ExecuteCommand}" CommandParameter="https://groups.google.com/d/forum/mnmn-forum">フォーラム</Button>
-        <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn">リポジトリ</Button>
-        <Button Command="{Binding ExecuteCommand}" CommandParameter="https://bitbucket.org/sk_0520/mnmn/downloads">最新版</Button>
-        <Button Command="{Binding ExecuteCommand}" CommandParameter="content.type.text.net@gmail.com">メール</Button>
-      </StackPanel>
+      <TabItem.Resources>
+        <Thickness x:Key="ContentMargin">8</Thickness>
+      </TabItem.Resources>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="180" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="{StaticResource ContentMargin}">
+
+          <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Resources/MnMn.ico" Width="48" Height="48" />
+
+            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{x:Static app:Constants.ApplicationName}" />
+            <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="{x:Static app:Constants.BuildType}" />
+          </Grid>
+
+          <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" Style="{StaticResource DefaultTextBox}" />
+
+          <StackPanel Margin="{StaticResource ContentMargin}">
+            <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
+            <TextBlock>
+                <Hyperlink Command="{Binding CopyShortInformationCommand}">短い情報</Hyperlink>
+                <Hyperlink Command="{Binding CopyLongInformationCommand}">長い情報</Hyperlink>
+            </TextBlock>
+          </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource ContentMargin}">
+          <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+              <Setter Property="Margin" Value="0,2" />
+            </Style>
+          </StackPanel.Resources>
+          <TextBlock>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriAbout}">Webサイト</Hyperlink>
+          </TextBlock>
+          <TextBlock>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppMailAbout}">メール送信</Hyperlink>
+          </TextBlock>
+          <TextBlock>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriDevelopment}">開発ページ</Hyperlink>
+          </TextBlock>
+          <TextBlock>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Hyperlink>
+          </TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+          <UniformGrid Rows="1" Columns="6">
+            <UniformGrid.Resources>
+              <Style TargetType="Button">
+                <Setter Property="Margin" Value="4,0" />
+              </Style>
+            </UniformGrid.Resources>
+            <Button Command="{Binding OpenAppDirectoryCommand}">本体</Button>
+            <Button Command="{Binding OpenSettingDirectoryCommand}">データ</Button>
+            <Button Command="{Binding OpenCacheDirectoryCommand}">キャッシュ</Button>
+          </UniformGrid>
+        </StackPanel>
+      </Grid>
     </TabItem>
 
     <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}">

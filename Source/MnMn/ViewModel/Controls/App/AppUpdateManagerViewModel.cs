@@ -128,8 +128,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
             try {
                 var client = new HttpClient();
-                Mediation.Logger.Trace("update check: " + Constants.UriUpdate);
-                var response = await client.GetAsync(Constants.UriUpdate);
+                Mediation.Logger.Trace("update check: " + Constants.AppUriUpdate);
+                var response = await client.GetAsync(Constants.AppUriUpdate);
 
                 Mediation.Logger.Trace("update response state: " + response.StatusCode);
                 if(!response.IsSuccessStatusCode) {
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             if(UpdateCheckState == UpdateCheckState.CurrentIsOld) {
                 var client = new HttpClient();
-                return client.GetStringAsync(Constants.UriChangelogRelease).ContinueWith(t => {
+                return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
                     UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
                         UpdateBrowser.NavigateToString(htmlSource);

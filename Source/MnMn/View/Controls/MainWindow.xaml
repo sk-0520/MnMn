@@ -4,6 +4,8 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:cttn_sl_view_window="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Window;assembly=ContentTypeTextNet.SharedLibrary"
+
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_controls_app="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.App"
@@ -44,13 +46,13 @@
     </StatusBar>
 
     <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-      <TabItem Header="2525 video" DataContext="{Binding SmileManager}">
+      <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
-      <TabItem Header="SETTING" DataContext="{Binding AppSettingManager}">
+      <TabItem Header="本体設定" DataContext="{Binding AppSettingManager}">
         <app_view_controls_app:AppSettingManager VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  />
       </TabItem>
-      <TabItem Header="MnMn" DataContext="{Binding AppInformationManager}">
+      <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}">
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
       <TabItem DataContext="{Binding AppUpdateManager}">

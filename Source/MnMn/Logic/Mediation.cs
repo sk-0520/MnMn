@@ -84,6 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Debug.Assert(request.RequestKind == RequestKind.CacheDirectory);
 
             var map = new Dictionary<ServiceType, IEnumerable<string>>() {
+                {ServiceType.Application, new string[0] },
                 {ServiceType.Smile, new [] { Constants.ServiceName, Constants.ServiceSmileName } },
                 {ServiceType.SmileVideo, new [] { Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName } },
             };
