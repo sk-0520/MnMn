@@ -30,42 +30,67 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoFilteringViweModel: SingleModelWrapperViewModelBase<SmileVideoFilteringSettingModel>
+    public class SmileVideoFilteringViweModel: ViewModelBase
     {
-        public SmileVideoFilteringViweModel(SmileVideoFilteringSettingModel model, SmileVideoFilteringModel filtering)
-            : base(model)
+        public SmileVideoFilteringViweModel(SmileVideoCommentFilteringSettingModel commentSetting, SmileVideoFinderFilteringSettingModel finderSetting, SmileVideoFilteringModel filteringDefine)
         {
-            Filtering = filtering;
+            CommentSetting = commentSetting;
+            FinderSetting = finderSetting;
 
-            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>(Model.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            FilteringDefine = filteringDefine;
 
-            DefineItems = filtering.Elements;
+            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            if(FinderSetting != null) {
+                FinderFilterList = new MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel>(FinderSetting.Items, default(object), (m, o) => new SmileVideoFinderFilteringItemEditViewModel(m));
+            }
+
+            CommentDefineItems = filteringDefine.Elements;
         }
 
         #region property
 
-        SmileVideoFilteringModel Filtering { get; }
+        SmileVideoFilteringModel FilteringDefine { get; }
 
-        public MVMPairCreateDelegationCollection<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel> CommentFilterList { get; }
+        public CollectionModel<DefinedElementModel> CommentDefineItems { get; }
+
+        #region comment
+
+        SmileVideoCommentFilteringSettingModel CommentSetting { get; }
+
+        public MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
 
         public bool IgnoreOverlapWord
         {
-            get { return Model.IgnoreOverlapWord; }
-            set { SetModelValue(value); }
+            get { return CommentSetting.IgnoreOverlapWord; }
+            set { SetPropertyValue(CommentSetting, value); }
         }
 
         public TimeSpan IgnoreOverlapTime
         {
-            get { return Model.IgnoreOverlapTime; }
-            set { SetModelValue(value); }
+            get { return CommentSetting.IgnoreOverlapTime; }
+            set { SetPropertyValue(CommentSetting, value); }
         }
-
-        public CollectionModel<DefinedElementModel> DefineItems { get; }
 
         public CollectionModel<string> DefineKeys
         {
-            get { return Model.DefineKeys; }
+            get { return CommentSetting.DefineKeys; }
         }
+
+        #endregion
+
+        #region finder
+
+        SmileVideoFinderFilteringSettingModel FinderSetting { get; }
+
+        public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
+
+        public bool IsEnabledFinderFiltering
+        {
+            get { return FinderSetting.IsEnabledFinderFiltering; }
+            set { SetPropertyValue(FinderSetting, value); }
+        }
+
+        #endregion
 
         #endregion
     }

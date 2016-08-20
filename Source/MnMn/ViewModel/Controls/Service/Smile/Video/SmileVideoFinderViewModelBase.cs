@@ -32,9 +32,11 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
@@ -50,8 +52,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoFinderItem _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
-        string _inputFilter;
+        string _inputTitleFilter;
         bool _isBlacklist;
+        bool _showFilterSetting;
+        bool _isEnabledFinderFiltering;
 
         bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
@@ -69,6 +73,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
             //BindingOperations.EnableCollectionSynchronization(FinderItemList, new object());
+            var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
+            FinderFilering = filteringResult.Filtering;
+
+            this._isEnabledFinderFiltering = FinderFilering.IsEnabledFinderFiltering;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -81,9 +89,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected SmileVideoSettingModel Setting { get; }
 
         protected CollectionModel<SmileVideoFinderItem> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItem>();
-        public IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
+        public virtual IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
+
+        //public virtual SmileVideoFilteringViweModel Filtering { get; }
+        public SmileVideoFilteringViweModel FinderFilering { get; }
 
         public virtual bool IsAscending
         {
@@ -134,12 +145,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual string InputFilter
+        public virtual string InputTitleFilter
         {
-            get { return this._inputFilter; }
+            get { return this._inputTitleFilter; }
             set
             {
-                if(SetVariableValue(ref this._inputFilter, value)) {
+                if(SetVariableValue(ref this._inputTitleFilter, value)) {
                     FinderItems.Refresh();
                 }
             }
@@ -154,6 +165,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
+
+        /// <summary>
+        /// 設定フィルタを使用するか。
+        /// </summary>
+        public virtual bool IsEnabledFinderFiltering
+        {
+            get { return this._isEnabledFinderFiltering; }
+            set
+            {
+                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+                    FinderFilering.IsEnabledFinderFiltering = value;
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 設定フィルタ有効無効UI表示。
+        /// </summary>
+        public virtual bool ShowFilterSetting
+        {
+            get { return this._showFilterSetting; }
+            set { SetVariableValue(ref this._showFilterSetting, value); }
+        }
+
+        /// <summary>
+        /// フィルタリング設定をそもそも使用するか。
+        /// </summary>
+        public virtual bool IsUsingFinderFilter { get; } = true;
 
         public virtual bool CanLoad
         {
@@ -201,6 +241,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public ICommand RandomContinuousPlaybackCommand
         {
             get { return CreateCommand(o => ContinuousPlaybackAsync(true)); }
+        }
+
+        public ICommand ChangedFilteringCommand
+        {
+            get { return CreateCommand(o => ChangedFiltering()); }
         }
 
         #endregion
@@ -253,9 +298,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected bool IsShowFilteringItem(object obj)
+        {
+            if(!IsUsingFinderFilter) {
+                return true;
+            }
+
+            if(!IsEnabledFinderFiltering) {
+                return true;
+            }
+
+            if(!FinderFilering.FinderFilterList.Any()) {
+                return true;
+            }
+
+            var information = ((SmileVideoFinderItem)obj).Information;
+            var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
+            foreach(var filter in filters.AsParallel()) {
+                var isHit = filter.Check(information.VideoId, information.Title, information.UserId, information.UserNickname, information.ChannelId, information.ChannelName, information.Description, information.TagList);
+                if(isHit) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         protected virtual bool FilterItems(object obj)
         {
-            var filter = InputFilter;
+            var isHitFinder = IsShowFilteringItem(obj);
+            if(!isHitFinder) {
+                return false;
+            }
+
+            var filter = InputTitleFilter;
             if(string.IsNullOrEmpty(filter)) {
                 return true;
             }
@@ -367,6 +443,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             FinderItems.SortDescriptions.Clear();
             FinderItems.SortDescriptions.Add(sort);
+            FinderItems.Refresh();
+        }
+
+        void ChangedFiltering()
+        {
             FinderItems.Refresh();
         }
 

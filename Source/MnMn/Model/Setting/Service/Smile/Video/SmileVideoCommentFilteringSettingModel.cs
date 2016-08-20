@@ -24,36 +24,28 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    /// <summary>
-    /// 動画個別設定。
-    /// </summary>
     [DataContract]
-    public class SmileVideoIndividualVideoSettingModel: SettingModelBase
+    public class SmileVideoCommentFilteringSettingModel: SettingModelBase
     {
-        /// <summary>
-        /// 通常画質読み込み済み。
-        /// </summary>
-        [DataMember]
-        public bool LoadedNormal { get; set; } = false;
-        /// <summary>
-        /// エコノミー読み込み済み。
-        /// </summary>
-        [DataMember]
-        public bool LoadedEconomyMode { get; set; } = false;
-
-        [DataMember]
-        public bool ConvertedSwf { get; set; } = false;
-
         /// <summary>
         /// フィルタリングデータ。
         /// </summary>
         [DataMember]
-        public SmileVideoCommentFilteringSettingModel Filtering { get; set; } = new SmileVideoCommentFilteringSettingModel();
+        public CollectionModel<SmileVideoCommentFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoCommentFilteringItemSettingModel>();
 
         /// <summary>
-        /// 全体設定のフィルタリングを使用するか。
+        /// 重複したコメントを無視するか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledGlobalCommentFilering { get; set; } = Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled;
+        public bool IgnoreOverlapWord { get; set; } = Constants.SettingServiceSmileVideoFilteringIgnoreOverlapWord;
+
+        /// <summary>
+        /// <see cref="IgnoreOverlapWord"/>が有効な際の重複判定時間。
+        /// </summary>
+        [DataMember]
+        public TimeSpan IgnoreOverlapTime { get; set; } = Constants.SettingServiceSmileVideoFilteringIgnoreOverlapTime;
+
+        [DataMember]
+        public CollectionModel<string> DefineKeys { get; set; } = new CollectionModel<string>();
     }
 }

@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #region define
 
         static IEnumerable<string> ChangePagePropertyNames => new[] {
+            nameof(FinderItemsViewer),
             nameof(FinderItems),
             nameof(FinderLoadState),
             nameof(CanLoad),
@@ -54,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             nameof(PageChangeCommand),
             nameof(IsAscending),
             nameof(SelectedSortType),
+            nameof(IsEnabledFinderFiltering),
+            nameof(ShowFilterSetting),
         };
 
         #endregion
@@ -146,7 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     CallPageItemOnPropertyChange();
 
                     if(this._selectedPage != null && oldSelectedPage != null) {
-                        this._selectedPage.ViewModel.InputFilter = oldSelectedPage.ViewModel.InputFilter;
+                        this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
                         this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
                         this._selectedPage.ViewModel.FinderItems.Refresh();
                     }
@@ -168,6 +171,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return SelectedPage.ViewModel.FinderItems;
             }
         }
+
+        public override IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => GetSearchProperty<IReadOnlyList<SmileVideoFinderItem>>();
 
         public int TotalCount
         {
@@ -410,12 +415,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public override string InputFilter
+        public override string InputTitleFilter
         {
             get { return GetSearchProperty<string>(); }
             set { SetSearchProperty(value); }
         }
         public override bool IsBlacklist
+        {
+            get { return GetSearchProperty<bool>(); }
+            set { SetSearchProperty(value); }
+        }
+
+        public override bool IsEnabledFinderFiltering
+        {
+            get { return GetSearchProperty<bool>(); }
+            set { SetSearchProperty(value); }
+        }
+
+        public override bool ShowFilterSetting
         {
             get { return GetSearchProperty<bool>(); }
             set { SetSearchProperty(value); }

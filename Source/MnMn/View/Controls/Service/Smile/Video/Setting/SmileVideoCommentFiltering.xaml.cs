@@ -29,14 +29,18 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 {
     /// <summary>
-    /// SmileVideoFilteringCommentList.xaml の相互作用ロジック
+    /// SmileVideoCommentFiltering.xaml の相互作用ロジック
     /// <para>Formsのにほい。</para>
     /// </summary>
-    public partial class SmileVideoFilteringCommentList: UserControl
+    public partial class SmileVideoCommentFiltering: UserControl
     {
+        #region event
+
         public event EventHandler FilteringChanged;
 
-        public SmileVideoFilteringCommentList()
+        #endregion
+
+        public SmileVideoCommentFiltering()
         {
             InitializeComponent();
         }
@@ -59,15 +63,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         static readonly DependencyProperty FilteringTypeItemsProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(FilteringTypeItemsProperty)),
             typeof(IEnumerable<FilteringType>),
-            typeof(SmileVideoFilteringCommentList),
+            typeof(SmileVideoCommentFiltering),
             new FrameworkPropertyMetadata(EnumUtility.GetMembers<FilteringType>())
         );
 
         static readonly DependencyProperty FilteringTargetItemsProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(FilteringTargetItemsProperty)),
-            typeof(IEnumerable<SmileVideoFilteringTarget>),
-            typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(EnumUtility.GetMembers<SmileVideoFilteringTarget>())
+            typeof(IEnumerable<SmileVideoCommentFilteringTarget>),
+            typeof(SmileVideoCommentFiltering),
+            new FrameworkPropertyMetadata(EnumUtility.GetMembers<SmileVideoCommentFilteringTarget>())
         );
 
         #region FilteringItemSourceProperty
@@ -75,18 +79,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         public static readonly DependencyProperty FilteringProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(FilteringProperty)),
             typeof(SmileVideoFilteringViweModel),
-            typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoFilteringItemSettingModel, SmileVideoFilteringEditItemViewModel>), new PropertyChangedCallback(OnFilteringChanged))
+            typeof(SmileVideoCommentFiltering),
+            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringChanged))
         );
 
         private static void OnFilteringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<SmileVideoFilteringCommentList>(d, control => {
+            CastUtility.AsAction<SmileVideoCommentFiltering>(d, control => {
                 control.Filtering = e.NewValue as SmileVideoFilteringViweModel;
                 control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
                 control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
                 control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
-                var defineItems = control.Filtering.DefineItems.Select(de => new SmileVideoFilteringElementViewModel(de)).ToArray();
+                var defineItems = control.Filtering.CommentDefineItems.Select(de => new SmileVideoCommentFilteringElementViewModel(de)).ToArray();
                 foreach(var item in defineItems) {
                     item.IsChecked = control.Filtering.DefineKeys.Any(k => k == item.Key);
                 }
@@ -107,22 +111,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         static readonly DependencyProperty FilteringViewModelItemsSourceProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(FilteringViewModelItemsSourceProperty)),
-            typeof(ObservableCollection<SmileVideoFilteringEditItemViewModel>),
-            typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(default(ObservableCollection<SmileVideoFilteringEditItemViewModel>), new PropertyChangedCallback(OnFilteringViewModelItemsSourceChanged))
+            typeof(ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>),
+            typeof(SmileVideoCommentFiltering),
+            new FrameworkPropertyMetadata(default(ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringViewModelItemsSourceChanged))
         );
 
         private static void OnFilteringViewModelItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CastUtility.AsAction<SmileVideoFilteringCommentList>(d, control => {
-                control.FilteringViewModelItemsSource = e.NewValue as ObservableCollection<SmileVideoFilteringEditItemViewModel>;
+            CastUtility.AsAction<SmileVideoCommentFiltering>(d, control => {
+                control.FilteringViewModelItemsSource = e.NewValue as ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>;
             });
         }
 
 
-        ObservableCollection<SmileVideoFilteringEditItemViewModel> FilteringViewModelItemsSource
+        ObservableCollection<SmileVideoCommentFilteringItemEditViewModel> FilteringViewModelItemsSource
         {
-            get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoFilteringEditItemViewModel>; }
+            get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>; }
             set { SetValue(FilteringViewModelItemsSourceProperty, value); }
         }
 
@@ -132,17 +136,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         public static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(SelectedFilteringEditItemProperty)),
-            typeof(SmileVideoFilteringEditItemViewModel),
-            typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(default(SmileVideoFilteringEditItemViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
+            typeof(SmileVideoCommentFilteringItemEditViewModel),
+            typeof(SmileVideoCommentFiltering),
+            new FrameworkPropertyMetadata(default(SmileVideoCommentFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
         );
 
         static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as SmileVideoFilteringCommentList;
+            var control = d as SmileVideoCommentFiltering;
             if(control != null) {
                 var oldItem = control.SelectedFilteringEditItem;
-                control.SelectedFilteringEditItem = e.NewValue as SmileVideoFilteringEditItemViewModel;
+                control.SelectedFilteringEditItem = e.NewValue as SmileVideoCommentFilteringItemEditViewModel;
                 if(oldItem != null) {
                     oldItem.Reset();
                 }
@@ -154,9 +158,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             }
         }
 
-        public SmileVideoFilteringEditItemViewModel SelectedFilteringEditItem
+        public SmileVideoCommentFilteringItemEditViewModel SelectedFilteringEditItem
         {
-            get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoFilteringEditItemViewModel; }
+            get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoCommentFilteringItemEditViewModel; }
             set { SetValue(SelectedFilteringEditItemProperty, value); }
         }
 
@@ -167,13 +171,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(RemoveCommandProperty)),
             typeof(ICommand),
-            typeof(SmileVideoFilteringCommentList),
-            new FrameworkPropertyMetadata(default(SmileVideoFilteringEditItemViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnRemoveCommandChanged))
+            typeof(SmileVideoCommentFiltering),
+            new FrameworkPropertyMetadata(default(SmileVideoCommentFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnRemoveCommandChanged))
         );
 
         static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as SmileVideoFilteringCommentList;
+            var control = d as SmileVideoCommentFiltering;
             if(control != null) {
                 control.RemoveCommand = e.NewValue as ICommand;
             }
@@ -200,7 +204,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 return;
             }
 
-            var filterItem = (SmileVideoFilteringEditItemViewModel)selectedItem;
+            var filterItem = (SmileVideoCommentFilteringItemEditViewModel)selectedItem;
             SelectedFilteringEditItem = filterItem;
         }
 
@@ -215,7 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            var model = new SmileVideoFilteringItemSettingModel();
+            var model = new SmileVideoCommentFilteringItemSettingModel();
             if(SelectedFilteringEditItem != null) {
                 var src = SelectedFilteringEditItem;
                 model.Type = src.EditingType;
@@ -224,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
                 model.IgnoreCase = src.EditingIgnoreCase;
             } else {
                 model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
-                model.Target = selectTarget.SelectedItem != null ? (SmileVideoFilteringTarget)selectTarget.SelectedItem : default(SmileVideoFilteringTarget);
+                model.Target = selectTarget.SelectedItem != null ? (SmileVideoCommentFilteringTarget)selectTarget.SelectedItem : default(SmileVideoCommentFilteringTarget);
                 model.Source = inputSource.Text;
                 model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
             }
@@ -288,7 +292,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
             var checkbox = (CheckBox)sender;
             var isChecked = checkbox.IsChecked.GetValueOrDefault();
-            var element = checkbox.DataContext as SmileVideoFilteringElementViewModel;
+            var element = checkbox.DataContext as SmileVideoCommentFilteringElementViewModel;
             if(element == null) {
                 return;
             }

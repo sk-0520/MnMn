@@ -20,32 +20,21 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoFilteringSettingModel: SettingModelBase
+    public class SmileVideoFinderFilteringItemSettingModel: FilteringItemSettingModel
     {
-        /// <summary>
-        /// フィルタリングデータ。
-        /// </summary>
-        [DataMember]
-        public CollectionModel<SmileVideoFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoFilteringItemSettingModel>();
+        #region property
 
         /// <summary>
-        /// 重複したコメントを無視するか。
+        /// 対象。
         /// </summary>
         [DataMember]
-        public bool IgnoreOverlapWord { get; set; } = Constants.SettingServiceSmileVideoFilteringIgnoreOverlapWord;
+        public SmileVideoFinderFilteringTarget Target { get; set; }
 
-        /// <summary>
-        /// <see cref="IgnoreOverlapWord"/>が有効な際の重複判定時間。
-        /// </summary>
-        [DataMember]
-        public TimeSpan IgnoreOverlapTime { get; set; } = Constants.SettingServiceSmileVideoFilteringIgnoreOverlapTime;
-
-        [DataMember]
-        public CollectionModel<string> DefineKeys { get; set; } = new CollectionModel<string>();
+        #endregion
     }
 }

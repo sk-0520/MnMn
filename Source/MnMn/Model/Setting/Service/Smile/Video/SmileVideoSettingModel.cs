@@ -54,6 +54,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public FixedSizeCollectionModel<SmileVideoCheckItLaterModel> CheckItLater { get; set; } = new FixedSizeCollectionModel<SmileVideoCheckItLaterModel>(Constants.ServiceSmileVideoCheckItLaterCount, false);
 
+        /// <summary>
+        /// 動画フィルタリングデータ。
+        /// </summary>
+        [DataMember]
+        public SmileVideoFinderFilteringSettingModel FinderFiltering { get; set; } = new SmileVideoFinderFilteringSettingModel();
+
+
         #endregion
     }
 }

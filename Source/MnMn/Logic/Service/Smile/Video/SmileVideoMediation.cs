@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
             Filtering = LoadModelFromFile<SmileVideoFilteringModel>(Constants.SmileVideoFilteringPath);
 
-            GlobalCommentFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering, Filtering);
+            GlobalFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering, Setting.FinderFiltering, Filtering);
         }
 
         #region property
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         HashSet<SmileVideoPlayerWindow> Players { get; } = new HashSet<SmileVideoPlayerWindow>();
 
-        SmileVideoFilteringViweModel GlobalCommentFiltering { get; }
+        SmileVideoFilteringViweModel GlobalFiltering { get; }
 
         #endregion
 
@@ -93,8 +93,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return new ResponseModel(request, new SmileVideoAccountMyListSettingResultModel(list));
 
                 case SmileVideoCustomSettingKind.CommentFiltering:
-                    var filter = GlobalCommentFiltering;
-                    return new ResponseModel(request, new SmileVideoCommentFilteringResultModel(filter));
+                    var filter = GlobalFiltering;
+                    return new ResponseModel(request, new SmileVideoFilteringResultModel(filter));
 
                 default:
                     throw new NotImplementedException();

@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems = CollectionViewSource.GetDefaultView(CommentList);
             CommentItems.Filter = FilterCommentItems;
 
-            var filteringResult = Mediation.GetResultFromRequest<SmileVideoCommentFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
+            var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             GlobalCommentFilering = filteringResult.Filtering;
         }
 
@@ -1849,8 +1849,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
-                .Select(e => new SmileVideoFilteringItemSettingModel() {
-                    Target = SmileVideoFilteringTarget.Comment,
+                .Select(e => new SmileVideoCommentFilteringItemSettingModel() {
+                    Target = SmileVideoCommentFilteringTarget.Comment,
                     IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
                     Type = FilteringType.Regex,
                     Source = e.Extends["pattern"],
@@ -1861,13 +1861,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentCustomFilterItems(filterList);
         }
 
-        void ApprovalCommentCustomFilterItems(IReadOnlyList<SmileVideoFilteringItemSettingModel> filterList)
+        void ApprovalCommentCustomFilterItems(IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
         {
             if(!filterList.Any()) {
                 return;
             }
 
-            var filters = filterList.Select(f => new SmileVideoFiltering(f));
+            var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
                 foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
                     item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
@@ -2304,7 +2304,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             };
             CallOnPropertyChange(propertyNames);
 
-            LocalCommentFilering = new SmileVideoFilteringViweModel(Information.Filtering, Mediation.Smile.VideoMediation.Filtering);
+            LocalCommentFilering = new SmileVideoFilteringViweModel(Information.Filtering, null, Mediation.Smile.VideoMediation.Filtering);
             SetLocalFiltering();
 
             base.OnLoadGetthumbinfoEnd();

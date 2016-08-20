@@ -143,6 +143,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.ViewCounter;
 
+        public override bool IsUsingFinderFilter { get; } = false;
+
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
             var result = new FeedSmileVideoModel();

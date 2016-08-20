@@ -211,6 +211,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override bool HasMyListFolder { get; } = true;
 
+        public override bool IsUsingFinderFilter { get; } = false;
+
         #endregion
     }
 }
