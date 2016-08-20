@@ -49,13 +49,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region property
 
-        SmileVideoCommentFilteringSettingModel CommentSetting { get; }
-        SmileVideoFinderFilteringSettingModel FinderSetting { get; }
-
         SmileVideoFilteringModel FilteringDefine { get; }
 
+        public CollectionModel<DefinedElementModel> CommentDefineItems { get; }
+
+        #region comment
+
+        SmileVideoCommentFilteringSettingModel CommentSetting { get; }
+
         public MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
-        public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
 
         public bool IgnoreOverlapWord
         {
@@ -69,12 +71,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(CommentSetting, value); }
         }
 
-        public CollectionModel<DefinedElementModel> CommentDefineItems { get; }
-
         public CollectionModel<string> DefineKeys
         {
             get { return CommentSetting.DefineKeys; }
         }
+
+        #endregion
+
+        #region finder
+
+        SmileVideoFinderFilteringSettingModel FinderSetting { get; }
+
+        public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
+
+        public bool IsEnabledFinderFiltering
+        {
+            get { return FinderSetting.IsEnabledFinderFiltering; }
+            set { SetPropertyValue(FinderSetting, value); }
+        }
+
+        #endregion
 
         #endregion
     }

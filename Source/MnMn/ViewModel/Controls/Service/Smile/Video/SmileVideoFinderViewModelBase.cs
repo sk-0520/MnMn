@@ -54,8 +54,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         string _inputTitleFilter;
         bool _isBlacklist;
-        bool _showSettingFilter;
-        bool _isEnabledSettingFilter;
+        bool _showFilterSetting;
+        bool _isEnabledFinderFiltering;
 
         bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
@@ -75,6 +75,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //BindingOperations.EnableCollectionSynchronization(FinderItemList, new object());
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             FinderFilering = filteringResult.Filtering;
+
+            this._isEnabledFinderFiltering = FinderFilering.IsEnabledFinderFiltering;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -167,12 +169,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 設定フィルタを使用するか。
         /// </summary>
-        public bool IsEnabledSettingFilter
+        public bool IsEnabledFinderFiltering
         {
-            get { return this._isEnabledSettingFilter; }
+            get { return this._isEnabledFinderFiltering; }
             set
             {
-                if(SetVariableValue(ref this._isEnabledSettingFilter, value)) {
+                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+                    FinderFilering.IsEnabledFinderFiltering = value;
                     FinderItems.Refresh();
                 }
             }
@@ -181,10 +184,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 設定フィルタ有効無効UI表示。
         /// </summary>
-        public bool ShowSettingFilter
+        public bool ShowFilterSetting
         {
-            get { return this._showSettingFilter; }
-            set { SetVariableValue(ref this._showSettingFilter, value); }
+            get { return this._showFilterSetting; }
+            set { SetVariableValue(ref this._showFilterSetting, value); }
         }
 
         public virtual bool CanLoad

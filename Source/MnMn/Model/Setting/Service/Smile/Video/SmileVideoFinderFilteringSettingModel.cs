@@ -19,6 +19,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public CollectionModel<SmileVideoFinderFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoFinderFilteringItemSettingModel>();
 
+        /// <summary>
+        /// フィルタリング設定を使用するか。
+        /// </summary>
+        [DataMember]
+        public bool IsEnabledFinderFiltering { get; set; }
 
         #endregion
     }
