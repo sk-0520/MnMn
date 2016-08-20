@@ -6,6 +6,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:cttn_pe_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=Package"
+
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -86,6 +88,48 @@
             <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Hyperlink>
           </TextBlock>
         </StackPanel>
+
+        <ListView Grid.Row="0" Grid.Column="2" Margin="{StaticResource ContentMargin}" ItemsSource="{Binding ComponentCollection}">
+          <ListView.View>
+            <GridView>
+              <GridViewColumn Header="コンポーネント">
+                <GridViewColumn.CellTemplate>
+                  <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock>
+                        <Hyperlink Command="{Binding DataContext.AppAboutManager.OpenLinkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Uri}">
+                          <TextBlock>
+                            <TextBlock.Style>
+                              <Style TargetType="TextBlock" >
+                                <!-- 今持ってるフォントで表示できたやつを渋々使用 -->
+                                <Style.Triggers>
+                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Library}">
+                                    <Setter Property="Text" Value="⚙" />
+                                  </DataTrigger>
+                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Image}">
+                                    <Setter Property="Text" Value="✍" />
+                                  </DataTrigger>
+                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Source}">
+                                    <Setter Property="Text" Value="📖" />
+                                  </DataTrigger>
+                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.WebPage}">
+                                    <Setter Property="Text" Value="🏠" />
+                                  </DataTrigger>
+                                </Style.Triggers>
+                              </Style>
+                            </TextBlock.Style>
+                          </TextBlock>
+                          <TextBlock Text="{Binding Name}" />
+                        </Hyperlink>
+                      </TextBlock>
+                    </StackPanel>
+                  </DataTemplate>
+                </GridViewColumn.CellTemplate>
+              </GridViewColumn>
+              <GridViewColumn Header="ライセンス" DisplayMemberBinding="{Binding License}" />
+            </GridView>
+          </ListView.View>
+        </ListView>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
           <UniformGrid Rows="1" Columns="6">
