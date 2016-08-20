@@ -25,7 +25,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return CreateCommand(o => {
                     var s = (string)o;
                     try {
-                        Process.Start(s);
+                        if(s.Any(c => c == '@')) {
+                            var mail = "mailto:" + s;
+                            Process.Start(mail);
+                        } else {
+                            Process.Start(s);
+                        }
                     } catch(Exception ex) {
                         Mediation.Logger.Warning(ex);
                     }
