@@ -56,7 +56,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isBlacklist;
         bool _showFilterSetting;
         bool _isEnabledFinderFiltering;
-        bool _isUsingFinderFilter = true;
 
         bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
@@ -194,10 +193,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// フィルタリング設定をそもそも使用するか。
         /// </summary>
-        public virtual bool IsUsingFinderFilter
-        {
-            get { return this._isUsingFinderFilter; }
-        }
+        public virtual bool IsUsingFinderFilter { get; } = true;
 
         public virtual bool CanLoad
         {
@@ -304,6 +300,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected bool IsShowFilteringItem(object obj)
         {
+            if(!IsUsingFinderFilter) {
+                return true;
+            }
+
             if(!IsEnabledFinderFiltering) {
                 return true;
             }
