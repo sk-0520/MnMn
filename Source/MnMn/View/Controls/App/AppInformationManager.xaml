@@ -74,24 +74,24 @@
             </Style>
           </StackPanel.Resources>
           <TextBlock>
-            <Hyperlink Command="{Binding ExecuteCommand}" CommandParameter="{x:Static app:Constants.AppUriAbout}">Webサイト</Hyperlink>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriAbout}">Webサイト</Hyperlink>
           </TextBlock>
           <TextBlock>
-            <Hyperlink Command="{Binding ExecuteCommand}" CommandParameter="{x:Static app:Constants.AppMailAbout}">メール送信</Hyperlink>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppMailAbout}">メール送信</Hyperlink>
           </TextBlock>
           <TextBlock>
-            <Hyperlink Command="{Binding ExecuteCommand}" CommandParameter="{x:Static app:Constants.AppUriDevelopment}">開発ページ</Hyperlink>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriDevelopment}">開発ページ</Hyperlink>
           </TextBlock>
           <TextBlock>
-            <Hyperlink Command="{Binding ExecuteCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Hyperlink>
+            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Hyperlink>
           </TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
           <StackPanel Orientation="Horizontal">
-            <Button>本体</Button>
-            <Button>データ</Button>
-            <Button>キャッシュ</Button>
+            <Button Command="{Binding OpenAppDirectoryCommand}">本体</Button>
+            <Button Command="{Binding OpenSettingDirectoryCommand}">データ</Button>
+            <Button Command="{Binding OpenCacheDirectoryCommand}">キャッシュ</Button>
           </StackPanel>
         </StackPanel>
       </Grid>

@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
@@ -26,22 +30,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region command
 
-        public ICommand ExecuteCommand
+        public ICommand OpenLinkCommand
         {
             get
             {
                 return CreateCommand(o => {
                     var s = (string)o;
-                    try {
-                        if(s.Any(c => c == '@')) {
-                            var mail = "mailto:" + s;
-                            Process.Start(mail);
-                        } else {
-                            Process.Start(s);
-                        }
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
+                    if(s.Any(c => c == '@')) {
+                        var mail = "mailto:" + s;
+                        s = mail;
                     }
+                    Execute(s);
                 });
             }
         }
@@ -86,6 +85,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     ;
                     Clipboard.SetText(text);
                 });
+            }
+        }
+
+        public ICommand OpenAppDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    Execute(Constants.AssemblyRootDirectoryPath);
+                });
+            }
+        }
+
+        public ICommand OpenSettingDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    Execute(VariableConstants.GetSettingDirectory().FullName);
+                });
+            }
+        }
+
+        public ICommand OpenCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var dir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
+                    Execute(dir.FullName);
+                });
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        void Execute(string command)
+        {
+            try {
+                Process.Start(command);
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
             }
         }
 
