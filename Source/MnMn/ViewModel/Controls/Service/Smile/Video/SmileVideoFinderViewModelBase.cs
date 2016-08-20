@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isBlacklist;
         bool _showFilterSetting;
         bool _isEnabledFinderFiltering;
+        bool _isUsingFinderFilter = true;
 
         bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected SmileVideoSettingModel Setting { get; }
 
         protected CollectionModel<SmileVideoFinderItem> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItem>();
-        public IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
+        public virtual IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
 
@@ -169,7 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 設定フィルタを使用するか。
         /// </summary>
-        public bool IsEnabledFinderFiltering
+        public virtual bool IsEnabledFinderFiltering
         {
             get { return this._isEnabledFinderFiltering; }
             set
@@ -184,10 +185,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 設定フィルタ有効無効UI表示。
         /// </summary>
-        public bool ShowFilterSetting
+        public virtual bool ShowFilterSetting
         {
             get { return this._showFilterSetting; }
             set { SetVariableValue(ref this._showFilterSetting, value); }
+        }
+
+        /// <summary>
+        /// フィルタリング設定をそもそも使用するか。
+        /// </summary>
+        public virtual bool IsUsingFinderFilter
+        {
+            get { return this._isUsingFinderFilter; }
         }
 
         public virtual bool CanLoad

@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #region define
 
         static IEnumerable<string> ChangePagePropertyNames => new[] {
+            nameof(FinderItemsViewer),
             nameof(FinderItems),
             nameof(FinderLoadState),
             nameof(CanLoad),
@@ -54,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             nameof(PageChangeCommand),
             nameof(IsAscending),
             nameof(SelectedSortType),
+            nameof(IsEnabledFinderFiltering),
+            nameof(ShowFilterSetting),
         };
 
         #endregion
@@ -168,6 +171,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 return SelectedPage.ViewModel.FinderItems;
             }
         }
+
+        public override IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => GetSearchProperty<IReadOnlyList<SmileVideoFinderItem>>();
 
         public int TotalCount
         {
@@ -416,6 +421,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetSearchProperty(value); }
         }
         public override bool IsBlacklist
+        {
+            get { return GetSearchProperty<bool>(); }
+            set { SetSearchProperty(value); }
+        }
+
+        public override bool IsEnabledFinderFiltering
+        {
+            get { return GetSearchProperty<bool>(); }
+            set { SetSearchProperty(value); }
+        }
+
+        public override bool ShowFilterSetting
         {
             get { return GetSearchProperty<bool>(); }
             set { SetSearchProperty(value); }

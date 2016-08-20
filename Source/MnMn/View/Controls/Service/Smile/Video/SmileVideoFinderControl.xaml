@@ -93,17 +93,49 @@
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>
-      <ToggleButton Grid.Column="7" IsChecked="{Binding ShowFilterSetting}">フィルタ設定</ToggleButton>
+      <ToggleButton Grid.Column="7" IsChecked="{Binding ShowFilterSetting}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>フィルタ</TextBlock>
+          <ContentControl VerticalContentAlignment="Stretch">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="True">
+                    <Setter Property="Content">
+                      <Setter.Value>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock>(</TextBlock>
+                          <TextBlock Text="{Binding FinderItems.Count}" />
+                          <TextBlock>/</TextBlock>
+                          <TextBlock Text="{Binding FinderItemsViewer.Count}" />
+                          <TextBlock>)</TextBlock>
+                        </StackPanel>
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="False">
+                    <Setter Property="Content">
+                      <Setter.Value>
+                        <TextBlock>(無効)</TextBlock>
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </ContentControl.Style>
+          </ContentControl>
+        </StackPanel>
+      </ToggleButton>
     </Grid>
 
     <Grid Grid.Row="2">
       <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition />
+        <RowDefinition Height="6*" />
+        <RowDefinition Height="*" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition />
-        <ColumnDefinition />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
       <ListBox
@@ -635,7 +667,7 @@
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <CheckBox Grid.Row="0" IsChecked="{Binding IsEnabledFinderFiltering}">使用する</CheckBox>
+            <CheckBox Grid.Row="0" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
             <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
