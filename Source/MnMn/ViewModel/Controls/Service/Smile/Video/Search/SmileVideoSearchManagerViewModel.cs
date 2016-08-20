@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             {
                 if(SetVariableValue(ref this._showTagArea, value)) {
                     if(this._showTagArea) {
-                        if(RecommendTagLoadState == LoadState.None) {
+                        if(RecommendTagLoadState == LoadState.None && Session.IsLoggedIn) {
                             LoadRecommendTagItemsAsync().ConfigureAwait(false);
                         }
                         if(TrendTagLoadState == LoadState.None) {

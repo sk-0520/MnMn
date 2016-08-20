@@ -135,7 +135,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#60: 非ログイン状態でおすすめタグを取得すると表明で死ぬ'
 					},
 					{
 						'revision': '',

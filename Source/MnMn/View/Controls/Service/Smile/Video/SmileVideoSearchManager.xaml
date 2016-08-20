@@ -25,6 +25,7 @@
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <Style x:Key="ReloadButton" TargetType="Button">
         <Setter Property="FontFamily" Value="Webdings" />
@@ -74,7 +75,7 @@
         <xctk:DropDownButton.DropDownContent>
           <Border>
             <StackPanel Orientation="Horizontal">
-              <GroupBox>
+              <GroupBox Visibility="{Binding Session.IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <GroupBox.Header>
                   <StackPanel Orientation="Horizontal">
                     <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
