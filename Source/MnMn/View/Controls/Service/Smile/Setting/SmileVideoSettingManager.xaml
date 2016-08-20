@@ -25,11 +25,11 @@
       <GroupBox Header="account">
         <StackPanel>
           <Label>e-mail</Label>
-          <TextBox Text="{Binding AccountName}" />
+          <TextBox Text="{Binding EditingAccountName}" />
           <Label>password</Label>
           <PasswordBox>
             <i:Interaction.Behaviors>
-              <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding AccountPassword, Mode=TwoWay}" />
+              <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding EditingAccountPassword, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
           </PasswordBox>
           <Button Command="{Binding LoginCommand}">
