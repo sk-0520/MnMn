@@ -477,6 +477,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public string ChannelName
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return Thumb.ChannelName;
+            }
+        }
+
         public bool IsChannelVideo
         {
             get

@@ -293,8 +293,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected bool IsShowFilteringItem(object obj)
+        {
+            if(!IsEnabledFinderFiltering) {
+                return true;
+            }
+
+            if(!FinderFilering.FinderFilterList.Any()) {
+                return true;
+            }
+
+            var information = ((SmileVideoFinderItem)obj).Information;
+            var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
+            foreach(var filter in filters.AsParallel()) {
+                var isHit = filter.Check(information.VideoId, information.Title, information.UserId, information.UserNickname, information.ChannelId, information.ChannelName, information.Description, information.TagList);
+                if(isHit) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         protected virtual bool FilterItems(object obj)
         {
+            var isHitFinder = IsShowFilteringItem(obj);
+            if(!isHitFinder) {
+                return false;
+            }
+
             var filter = InputTitleFilter;
             if(string.IsNullOrEmpty(filter)) {
                 return true;
@@ -412,7 +439,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void ChangedFiltering()
         {
-            Mediation.Logger.Information("not impl");
+            FinderItems.Refresh();
         }
 
         #endregion

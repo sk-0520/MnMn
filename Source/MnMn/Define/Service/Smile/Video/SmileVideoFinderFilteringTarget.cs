@@ -34,6 +34,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_VideoId))]
         VideoId,
         /// <summary>
+        /// タイトル。
+        /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Title))]
+        Title,
+        /// <summary>
         /// ユーザーID。
         /// </summary>
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserId))]
@@ -53,11 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         /// </summary>
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelName))]
         ChannelName,
-        /// <summary>
-        /// タイトル。
-        /// </summary>
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Title))]
-        Title,
         /// <summary>
         /// 紹介文。
         /// </summary>
