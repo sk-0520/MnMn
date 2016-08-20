@@ -109,6 +109,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentTypeTextNet.Pe.Library.PeData.Define\ComponentKind.cs" />
+    <Compile Include="ContentTypeTextNet.Pe.Library.PeData.Item\ComponentItemCollectionModel.cs" />
+    <Compile Include="ContentTypeTextNet.Pe.Library.PeData.Item\ComponentItemModel.cs" />
     <Compile Include="ContentTypeTextNet.Pe.PeMain.IF\ILogAppender.cs" />
     <Compile Include="ContentTypeTextNet.Pe.PeMain.Logic.Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="ContentTypeTextNet.Pe.PeMain.Logic\AppLogger.cs" />

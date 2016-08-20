@@ -147,7 +147,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#2: 外部ライブラリの情報追加'
 					},
 					{
 						'revision': '',
