@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,6 +41,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 {
     public class SmileVideoCommentViewModel: SingleModelWrapperViewModelBase<RawSmileVideoMsgChatModel>
     {
+        #region define
+
+        static Regex regSpace = new Regex(@"(?<SPACE>\s){2,}", RegexOptions.Compiled);
+        const string viewSpace = "˽";
+        const string viewLineBreak = "↵";
+
+        #endregion
+
         #region variable
 
         bool _isSelected;
@@ -160,10 +169,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public string Content { get; }
 
         /// <summary>
-        /// コメント内容。
-        /// <para>改行区切り。</para>
+        /// コメントを一行表示。
+        /// <para>改行と連続スペースはいい感じに置き換える。</para>
         /// </summary>
-        public string[] ContentLines { get { return Content?.SplitLines().ToArray() ?? new string[0]; } }
+        public string ContentSingleLine
+        {
+            get
+            {
+                if(Content == null) {
+                    return string.Empty;
+                }
+
+                var lines = Content
+                    .SplitLines()
+                    .Select(s => regSpace.Replace(s, viewSpace))
+                ;
+
+                return string.Join(viewLineBreak, lines);
+            }
+        }
 
         /// <summary>
         /// 実際に表示するコメント内容。
