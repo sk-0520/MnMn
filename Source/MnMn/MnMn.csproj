@@ -210,6 +210,9 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
+    <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
+      <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Converter\SpaceJoinConverter.cs" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -449,8 +452,8 @@
     <Compile Include="View\Controls\Service\Smile\SmileUsersManager.xaml.cs">
       <DependentUpon>SmileUsersManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFilteringCommentList.xaml.cs">
-      <DependentUpon>SmileVideoFilteringCommentList.xaml</DependentUpon>
+    <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoCommentFiltering.xaml.cs">
+      <DependentUpon>SmileVideoCommentFiltering.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\SmileManager.xaml.cs">
       <DependentUpon>SmileManager.xaml</DependentUpon>
@@ -530,11 +533,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFilteringCommentList.xaml">
+    <Page Include="View\Controls\Service\Smile\Video\Setting\SmileVideoCommentFiltering.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\SmileManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

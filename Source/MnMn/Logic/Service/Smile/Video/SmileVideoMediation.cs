@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             AccountMyList = LoadModelFromFile<SmileVideoMyListModel>(Constants.SmileVideoMyListPath);
             Filtering = LoadModelFromFile<SmileVideoFilteringModel>(Constants.SmileVideoFilteringPath);
 
-            GlobalFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering, Filtering);
+            GlobalFiltering = new SmileVideoFilteringViweModel(Setting.Comment.Filtering, Setting.FinderFiltering, Filtering);
         }
 
         #region property
