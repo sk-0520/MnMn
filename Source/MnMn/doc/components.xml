@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<components>
-	<component kind="Library" Name="" Uri="" License="" />
-	<component kind="Library" Name="" Uri="" License="" />
+<Components>
+	<Component kind="Library" Name="" Uri="" License="" />
+	<Component kind="Library" Name="" Uri="" License="" />
 	<Component kind="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
 	<Component kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
-	<component kind="Library" Name="" Uri="" License="" />
-	<component kind="Image" Name="Crystal Project" Uri="https://www.iconfinder.com/icons/18023/battery_power_icon" License="LGPL" />
-	<component kind="Library" Name="" Uri="" License="" />
+	<Component kind="Library" Name="" Uri="" License="" />
+	<Component kind="Image" Name="Crystal Project" Uri="https://www.iconfinder.com/icons/18023/battery_power_icon" License="LGPL" />
+	<Component kind="Library" Name="" Uri="" License="" />
 	<Component Kind="Image" Name="MICROSOFT VISUAL STUDIO 2015 IMAGE LIBRARY" Uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" License="Visual Studio 2013 Image Library EULA" />
-	<component kind="Library" Name="" Uri="" License="" />
+	<Component kind="Library" Name="" Uri="" License="" />
 	<Component Kind="WebPage" Name="MSDN" Uri="https://msdn.microsoft.com/" License="" />
 	<Component Kind="WebPage" Name="Stack Overflow" Uri="http://stackoverflow.com/" License="" />
 	<Component Kind="WebPage" Name="Iconfinder" Uri="https://www.iconfinder.com/" License="" />
 	<Component Kind="WebPage" Name="Google Apps Script" Uri="https://developers.google.com/apps-script/" License="" />
-</components>
+</Components>
