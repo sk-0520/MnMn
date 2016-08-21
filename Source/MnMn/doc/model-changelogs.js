@@ -84,32 +84,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.08.1',
-		'isRc': true,
+		'date': '2016/08/21',
+		'version': '0.09.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '1dbf62729ab94c47670d2eff7f98a71d912085d7',
 						'subject': '#65: コメントリストの改行表示を控えめにする',
 						'comments': [
 							'改行は ↵ に置き換え',
@@ -117,7 +100,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f9373d77bd36bc17e83f9f8aac71421fdd7a8425',
 						'subject': '#67: 検索結果一覧のフィルタリング登録',
 						'comments': [
 							'各ファインダー内で設定するけど全てのファインダーに影響します',
@@ -125,19 +108,15 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '92b45e94d27c601268e0f62d18605d30462f86af',
 						'subject': '#4: ログイン設定を一時データに乗せる'
 					},
 					{
-						'revision': '',
+						'revision': '515bb8135debcaf0a5be792665bdd19c9c96df11',
 						'subject': '#70: メインウィンドウのアプリケーション情報をきちんと表示'
 					},
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
+						'revision': 'fcc7d499aa835309b1c07a999e3d1688fce6a555',
 						'subject': '#58: アップデート確認を定期的に行う'
 					}
 				]
@@ -146,20 +125,24 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '5bf707455c2f7c2bb987fd614e9f89310c79eba9',
 						'subject': '#60: 非ログイン状態でおすすめタグを取得すると表明で死ぬ'
 					},
 					{
-						'revision': '',
+						'revision': 'c88b661a52af5cfbb5d67618e724690cf20a14a6',
 						'subject': '#2: 外部ライブラリの情報追加'
 					},
 					{
-						'revision': '',
+						'revision': '47630bef7fc67da4d78b637322a78a2833d5c3a1',
 						'subject': '#69: 未設定ブックマークで表示されるファインダーがバグってる'
 					},
 					{
-						'revision': '',
-						'subject': ''
+						'revision': '4e3b7157cb086251191c9c60c520cc56a3045d6f',
+						'subject': 'ユーザー情報切替でスレッド間のディスパッチャー的なあれ修正'
+					},
+					{
+						'revision': '86157cdeea0d00c4df1d5297ff6adb6e5ac47d2c',
+						'subject': '検索履歴をリンクっぽくした'
 					}
 				]
 			},
@@ -167,16 +150,12 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'd279ad7b362137cdaa3f041cc6b797dc4f404845',
 						'subject': 'AssemblyCopyright追記'
 					},
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'revision': '82b24852d09d3b1ef32a73f7bdaf140f86525246',
+						'subject': '履歴数を減らした 1000 -> 500'
 					}
 				]
 			}
