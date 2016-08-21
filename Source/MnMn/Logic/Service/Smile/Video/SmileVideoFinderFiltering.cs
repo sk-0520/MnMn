@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -42,32 +43,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region function
 
-        public bool Check(string videoId, string title, string userId, string userName, string channelId, string channelName, string description, IEnumerable<SmileVideoTagViewModel> tags)
+        public bool Check(SmileVideoFinderFilteringParameterModel parameter)
         {
             switch(SubSetting.Target) {
                 case SmileVideoFinderFilteringTarget.VideoId:
-                    return Check(videoId);
+                    return Check(parameter.VideoId);
 
                 case SmileVideoFinderFilteringTarget.Title:
-                    return Check(title);
+                    return Check(parameter.Title);
 
                 case SmileVideoFinderFilteringTarget.UserId:
-                    return Check(userId);
+                    return Check(parameter.UserId);
 
                 case SmileVideoFinderFilteringTarget.UserName:
-                    return Check(userName);
+                    return Check(parameter.UserName);
 
                 case SmileVideoFinderFilteringTarget.ChannelId:
-                    return Check(channelId);
+                    return Check(parameter.ChannelId);
 
                 case SmileVideoFinderFilteringTarget.ChannelName:
-                    return Check(channelName);
+                    return Check(parameter.ChannelName);
 
                 case SmileVideoFinderFilteringTarget.Description:
-                    return Check(description);
+                    return Check(parameter.Description);
 
                 case SmileVideoFinderFilteringTarget.Tag:
-                    return tags.Any(c => Check(c.TagName));
+                    return parameter.Tags.Any(c => Check(c.TagName));
 
                 default:
                     throw new NotImplementedException();

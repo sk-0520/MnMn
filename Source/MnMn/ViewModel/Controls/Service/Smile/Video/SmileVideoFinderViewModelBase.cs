@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
@@ -312,7 +313,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var information = finderItem.Information;
             var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
             foreach(var filter in filters.AsParallel()) {
-                var isHit = filter.Check(information.VideoId, information.Title, information.UserId, information.UserNickname, information.ChannelId, information.ChannelName, information.Description, information.TagList);
+                var param = new SmileVideoFinderFilteringParameterModel() {
+                    VideoId = information.VideoId,
+                    Title = information.Title,
+                    Tags = information.TagList,
+                };
+                if(information.InformationSource == SmileVideoInformationSource.Getthumbinfo) {
+                    param.UserId = information.UserId;
+                    param.UserName = information.UserNickname;
+                    param.ChannelId = information.ChannelId;
+                    param.ChannelName = information.ChannelName;
+                    param.Description = information.Description;
+                }
+
+                var isHit = filter.Check(param);
                 if(isHit) {
                     finderItem.Approval = false;
                     return false;
