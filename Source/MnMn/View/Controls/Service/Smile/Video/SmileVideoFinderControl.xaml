@@ -14,6 +14,7 @@
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 
@@ -29,8 +30,12 @@
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
       <cttn_sl_view_controls:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+      <cttn_sl_view_controls:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
@@ -44,9 +49,17 @@
         <Setter Property="Padding" Value="{StaticResource ValueCell}" />
         <Setter Property="TextAlignment" Value="Right" />
       </Style>
+
+      <Style x:Key="HeadFootContent" TargetType="ContentControl">
+        <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
+      </Style>
+
+      <Style x:Key="BodyContentVisibility" TargetType="Grid">
+        <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
+      </Style>
+
     </ResourceDictionary>
   </UserControl.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -55,9 +68,9 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
-    <Grid>
+    <Grid Style="{StaticResource BodyContentVisibility}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -128,7 +141,7 @@
       </ToggleButton>
     </Grid>
 
-    <Grid Grid.Row="2">
+    <Grid Grid.Row="2" Style="{StaticResource BodyContentVisibility}">
       <Grid.RowDefinitions>
         <RowDefinition Height="6*" />
         <RowDefinition Height="*" />
@@ -681,7 +694,7 @@
 
     </Grid>
 
-    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
   </Grid>
 </UserControl>
