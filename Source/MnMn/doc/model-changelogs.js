@@ -155,7 +155,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'ファインダーのキャッシュ状態表示を済・未から有・無に変更'
 					},
 					{
 						'revision': '',

@@ -641,7 +641,7 @@
                                       <Binding Path="Information.LoadedEconomyVideo" />
                                     </MultiBinding>
                                   </DataTrigger.Binding>
-                                  <Setter Property="Text" Value="済" />
+                                  <Setter Property="Text" Value="有" />
                                 </DataTrigger>
                                 <DataTrigger Value="False">
                                   <DataTrigger.Binding>
@@ -650,7 +650,7 @@
                                       <Binding Path="Information.LoadedEconomyVideo" />
                                     </MultiBinding>
                                   </DataTrigger.Binding>
-                                  <Setter Property="Text" Value="未" />
+                                  <Setter Property="Text" Value="無" />
                                 </DataTrigger>
                               </Style.Triggers>
                             </Style>
