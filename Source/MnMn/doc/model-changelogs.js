@@ -85,7 +85,7 @@
 	*/
 	{
 		'date': 'YYYY/MM/DD',
-		'version': '0.10.1',
+		'version': '0.10.2',
 		'isRc': true,
 		'contents': [
 			{
