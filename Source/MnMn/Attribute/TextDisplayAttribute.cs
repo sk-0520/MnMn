@@ -23,9 +23,9 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 {
-    public class EnumTextDisplayAttribute: EnumDisplayAttributeBase
+    public class TextDisplayAttribute: DisplayTextAttributeBase
     {
-        public EnumTextDisplayAttribute(string text)
+        public TextDisplayAttribute(string text)
             : base(DisplayKind.Text, text)
         { }
 

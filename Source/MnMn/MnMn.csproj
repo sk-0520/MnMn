@@ -157,9 +157,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Attribute\EnumDisplayAttributeBase.cs" />
+    <Compile Include="Attribute\DisplayTextAttributeBase.cs" />
     <Compile Include="Attribute\EnumResourceDisplayAttribute.cs" />
-    <Compile Include="Attribute\EnumTextDisplayAttribute.cs" />
+    <Compile Include="Attribute\TextDisplayAttribute.cs" />
     <Compile Include="Constants.Config.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
@@ -209,6 +209,7 @@
     <Compile Include="Define\TextShowType.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
+    <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />

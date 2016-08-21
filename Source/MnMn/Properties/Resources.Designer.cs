@@ -435,6 +435,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ニコニコ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_Smile {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_Smile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ニコニコ動画 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_SmileVideo {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_SmileVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   完了 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_SourceLoadState_Completed {

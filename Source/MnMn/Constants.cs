@@ -46,7 +46,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// アプリケーション名。
         /// </summary>
-        public static string ApplicationName { get; } = "MnMn";
+        public const string applicationName = "MnMn";
+
+        /// <summary>
+        /// アプリケーション名。
+        /// </summary>
+        public static string ApplicationName { get; } = applicationName;
 
 #if DEBUG
         /// <summary>
