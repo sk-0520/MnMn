@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -27,14 +28,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     /// </summary>
     public enum ServiceType
     {
+        /// <summary>
+        /// 本体。
+        /// </summary>
+        [TextDisplay(Constants.applicationName)]
         Application,
         /// <summary>
         /// ニコニコ。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_Smile))]
         Smile,
         /// <summary>
         /// ニコニコ動画。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileVideo))]
         SmileVideo,
     }
 }

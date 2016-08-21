@@ -14,6 +14,7 @@
 
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
@@ -22,7 +23,6 @@
   ResizeMode="CanResizeWithGrip"
   Icon="/Resources/Service/Smile/Service-Smile.ico"
 
-  Title="{Binding Title}"
   Left="{Binding Left, Mode=TwoWay}"
   Top="{Binding Top, Mode=TwoWay}"
   Width="{Binding Width, Mode=TwoWay}"
@@ -149,6 +149,9 @@
 
     </ResourceDictionary>
   </Window.Resources>
+  <i:Interaction.Behaviors>
+    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+  </i:Interaction.Behaviors>
   <DockPanel>
 
     <ToolBar DockPanel.Dock="Top">

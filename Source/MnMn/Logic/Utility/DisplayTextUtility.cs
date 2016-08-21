@@ -16,37 +16,31 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Attribute;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
-    [ValueConversion(typeof(Enum), typeof(string))]
-    public class EnumDisplayConverter: IValueConverter
+    /// <summary>
+    /// <see cref="DisplayTextAttributeBase"/>に対する処理。
+    /// </summary>
+    public static class DisplayTextUtility
     {
-        #region IValueConverter
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public static string GetDisplayText(object value)
         {
-            if(value == null) {
-                return DependencyProperty.UnsetValue;
+            var type = value.GetType();
+            var memberInfo = type.GetMember(value.ToString()).FirstOrDefault();
+            if(memberInfo != null) {
+                var attrs = memberInfo.GetCustomAttributes(typeof(DisplayTextAttributeBase), true);
+                if(attrs != null && attrs.Length > 0) {
+                    var display = ((DisplayTextAttributeBase)attrs[0]);
+                    return display.Text;
+                }
             }
 
-            return DisplayTextUtility.GetDisplayText(value);
+            return value.ToString();
         }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }
