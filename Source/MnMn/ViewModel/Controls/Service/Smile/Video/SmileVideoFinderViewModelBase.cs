@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             FinderFilering = filteringResult.Filtering;
 
-            this._isEnabledFinderFiltering = FinderFilering.IsEnabledFinderFiltering;
+            this._isEnabledFinderFiltering = Constants.ServiceSmileVideoIsEnabledFiltering;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -173,13 +173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public virtual bool IsEnabledFinderFiltering
         {
             get { return this._isEnabledFinderFiltering; }
-            set
-            {
-                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
-                    FinderFilering.IsEnabledFinderFiltering = value;
-                    FinderItems.Refresh();
-                }
-            }
+            set { SetVariableValue(ref this._isEnabledFinderFiltering, value); }
         }
 
         /// <summary>

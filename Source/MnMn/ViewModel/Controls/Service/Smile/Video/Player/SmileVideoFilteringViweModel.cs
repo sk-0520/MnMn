@@ -84,11 +84,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
 
-        public bool IsEnabledFinderFiltering
-        {
-            get { return FinderSetting.IsEnabledFinderFiltering; }
-            set { SetPropertyValue(FinderSetting, value); }
-        }
+        //public bool IsEnabledFinderFiltering
+        //{
+        //    get { return FinderSetting.IsEnabledFinderFiltering; }
+        //    set { SetPropertyValue(FinderSetting, value); }
+        //}
 
         #endregion
 
