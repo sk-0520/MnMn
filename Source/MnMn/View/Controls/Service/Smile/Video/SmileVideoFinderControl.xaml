@@ -241,6 +241,25 @@
                       </app_view_controls:LoadStateNavigator.Style>
                     </app_view_controls:LoadStateNavigator>
 
+                    <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="7" >
+                      <Border.Background>
+                        <LinearGradientBrush Opacity="0.5" StartPoint="0.5,0" EndPoint="0.5,1">
+                          <GradientStop Color="#444444" Offset="0"/>
+                          <GradientStop Color="#888888" Offset="1"/>
+                        </LinearGradientBrush>
+                      </Border.Background>
+                      <Border.Style>
+                        <Style TargetType="Border">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Approval}" Value="False">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </Border.Style>
+                    </Border>
+
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Padding="2,1" FontWeight="Bold" Text="{Binding Information.Title}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="再生数" Style="{StaticResource HeaderColumn}" />
@@ -660,12 +679,8 @@
                         <Border/>
                       </DockPanel>
                     </Border>
-
-                    <!--<Border IsHitTestVisible="True" BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6" />-->
                   </Grid>
                 </Grid>
-
-
               </DockPanel>
             </ContentControl>
           </DataTemplate>

@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool? _isChecked = false;
         int _number;
+        bool _approval;
 
         #endregion
 
@@ -57,6 +58,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._number; }
             set { SetVariableValue(ref this._number, value); }
+        }
+
+        public bool Approval
+        {
+            get { return this._approval; }
+            set { SetVariableValue(ref this._approval, value); }
         }
 
         #endregion

@@ -304,30 +304,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return true;
             }
 
-            if(!IsEnabledFinderFiltering) {
-                return true;
-            }
-
             if(!FinderFilering.FinderFilterList.Any()) {
                 return true;
             }
 
-            var information = ((SmileVideoFinderItem)obj).Information;
+            var finderItem = (SmileVideoFinderItem)obj;
+            var information = finderItem.Information;
             var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
             foreach(var filter in filters.AsParallel()) {
                 var isHit = filter.Check(information.VideoId, information.Title, information.UserId, information.UserNickname, information.ChannelId, information.ChannelName, information.Description, information.TagList);
                 if(isHit) {
+                    finderItem.Approval = false;
                     return false;
                 }
             }
 
+            finderItem.Approval = true;
             return true;
         }
 
         protected virtual bool FilterItems(object obj)
         {
             var isHitFinder = IsShowFilteringItem(obj);
-            if(!isHitFinder) {
+
+            if(IsEnabledFinderFiltering && !isHitFinder) {
                 return false;
             }
 
