@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// <see cref="View.Controls.Service.Smile.Video.SmileVideoFinderControl"/>に設定するアイテム。
     /// <para><see cref="SmileVideoInformationViewModel"/>を<see cref="View.Controls.Service.Smile.Video.SmileVideoFinderControl"/>に設定するために超頑張ったのである。</para>
     /// </summary>
-    public sealed class SmileVideoFinderItem: ViewModelBase, ICheckable
+    public sealed class SmileVideoFinderItemViewModel: ViewModelBase, ICheckable
     {
         #region define
 
@@ -40,10 +40,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool? _isChecked = false;
         int _number;
+        bool _approval = true;
 
         #endregion
 
-        public SmileVideoFinderItem(SmileVideoInformationViewModel information, int number)
+        public SmileVideoFinderItemViewModel(SmileVideoInformationViewModel information, int number)
         {
             Information = information;
             Number = number;
@@ -53,10 +54,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoInformationViewModel Information { get; }
 
+        /// <summary>
+        /// 表示位置番号。
+        /// </summary>
         public int Number
         {
             get { return this._number; }
             set { SetVariableValue(ref this._number, value); }
+        }
+
+        /// <summary>
+        /// フィルタにより表示が許可されているか。
+        /// </summary>
+        public bool Approval
+        {
+            get { return this._approval; }
+            set { SetVariableValue(ref this._approval, value); }
         }
 
         #endregion

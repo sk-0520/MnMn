@@ -449,7 +449,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string UserNickname
+        public string UserName
         {
             get
             {
@@ -467,6 +467,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return Thumb.UserId;
             }
         }
+
+        public string ChannelId
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return Thumb.ChannelId;
+            }
+        }
+
+        public string ChannelName
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+                return Thumb.ChannelName;
+            }
+        }
+
+        public bool IsChannelVideo
+        {
+            get
+            {
+                ThrowNotGetthumbinfoSource();
+
+                return string.IsNullOrEmpty(UserId);
+            }
+        }
+
 
         public bool IsOfficialVideo
         {
@@ -644,7 +673,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// この動画に対するフィルタ。
         /// </summary>
-        public SmileVideoFilteringSettingModel Filtering
+        public SmileVideoCommentFilteringSettingModel Filtering
         {
             get { return IndividualVideoSetting.Filtering; }
         }

@@ -28,9 +28,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
 {
-    public class SmileVideoCommentFilteringResultModel: ModelBase
+    public class SmileVideoFilteringResultModel: ModelBase
     {
-        public SmileVideoCommentFilteringResultModel(SmileVideoFilteringViweModel filtering)
+        public SmileVideoFilteringResultModel(SmileVideoFilteringViweModel filtering)
         {
             Filtering = filtering;
         }

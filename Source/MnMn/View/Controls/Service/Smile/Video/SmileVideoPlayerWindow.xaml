@@ -57,6 +57,7 @@
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
@@ -579,7 +580,7 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
                   <TextBlock DockPanel.Dock="Right">高</TextBlock>
-                  <Slider Minimum="-3000" Maximum="-1" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
+                  <Slider Minimum="-3000" Maximum="-1" LargeChange="100" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
@@ -670,6 +671,7 @@
                     <Slider
                       Minimum="1"
                       Maximum="50"
+                      LargeChange="5"
                       Value="{Binding DisplayCommentLimitCount}"
                       IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
                     />
@@ -778,7 +780,7 @@
 
                           <TextBlock DockPanel.Dock="Right" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" Visibility="{Binding DataContext.PlayerShowPostTimestamp, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
 
-                          <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Content}">
+                          <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding ContentSingleLine}">
                             <TextBlock.Style>
                               <Style TargetType="TextBlock">
                                 <Style.Triggers>
@@ -795,6 +797,7 @@
                               </Style>
                             </TextBlock.Style>
                           </TextBlock>
+
                         </DockPanel>
                       </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -888,13 +891,13 @@
             </DockPanel>
           </TabItem>
           <TabItem Header="個別フィルタ" Margin="0">
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList x:Name="localFilter">
+            <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
                   <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
                 </i:EventTrigger>
               </i:Interaction.Triggers>
-            </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
+            </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
           </TabItem>
           <TabItem>
             <TabItem.Header>
@@ -903,13 +906,13 @@
                 <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
               </StackPanel>
             </TabItem.Header>
-            <app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList Filtering="{Binding GlobalCommentFilering}">
+            <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
                   <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
                 </i:EventTrigger>
               </i:Interaction.Triggers>
-            </app_view_controls_service_smile_video_setting:SmileVideoFilteringCommentList>
+            </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
           </TabItem>
           <TabItem Header="設定">
             <StackPanel>
@@ -927,12 +930,12 @@
               />
               <DockPanel>
                 <Label DockPanel.Dock="Left">透明度</Label>
-                <Slider Minimum="0.1" Maximum="1" Value="{Binding CommentFontAlpha}" />
+                <Slider Minimum="0.1" Maximum="1" LargeChange="0.1"  Value="{Binding CommentFontAlpha}"/>
               </DockPanel>
               <DockPanel>
                 <Label DockPanel.Dock="Left">表示時間</Label>
                 <!-- TODO: UI側で制限 -->
-                <Slider Minimum="1000" Maximum="10000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
+                <Slider Minimum="1000" Maximum="10000" LargeChange="1000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
               </DockPanel>
               <CheckBox IsChecked="{Binding CommentConvertPairYenSlash}">
                 <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
@@ -972,7 +975,7 @@
             <StackPanel Grid.Column="0">
               <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
 
-              <!--<TextBlock Text="{Binding UserNickname}" />-->
+              <!--<TextBlock Text="{Binding UserName}" />-->
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
                 <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
@@ -982,7 +985,7 @@
                         <Style TargetType="Run">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding InformationLoadState}" Value="Loaded">
-                              <Setter Property="Text" Value="{Binding UserNickname, Mode=OneTime}" />
+                              <Setter Property="Text" Value="{Binding UserName, Mode=OneTime}" />
                             </DataTrigger>
                           </Style.Triggers>
                         </Style>

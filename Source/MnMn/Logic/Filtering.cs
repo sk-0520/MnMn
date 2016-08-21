@@ -108,6 +108,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public bool Check(string target)
         {
+            if(target == null) {
+                return false;
+            }
+
             var notNullTarget = target ?? string.Empty;
             var notNullSource = Setting.Source ?? string.Empty;
 

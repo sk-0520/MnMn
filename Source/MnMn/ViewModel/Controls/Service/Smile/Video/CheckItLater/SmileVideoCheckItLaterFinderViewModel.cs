@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.Length;
 
+        public override bool IsUsingFinderFilter { get; } = false;
+
         protected override bool FilterItems(object obj)
         {
             var baseResult = base.FilterItems(obj);
@@ -69,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 return baseResult;
             }
 
-            var finderItem = (SmileVideoFinderItem)obj;
+            var finderItem = (SmileVideoFinderItemViewModel)obj;
             var viewModel = finderItem.Information;
 
             return !IdLaterMap[viewModel.VideoId].IsChecked;

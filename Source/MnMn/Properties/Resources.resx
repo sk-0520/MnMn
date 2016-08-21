@@ -159,6 +159,15 @@
   <data name="String_App_Define_LoginState_None" xml:space="preserve">
     <value>未ログイン</value>
   </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentFilteringTarget_Command" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentFilteringTarget_Comment" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentFilteringTarget_UserId" xml:space="preserve">
+    <value>ユーザーID</value>
+  </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentResultStatus_Failure" xml:space="preserve">
     <value>投稿拒否</value>
   </data>
@@ -188,14 +197,29 @@
     <value>不明</value>
     <comment>実装側で使用、サービスからはこない</comment>
   </data>
-  <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Command" xml:space="preserve">
-    <value>コマンド</value>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelId" xml:space="preserve">
+    <value>チャンネルID</value>
   </data>
-  <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_Comment" xml:space="preserve">
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_ChannelName" xml:space="preserve">
+    <value>チャンネル名</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Description" xml:space="preserve">
     <value>コメント</value>
   </data>
-  <data name="String_App_Define_Service_Smile_Video_SmileVideoFilteringTarget_UserId" xml:space="preserve">
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Tag" xml:space="preserve">
+    <value>タグ</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_Title" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserId" xml:space="preserve">
     <value>ユーザーID</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_UserName" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoFinderFilteringTarget_VideoId" xml:space="preserve">
+    <value>動画ID</value>
   </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoSortType_CommentCount" xml:space="preserve">
     <value>コメント数</value>

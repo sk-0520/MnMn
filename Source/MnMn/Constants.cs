@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -36,6 +37,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
     /// </summary>
     public partial class Constants
     {
+        const string buildTypeDebug = "DEBUG";
+        const string buildTypeBeta = "β";
+        const string buildTypeRelease = "RELEASE";
+
         #region proeprty
 
         /// <summary>
@@ -55,6 +60,23 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ApplicationUsingName { get; } = ApplicationName;
 #endif
         /// <summary>
+        /// ビルドタイプ。
+        /// </summary>
+        public static string BuildType
+        {
+            get
+            {
+#if DEBUG
+                return buildTypeDebug;
+#elif BETA
+                return buildTypeBeta;
+#else
+                return buildTypeRelease;
+#endif
+            }
+
+        }
+        /// <summary>
         /// アプリケーションパス。
         /// </summary>
         public static string AssemblyPath { get; } = Assembly.GetExecutingAssembly().Location;
@@ -71,6 +93,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// バージョン番号。
         /// </summary>
         public static Version ApplicationVersionNumber { get; } = Assembly.GetExecutingAssembly().GetName().Version;
+        /// <summary>
+        /// バージョンリビジョン。
+        /// </summary>
+        public static string ApplicationVersionRevision { get; } = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
+        /// <summary>
+        /// アプリケーションバージョン。
+        /// </summary>
+        public static string ApplicationVersion { get; } = ApplicationVersionNumber.ToString() + "-" + ApplicationVersionRevision;
 
         /// <summary>
         /// 前回バージョンがこれ未満なら使用許諾を表示
@@ -149,11 +179,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// doc/
         /// </summary>
         public static string ApplicationDocDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "doc"); } }
+
         /// <summary>
         /// etc/
         /// </summary>
         public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
 
+        /// <summary>
+        /// 外部ライブラリファイルパス。
+        /// </summary>
+        public static string ComponentListFileName { get { return Path.Combine(ApplicationDocDirectoryPath, "components.xml"); } }
         /// <summary>
         /// ヘルプファイルパス。
         /// </summary>

@@ -25,6 +25,7 @@
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <Style x:Key="ReloadButton" TargetType="Button">
         <Setter Property="FontFamily" Value="Webdings" />
@@ -74,7 +75,7 @@
         <xctk:DropDownButton.DropDownContent>
           <Border>
             <StackPanel Orientation="Horizontal">
-              <GroupBox>
+              <GroupBox Visibility="{Binding Session.IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <GroupBox.Header>
                   <StackPanel Orientation="Horizontal">
                     <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
@@ -173,10 +174,21 @@
 
                 <TextBlock DockPanel.Dock="Right" Margin="2,0" Text="{Binding LastTimestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
 
-                <Button Cursor="Hand" Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                <Button Cursor="Hand" Background="Transparent" Content="{Binding Query, Mode=OneTime}" Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                  <Button.Style>
+                    <Style TargetType="Button">
+                      <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                          <!--<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />-->
+                          <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                      </Style.Triggers>
+                      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" />
+                    </Style>
+                  </Button.Style>
                   <Button.Template>
-                    <ControlTemplate>
-                      <TextBlock Text="{Binding Query, Mode=OneTime}" FontWeight="Bold" />
+                    <ControlTemplate TargetType="Button">
+                      <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}"/>
                     </ControlTemplate>
                   </Button.Template>
                 </Button>

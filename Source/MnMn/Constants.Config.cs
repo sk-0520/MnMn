@@ -37,16 +37,26 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region property
 
-        public static string UriUpdate => ReplaceAppConfig(appConfig.Get("uri-update"));
-        public static string UriChangelogRelease => ReplaceAppConfig(appConfig.Get("uri-changelog-release"));
-        //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("uri-changelog-rc"));
+        public static string AppUriAbout => ReplaceAppConfig(appConfig.Get("app-uri-about"));
+        public static string AppMailAbout => ReplaceAppConfig(appConfig.Get("app-mail-about"));
+        public static string AppUriDevelopment => ReplaceAppConfig(appConfig.Get("app-uri-development"));
+        public static string AppUriForum => ReplaceAppConfig(appConfig.Get("app-uri-forum"));
+        public static string AppUriUpdate => ReplaceAppConfig(appConfig.Get("app-uri-update"));
+        public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
+        //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
         /// <summary>
         /// 設定ファイルの自動保存タイミング。
         /// </summary>
-        public static TimeSpan AutoSaveSettingTime => appConfig.Get("auto-save-setting-time", TimeSpan.Parse);
+        public static TimeSpan BackgroundAutoSaveSettingTime => appConfig.Get("background-auto-save-setting-time", TimeSpan.Parse);
+        /// <summary>
+        /// アップデートチェックタイミング。
+        /// </summary>
+        public static TimeSpan BackgroundUpdateCheckTime => appConfig.Get("background-update-check-time", TimeSpan.Parse);
+
+
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 

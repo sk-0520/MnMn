@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
     public class SmileSettingManagerViewModel: ManagerViewModelBase
     {
+        #region variable
+
+        string _editingAccountName;
+        string _editingAccountPassword;
+
+        #endregion
+
         public SmileSettingManagerViewModel(Mediation mediation)
             : base(mediation)
         {
@@ -44,15 +52,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         SmileSettingModel Setting { get; }
         public SmileSessionViewModel Session { get; }
 
-        public string AccountName
+        public string EditingAccountName
         {
-            get { return Setting.Account.Name; }
-            set { SetPropertyValue(Setting.Account, value, nameof(Setting.Account.Name)); }
+            get { return this._editingAccountName; }
+            set { SetVariableValue(ref this._editingAccountName, value); }
         }
-        public string AccountPassword
+        public string EditingAccountPassword
         {
-            get { return Setting.Account.Password; }
-            set { SetPropertyValue(Setting.Account, value, nameof(Setting.Account.Password)); }
+            get { return this._editingAccountPassword; }
+            set { SetVariableValue(ref this._editingAccountPassword, value); }
         }
 
         #endregion
@@ -67,12 +75,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             }
         }
 
+        public ICommand OpenUriCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var uri = (string)o;
+                    try {
+                        Process.Start(uri);
+                    } catch(Exception ex) {
+                        Mediation.Logger.Error(ex);
+                    }
+                });
+            }
+        }
+
         #endregion
 
         #region function
 
         Task LoginAsync()
         {
+            Setting.Account.Name = EditingAccountName;
+            Setting.Account.Password = EditingAccountPassword;
+
             return Session.ChangeUserAccountAsync(Setting.Account).ContinueWith(t => {
                 return Session.LoginAsync();
             }).ContinueWith(t => {
@@ -91,6 +117,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase
+
+        protected override void ShowView()
+        {
+            base.ShowView();
+
+            EditingAccountName = Setting.Account.Name;
+            EditingAccountPassword = Setting.Account.Password;
+        }
 
         public override Task InitializeAsync()
         {

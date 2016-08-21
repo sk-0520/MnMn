@@ -6,6 +6,24 @@ MnMn は Windows 上で動作するWebサービス専用ブラウザです。
 
  * ニコニコ動画
 
+# ダウンロード
+
+[ダウンロード](https://bitbucket.org/sk_0520/mnmn/downloads)を参照。
+
+
+# フォーラム
+
+[Google Groups](https://groups.google.com/d/forum/mnmn-forum)を参照。
+
+
+# 課題管理
+
+フォーラムやメールでの意見を課題として対応しています。
+
+Bitbucket へログイン可能なアカウントを持っていれば課題を作成して頂いてもかまいません。
+
+[Issues](https://bitbucket.org/sk_0520/mnmn/issues?status=new&status=open)を参照。
+
 ## CI
 
 都合により赤かったり404だったり。

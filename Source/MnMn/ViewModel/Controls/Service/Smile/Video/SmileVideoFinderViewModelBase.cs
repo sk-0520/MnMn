@@ -32,9 +32,12 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
@@ -47,11 +50,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _nowLoading;
 
-        SmileVideoFinderItem _selectedFinderItem;
+        SmileVideoFinderItemViewModel _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
-        string _inputFilter;
+        string _inputTitleFilter;
         bool _isBlacklist;
+        bool _showFilterSetting;
+        bool _isEnabledFinderFiltering;
 
         bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
@@ -69,6 +74,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             SortTypeItems = new CollectionModel<SmileVideoSortType>(EnumUtility.GetMembers<SmileVideoSortType>());
 
             //BindingOperations.EnableCollectionSynchronization(FinderItemList, new object());
+            var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
+            FinderFilering = filteringResult.Filtering;
+
+            this._isEnabledFinderFiltering = FinderFilering.IsEnabledFinderFiltering;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -80,10 +89,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected CancellationTokenSource CancelLoading { get; set; }
         protected SmileVideoSettingModel Setting { get; }
 
-        protected CollectionModel<SmileVideoFinderItem> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItem>();
-        public IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
+        protected CollectionModel<SmileVideoFinderItemViewModel> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItemViewModel>();
+        public virtual IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
+
+        //public virtual SmileVideoFilteringViweModel Filtering { get; }
+        public SmileVideoFilteringViweModel FinderFilering { get; }
 
         public virtual bool IsAscending
         {
@@ -113,7 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._nowLoading, value); }
         }
 
-        public SmileVideoFinderItem SelectedFinderItem
+        public SmileVideoFinderItemViewModel SelectedFinderItem
         {
             get { return this._selectedFinderItem; }
             set { SetVariableValue(ref this._selectedFinderItem, value); }
@@ -134,12 +146,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public virtual string InputFilter
+        public virtual string InputTitleFilter
         {
-            get { return this._inputFilter; }
+            get { return this._inputTitleFilter; }
             set
             {
-                if(SetVariableValue(ref this._inputFilter, value)) {
+                if(SetVariableValue(ref this._inputTitleFilter, value)) {
                     FinderItems.Refresh();
                 }
             }
@@ -154,6 +166,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
+
+        /// <summary>
+        /// 設定フィルタを使用するか。
+        /// </summary>
+        public virtual bool IsEnabledFinderFiltering
+        {
+            get { return this._isEnabledFinderFiltering; }
+            set
+            {
+                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+                    FinderFilering.IsEnabledFinderFiltering = value;
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 設定フィルタ有効無効UI表示。
+        /// </summary>
+        public virtual bool ShowFilterSetting
+        {
+            get { return this._showFilterSetting; }
+            set { SetVariableValue(ref this._showFilterSetting, value); }
+        }
+
+        /// <summary>
+        /// フィルタリング設定をそもそも使用するか。
+        /// </summary>
+        public virtual bool IsUsingFinderFilter { get; } = true;
 
         public virtual bool CanLoad
         {
@@ -203,6 +244,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return CreateCommand(o => ContinuousPlaybackAsync(true)); }
         }
 
+        public ICommand ChangedFilteringCommand
+        {
+            get { return CreateCommand(o => ChangedFiltering()); }
+        }
+
         #endregion
 
         #region function
@@ -220,7 +266,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var finderItems = items
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
-                .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
+                .Select(v => new SmileVideoFinderItemViewModel(v.Information, v.Index + 1))
                 .ToArray()
             ;
 
@@ -253,14 +299,58 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected bool IsShowFilteringItem(object obj)
+        {
+            if(!IsUsingFinderFilter) {
+                return true;
+            }
+
+            if(!FinderFilering.FinderFilterList.Any()) {
+                return true;
+            }
+
+            var finderItem = (SmileVideoFinderItemViewModel)obj;
+            var information = finderItem.Information;
+            var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
+            foreach(var filter in filters.AsParallel()) {
+                var param = new SmileVideoFinderFilteringParameterModel() {
+                    VideoId = information.VideoId,
+                    Title = information.Title,
+                    Tags = information.TagList,
+                };
+                if(information.InformationSource == SmileVideoInformationSource.Getthumbinfo) {
+                    param.UserId = information.UserId;
+                    param.UserName = information.UserName;
+                    param.ChannelId = information.ChannelId;
+                    param.ChannelName = information.ChannelName;
+                    param.Description = information.Description;
+                }
+
+                var isHit = filter.Check(param);
+                if(isHit) {
+                    finderItem.Approval = false;
+                    return false;
+                }
+            }
+
+            finderItem.Approval = true;
+            return true;
+        }
+
         protected virtual bool FilterItems(object obj)
         {
-            var filter = InputFilter;
+            var isHitFinder = IsShowFilteringItem(obj);
+
+            if(IsEnabledFinderFiltering && !isHitFinder) {
+                return false;
+            }
+
+            var filter = InputTitleFilter;
             if(string.IsNullOrEmpty(filter)) {
                 return true;
             }
 
-            var finderItem = (SmileVideoFinderItem)obj;
+            var finderItem = (SmileVideoFinderItemViewModel)obj;
             var viewModel = finderItem.Information;
             var isHit = viewModel.Title.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1;
             if(IsBlacklist) {
@@ -270,10 +360,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public IEnumerable<SmileVideoFinderItem> GetCheckedItems()
+        public IEnumerable<SmileVideoFinderItemViewModel> GetCheckedItems()
         {
             return FinderItemsViewer
-                .Cast<SmileVideoFinderItem>()
+                .Cast<SmileVideoFinderItemViewModel>()
                 .Where(i => i.IsChecked.GetValueOrDefault())
             ;
         }
@@ -313,7 +403,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         internal virtual void ToggleAllCheck()
         {
-            var items = FinderItems.Cast<SmileVideoFinderItem>().ToArray();
+            var items = FinderItems.Cast<SmileVideoFinderItemViewModel>().ToArray();
             var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
             foreach(var item in items) {
@@ -350,13 +440,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         internal virtual void ChangeSortItems()
         {
             var map = new[] {
-                new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItem.Number) },
-                new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
-                new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
-                new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
-                new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
-                new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },
-                new { Type = SmileVideoSortType.MyListCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.MylistCounter) },
+                new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItemViewModel.Number) },
+                new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItemViewModel.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
+                new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItemViewModel.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
+                new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItemViewModel.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
+                new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItemViewModel.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
+                new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItemViewModel.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },
+                new { Type = SmileVideoSortType.MyListCount, Parent = nameof(SmileVideoFinderItemViewModel.Information),Property = nameof(SmileVideoInformationViewModel.MylistCounter) },
             }.ToDictionary(
                 ak => ak.Type,
                 av => $"{av.Parent}.{av.Property}"
@@ -367,6 +457,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             FinderItems.SortDescriptions.Clear();
             FinderItems.SortDescriptions.Add(sort);
+            FinderItems.Refresh();
+        }
+
+        void ChangedFiltering()
+        {
             FinderItems.Refresh();
         }
 

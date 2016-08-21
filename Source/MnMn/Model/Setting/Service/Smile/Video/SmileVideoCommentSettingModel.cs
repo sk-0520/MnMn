@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// フィルタリングデータ。
         /// </summary>
         [DataMember]
-        public SmileVideoFilteringSettingModel Filtering { get; set; } = new SmileVideoFilteringSettingModel();
+        public SmileVideoCommentFilteringSettingModel Filtering { get; set; } = new SmileVideoCommentFilteringSettingModel();
 
         #endregion
     }

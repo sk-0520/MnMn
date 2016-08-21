@@ -17,23 +17,28 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
-    [DataContract]
-    public class SmileVideoFilteringItemSettingModel: FilteringItemSettingModel
+    /// <summary>
+    /// ファインダーフィルタの必要データ。
+    /// <para>引数でやってたけど多い。</para>
+    /// </summary>
+    public struct SmileVideoFinderFilteringParameterModel
     {
         #region property
-        
-        /// <summary>
-        /// 対象。
-        /// </summary>
-        [DataMember]
-        public SmileVideoFilteringTarget Target { get; set; }
+
+        public string VideoId { get; set; }
+        public string Title { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string ChannelId { get; set; }
+        public string ChannelName { get; set; }
+        public string Description { get; set; }
+        public IEnumerable<SmileVideoTagViewModel> Tags { get; set; }
 
         #endregion
     }

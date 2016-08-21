@@ -7,7 +7,9 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,26 +20,56 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
       </ResourceDictionary.MergedDictionaries>
+      <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
     <StackPanel>
-      <GroupBox Header="account">
+      <GroupBox Header="アカウント設定">
         <StackPanel>
-          <Label>e-mail</Label>
-          <TextBox Text="{Binding AccountName}" />
-          <Label>password</Label>
-          <PasswordBox>
-            <i:Interaction.Behaviors>
-              <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding AccountPassword, Mode=TwoWay}" />
-            </i:Interaction.Behaviors>
-          </PasswordBox>
-          <Button Command="{Binding LoginCommand}">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock>login:</TextBlock>
-              <TextBlock Text="{Binding Session.LoginState}" />
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0">メールアドレスまたは電話番号</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EditingAccountName}" />
+
+            <Label Grid.Row="1" Grid.Column="0">パスワード</Label>
+            <PasswordBox Grid.Row="1" Grid.Column="1">
+              <i:Interaction.Behaviors>
+                <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding EditingAccountPassword, Mode=TwoWay}" />
+              </i:Interaction.Behaviors>
+            </PasswordBox>
+
+            <StackPanel Grid.Row="2">
+              <TextBlock Grid.Column="0" TextAlignment="Center">
+                <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountRegister}">会員登録</Hyperlink>
+              </TextBlock>
+
+              <TextBlock Grid.Column="1" TextAlignment="Center">
+                <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountReset}">パスワード再発行</Hyperlink>
+              </TextBlock>
             </StackPanel>
-          </Button>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+              <Button VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding LoginCommand}">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock>ログインチェック:</TextBlock>
+                  <TextBlock Text="{Binding Session.LoginState, Converter={StaticResource EnumDisplayConverter}}" />
+                </StackPanel>
+              </Button>
+              <Border Width="8" />
+              <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis">ログインチェックするまでアカウント情報は有効になりません。</TextBlock>
+            </StackPanel>
+          </Grid>
+
+
         </StackPanel>
       </GroupBox>
     </StackPanel>

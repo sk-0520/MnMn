@@ -14,6 +14,8 @@
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
   xmlns:app_view_converter_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -28,8 +30,12 @@
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
       <cttn_sl_view_controls:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+      <cttn_sl_view_controls:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
@@ -43,9 +49,17 @@
         <Setter Property="Padding" Value="{StaticResource ValueCell}" />
         <Setter Property="TextAlignment" Value="Right" />
       </Style>
+
+      <Style x:Key="HeadFootContent" TargetType="ContentControl">
+        <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
+      </Style>
+
+      <Style x:Key="BodyContentVisibility" TargetType="Grid">
+        <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
+      </Style>
+
     </ResourceDictionary>
   </UserControl.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -54,555 +68,648 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
-    <Grid>
-      <DockPanel>
-        <Button DockPanel.Dock="Left" Command="{Binding AllCheckCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
-        </Button>
-        <xctk:SplitButton DockPanel.Dock="Left" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
-          <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
-          <xctk:SplitButton.DropDownContent>
-            <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
-          </xctk:SplitButton.DropDownContent>
-        </xctk:SplitButton>
+    <Grid Style="{StaticResource BodyContentVisibility}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
 
-        <ComboBox DockPanel.Dock="Right" MinWidth="100" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
-          <ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsAscending}">
-          <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
-        </ToggleButton>
-        <Label DockPanel.Dock="Right" Margin="10,0,0,0" >並べ替え</Label>
-        <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
-        <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
-      </DockPanel>
+      <Button Grid.Column="0" Command="{Binding AllCheckCommand}">
+        <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
+      </Button>
+      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
+        <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
+        <xctk:SplitButton.DropDownContent>
+          <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
+        </xctk:SplitButton.DropDownContent>
+      </xctk:SplitButton>
+
+      <xctk:WatermarkTextBox Grid.Column="2" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+
+      <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
+      <Label Grid.Column="4" Margin="10,0,0,0" >並べ替え</Label>
+      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
+        <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
+      </ToggleButton>
+      <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <ToggleButton Grid.Column="7" IsChecked="{Binding ShowFilterSetting}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>フィルタ</TextBlock>
+          <ContentControl VerticalContentAlignment="Stretch">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="True">
+                    <Setter Property="Content">
+                      <Setter.Value>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock>(</TextBlock>
+                          <TextBlock Text="{Binding FinderItems.Count}" />
+                          <TextBlock>/</TextBlock>
+                          <TextBlock Text="{Binding FinderItemsViewer.Count}" />
+                          <TextBlock>)</TextBlock>
+                        </StackPanel>
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="False">
+                    <Setter Property="Content">
+                      <Setter.Value>
+                        <TextBlock>(無効)</TextBlock>
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </ContentControl.Style>
+          </ContentControl>
+        </StackPanel>
+      </ToggleButton>
     </Grid>
 
-    <ListBox
-      x:Name="PART_List"
-      Grid.Row="2"
-      Style="{StaticResource ContentListBox}"
-      ItemsSource="{Binding FinderItems}"
-      SelectedItem="{Binding SelectedFinderItem}"
-    >
-      <ListBox.ItemContainerStyle>
-        <Style TargetType="{x:Type ListBoxItem}">
-          <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-          <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
-      </ListBox.ItemContainerStyle>
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <ContentControl x:Name="detail">
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="MouseDoubleClick">
-                <i:InvokeCommandAction Command="{Binding Information.OpenVideoCommand}" />
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
+    <Grid Grid.Row="2" Style="{StaticResource BodyContentVisibility}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="6*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-            <DockPanel Background="Transparent">
-              <CheckBox DockPanel.Dock="Left" Width="32" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick" IsChecked="{Binding IsChecked}">
-                <CheckBox.Template>
-                  <ControlTemplate TargetType="CheckBox">
-                    <Grid>
-                      <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                      </Grid.RowDefinitions>
-                      <TextBlock Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" Text="{Binding Number}" />
-                      <CheckBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}" />
-                    </Grid>
-                  </ControlTemplate>
-                </CheckBox.Template>
-              </CheckBox>
+      <ListBox
+        x:Name="PART_List"
+        Grid.Row="0"
+        Grid.RowSpan="2"
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
+        Style="{StaticResource ContentListBox}"
+        ItemsSource="{Binding FinderItems}"
+        SelectedItem="{Binding SelectedFinderItem}"
+      >
+        <ListBox.ItemContainerStyle>
+          <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+          </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <ContentControl x:Name="detail">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                  <i:InvokeCommandAction Command="{Binding Information.OpenVideoCommand}" />
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
 
-              <Grid Width="78" Height="60" DockPanel.Dock="Left" >
-                <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding Information.ThumbnailLoadState, Mode=OneWay}" />
-                <Image Source="{Binding Information.ThumbnailImage, Mode=OneWay}" />
-              </Grid>
+              <DockPanel Background="Transparent">
+                <CheckBox DockPanel.Dock="Left" Width="32" PreviewMouseDoubleClick="UIElement_PreviewMouseDoubleClick" IsChecked="{Binding IsChecked}">
+                  <CheckBox.Template>
+                    <ControlTemplate TargetType="CheckBox">
+                      <Grid>
+                        <Grid.RowDefinitions>
+                          <RowDefinition />
+                          <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Center" Text="{Binding Number}" />
+                        <CheckBox Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" IsEnabled="{Binding Checkable, RelativeSource={RelativeSource AncestorType=UserControl}}" IsChecked="{Binding IsChecked}" />
+                      </Grid>
+                    </ControlTemplate>
+                  </CheckBox.Template>
+                </CheckBox>
 
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                <Grid Width="78" Height="60" DockPanel.Dock="Left" >
+                  <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding Information.ThumbnailLoadState, Mode=OneWay}" />
+                  <Image Source="{Binding Information.ThumbnailImage, Mode=OneWay}" />
+                </Grid>
 
-                <Grid Grid.Column="0">
-                  <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                  </Grid.RowDefinitions>
+                <Grid>
                   <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="160" />
-                    <!-- dummy -->
-                    <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <app_view_controls:LoadStateNavigator
-                    Grid.Row="0"
-                    Grid.RowSpan="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="7"
-                    ShowStateText="False"
-                  >
-                    <app_view_controls:LoadStateNavigator.Style>
-                      <Style TargetType="app_view_controls:LoadStateNavigator">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Information.NeedLoadInformationFlag}" Value="True">
-                            <Setter Property="LoadState" Value="{Binding Information.InformationLoadState}" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding Information.NeedLoadInformationFlag}" Value="False">
-                            <Setter Property="LoadState" Value="Loaded" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </app_view_controls:LoadStateNavigator.Style>
-                  </app_view_controls:LoadStateNavigator>
+                  <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                      <RowDefinition />
+                      <RowDefinition />
+                      <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="80" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="80" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="160" />
+                      <!-- dummy -->
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Padding="2,1" FontWeight="Bold" Text="{Binding Information.Title}" />
+                    <app_view_controls:LoadStateNavigator
+                      Grid.Row="0"
+                      Grid.RowSpan="3"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="7"
+                      ShowStateText="False"
+                    >
+                      <app_view_controls:LoadStateNavigator.Style>
+                        <Style TargetType="app_view_controls:LoadStateNavigator">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Information.NeedLoadInformationFlag}" Value="True">
+                              <Setter Property="LoadState" Value="{Binding Information.InformationLoadState}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Information.NeedLoadInformationFlag}" Value="False">
+                              <Setter Property="LoadState" Value="Loaded" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </app_view_controls:LoadStateNavigator.Style>
+                    </app_view_controls:LoadStateNavigator>
 
-                  <TextBlock Grid.Row="1" Grid.Column="0" Text="再生数" Style="{StaticResource HeaderColumn}" />
-                  <TextBlock Grid.Row="1" Grid.Column="1">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
-                        <Style.Triggers>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="---" />
-                          </MultiDataTrigger>
+                    <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="7" >
+                      <Border.Background>
+                        <LinearGradientBrush Opacity="0.5" StartPoint="0.5,0" EndPoint="0.5,1">
+                          <GradientStop Color="#444444" Offset="0"/>
+                          <GradientStop Color="#888888" Offset="1"/>
+                        </LinearGradientBrush>
+                      </Border.Background>
+                      <Border.Style>
+                        <Style TargetType="Border">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Approval}" Value="False">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </Border.Style>
+                    </Border>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasViewConter}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Padding="2,1" FontWeight="Bold" Text="{Binding Information.Title}" />
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasViewConter}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="再生数" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="---" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="未処理" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasViewConter}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="準備中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込失敗" />
-                          </MultiDataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasViewConter}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
 
-                  <TextBlock Grid.Row="1" Grid.Column="2" Text="マイリスト" Style="{StaticResource HeaderColumn}" />
-                  <TextBlock Grid.Row="1" Grid.Column="3">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
-                        <Style.Triggers>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="---" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="未処理" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="準備中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasViewConter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込失敗" />
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="マイリスト" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="1" Grid.Column="3">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="---" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="未処理" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="準備中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込失敗" />
-                          </MultiDataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
 
-                  <TextBlock Grid.Row="1" Grid.Column="4" Text="投稿日" Style="{StaticResource HeaderColumn}" />
-                  <TextBlock Grid.Row="1" Grid.Column="5">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
-                        <Style.Triggers>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="----/--/--" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="未処理" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="準備中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込失敗" />
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
-                          </MultiDataTrigger>
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="投稿日" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="1" Grid.Column="5">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="----/--/--" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="未処理" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="準備中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込失敗" />
-                          </MultiDataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
+                            </MultiDataTrigger>
 
-                  <TextBlock Grid.Row="2" Grid.Column="0" Text="時間" Style="{StaticResource HeaderColumn}" />
-                  <TextBlock Grid.Row="2" Grid.Column="1" >
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
-                        <Style.Triggers>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasLength}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="--:--" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="未処理" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasLength}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="準備中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasFirstRetrieve}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込失敗" />
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasLength}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                          </MultiDataTrigger>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="時間" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" >
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasLength}" Value="False" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="--:--" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasLength}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="未処理" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasLength}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasLength}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="準備中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasLength}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込失敗" />
-                          </MultiDataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasLength}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                            </MultiDataTrigger>
 
-                  <TextBlock Grid.Row="2" Grid.Column="2" Text="コメント" Style="{StaticResource HeaderColumn}" />
-                  <TextBlock Grid.Row="2" Grid.Column="3">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
-                        <Style.Triggers>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="---" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasLength}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="未処理" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                              <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasLength}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="準備中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasLength}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.Length, Mode=OneWay, Converter={StaticResource TimespanToHMFormatConverter}}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込失敗" />
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="コメント" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="2" Grid.Column="3">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="---" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="未処理" />
-                          </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
 
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="準備中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込中" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
-                          </MultiDataTrigger>
-                          <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                              <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                              <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Text" Value="読込失敗" />
-                          </MultiDataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
 
-                  <TextBlock Grid.Row="2" Grid.Column="4" Text="状態" Style="{StaticResource HeaderColumn}" />
-                  <Border Grid.Row="2" Grid.Column="5" Padding="{StaticResource ValueCell}">
-                    <DockPanel>
-                      <TextBlock DockPanel.Dock="Right">
-                        <TextBlock.Style>
-                          <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                              <DataTrigger Value="True">
-                                <DataTrigger.Binding>
-                                  <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
-                                    <Binding Path="Information.LoadedNormalVideo" />
-                                    <Binding Path="Information.LoadedEconomyVideo" />
-                                  </MultiBinding>
-                                </DataTrigger.Binding>
-                                <Setter Property="Text" Value="済" />
-                              </DataTrigger>
-                              <DataTrigger Value="False">
-                                <DataTrigger.Binding>
-                                  <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
-                                    <Binding Path="Information.LoadedNormalVideo" />
-                                    <Binding Path="Information.LoadedEconomyVideo" />
-                                  </MultiBinding>
-                                </DataTrigger.Binding>
-                                <Setter Property="Text" Value="未" />
-                              </DataTrigger>
-                            </Style.Triggers>
-                          </Style>
-                        </TextBlock.Style>
-                      </TextBlock>
-                      <TextBlock DockPanel.Dock="Right">キャッシュ:</TextBlock>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="未処理" />
+                            </MultiDataTrigger>
 
-                      <Border DockPanel.Dock="Right" Width="12" />
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="準備中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込中" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                              <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
+                                <Condition Binding="{Binding Information.InformationLoadState}" Value="Failure" />
+                              </MultiDataTrigger.Conditions>
+                              <Setter Property="Text" Value="読込失敗" />
+                            </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
 
-                      <TextBlock DockPanel.Dock="Right">
-                        <TextBlock.Style>
-                          <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                              <DataTrigger Binding="{Binding Information.ViewingAlready}" Value="True">
-                                <Setter Property="Text" Value="済" />
-                              </DataTrigger>
-                              <DataTrigger Binding="{Binding Information.ViewingAlready}" Value="False">
-                                <Setter Property="Text" Value="未" />
-                              </DataTrigger>
-                            </Style.Triggers>
-                          </Style>
-                        </TextBlock.Style>
-                      </TextBlock>
-                      <TextBlock DockPanel.Dock="Right">視聴:</TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="4" Text="状態" Style="{StaticResource HeaderColumn}" />
+                    <Border Grid.Row="2" Grid.Column="5" Padding="{StaticResource ValueCell}">
+                      <DockPanel>
+                        <TextBlock DockPanel.Dock="Right">
+                          <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                              <Style.Triggers>
+                                <DataTrigger Value="True">
+                                  <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                      <Binding Path="Information.LoadedNormalVideo" />
+                                      <Binding Path="Information.LoadedEconomyVideo" />
+                                    </MultiBinding>
+                                  </DataTrigger.Binding>
+                                  <Setter Property="Text" Value="済" />
+                                </DataTrigger>
+                                <DataTrigger Value="False">
+                                  <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                      <Binding Path="Information.LoadedNormalVideo" />
+                                      <Binding Path="Information.LoadedEconomyVideo" />
+                                    </MultiBinding>
+                                  </DataTrigger.Binding>
+                                  <Setter Property="Text" Value="未" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                            </Style>
+                          </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock DockPanel.Dock="Right">キャッシュ:</TextBlock>
 
-                      <Border/>
-                    </DockPanel>
-                  </Border>
+                        <Border DockPanel.Dock="Right" Width="12" />
 
-                  <!--<Border IsHitTestVisible="True" BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6" />-->
+                        <TextBlock DockPanel.Dock="Right">
+                          <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding Information.ViewingAlready}" Value="True">
+                                  <Setter Property="Text" Value="済" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Information.ViewingAlready}" Value="False">
+                                  <Setter Property="Text" Value="未" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                            </Style>
+                          </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock DockPanel.Dock="Right">視聴:</TextBlock>
+
+                        <Border/>
+                      </DockPanel>
+                    </Border>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </DockPanel>
+            </ContentControl>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
 
+      <Grid Grid.Column="1" Visibility="{Binding ShowFilterSetting, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Border BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            </DockPanel>
-          </ContentControl>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+            <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
+            <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="FilteringChanged">
+                  <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering>
+          </Grid>
+        </Border>
+      </Grid>
 
-    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </Grid>
+
+    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
   </Grid>
 </UserControl>
