@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Xml.Linq;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -52,9 +53,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public AppUpdateManagerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            BackgroundUpdateCheckTimer = new DispatcherTimer() {
+                Interval = Constants.BackgroundUpdateCheckTime,
+            };
+            BackgroundUpdateCheckTimer.Tick += BackgroundUpdateCheckTimer_Tick;
+        }
 
         #region property
+
+        DispatcherTimer BackgroundUpdateCheckTimer { get; }
 
         WebBrowser UpdateBrowser { get; set; }
 
@@ -208,9 +216,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         Task UpdateCheckAsync()
         {
+            BackgroundUpdateCheckTimer.Stop();
+
             return CheckVersionAsync().ContinueWith(t => {
-                LoadChangelogAsync();
-            });
+                return LoadChangelogAsync().ContinueWith(_ => {
+                    BackgroundUpdateCheckTimer.Start();
+                });
+            }, TaskContinuationOptions.AttachedToParent);
         }
 
         Process CreateProcess(Dictionary<string, string> map)
@@ -311,7 +323,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override Task InitializeAsync()
         {
-            return CheckVersionAsync();
+            return CheckVersionAsync().ContinueWith(t => {
+                BackgroundUpdateCheckTimer.Start();
+            });
         }
 
         public override void InitializeView(MainWindow view)
@@ -332,5 +346,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         #endregion
+
+        private void BackgroundUpdateCheckTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateCheckAsync().ConfigureAwait(false);
+        }
+
     }
 }
