@@ -883,7 +883,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 switch(Player.State) {
                                     case Meta.Vlc.Interop.Media.MediaState.NothingSpecial:
                                     case Meta.Vlc.Interop.Media.MediaState.Stopped:
-                                        StopMovie();
+                                        StopMovie(true);
                                         SetMedia();
                                         PlayMovie();
                                         break;
@@ -892,7 +892,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                         //Player.BeginStop(() => {
                                         //    Player.Play();
                                         //});
-                                        StopMovie();
+                                        StopMovie(true);
                                         PlayMovie();
                                         break;
                                 }
@@ -932,7 +932,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         UserOperationStop = true;
-                        StopMovie();
+                        StopMovie(true);
                         UserOperationStop = false;
                     }
                 );
@@ -1208,10 +1208,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.IsMute = IsMute;
             Player.Volume = Volume;
             return View.Dispatcher.BeginInvoke(new Action(() => {
+                ClearComment();
                 if(!IsViewClosed) {
                     Player.Play();
                 }
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+        }
+
+        void StopMovie(bool isStopComment)
+        {
+            Mediation.Logger.Debug("stop");
+            if(IsSettedMedia) {
+                Player.Stop();
+            }
+            //Player.BeginStop(() => {
+            //    Mediation.Logger.Debug("stoped");
+            //    PlayerState = PlayerState.Stop;
+            //    VideoPosition = 0;
+            //    ClearComment();
+            //    PrevPlayedTime = TimeSpan.Zero;
+            //});
+            Mediation.Logger.Debug("stoped");
+            PlayerState = PlayerState.Stop;
+            VideoPosition = 0;
+            if(isStopComment) {
+                ClearComment();
+            }
+            PrevPlayedTime = TimeSpan.Zero;
         }
 
         void ClearComment()
@@ -1745,26 +1768,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
         }
 
-        void StopMovie()
-        {
-            Mediation.Logger.Debug("stop");
-            if(IsSettedMedia) {
-                Player.Stop();
-            }
-            //Player.BeginStop(() => {
-            //    Mediation.Logger.Debug("stoped");
-            //    PlayerState = PlayerState.Stop;
-            //    VideoPosition = 0;
-            //    ClearComment();
-            //    PrevPlayedTime = TimeSpan.Zero;
-            //});
-            Mediation.Logger.Debug("stoped");
-            PlayerState = PlayerState.Stop;
-            VideoPosition = 0;
-            ClearComment();
-            PrevPlayedTime = TimeSpan.Zero;
-        }
-
         void RefreshFilteringComment()
         {
             Debug.Assert(FilteringCommentType != SmileVideoFilteringCommentType.All);
@@ -2194,7 +2197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
-                StopMovie();
+                StopMovie(true);
             }
             SecondsDownloadingSize = e.SecondsDownlodingSize;
 
@@ -2498,7 +2501,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
-                StopMovie();
+                StopMovie(true);
             }
 
             //View.player.Dispose();
@@ -2628,14 +2631,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         //        Player.Play();
                         //    });
                         //});
-                        Player.Stop();
-                        Player.Play();
+                        //Player.Stop();
+                        //Player.Play();
+                        StopMovie(true);
+                        PlayMovie();
                     } else {
                         //PlayerState = PlayerState.Stop;
                         //VideoPosition = 0;
                         //ClearComment();
                         //PrevPlayedTime = TimeSpan.Zero;
-                        StopMovie();
+                        StopMovie(false);
                     }
                     break;
 
