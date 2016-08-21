@@ -53,6 +53,11 @@
       <Style x:Key="HeadFootContent" TargetType="ContentControl">
         <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
       </Style>
+
+      <Style x:Key="BodyContentVisibility" TargetType="Grid">
+        <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
+      </Style>
+
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -65,7 +70,7 @@
 
     <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
-    <Grid>
+    <Grid Style="{StaticResource BodyContentVisibility}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -136,7 +141,7 @@
       </ToggleButton>
     </Grid>
 
-    <Grid Grid.Row="2">
+    <Grid Grid.Row="2" Style="{StaticResource BodyContentVisibility}">
       <Grid.RowDefinitions>
         <RowDefinition Height="6*" />
         <RowDefinition Height="*" />
