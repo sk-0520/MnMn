@@ -183,7 +183,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Slider EnabledCommentSlider { get; set; }
 
-        public string Title { get { return $"SmileVideo [{VideoId}]: {Information.Title}"; } }
+        public string Title
+        {
+            get { return $"SmileVideo [{VideoId}]: {Information.Title}"; }
+            set { /*dmy*/ }
+        }
 
         public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoCommentUtility.normalCommentColors);
 

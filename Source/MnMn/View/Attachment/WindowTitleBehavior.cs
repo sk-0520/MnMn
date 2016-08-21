@@ -49,7 +49,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         public ServiceType Service
         {
             get { return (ServiceType)GetValue(ServiceProperty); }
-            set { SetValue(ServiceProperty, value); }
+            set
+            {
+                SetValue(ServiceProperty, value);
+                ChangeTitle();
+            }
+        }
+
+        #endregion
+
+        #region TitleProperty
+
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(TitleProperty)),
+            typeof(string),
+            typeof(WindowTitleBehavior),
+            new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTitleChanged))
+        );
+
+        private static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WindowTitleBehavior;
+            if(control != null) {
+                control.Title = e.NewValue as string;
+            }
+        }
+
+        public string Title
+        {
+            get { return GetValue(TitleProperty) as string; }
+            set
+            {
+                SetValue(TitleProperty, value);
+                ChangeTitle();
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        void ChangeTitle()
+        {
+            if(AssociatedObject != null) {
+                AssociatedObject.Title = $"{Service.ToString()}: {Title}";
+            }
         }
 
         #endregion
@@ -58,8 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            AssociatedObject.Title = Service.ToString();
+            ChangeTitle();
         }
     }
 }
