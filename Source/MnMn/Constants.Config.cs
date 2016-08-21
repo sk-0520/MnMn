@@ -50,7 +50,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 設定ファイルの自動保存タイミング。
         /// </summary>
-        public static TimeSpan AutoSaveSettingTime => appConfig.Get("auto-save-setting-time", TimeSpan.Parse);
+        public static TimeSpan BackgroundAutoSaveSettingTime => appConfig.Get("background-auto-save-setting-time", TimeSpan.Parse);
+        /// <summary>
+        /// アップデートチェックタイミング。
+        /// </summary>
+        public static TimeSpan BackgroundUpdateCheckTime => appConfig.Get("background-update-check-time", TimeSpan.Parse);
+
+
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 

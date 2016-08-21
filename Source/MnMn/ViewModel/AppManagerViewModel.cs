@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             AutoSaveTimer = new DispatcherTimer() {
-                Interval = Constants.AutoSaveSettingTime,
+                Interval = Constants.BackgroundAutoSaveSettingTime,
             };
             AutoSaveTimer.Tick += AutoSaveTimer_Tick;
             AutoSaveTimer.Start();
