@@ -41,6 +41,7 @@
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -583,8 +584,8 @@
                   <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
               </DockPanel.Style>
-              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">とじる</Button>
-              <TextBlock Text="{Binding CommentInformation}" />
+              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
+              <TextBox IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding CommentInformation}" />
             </DockPanel>
           </Grid>
         </Grid>
