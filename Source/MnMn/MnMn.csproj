@@ -280,7 +280,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\CheckItLater\SmileVideoCheckItLaterManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderItem.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\SmileVideoFinderItemViewModel.cs" />
     <Compile Include="View\Controls\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>

@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public override IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => GetSearchProperty<IReadOnlyList<SmileVideoFinderItem>>();
+        public override IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => GetSearchProperty<IReadOnlyList<SmileVideoFinderItemViewModel>>();
 
         public int TotalCount
         {

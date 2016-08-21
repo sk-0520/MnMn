@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _nowLoading;
 
-        SmileVideoFinderItem _selectedFinderItem;
+        SmileVideoFinderItemViewModel _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
         string _inputTitleFilter;
@@ -89,8 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected CancellationTokenSource CancelLoading { get; set; }
         protected SmileVideoSettingModel Setting { get; }
 
-        protected CollectionModel<SmileVideoFinderItem> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItem>();
-        public virtual IReadOnlyList<SmileVideoFinderItem> FinderItemsViewer => FinderItemList;
+        protected CollectionModel<SmileVideoFinderItemViewModel> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItemViewModel>();
+        public virtual IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
 
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._nowLoading, value); }
         }
 
-        public SmileVideoFinderItem SelectedFinderItem
+        public SmileVideoFinderItemViewModel SelectedFinderItem
         {
             get { return this._selectedFinderItem; }
             set { SetVariableValue(ref this._selectedFinderItem, value); }
@@ -266,7 +266,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var finderItems = items
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
-                .Select(v => new SmileVideoFinderItem(v.Information, v.Index + 1))
+                .Select(v => new SmileVideoFinderItemViewModel(v.Information, v.Index + 1))
                 .ToArray()
             ;
 
@@ -309,7 +309,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return true;
             }
 
-            var finderItem = (SmileVideoFinderItem)obj;
+            var finderItem = (SmileVideoFinderItemViewModel)obj;
             var information = finderItem.Information;
             var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
             foreach(var filter in filters.AsParallel()) {
@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return true;
             }
 
-            var finderItem = (SmileVideoFinderItem)obj;
+            var finderItem = (SmileVideoFinderItemViewModel)obj;
             var viewModel = finderItem.Information;
             var isHit = viewModel.Title.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1;
             if(IsBlacklist) {
@@ -360,10 +360,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public IEnumerable<SmileVideoFinderItem> GetCheckedItems()
+        public IEnumerable<SmileVideoFinderItemViewModel> GetCheckedItems()
         {
             return FinderItemsViewer
-                .Cast<SmileVideoFinderItem>()
+                .Cast<SmileVideoFinderItemViewModel>()
                 .Where(i => i.IsChecked.GetValueOrDefault())
             ;
         }
@@ -403,7 +403,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         internal virtual void ToggleAllCheck()
         {
-            var items = FinderItems.Cast<SmileVideoFinderItem>().ToArray();
+            var items = FinderItems.Cast<SmileVideoFinderItemViewModel>().ToArray();
             var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
             foreach(var item in items) {
@@ -440,13 +440,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         internal virtual void ChangeSortItems()
         {
             var map = new[] {
-                new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItem.Number) },
-                new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
-                new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
-                new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItem.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
-                new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
-                new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },
-                new { Type = SmileVideoSortType.MyListCount, Parent = nameof(SmileVideoFinderItem.Information),Property = nameof(SmileVideoInformationViewModel.MylistCounter) },
+                new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItemViewModel.Number) },
+                new { Type = SmileVideoSortType.Title, Parent = nameof(SmileVideoFinderItemViewModel.Information), Property = nameof(SmileVideoInformationViewModel.Title) },
+                new { Type = SmileVideoSortType.Length, Parent = nameof(SmileVideoFinderItemViewModel.Information), Property = nameof(SmileVideoInformationViewModel.Length) },
+                new { Type = SmileVideoSortType.FirstRetrieve, Parent = nameof(SmileVideoFinderItemViewModel.Information), Property = nameof(SmileVideoInformationViewModel.FirstRetrieve) },
+                new { Type = SmileVideoSortType.ViewCount, Parent = nameof(SmileVideoFinderItemViewModel.Information),Property = nameof(SmileVideoInformationViewModel.ViewCounter) },
+                new { Type = SmileVideoSortType.CommentCount, Parent = nameof(SmileVideoFinderItemViewModel.Information),Property = nameof(SmileVideoInformationViewModel.CommentCounter) },
+                new { Type = SmileVideoSortType.MyListCount, Parent = nameof(SmileVideoFinderItemViewModel.Information),Property = nameof(SmileVideoInformationViewModel.MylistCounter) },
             }.ToDictionary(
                 ak => ak.Type,
                 av => $"{av.Parent}.{av.Property}"
