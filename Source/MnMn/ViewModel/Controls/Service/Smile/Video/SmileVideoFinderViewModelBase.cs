@@ -173,7 +173,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public virtual bool IsEnabledFinderFiltering
         {
             get { return this._isEnabledFinderFiltering; }
-            set { SetVariableValue(ref this._isEnabledFinderFiltering, value); }
+            set
+            {
+                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+                    FinderItems.Refresh();
+                }
+            }
         }
 
         /// <summary>
