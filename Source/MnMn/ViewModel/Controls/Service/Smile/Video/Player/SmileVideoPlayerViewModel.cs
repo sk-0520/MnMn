@@ -2524,16 +2524,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 return;
             }
+            Navigationbar.seekbar.CaptureMouse();
 
             ChangingVideoPosition = true;
             SeekbarMouseDownPosition = e.GetPosition(Navigationbar.seekbar);
             Navigationbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
             Navigationbar.seekbar.MouseMove += Seekbar_MouseMove;
+
+            var tempPosition = SeekbarMouseDownPosition.X / Navigationbar.seekbar.ActualWidth;
+            Navigationbar.seekbar.Value = tempPosition;
         }
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
         {
             MovingSeekbarThumb = true;
+
+            Debug.Assert(ChangingVideoPosition);
+            var movingPosition = e.GetPosition(Navigationbar.seekbar);
+
+            var tempPosition = movingPosition.X / Navigationbar.seekbar.ActualWidth;
+            Navigationbar.seekbar.Value = tempPosition;
         }
 
         private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -2556,6 +2566,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
+
+            Navigationbar.seekbar.ReleaseMouseCapture();
         }
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
