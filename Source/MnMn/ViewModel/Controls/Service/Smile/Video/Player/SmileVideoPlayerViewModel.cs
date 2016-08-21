@@ -2116,12 +2116,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            ResetCommentInformation();
-
             //投稿コメントを画面上に流す
             //TODO: 投稿者判定なし
-            //var commentModel = new CommentModel
-
 
             var commentModel = new RawSmileVideoMsgChatModel() {
                 //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
@@ -2142,6 +2138,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentList.Add(commentViewModel);
             CommentItems.Refresh();
 
+            ResetCommentInformation();
+
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
         }
@@ -2154,6 +2152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ResetCommentInformation()
         {
             CommentInformation = string.Empty;
+            PostCommentBody = string.Empty;
         }
 
         void SetLocalFiltering()

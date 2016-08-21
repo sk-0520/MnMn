@@ -585,7 +585,7 @@
                 </Style>
               </DockPanel.Style>
               <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
-              <TextBox IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding CommentInformation}" />
+              <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding CommentInformation}" />
             </DockPanel>
           </Grid>
         </Grid>
