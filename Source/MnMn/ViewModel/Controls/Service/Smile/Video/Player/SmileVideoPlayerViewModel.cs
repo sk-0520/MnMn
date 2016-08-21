@@ -159,6 +159,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _postAfterCommand;
         string _postCommentBody;
 
+        string _commentInformation;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -847,6 +849,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._secondsDownloadingSize, value); }
         }
 
+        public string CommentInformation
+        {
+            get { return this._commentInformation; }
+            set { SetVariableValue(ref this._commentInformation, value); }
+        }
+
         #endregion
 
         #region command
@@ -1114,6 +1122,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICommand PostCommentCommand
         {
             get { return CreateCommand(o => PostCommentAsync(PlayTime).ConfigureAwait(false)); }
+        }
+
+        public ICommand CloseCommentInformationCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    CommentInformation = string.Empty;
+                });
+            }
         }
 
         #endregion
@@ -2089,6 +2107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(status != SmileVideoCommentResultStatus.Success) {
                 //TODO: ユーザー側に通知
                 Mediation.Logger.Warning($"fail: {status}");
+
                 return;
             }
 

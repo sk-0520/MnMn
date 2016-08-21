@@ -58,6 +58,7 @@
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+      <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
@@ -483,11 +484,16 @@
           </Grid>
 
           <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="3*" />
-              <ColumnDefinition Width="7*" />
-              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition Width="6*" />
+              <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
+
             <xctk:DropDownButton Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
                 <StackPanel>
@@ -565,6 +571,21 @@
             </xctk:DropDownButton>
             <TextBox Grid.Column="1" Text="{Binding PostCommentBody}"></TextBox>
             <Button Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
+
+            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+              <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding CommentInformation, Converter={StaticResource HasTextLengthConverter}}" Value="True">
+                      <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                  <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+              </DockPanel.Style>
+              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">とじる</Button>
+              <TextBlock Text="{Binding CommentInformation}" />
+            </DockPanel>
           </Grid>
         </Grid>
 
