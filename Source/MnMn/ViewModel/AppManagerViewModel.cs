@@ -72,11 +72,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            AutoSaveTimer = new DispatcherTimer() {
-                Interval = Constants.AutoSaveSettingTime,
+            BackgroundAutoSaveTimer = new DispatcherTimer() {
+                Interval = Constants.BackgroundAutoSaveSettingTime,
             };
-            AutoSaveTimer.Tick += AutoSaveTimer_Tick;
-            AutoSaveTimer.Start();
+            BackgroundAutoSaveTimer.Tick += AutoSaveTimer_Tick;
+            BackgroundAutoSaveTimer.Start();
         }
 
         #region property
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
-        DispatcherTimer AutoSaveTimer { get; }
+        DispatcherTimer BackgroundAutoSaveTimer { get; }
 
 
         public AppUpdateManagerViewModel AppUpdateManager { get; }
@@ -245,8 +245,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         private void View_Closed(object sender, EventArgs e)
         {
-            AutoSaveTimer.Stop();
-            AutoSaveTimer.Tick -= AutoSaveTimer_Tick;
+            BackgroundAutoSaveTimer.Stop();
+            BackgroundAutoSaveTimer.Tick -= AutoSaveTimer_Tick;
             View.UserClosing -= View_UserClosing;
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
@@ -256,10 +256,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             Mediation.Logger.Debug($"timer: {sender}, {e}");
             try {
-                AutoSaveTimer.Stop();
+                BackgroundAutoSaveTimer.Stop();
                 Mediation.Order(new AppSaveOrderModel(false));
             } finally {
-                AutoSaveTimer.Start();
+                BackgroundAutoSaveTimer.Start();
             }
 
         }
