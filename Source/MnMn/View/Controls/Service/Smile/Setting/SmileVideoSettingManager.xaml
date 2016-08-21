@@ -64,7 +64,8 @@
                   <TextBlock Text="{Binding Session.LoginState, Converter={StaticResource EnumDisplayConverter}}" />
                 </StackPanel>
               </Button>
-              <TextBlock VerticalAlignment="Center">ログインチェックするまでアカウント情報は有効になりません。</TextBlock>
+              <Border Width="8" />
+              <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis">ログインチェックするまでアカウント情報は有効になりません。</TextBlock>
             </StackPanel>
           </Grid>
 

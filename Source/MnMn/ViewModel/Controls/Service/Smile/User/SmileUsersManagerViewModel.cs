@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -42,7 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         public SmileUsersManagerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            BindingOperations.EnableCollectionSynchronization(UserItems, new object());
+        }
 
         #region property
 
