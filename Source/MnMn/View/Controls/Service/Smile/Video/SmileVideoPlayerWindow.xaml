@@ -974,7 +974,7 @@
             <StackPanel Grid.Column="0">
               <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
 
-              <!--<TextBlock Text="{Binding UserNickname}" />-->
+              <!--<TextBlock Text="{Binding UserName}" />-->
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
                 <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
@@ -984,7 +984,7 @@
                         <Style TargetType="Run">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding InformationLoadState}" Value="Loaded">
-                              <Setter Property="Text" Value="{Binding UserNickname, Mode=OneTime}" />
+                              <Setter Property="Text" Value="{Binding UserName, Mode=OneTime}" />
                             </DataTrigger>
                           </Style.Triggers>
                         </Style>

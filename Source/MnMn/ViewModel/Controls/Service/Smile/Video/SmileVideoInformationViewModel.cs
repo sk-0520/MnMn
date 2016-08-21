@@ -449,7 +449,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string UserNickname
+        public string UserName
         {
             get
             {

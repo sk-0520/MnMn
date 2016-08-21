@@ -320,7 +320,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 };
                 if(information.InformationSource == SmileVideoInformationSource.Getthumbinfo) {
                     param.UserId = information.UserId;
-                    param.UserName = information.UserNickname;
+                    param.UserName = information.UserName;
                     param.ChannelId = information.ChannelId;
                     param.ChannelName = information.ChannelName;
                     param.Description = information.Description;

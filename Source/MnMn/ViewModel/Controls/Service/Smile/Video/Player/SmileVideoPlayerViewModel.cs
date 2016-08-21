@@ -552,9 +552,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ReplayVideo)); }
         }
 
-        public string UserNickname
+        public string UserName
         {
-            get { return Information.UserNickname; }
+            get { return Information.UserName; }
         }
         public string UserId
         {
