@@ -160,9 +160,18 @@
 	},
 	{
 		'date': '2016/08/21',
-		'version': '0.10.0',
+		'version': '0.10.1',
 		'isRc': false,
 		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': 'ファインダーのフィルタリングON/OFFが変だったので修正+緊急リリース'
+					}
+				]
+			},
 			{
 				'type': 'fixes',
 				'logs': [
