@@ -5,6 +5,21 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Meta.Vlc;
 
+// アセンブリのバージョン情報は次の 4 つの値で構成されています:
+//
+//      メジャー バージョン
+//      マイナー バージョン
+//      ビルド番号
+//      Revision
+//
+// すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を
+// 既定値にすることができます:
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("0.09.7.*")]
+[assembly: AssemblyInformationalVersion("xxxxxxxxxxxxxxDEVELOPMENTxxxxxxxxxxxxxxx")]
+
+#region あまり変わらない部分
+
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
@@ -41,18 +56,7 @@ using Meta.Vlc;
                                               //アプリケーション、またはいずれのテーマ固有のリソース ディクショナリにも見つからない場合に使用されます)
 )]
 
-
-// アセンブリのバージョン情報は次の 4 つの値で構成されています:
-//
-//      メジャー バージョン
-//      マイナー バージョン
-//      ビルド番号
-//      Revision
-//
-// すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を
-// 既定値にすることができます:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.09.6.*")]
-[assembly: AssemblyInformationalVersion("xxxxxxxxxxxxxxDEVELOPMENTxxxxxxxxxxxxxxx")]
-
 [assembly: VlcSettings(@"lib\LibVlc")]
+
+#endregion
+
