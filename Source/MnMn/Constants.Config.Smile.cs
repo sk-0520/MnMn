@@ -106,6 +106,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Color ServiceSmileVideoMyListFolderColor => appConfig.Get("service-smile-mylist-folder-color", s => (Color)ColorConverter.ConvertFromString(s));
 
+        /// <summary>
+        /// ファインダーのフィルタリングを使用するか。
+        /// </summary>
+        public static bool ServiceSmileVideoIsEnabledFiltering => appConfig.Get("service-smile-smilevideo-is-enabled-filtering", bool.Parse);
 
         #endregion
 
@@ -153,10 +157,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// コメント投稿を匿名で行うか。
         /// </summary>
         public static bool SettingServiceSmileVideoCommentPostAnonymous => appConfig.Get("setting-service-smile-smilevideo-comment-post-anonymous", bool.Parse);
-        /// <summary>
-        /// ファインダーのフィルタリングを使用するか。
-        /// </summary>
-        public static bool SettingServiceSmileVideoIsEnabledFiltering => appConfig.Get("setting-service-smile-smilevideo-is-enabled-filtering", bool.Parse);
         /// <summary>
         /// 検索で一度に取得する数。
         /// </summary>
