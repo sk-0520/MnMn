@@ -187,6 +187,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   PostKey取得がダメダメ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_Comment_PostKeyError {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_Comment_PostKeyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentFilteringTarget_Command {

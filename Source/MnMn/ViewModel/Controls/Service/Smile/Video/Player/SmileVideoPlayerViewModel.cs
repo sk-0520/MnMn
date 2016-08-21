@@ -2025,6 +2025,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ChangedCommentFont();
             ChangedCommentContent();
+            ResetCommentInformation();
 
             var propertyNames = new[] {
                 nameof(CommentFontFamily),
@@ -2035,6 +2036,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
                 nameof(PlayerTextShowKind),
+                nameof(CommentInformation),
             };
             CallOnPropertyChange(propertyNames);
         }
@@ -2087,7 +2089,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var postKey = await msg.LoadPostKeyAsync(Information.ThreadId, commentCount);
             if(postKey == null) {
+                SetCommentInformation(Properties.Resources.String_App_Define_Service_Smile_Video_Comment_PostKeyError);
                 return;
+            } else {
+                Mediation.Logger.Information($"postkey = {postKey}");
             }
 
             var resultPost = await msg.PostAsync(
@@ -2100,16 +2105,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommentBody
             );
             if(resultPost == null) {
-                Mediation.Logger.Error($"fail: {nameof(msg.PostAsync)}");
+                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
                 return;
             }
             var status = SmileVideoCommentUtility.ConvertResultStatus(resultPost.ChatResult.Status);
             if(status != SmileVideoCommentResultStatus.Success) {
                 //TODO: ユーザー側に通知
-                Mediation.Logger.Warning($"fail: {status}");
-
+                var message = DisplayTextUtility.GetDisplayText(status);
+                SetCommentInformation($"fail: {message}, {status}");
                 return;
             }
+
+            ResetCommentInformation();
 
             //投稿コメントを画面上に流す
             //TODO: 投稿者判定なし
@@ -2137,6 +2144,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
+        }
+
+        void SetCommentInformation(string text)
+        {
+            CommentInformation = text;
+        }
+
+        void ResetCommentInformation()
+        {
+            CommentInformation = string.Empty;
         }
 
         void SetLocalFiltering()
