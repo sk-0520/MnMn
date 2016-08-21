@@ -159,6 +159,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _postAfterCommand;
         string _postCommentBody;
 
+        string _commentInformation;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -847,6 +849,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._secondsDownloadingSize, value); }
         }
 
+        public string CommentInformation
+        {
+            get { return this._commentInformation; }
+            set { SetVariableValue(ref this._commentInformation, value); }
+        }
+
         #endregion
 
         #region command
@@ -1114,6 +1122,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICommand PostCommentCommand
         {
             get { return CreateCommand(o => PostCommentAsync(PlayTime).ConfigureAwait(false)); }
+        }
+
+        public ICommand CloseCommentInformationCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    CommentInformation = string.Empty;
+                });
+            }
         }
 
         #endregion
@@ -2007,6 +2025,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ChangedCommentFont();
             ChangedCommentContent();
+            ResetCommentInformation();
 
             var propertyNames = new[] {
                 nameof(CommentFontFamily),
@@ -2017,6 +2036,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
                 nameof(PlayerTextShowKind),
+                nameof(CommentInformation),
             };
             CallOnPropertyChange(propertyNames);
         }
@@ -2069,7 +2089,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var postKey = await msg.LoadPostKeyAsync(Information.ThreadId, commentCount);
             if(postKey == null) {
+                SetCommentInformation(Properties.Resources.String_App_Define_Service_Smile_Video_Comment_PostKeyError);
                 return;
+            } else {
+                Mediation.Logger.Information($"postkey = {postKey}");
             }
 
             var resultPost = await msg.PostAsync(
@@ -2082,20 +2105,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommentBody
             );
             if(resultPost == null) {
-                Mediation.Logger.Error($"fail: {nameof(msg.PostAsync)}");
+                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
                 return;
             }
             var status = SmileVideoCommentUtility.ConvertResultStatus(resultPost.ChatResult.Status);
             if(status != SmileVideoCommentResultStatus.Success) {
                 //TODO: ユーザー側に通知
-                Mediation.Logger.Warning($"fail: {status}");
+                var message = DisplayTextUtility.GetDisplayText(status);
+                SetCommentInformation($"fail: {message}, {status}");
                 return;
             }
 
             //投稿コメントを画面上に流す
             //TODO: 投稿者判定なし
-            //var commentModel = new CommentModel
-
 
             var commentModel = new RawSmileVideoMsgChatModel() {
                 //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
@@ -2116,8 +2138,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentList.Add(commentViewModel);
             CommentItems.Refresh();
 
+            ResetCommentInformation();
+
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
+        }
+
+        void SetCommentInformation(string text)
+        {
+            CommentInformation = text;
+        }
+
+        void ResetCommentInformation()
+        {
+            CommentInformation = string.Empty;
+            PostCommentBody = string.Empty;
         }
 
         void SetLocalFiltering()

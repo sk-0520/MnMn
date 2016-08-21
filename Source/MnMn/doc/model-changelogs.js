@@ -147,6 +147,10 @@
 					{
 						'revision': '',
 						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': '#27: コメント投稿後の各種制御'
 					}
 				]
 			},
