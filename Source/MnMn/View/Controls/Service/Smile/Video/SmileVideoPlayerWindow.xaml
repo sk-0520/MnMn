@@ -23,7 +23,6 @@
   ResizeMode="CanResizeWithGrip"
   Icon="/Resources/Service/Smile/Service-Smile.ico"
 
-  Title="{Binding Title}"
   Left="{Binding Left, Mode=TwoWay}"
   Top="{Binding Top, Mode=TwoWay}"
   Width="{Binding Width, Mode=TwoWay}"
