@@ -84,49 +84,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.09.1',
-		'isRc': true,
+		'date': '2016/08/21',
+		'version': '0.10.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '37a3ec310f3c63d3feef5ae29b53bf3005cccfe6',
 						'subject': '#17: プレイヤーのナビゲーター使い辛くて逆にすごい',
 						'comments': [
 							'一応世間一般のプレイヤー操作感覚に合わせた',
@@ -134,22 +100,18 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '936a349e865fb3f47fce73f6b3c5fefc2eafd1f3',
 						'subject': '#72: ファインダーのフィルタリング初期状態切替とViewModelの憂鬱',
 						'comments': [
 							'対して考えてもいないViewModelで状態遷移もややこしいし基本的に有効で問題ないはずなので設定としては持ち歩かないようにした'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0e4d5392c5fde1d6ed26eecbe09b9fa3b7e23a11',
 						'subject': '#19: 動画リプレイ時に流れていたコメントは破棄する'
 					},
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
+						'revision': '849aac9a2a0c0b5900fd7ae4beedb95cb8f8426b',
 						'subject': '#27: コメント投稿後の各種制御'
 					}
 				]
@@ -158,18 +120,18 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'eb1488a15f2320ba943ff4b53fcd76b93c8ccace',
 						'subject': 'ファインダーのキャッシュ状態表示を済・未から有・無に変更'
 					},
 					{
-						'revision': '',
+						'revision': 'fda2cad72057a84b040bae37ae9ace9265c5c407',
 						'subject': '#57: ウィンドウのタイトル書式を統一可能な仕組みを作っておく',
 						'comments': [
 							'未だに Mode=OneWayとプロパティのSetter有無がようわからんけど未来に禍根を残す懸念材料は潰せた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'fa143a6a1a9957c6c2305a4606757766448793e5',
 						'subject': 'アップデートチェックは問答無用だから設定項目から外した'
 					}
 				]
