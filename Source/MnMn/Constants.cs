@@ -79,8 +79,26 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 return buildTypeRelease;
 #endif
             }
+        }
+
+        /// <summary>
+        /// <see cref="BuildType"/>とやってること一緒だけどリリース版は何も返さない。
+        /// </summary>
+        public static string BuildTypeInformation
+        {
+            get
+            {
+#if DEBUG
+                return BuildType;
+#elif BETA
+                return BuildType;
+#else
+                return string.Empty;
+#endif
+            }
 
         }
+
         /// <summary>
         /// アプリケーションパス。
         /// </summary>

@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Interactivity;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 {
@@ -92,7 +93,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         void ChangeTitle()
         {
             if(AssociatedObject != null) {
-                AssociatedObject.Title = $"{Service.ToString()}: {Title}";
+                var build = Constants.BuildTypeInformation;
+                if(!string.IsNullOrEmpty(build)) {
+                    build = $"<{build}> ";
+                }
+
+                var serviceText = DisplayTextUtility.GetDisplayText(Service);
+                AssociatedObject.Title = $"{build}{serviceText}: {Title}";
             }
         }
 
