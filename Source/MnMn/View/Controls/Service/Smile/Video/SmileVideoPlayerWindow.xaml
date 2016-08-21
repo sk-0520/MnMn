@@ -580,7 +580,7 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
                   <TextBlock DockPanel.Dock="Right">高</TextBlock>
-                  <Slider Minimum="-3000" Maximum="-1" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
+                  <Slider Minimum="-3000" Maximum="-1" LargeChange="100" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
@@ -671,6 +671,7 @@
                     <Slider
                       Minimum="1"
                       Maximum="50"
+                      LargeChange="5"
                       Value="{Binding DisplayCommentLimitCount}"
                       IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
                     />
@@ -929,12 +930,12 @@
               />
               <DockPanel>
                 <Label DockPanel.Dock="Left">透明度</Label>
-                <Slider Minimum="0.1" Maximum="1" Value="{Binding CommentFontAlpha}" />
+                <Slider Minimum="0.1" Maximum="1" LargeChange="0.1"  Value="{Binding CommentFontAlpha}"/>
               </DockPanel>
               <DockPanel>
                 <Label DockPanel.Dock="Left">表示時間</Label>
                 <!-- TODO: UI側で制限 -->
-                <Slider Minimum="1000" Maximum="10000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
+                <Slider Minimum="1000" Maximum="10000" LargeChange="1000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
               </DockPanel>
               <CheckBox IsChecked="{Binding CommentConvertPairYenSlash}">
                 <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
