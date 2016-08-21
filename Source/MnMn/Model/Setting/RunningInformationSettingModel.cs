@@ -56,11 +56,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public DateTime FirstTimestamp { get; set; }
 
-        /// <summary>
-        /// アップデートチェックを行うか。
-        /// </summary>
-        [DataMember]
-        public bool CheckUpdateRelease { get; set; }
+        ///// <summary>
+        ///// アップデートチェックを行うか。
+        ///// </summary>
+        //[DataMember]
+        //public bool CheckUpdateRelease { get; set; }
         ///// <summary>
         ///// RCアップデートチェックを行うか。
         ///// </summary>
