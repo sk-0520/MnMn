@@ -187,6 +187,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   PostKey取得がダメダメ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_Comment_PostKeyError {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_Comment_PostKeyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_SmileVideoCommentFilteringTarget_Command {
@@ -431,6 +440,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount {
             get {
                 return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoSortType_ViewCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ニコニコ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_Smile {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_Smile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ニコニコ動画 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_SmileVideo {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_SmileVideo", resourceCulture);
             }
         }
         

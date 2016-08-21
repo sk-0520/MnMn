@@ -106,6 +106,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Color ServiceSmileVideoMyListFolderColor => appConfig.Get("service-smile-mylist-folder-color", s => (Color)ColorConverter.ConvertFromString(s));
 
+        /// <summary>
+        /// ファインダーのフィルタリングを使用するか。
+        /// </summary>
+        public static bool ServiceSmileVideoIsEnabledFiltering => appConfig.Get("service-smile-smilevideo-is-enabled-filtering", bool.Parse);
 
         #endregion
 

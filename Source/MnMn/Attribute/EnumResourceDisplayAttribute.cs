@@ -7,7 +7,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Attribute
 {
-    public class EnumResourceDisplayAttribute: EnumDisplayAttributeBase
+    public class EnumResourceDisplayAttribute: DisplayTextAttributeBase
     {
         public EnumResourceDisplayAttribute(string name)
             : base(DisplayKind.Resource, name)

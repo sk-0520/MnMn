@@ -46,7 +46,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// アプリケーション名。
         /// </summary>
-        public static string ApplicationName { get; } = "MnMn";
+        public const string applicationName = "MnMn";
+
+        /// <summary>
+        /// アプリケーション名。
+        /// </summary>
+        public static string ApplicationName { get; } = applicationName;
 
 #if DEBUG
         /// <summary>
@@ -74,8 +79,26 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 return buildTypeRelease;
 #endif
             }
+        }
+
+        /// <summary>
+        /// <see cref="BuildType"/>とやってること一緒だけどリリース版は何も返さない。
+        /// </summary>
+        public static string BuildTypeInformation
+        {
+            get
+            {
+#if DEBUG
+                return BuildType;
+#elif BETA
+                return BuildType;
+#else
+                return string.Empty;
+#endif
+            }
 
         }
+
         /// <summary>
         /// アプリケーションパス。
         /// </summary>

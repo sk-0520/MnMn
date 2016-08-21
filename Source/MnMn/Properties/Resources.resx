@@ -159,6 +159,15 @@
   <data name="String_App_Define_LoginState_None" xml:space="preserve">
     <value>未ログイン</value>
   </data>
+  <data name="String_App_Define_ServiceType_Smile" xml:space="preserve">
+    <value>ニコニコ</value>
+  </data>
+  <data name="String_App_Define_ServiceType_SmileVideo" xml:space="preserve">
+    <value>ニコニコ動画</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_Comment_PostKeyError" xml:space="preserve">
+    <value>PostKey取得がダメダメ</value>
+  </data>
   <data name="String_App_Define_Service_Smile_Video_SmileVideoCommentFilteringTarget_Command" xml:space="preserve">
     <value>コマンド</value>
   </data>

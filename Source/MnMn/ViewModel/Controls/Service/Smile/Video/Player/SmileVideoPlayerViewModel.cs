@@ -159,6 +159,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _postAfterCommand;
         string _postCommentBody;
 
+        string _commentInformation;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -183,7 +185,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Slider EnabledCommentSlider { get; set; }
 
-        public string Title { get { return $"SmileVideo [{VideoId}]: {Information.Title}"; } }
+        public string Title
+        {
+            get { return $"[{VideoId}]: {Information.Title}"; }
+            set { /*dmy*/ }
+        }
 
         public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoCommentUtility.normalCommentColors);
 
@@ -843,6 +849,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._secondsDownloadingSize, value); }
         }
 
+        public string CommentInformation
+        {
+            get { return this._commentInformation; }
+            set { SetVariableValue(ref this._commentInformation, value); }
+        }
+
         #endregion
 
         #region command
@@ -883,7 +895,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 switch(Player.State) {
                                     case Meta.Vlc.Interop.Media.MediaState.NothingSpecial:
                                     case Meta.Vlc.Interop.Media.MediaState.Stopped:
-                                        StopMovie();
+                                        StopMovie(true);
                                         SetMedia();
                                         PlayMovie();
                                         break;
@@ -892,7 +904,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                         //Player.BeginStop(() => {
                                         //    Player.Play();
                                         //});
-                                        StopMovie();
+                                        StopMovie(true);
                                         PlayMovie();
                                         break;
                                 }
@@ -932,7 +944,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         UserOperationStop = true;
-                        StopMovie();
+                        StopMovie(true);
                         UserOperationStop = false;
                     }
                 );
@@ -1112,6 +1124,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => PostCommentAsync(PlayTime).ConfigureAwait(false)); }
         }
 
+        public ICommand CloseCommentInformationCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    CommentInformation = string.Empty;
+                });
+            }
+        }
+
         #endregion
 
 
@@ -1208,10 +1230,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.IsMute = IsMute;
             Player.Volume = Volume;
             return View.Dispatcher.BeginInvoke(new Action(() => {
+                ClearComment();
                 if(!IsViewClosed) {
                     Player.Play();
                 }
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+        }
+
+        void StopMovie(bool isStopComment)
+        {
+            Mediation.Logger.Debug("stop");
+            if(IsSettedMedia) {
+                Player.Stop();
+            }
+            //Player.BeginStop(() => {
+            //    Mediation.Logger.Debug("stoped");
+            //    PlayerState = PlayerState.Stop;
+            //    VideoPosition = 0;
+            //    ClearComment();
+            //    PrevPlayedTime = TimeSpan.Zero;
+            //});
+            Mediation.Logger.Debug("stoped");
+            PlayerState = PlayerState.Stop;
+            VideoPosition = 0;
+            if(isStopComment) {
+                ClearComment();
+            }
+            PrevPlayedTime = TimeSpan.Zero;
         }
 
         void ClearComment()
@@ -1745,26 +1790,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
         }
 
-        void StopMovie()
-        {
-            Mediation.Logger.Debug("stop");
-            if(IsSettedMedia) {
-                Player.Stop();
-            }
-            //Player.BeginStop(() => {
-            //    Mediation.Logger.Debug("stoped");
-            //    PlayerState = PlayerState.Stop;
-            //    VideoPosition = 0;
-            //    ClearComment();
-            //    PrevPlayedTime = TimeSpan.Zero;
-            //});
-            Mediation.Logger.Debug("stoped");
-            PlayerState = PlayerState.Stop;
-            VideoPosition = 0;
-            ClearComment();
-            PrevPlayedTime = TimeSpan.Zero;
-        }
-
         void RefreshFilteringComment()
         {
             Debug.Assert(FilteringCommentType != SmileVideoFilteringCommentType.All);
@@ -2000,6 +2025,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ChangedCommentFont();
             ChangedCommentContent();
+            ResetCommentInformation();
 
             var propertyNames = new[] {
                 nameof(CommentFontFamily),
@@ -2010,6 +2036,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
                 nameof(PlayerTextShowKind),
+                nameof(CommentInformation),
             };
             CallOnPropertyChange(propertyNames);
         }
@@ -2062,7 +2089,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var postKey = await msg.LoadPostKeyAsync(Information.ThreadId, commentCount);
             if(postKey == null) {
+                SetCommentInformation(Properties.Resources.String_App_Define_Service_Smile_Video_Comment_PostKeyError);
                 return;
+            } else {
+                Mediation.Logger.Information($"postkey = {postKey}");
             }
 
             var resultPost = await msg.PostAsync(
@@ -2075,20 +2105,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 PostCommentBody
             );
             if(resultPost == null) {
-                Mediation.Logger.Error($"fail: {nameof(msg.PostAsync)}");
+                SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
                 return;
             }
             var status = SmileVideoCommentUtility.ConvertResultStatus(resultPost.ChatResult.Status);
             if(status != SmileVideoCommentResultStatus.Success) {
                 //TODO: ユーザー側に通知
-                Mediation.Logger.Warning($"fail: {status}");
+                var message = DisplayTextUtility.GetDisplayText(status);
+                SetCommentInformation($"fail: {message}, {status}");
                 return;
             }
 
             //投稿コメントを画面上に流す
             //TODO: 投稿者判定なし
-            //var commentModel = new CommentModel
-
 
             var commentModel = new RawSmileVideoMsgChatModel() {
                 //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
@@ -2109,8 +2138,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentList.Add(commentViewModel);
             CommentItems.Refresh();
 
+            ResetCommentInformation();
+
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
+        }
+
+        void SetCommentInformation(string text)
+        {
+            CommentInformation = text;
+        }
+
+        void ResetCommentInformation()
+        {
+            CommentInformation = string.Empty;
+            PostCommentBody = string.Empty;
         }
 
         void SetLocalFiltering()
@@ -2194,7 +2236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
-                StopMovie();
+                StopMovie(true);
             }
             SecondsDownloadingSize = e.SecondsDownlodingSize;
 
@@ -2498,7 +2540,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
-                StopMovie();
+                StopMovie(true);
             }
 
             //View.player.Dispose();
@@ -2524,16 +2566,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 return;
             }
+            Navigationbar.seekbar.CaptureMouse();
 
             ChangingVideoPosition = true;
             SeekbarMouseDownPosition = e.GetPosition(Navigationbar.seekbar);
             Navigationbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
             Navigationbar.seekbar.MouseMove += Seekbar_MouseMove;
+
+            var tempPosition = SeekbarMouseDownPosition.X / Navigationbar.seekbar.ActualWidth;
+            Navigationbar.seekbar.Value = tempPosition;
         }
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
         {
             MovingSeekbarThumb = true;
+
+            Debug.Assert(ChangingVideoPosition);
+            var movingPosition = e.GetPosition(Navigationbar.seekbar);
+
+            var tempPosition = movingPosition.X / Navigationbar.seekbar.ActualWidth;
+            Navigationbar.seekbar.Value = tempPosition;
         }
 
         private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -2556,6 +2608,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
+
+            Navigationbar.seekbar.ReleaseMouseCapture();
         }
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -2616,14 +2670,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         //        Player.Play();
                         //    });
                         //});
-                        Player.Stop();
-                        Player.Play();
+                        //Player.Stop();
+                        //Player.Play();
+                        StopMovie(true);
+                        PlayMovie();
                     } else {
                         //PlayerState = PlayerState.Stop;
                         //VideoPosition = 0;
                         //ClearComment();
                         //PrevPlayedTime = TimeSpan.Zero;
-                        StopMovie();
+                        StopMovie(false);
                     }
                     break;
 

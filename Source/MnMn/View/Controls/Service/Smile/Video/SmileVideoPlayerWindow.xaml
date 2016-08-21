@@ -14,6 +14,7 @@
 
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting"
@@ -22,7 +23,6 @@
   ResizeMode="CanResizeWithGrip"
   Icon="/Resources/Service/Smile/Service-Smile.ico"
 
-  Title="{Binding Title}"
   Left="{Binding Left, Mode=TwoWay}"
   Top="{Binding Top, Mode=TwoWay}"
   Width="{Binding Width, Mode=TwoWay}"
@@ -41,6 +41,7 @@
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -58,6 +59,7 @@
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+      <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
@@ -149,6 +151,9 @@
 
     </ResourceDictionary>
   </Window.Resources>
+  <i:Interaction.Behaviors>
+    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+  </i:Interaction.Behaviors>
   <DockPanel>
 
     <ToolBar DockPanel.Dock="Top">
@@ -480,11 +485,16 @@
           </Grid>
 
           <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="3*" />
-              <ColumnDefinition Width="7*" />
-              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition Width="6*" />
+              <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
+
             <xctk:DropDownButton Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
                 <StackPanel>
@@ -562,6 +572,21 @@
             </xctk:DropDownButton>
             <TextBox Grid.Column="1" Text="{Binding PostCommentBody}"></TextBox>
             <Button Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
+
+            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+              <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding CommentInformation, Converter={StaticResource HasTextLengthConverter}}" Value="True">
+                      <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                  <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+              </DockPanel.Style>
+              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
+              <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding CommentInformation}" />
+            </DockPanel>
           </Grid>
         </Grid>
 
