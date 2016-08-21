@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// フィルタリング設定を使用するか。
         /// </summary>
         [DataMember]
-        public bool IsEnabledFinderFiltering { get; set; }
+        public bool IsEnabledFinderFiltering { get; set; } = Constants.SettingServiceSmileVideoIsEnabledFiltering;
 
         #endregion
     }

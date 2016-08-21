@@ -154,6 +154,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileVideoCommentPostAnonymous => appConfig.Get("setting-service-smile-smilevideo-comment-post-anonymous", bool.Parse);
         /// <summary>
+        /// ファインダーのフィルタリングを使用するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoIsEnabledFiltering => appConfig.Get("setting-service-smile-smilevideo-is-enabled-filtering", bool.Parse);
+        /// <summary>
         /// 検索で一度に取得する数。
         /// </summary>
         public static int SettingServiceSmileVideoSearchCount => appConfig.Get("setting-service-smile-smilevideo-search-count", int.Parse);
