@@ -1062,16 +1062,79 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region IGarbageCollection
 
-        public long GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        CheckResultModel<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan)
         {
-            if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
-                // 動画ファイル破棄
+            try {
+                file.Refresh();
 
-                //IndividualVideoSetting.LoadedNormal
-
+                if(file.Exists) {
+                    var timestamp = file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime;
+                    if(!cacheSpan.IsCacheTime(timestamp)) {
+                        var fileSize = file.Length;
+                        file.Delete();
+                        return CheckResultModel.Success(fileSize);
+                    }
+                }
+            } catch(Exception ex) {
+                Mediation.Logger.Warning($"{file}: {ex}");
             }
 
-            return 0;
+            return CheckResultModel.Failure<long>();
+        }
+
+        long GarbageCollectionLarge(CacheSpan cacheSpan)
+        {
+            if(cacheSpan.IsNoExpiration) {
+                return 0;
+            }
+
+            // 動画ファイル破棄
+            var normalFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetVideoFileName(false)));
+            var economyFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetVideoFileName(true)));
+            // Flash変換後ファイル
+            var normalFlashConvertedFile = new FileInfo(PathUtility.AppendExtension(normalFile.FullName, SmileVideoInformationUtility.flashConvertedExtension));
+            // エコノミーでFlashってのは多分ないんだろうね
+            var economyFlashConvertedFile = new FileInfo(PathUtility.AppendExtension(normalFile.FullName, SmileVideoInformationUtility.flashConvertedExtension));
+
+            var normalCheck = GarbageCollectionFromFile(normalFile, cacheSpan);
+            var economyCheck = GarbageCollectionFromFile(economyFile, cacheSpan);
+            var normalFlashCheck = GarbageCollectionFromFile(normalFlashConvertedFile, cacheSpan);
+            var economyFlashCheck = GarbageCollectionFromFile(economyFlashConvertedFile, cacheSpan);
+
+            if(normalCheck.IsSuccess) {
+                IndividualVideoSetting.LoadedNormal = false;
+            }
+            if(economyCheck.IsSuccess) {
+                IndividualVideoSetting.LoadedEconomyMode = false;
+            }
+            if(normalFlashCheck.IsSuccess || economyFlashCheck.IsSuccess) {
+                IndividualVideoSetting.ConvertedSwf = false;
+            }
+
+            var checks = new[] {
+                normalCheck,
+                economyCheck,
+                normalFlashCheck,
+                economyFlashCheck,
+            };
+
+            SaveSetting(false);
+
+            return checks.Where(c => c.IsSuccess).Sum(c => c.Result);
+        }
+
+        public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        {
+            if(IsPlaying || IsDownloading || IsDisposed) {
+                CheckResultModel.Failure<long>();
+            }
+
+            long largeSize = 0;
+            if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
+                largeSize = GarbageCollectionLarge(cacheSpan);
+            }
+
+            return CheckResultModel.Success(largeSize);
         }
 
         #endregion

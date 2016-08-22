@@ -151,14 +151,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region ManagerViewModelBase
 
-        Task<long> GarbageCollectionCahceVideoAsync(string videoId, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        Task<long> GarbageCollectionCahceVideoAsync(string videoId, DirectoryInfo baseDirectory, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            // ゴミ処理時に読みに行くのはバカっぽいので。
+            var targetFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediation, videoId);
+            if(!targetFile.Exists) {
+                // thumbなけりゃディレクトリごとポイする
+                var totalSize = baseDirectory.EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+                try {
+                    baseDirectory.Delete(true);
+                    return Task.FromResult(totalSize);
+                } catch(Exception ex) {
+                    Mediation.Logger.Error($"{baseDirectory}: {ex}");
+                }
+                return Task.FromResult(0L);
+            }
+
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, CacheSpan.InfinityCache));
             var viewModelTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
             return viewModelTask.ContinueWith(t => {
                 var viewModel = t.Result;
-                return viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+                var checkResult = viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+                return checkResult.Result;
             });
         }
 
@@ -170,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 long result = 0;
                 foreach(var dir in cacheDirInfos) {
                     //TODO: オーバーフロー
-                    result += await GarbageCollectionCahceVideoAsync(dir.Name, garbageCollectionLevel, cacheSpan);
+                    result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
                 };
 
                 return result;

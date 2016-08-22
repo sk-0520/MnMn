@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// </summary>
         /// <param name="garbageCollectionLevel">どんだけ処理するか。</param>
         /// <param name="cacheSpan">対象キャッシュ時間。</param>
-        /// <returns>処理サイズ。</returns>
-        long GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
+        /// <returns>処理の成功・失敗と成功時に処理サイズ</returns>
+        CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
     }
 }
