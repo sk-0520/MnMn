@@ -151,23 +151,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region ManagerViewModelBase
 
-        long GarbageCollectionCahceVideo(string videoId, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        Task<long> GarbageCollectionCahceVideoAsync(string videoId, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             // ゴミ処理時に読みに行くのはバカっぽいので。
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, CacheSpan.InfinityCache));
-            var viewModel = Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
-            return viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+            var viewModelTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+            return viewModelTask.ContinueWith(t => {
+                var viewModel = t.Result;
+                return viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+            });
         }
 
         Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
                 var cacheDirInfos = baseDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
                 long result = 0;
                 foreach(var dir in cacheDirInfos) {
                     //TODO: オーバーフロー
-                    result += GarbageCollectionCahceVideo(dir.Name, garbageCollectionLevel, cacheSpan);
+                    result += await GarbageCollectionCahceVideoAsync(dir.Name, garbageCollectionLevel, cacheSpan);
                 };
 
                 return result;
