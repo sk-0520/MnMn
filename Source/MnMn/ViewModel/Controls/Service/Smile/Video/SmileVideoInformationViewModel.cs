@@ -141,10 +141,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public DirectoryInfo CacheDirectory { get; private set; }
 
-
-        public string PageHtml { get; private set; }
-
-        public string DescriptionHtml { get; private set; }
+        /// <summary>
+        /// 視聴ページのHTMLソース。
+        /// </summary>
+        public string WatchPageHtmlSource { get; private set; }
+        /// <summary>
+        /// 動画紹介HTMLソース。
+        /// </summary>
+        public string DescriptionHtmlSource { get; private set; }
         public string PageVideoToken { get; private set; }
 
         public SmileVideoInformationSource InformationSource { get; private set; }
@@ -218,6 +222,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._referenceCount; }
             set { SetVariableValue(ref this._referenceCount, value); }
         }
+
+        #region ファイル
+
+        /// <summary>
+        /// 視聴ページHTMLファイル。
+        /// </summary>
+        public FileInfo WatchPageHtmlFile { get; private set; }
+        /// <summary>
+        /// サムネイル画像ファイルパス。
+        /// </summary>
+        public FileInfo ThumbnaiImageFile { get; private set; }
+
+        #endregion
 
         #region 生データから取得
 
@@ -798,6 +815,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             CacheDirectory = GetCahceDirectory(Mediation, VideoId);
 
+            WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
+            ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
+
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
 
@@ -905,11 +925,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 OptionAutoCloseOnEnd = true,
             };
             return Task.Run(() => {
-                PageHtml = html;
+                WatchPageHtmlSource = html;
                 htmlDocument.LoadHtml(html);
                 //document.DocumentNode.SelectSingleNode("@")
                 var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                DescriptionHtml = description.InnerHtml;
+                DescriptionHtmlSource = description.InnerHtml;
 
                 var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
                 var flashvars = json.SelectToken("flashvars");
@@ -919,8 +939,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 PageHtmlLoadState = LoadState.Loaded;
             }).ContinueWith(task => {
                 if(isSave) {
-                    var filePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html"));
-                    File.WriteAllText(filePath, PageHtml);
+                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
                 }
             });
         }
@@ -973,9 +992,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             PageHtmlLoadState = LoadState.Preparation;
 
-            var file = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
-            if(file.Exists && Constants.MinimumHtmlFileSize <= file.Length) {
-                using(var stream = file.OpenText()) {
+            if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {
+                using(var stream = WatchPageHtmlFile.OpenText()) {
                     var html = stream.ReadToEnd();
                     return SetPageHtmlAsync(html, false);
                 }
