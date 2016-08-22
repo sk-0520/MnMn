@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
         }
 
-        Task GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             return Task.Run(() => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
@@ -167,6 +167,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 foreach(var dir in cacheDirInfos) {
                     GarbageCollectionCahceVideo(dir.Name, garbageCollectionLevel, cacheSpan);
                 };
+
+                return -1L;
             });
         }
 
@@ -192,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public override Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             var items = ManagerItems
                 .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))
@@ -200,7 +202,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ;
             items.Add(GarbageCollectionCahceVideosAsync(garbageCollectionLevel, cacheSpan));
 
-            return Task.WhenAll(items);
+            return Task.WhenAll(items).ContinueWith(t => {
+                return t.Result.Sum();
+            });
         }
 
         #endregion

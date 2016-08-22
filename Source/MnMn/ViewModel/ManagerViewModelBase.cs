@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         bool _isVisible;
         ManagerViewModelBase _selectedManager;
 
+        protected Task<long> GarbageCollectionDummyResult { get; } = Task.FromResult(0L);
+
         #endregion
 
         public ManagerViewModelBase(Mediation mediation)
@@ -107,7 +109,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// キャッシュなどのゴミ処理を行う。
         /// </summary>
-        public abstract Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
+        /// <param name="garbageCollectionLevel">ゴミ処理レベル。</param>
+        /// <param name="cacheSpan">基準にするキャッシュ時間。</param>
+        /// <returns>処理したデータのバイト数。</returns>
+        public abstract Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
 
         #endregion
     }

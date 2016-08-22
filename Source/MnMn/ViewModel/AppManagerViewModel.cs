@@ -212,9 +212,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
-        public override Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan)));
+            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
+                return t.Result.Sum();
+            });
         }
 
         #endregion

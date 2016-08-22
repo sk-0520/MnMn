@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public override void UninitializeView(MainWindow view)
         { }
 
-        public override Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             var span = Constants.ServiceSmileVideoCheckItLaterCacheSpan;
             var gcItems = Setting.CheckItLater
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
             CallOnPropertyChangeDisplayItem();
 
-            return Task.CompletedTask;
+            return GarbageCollectionDummyResult;
         }
 
         protected override void CallOnPropertyChangeDisplayItem()
