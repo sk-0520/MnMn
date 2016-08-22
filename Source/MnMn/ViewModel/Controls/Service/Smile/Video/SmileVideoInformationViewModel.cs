@@ -34,6 +34,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -59,7 +60,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoInformationViewModel: ViewModelBase
+    public class SmileVideoInformationViewModel: ViewModelBase, IGarbageCollection
     {
         #region variable
 
@@ -1037,6 +1038,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(ReferenceCount > 0) {
                 ReferenceCount -= 1;
             }
+        }
+
+        #endregion
+
+        #region IGarbageCollection
+
+        public long GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        {
+
+            return 0;
         }
 
         #endregion

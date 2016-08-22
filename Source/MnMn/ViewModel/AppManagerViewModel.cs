@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 manager.InitializeView(view);
             }
 
-            GarbageCollectionAsync();
+            GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime));
 
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
@@ -212,9 +212,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
-        public override Task GarbageCollectionAsync()
+        public override Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync()));
+            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan)));
         }
 
         #endregion

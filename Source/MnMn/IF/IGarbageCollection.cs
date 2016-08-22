@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
@@ -32,7 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// ゴミ処理。
         /// </summary>
         /// <param name="garbageCollectionLevel">どんだけ処理するか。</param>
+        /// <param name="cacheSpan">対象キャッシュ時間。</param>
         /// <returns>処理サイズ。</returns>
-        long GarbageCollection(GarbageCollectionLevel garbageCollectionLevel);
+        long GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
     }
 }

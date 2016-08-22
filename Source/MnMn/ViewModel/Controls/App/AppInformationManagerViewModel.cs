@@ -99,9 +99,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        public override Task GarbageCollectionAsync()
+        public override Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync()));
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan)));
         }
 
         #endregion

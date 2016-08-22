@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             base.ShowView();
         }
 
-        public override Task GarbageCollectionAsync()
+        public override Task GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             return Task.CompletedTask;
         }
