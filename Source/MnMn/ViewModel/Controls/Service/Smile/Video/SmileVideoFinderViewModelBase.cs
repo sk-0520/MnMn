@@ -300,6 +300,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected bool IsShowFilteringItem(object obj)
         {
+            var finderItem = (SmileVideoFinderItemViewModel)obj;
+            finderItem.Approval = true;
+
             if(!IsUsingFinderFilter) {
                 return true;
             }
@@ -308,7 +311,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return true;
             }
 
-            var finderItem = (SmileVideoFinderItemViewModel)obj;
             var information = finderItem.Information;
             var filters = FinderFilering.FinderFilterList.Select(i => new SmileVideoFinderFiltering(i.Model));
             foreach(var filter in filters.AsParallel()) {
@@ -332,7 +334,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
 
-            finderItem.Approval = true;
             return true;
         }
 
