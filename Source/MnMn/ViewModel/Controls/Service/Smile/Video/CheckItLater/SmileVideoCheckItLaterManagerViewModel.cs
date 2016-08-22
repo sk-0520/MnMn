@@ -96,11 +96,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         {
             base.ShowView();
 
-            CheckItLaterFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+            CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
+                CallOnPropertyChangeDisplayItem();
+            }).ConfigureAwait(false);
         }
 
         protected override void HideView()
-        { }
+        {
+            base.HideView();
+
+            CallOnPropertyChangeDisplayItem();
+        }
 
         public override Task InitializeAsync()
         {
