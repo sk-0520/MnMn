@@ -60,6 +60,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public TimeSpan Expires { get; }
 
+        /// <summary>
+        /// 有効期限なしか。
+        /// <para><see cref="NoCache"/>と異なりユーザー設定が 00:00:00 を意味し、<see cref="IsCacheTime(DateTime)"/>が無条件成立する。</para>
+        /// </summary>
+        public bool IsNoExpiration => Expires == TimeSpan.Zero;
+
         #endregion
 
         #region function

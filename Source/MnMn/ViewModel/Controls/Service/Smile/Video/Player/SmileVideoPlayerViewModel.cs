@@ -1618,8 +1618,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var htmlDocument = new HtmlDocument() {
                 OptionAutoCloseOnEnd = true,
             };
-            htmlDocument.LoadHtml(Information.PageHtml);
-            var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(Information.PageHtml);
+            htmlDocument.LoadHtml(Information.WatchPageHtmlSource);
+            var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(Information.WatchPageHtmlSource);
             var videoDetail = json?.SelectToken("videoDetail");
             var tagList = videoDetail?.SelectToken("tagList");
             if(tagList != null) {
@@ -1641,7 +1641,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             IsMakedDescription = true;
 
-            var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtml);
+            var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
 #if false
 #if DEBUG
             var h = Path.Combine(DownloadDirectory.FullName, $"description.html");

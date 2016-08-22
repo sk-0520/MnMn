@@ -34,6 +34,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -59,7 +60,7 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public class SmileVideoInformationViewModel: ViewModelBase
+    public class SmileVideoInformationViewModel: ViewModelBase, IGarbageCollection
     {
         #region variable
 
@@ -140,10 +141,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public DirectoryInfo CacheDirectory { get; private set; }
 
-
-        public string PageHtml { get; private set; }
-
-        public string DescriptionHtml { get; private set; }
+        /// <summary>
+        /// 視聴ページのHTMLソース。
+        /// </summary>
+        public string WatchPageHtmlSource { get; private set; }
+        /// <summary>
+        /// 動画紹介HTMLソース。
+        /// </summary>
+        public string DescriptionHtmlSource { get; private set; }
         public string PageVideoToken { get; private set; }
 
         public SmileVideoInformationSource InformationSource { get; private set; }
@@ -217,6 +222,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._referenceCount; }
             set { SetVariableValue(ref this._referenceCount, value); }
         }
+
+        #region ファイル
+
+        /// <summary>
+        /// 視聴ページHTMLファイル。
+        /// </summary>
+        public FileInfo WatchPageHtmlFile { get; private set; }
+        /// <summary>
+        /// サムネイル画像ファイルパス。
+        /// </summary>
+        public FileInfo ThumbnaiImageFile { get; private set; }
+
+        #endregion
 
         #region 生データから取得
 
@@ -797,6 +815,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             CacheDirectory = GetCahceDirectory(Mediation, VideoId);
 
+            WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
+            ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
+
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
 
@@ -833,10 +854,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ThumbnailLoadState = LoadState.Preparation;
 
-            var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
-            if(CacheImageUtility.ExistImage(cachedFilePath, cacheSpan)) {
+            //var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
+            if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
                 ThumbnailLoadState = LoadState.Loading;
-                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(cachedFilePath);
+                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
                 ThumbnailLoadState = LoadState.Loaded;
                 return Task.CompletedTask;
             }
@@ -847,7 +868,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(image != null) {
                     this._thumbnailImage = image;
                     ThumbnailLoadState = LoadState.Loaded;
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, cachedFilePath, Mediation.Logger);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
                 } else {
                     ThumbnailLoadState = LoadState.Failure;
                 }
@@ -904,11 +925,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 OptionAutoCloseOnEnd = true,
             };
             return Task.Run(() => {
-                PageHtml = html;
+                WatchPageHtmlSource = html;
                 htmlDocument.LoadHtml(html);
                 //document.DocumentNode.SelectSingleNode("@")
                 var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
-                DescriptionHtml = description.InnerHtml;
+                DescriptionHtmlSource = description.InnerHtml;
 
                 var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(html);
                 var flashvars = json.SelectToken("flashvars");
@@ -918,8 +939,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 PageHtmlLoadState = LoadState.Loaded;
             }).ContinueWith(task => {
                 if(isSave) {
-                    var filePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html"));
-                    File.WriteAllText(filePath, PageHtml);
+                    File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
                 }
             });
         }
@@ -972,9 +992,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             PageHtmlLoadState = LoadState.Preparation;
 
-            var file = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
-            if(file.Exists && Constants.MinimumHtmlFileSize <= file.Length) {
-                using(var stream = file.OpenText()) {
+            if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {
+                using(var stream = WatchPageHtmlFile.OpenText()) {
                     var html = stream.ReadToEnd();
                     return SetPageHtmlAsync(html, false);
                 }
@@ -1037,6 +1056,85 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(ReferenceCount > 0) {
                 ReferenceCount -= 1;
             }
+        }
+
+        #endregion
+
+        #region IGarbageCollection
+
+        CheckResultModel<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan)
+        {
+            try {
+                file.Refresh();
+
+                if(file.Exists) {
+                    var timestamp = file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime;
+                    if(!cacheSpan.IsCacheTime(timestamp)) {
+                        var fileSize = file.Length;
+                        file.Delete();
+                        return CheckResultModel.Success(fileSize);
+                    }
+                }
+            } catch(Exception ex) {
+                Mediation.Logger.Warning($"{file}: {ex}");
+            }
+
+            return CheckResultModel.Failure<long>();
+        }
+
+        long GarbageCollectionLarge(CacheSpan cacheSpan)
+        {
+            if(cacheSpan.IsNoExpiration) {
+                return 0;
+            }
+
+            // 動画ファイル破棄
+            var normalFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetVideoFileName(false)));
+            var economyFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetVideoFileName(true)));
+            // Flash変換後ファイル
+            var normalFlashConvertedFile = new FileInfo(PathUtility.AppendExtension(normalFile.FullName, SmileVideoInformationUtility.flashConvertedExtension));
+            // エコノミーでFlashってのは多分ないんだろうね
+            var economyFlashConvertedFile = new FileInfo(PathUtility.AppendExtension(normalFile.FullName, SmileVideoInformationUtility.flashConvertedExtension));
+
+            var normalCheck = GarbageCollectionFromFile(normalFile, cacheSpan);
+            var economyCheck = GarbageCollectionFromFile(economyFile, cacheSpan);
+            var normalFlashCheck = GarbageCollectionFromFile(normalFlashConvertedFile, cacheSpan);
+            var economyFlashCheck = GarbageCollectionFromFile(economyFlashConvertedFile, cacheSpan);
+
+            if(normalCheck.IsSuccess) {
+                IndividualVideoSetting.LoadedNormal = false;
+            }
+            if(economyCheck.IsSuccess) {
+                IndividualVideoSetting.LoadedEconomyMode = false;
+            }
+            if(normalFlashCheck.IsSuccess || economyFlashCheck.IsSuccess) {
+                IndividualVideoSetting.ConvertedSwf = false;
+            }
+
+            var checks = new[] {
+                normalCheck,
+                economyCheck,
+                normalFlashCheck,
+                economyFlashCheck,
+            };
+
+            SaveSetting(false);
+
+            return checks.Where(c => c.IsSuccess).Sum(c => c.Result);
+        }
+
+        public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        {
+            if(IsPlaying || IsDownloading || IsDisposed) {
+                CheckResultModel.Failure<long>();
+            }
+
+            long largeSize = 0;
+            if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
+                largeSize = GarbageCollectionLarge(cacheSpan);
+            }
+
+            return CheckResultModel.Success(largeSize);
         }
 
         #endregion

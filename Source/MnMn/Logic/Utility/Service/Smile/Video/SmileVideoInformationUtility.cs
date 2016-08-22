@@ -31,6 +31,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
     public static class SmileVideoInformationUtility
     {
+        #region define
+
+        /// <summary>
+        /// Flashを変換した後のファイル拡張子。
+        /// </summary>
+        public const string flashConvertedExtension = "flv";
+
+        #endregion
+
         #region function
 
         /// <summary>
@@ -48,17 +57,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return Directory.CreateDirectory(cachedDirPath);
         }
 
-        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        public static FileInfo GetGetthumbinfoFile(Mediation mediation, string videoId)
         {
             var cacheDir = SmileVideoInformationUtility.GetCacheDirectory(mediation, videoId);
-
-            RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
             var fileName = PathUtility.CreateFileName(videoId, "thumb", "xml");
-            var cachedThumbFilePath = Path.Combine(cacheDir.FullName, fileName);
-            if(File.Exists(cachedThumbFilePath)) {
-                var fileInfo = new FileInfo(cachedThumbFilePath);
-                if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-                    using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+            return new FileInfo(Path.Combine(cacheDir.FullName, fileName));
+        }
+
+        public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
+        {
+            RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
+            var cachedThumbFile = GetGetthumbinfoFile(mediation, videoId);
+            if(cachedThumbFile.Exists) {
+                if(thumbCacheSpan.IsCacheTime(cachedThumbFile.LastWriteTime) && Constants.MinimumXmlFileSize <= cachedThumbFile.Length) {
+                    using(var stream = new FileStream(cachedThumbFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                         rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
                     }
                 }
@@ -70,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             // キャッシュ構築
             try {
-                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
+                SerializeUtility.SaveXmlSerializeToFile(cachedThumbFile.FullName, rawGetthumbinfo);
             } catch(Exception ex) {
                 mediation.Logger.Warning(ex);
             }
