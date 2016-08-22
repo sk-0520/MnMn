@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// キャッシュなどのゴミ処理を行う。
         /// </summary>
         /// <param name="garbageCollectionLevel">ゴミ処理レベル。</param>
-        /// <param name="cacheSpan">基準にするキャッシュ時間。</param>
+        /// <param name="cacheSpan">基準にするキャッシュ時間。順守する必要はない。</param>
         /// <returns>処理したデータのバイト数。</returns>
         public abstract Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
 

@@ -1046,6 +1046,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public long GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
+            if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
+                // 動画ファイル破棄
+
+                //IndividualVideoSetting.LoadedNormal
+
+            }
 
             return 0;
         }

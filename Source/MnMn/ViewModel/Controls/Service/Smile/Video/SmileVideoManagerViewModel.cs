@@ -164,11 +164,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.Run(() => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
                 var cacheDirInfos = baseDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
+                long result = 0;
                 foreach(var dir in cacheDirInfos) {
-                    GarbageCollectionCahceVideo(dir.Name, garbageCollectionLevel, cacheSpan);
+                    //TODO: オーバーフロー
+                    result += GarbageCollectionCahceVideo(dir.Name, garbageCollectionLevel, cacheSpan);
                 };
 
-                return -1L;
+                return result;
             });
         }
 
