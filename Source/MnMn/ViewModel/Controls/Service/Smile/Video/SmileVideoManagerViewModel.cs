@@ -161,17 +161,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         Task GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            var appSetting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            if(appSetting.CacheLifeTime == TimeSpan.Zero) {
-                return Task.CompletedTask;
-            }
-
             return Task.Run(() => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
                 var cacheDirInfos = baseDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
                 foreach(var dir in cacheDirInfos) {
-                    //GarbageCollectionCahceVideo(dir.Name,
-                }
+                    GarbageCollectionCahceVideo(dir.Name, garbageCollectionLevel, cacheSpan);
+                };
             });
         }
 
