@@ -854,10 +854,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ThumbnailLoadState = LoadState.Preparation;
 
-            var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
-            if(CacheImageUtility.ExistImage(cachedFilePath, cacheSpan)) {
+            //var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
+            if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
                 ThumbnailLoadState = LoadState.Loading;
-                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(cachedFilePath);
+                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
                 ThumbnailLoadState = LoadState.Loaded;
                 return Task.CompletedTask;
             }
@@ -868,7 +868,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(image != null) {
                     this._thumbnailImage = image;
                     ThumbnailLoadState = LoadState.Loaded;
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, cachedFilePath, Mediation.Logger);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
                 } else {
                     ThumbnailLoadState = LoadState.Failure;
                 }
