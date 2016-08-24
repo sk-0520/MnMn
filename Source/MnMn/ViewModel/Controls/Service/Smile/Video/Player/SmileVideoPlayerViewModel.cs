@@ -558,6 +558,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ReplayVideo)); }
         }
 
+        /// <summary>
+        /// チャンネル動画か。
+        /// </summary>
+        public bool IsChannelVideo { get { return Information.IsChannelVideo; } }
+
         public string UserName
         {
             get { return Information.UserName; }
@@ -565,6 +570,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public string UserId
         {
             get { return Information.UserId; }
+        }
+        public string ChannelName
+        {
+            get { return Information.ChannelName; }
+        }
+        public string ChannelId
+        {
+            get { return Information.ChannelId; }
         }
 
         public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
@@ -984,13 +997,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenUserIdCommand
+        public ICommand OpenUserOrChannelIdCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        OpenUserId(UserId);
+                        if(IsChannelVideo) {
+                            Mediation.Logger.Debug("チャンネルを開く処理は未実装");
+                        } else {
+                            OpenUserId(UserId);
+                        }
                     }
                 );
             }

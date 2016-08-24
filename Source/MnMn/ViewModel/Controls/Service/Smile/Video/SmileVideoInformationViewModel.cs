@@ -504,6 +504,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// チャンネル動画か。
+        /// </summary>
         public bool IsChannelVideo
         {
             get
