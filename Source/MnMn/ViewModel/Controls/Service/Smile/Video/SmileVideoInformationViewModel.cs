@@ -1101,14 +1101,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var normalFlashCheck = GarbageCollectionFromFile(normalFlashConvertedFile, cacheSpan);
             var economyFlashCheck = GarbageCollectionFromFile(economyFlashConvertedFile, cacheSpan);
 
+            var needSave = false;
+
             if(normalCheck.IsSuccess) {
+                var temp = IndividualVideoSetting.LoadedNormal;
                 IndividualVideoSetting.LoadedNormal = false;
+                needSave |= IndividualVideoSetting.LoadedNormal == temp;
             }
             if(economyCheck.IsSuccess) {
+                var temp = IndividualVideoSetting.LoadedEconomyMode;
                 IndividualVideoSetting.LoadedEconomyMode = false;
+                needSave |= IndividualVideoSetting.LoadedEconomyMode == temp;
             }
             if(normalFlashCheck.IsSuccess || economyFlashCheck.IsSuccess) {
+                var temp = IndividualVideoSetting.ConvertedSwf;
                 IndividualVideoSetting.ConvertedSwf = false;
+                needSave |= IndividualVideoSetting.ConvertedSwf == temp;
             }
 
             var checks = new[] {
@@ -1118,7 +1126,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 economyFlashCheck,
             };
 
-            SaveSetting(false);
+            if(needSave) {
+                SaveSetting(false);
+            }
 
             return checks.Where(c => c.IsSuccess).Sum(c => c.Result);
         }
