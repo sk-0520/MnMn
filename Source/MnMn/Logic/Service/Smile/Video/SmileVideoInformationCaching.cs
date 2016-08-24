@@ -46,6 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #endregion
 
+        object checker = new object();
+
         public SmileVideoInformationCaching(Mediation mediation)
             : base(true)
         {
@@ -77,10 +79,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
             return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, usingVideoId, thumbCacheSpan).ContinueWith(t => {
                 var rawGetthumbinfo = t.Result;
-                result = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
-                result.IncrementReference();
-                Add(usingVideoId, result);
-                return result;
+                var createdInformation = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
+                lock(checker) {
+                    if(TryGetValue(usingVideoId, out result)) {
+                        result.IncrementReference();
+                        return result;
+                    }
+                    createdInformation.IncrementReference();
+                    Add(usingVideoId, createdInformation);
+                    return createdInformation;
+                }
             });
         }
 

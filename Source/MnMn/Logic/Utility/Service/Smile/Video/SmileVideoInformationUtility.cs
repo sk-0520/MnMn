@@ -82,6 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             // キャッシュ構築
             try {
+
+                mediation.Logger.Debug(cachedThumbFile.Name);
                 SerializeUtility.SaveXmlSerializeToFile(cachedThumbFile.FullName, rawGetthumbinfo);
             } catch(Exception ex) {
                 mediation.Logger.Warning(ex);
