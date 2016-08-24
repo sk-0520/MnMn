@@ -187,7 +187,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+                return GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
+                    var gcSize = t.Result;
+                    Mediation.Logger.Information($"GC: {gcSize:#,#.} byte");
+                });
+            }, TaskContinuationOptions.AttachedToParent);
         }
 
         public override void InitializeView(MainWindow view)
@@ -197,8 +202,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var manager in ManagerItems) {
                 manager.InitializeView(view);
             }
-
-            GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime));
 
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
