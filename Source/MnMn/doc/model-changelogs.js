@@ -84,9 +84,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.10.2',
-		'isRc': true,
+		'date': '2016/08/24',
+		'version': '0.11.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
