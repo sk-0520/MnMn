@@ -43,25 +43,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         #region function
 
         /// <summary>
-        /// 動画IDに対応するキャッシュディレクトリを取得する。
-        /// <para>存在しない場合は生成される。</para>
+        /// 動画IDに対応するキャッシュディレクトリパスを取得する。
+        /// <para>ディレクトリの作成などはサポートしない。</para>
         /// </summary>
         /// <param name="mediation"></param>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public static DirectoryInfo GetCacheDirectory(Mediation mediation, string videoId)
+        public static DirectoryInfo GetCacheDirectoryPath(Mediation mediation, string videoId)
         {
             var parentDir = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
             var cachedDirPath = Path.Combine(parentDir.FullName, videoId);
 
-            return Directory.CreateDirectory(cachedDirPath);
+            return new DirectoryInfo(cachedDirPath);
         }
 
         public static FileInfo GetGetthumbinfoFile(Mediation mediation, string videoId)
         {
-            var cacheDir = SmileVideoInformationUtility.GetCacheDirectory(mediation, videoId);
+            var cacheDirPath = GetCacheDirectoryPath(mediation, videoId);
             var fileName = PathUtility.CreateFileName(videoId, "thumb", "xml");
-            return new FileInfo(Path.Combine(cacheDir.FullName, fileName));
+            return new FileInfo(Path.Combine(cacheDirPath.FullName, fileName));
         }
 
         public static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
