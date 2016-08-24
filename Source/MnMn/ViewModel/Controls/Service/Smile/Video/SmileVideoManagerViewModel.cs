@@ -179,9 +179,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.Run(async () => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                var cacheDirInfos = baseDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
+                var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly);
                 long result = 0;
                 foreach(var dir in cacheDirInfos) {
+                    Mediation.Logger.Information($"#{dir.Name}");
                     //TODO: オーバーフロー
                     result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
                 };

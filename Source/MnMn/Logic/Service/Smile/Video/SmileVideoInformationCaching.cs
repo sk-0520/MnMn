@@ -70,6 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
         {
             var usingVideoId = GetSafeVideoId(videoId);
+            Mediation.Logger.Debug($"-{usingVideoId}");
 
             SmileVideoInformationViewModel result;
             if(TryGetValue(usingVideoId, out result)) {
@@ -77,6 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 return Task.FromResult(result);
             }
 
+            Mediation.Logger.Debug($"*{usingVideoId}");
             return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, usingVideoId, thumbCacheSpan).ContinueWith(t => {
                 var rawGetthumbinfo = t.Result;
                 var createdInformation = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -82,8 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             // キャッシュ構築
             try {
-
-                mediation.Logger.Debug(cachedThumbFile.Name);
+                mediation.Logger.Debug($"*{cachedThumbFile.Name}");
                 SerializeUtility.SaveXmlSerializeToFile(cachedThumbFile.FullName, rawGetthumbinfo);
             } catch(Exception ex) {
                 mediation.Logger.Warning(ex);
