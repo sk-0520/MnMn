@@ -73,10 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             BackgroundAutoSaveTimer.Tick += AutoSaveTimer_Tick;
-            BackgroundAutoSaveTimer.Start();
-
             BackgroundGarbageCollectionTimer.Tick += BackgroundGarbageCollectionTimer_Tick;
-            BackgroundGarbageCollectionTimer.Start();
         }
 
         #region property
@@ -206,6 +203,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var manager in ManagerItems) {
                 manager.InitializeView(view);
             }
+
+            BackgroundAutoSaveTimer.Start();
+            BackgroundGarbageCollectionTimer.Start();
 
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
