@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -55,7 +56,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// アップデートチェックタイミング。
         /// </summary>
         public static TimeSpan BackgroundUpdateCheckTime => appConfig.Get("background-update-check-time", TimeSpan.Parse);
-
+        /// <summary>
+        /// ゴミ処理タイミング。
+        /// </summary>
+        public static TimeSpan BackgroundGarbageCollectionTime => appConfig.Get("background-garbage-collection-time", TimeSpan.Parse);
+        /// <summary>
+        /// ゴミ処理規模。
+        /// </summary>
+        public static GarbageCollectionLevel BackgroundGarbageCollectionLevel => appConfig.Get("background-garbage-collection-level", s => (GarbageCollectionLevel)Enum.Parse(typeof(GarbageCollectionLevel), s));
 
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
