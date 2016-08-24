@@ -1014,14 +1014,14 @@
                                 <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
                                 <Condition Binding="{Binding IsChannelVideo}" Value="False" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding UserName, Mode=OneTime}" />
+                              <Setter Property="Text" Value="{Binding UserName, Mode=OneWay}" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
                                 <Condition Binding="{Binding IsChannelVideo}" Value="True" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding ChannelName, Mode=OneTime}" />
+                              <Setter Property="Text" Value="{Binding ChannelName, Mode=OneWay}" />
                             </MultiDataTrigger>
                           </Style.Triggers>
                         </Style>

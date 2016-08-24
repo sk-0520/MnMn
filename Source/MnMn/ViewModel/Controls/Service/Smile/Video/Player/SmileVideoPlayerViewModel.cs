@@ -2360,6 +2360,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(Title),
                 nameof(IsEnabledPostAnonymous),
                 nameof(Information),
+                nameof(UserName),
+                nameof(ChannelName),
+                nameof(IsChannelVideo),
             };
             CallOnPropertyChange(propertyNames);
 
