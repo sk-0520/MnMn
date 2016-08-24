@@ -110,7 +110,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#59: ゴミ収集を定期的に行う。',
+						'comments': [
+							'ファイルの排他がスーパーあやしい！'
+						]
 					},
 					{
 						'revision': '',
