@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -96,11 +97,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         {
             base.ShowView();
 
-            CheckItLaterFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
+            CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
+                CallOnPropertyChangeDisplayItem();
+            }).ConfigureAwait(false);
         }
 
         protected override void HideView()
-        { }
+        {
+            base.HideView();
+
+            CallOnPropertyChangeDisplayItem();
+        }
 
         public override Task InitializeAsync()
         {
@@ -113,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public override void UninitializeView(MainWindow view)
         { }
 
-        public override Task GarbageCollectionAsync()
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             var span = Constants.ServiceSmileVideoCheckItLaterCacheSpan;
             var gcItems = Setting.CheckItLater
@@ -125,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             }
             CallOnPropertyChangeDisplayItem();
 
-            return Task.CompletedTask;
+            return GarbageCollectionDummyResult;
         }
 
         protected override void CallOnPropertyChangeDisplayItem()

@@ -35,6 +35,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -149,40 +151,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region ManagerViewModelBase
 
-        Task GarbageCollectionCahceVideosAsync()
+        Task<long> GarbageCollectionCahceVideoAsync(string videoId, DirectoryInfo baseDirectory, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            var appSetting = Mediation.GetResultFromRequest<AppSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Application));
-            if(appSetting.CacheLifeTime == TimeSpan.Zero) {
-                return Task.CompletedTask;
-            }
-
-            return Task.Run(() => {
-                var videoExts = new[] {
-                SmileVideoMovieType.Mp4,
-                SmileVideoMovieType.Swf,
-                SmileVideoMovieType.Flv,
-            }
-                    .Select(t => SmileVideoGetthumbinfoUtility.GetFileExtension(t))
-                    .Select(s => "." + s)
-                    .ToArray()
-                ;
-
-
-                var cacheSpan = new CacheSpan(DateTime.Now, appSetting.CacheLifeTime);
-
-                var dirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                var gcFiles = dirInfo.EnumerateFileSystemInfos("*", SearchOption.AllDirectories)
-                    .Where(f => videoExts.Any(v => string.Equals(f.Extension, v, StringComparison.OrdinalIgnoreCase)))
-                    .Where(f => !cacheSpan.IsCacheTime(f.CreationTime))
-                ;
-                foreach(var item in gcFiles) {
-                    try {
-                        Mediation.Logger.Trace($"GC:SMILE:VIDEO: {item.FullName}");
-                        File.Delete(item.FullName);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Warning(ex);
-                    }
+            var targetFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediation, videoId);
+            if(!targetFile.Exists) {
+                // thumbなけりゃディレクトリごとポイする
+                var totalSize = baseDirectory.EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+                try {
+                    baseDirectory.Delete(true);
+                    return Task.FromResult(totalSize);
+                } catch(Exception ex) {
+                    Mediation.Logger.Error($"{baseDirectory}: {ex}");
                 }
+                return Task.FromResult(0L);
+            }
+
+            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, CacheSpan.InfinityCache));
+            var viewModelTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+            return viewModelTask.ContinueWith(t => {
+                var viewModel = t.Result;
+                var checkResult = viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+                return checkResult.Result;
+            });
+        }
+
+        Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        {
+            return Task.Run(async () => {
+                var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+                var cacheDirInfos = baseDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
+                long result = 0;
+                foreach(var dir in cacheDirInfos) {
+                    //TODO: オーバーフロー
+                    result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
+                };
+
+                return result;
             });
         }
 
@@ -208,15 +212,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public override Task GarbageCollectionAsync()
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             var items = ManagerItems
-                .Select(m => m.GarbageCollectionAsync())
+                .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))
                 .ToList()
             ;
-            items.Add(GarbageCollectionCahceVideosAsync());
+            items.Add(GarbageCollectionCahceVideosAsync(garbageCollectionLevel, cacheSpan));
 
-            return Task.WhenAll(items);
+            return Task.WhenAll(items).ContinueWith(t => {
+                return t.Result.Sum();
+            });
         }
 
         #endregion

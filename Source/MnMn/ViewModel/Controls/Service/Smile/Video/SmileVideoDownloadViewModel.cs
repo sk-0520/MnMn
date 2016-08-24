@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 if(Information.MovieType == SmileVideoMovieType.Swf) {
-                    var filePath = PathUtility.AppendExtension(VideoFile.FullName, "flv");
+                    var filePath = PathUtility.AppendExtension(VideoFile.FullName, SmileVideoInformationUtility.flashConvertedExtension);
                     var result = new FileInfo(filePath);
                     return result;
                 } else {

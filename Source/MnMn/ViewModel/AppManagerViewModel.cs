@@ -72,11 +72,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            BackgroundAutoSaveTimer = new DispatcherTimer() {
-                Interval = Constants.BackgroundAutoSaveSettingTime,
-            };
             BackgroundAutoSaveTimer.Tick += AutoSaveTimer_Tick;
             BackgroundAutoSaveTimer.Start();
+
+            BackgroundGarbageCollectionTimer.Tick += BackgroundGarbageCollectionTimer_Tick;
+            BackgroundGarbageCollectionTimer.Start();
         }
 
         #region property
@@ -84,8 +84,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         MainWindow View { get; set; }
         AppSettingModel Setting { get; }
 
-        DispatcherTimer BackgroundAutoSaveTimer { get; }
-
+        DispatcherTimer BackgroundAutoSaveTimer { get; } = new DispatcherTimer() {
+            Interval = Constants.BackgroundAutoSaveSettingTime,
+        };
+        DispatcherTimer BackgroundGarbageCollectionTimer { get; } = new DispatcherTimer() {
+            Interval = Constants.BackgroundGarbageCollectionTime,
+        };
 
         public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
@@ -187,7 +191,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+                return GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
+                    var gcSize = t.Result;
+                    Mediation.Logger.Information($"GC: {gcSize:n0} byte");
+                });
+            }, TaskContinuationOptions.AttachedToParent);
         }
 
         public override void InitializeView(MainWindow view)
@@ -197,8 +206,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var manager in ManagerItems) {
                 manager.InitializeView(view);
             }
-
-            GarbageCollectionAsync();
 
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
@@ -212,9 +219,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
-        public override Task GarbageCollectionAsync()
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync()));
+            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
+                return t.Result.Sum();
+            });
         }
 
         #endregion
@@ -247,6 +256,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             BackgroundAutoSaveTimer.Stop();
             BackgroundAutoSaveTimer.Tick -= AutoSaveTimer_Tick;
+
+            BackgroundGarbageCollectionTimer.Stop();
+            BackgroundGarbageCollectionTimer.Tick -= BackgroundGarbageCollectionTimer_Tick;
+
             View.UserClosing -= View_UserClosing;
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
@@ -261,8 +274,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             } finally {
                 BackgroundAutoSaveTimer.Start();
             }
-
         }
+
+        private async void BackgroundGarbageCollectionTimer_Tick(object sender, EventArgs e)
+        {
+            Mediation.Logger.Debug($"timer: {sender}, {e}");
+            try {
+                BackgroundGarbageCollectionTimer.Stop();
+
+                var cacheSpan = new CacheSpan(DateTime.Now, Setting.CacheLifeTime);
+                var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan);
+                Mediation.Logger.Information($"GC: {gcSize:n0} byte");
+            } finally {
+                BackgroundGarbageCollectionTimer.Start();
+            }
+        }
+
 
     }
 }

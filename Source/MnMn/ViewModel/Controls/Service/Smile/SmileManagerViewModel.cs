@@ -135,14 +135,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             VideoManager.UninitializeView(view);
         }
 
-        public override Task GarbageCollectionAsync()
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             var tasks = new[] {
-                UsersManager.GarbageCollectionAsync(),
-                VideoManager.GarbageCollectionAsync(),
-                SettingManager.GarbageCollectionAsync(),
+                UsersManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
+                VideoManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
+                SettingManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
             };
-            return Task.WhenAll(tasks);
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                return t.Result.Sum();
+            });
         }
 
         #endregion
