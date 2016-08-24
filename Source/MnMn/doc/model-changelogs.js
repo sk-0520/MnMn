@@ -89,39 +89,14 @@
 		'isRc': false,
 		'contents': [
 			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '25be418fa62b5cc1a96e2fa160e7ffe0cca40090',
 						'subject': '#59: ゴミ収集を定期的に行う。',
 						'comments': [
 							'ファイルの排他がスーパーあやしい！'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -129,19 +104,19 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '737a2fe187a6ca8fc66121ec36156bebd595de59',
 						'subject': '#77: ファインダーフィルタで無効対象にした後、フィルタを削除したら色が黒い'
 					},
 					{
-						'revision': '',
+						'revision': '637ec648c4d8bed83cc70cbdbe3d7c5960bab4a5',
 						'subject': '#76: あとで見るを見た後に件数表示が変わらない'
 					},
 					{
-						'revision': '',
+						'revision': '407c9a77a69f48177ace2230cfce08784882d83c',
 						'subject': '#13: キャッシュクリア時にキャッシュ情報を初期化する'
 					},
 					{
-						'revision': '',
+						'revision': '361b2784cf9835bc20e098ab435952aed7d4bd4c',
 						'subject': '#78: チャンネル動画の名前とかがプレイヤーに表示されない',
 						'comments': [
 							'チャンネルページの構造は調べてないのでクリックしてもチャンネルページには遷移しません',
@@ -149,25 +124,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '8393a3941dba6bc92fd6db2454e58c21dcf18292',
 						'subject': '動画連続再生時にユーザー名(と#78で修正したチャンネル名)が再生中動画のものに反映されない'
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
