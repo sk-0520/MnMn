@@ -19,35 +19,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video
 {
-    public class DownloadingErrorEventArgs: DownloaderEventArgs
+    public class SmileVideoGetthumbinfoFailureException: System.Exception
     {
-        public DownloadingErrorEventArgs(int counter, System.Exception ex)
+        public SmileVideoGetthumbinfoFailureException(string videoId, RawSmileVideoThumbResponseModel thumb)
+            : base(videoId)
         {
-            Counter = counter;
-            Exception = ex;
+            VideoId = videoId;
+            Thumb = thumb;
         }
 
         #region property
 
-        /// <summary>
-        /// 失敗回数。
-        /// </summary>
-        public int Counter { get; }
-        /// <summary>
-        /// 失敗内容。
-        /// </summary>
-        public Exception Exception { get; }
-
-        //
-        // 概要:
-        //     イベントをキャンセルするかどうかを示す値を取得または設定します。
-        //
-        // 戻り値:
-        //     イベントを取り消す場合は true。それ以外の場合は false。
-        public bool Cancel { get; set; }
+        public string VideoId { get; }
+        public RawSmileVideoThumbResponseModel Thumb { get; }
 
         #endregion
     }

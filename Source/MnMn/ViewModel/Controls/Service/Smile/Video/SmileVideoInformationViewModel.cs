@@ -842,7 +842,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ThrowNotGetthumbinfoSource()
         {
             if(InformationSource != SmileVideoInformationSource.Getthumbinfo) {
-                throw new InvalidOperationException($"{nameof(InformationSource)}: {InformationSource}");
+                throw new InvalidOperationException($"{VideoId}: {nameof(InformationSource)}: {InformationSource}");
             }
         }
 
@@ -1139,7 +1139,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             if(IsPlaying || IsDownloading || IsDisposed) {
-                CheckResultModel.Failure<long>();
+                return CheckResultModel.Failure<long>();
+            }
+            if(InformationSource != SmileVideoInformationSource.Getthumbinfo) {
+                return CheckResultModel.Failure<long>();
             }
 
             long largeSize = 0;
