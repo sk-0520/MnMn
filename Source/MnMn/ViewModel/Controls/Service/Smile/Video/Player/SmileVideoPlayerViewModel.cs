@@ -83,6 +83,7 @@ using System.Runtime.ExceptionServices;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using System.Windows.Controls.Primitives;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -161,6 +162,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         string _commentInformation;
 
+        bool _isFullScreen;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -184,6 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Border DetailComment { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Slider EnabledCommentSlider { get; set; }
+        Popup SubScreen { get; set; }
 
         public string Title
         {
@@ -866,6 +870,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._commentInformation; }
             set { SetVariableValue(ref this._commentInformation, value); }
+        }
+
+        public bool IsFullScreen
+        {
+            get { return this._isFullScreen; }
+            set { SetVariableValue(ref this._isFullScreen, value); }
         }
 
         #endregion
@@ -2442,13 +2452,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var playerView = (SmileVideoPlayerWindow)view;
 
             View = playerView;
-            Player = playerView.player;//.MediaPlayer;
-            NormalCommentArea = playerView.normalCommentArea;
-            OriginalPosterCommentArea = playerView.originalPosterCommentArea;
-            Navigationbar = playerView.seekbar;
-            CommentView = playerView.commentView;
-            DetailComment = playerView.detailComment;
-            DocumentDescription = playerView.documentDescription;
+            Player = View.player;//.MediaPlayer;
+            NormalCommentArea = View.normalCommentArea;
+            OriginalPosterCommentArea = View.originalPosterCommentArea;
+            Navigationbar = View.seekbar;
+            CommentView = View.commentView;
+            DetailComment = View.detailComment;
+            DocumentDescription = View.documentDescription;
+            SubScreen = View.subScreen;
+
+            var logicalScreenRect = UIUtility.ToLogicalPixel(View, Screen.PrimaryScreen.DeviceBounds);
+            SubScreen.HorizontalOffset = logicalScreenRect.Left;
+            SubScreen.VerticalOffset = logicalScreenRect.Top;
+            SubScreen.Width = logicalScreenRect.Width;
+            SubScreen.Height = logicalScreenRect.Height;
 
             // 初期設定
             Player.Volume = Volume;

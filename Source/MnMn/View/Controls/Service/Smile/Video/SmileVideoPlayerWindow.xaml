@@ -425,22 +425,35 @@
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
 
-          <vlc_wpf:VlcPlayer x:Name="player" Grid.Row="0" EndBehavior="Nothing" />
+          <Grid x:Name="media" Grid.Row="0">
+            <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing" />
 
-          <Viewbox Grid.Row="0" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
-              <Canvas x:Name="normalCommentArea" />
-              <Canvas x:Name="originalPosterCommentArea" />
-              <Rectangle
-                VerticalAlignment="Top"
-                HorizontalAlignment="Stretch"
-                Fill="#80ffffff"
-                Width="{Binding CommentAreaWidth}"
-                Height="{Binding CommentEnabledHeight}"
-                Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
-              />
+            <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
+                <Canvas x:Name="normalCommentArea" />
+                <Canvas x:Name="originalPosterCommentArea" />
+                <Rectangle
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Stretch"
+                  Fill="#80ffffff"
+                  Width="{Binding CommentAreaWidth}"
+                  Height="{Binding CommentEnabledHeight}"
+                  Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
+                />
+              </Grid>
+            </Viewbox>
+
+          </Grid>
+
+          <Popup x:Name="subScreen" Placement="Absolute"  Width="100" Height="100" IsOpen="{Binding IsFullScreen}">
+            <Grid Background="Red">
+              <Rectangle>
+                <Rectangle.Fill>
+                  <VisualBrush Visual="{Binding ElementName=media}" />
+                </Rectangle.Fill>
+              </Rectangle>
             </Grid>
-          </Viewbox>
+          </Popup>
 
           <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -479,6 +492,7 @@
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
                   </ToggleButton>
+                  <ToggleButton IsChecked="{Binding IsFullScreen}">full screen</ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>
