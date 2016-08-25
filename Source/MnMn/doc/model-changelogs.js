@@ -84,16 +84,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.11.1',
-		'isRc': true,
+		'date': '2016/08/25',
+		'version': '0.12.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '再オープンで #59',
+						'comments': [
+							'0.11.0で完全に死んでたから0.12.0として再リリース',
+							'多分大丈夫なはず。。。はず。。。'
+						]
 					},
 					{
 						'revision': '',
@@ -105,64 +109,6 @@
 					}
 				]
 			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'fixes',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			}
-		]
-	},
-	{
-		'date': '2016/08/24',
-		'version': '0.11.0',
-		'isRc': false,
-		'contents': [
 			{
 				'type': 'features',
 				'logs': [
@@ -170,7 +116,8 @@
 						'revision': '25be418fa62b5cc1a96e2fa160e7ffe0cca40090',
 						'subject': '#59: ゴミ収集を定期的に行う。',
 						'comments': [
-							'ファイルの排他がスーパーあやしい！'
+							'ファイルの排他がスーパーあやしい！',
+							'あやしいとかそういうレベルじゃなかった'
 						]
 					}
 				]

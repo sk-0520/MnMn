@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
@@ -70,7 +71,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
         {
             var usingVideoId = GetSafeVideoId(videoId);
-            Mediation.Logger.Debug($"-{usingVideoId}");
 
             SmileVideoInformationViewModel result;
             if(TryGetValue(usingVideoId, out result)) {
@@ -78,9 +78,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 return Task.FromResult(result);
             }
 
-            Mediation.Logger.Debug($"*{usingVideoId}");
             return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, usingVideoId, thumbCacheSpan).ContinueWith(t => {
                 var rawGetthumbinfo = t.Result;
+
+                if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+                    throw new SmileVideoGetthumbinfoFailureException(videoId, rawGetthumbinfo);
+                }
+
                 var createdInformation = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfo.Thumb, UnOrdered);
                 lock(checker) {
                     if(TryGetValue(usingVideoId, out result)) {
