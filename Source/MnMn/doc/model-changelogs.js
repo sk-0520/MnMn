@@ -93,19 +93,15 @@
 				'logs': [
 					{
 						'revision': '',
+						'subject': 'むだに頑張って無駄につかれた'
+					},
+					{
+						'revision': 'd399b69851eb506d5f21218a934efae5d3182d5c',
 						'subject': '再オープンで #59',
 						'comments': [
 							'0.11.0で完全に死んでたから0.12.0として再リリース',
 							'多分大丈夫なはず。。。はず。。。'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
