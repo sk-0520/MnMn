@@ -425,7 +425,7 @@
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
 
-          <Grid x:Name="media" Grid.Row="0">
+          <Grid x:Name="viewMedia" Grid.Row="0">
             <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing" />
 
             <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -444,16 +444,6 @@
             </Viewbox>
 
           </Grid>
-
-          <Popup x:Name="subScreen" Placement="Absolute"  Width="100" Height="100" IsOpen="{Binding IsFullScreen}">
-            <Grid Background="Red">
-              <Rectangle>
-                <Rectangle.Fill>
-                  <VisualBrush Visual="{Binding ElementName=media}" />
-                </Rectangle.Fill>
-              </Rectangle>
-            </Grid>
-          </Popup>
 
           <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -492,7 +482,7 @@
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
                   </ToggleButton>
-                  <ToggleButton IsChecked="{Binding IsFullScreen}">full screen</ToggleButton>
+                  <Button Command="{Binding ShowFullScreenCommand}">full screen</Button>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>

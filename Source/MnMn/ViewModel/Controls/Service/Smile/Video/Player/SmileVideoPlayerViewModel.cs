@@ -187,7 +187,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Border DetailComment { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Slider EnabledCommentSlider { get; set; }
-        Popup SubScreen { get; set; }
+        SmileVideoFullScreenWindow FullScreenWindow { get; set; }
+        Visual ViewMedia { get; set; }
 
         public string Title
         {
@@ -1161,8 +1162,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+        public ICommand ShowFullScreenCommand
+        {
+            get { return CreateCommand(o => ShowFullScreen()); }
+        }
 
+        #endregion
 
         #region function
 
@@ -2199,6 +2204,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
         }
 
+        SmileVideoFullScreenWindow CreateFullScreenWindow()
+        {
+            var window = new SmileVideoFullScreenWindow() {
+                DataContext = this,
+            };
+            window.abc.Visual = View.player;
+
+            window.def.Visual = View.layer;
+
+            return window;
+        }
+
+        void ShowFullScreen()
+        {
+            if(FullScreenWindow == null) {
+                FullScreenWindow = CreateFullScreenWindow();
+            }
+            FullScreenWindow.Show();
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -2459,13 +2484,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentView = View.commentView;
             DetailComment = View.detailComment;
             DocumentDescription = View.documentDescription;
-            SubScreen = View.subScreen;
-
-            var logicalScreenRect = UIUtility.ToLogicalPixel(View, Screen.PrimaryScreen.DeviceBounds);
-            SubScreen.HorizontalOffset = logicalScreenRect.Left;
-            SubScreen.VerticalOffset = logicalScreenRect.Top;
-            SubScreen.Width = logicalScreenRect.Width;
-            SubScreen.Height = logicalScreenRect.Height;
+            ViewMedia = View.viewMedia;
 
             // 初期設定
             Player.Volume = Volume;
