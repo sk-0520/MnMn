@@ -2179,6 +2179,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void SetNavigationbarBaseEvent(Navigationbar navigationbar)
+        {
+            navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+        }
+
+        void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
+        {
+            navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -2456,7 +2466,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
-            Navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+            SetNavigationbarBaseEvent(Navigationbar);
             DetailComment.LostFocus += DetailComment_LostFocus;
         }
 
@@ -2545,7 +2555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
             Player.StateChanged -= Player_StateChanged;
-            Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+            UnsetNavigationbarBaseEvent(Navigationbar);
 
             if(EnabledCommentSlider != null) {
                 EnabledCommentSlider.MouseEnter -= EnabledCommentSlider_MouseEnter;
@@ -2586,15 +2596,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 return;
             }
-            Navigationbar.seekbar.CaptureMouse();
+
+            var seekbar = (Slider)sender;
+            seekbar.CaptureMouse();
 
             ChangingVideoPosition = true;
-            SeekbarMouseDownPosition = e.GetPosition(Navigationbar.seekbar);
-            Navigationbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
-            Navigationbar.seekbar.MouseMove += Seekbar_MouseMove;
+            SeekbarMouseDownPosition = e.GetPosition(seekbar);
+            seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
+            seekbar.MouseMove += Seekbar_MouseMove;
 
-            var tempPosition = SeekbarMouseDownPosition.X / Navigationbar.seekbar.ActualWidth;
-            Navigationbar.seekbar.Value = tempPosition;
+            var tempPosition = SeekbarMouseDownPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
         }
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
@@ -2602,34 +2614,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             MovingSeekbarThumb = true;
 
             Debug.Assert(ChangingVideoPosition);
-            var movingPosition = e.GetPosition(Navigationbar.seekbar);
 
-            var tempPosition = movingPosition.X / Navigationbar.seekbar.ActualWidth;
-            Navigationbar.seekbar.Value = tempPosition;
+            var seekbar = (Slider)sender;
+            var movingPosition = e.GetPosition(seekbar);
+
+            var tempPosition = movingPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
         }
 
         private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Debug.Assert(CanVideoPlay);
 
-            Navigationbar.seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
-            Navigationbar.seekbar.MouseMove -= Seekbar_MouseMove;
+            var seekbar = (Slider)sender;
 
-            float nextPosition;
+            seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
+            seekbar.MouseMove -= Seekbar_MouseMove;
 
-            if(!MovingSeekbarThumb) {
-                var pos = e.GetPosition(Navigationbar.seekbar);
-                nextPosition = (float)(pos.X / Navigationbar.seekbar.ActualWidth);
-            } else {
-                nextPosition = (float)Navigationbar.VideoPosition;
-            }
+
+            //#82: これなんの処理だ、わからん
+            //float nextPosition;
+            //if(!MovingSeekbarThumb) {
+            //    var pos = e.GetPosition(seekbar);
+            //    nextPosition = (float)(pos.X / seekbar.ActualWidth);
+            //} else {
+            //    nextPosition = (float)((Navigationbar)seekbar.Parent).VideoPosition;
+            //}
+            var pos = e.GetPosition(seekbar);
+            var nextPosition = (float)(pos.X / seekbar.ActualWidth);
             // TODO: 読み込んでない部分は移動不可にする
             MoveVideoPostion(nextPosition);
 
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
 
-            Navigationbar.seekbar.ReleaseMouseCapture();
+            seekbar.ReleaseMouseCapture();
         }
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
