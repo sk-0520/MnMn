@@ -73,10 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             BackgroundAutoSaveTimer.Tick += AutoSaveTimer_Tick;
-            BackgroundAutoSaveTimer.Start();
-
             BackgroundGarbageCollectionTimer.Tick += BackgroundGarbageCollectionTimer_Tick;
-            BackgroundGarbageCollectionTimer.Start();
         }
 
         #region property
@@ -191,12 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(_ => {
-                return GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
-                    var gcSize = t.Result;
-                    Mediation.Logger.Information($"GC: {gcSize:n0} byte");
-                });
-            }, TaskContinuationOptions.AttachedToParent);
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
@@ -206,6 +198,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var manager in ManagerItems) {
                 manager.InitializeView(view);
             }
+
+            BackgroundAutoSaveTimer.Start();
+
+            // GCは裏で走らせておく
+            GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
+                var gcSize = t.Result;
+                Mediation.Logger.Information($"GC: {gcSize:n0} byte");
+                BackgroundGarbageCollectionTimer.Start();
+            });
 
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;

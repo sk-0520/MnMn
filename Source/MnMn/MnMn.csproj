@@ -170,6 +170,7 @@
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
     <Compile Include="Define\GarbageCollectionLevel.cs" />
     <Compile Include="Define\OrderKind.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoFinderFilteringTarget.cs" />

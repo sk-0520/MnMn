@@ -23,8 +23,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -147,44 +149,75 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        long RemoveDirectory(DirectoryInfo directory)
+        {
+            if(directory.Exists) {
+                var files = directory.GetFiles("*", SearchOption.AllDirectories);
+                if(files.Length > 0) {
+                    var totalSize = files.Sum(f => f.Length);
+                    directory.Delete(true);
+                    return totalSize;
+                }
+            }
+
+            return 0;
+        }
+
         #endregion
 
         #region ManagerViewModelBase
 
         Task<long> GarbageCollectionCahceVideoAsync(string videoId, DirectoryInfo baseDirectory, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
+            CheckUtility.EnforceNotNullAndNotWhiteSpace(videoId);
+
             var targetFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediation, videoId);
-            if(!targetFile.Exists) {
-                // thumbなけりゃディレクトリごとポイする
-                var totalSize = baseDirectory.EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
+            if(!targetFile.Exists && baseDirectory.Exists) {
                 try {
-                    baseDirectory.Delete(true);
-                    return Task.FromResult(totalSize);
+                    // thumbなけりゃディレクトリごとポイする
+                    var size = RemoveDirectory(baseDirectory);
+                    return Task.FromResult(size);
                 } catch(Exception ex) {
                     Mediation.Logger.Error($"{baseDirectory}: {ex}");
                 }
-                return Task.FromResult(0L);
+                return GarbageCollectionDummyResult;
             }
 
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, CacheSpan.InfinityCache));
             var viewModelTask = Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
             return viewModelTask.ContinueWith(t => {
-                var viewModel = t.Result;
-                var checkResult = viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
-                return checkResult.Result;
+                if(t.IsFaulted) {
+                    var exception = t.Exception.InnerException as SmileVideoGetthumbinfoFailureException;
+                    Mediation.Logger.Information($"load fail: {exception}");
+                    var dir = SmileVideoInformationUtility.GetCacheDirectory(Mediation, videoId);
+                    if(dir.Exists) {
+                        try {
+                            return RemoveDirectory(dir);
+                        } catch(Exception ex) {
+                            Mediation.Logger.Error(ex);
+                        }
+                    }
+                    return GarbageCollectionDummyResult.Result;
+                } else {
+                    var viewModel = t.Result;
+                    var checkResult = viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+                    return checkResult.Result;
+                }
             });
         }
 
         Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.Run(async () => {
+            return Task.Run(() => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                var cacheDirInfos = baseDirInfo.EnumerateDirectories("*", SearchOption.TopDirectoryOnly);
-                long result = 0;
-                foreach(var dir in cacheDirInfos) {
-                    //TODO: オーバーフロー
-                    result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
-                };
+                var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly);
+                //long result = 0;
+                //foreach(var dir in cacheDirInfos) {
+                //    //TODO: オーバーフロー
+                //    result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
+                //};
+                var tasks = cacheDirInfos.Select(dir => GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan));
+                var result = Task.WhenAll(tasks).Result.Sum();
 
                 return result;
             });
