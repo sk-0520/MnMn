@@ -336,7 +336,20 @@
           <Setter Property="Height" Value="10" />
         </Style>
       </StatusBar.Resources>
-      <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea}">
+      <!--<ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea}">-->
+      <ToggleButton x:Name="switchInformation">
+        <ToggleButton.Style>
+          <Style TargetType="ToggleButton">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
+                <Setter Property="IsChecked" Value="{Binding PlayerShowDetailArea}" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
+                <Setter Property="IsChecked" Value="False" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ToggleButton.Style>
         <Canvas Style="{StaticResource StatePanel}">
           <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
@@ -465,7 +478,6 @@
           <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
 
           <Grid x:Name="viewMedia" Grid.Row="0">
@@ -491,10 +503,20 @@
           <Grid Grid.Row="1">
             <Grid.RowDefinitions>
               <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition Width="6*" />
+              <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
             <app_view_controls:Navigationbar
               x:Name="seekbar"
               Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="3"
               VideoPosition="{Binding VideoPosition}"
               VideoLoadedSize="{Binding VideoLoadedSize}"
               VideoTotalSize="{Binding VideoTotalSize}"
@@ -529,20 +551,8 @@
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>
-          </Grid>
 
-          <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-              <RowDefinition />
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="2*" />
-              <ColumnDefinition Width="6*" />
-              <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-
-            <xctk:DropDownButton Grid.Column="0">
+            <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
                 <StackPanel>
                   <StackPanel Orientation="Horizontal">
@@ -617,10 +627,10 @@
               </xctk:DropDownButton.DropDownContent>
               コマンド
             </xctk:DropDownButton>
-            <TextBox Grid.Column="1" Text="{Binding PostCommentBody}"></TextBox>
-            <Button Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PostCommentBody}"></TextBox>
+            <Button Grid.Row="1" Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
 
-            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
               <DockPanel.Style>
                 <Style TargetType="DockPanel">
                   <Style.Triggers>
@@ -634,6 +644,7 @@
               <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
               <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding CommentInformation}" />
             </DockPanel>
+
           </Grid>
         </Grid>
 
