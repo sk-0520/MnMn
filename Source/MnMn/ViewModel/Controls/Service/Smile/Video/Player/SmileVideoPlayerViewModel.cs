@@ -192,7 +192,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Border DetailComment { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Slider EnabledCommentSlider { get; set; }
-        SmileVideoFullScreenWindow FullScreenWindow { get; set; }
         Visual ViewMedia { get; set; }
 
         public string Title
@@ -2238,24 +2237,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
         }
 
-        SmileVideoFullScreenWindow CreateFullScreenWindow()
-        {
-            var window = new SmileVideoFullScreenWindow() {
-                DataContext = this,
-            };
-            window.abc.Visual = View.player;
-
-            window.def.Visual = View.layer;
-
-            return window;
-        }
-
         void ShowFullScreen()
         {
-            //if(FullScreenWindow == null) {
-            //    FullScreenWindow = CreateFullScreenWindow();
-            //}
-            //FullScreenWindow.Show();
             IsNormalWindow = !IsNormalWindow;
             if(IsNormalWindow) {
                 var logicalViewArea = new Rect(Left, Top, Width, Height);

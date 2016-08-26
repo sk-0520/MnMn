@@ -302,9 +302,6 @@
     <Compile Include="View\Controls\Service\Smile\Video\SmileVideoCheckItLaterManager.xaml.cs">
       <DependentUpon>SmileVideoCheckItLaterManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoFullScreenWindow.xaml.cs">
-      <DependentUpon>SmileVideoFullScreenWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Converter\EnumDisplayConverter.cs" />
     <Compile Include="View\Converter\HumanLikeByteConverter.cs" />
     <Compile Include="View\Converter\OutlinedTextBlockFontSizeToStrokeConverter.cs" />
@@ -570,10 +567,6 @@
     <Page Include="View\Controls\Service\Smile\Setting\SmileVideoSettingManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Controls\Service\Smile\Video\SmileVideoFullScreenWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoHistoryManager.xaml">
       <SubType>Designer</SubType>
