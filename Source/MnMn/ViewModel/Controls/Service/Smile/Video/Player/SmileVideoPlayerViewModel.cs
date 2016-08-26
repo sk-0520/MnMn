@@ -84,6 +84,8 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookma
 using System.Windows.Controls.Primitives;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -162,7 +164,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         string _commentInformation;
 
-        bool _isNormalWindow;
+        bool _isNormalWindow = true;
+        Thickness _resizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        Thickness _glassFrameThickness = SystemParameters.WindowResizeBorderThickness;
+
 
         #endregion
 
@@ -214,7 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Left; }
             set
             {
-                if(State == WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Left));
                 }
             }
@@ -224,7 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Top; }
             set
             {
-                if(State == System.Windows.WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Top));
                 }
             }
@@ -234,7 +239,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Width; }
             set
             {
-                if(State == WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Width));
                 }
             }
@@ -244,7 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Height; }
             set
             {
-                if(State == System.Windows.WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height));
                 }
             }
@@ -876,8 +881,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsNormalWindow
         {
             get { return this._isNormalWindow; }
-            set { SetVariableValue(ref this._isNormalWindow, value); }
+            set
+            {
+                if(SetVariableValue(ref this._isNormalWindow, value)) {
+                    if(IsNormalWindow) {
+                        ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+                        GlassFrameThickness = SystemParameters.WindowResizeBorderThickness;
+                    } else {
+                        ResizeBorderThickness = new Thickness(0);
+                        GlassFrameThickness = new Thickness(0);
+                    }
+                }
+            }
         }
+
+        public Thickness ResizeBorderThickness
+        {
+            get { return this._resizeBorderThickness; }
+            set { SetVariableValue(ref this._resizeBorderThickness, value); }
+        }
+        public Thickness GlassFrameThickness
+        {
+            get { return this._glassFrameThickness; }
+            set { SetVariableValue(ref this._glassFrameThickness, value); }
+        }
+
 
         #endregion
 
@@ -2222,7 +2250,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //    FullScreenWindow = CreateFullScreenWindow();
             //}
             //FullScreenWindow.Show();
-
+            IsNormalWindow = !IsNormalWindow;
+            if(IsNormalWindow) {
+                var logicalViewArea = new Rect(Left, Top, Width, Height);
+                var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
+                var podRect = PodStructUtility.Convert(deviceViewArea);
+                var hWnd = HandleUtility.GetWindowHandle(View);
+                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+            } else {
+                var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
+                var hWnd = HandleUtility.GetWindowHandle(View);
+                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+            }
         }
 
         #endregion
