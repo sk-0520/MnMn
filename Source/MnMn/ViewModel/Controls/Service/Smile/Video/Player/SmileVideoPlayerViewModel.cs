@@ -255,6 +255,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public bool Topmost
+        {
+            get { return Setting.Player.Window.Tommost; }
+            set { SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height)); }
+        }
+
         public bool PlayerShowDetailArea
         {
             get { return Setting.Player.ShowDetailArea; }

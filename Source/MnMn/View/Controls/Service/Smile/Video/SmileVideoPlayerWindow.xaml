@@ -155,18 +155,18 @@
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
   </i:Interaction.Behaviors>
-  <!--<Window.Style>
+  <Window.Style>
     <Style TargetType="Window">
       <Style.Triggers>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
-          <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+          <Setter Property="Topmost" Value="{Binding Topmost}" />
         </DataTrigger>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
-          <Setter Property="ResizeMode" Value="NoResize" />
+          <Setter Property="Topmost" Value="True" />
         </DataTrigger>
       </Style.Triggers>
     </Style>
-  </Window.Style>-->
+  </Window.Style>
   <WindowChrome.WindowChrome>
     <WindowChrome
       CaptionHeight="{Binding ActualHeight, ElementName=caption}"
