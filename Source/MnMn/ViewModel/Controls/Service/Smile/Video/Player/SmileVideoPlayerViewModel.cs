@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         string _commentInformation;
 
-        bool _isFullScreen;
+        bool _isNormalWindow;
 
         #endregion
 
@@ -873,10 +873,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._commentInformation, value); }
         }
 
-        public bool IsFullScreen
+        public bool IsNormalWindow
         {
-            get { return this._isFullScreen; }
-            set { SetVariableValue(ref this._isFullScreen, value); }
+            get { return this._isNormalWindow; }
+            set { SetVariableValue(ref this._isNormalWindow, value); }
         }
 
         #endregion
@@ -2218,10 +2218,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ShowFullScreen()
         {
-            if(FullScreenWindow == null) {
-                FullScreenWindow = CreateFullScreenWindow();
-            }
-            FullScreenWindow.Show();
+            //if(FullScreenWindow == null) {
+            //    FullScreenWindow = CreateFullScreenWindow();
+            //}
+            //FullScreenWindow.Show();
+
         }
 
         #endregion
