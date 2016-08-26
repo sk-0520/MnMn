@@ -547,7 +547,7 @@
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
                   </ToggleButton>
-                  <Button Command="{Binding ShowFullScreenCommand}">full screen</Button>
+                  <Button Command="{Binding SwitchFullScreenCommand}">full screen</Button>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
             </app_view_controls:Navigationbar>

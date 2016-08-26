@@ -211,7 +211,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public WindowState State
         {
             get { return this._state; }
-            set { SetVariableValue(ref this._state, value); }
+            set
+            {
+                if(SetVariableValue(ref this._state, value)) {
+                    //if(State == WindowState.Maximized) {
+                    //    GlassFrameThickness = new Thickness(0);
+                    //    ResizeBorderThickness = new Thickness(0);
+                    //} else {
+                    //    GlassFrameThickness = SystemParameters.WindowResizeBorderThickness;
+                    //    ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+                    //}
+                }
+            }
         }
         public double Left
         {
@@ -1195,9 +1206,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand ShowFullScreenCommand
+        public ICommand SwitchFullScreenCommand
         {
-            get { return CreateCommand(o => ShowFullScreen()); }
+            get { return CreateCommand(o => SwitchFullScreen()); }
         }
 
         #endregion
@@ -2237,18 +2248,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
         }
 
-        void ShowFullScreen()
+        void SwitchFullScreen()
         {
             IsNormalWindow = !IsNormalWindow;
-            if(IsNormalWindow) {
+            SetWindowMode(IsNormalWindow);
+        }
+
+        void SetWindowMode(bool isNormalWindow)
+        {
+            var hWnd = HandleUtility.GetWindowHandle(View);
+            if(isNormalWindow) {
+                View.Deactivated -= View_Deactivated;
+
                 var logicalViewArea = new Rect(Left, Top, Width, Height);
                 var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
                 var podRect = PodStructUtility.Convert(deviceViewArea);
-                var hWnd = HandleUtility.GetWindowHandle(View);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
             } else {
+                View.Deactivated += View_Deactivated;
+
                 var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
-                var hWnd = HandleUtility.GetWindowHandle(View);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
             }
         }
@@ -2627,6 +2646,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 EnabledCommentSlider.MouseLeave -= EnabledCommentSlider_MouseLeave;
             }
 
+            View.Deactivated -= View_Deactivated;
+
             IsViewClosed = true;
 
             Information.IsPlaying = false;
@@ -2818,6 +2839,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //ClearSelectedComment();
         }
 
+        private void View_Deactivated(object sender, EventArgs e)
+        {
+            SwitchFullScreen();
+        }
 
         #endregion
     }
