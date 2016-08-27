@@ -68,6 +68,7 @@
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
+      <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
 
       <CollectionViewSource x:Key="PlayListItems" Source="{Binding PlayListItems}" />
 
@@ -176,11 +177,21 @@
   </Window.Style>
   <WindowChrome.WindowChrome>
     <WindowChrome
-      CaptionHeight="{Binding ActualHeight, ElementName=caption}"
       ResizeBorderThickness="{Binding ResizeBorderThickness}"
       GlassFrameThickness="0"
       CornerRadius="0"
     >
+      <WindowChrome.CaptionHeight>
+        <MultiBinding Converter="{StaticResource CaptionHeightConverter}">
+          <MultiBinding.ConverterParameter>
+            <sys:Double>0</sys:Double>
+          </MultiBinding.ConverterParameter>
+          <MultiBinding.Bindings>
+            <Binding Path="IsNormalWindow" />
+            <Binding Path="ActualHeight" ElementName="caption" />
+          </MultiBinding.Bindings>
+        </MultiBinding>
+      </WindowChrome.CaptionHeight>
     </WindowChrome>
   </WindowChrome.WindowChrome>
 

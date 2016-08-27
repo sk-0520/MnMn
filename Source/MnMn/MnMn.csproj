@@ -306,6 +306,7 @@
     <Compile Include="View\Converter\HumanLikeByteConverter.cs" />
     <Compile Include="View\Converter\OutlinedTextBlockFontSizeToStrokeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\BookmarkLevelConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\CaptionHeightConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListCanRemoveToVisibilityConverter.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\FileNameUtility.cs" />
