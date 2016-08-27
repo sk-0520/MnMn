@@ -29,6 +29,8 @@
   Width="{Binding Width, Mode=TwoWay}"
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
+  
+  BorderThickness="{Binding WindowBorderThickness}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -164,6 +166,10 @@
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
           <Setter Property="Topmost" Value="True" />
         </DataTrigger>
+
+        <Trigger Property="WindowState" Value="Maximized">
+          <Setter Property="BorderThickness" Value="10" />
+        </Trigger>
       </Style.Triggers>
     </Style>
   </Window.Style>
@@ -176,6 +182,7 @@
     >
     </WindowChrome>
   </WindowChrome.WindowChrome>
+
   <DockPanel>
     <Grid
       x:Name="caption"

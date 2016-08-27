@@ -100,6 +100,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         static readonly TimeSpan correctionTime = TimeSpan.FromSeconds(1);
 
+        static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        static readonly Thickness enabledGlassFrameThickness = SystemParameters.WindowResizeBorderThickness;
+        static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
+
         #endregion
 
         #region variable
@@ -165,9 +169,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _commentInformation;
 
         bool _isNormalWindow = true;
-        Thickness _resizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-        Thickness _glassFrameThickness = SystemParameters.WindowResizeBorderThickness;
-
+        Thickness _resizeBorderThickness = enabledResizeBorderThickness;
+        Thickness _glassFrameThickness = enabledGlassFrameThickness;
+        Thickness _windowBorderThickness = new Thickness(0);
 
         #endregion
 
@@ -214,13 +218,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._state, value)) {
-                    //if(State == WindowState.Maximized) {
-                    //    GlassFrameThickness = new Thickness(0);
-                    //    ResizeBorderThickness = new Thickness(0);
-                    //} else {
-                    //    GlassFrameThickness = SystemParameters.WindowResizeBorderThickness;
-                    //    ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-                    //}
+                    if(State == WindowState.Maximized) {
+                        WindowBorderThickness = maximumWindowBorderThickness;
+                    } else {
+                        WindowBorderThickness = new Thickness(0);
+                    }
                 }
             }
         }
@@ -901,8 +903,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 if(SetVariableValue(ref this._isNormalWindow, value)) {
                     if(IsNormalWindow) {
-                        ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-                        GlassFrameThickness = SystemParameters.WindowResizeBorderThickness;
+                        ResizeBorderThickness = enabledResizeBorderThickness;
+                        GlassFrameThickness = enabledGlassFrameThickness;
                     } else {
                         ResizeBorderThickness = new Thickness(0);
                         GlassFrameThickness = new Thickness(0);
@@ -920,6 +922,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._glassFrameThickness; }
             set { SetVariableValue(ref this._glassFrameThickness, value); }
+        }
+        public Thickness WindowBorderThickness
+        {
+            get { return this._windowBorderThickness; }
+            set { SetVariableValue(ref this._windowBorderThickness, value); }
         }
 
 
