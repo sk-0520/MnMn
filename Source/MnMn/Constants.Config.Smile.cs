@@ -198,6 +198,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static double SettingServiceSmileVideoWindowHeight => appConfig.Get("setting-service-smile-smilevideo-player-window-height", double.Parse);
         /// <summary>
+        /// ウィンドウ最前面状態。
+        /// </summary>
+        public static bool SettingServiceSmileVideoWindowTopmost => appConfig.Get("setting-service-smile-smilevideo-player-window-topmost", bool.Parse);
+        /// <summary>
         /// 予期せぬ停止から次の動画へ移るまでの待機時間。
         /// </summary>
         public static TimeSpan SettingServiceSmileVideoPlayerBufferingStopSkipTime => appConfig.Get("setting-service-smile-smilevideo-player-buffering-stop-skip-time", TimeSpan.Parse);
