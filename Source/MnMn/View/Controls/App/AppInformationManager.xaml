@@ -206,6 +206,10 @@
       </DockPanel>
     </TabItem>
 
+    <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}">
+      <WebBrowser x:Name="issueBrowser" />
+    </TabItem>
+
     <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
       <WebBrowser x:Name="helpBrowser" />
     </TabItem>

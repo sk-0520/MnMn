@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             AppAboutManager = new AppAboutManagerViewModel(Mediation);
             AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
+            AppIssueManager = new AppIssueManagerViewModel(Mediation);
             AppHelpManager = new AppHelpManagerViewModel(Mediation);
         }
 
@@ -54,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public AppAboutManagerViewModel AppAboutManager { get; }
         public AppLoggingManagerViewModel AppLoggingManager { get; }
+        public AppIssueManagerViewModel AppIssueManager { get; }
         public AppHelpManagerViewModel AppHelpManager { get; }
 
         public IEnumerable<ManagerViewModelBase> ManagerChildren
@@ -63,6 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return new ManagerViewModelBase[] {
                     AppAboutManager,
                     AppLoggingManager,
+                    AppIssueManager,
                     AppHelpManager,
                 };
             }
