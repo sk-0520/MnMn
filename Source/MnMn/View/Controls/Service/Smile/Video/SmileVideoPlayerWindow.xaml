@@ -29,7 +29,7 @@
   Width="{Binding Width, Mode=TwoWay}"
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
-  
+
   BorderThickness="{Binding WindowBorderThickness}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -166,18 +166,19 @@
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
           <Setter Property="Topmost" Value="True" />
         </DataTrigger>
-
-        <Trigger Property="WindowState" Value="Maximized">
-          <Setter Property="BorderThickness" Value="10" />
-        </Trigger>
       </Style.Triggers>
+      <Setter Property="BorderBrush">
+        <Setter.Value>
+          <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+        </Setter.Value>
+      </Setter>
     </Style>
   </Window.Style>
   <WindowChrome.WindowChrome>
     <WindowChrome
       CaptionHeight="{Binding ActualHeight, ElementName=caption}"
       ResizeBorderThickness="{Binding ResizeBorderThickness}"
-      GlassFrameThickness="{Binding GlassFrameThickness}"
+      GlassFrameThickness="0"
       CornerRadius="0"
     >
     </WindowChrome>

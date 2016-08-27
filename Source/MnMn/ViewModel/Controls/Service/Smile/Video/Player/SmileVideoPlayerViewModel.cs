@@ -101,8 +101,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         static readonly TimeSpan correctionTime = TimeSpan.FromSeconds(1);
 
         static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-        static readonly Thickness enabledGlassFrameThickness = SystemParameters.WindowResizeBorderThickness;
         static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        static readonly Thickness normalWindowBorderThickness = new Thickness(1);
 
         #endregion
 
@@ -170,8 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _isNormalWindow = true;
         Thickness _resizeBorderThickness = enabledResizeBorderThickness;
-        Thickness _glassFrameThickness = enabledGlassFrameThickness;
-        Thickness _windowBorderThickness = new Thickness(0);
+        Thickness _windowBorderThickness = normalWindowBorderThickness;
 
         #endregion
 
@@ -221,7 +220,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(State == WindowState.Maximized) {
                         WindowBorderThickness = maximumWindowBorderThickness;
                     } else {
-                        WindowBorderThickness = new Thickness(0);
+                        //if(!IsNormalWindow) {
+                        //    SetWindowMode(false);
+                        //}
+                        WindowBorderThickness = normalWindowBorderThickness;
                     }
                 }
             }
@@ -904,10 +906,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 if(SetVariableValue(ref this._isNormalWindow, value)) {
                     if(IsNormalWindow) {
                         ResizeBorderThickness = enabledResizeBorderThickness;
-                        GlassFrameThickness = enabledGlassFrameThickness;
+                        //重複
+                        if(State == WindowState.Maximized) {
+                            WindowBorderThickness = maximumWindowBorderThickness;
+                        } else {
+                            WindowBorderThickness = normalWindowBorderThickness;
+                        }
                     } else {
                         ResizeBorderThickness = new Thickness(0);
-                        GlassFrameThickness = new Thickness(0);
+                        WindowBorderThickness = new Thickness(0);
                     }
                 }
             }
@@ -917,11 +924,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get { return this._resizeBorderThickness; }
             set { SetVariableValue(ref this._resizeBorderThickness, value); }
-        }
-        public Thickness GlassFrameThickness
-        {
-            get { return this._glassFrameThickness; }
-            set { SetVariableValue(ref this._glassFrameThickness, value); }
         }
         public Thickness WindowBorderThickness
         {
@@ -2257,12 +2259,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void SwitchFullScreen()
         {
-            IsNormalWindow = !IsNormalWindow;
-            SetWindowMode(IsNormalWindow);
+            SetWindowMode(!IsNormalWindow);
         }
 
         void SetWindowMode(bool isNormalWindow)
         {
+            IsNormalWindow = isNormalWindow;
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(isNormalWindow) {
                 View.Deactivated -= View_Deactivated;
