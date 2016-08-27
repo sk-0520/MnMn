@@ -1,5 +1,6 @@
 ﻿<!--
-  ICaptionCommand の実装が必要。
+  ViewModel に ICaptionCommand の実装が必要。
+  あと ViewModel を DataContext とするビューは Window を前提。
 -->
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
