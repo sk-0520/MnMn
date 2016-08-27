@@ -509,6 +509,7 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Resource Include="Resources\Service\Smile\Video\Player\FullScreen.png" />
     <Page Include="View\Controls\AcceptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
