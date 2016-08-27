@@ -203,11 +203,22 @@
     <Grid
       x:Name="caption"
       DockPanel.Dock="Top"
-      Margin="5"
+      Margin="4"
       Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
-      Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
       TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
     >
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
@@ -215,7 +226,7 @@
       </Grid.ColumnDefinitions>
       <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
       <Grid Grid.Column="1" >
-        <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+        <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
       </Grid>
       <StackPanel Grid.Column="2" Orientation="Horizontal">
         <Button Style="{StaticResource WindowChromeMinimum}"  />
@@ -605,6 +616,9 @@
               </app_view_controls:Navigationbar.Style>
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
+                  <ToggleButton ToolTip="フルスクリーン" IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
+                    <Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />
+                  </ToggleButton>
                   <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
                   </ToggleButton>
@@ -620,9 +634,6 @@
                   </ToggleButton>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
-                  </ToggleButton>
-                  <ToggleButton IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
