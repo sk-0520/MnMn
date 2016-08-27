@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -47,7 +48,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             base.ShowView();
 
             if(IssueBrowser.Source == null) {
-                WebBrowserUtility.SetSilent(IssueBrowser, false);
+                // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
+                dynamic activeX = IssueBrowser.GetType().InvokeMember(
+                    "ActiveXInstance",
+                    BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                    null,
+                    IssueBrowser,
+                    new object[] { }
+                );
+                activeX.Silent = true;
+
                 IssueBrowser.Navigate(Constants.AppUriIssueResolved);
             }
         }
