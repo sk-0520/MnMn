@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             base.ShowView();
 
             if(IssueBrowser.Source == null) {
+                WebBrowserUtility.SetSilent(IssueBrowser, false);
                 IssueBrowser.Navigate(Constants.AppUriIssueResolved);
             }
         }
