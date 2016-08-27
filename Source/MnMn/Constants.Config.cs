@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriUpdate => ReplaceAppConfig(appConfig.Get("app-uri-update"));
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
+        public static string AppUriIssueResolved => ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved"));
+
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
