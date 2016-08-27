@@ -585,6 +585,15 @@
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
             >
+              <app_view_controls:Navigationbar.Style>
+                <Style TargetType="app_view_controls:Navigationbar">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
+                      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </app_view_controls:Navigationbar.Style>
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
