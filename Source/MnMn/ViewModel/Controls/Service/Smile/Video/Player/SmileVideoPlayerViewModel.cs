@@ -1204,6 +1204,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => SwitchFullScreen()); }
         }
 
+        public ICommand FullScreenCancelCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(IsNormalWindow) {
+                        return;
+                    }
+                    // フルスクリーン時は元に戻してあげる
+                    SetWindowMode(true);
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -2246,11 +2260,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SetWindowMode(!IsNormalWindow);
         }
 
-        void SetWindowMode(bool isNormalWindow)
+        void SetWindowMode(bool toNormalWindow)
         {
-            IsNormalWindow = isNormalWindow;
+            IsNormalWindow = toNormalWindow;
             var hWnd = HandleUtility.GetWindowHandle(View);
-            if(isNormalWindow) {
+            if(toNormalWindow) {
                 View.Deactivated -= View_Deactivated;
 
                 var logicalViewArea = new Rect(Left, Top, Width, Height);

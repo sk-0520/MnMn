@@ -36,6 +36,9 @@
   mc:Ignorable="d"
   d:DesignHeight="540" d:DesignWidth="780"
 >
+  <i:Interaction.Behaviors>
+    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+  </i:Interaction.Behaviors>
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -156,9 +159,9 @@
 
     </ResourceDictionary>
   </Window.Resources>
-  <i:Interaction.Behaviors>
-    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
-  </i:Interaction.Behaviors>
+  <Window.InputBindings>
+    <KeyBinding Command="{Binding FullScreenCancelCommand}" Key="Esc" />
+  </Window.InputBindings>
   <Window.Style>
     <Style TargetType="Window">
       <Style.Triggers>
@@ -503,7 +506,13 @@
           </Grid.RowDefinitions>
 
           <Grid x:Name="viewMedia" Grid.Row="0">
-            <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing" />
+            <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick" >
+                  <i:InvokeCommandAction Command="{Binding FullScreenCancelCommand}" />
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </vlc_wpf:VlcPlayer>
 
             <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
