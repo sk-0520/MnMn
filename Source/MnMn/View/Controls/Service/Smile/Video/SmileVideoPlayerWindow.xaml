@@ -45,6 +45,7 @@
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -210,11 +211,13 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
       <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
-      <TextBlock Grid.Column="1" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Grid Grid.Column="1" >
+        <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+      </Grid>
       <StackPanel Grid.Column="2" Orientation="Horizontal">
-        <Button Content="min" WindowChrome.IsHitTestVisibleInChrome="True" />
-        <Button Content="max" WindowChrome.IsHitTestVisibleInChrome="True" />
-        <Button Content="close" WindowChrome.IsHitTestVisibleInChrome="True" />
+        <Button Style="{StaticResource WindowChromeMinimum}"  />
+        <Button Style="{StaticResource WindowChromeMaximum}" />
+        <Button Style="{StaticResource WindowChromeClose}" />
       </StackPanel>
     </Grid>
 
@@ -446,9 +449,9 @@
                         </Style>
                       </StackPanel.Resources>
                       <TextBlock Text="{Binding Information.FirstRetrieve, Mode=OneWay, StringFormat=投稿日時: {0:yyyy/MM/dd HH:mm:ss}}" />
-                      <TextBlock Text="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=再生数: {0:#,#.}}" />
-                      <TextBlock Text="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=コメント数: {0:#,#.}}" />
-                      <TextBlock Text="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=マイリスト数: {0:#,#.}}" />
+                      <TextBlock Text="{Binding Information.ViewCounter, Mode=OneWay, StringFormat=再生数: {0:N0}}" />
+                      <TextBlock Text="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=コメント数: {0:N0}}" />
+                      <TextBlock Text="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=マイリスト数: {0:N0}}" />
                     </StackPanel>
                   </Setter.Value>
                 </Setter>

@@ -89,7 +89,7 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView, ICaptionCommand
     {
         #region define
 
@@ -211,23 +211,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
         }
 
-        public WindowState State
-        {
-            get { return this._state; }
-            set
-            {
-                if(SetVariableValue(ref this._state, value)) {
-                    if(State == WindowState.Maximized) {
-                        WindowBorderThickness = maximumWindowBorderThickness;
-                    } else {
-                        //if(!IsNormalWindow) {
-                        //    SetWindowMode(false);
-                        //}
-                        WindowBorderThickness = normalWindowBorderThickness;
-                    }
-                }
-            }
-        }
         public double Left
         {
             get { return Setting.Player.Window.Left; }
@@ -2574,6 +2557,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.Close();
             }
         }
+
+        #endregion
+
+        #region ICaptionCommand
+
+        public WindowState State
+        {
+            get { return this._state; }
+            set
+            {
+                if(SetVariableValue(ref this._state, value)) {
+                    if(State == WindowState.Maximized) {
+                        WindowBorderThickness = maximumWindowBorderThickness;
+                    } else {
+                        //if(!IsNormalWindow) {
+                        //    SetWindowMode(false);
+                        //}
+                        WindowBorderThickness = normalWindowBorderThickness;
+                    }
+                }
+            }
+        }
+
+        public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
+        public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
+        public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
+        public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
 
         #endregion
 
