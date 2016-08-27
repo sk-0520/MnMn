@@ -909,6 +909,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         //重複
                         if(State == WindowState.Maximized) {
                             WindowBorderThickness = maximumWindowBorderThickness;
+                            State = WindowState.Normal;
                         } else {
                             WindowBorderThickness = normalWindowBorderThickness;
                         }
