@@ -1,0 +1,35 @@
+﻿<!--
+  ViewModel に ICaptionCommand の実装が必要。
+  あと ViewModel を DataContext とするビューは Window を前提。
+-->
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <Style x:Key="WindowChromeButton" TargetType="Button">
+    <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+    <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" />
+    <Setter Property="FontFamily" Value="Marlett" />
+    <Setter Property="IsTabStop" Value="False" />
+  </Style>
+  <Style x:Key="WindowChromeMinimum" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
+    <Setter Property="Content" Value="0" />
+    <Setter Property="Command" Value="{Binding CaptionMinimumCommand}" />
+  </Style>
+  <Style x:Key="WindowChromeMaximum" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding State}" Value="Normal">
+        <Setter Property="Content" Value="1" />
+        <Setter Property="Command" Value="{Binding CaptionMaximumCommand}" />
+      </DataTrigger>
+      <DataTrigger Binding="{Binding State}" Value="Maximized">
+        <Setter Property="Content" Value="2" />
+        <Setter Property="Command" Value="{Binding CaptionRestoreCommand}" />
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+  <Style x:Key="WindowChromeClose" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
+    <Setter Property="Content" Value="r" />
+    <Setter Property="Command" Value="{Binding CaptionCloseCommand}" />
+  </Style>
+</ResourceDictionary>

@@ -83,10 +83,13 @@ using System.Runtime.ExceptionServices;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using System.Windows.Controls.Primitives;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.PInvoke.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView
+    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView, ICaptionCommand
     {
         #region define
 
@@ -96,6 +99,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         const float initPrevStateChangedPosition = -1;
 
         static readonly TimeSpan correctionTime = TimeSpan.FromSeconds(1);
+
+        static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        static readonly Thickness normalWindowBorderThickness = new Thickness(1);
 
         #endregion
 
@@ -161,6 +168,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         string _commentInformation;
 
+        bool _isNormalWindow = true;
+        Thickness _resizeBorderThickness = enabledResizeBorderThickness;
+        Thickness _windowBorderThickness = normalWindowBorderThickness;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -184,6 +195,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Border DetailComment { get; set; }
         FlowDocumentScrollViewer DocumentDescription { get; set; }
         Slider EnabledCommentSlider { get; set; }
+        Visual ViewMedia { get; set; }
 
         public string Title
         {
@@ -199,17 +211,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
         }
 
-        public WindowState State
-        {
-            get { return this._state; }
-            set { SetVariableValue(ref this._state, value); }
-        }
         public double Left
         {
             get { return Setting.Player.Window.Left; }
             set
             {
-                if(State == WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Left));
                 }
             }
@@ -219,7 +226,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Top; }
             set
             {
-                if(State == System.Windows.WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Top));
                 }
             }
@@ -229,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Width; }
             set
             {
-                if(State == WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Width));
                 }
             }
@@ -239,10 +246,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.Window.Height; }
             set
             {
-                if(State == System.Windows.WindowState.Normal) {
+                if(IsNormalWindow && State == WindowState.Normal) {
                     SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height));
                 }
             }
+        }
+
+        public bool Topmost
+        {
+            get { return Setting.Player.Window.Tommost; }
+            set { SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height)); }
         }
 
         public bool PlayerShowDetailArea
@@ -868,6 +881,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._commentInformation, value); }
         }
 
+        public bool IsNormalWindow
+        {
+            get { return this._isNormalWindow; }
+            set
+            {
+                if(SetVariableValue(ref this._isNormalWindow, value)) {
+                    if(IsNormalWindow) {
+                        ResizeBorderThickness = enabledResizeBorderThickness;
+                        //重複
+                        if(State == WindowState.Maximized) {
+                            WindowBorderThickness = maximumWindowBorderThickness;
+                            State = WindowState.Normal;
+                        } else {
+                            WindowBorderThickness = normalWindowBorderThickness;
+                        }
+                    } else {
+                        ResizeBorderThickness = new Thickness(0);
+                        WindowBorderThickness = new Thickness(0);
+                    }
+                }
+            }
+        }
+
+        public Thickness ResizeBorderThickness
+        {
+            get { return this._resizeBorderThickness; }
+            set { SetVariableValue(ref this._resizeBorderThickness, value); }
+        }
+        public Thickness WindowBorderThickness
+        {
+            get { return this._windowBorderThickness; }
+            set { SetVariableValue(ref this._windowBorderThickness, value); }
+        }
+
+
         #endregion
 
         #region command
@@ -1151,8 +1199,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        #endregion
+        public ICommand SwitchFullScreenCommand
+        {
+            get { return CreateCommand(o => SwitchFullScreen()); }
+        }
 
+        public ICommand FullScreenCancelCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(IsNormalWindow) {
+                        return;
+                    }
+                    // フルスクリーン時は元に戻してあげる
+                    SetWindowMode(true);
+                });
+            }
+        }
+
+        #endregion
 
         #region function
 
@@ -2179,6 +2245,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void SetNavigationbarBaseEvent(Navigationbar navigationbar)
+        {
+            navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+        }
+
+        void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
+        {
+            navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+        }
+
+        void SwitchFullScreen()
+        {
+            SetWindowMode(!IsNormalWindow);
+        }
+
+        void SetWindowMode(bool toNormalWindow)
+        {
+            IsNormalWindow = toNormalWindow;
+            var hWnd = HandleUtility.GetWindowHandle(View);
+            if(toNormalWindow) {
+                View.Deactivated -= View_Deactivated;
+
+                var logicalViewArea = new Rect(Left, Top, Width, Height);
+                var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
+                var podRect = PodStructUtility.Convert(deviceViewArea);
+                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+            } else {
+                View.Deactivated += View_Deactivated;
+
+                var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
+                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -2432,13 +2532,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var playerView = (SmileVideoPlayerWindow)view;
 
             View = playerView;
-            Player = playerView.player;//.MediaPlayer;
-            NormalCommentArea = playerView.normalCommentArea;
-            OriginalPosterCommentArea = playerView.originalPosterCommentArea;
-            Navigationbar = playerView.seekbar;
-            CommentView = playerView.commentView;
-            DetailComment = playerView.detailComment;
-            DocumentDescription = playerView.documentDescription;
+            Player = View.player;//.MediaPlayer;
+            NormalCommentArea = View.normalCommentArea;
+            OriginalPosterCommentArea = View.originalPosterCommentArea;
+            Navigationbar = View.seekbar;
+            CommentView = View.commentView;
+            DetailComment = View.detailComment;
+            DocumentDescription = View.documentDescription;
+            ViewMedia = View.viewMedia;
 
             // 初期設定
             Player.Volume = Volume;
@@ -2456,7 +2557,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
-            Navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+            SetNavigationbarBaseEvent(Navigationbar);
             DetailComment.LostFocus += DetailComment_LostFocus;
         }
 
@@ -2470,6 +2571,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.Close();
             }
         }
+
+        #endregion
+
+        #region ICaptionCommand
+
+        public WindowState State
+        {
+            get { return this._state; }
+            set
+            {
+                if(SetVariableValue(ref this._state, value)) {
+                    if(State == WindowState.Maximized) {
+                        WindowBorderThickness = maximumWindowBorderThickness;
+                    } else {
+                        //if(!IsNormalWindow) {
+                        //    SetWindowMode(false);
+                        //}
+                        WindowBorderThickness = normalWindowBorderThickness;
+                    }
+                }
+            }
+        }
+
+        public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
+        public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
+        public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
+        public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
 
         #endregion
 
@@ -2545,12 +2673,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
             Player.StateChanged -= Player_StateChanged;
-            Navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+            UnsetNavigationbarBaseEvent(Navigationbar);
 
             if(EnabledCommentSlider != null) {
                 EnabledCommentSlider.MouseEnter -= EnabledCommentSlider_MouseEnter;
                 EnabledCommentSlider.MouseLeave -= EnabledCommentSlider_MouseLeave;
             }
+
+            View.Deactivated -= View_Deactivated;
 
             IsViewClosed = true;
 
@@ -2586,15 +2716,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 return;
             }
-            Navigationbar.seekbar.CaptureMouse();
+
+            var seekbar = (Slider)sender;
+            seekbar.CaptureMouse();
 
             ChangingVideoPosition = true;
-            SeekbarMouseDownPosition = e.GetPosition(Navigationbar.seekbar);
-            Navigationbar.seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
-            Navigationbar.seekbar.MouseMove += Seekbar_MouseMove;
+            SeekbarMouseDownPosition = e.GetPosition(seekbar);
+            seekbar.PreviewMouseUp += VideoSilder_PreviewMouseUp;
+            seekbar.MouseMove += Seekbar_MouseMove;
 
-            var tempPosition = SeekbarMouseDownPosition.X / Navigationbar.seekbar.ActualWidth;
-            Navigationbar.seekbar.Value = tempPosition;
+            var tempPosition = SeekbarMouseDownPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
         }
 
         private void Seekbar_MouseMove(object sender, MouseEventArgs e)
@@ -2602,34 +2734,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             MovingSeekbarThumb = true;
 
             Debug.Assert(ChangingVideoPosition);
-            var movingPosition = e.GetPosition(Navigationbar.seekbar);
 
-            var tempPosition = movingPosition.X / Navigationbar.seekbar.ActualWidth;
-            Navigationbar.seekbar.Value = tempPosition;
+            var seekbar = (Slider)sender;
+            var movingPosition = e.GetPosition(seekbar);
+
+            var tempPosition = movingPosition.X / seekbar.ActualWidth;
+            seekbar.Value = tempPosition;
         }
 
         private void VideoSilder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Debug.Assert(CanVideoPlay);
 
-            Navigationbar.seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
-            Navigationbar.seekbar.MouseMove -= Seekbar_MouseMove;
+            var seekbar = (Slider)sender;
 
-            float nextPosition;
+            seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
+            seekbar.MouseMove -= Seekbar_MouseMove;
 
-            if(!MovingSeekbarThumb) {
-                var pos = e.GetPosition(Navigationbar.seekbar);
-                nextPosition = (float)(pos.X / Navigationbar.seekbar.ActualWidth);
-            } else {
-                nextPosition = (float)Navigationbar.VideoPosition;
-            }
+
+            //#82: これなんの処理だ、わからん
+            //float nextPosition;
+            //if(!MovingSeekbarThumb) {
+            //    var pos = e.GetPosition(seekbar);
+            //    nextPosition = (float)(pos.X / seekbar.ActualWidth);
+            //} else {
+            //    nextPosition = (float)((Navigationbar)seekbar.Parent).VideoPosition;
+            //}
+            var pos = e.GetPosition(seekbar);
+            var nextPosition = (float)(pos.X / seekbar.ActualWidth);
             // TODO: 読み込んでない部分は移動不可にする
             MoveVideoPostion(nextPosition);
 
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
 
-            Navigationbar.seekbar.ReleaseMouseCapture();
+            seekbar.ReleaseMouseCapture();
         }
 
         private void Player_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -2734,6 +2873,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //ClearSelectedComment();
         }
 
+        private void View_Deactivated(object sender, EventArgs e)
+        {
+            SwitchFullScreen();
+        }
 
         #endregion
     }
