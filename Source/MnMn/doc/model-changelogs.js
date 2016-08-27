@@ -120,7 +120,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#87: 開発中内容を一覧表示する'
 					},
 					{
 						'revision': '',
