@@ -127,7 +127,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'プレイヤーウィンドウ破棄時にメモリ解放処理を追加',
+						'comments': [
+							'GC: LOHを含む',
+							'Meta.VLC: Dispose呼び出し。これに関しては過去の挙動があれなもんなんで try ... catch(Exception) した'
+						]
 					},
 					{
 						'revision': '',
