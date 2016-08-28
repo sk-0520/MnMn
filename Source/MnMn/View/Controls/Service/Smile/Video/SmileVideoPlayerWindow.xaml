@@ -609,7 +609,6 @@
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
               SliderPopupIsOpen="{Binding ShowCommentChart}"
-              SliderPopupPlacement="Bottom"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
@@ -644,15 +643,15 @@
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
               <app_view_controls:Navigationbar.SliderPopupContent>
-                <Border BorderBrush="Red" BorderThickness="1">
+                <Border>
                   <Viewbox Stretch="Fill" >
-                    <oxy:Plot Width="100" Height="100" >
+                    <oxy:Plot Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
                       <oxy:Plot.Axes>
-                        <oxy:LinearAxis IsAxisVisible="False" Position="Left" />
+                        <oxy:LinearAxis IsAxisVisible="False" Position="Left" MajorGridlineStyle="None" />
                         <oxy:LinearAxis IsAxisVisible="False" Position="Bottom"/>
                       </oxy:Plot.Axes>
                       <oxy:Plot.Series>
-                        <oxy:LineSeries ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
+                        <oxy:LineSeries Color="#660000ee" ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
                       </oxy:Plot.Series>
                     </oxy:Plot>
                   </Viewbox>
