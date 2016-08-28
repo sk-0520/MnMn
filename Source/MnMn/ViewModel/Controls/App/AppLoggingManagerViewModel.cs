@@ -27,6 +27,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -87,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         string GetLog()
         {
-            return string.Join(Environment.NewLine, LogList.Select(l => l.ToString()));
+            return string.Join(Environment.NewLine, LogList.Select(l => LogUtility.MakeLogDetailText(l)));
         }
 
         void CopyLog()

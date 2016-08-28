@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 logger.LoggerConfig.PutsStream = true;
             }
 
-            logger.Information(Constants.ApplicationName);
+            logger.Information(Constants.ApplicationName, new AppInformationCollection().ToString());
 
             if(!Mutex.WaitOne(0, false)) {
                 Shutdown();
