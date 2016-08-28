@@ -356,7 +356,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 投降者コメントが構築されたか。
         /// </summary>
-        bool IsMakedDescription { get; set; } = false;
+        bool IsMadeDescription { get; set; } = false;
         /// <summary>
         ///
         /// </summary>
@@ -1722,7 +1722,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void MakeDescription()
         {
-            IsMakedDescription = true;
+            IsMadeDescription = true;
 
             var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
 #if false
@@ -2329,7 +2329,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
-            if(!IsMakedDescription) {
+            if(!IsMadeDescription) {
                 MakeDescription();
             }
             if(!IsCheckedTagPedia) {
@@ -2370,7 +2370,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(!IsProcessCancel) {
                 if(Information.PageHtmlLoadState == LoadState.Loaded) {
-                    if(!IsMakedDescription) {
+                    if(!IsMadeDescription) {
                         MakeDescription();
                     }
                     if(!IsCheckedTagPedia) {
@@ -2481,7 +2481,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             _prevStateChangedPosition = initPrevStateChangedPosition;
             IsBufferingStop = false;
             UserOperationStop = false;
-            IsMakedDescription = false;
+            IsMadeDescription = false;
             IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
