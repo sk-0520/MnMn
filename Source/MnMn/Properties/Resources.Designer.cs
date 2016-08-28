@@ -516,12 +516,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   現在バージョンは最新版です に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UpdateCheckState_CurrentIsNew {
+            get {
+                return ResourceManager.GetString("String_App_Define_UpdateCheckState_CurrentIsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新バージョン🐜 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UpdateCheckState_CurrentIsOld {
+            get {
+                return ResourceManager.GetString("String_App_Define_UpdateCheckState_CurrentIsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UpdateCheckState_Error {
+            get {
+                return ResourceManager.GetString("String_App_Define_UpdateCheckState_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未チェック に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UpdateCheckState_UnChecked {
+            get {
+                return ResourceManager.GetString("String_App_Define_UpdateCheckState_UnChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新バージョン(${NEW-VERSION})がリリースされています。
         ///現バージョン(${NOW-VERSION})から更新を行いますか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Update_Format {
             get {
                 return ResourceManager.GetString("String_App_Update_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデートチェック状態 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Update_Title {
+            get {
+                return ResourceManager.GetString("String_App_Update_Title", resourceCulture);
             }
         }
         

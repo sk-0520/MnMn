@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -27,19 +28,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// 未チェック。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UpdateCheckState_UnChecked))]
         UnChecked,
         /// <summary>
         /// 現行は最新版。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UpdateCheckState_CurrentIsNew))]
         CurrentIsNew,
         /// <summary>
         /// 現行は古い。
         /// <para>つまりはまぁ最新版があった。</para>
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UpdateCheckState_CurrentIsOld))]
         CurrentIsOld,
         /// <summary>
         /// エラー。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UpdateCheckState_Error))]
         Error,
     }
 }

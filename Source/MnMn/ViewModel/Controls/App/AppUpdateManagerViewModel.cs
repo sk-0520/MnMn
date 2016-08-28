@@ -85,6 +85,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 if(SetVariableValue(ref this._updateCheckState, value)) {
                     HasUpdate = UpdateCheckState == UpdateCheckState.CurrentIsOld;
+                    if(!HasUpdate) {
+                        SetUpdateStateViewAsync().ConfigureAwait(false);
+                    }
                 }
             }
         }
@@ -194,6 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 UpdateCheckState = UpdateCheckState.CurrentIsOld;
             } catch(Exception ex) {
                 Mediation.Logger.Warning(ex);
+                UpdateCheckState = UpdateCheckState.Error;
             }
         }
 
@@ -207,11 +211,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         UpdateBrowser.NavigateToString(htmlSource);
                     }));
                 });
-            } else {
-                return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                    UpdateBrowser.NavigateToString("<html><head></head><body></body></html>");
-                })).Task;
             }
+
+            return Task.CompletedTask;
+            //} else {
+            //    return SetUpdateStateViewAsync();
+            //}
+        }
+
+        Task SetUpdateStateViewAsync()
+        {
+            if(UpdateBrowser == null) {
+                return Task.CompletedTask;
+            }
+
+            return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
+                var rawHtmlSource = File.ReadAllText(Constants.UpdateStateHtmlFilePath);
+                var map = new Dictionary<string, string>() {
+                        {"UPDATE-TITLE", Properties.Resources.String_App_Update_Title },
+                        {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },
+                    };
+                var htmlSource = AppUtility.ReplaceString(rawHtmlSource, map);
+                UpdateBrowser.NavigateToString(htmlSource);
+            })).Task;
         }
 
         Task UpdateCheckAsync()
@@ -341,7 +363,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         protected override void ShowView()
         {
             if(UpdateBrowser.Source == null) {
-                LoadChangelogAsync().ConfigureAwait(false);
+                LoadChangelogAsync().ContinueWith(_ => {
+                    SetUpdateStateViewAsync().ConfigureAwait(false);
+                }).ConfigureAwait(false);
             }
         }
 
