@@ -188,31 +188,72 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region property
 
+        /// <summary>
+        /// ウィンドウ要素。
+        /// </summary>
         SmileVideoPlayerWindow View { get; set; }
+        /// <summary>
+        /// プレイヤー要素。
+        /// </summary>
         VlcPlayer Player { get; set; }
+        /// <summary>
+        /// ナビゲーションバー要素。
+        /// </summary>
         Navigationbar Navigationbar { get; set; }
+        /// <summary>
+        /// 視聴者コメント表示レイヤー要素。
+        /// </summary>
         Canvas NormalCommentArea { get; set; }
+        /// <summary>
+        /// 投稿者コメント表示レイヤー要素。
+        /// </summary>
         Canvas OriginalPosterCommentArea { get; set; }
+        /// <summary>
+        /// コメント一覧要素。
+        /// </summary>
         ListBox CommentView { get; set; }
+        /// <summary>
+        /// コメント詳細部分要素。
+        /// <para>使ってないんよねぇ。</para>
+        /// </summary>
         Border DetailComment { get; set; }
+        /// <summary>
+        /// 動画紹介文書表示要素。
+        /// </summary>
         FlowDocumentScrollViewer DocumentDescription { get; set; }
+        /// <summary>
+        /// コメント有効位置抑制スライダー要素。
+        /// </summary>
         Slider EnabledCommentSlider { get; set; }
-        Visual ViewMedia { get; set; }
 
+        /// <summary>
+        /// タイトル。
+        /// </summary>
         public string Title
         {
             get { return $"[{VideoId}]: {Information.Title}"; }
             set { /*dmy*/ }
         }
 
+        /// <summary>
+        /// コマンドで使用する色一覧。
+        /// </summary>
         public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoMsgUtility.normalCommentColors);
 
+        /// <summary>
+        /// プレイリストはランダム再生か。
+        /// </summary>
         public bool IsRandomPlay
         {
             get { return PlayListItems.IsRandom; }
             set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
         }
 
+        #region window
+
+        /// <summary>
+        /// ウィンドウ X 座標。
+        /// </summary>
         public double Left
         {
             get { return Setting.Player.Window.Left; }
@@ -223,6 +264,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// ウィンドウ Y 座標。
+        /// </summary>
         public double Top
         {
             get { return Setting.Player.Window.Top; }
@@ -233,6 +277,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// ウィンドウ横幅。
+        /// </summary>
         public double Width
         {
             get { return Setting.Player.Window.Width; }
@@ -243,6 +290,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// ウィンドウ高さ。
+        /// </summary>
         public double Height
         {
             get { return Setting.Player.Window.Height; }
@@ -253,37 +303,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// 最前面表示状態。
+        /// </summary>
         public bool Topmost
         {
             get { return Setting.Player.Window.Tommost; }
             set { SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height)); }
         }
 
+        #endregion
+
+        /// <summary>
+        /// 詳細部分を表示状態。
+        /// </summary>
         public bool PlayerShowDetailArea
         {
             get { return Setting.Player.ShowDetailArea; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowDetailArea)); }
         }
-
+        /// <summary>
+        /// コメント一覧表示状態。
+        /// </summary>
         public bool PlayerShowCommentArea
         {
             get { return Setting.Player.ShowCommentList; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowCommentList)); }
         }
 
+        /// <summary>
+        /// コメント表示レイヤー(投稿者・視聴者供に)表示状態。
+        /// </summary>
         public bool PlayerVisibleComment
         {
             get { return Setting.Player.VisibleComment; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.VisibleComment)); }
         }
 
+        /// <summary>
+        /// コメント一覧自動スクロール状態。
+        /// </summary>
         public bool IsAutoScroll
         {
             get { return Setting.Player.AutoScrollCommentList; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.AutoScrollCommentList)); }
         }
 
+        /// <summary>
+        /// 共有NG有効状態。
+        /// </summary>
         public bool IsEnabledSharedNoGood
         {
             get { return Setting.Comment.IsEnabledSharedNoGood; }
@@ -294,6 +362,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// 共有NG閾値。
+        /// </summary>
         public int SharedNoGoodScore
         {
             get { return Setting.Comment.SharedNoGoodScore; }
@@ -304,7 +375,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// コメント一覧フィルタリング状態。
+        /// <para>表示コメントではない。</para>
+        /// </summary>
         public SmileVideoFilteringCommentType FilteringCommentType
         {
             get { return this._filteringCommentType; }
@@ -319,7 +393,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// コメント一覧でフィルタリングするユーザーID。
+        /// <para>視聴者選択時のみに有効。</para>
+        /// </summary>
         public string FilteringUserId
         {
             get { return this._filteringUserId; }
@@ -332,27 +409,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// コメント一覧フィルタリングで用いるユーザー一覧。
+        /// </summary>
         public CollectionModel<SmileVideoFilteringUserViewModel> FilteringUserList { get; } = new CollectionModel<SmileVideoFilteringUserViewModel>();
-
+        /// <summary>
+        /// コメント一覧の件数。
+        ///
+        /// TODO: べつにいらんのちゃうかなぁ。
+        /// </summary>
         public int CommentListCount
         {
             get { return this._commentListCount; }
             private set { SetVariableValue(ref this._commentListCount, value); }
         }
+        /// <summary>
+        /// コメント一覧の件数。
+        ///
+        /// TODO: <see cref="CommentListCount"/>と同じ。
+        /// </summary>
         public int OriginalPosterCommentListCount
         {
             get { return this._originalPosterCommentListCount; }
             private set { SetVariableValue(ref this._originalPosterCommentListCount, value); }
         }
-
+        /// <summary>
+        /// 匿名投稿が可能か。
+        /// </summary>
         public bool IsEnabledPostAnonymous { get { return Information?.IsOfficialVideo ?? false; } }
 
         /// <summary>
         /// 初回再生か。
         /// </summary>
         bool IsFirstPlay { get; set; } = true;
-
+        /// <summary>
+        /// ユーザー操作で停止されたか。
+        /// </summary>
         bool UserOperationStop { get; set; } = false;
 
         /// <summary>
@@ -365,18 +457,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool IsCheckedTagPedia { get; set; } = false;
 
         public ICollectionView CommentItems { get; private set; }
+        /// <summary>
+        /// コメント全データ。
+        /// </summary>
         CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        /// <summary>
+        /// 視聴者コメントデータ。
+        /// <para><see cref="CommentList"/>から構築。</para>
+        /// </summary>
         CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        /// <summary>
+        /// 投稿者コメントデータ。
+        /// <para><see cref="CommentList"/>から構築。</para>
+        /// </summary>
         CollectionModel<SmileVideoCommentViewModel> OriginalPosterCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
 
+        /// <summary>
+        /// 現在表示中コメント。
+        /// </summary>
         public CollectionModel<SmileVideoCommentDataModel> ShowingCommentList { get; } = new CollectionModel<SmileVideoCommentDataModel>();
 
+        /// <summary>
+        /// タグ。
+        /// </summary>
         public CollectionModel<SmileVideoTagViewModel> TagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
+        /// <summary>
+        /// 関連動画。
+        /// </summary>
         public CollectionModel<SmileVideoInformationViewModel> RelationVideoItems { get; } = new CollectionModel<SmileVideoInformationViewModel>();
-
+        /// <summary>
+        /// 市場。
+        /// <para>未実装</para>
+        /// </summary>
         public CollectionModel<object> MarketItems { get; } = new CollectionModel<object>();
 
+        /// <summary>
+        /// 動画に対するフィルタ設定。
+        /// </summary>
         public SmileVideoFilteringViweModel LocalCommentFilering { get; set; }
+        /// <summary>
+        /// 全体に対するフィルタ設定。
+        /// </summary>
         public SmileVideoFilteringViweModel GlobalCommentFilering { get; }
 
         /// <summary>
@@ -395,10 +516,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// ビューが閉じられたか。
         /// </summary>
         bool IsViewClosed { get; set; }
+        /// <summary>
+        /// 自動再生可能サイズ。
+        /// </summary>
         long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
-
+        /// <summary>
+        /// プレイリスト。
+        /// </summary>
         public PlayListModel<SmileVideoInformationViewModel> PlayListItems { get; } = new PlayListModel<SmileVideoInformationViewModel>();
-
+        /// <summary>
+        /// 関連動画読込状態。
+        /// </summary>
         public LoadState RelationVideoLoadState
         {
             get { return this._relationVideoLoadState; }
@@ -445,7 +573,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// ミュート状態。
+        /// </summary>
         public bool IsMute
         {
             get { return Setting.Player.IsMute; }
@@ -480,6 +610,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         TimeSpan PrevPlayedTime { get; set; }
 
+        /// <summary>
+        /// 選択中コメント。
+        /// </summary>
         public SmileVideoCommentViewModel SelectedComment
         {
             get { return this._selectedComment; }
@@ -498,35 +631,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// 動画を実際に表示するサイズ。
+        /// <para><see cref="RealVideoWidth"/>, <see cref="RealVideoHeight"/>に対してスケーリングしたサイズ。</para>
+        /// </summary>
         Size VisualVideoSize { get; set; }
 
+        /// <summary>
+        /// 動画の物理サイズ(横幅)。
+        /// </summary>
         public double RealVideoWidth
         {
             get { return this._realVideoWidth; }
             set { SetVariableValue(ref this._realVideoWidth, value); }
         }
+        /// <summary>
+        /// 動画の物理サイズ(高さ)。
+        /// </summary>
         public double RealVideoHeight
         {
             get { return this._realVideoHeight; }
             set { SetVariableValue(ref this._realVideoHeight, value); }
         }
 
+        /// <summary>
+        /// なんかの横幅。
+        /// </summary>
         public double BaseWidth
         {
             get { return this._baseWidth; }
             set { SetVariableValue(ref this._baseWidth, value); }
         }
+        /// <summary>
+        /// なんかの高さ。
+        /// </summary>
         public double BaseHeight
         {
             get { return this._baseHeight; }
             set { SetVariableValue(ref this._baseHeight, value); }
         }
-
+        /// <summary>
+        /// コメント表示領域の幅。
+        /// </summary>
         public double CommentAreaWidth
         {
             get { return this._commentAreaWidth; }
             set { SetVariableValue(ref this._commentAreaWidth, value); }
         }
+        /// <summary>
+        /// コメント表示領域の高さ。
+        /// </summary>
         public double CommentAreaHeight
         {
             get { return this._commentAreaHeight; }
@@ -565,8 +719,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._isBufferingStop; }
             set { SetVariableValue(ref this._isBufferingStop, value); }
         }
+        /// <summary>
+        /// バッファ開始時点での動画位置。
+        /// </summary>
         float BufferingVideoPosition { get; set; }
-
+        /// <summary>
+        /// リプレイ状態。
+        /// </summary>
         public bool ReplayVideo
         {
             get { return Setting.Player.ReplayVideo; }
@@ -577,24 +736,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// チャンネル動画か。
         /// </summary>
         public bool IsChannelVideo { get { return Information.IsChannelVideo; } }
+        /// <summary>
+        /// 投稿者ユーザー名。
+        /// </summary>
+        public string UserName { get { return Information.UserName; } }
+        /// <summary>
+        /// 投稿者ユーザーID。
+        /// </summary>
+        public string UserId { get { return Information.UserId; } }
+        /// <summary>
+        /// 投稿者チャンネル名。
+        /// </summary>
+        public string ChannelName { get { return Information.ChannelName; } }
+        /// <summary>
+        /// 投稿者チャンネルID。
+        /// </summary>
+        public string ChannelId { get { return Information.ChannelId; } }
 
-        public string UserName
-        {
-            get { return Information.UserName; }
-        }
-        public string UserId
-        {
-            get { return Information.UserId; }
-        }
-        public string ChannelName
-        {
-            get { return Information.ChannelName; }
-        }
-        public string ChannelId
-        {
-            get { return Information.ChannelId; }
-        }
-
+        /// <summary>
+        /// 自身のアカウントに紐付くマイリストの一覧。
+        /// </summary>
         public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
         {
             get
@@ -609,6 +770,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// ブックマーク一覧。
+        /// </summary>
         public IReadOnlyList<SmileVideoBookmarkNodeViewModel> BookmarkItems
         {
             get
@@ -622,29 +786,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメントが選択されているか。
+        /// </summary>
         public bool IsSelectedComment
         {
             get { return this._isSelectedComment; }
             set { SetVariableValue(ref this._isSelectedComment, value); }
         }
-
+        /// <summary>
+        /// コメント表示制限数の有効状態。
+        /// </summary>
         public bool IsEnabledDisplayCommentLimit
         {
             get { return Setting.Player.IsEnabledDisplayCommentLimit; }
             set { SetPropertyValue(Setting.Player, value); }
         }
+        /// <summary>
+        /// コメント表示制限数。
+        /// </summary>
         public int DisplayCommentLimitCount
         {
             get { return Setting.Player.DisplayCommentLimitCount; }
             set { SetPropertyValue(Setting.Player, value); }
         }
-
+        /// <summary>
+        /// 動画情報欄選択状態。
+        /// </summary>
         public bool IsSelectedInformation
         {
             get { return this._isSelectedInformation; }
             set { SetVariableValue(ref this._isSelectedInformation, value); }
         }
-
+        /// <summary>
+        /// メディア(動画ファイルとか)がプレイヤーに設定されているか。
+        /// </summary>
         public bool IsSettedMedia
         {
             get { return this._isSettedMedia; }
@@ -665,6 +841,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメントのテキスト描画方法。
+        /// </summary>
         public TextShowKind PlayerTextShowKind
         {
             get { return Setting.Player.TextShowKind; }
@@ -704,6 +883,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isEnabledOriginalPosterCommentArea, value); }
         }
 
+        /// <summary>
+        /// コメントのフォント名。
+        /// </summary>
         public FontFamily CommentFontFamily
         {
             get { return FontUtility.MakeFontFamily(Setting.Comment.FontFamily, SystemFonts.MessageFontFamily); }
@@ -715,6 +897,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメントのフォントは太字か。
+        /// </summary>
         public bool CommentFontBold
         {
             get { return Setting.Comment.FontBold; }
@@ -726,6 +911,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメントのフォントは斜体か。
+        /// </summary>
         public bool CommentFontItalic
         {
             get { return Setting.Comment.FontItalic; }
@@ -737,6 +925,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメントのフォントサイズ。
+        /// </summary>
         public double CommentFontSize
         {
             get { return Setting.Comment.FontSize; }
@@ -748,6 +939,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメントの透明度。
+        /// </summary>
         public double CommentFontAlpha
         {
             get { return Setting.Comment.FontAlpha; }
@@ -759,6 +953,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメント表示時間。
+        /// </summary>
         public TimeSpan CommentShowTime
         {
             get { return Setting.Comment.ShowTime; }
@@ -771,6 +968,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        /// <summary>
+        /// コメント中の円マーク置き換え状態。
+        /// </summary>
         public bool CommentConvertPairYenSlash
         {
             get { return Setting.Comment.ConvertPairYenSlash; }
@@ -782,6 +982,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        #region post
+
+        /// <summary>
+        /// 投稿コメント縦位置。
+        /// </summary>
         public SmileVideoCommentVertical PostCommandVertical
         {
             get { return this._postCommandVertical; }
@@ -792,6 +997,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// 投稿コメントサイズ。
+        /// </summary>
         public SmileVideoCommentSize PostCommandSize
         {
             get { return this._postCommandSize; }
@@ -802,6 +1010,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// 投稿コメント色。
+        /// </summary>
         public Color PostCommandColor
         {
             get { return this._postCommandColor; }
@@ -812,6 +1023,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// 投稿コメントは匿名か。
+        /// </summary>
         public bool IsPostAnonymous
         {
             get { return Setting.Comment.PostAnonymous; }
@@ -822,6 +1036,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// 投稿コメントの前につけるコマンド。
+        /// </summary>
         public string PostBeforeCommand
         {
             get { return this._postBeforeCommand; }
@@ -832,6 +1049,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+        /// <summary>
+        /// 投稿コメントの後につけるコマンド。
+        /// </summary>
         public string PostAfterCommand
         {
             get { return this._postAfterCommand; }
@@ -842,21 +1062,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// 投稿コメントのコマンド一覧。
+        /// </summary>
         public CollectionModel<string> PostCommandItems { get; } = new CollectionModel<string>();
-
+        /// <summary>
+        /// 投稿コメント本文。
+        /// </summary>
         public string PostCommentBody
         {
             get { return this._postCommentBody; }
             set { SetVariableValue(ref this._postCommentBody, value); }
         }
 
+        #endregion
+
+        /// <summary>
+        /// コメント一覧に投稿時間を表示するか。
+        /// </summary>
         public bool PlayerShowPostTimestamp
         {
             get { return Setting.Player.ShowPostTimestamp; }
             set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowPostTimestamp)); }
         }
-
+        /// <summary>
+        /// 全体フィルタ使用状態。
+        /// </summary>
         public bool IsEnabledGlobalCommentFilering
         {
             get { return Information?.IsEnabledGlobalCommentFilering ?? Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled; }
@@ -870,19 +1101,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// 一秒間にダウンロードできたデータサイズ。
+        /// </summary>
         public long SecondsDownloadingSize
         {
             get { return this._secondsDownloadingSize; }
             set { SetVariableValue(ref this._secondsDownloadingSize, value); }
         }
-
+        /// <summary>
+        /// コメント投稿に関する情報。
+        /// </summary>
         public string CommentInformation
         {
             get { return this._commentInformation; }
             set { SetVariableValue(ref this._commentInformation, value); }
         }
-
+        /// <summary>
+        /// 通常ウィンドウ状態か。
+        /// <para>これだけ変えても変な挙動になるだけ。<see cref="SetWindowMode(bool)"/で切り替える前提。></para>
+        /// </summary>
         public bool IsNormalWindow
         {
             get { return this._isNormalWindow; }
@@ -905,24 +1143,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-
+        /// <summary>
+        /// リサイズ幅。
+        /// </summary>
         public Thickness ResizeBorderThickness
         {
             get { return this._resizeBorderThickness; }
             set { SetVariableValue(ref this._resizeBorderThickness, value); }
         }
+        /// <summary>
+        /// ウィンドウ枠幅。
+        /// </summary>
         public Thickness WindowBorderThickness
         {
             get { return this._windowBorderThickness; }
             set { SetVariableValue(ref this._windowBorderThickness, value); }
         }
-
+        /// <summary>
+        /// コメントグラフ表示状態。
+        /// </summary>
         public bool ShowCommentChart
         {
             get { return this._showCommentChart; }
             set { SetVariableValue(ref this._showCommentChart, value); }
         }
-
+        /// <summary>
+        /// コメントグラフデータ。
+        /// </summary>
         public CollectionModel<DataPoint> CommentChartList { get; } = new CollectionModel<DataPoint>();
 
         #endregion
@@ -2234,7 +2481,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentView = View.commentView;
             DetailComment = View.detailComment;
             DocumentDescription = View.documentDescription;
-            ViewMedia = View.viewMedia;
 
             // 初期設定
             Player.Volume = Volume;
