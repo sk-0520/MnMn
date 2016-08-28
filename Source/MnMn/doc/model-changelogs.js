@@ -84,9 +84,9 @@
 	},
 	*/
 	{
-		'date': '2016/08/28',
-		'version': '0.13.0',
-		'isRc': false,
+		'date': 'YYYY/MM/DD',
+		'version': '0.13.1',
+		'isRc': true,
 		'contents': [
 			{
 				'type': 'note',
@@ -105,6 +105,64 @@
 					}
 				]
 			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
+		'date': '2016/08/28',
+		'version': '0.13.0',
+		'isRc': false,
+		'contents': [
 			{
 				'type': 'features',
 				'logs': [
