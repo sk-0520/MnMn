@@ -211,6 +211,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
             View.Closed += View_Closed;
+
+            Mediation.Order(new AppCleanMemoryOrderModel(true));
         }
 
         public override void UninitializeView(MainWindow view)
