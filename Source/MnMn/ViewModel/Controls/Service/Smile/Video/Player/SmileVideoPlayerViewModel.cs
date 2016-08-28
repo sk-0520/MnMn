@@ -1730,34 +1730,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         Task LoadNextPlayListItemAsync()
         {
-            // TODO: ランダム再生の考慮
-            Debug.Assert(PlayListItems.CanItemChange);
-
-            //var index = PlayListItems.FindIndex(i => i == VideoInformation);
-            //if(index == PlayListItems.Count - 1) {
-            //    index = 0;
-            //} else if(index >= 0) {
-            //    index += 1;
-            //} else {
-            //    index = 0;
-            //}
             var targetViewModel = PlayListItems.ChangeNextItem();
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
         Task LoadPrevPlayListItemAsync()
         {
-            // TODO: ランダム再生の考慮と*Next*時にちゃんと戻れるようにする
-            Debug.Assert(PlayListItems.CanItemChange);
-
-            //var index = PlayListItems.FindIndex(i => i == VideoInformation);
-            //if(index == 0) {
-            //    index = PlayListItems.Count - 1;
-            //} else if(0 < index) {
-            //    index -= 1;
-            //} else {
-            //    index = 0;
-            //}
             var targetViewModel = PlayListItems.ChangePrevItem();
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
