@@ -14,6 +14,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
+        const string optionLogDirectoryPath = "log";
+        public static bool HasOptionLogDirectoryPath => CommandLine.HasValue(optionLogDirectoryPath);
+        public static string OptionLogDirectoryPath => CommandLine.GetValue(optionLogDirectoryPath);
+
         const string optionSettingRootDirectoryPath = "setting-root";
         public static bool HasOptionSettingRootDirectoryPath => CommandLine.HasValue(optionSettingRootDirectoryPath);
         public static string OptionValueSettingRootDirectoryPath => CommandLine.GetValue(optionSettingRootDirectoryPath);

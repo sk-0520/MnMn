@@ -150,7 +150,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'ログ出力をコマンドラインから使用'
 					},
 					{
 						'revision': '',
