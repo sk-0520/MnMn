@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -68,6 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
+            CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
+
             var rankingResponse = Mediation.Request(new RequestModel(RequestKind.RankingDefine, ServiceType.SmileVideo));
             var rankingModel = (SmileVideoRankingModel)rankingResponse.Result;
             RankingManager = new SmileVideoRankingManagerViewModel(Mediation, rankingModel);
@@ -103,7 +106,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
-        //MainWindow View { get; set; }
+
+        DispatcherTimer CheckItLaterCheckTimer = new DispatcherTimer() {
+            Interval = Constants.ServiceSmileVideoCheckItLaterCheckTime,
+        };
 
         public SessionViewModelBase Session { get; }
 
@@ -227,7 +233,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(_ => {
                 // 裏で走らせとく
-                CheckUpdateAsync();
+                CheckUpdateAsync().ContinueWith(t => {
+                    CheckItLaterCheckTimer.Start();
+                });
             });
         }
 
@@ -240,6 +248,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override void UninitializeView(MainWindow view)
         {
+            CheckItLaterCheckTimer.Stop();
+            CheckItLaterCheckTimer.Tick -= CheckItLaterCheckTimer_Tick;
+
             foreach(var item in ManagerItems) {
                 item.UninitializeView(view);
             }
@@ -259,6 +270,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #endregion
+
+        async void CheckItLaterCheckTimer_Tick(object sender, EventArgs e)
+        {
+            CheckItLaterCheckTimer.Stop();
+            try {
+                await CheckUpdateAsync();
+            } finally {
+                CheckItLaterCheckTimer.Start();
+            }
+        }
 
     }
 }
