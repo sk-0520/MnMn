@@ -172,6 +172,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         Thickness _resizeBorderThickness = enabledResizeBorderThickness;
         Thickness _windowBorderThickness = normalWindowBorderThickness;
 
+        bool _showCommentChart;
+
         #endregion
 
         public SmileVideoPlayerViewModel(Mediation mediation)
@@ -915,6 +917,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._windowBorderThickness, value); }
         }
 
+        public bool ShowCommentChart
+        {
+            get { return this._showCommentChart; }
+            set { SetVariableValue(ref this._showCommentChart, value); }
+        }
 
         #endregion
 
@@ -2248,11 +2255,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
+            navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
+            navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
         }
 
         void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
+            navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
+            navigationbar.seekbar.MouseLeave -= Seekbar_MouseLeave;
         }
 
         void SwitchFullScreen()
@@ -2545,10 +2556,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.Volume = Volume;
             SetLocalFiltering();
 
+            // あれこれイベント
             var content = Navigationbar.ExstendsContent as Panel;
             EnabledCommentSlider = UIUtility.FindLogicalChildren<Slider>(content).First();
 
-            // あれこれイベント
             EnabledCommentSlider.MouseEnter += EnabledCommentSlider_MouseEnter;
             EnabledCommentSlider.MouseLeave += EnabledCommentSlider_MouseLeave;
 
@@ -2876,6 +2887,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void View_Deactivated(object sender, EventArgs e)
         {
             SwitchFullScreen();
+        }
+
+        private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ShowCommentChart = true;
+        }
+
+        private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ShowCommentChart = false;
         }
 
         #endregion

@@ -604,6 +604,7 @@
               StopCommand="{Binding StopCommand}"
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
+              SliderPopupIsOpen="{Binding ShowCommentChart}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
@@ -637,6 +638,14 @@
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
+              <app_view_controls:Navigationbar.SliderPopupContent>
+                <Border BorderBrush="Red" BorderThickness="1">
+                  <StackPanel>
+                    <TextBlock Text="いいかんじにえらー" />
+                    <TextBlock Text="いいかんじにえらー" />
+                  </StackPanel>
+                </Border>
+              </app_view_controls:Navigationbar.SliderPopupContent>
             </app_view_controls:Navigationbar>
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
