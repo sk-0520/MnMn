@@ -95,8 +95,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
     {
         #region define
 
-        static readonly Size BaseSize_4x3 = new Size(640, 480);
-        static readonly Size BaseSize_16x9 = new Size(512, 384);
+        //static readonly Size BaseSize_4x3 = new Size(640, 480);
+        //static readonly Size BaseSize_16x9 = new Size(512, 384);
 
         const float initPrevStateChangedPosition = -1;
 
@@ -135,12 +135,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _showEnabledCommentPreviewArea = false;
         bool _isEnabledOriginalPosterCommentArea = false;
 
-        [Obsolete]
-        GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
-        [Obsolete]
-        GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
-        [Obsolete]
-        GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
+        //[Obsolete]
+        //GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
+        //[Obsolete]
+        //GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
+        //[Obsolete]
+        //GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
 
         PlayerState _playerState;
         bool _isBufferingStop;
@@ -533,24 +533,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._commentAreaHeight, value); }
         }
 
-        [Obsolete]
-        public GridLength VisualPlayerWidth
-        {
-            get { return this._visualPlayerWidth; }
-            set { SetVariableValue(ref this._visualPlayerWidth, value); }
-        }
-        [Obsolete]
-        public GridLength VisualPlayerHeight
-        {
-            get { return this._visualPlayerHeight; }
-            set { SetVariableValue(ref this._visualPlayerHeight, value); }
-        }
-        [Obsolete]
-        public GridLength CommentListLength
-        {
-            get { return this._commentListLength; }
-            set { SetVariableValue(ref this._commentListLength, value); }
-        }
+        //[Obsolete]
+        //public GridLength VisualPlayerWidth
+        //{
+        //    get { return this._visualPlayerWidth; }
+        //    set { SetVariableValue(ref this._visualPlayerWidth, value); }
+        //}
+        //[Obsolete]
+        //public GridLength VisualPlayerHeight
+        //{
+        //    get { return this._visualPlayerHeight; }
+        //    set { SetVariableValue(ref this._visualPlayerHeight, value); }
+        //}
+        //[Obsolete]
+        //public GridLength CommentListLength
+        //{
+        //    get { return this._commentListLength; }
+        //    set { SetVariableValue(ref this._commentListLength, value); }
+        //}
         public PlayerState PlayerState
         {
             get { return this._playerState; }
@@ -1150,19 +1150,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        [Obsolete]
-        public ICommand ChangePlayerSizeCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var percent = int.Parse((string)o);
-                        ChangePlayerSizeFromPercent(percent);
-                    }
-                );
-            }
-        }
+        //[Obsolete]
+        //public ICommand ChangePlayerSizeCommand
+        //{
+        //    get
+        //    {
+        //        return CreateCommand(
+        //            o => {
+        //                var percent = int.Parse((string)o);
+        //                ChangePlayerSizeFromPercent(percent);
+        //            }
+        //        );
+        //    }
+        //}
 
         public ICommand ChangedFilteringCommand
         {
@@ -1238,21 +1238,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        [Obsolete]
-        void ChangePlayerSizeFromPercent(int percent)
-        {
-            if(VisualVideoSize.IsEmpty) {
-                return;
-            }
-            var baseLength = 100.0;
-            var scale = percent / baseLength;
-            var videoWidth = VisualVideoSize.Width * scale;
-            VisualPlayerWidth = new GridLength(videoWidth);
-            CommentListLength = new GridLength(Width - videoWidth);
-            //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
+        //[Obsolete]
+        //void ChangePlayerSizeFromPercent(int percent)
+        //{
+        //    if(VisualVideoSize.IsEmpty) {
+        //        return;
+        //    }
+        //    var baseLength = 100.0;
+        //    var scale = percent / baseLength;
+        //    var videoWidth = VisualVideoSize.Width * scale;
+        //    VisualPlayerWidth = new GridLength(videoWidth);
+        //    CommentListLength = new GridLength(Width - videoWidth);
+        //    //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
 
-            //View.SizeToContent = SizeToContent.Width;
-        }
+        //    //View.SizeToContent = SizeToContent.Width;
+        //}
 
         void SetVideoDataInformation()
         {
