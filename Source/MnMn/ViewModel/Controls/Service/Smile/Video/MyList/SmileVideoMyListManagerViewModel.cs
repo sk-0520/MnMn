@@ -116,7 +116,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 if(SetVariableValue(ref this._isSelectedAccount, value)) {
                     if(IsSelectedAccount) {
-                        ChangedSelectedFinder(SelectedAccountFinder);
+                        if(Session.IsLoggedIn) {
+                            ChangedSelectedFinder(SelectedAccountFinder);
+                        }
                     }
                 }
             }
@@ -734,6 +736,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override Task InitializeAsync()
         {
+            Application.Current.Dispatcher.Invoke(() => {
+                AccountMyList.Clear();
+            });
+
             if(Session.IsLoggedIn) {
                 return LoadAccountMyListAsync(false, null);
             }
