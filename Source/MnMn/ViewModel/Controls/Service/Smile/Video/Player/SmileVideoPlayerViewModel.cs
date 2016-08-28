@@ -617,7 +617,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 if(this._bookmarkItems == null) {
                     var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.NodeItems;
-                    this._bookmarkItems = MakeBookmarkItems(treeItems);
+                    this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(treeItems);
                 }
 
                 return this._bookmarkItems;
@@ -1232,38 +1232,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #endregion
 
         #region function
-
-        List<SmileVideoBookmarkNodeViewModel> MakeBookmarkItemsCore(IList<SmileVideoBookmarkNodeViewModel> nodes, int level)
-        {
-            var result = new List<SmileVideoBookmarkNodeViewModel>();
-
-            foreach(var node in nodes) {
-                node.Level = level;
-                result.Add(node);
-
-                if(node.NodeItems.Any()) {
-                    var items = MakeBookmarkItemsCore(node.NodeItems, level + 1);
-                    result.AddRange(items);
-                }
-            }
-
-            return result;
-        }
-
-        List<SmileVideoBookmarkNodeViewModel> MakeBookmarkItems(IList<SmileVideoBookmarkNodeViewModel> nodes)
-        {
-            var result = new List<SmileVideoBookmarkNodeViewModel>();
-
-            foreach(var node in nodes) {
-                node.Level = 0;
-                result.Add(node);
-
-                var list = MakeBookmarkItemsCore(node.NodeItems, 1);
-                result.AddRange(list);
-            }
-
-            return result;
-        }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
