@@ -695,9 +695,7 @@
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">
-              <Label>ファインダーフィルタ使用する</Label>
-            </CheckBox>
+            <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
             <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="FilteringChanged">
