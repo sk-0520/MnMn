@@ -158,7 +158,7 @@
         <Grid>
 
         </Grid>
-        <ListView x:Name="listLog" ItemsSource="{Binding LogItems}">
+        <ListView x:Name="listLog" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" ItemsSource="{Binding LogItems}">
           <ListView.Resources>
             <Style TargetType="ListViewItem">
               <Style.Triggers>
@@ -190,7 +190,7 @@
               <GridViewColumn Header="タイムスタンプ">
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
-                    <TextBlock Text="{Binding Timestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
+                    <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}, Mode=OneWay}" />
                   </DataTemplate>
                 </GridViewColumn.CellTemplate>
               </GridViewColumn>
@@ -232,14 +232,17 @@
               <GridViewColumn Header="呼び出し">
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
-                    <TextBlock Text="{Binding CallerMember}" />
+                    <StackPanel Orientation="Horizontal">
+                      <TextBox BorderThickness="0" Background="Transparent" IsReadOnly="True" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" Text="{Binding CallerMember, Mode=OneTime}" />
+                      <TextBlock Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
+                    </StackPanel>
                   </DataTemplate>
                 </GridViewColumn.CellTemplate>
               </GridViewColumn>
               <GridViewColumn Header="メッセージ">
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Message}" />
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Message, Mode=OneTime}" />
                   </DataTemplate>
                 </GridViewColumn.CellTemplate>
               </GridViewColumn>
