@@ -7,6 +7,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:cttn_pe_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=Package"
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
 
@@ -149,16 +150,15 @@
     <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}">
       <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-          <Button Command="{Binding SaveLogCommand}">全件保存</Button>
-          <Button Command="{Binding CopyLogCommand}">全件コピー</Button>
+          <Button Command="{Binding SaveAllLogCommand}">全件保存</Button>
+          <Button Command="{Binding CopyAllLogCommand}">全件コピー</Button>
           <Separator />
-          <Button Command="{Binding ClearLogCommand}">クリア</Button>
+          <Button Command="{Binding CopySelectedLogCommand}">選択ログをコピー</Button>
+          <Separator />
+          <Button Command="{Binding ClearAllLogCommand}">クリア</Button>
         </ToolBar>
 
-        <Grid>
-
-        </Grid>
-        <ListView x:Name="listLog" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" ItemsSource="{Binding LogItems}">
+        <ListView x:Name="listLog" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
           <ListView.Resources>
             <Style TargetType="ListViewItem">
               <Style.Triggers>

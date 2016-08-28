@@ -40,6 +40,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppLoggingManagerViewModel: ManagerViewModelBase, ILogAppender
     {
+        #region variable
+
+        LogItemModel _selectedLogItem;
+
+        #endregion
+
         public AppLoggingManagerViewModel(Mediation mediation, AppLogger appLogge)
             : base(mediation)
         {
@@ -58,45 +64,72 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         ListBox LogListBox { get; set; }
 
+        public LogItemModel SelectedLogItem
+        {
+            get { return this._selectedLogItem; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedLogItem, value)) {
+                    CommandManager.InvalidateRequerySuggested();
+                }
+            }
+        }
+
         #endregion
 
         #region command
 
-        public ICommand ClearLogCommand
+        public ICommand ClearAllLogCommand
         {
-            get { return CreateCommand(o => ClearLog()); }
+            get { return CreateCommand(o => ClearAllLog()); }
         }
 
-        public ICommand CopyLogCommand
+        public ICommand CopyAllLogCommand
         {
-            get { return CreateCommand(o => CopyLog()); }
+            get { return CreateCommand(o => CopyAllLog()); }
         }
 
-        public ICommand SaveLogCommand
+        public ICommand CopySelectedLogCommand
         {
-            get { return CreateCommand(o => SaveLogFromDialog()); }
+            get
+            {
+                return CreateCommand(
+                    o => CopySingleLog(SelectedLogItem),
+                    o => SelectedLogItem != null
+                );
+            }
+        }
+
+        public ICommand SaveAllLogCommand
+        {
+            get { return CreateCommand(o => SaveAllLogFromDialog()); }
         }
 
         #endregion
 
         #region function
 
-        void ClearLog()
+        void ClearAllLog()
         {
             LogList.Clear();
         }
 
-        string GetLog()
+        string GetTextAllLog()
         {
             return string.Join(Environment.NewLine, LogList.Select(l => LogUtility.MakeLogDetailText(l)));
         }
 
-        void CopyLog()
+        void CopySingleLog(LogItemModel logItem)
         {
-            Clipboard.SetText(GetLog());
+            Clipboard.SetText(LogUtility.MakeLogDetailText(logItem));
         }
 
-        void SaveLogFromDialog()
+        void CopyAllLog()
+        {
+            Clipboard.SetText(GetTextAllLog());
+        }
+
+        void SaveAllLogFromDialog()
         {
             var filter = new DialogFilterList();
             filter.Add(new DialogFilterItem(Properties.Resources.String_Log_Filter_Log, "*.log"));
@@ -117,7 +150,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         void WriteLog(Stream stream)
         {
             using(var writer = new StreamWriter(stream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
-                writer.Write(GetLog());
+                writer.Write(GetTextAllLog());
             }
         }
 
