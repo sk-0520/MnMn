@@ -2131,51 +2131,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             base.OnLoadVideoEnd();
         }
 
-        IEnumerable<DataPoint> CreateCommentChartList(IReadOnlyList<SmileVideoCommentViewModel> commentList)
-        {
-            var srcItems = commentList
-                .GroupBy(c => (int)c.ElapsedTime.TotalSeconds)
-                .Select(cg => new DataPoint((int)cg.First().ElapsedTime.TotalSeconds, cg.Count()))
-            ;
-
-            var emptySecondItems = Enumerable.Range(0, (int)TotalTime.TotalSeconds)
-                .Select(s => new DataPoint(s, 0))
-            ;
-
-            var mixItems = srcItems
-                .Concat(emptySecondItems)
-                .GroupBy(cd => cd.X)
-                .OrderBy(cg => cg.Key)
-                .Select(cg => cg.OrderByDescending(c => c.Y).First())
-            ;
-
-            return mixItems;
-        }
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
-            var comments = rawMsgPacket.Chat
-                .Where(c => !string.IsNullOrEmpty(c.Content))
-                .GroupBy(c => new { c.No, c.Fork })
-                .Select(c => new SmileVideoCommentViewModel(c.First(), Setting))
-                .OrderBy(c => c.ElapsedTime)
-            ;
+            var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, Setting);
             CommentList.InitializeRange(comments);
             CommentListCount = CommentList.Count;
             ApprovalComment();
 
-            var chartItems = CreateCommentChartList(CommentList);
+            var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
             CommentChartList.InitializeRange(chartItems);
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
-            var userSequence = NormalCommentList
-                .Where(c => !string.IsNullOrWhiteSpace(c.UserId))
-                .GroupBy(c => c.UserId)
-                .Select(g => new { Count = g.Count(), Comment = g.First() })
-                .Select(cc => new SmileVideoFilteringUserViewModel(cc.Comment.UserId, cc.Comment.UserKind, cc.Count))
-                .OrderByDescending(fu => fu.Count)
-                .ThenBy(fu => fu.UserId)
-            ;
+            var userSequence = SmileVideoCommentUtility.CreateFilteringUserItems(NormalCommentList);
             FilteringUserList.InitializeRange(userSequence);
             OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
             OriginalPosterCommentListCount = OriginalPosterCommentList.Count;

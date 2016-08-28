@@ -30,10 +30,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
+using OxyPlot;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -324,6 +326,72 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// グラフ用データの生成。
+        /// </summary>
+        /// <param name="commentList"></param>
+        /// <param name="totalTime"></param>
+        /// <returns></returns>
+        public static IEnumerable<DataPoint> CreateCommentChartItems(IReadOnlyList<SmileVideoCommentViewModel> commentList, TimeSpan totalTime)
+        {
+            var srcItems = commentList
+                .GroupBy(c => (int)c.ElapsedTime.TotalSeconds)
+                .Select(cg => new DataPoint((int)cg.First().ElapsedTime.TotalSeconds, cg.Count()))
+            ;
+
+            var emptySecondItems = Enumerable.Range(0, (int)totalTime.TotalSeconds)
+                .Select(s => new DataPoint(s, 0))
+            ;
+
+            var mixItems = srcItems
+                .Concat(emptySecondItems)
+                .GroupBy(cd => cd.X)
+                .OrderBy(cg => cg.Key)
+                .Select(cg => cg.OrderByDescending(c => c.Y).First())
+            ;
+
+            return mixItems;
+        }
+
+        /// <summary>
+        /// 生メッセージからコメントViewModelを生成する。
+        /// </summary>
+        /// <param name="rawMsgPacket"></param>
+        /// <param name="setting"></param>
+        /// <returns>生成されたコメント群。いい感じに並び替えられてる。</returns>
+        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacketModel rawMsgPacket, SmileVideoSettingModel setting)
+        {
+            var comments = rawMsgPacket.Chat
+                .Where(c => !string.IsNullOrEmpty(c.Content))
+                .GroupBy(c => new { c.No, c.Fork })
+                .Select(c => new SmileVideoCommentViewModel(c.First(), setting))
+                .OrderBy(c => c.ElapsedTime)
+            ;
+
+            return comments;
+        }
+
+        /// <summary>
+        ///ユーザーのフィルタリング用データ生成。
+        ///<para>ここでのフィルタリングはNGの意味ではなくコメントリストで使用するフィルタリング。</para>
+        ///<para>投稿者と視聴者は区別しない。区別したければ上位で分けてやる必要あり。</para>
+        /// </summary>
+        /// <param name="commentList"></param>
+        /// <returns></returns>
+        public static IEnumerable<SmileVideoFilteringUserViewModel> CreateFilteringUserItems(IReadOnlyList<SmileVideoCommentViewModel> commentList)
+        {
+            var result = commentList
+                .Where(c => !string.IsNullOrWhiteSpace(c.UserId))
+                .GroupBy(c => c.UserId)
+                .Select(g => new { Count = g.Count(), Comment = g.First() })
+                .Select(cc => new SmileVideoFilteringUserViewModel(cc.Comment.UserId, cc.Comment.UserKind, cc.Count))
+                .OrderByDescending(fu => fu.Count)
+                .ThenBy(fu => fu.UserId)
+            ;
+
+            return result;
         }
 
         #endregion
