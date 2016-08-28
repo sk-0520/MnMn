@@ -116,6 +116,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileVideoCheckItLaterCheckTime => appConfig.Get("service-smile-smilevideo-check_it_later-check-time", TimeSpan.Parse);
 
+        /// <summary>
+        /// コメント表示を行う際の補正時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoCommentCorrectionTime => appConfig.Get("service-smile-smilevideo-comment-correction-time", TimeSpan.Parse);
         #endregion
 
         #region setting

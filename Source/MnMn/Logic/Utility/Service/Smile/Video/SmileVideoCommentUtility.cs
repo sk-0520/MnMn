@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
     {
         #region define
 
-        static readonly TimeSpan correctionTime = TimeSpan.FromSeconds(1);
+        static readonly TimeSpan correctionTime = Constants.ServiceSmileVideoCommentCorrectionTime;
 
         #endregion
 
