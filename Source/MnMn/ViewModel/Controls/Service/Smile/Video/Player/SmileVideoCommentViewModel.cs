@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #region define
 
         static Regex regSpace = new Regex(@"(?<SPACE>\s){2,}", RegexOptions.Compiled);
-        const string viewSpace = "˽";
-        const string viewLineBreak = "↵";
+        static readonly string viewLineBreak = Constants.ServiceSmileVideoCommentSimpleNewline;
+        static readonly string viewSpace = Constants.ServiceSmileVideoCommentSimpleSpace;
 
         #endregion
 

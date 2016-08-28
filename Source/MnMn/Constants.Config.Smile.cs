@@ -120,6 +120,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// コメント表示を行う際の補正時間。
         /// </summary>
         public static TimeSpan ServiceSmileVideoCommentCorrectionTime => appConfig.Get("service-smile-smilevideo-comment-correction-time", TimeSpan.Parse);
+
+        /// <summary>
+        /// コメント一行表示の改行の視覚表示文字。
+        /// </summary>
+        public static string ServiceSmileVideoCommentSimpleNewline => appConfig.Get("service-smile-smilevideo-comment-simple-newline");
+        /// <summary>
+        /// コメント一行表示の連続スペースの視覚表示兼まとめ文字。
+        /// </summary>
+        public static string ServiceSmileVideoCommentSimpleSpace => appConfig.Get("service-smile-smilevideo-comment-simple-space");
+
         #endregion
 
         #region setting
