@@ -124,6 +124,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#83: ログ出力を人に優しくする'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
