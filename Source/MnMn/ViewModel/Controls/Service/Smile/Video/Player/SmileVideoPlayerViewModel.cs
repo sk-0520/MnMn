@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { /*dmy*/ }
         }
 
-        public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoCommentUtility.normalCommentColors);
+        public CollectionModel<Color> CommandColorItems { get; } = new CollectionModel<Color>(SmileVideoMsgUtility.normalCommentColors);
 
         public bool IsRandomPlay
         {
@@ -2108,16 +2108,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             yield return PostBeforeCommand;
 
             if(!IsEnabledPostAnonymous) {
-                yield return SmileVideoCommentUtility.ConvertRawIsAnonymous(IsPostAnonymous);
+                yield return SmileVideoMsgUtility.ConvertRawIsAnonymous(IsPostAnonymous);
             }
             if(PostCommandVertical != SmileVideoCommentVertical.Normal) {
-                yield return SmileVideoCommentUtility.ConvertRawVerticalAlign(PostCommandVertical);
+                yield return SmileVideoMsgUtility.ConvertRawVerticalAlign(PostCommandVertical);
             }
             if(PostCommandSize != SmileVideoCommentSize.Medium) {
-                yield return SmileVideoCommentUtility.ConvertRawFontSize(PostCommandSize);
+                yield return SmileVideoMsgUtility.ConvertRawFontSize(PostCommandSize);
             }
             if(PostCommandColor != Colors.White) {
-                yield return SmileVideoCommentUtility.ConvertRawForeColor(PostCommandColor);
+                yield return SmileVideoMsgUtility.ConvertRawForeColor(PostCommandColor);
             }
 
             yield return PostAfterCommand;
@@ -2170,7 +2170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 SetCommentInformation($"fail: {nameof(msg.PostAsync)}");
                 return;
             }
-            var status = SmileVideoCommentUtility.ConvertResultStatus(resultPost.ChatResult.Status);
+            var status = SmileVideoMsgUtility.ConvertResultStatus(resultPost.ChatResult.Status);
             if(status != SmileVideoCommentResultStatus.Success) {
                 //TODO: ユーザー側に通知
                 var message = DisplayTextUtility.GetDisplayText(status);
@@ -2452,8 +2452,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!PlayListItems.Any()) {
                 PlayListItems.Add(Information);
             }
-            if(Session.IsPremium && CommandColorItems.Count == SmileVideoCommentUtility.normalCommentColors.Length) {
-                CommandColorItems.AddRange(SmileVideoCommentUtility.premiumCommentColors);
+            if(Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Length) {
+                CommandColorItems.AddRange(SmileVideoMsgUtility.premiumCommentColors);
             }
 
             TotalTime = Information.Length;

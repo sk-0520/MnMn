@@ -71,10 +71,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Timestamp = RawValueUtility.ConvertUnixTime(Model.Date);
             UserId = Model.UserId;
             Number = RawValueUtility.ConvertInteger(Model.No);
-            Commands = SmileVideoCommentUtility.ConvertCommands(Model.Mail);
-            Score = SmileVideoCommentUtility.ConvertScore(Model.Score);
+            Commands = SmileVideoMsgUtility.ConvertCommands(Model.Mail);
+            Score = SmileVideoMsgUtility.ConvertScore(Model.Score);
 
-            ForegroundColor = SmileVideoCommentUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
+            ForegroundColor = SmileVideoMsgUtility.GetForeColor(Commands, UserKind == SmileVideoUserKind.Premium);
             ActualForeground = new SolidColorBrush(ForegroundColor);
             FreezableUtility.SafeFreeze(ActualForeground);
 
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
 
-            Vertical = SmileVideoCommentUtility.GetVerticalAlign(Commands);
+            Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
         }
 
         #region property
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         static double GetFontSize(double baseSize, IList<string> commands)
         {
-            switch(SmileVideoCommentUtility.GetFontSize(commands)) {
+            switch(SmileVideoMsgUtility.GetFontSize(commands)) {
                 case SmileVideoCommentSize.Medium:
                     return baseSize;
 
