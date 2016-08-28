@@ -9,6 +9,10 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
 
+  xmlns:oxy="http://oxyplot.org/wpf"
+  xmlns:oxy_a="http://oxyplot.org"
+
+
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -604,6 +608,7 @@
               StopCommand="{Binding StopCommand}"
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
+              SliderPopupIsOpen="{Binding ShowCommentChart}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
@@ -637,6 +642,21 @@
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
+              <app_view_controls:Navigationbar.SliderPopupContent>
+                <Border>
+                  <Viewbox Stretch="Fill" >
+                    <oxy:Plot Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
+                      <oxy:Plot.Axes>
+                        <oxy:LinearAxis IsAxisVisible="False" Position="Left" MajorGridlineStyle="None" />
+                        <oxy:LinearAxis IsAxisVisible="False" Position="Bottom"/>
+                      </oxy:Plot.Axes>
+                      <oxy:Plot.Series>
+                        <oxy:LineSeries Color="#660000ee" ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
+                      </oxy:Plot.Series>
+                    </oxy:Plot>
+                  </Viewbox>
+                </Border>
+              </app_view_controls:Navigationbar.SliderPopupContent>
             </app_view_controls:Navigationbar>
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">

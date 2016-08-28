@@ -79,8 +79,9 @@
       <Slider.Template>
         <ControlTemplate TargetType="Slider">
           <Border>
-            <Grid>
+            <Grid x:Name="PART_SliderBase">
               <ProgressBar
+                x:Name="PART_ProgressBar"
                 Margin="8,0"
                 Height="{StaticResource ProgressHeight}"
                 Minimum="0"
@@ -107,6 +108,17 @@
                   </Thumb>
                 </Track.Thumb>
               </Track>
+              <Popup
+                AllowsTransparency="True"
+                PopupAnimation="Fade"
+                PlacementTarget="{Binding ElementName=PART_ProgressBar}"
+                Width="{Binding ActualWidth, ElementName=PART_ProgressBar}"
+                MinHeight="{Binding ActualHeight, ElementName=PART_ProgressBar}"
+                Placement="{Binding SliderPopupPlacement, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                IsOpen="{Binding SliderPopupIsOpen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+              >
+                <ContentControl Content="{Binding SliderPopupContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+              </Popup>
             </Grid>
           </Border>
         </ControlTemplate>
