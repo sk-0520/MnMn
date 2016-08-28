@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #region property
 
         SmileVideoSettingModel Setting { get; }
-        MainWindow View { get; set; }
+        //MainWindow View { get; set; }
 
         public SessionViewModelBase Session { get; }
 
@@ -225,14 +225,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
+            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+                // 裏で走らせとく
+                CheckUpdateAsync();
+            });
         }
 
         public override void InitializeView(MainWindow view)
         {
-            View = view;
-            View.Loaded += View_Loaded;
-
             foreach(var item in ManagerItems) {
                 item.InitializeView(view);
             }
@@ -259,14 +259,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         #endregion
-
-        private void View_Loaded(object sender, RoutedEventArgs e)
-        {
-            View.Loaded -= View_Loaded;
-
-            CheckUpdateAsync();
-        }
-
 
     }
 }
