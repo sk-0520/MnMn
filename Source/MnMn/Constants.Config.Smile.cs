@@ -111,6 +111,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool ServiceSmileVideoIsEnabledFiltering => appConfig.Get("service-smile-smilevideo-is-enabled-filtering", bool.Parse);
 
+        /// <summary>
+        /// あとで見るのチェック時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoCheckItLaterCheckTime => appConfig.Get("service-smile-smilevideo-check_it_later-check-time", TimeSpan.Parse);
+
         #endregion
 
         #region setting
