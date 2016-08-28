@@ -144,7 +144,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#90: ソースが重い。特にプレイヤー周りが腐り過ぎてる',
+						'comments': [
+							'むりだった！'
+						]
 					},
 					{
 						'revision': '',
