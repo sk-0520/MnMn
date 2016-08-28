@@ -364,7 +364,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             if(UpdateBrowser.Source == null) {
                 LoadChangelogAsync().ContinueWith(_ => {
-                    SetUpdateStateViewAsync().ConfigureAwait(false);
+                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
+                        SetUpdateStateViewAsync().ConfigureAwait(false);
+                    }
                 }).ConfigureAwait(false);
             }
         }
