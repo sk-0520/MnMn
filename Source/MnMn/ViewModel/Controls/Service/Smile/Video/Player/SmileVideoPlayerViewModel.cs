@@ -1601,7 +1601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void FireShowComments()
         {
-            Mediation.Logger.Trace($"{VideoId}: {PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
+            //Mediation.Logger.Trace($"{VideoId}: {PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
             SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
