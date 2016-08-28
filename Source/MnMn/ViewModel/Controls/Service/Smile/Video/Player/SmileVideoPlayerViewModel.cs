@@ -86,6 +86,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using OxyPlot;
+using OxyPlot.Wpf;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -922,6 +924,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._showCommentChart; }
             set { SetVariableValue(ref this._showCommentChart, value); }
         }
+
+        public CollectionModel<DataPoint> CommentChartList { get; } = new CollectionModel<DataPoint>();
 
         #endregion
 
@@ -2417,6 +2421,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             base.OnLoadVideoEnd();
         }
 
+        IEnumerable<DataPoint> CreateCommentChartList(IReadOnlyList<SmileVideoCommentViewModel> commentList)
+        {
+            var srcItems = commentList
+                .GroupBy(c => (int)c.ElapsedTime.TotalSeconds)
+                .Select(cg => new DataPoint((int)cg.First().ElapsedTime.TotalSeconds, cg.Count()))
+            ;
+
+            var emptySecondItems = Enumerable.Range(0, (int)TotalTime.TotalSeconds)
+                .Select(s => new DataPoint(s, 0))
+            ;
+
+            var mixItems = srcItems
+                .Concat(emptySecondItems)
+                .GroupBy(cd => cd.X)
+                .OrderBy(cg => cg.Key)
+                .Select(cg => cg.OrderByDescending(c => c.Y).First())
+            ;
+
+            return mixItems;
+        }
+
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
             var comments = rawMsgPacket.Chat
@@ -2428,6 +2453,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentList.InitializeRange(comments);
             CommentListCount = CommentList.Count;
             ApprovalComment();
+
+            var chartItems = CreateCommentChartList(CommentList);
+            CommentChartList.InitializeRange(chartItems);
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
             var userSequence = NormalCommentList

@@ -9,6 +9,10 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
 
+  xmlns:oxy="http://oxyplot.org/wpf"
+  xmlns:oxy_a="http://oxyplot.org"
+
+
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -605,6 +609,7 @@
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
               SliderPopupIsOpen="{Binding ShowCommentChart}"
+              SliderPopupPlacement="Bottom"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
@@ -640,10 +645,17 @@
               </app_view_controls:Navigationbar.ExstendsContent>
               <app_view_controls:Navigationbar.SliderPopupContent>
                 <Border BorderBrush="Red" BorderThickness="1">
-                  <StackPanel>
-                    <TextBlock Text="いいかんじにえらー" />
-                    <TextBlock Text="いいかんじにえらー" />
-                  </StackPanel>
+                  <Viewbox Stretch="Fill" >
+                    <oxy:Plot Width="100" Height="100" >
+                      <oxy:Plot.Axes>
+                        <oxy:LinearAxis IsAxisVisible="False" Position="Left" />
+                        <oxy:LinearAxis IsAxisVisible="False" Position="Bottom"/>
+                      </oxy:Plot.Axes>
+                      <oxy:Plot.Series>
+                        <oxy:LineSeries ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
+                      </oxy:Plot.Series>
+                    </oxy:Plot>
+                  </Viewbox>
                 </Border>
               </app_view_controls:Navigationbar.SliderPopupContent>
             </app_view_controls:Navigationbar>
