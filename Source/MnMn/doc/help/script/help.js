@@ -43,6 +43,30 @@ var menuList = [
 		}
 	},
 	{
+		name: '*others',
+		localize: true,
+		level: 0,
+		title: {
+			'ja-jp': 'その他'
+		}
+	},
+	{
+		name: 'development',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '開発について'
+		}
+	},
+	{
+		name: 'development-source',
+		localize: true,
+		level: 2,
+		title: {
+			'ja-jp': 'ソースコードについて'
+		}
+	},
+	{
 		name: 'changelog',
 		localize: false,
 		level: 0,
