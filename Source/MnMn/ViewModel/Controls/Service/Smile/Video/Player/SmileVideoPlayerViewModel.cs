@@ -88,6 +88,7 @@ using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using OxyPlot;
 using OxyPlot.Wpf;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1518,7 +1519,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         [HandleProcessCorruptedStateExceptions]
         void SetMedia()
         {
-            if(!IsSettedMedia) {
+            if(!IsSettedMedia && !IsViewClosed) {
                 Player.LoadMedia(PlayFile.FullName);
                 IsSettedMedia = true;
             }
@@ -1526,7 +1527,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StartIfAutoPlay()
         {
-            if(Setting.Player.AutoPlay) {
+            if(Setting.Player.AutoPlay && !IsViewClosed) {
                 SetMedia();
                 PlayMovie();
             }
@@ -1547,7 +1548,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void StopMovie(bool isStopComment)
         {
             Mediation.Logger.Debug("stop");
-            if(IsSettedMedia) {
+            if(IsSettedMedia && !IsViewClosed) {
                 Player.Stop();
             }
             //Player.BeginStop(() => {
@@ -1600,7 +1601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void FireShowComments()
         {
-            Mediation.Logger.Trace($"{VideoId}: {PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
+            //Mediation.Logger.Trace($"{VideoId}: {PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
             SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
             SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
@@ -2634,7 +2635,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 StopMovie(true);
             }
 
-            //View.player.Dispose();
+            try {
+                Player.Dispose();
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
+            Mediation.Order(new AppCleanMemoryOrderModel(true));
         }
 
         private void Player_PositionChanged(object sender, EventArgs e)

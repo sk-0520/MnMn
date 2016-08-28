@@ -205,12 +205,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
                 var gcSize = t.Result;
                 Mediation.Logger.Information($"GC: {gcSize:n0} byte");
+                Mediation.Order(new AppCleanMemoryOrderModel(true));
                 BackgroundGarbageCollectionTimer.Start();
             });
 
             View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
             View.Closed += View_Closed;
+
+            Mediation.Order(new AppCleanMemoryOrderModel(false));
         }
 
         public override void UninitializeView(MainWindow view)
@@ -286,6 +289,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 var cacheSpan = new CacheSpan(DateTime.Now, Setting.CacheLifeTime);
                 var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan);
                 Mediation.Logger.Information($"GC: {gcSize:n0} byte");
+                Mediation.Order(new AppCleanMemoryOrderModel(true));
             } finally {
                 BackgroundGarbageCollectionTimer.Start();
             }

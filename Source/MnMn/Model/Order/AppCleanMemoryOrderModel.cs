@@ -19,25 +19,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
 {
     /// <summary>
-    /// 命令種別。
+    /// GC用指示内容。
     /// </summary>
-    public enum OrderKind
+    public class AppCleanMemoryOrderModel: OrderModel
     {
         /// <summary>
-        /// データ保存。
+        ///
         /// </summary>
-        Save,
+        /// <param name="isTargetLargeObjectHeap">LOHを含めるか</param>
+        public AppCleanMemoryOrderModel(bool isTargetLargeObjectHeap)
+            : base(Define.OrderKind.CleanMemory, Define.ServiceType.Application)
+        {
+            IsTargetLargeObjectHeap = isTargetLargeObjectHeap;
+        }
+
+        #region property
+
         /// <summary>
-        /// 終了。
+        /// LOHを含めるか。
         /// </summary>
-        Exit,
-        /// <summary>
-        /// メモリのGC。
-        /// </summary>
-        CleanMemory
+        public bool IsTargetLargeObjectHeap { get; }
+
+        #endregion
     }
 }
