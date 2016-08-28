@@ -64,7 +64,37 @@
         <TabItem.Header>
           <StackPanel>
             <TextBlock Text="アップデート" />
-            <TextBlock TextAlignment="Center" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">あるよ！</TextBlock>
+            <Border CornerRadius="4" BorderThickness="2" BorderBrush="Red" Background="Transparent" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <Border.Style>
+                <Style TargetType="Border">
+                  <Style.Triggers>
+                    <Trigger Property="Visibility" Value="Visible">
+                      <Trigger.EnterActions>
+                        <BeginStoryboard>
+                          <Storyboard>
+                            <ColorAnimation
+                              AutoReverse="True"
+                              RepeatBehavior="Forever"
+                              Storyboard.TargetProperty="Background.Color"
+                              Duration="00:00:01.5"
+                              To="Red"
+                            />
+                            <ColorAnimation
+                              AutoReverse="True"
+                              RepeatBehavior="Forever"
+                              Storyboard.TargetProperty="BorderBrush.Color"
+                              Duration="00:00:01.5"
+                              To="Transparent"
+                            />
+                          </Storyboard>
+                        </BeginStoryboard>
+                      </Trigger.EnterActions>
+                    </Trigger>
+                  </Style.Triggers>
+                </Style>
+              </Border.Style>
+              <TextBlock FontWeight="Bold" TextAlignment="Center" >あるよ！</TextBlock>
+            </Border>
           </StackPanel>
         </TabItem.Header>
         <Grid>

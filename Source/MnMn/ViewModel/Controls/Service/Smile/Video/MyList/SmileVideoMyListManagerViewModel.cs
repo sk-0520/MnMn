@@ -112,12 +112,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public bool IsSelectedAccount
         {
             get { return this._isSelectedAccount; }
-            set { SetVariableValue(ref this._isSelectedAccount, value); }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedAccount, value)) {
+                    if(IsSelectedAccount) {
+                        if(Session.IsLoggedIn) {
+                            ChangedSelectedFinder(SelectedAccountFinder);
+                        }
+                    }
+                }
+            }
         }
         public bool IsSelectedSearch
         {
             get { return this._isSelectedSearch; }
-            set { SetVariableValue(ref this._isSelectedSearch, value); }
+            set
+            {
+                if(SetVariableValue(ref this._isSelectedSearch, value)) {
+                    if(IsSelectedSearch) {
+                        ChangedSelectedFinder(SelectedSearchFinder);
+                    }
+                }
+            }
         }
         public bool IsSelectedBookmark
         {
@@ -125,7 +141,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             set
             {
                 if(SetVariableValue(ref this._isSelectedBookmark, value)) {
-                    if(value) {
+                    if(IsSelectedBookmark) {
                         var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
                         var items = setting.MyList.Bookmark.ToArray();
                         BookmarkUserMyListPairs.Clear();
@@ -133,6 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                             BookmarkUserMyListPairs.Add(item, null);
                         }
                         BookmarkUserMyListItems.Refresh();
+                        ChangedSelectedFinder(SelectedBookmarkFinder);
                     }
                 }
             }
@@ -143,12 +160,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             set
             {
                 if(SetVariableValue(ref this._isSelectedHistory, value)) {
-                    if(value) {
+                    if(IsSelectedHistory) {
                         var setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
                         var items = setting.MyList.History.Select(m => new SmileVideoItemsMyListFinderViewModel(Mediation, m));
 
                         HistoryUserMyList.InitializeRange(items);
                         HistoryUserMyListItems.Refresh();
+                        ChangedSelectedFinder(SelectedHistoryFinder);
                     }
                 }
             }
@@ -718,6 +736,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override Task InitializeAsync()
         {
+            Application.Current.Dispatcher.Invoke(() => {
+                AccountMyList.Clear();
+            });
+
             if(Session.IsLoggedIn) {
                 return LoadAccountMyListAsync(false, null);
             }

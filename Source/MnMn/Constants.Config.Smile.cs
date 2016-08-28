@@ -111,6 +111,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool ServiceSmileVideoIsEnabledFiltering => appConfig.Get("service-smile-smilevideo-is-enabled-filtering", bool.Parse);
 
+        /// <summary>
+        /// あとで見るのチェック時間。
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoCheckItLaterCheckTime => appConfig.Get("service-smile-smilevideo-check_it_later-check-time", TimeSpan.Parse);
+
         #endregion
 
         #region setting
@@ -197,6 +202,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// プレイヤーウィンドウ: 高さ。
         /// </summary>
         public static double SettingServiceSmileVideoWindowHeight => appConfig.Get("setting-service-smile-smilevideo-player-window-height", double.Parse);
+        /// <summary>
+        /// ウィンドウ最前面状態。
+        /// </summary>
+        public static bool SettingServiceSmileVideoWindowTopmost => appConfig.Get("setting-service-smile-smilevideo-player-window-topmost", bool.Parse);
         /// <summary>
         /// 予期せぬ停止から次の動画へ移るまでの待機時間。
         /// </summary>

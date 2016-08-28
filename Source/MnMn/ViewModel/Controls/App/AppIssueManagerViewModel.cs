@@ -16,34 +16,51 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
-    public class AppHelpManagerViewModel: ManagerViewModelBase
+    public class AppIssueManagerViewModel: ManagerViewModelBase
     {
-        public AppHelpManagerViewModel(Mediation mediation)
+        public AppIssueManagerViewModel(Mediation mediation)
             : base(mediation)
         { }
 
         #region property
 
-        WebBrowser HelpBrowser { get; set; }
+        WebBrowser IssueBrowser { get; set; }
 
         #endregion
 
-        #region command
-        #endregion
+        #region ManagerViewModelBas
 
-        #region ManagerViewModelBase
+        protected override void ShowView()
+        {
+            base.ShowView();
+
+            if(IssueBrowser.Source == null) {
+                // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
+                dynamic activeX = IssueBrowser.GetType().InvokeMember(
+                    "ActiveXInstance",
+                    BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                    null,
+                    IssueBrowser,
+                    new object[] { }
+                );
+                activeX.Silent = true;
+
+                IssueBrowser.Navigate(Constants.AppUriIssueResolved);
+            }
+        }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
@@ -57,20 +74,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override void InitializeView(MainWindow view)
         {
-            HelpBrowser = view.information.helpBrowser;
+            IssueBrowser = view.information.issueBrowser;
         }
 
         public override void UninitializeView(MainWindow view)
         {
-        }
-
-        protected override void ShowView()
-        {
-            base.ShowView();
-
-            if(HelpBrowser.Source == null) {
-                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
-            }
+            IssueBrowser = null;
         }
 
         #endregion

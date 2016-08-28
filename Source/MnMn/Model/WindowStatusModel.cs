@@ -56,7 +56,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// </summary>
         [DataMember, IsDeepClone]
         public double Height { get; set; }
- 
+
+        /// <summary>
+        /// 最前面。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public bool Tommost { get; set; }
+
         #endregion
 
         #region IDeepClone

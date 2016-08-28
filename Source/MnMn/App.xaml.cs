@@ -113,6 +113,22 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         protected async override void OnStartup(StartupEventArgs e)
         {
+            var logger = new Pe.PeMain.Logic.AppLogger();
+            logger.IsStock = true;
+
+            // ログオプションのあれこれ
+            if(VariableConstants.HasOptionLogDirectoryPath) {
+                var logFilePath = Path.Combine(Environment.ExpandEnvironmentVariables(VariableConstants.OptionLogDirectoryPath), PathUtility.AppendExtension($"{Constants.GetNowTimestampFileName()}-{Constants.BuildType}", "log"));
+                FileUtility.MakeFileParentDirectory(logFilePath);
+                var writer = new StreamWriter(new FileStream(logFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)) {
+                    AutoFlush = true,
+                };
+                logger.AttachmentStream(writer, true);
+                logger.LoggerConfig.PutsStream = true;
+            }
+
+            logger.Information(Constants.ApplicationName, new AppInformationCollection().ToString());
+
             if(!Mutex.WaitOne(0, false)) {
                 Shutdown();
                 return;
@@ -123,9 +139,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #if DEBUG
             DoDebug();
 #endif
-            var logger = new Pe.PeMain.Logic.AppLogger();
-            logger.IsStock = true;
-            logger.Information(Constants.ApplicationName);
             //var dir = VariableConstants.GetSettingDirectory();
             //var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
             //var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);

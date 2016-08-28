@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -511,6 +512,81 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get { return GetValue(ExstendsContentProperty); }
             set { SetValue(ExstendsContentProperty, value); }
+        }
+
+        #endregion
+
+        #region SliderPopupContentProperty
+
+        public static readonly DependencyProperty SliderPopupContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SliderPopupContentProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSliderPopupContentChanged))
+        );
+
+        private static void OnSliderPopupContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.SliderPopupContent = e.NewValue;
+            }
+        }
+
+        public object SliderPopupContent
+        {
+            get { return GetValue(SliderPopupContentProperty); }
+            set { SetValue(SliderPopupContentProperty, value); }
+        }
+
+        #endregion
+
+        #region SliderPopupIsOpenProperty
+
+        public static readonly DependencyProperty SliderPopupIsOpenProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SliderPopupIsOpenProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSliderPopupIsOpenChanged))
+        );
+
+        private static void OnSliderPopupIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.SliderPopupIsOpen = (bool)e.NewValue;
+            }
+        }
+
+        public bool SliderPopupIsOpen
+        {
+            get { return (bool)GetValue(SliderPopupIsOpenProperty); }
+            set { SetValue(SliderPopupIsOpenProperty, value); }
+        }
+
+        #endregion
+
+        #region SliderPopupPlacementProperty
+
+        public static readonly DependencyProperty SliderPopupPlacementProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SliderPopupPlacementProperty)),
+            typeof(PlacementMode),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(PlacementMode.Center, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSliderPopupPlacementChanged))
+        );
+
+        private static void OnSliderPopupPlacementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.SliderPopupPlacement = (PlacementMode)e.NewValue;
+            }
+        }
+
+        public PlacementMode SliderPopupPlacement
+        {
+            get { return (PlacementMode)GetValue(SliderPopupPlacementProperty); }
+            set { SetValue(SliderPopupPlacementProperty, value); }
         }
 
         #endregion
