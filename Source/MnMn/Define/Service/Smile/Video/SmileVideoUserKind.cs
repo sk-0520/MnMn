@@ -22,6 +22,9 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
+    /// <summary>
+    /// ユーザー種別。
+    /// </summary>
     public enum SmileVideoUserKind
     {
         Noraml,

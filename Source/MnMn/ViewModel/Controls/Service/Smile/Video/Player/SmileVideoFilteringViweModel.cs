@@ -30,6 +30,9 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
+    /// <summary>
+    /// コメント表示のフィルタリング。
+    /// </summary>
     public class SmileVideoFilteringViweModel: ViewModelBase
     {
         public SmileVideoFilteringViweModel(SmileVideoCommentFilteringSettingModel commentSetting, SmileVideoFinderFilteringSettingModel finderSetting, SmileVideoFilteringModel filteringDefine)
