@@ -154,55 +154,98 @@
           <Separator />
           <Button Command="{Binding ClearLogCommand}">クリア</Button>
         </ToolBar>
-        <ListBox x:Name="listLog" ItemsSource="{Binding LogItems}">
-          <ListBox.ItemContainerStyle>
-            <Style TargetType="ListBoxItem">
-              <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+
+        <Grid>
+
+        </Grid>
+        <ListView x:Name="listLog" ItemsSource="{Binding LogItems}">
+          <ListView.Resources>
+            <Style TargetType="ListViewItem">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding LogKind}" Value="None">
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LogKind}" Value="Debug">
+                  <Setter Property="Background" Value="#80444444" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LogKind}" Value="Trace">
+                  <Setter Property="Background" Value="#80cccccc" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LogKind}" Value="Information">
+                  <Setter Property="Background" Value="#804444cc" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LogKind}" Value="Warning">
+                  <Setter Property="Background" Value="#80cccc44" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LogKind}" Value="Error">
+                  <Setter Property="Background" Value="#80cc4444" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LogKind}" Value="Fatal">
+                  <Setter Property="Background" Value="#cc4444" />
+                </DataTrigger>
+              </Style.Triggers>
             </Style>
-          </ListBox.ItemContainerStyle>
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="140" />
-                  <ColumnDefinition Width="60" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Timestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
-                <TextBlock Grid.Column="1" >
-                  <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding LogKind}" Value="None">
-                          <Setter Property="Text" Value="☺" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LogKind}" Value="Debug">
-                          <Setter Property="Text" Value="デバッグ" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LogKind}" Value="Trace">
-                          <Setter Property="Text" Value="トレース" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LogKind}" Value="Information">
-                          <Setter Property="Text" Value="情報" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LogKind}" Value="Warning">
-                          <Setter Property="Text" Value="警報" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LogKind}" Value="Error">
-                          <Setter Property="Text" Value="異常" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LogKind}" Value="Fatal">
-                          <Setter Property="Text" Value="致命" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </TextBlock.Style>
-                </TextBlock>
-                <TextBlock Grid.Column="2" Text="{Binding Message}" />
-              </Grid>
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </ListBox>
+          </ListView.Resources>
+          <ListView.View>
+            <GridView>
+              <GridViewColumn Header="タイムスタンプ">
+                <GridViewColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Timestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
+                  </DataTemplate>
+                </GridViewColumn.CellTemplate>
+              </GridViewColumn>
+              <GridViewColumn Header="種別">
+                <GridViewColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock>
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding LogKind}" Value="None">
+                              <Setter Property="Text" Value="☺" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LogKind}" Value="Debug">
+                              <Setter Property="Text" Value="デバッグ" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LogKind}" Value="Trace">
+                              <Setter Property="Text" Value="トレース" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LogKind}" Value="Information">
+                              <Setter Property="Text" Value="情報" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LogKind}" Value="Warning">
+                              <Setter Property="Text" Value="警報" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LogKind}" Value="Error">
+                              <Setter Property="Text" Value="異常" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding LogKind}" Value="Fatal">
+                              <Setter Property="Text" Value="致命" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                  </DataTemplate>
+                </GridViewColumn.CellTemplate>
+              </GridViewColumn>
+              <GridViewColumn Header="呼び出し">
+                <GridViewColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding CallerMember}" />
+                  </DataTemplate>
+                </GridViewColumn.CellTemplate>
+              </GridViewColumn>
+              <GridViewColumn Header="メッセージ">
+                <GridViewColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Message}" />
+                  </DataTemplate>
+                </GridViewColumn.CellTemplate>
+              </GridViewColumn>
+            </GridView>
+          </ListView.View>
+        </ListView>
       </DockPanel>
     </TabItem>
 
