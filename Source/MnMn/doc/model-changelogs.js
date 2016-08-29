@@ -84,32 +84,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.13.1',
-		'isRc': true,
+		'date': '2016/08/29',
+		'version': '0.14.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '280384a2ad854ae96438a526e2851d4cdd2e14bd',
 						'subject': '#93: プレイヤーの動画部分でカーソルを非表示にする',
 						'comments': [
 							'ちょっとだけ制限として #82 にもあったけどコメントとカーソルがかぶる場合は未考慮',
@@ -117,14 +100,14 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2a8fdd548d407aa028c2f9f5b3aca41e57862f40',
 						'subject': '#99: 次回リリースの表示内容を更新できるようにする',
 						'comments': [
 							'うーん、リリース前の俺しか使わんしブックマークしてるしで無意味感半端ない'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2ee3654609aef393d66f2bdbd87ec7ea6c24a552',
 						'subject': '#97: アプリケーション側履歴削除時はリスト全体の再読み込みは行わない',
 						'comments': [
 							'手塩にかけて構築した読込手順外の処理で泥臭い感じだけど操作性は上がった'
@@ -136,7 +119,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '1ed5fa819a137468e93bf76f68e7e05fca844279',
 						'subject': '#100: メモリ消費を抑える',
 						'comments': [
 							'プレイヤーウィンドウ破棄時にメモリ解放処理を追加',
@@ -145,32 +128,24 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '1fd163c05bee6fb0c7ae28fddaae82137bc11618',
 						'subject': '#94: 投稿者コメント位置制御のアイコンが他の子たちと微妙にサイズが違う'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
+					}
 				]
 			},
 			{
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'ae5355efc197b6e858bc6024e174c61375eeb3dd',
 						'subject': '#90: ソースが重い。特にプレイヤー周りが腐り過ぎてる',
 						'comments': [
 							'むりだった！'
 						]
 					},
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'revision': 'bc1ed9316c3a915e8bb243ccf172632af978813d',
+						'subject': 'コメント表示の際のデバッグメッセージ破棄'
 					}
 				]
 			}
