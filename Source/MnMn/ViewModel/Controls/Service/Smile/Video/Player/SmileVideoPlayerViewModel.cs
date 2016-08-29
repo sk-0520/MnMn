@@ -1576,7 +1576,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ShowingCommentList.Clear();
         }
 
-        void MoveVideoPostion(float targetPosition)
+        /// <summary>
+        /// 動画再生位置を移動。
+        /// </summary>
+        /// <param name="targetPosition">動画再生位置。</param>
+        void MoveVideoPosition(float targetPosition)
         {
             Mediation.Logger.Debug(targetPosition.ToString());
 
@@ -2712,7 +2716,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var pos = e.GetPosition(seekbar);
             var nextPosition = (float)(pos.X / seekbar.ActualWidth);
             // TODO: 読み込んでない部分は移動不可にする
-            MoveVideoPostion(nextPosition);
+            MoveVideoPosition(nextPosition);
 
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
