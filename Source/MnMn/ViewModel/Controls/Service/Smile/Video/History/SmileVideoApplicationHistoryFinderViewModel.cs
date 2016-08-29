@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoHistoryFinderViewModelBase
 
+        protected override bool IsRemovedReload { get; } = false;
+
         protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.FirstRetrieve | SmileVideoInformationFlags.Length;
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
@@ -72,17 +74,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         protected override Task<CheckModel> RemoveCheckedItemsAsync()
         {
             var items = GetCheckedItems()
-                .Select(i => i.Information)
                 .ToArray();
             ;
 
             if(items.Any()) {
                 foreach(var item in items) {
-                    var model = Setting.History.FirstOrDefault(i => i.VideoId == item.VideoId);
+                    var model = Setting.History.FirstOrDefault(i => i.VideoId == item.Information.VideoId);
                     if(model != null) {
                         Setting.History.Remove(model);
+                        FinderItemList.Remove(item);
                     }
                 }
+                foreach(var item in FinderItemList.Select((item, index) => new { Item = item, Index = index })) {
+                    item.Item.Number = item.Index + 1;
+                }
+
                 return Task.FromResult(CheckModel.Success());
             } else {
                 return Task.FromResult(CheckModel.Failure());
