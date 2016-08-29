@@ -74,9 +74,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);
 
         /// <summary>
+        /// プレイヤー部分のカーソルを隠すまでの時間。
+        /// </summary>
+        public static TimeSpan PlayerCursorHideTime => appConfig.Get("player-cursor-hide-time", TimeSpan.Parse);
+        /// <summary>
         /// キャッシュファイル有効期間。
         /// </summary>
         public static TimeSpan SettingApplicationCacheLifeTime => appConfig.Get("setting-application-cache-life-time", TimeSpan.Parse);
+
         /// <summary>
         /// ウィンドウ: 左
         /// </summary>
