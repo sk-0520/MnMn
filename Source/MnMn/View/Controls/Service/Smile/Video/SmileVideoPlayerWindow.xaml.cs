@@ -40,5 +40,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 
             PlayerCursorHider = new CursorHider(this.player);
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            PlayerCursorHider.Dispose();
+
+            base.OnClosed(e);
+        }
     }
 }

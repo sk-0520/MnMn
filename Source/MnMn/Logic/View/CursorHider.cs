@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
             Element.MouseLeave += Element_MouseLeave;
             Element.MouseMove += Element_MouseMove;
+            Element.Unloaded += Element_Unloaded;
         }
 
         #region property
@@ -95,6 +96,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
             IsHidden = false;
         }
 
+        void ReleaseEvent()
+        {
+            HideWaitTimer.Stop();
+            HideWaitTimer.Tick -= HideWaitTimer_Tick;
+
+            Element.MouseLeave -= Element_MouseLeave;
+            Element.MouseMove -= Element_MouseMove;
+            Element.Unloaded -= Element_Unloaded;
+        }
+
+        #endregion
+
+        #region DisposeFinalizeBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                ReleaseEvent();
+            }
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         private void Element_MouseLeave(object sender, MouseEventArgs e)
@@ -118,12 +141,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         private void HideWaitTimer_Tick(object sender, EventArgs e)
         {
             if(HideTime <= DateTime.Now - LastCursorMoveTime) {
-                Debug.WriteLine("hidden!");
                 Element.Cursor = HiddenCursor;
                 IsHidden = true;
                 HideWaitTimer.Stop();
             }
         }
+
+        private void Element_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // 順番がわからん
+            if(!IsDisposed) {
+                ReleaseEvent();
+            }
+        }
+
 
     }
 }
