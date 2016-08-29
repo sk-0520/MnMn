@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoFeedFinderViewModelBase
 
+        protected override bool IsRemovedReload { get; } = true;
+
         protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.Length;
 
         public override bool NeedSession { get { return true; } }

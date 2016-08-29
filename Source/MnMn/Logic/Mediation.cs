@@ -21,6 +21,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -216,6 +218,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
+        bool OrderCore_CleanMemory(AppCleanMemoryOrderModel order)
+        {
+            var prevTime = DateTime.Now;
+            var prevUsingMemory = GC.GetTotalMemory(false);
+
+            if(order.IsTargetLargeObjectHeap) {
+                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            } else {
+                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Default;
+            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Default;
+
+            var gcUsingMemory = GC.GetTotalMemory(true);
+            var gcTime = DateTime.Now;
+
+            var detail = new[] {
+                prevTime.ToString() + " " + prevUsingMemory.ToString(),
+                "GC",
+                gcTime.ToString() + " " + gcUsingMemory.ToString(),
+            };
+            var gcSize = RawValueUtility.ConvertHumanLikeByte(prevUsingMemory - gcUsingMemory);
+            Logger.Information($"Memory GC: {gcSize}", string.Join(Environment.NewLine, detail));
+
+            return true;
+        }
+
         bool OrderCore(OrderModel order)
         {
             switch(order.OrderKind) {
@@ -224,6 +256,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case OrderKind.Save:
                     return OrderCore_Save((AppSaveOrderModel)order);
+
+                case OrderKind.CleanMemory:
+                    return OrderCore_CleanMemory((AppCleanMemoryOrderModel)order);
 
                 default:
                     throw new NotImplementedException();

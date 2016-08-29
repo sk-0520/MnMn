@@ -41,9 +41,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 
         #region property
 
+        /// <summary>
+        /// コメント表示要素。
+        /// </summary>
         public SmileVideoCommentElement Element { get; }
+        /// <summary>
+        /// コメントのViewModel。
+        /// </summary>
         public SmileVideoCommentViewModel ViewModel { get; }
+        /// <summary>
+        /// コメントのアニメーション。
+        /// </summary>
         public AnimationTimeline Animation { get; }
+        /// <summary>
+        /// <see cref="Animation"/>に紐付くクロック。
+        /// </summary>
         public AnimationClock Clock { get; }
 
         #endregion

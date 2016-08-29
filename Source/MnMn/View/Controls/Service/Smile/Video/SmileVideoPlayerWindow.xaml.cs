@@ -16,6 +16,8 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using ContentTypeTextNet.MnMn.MnMn.Logic.View;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
@@ -24,11 +26,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
     /// </summary>
     public partial class SmileVideoPlayerWindow: System.Windows.Window
     {
+        #region property
+
+        CursorHider PlayerCursorHider { get; }
+
+        #endregion
+
         public SmileVideoPlayerWindow()
         {
             InitializeComponent();
 
             this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
+
+            PlayerCursorHider = new CursorHider(this.player);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            PlayerCursorHider.Dispose();
+
+            base.OnClosed(e);
         }
     }
 }

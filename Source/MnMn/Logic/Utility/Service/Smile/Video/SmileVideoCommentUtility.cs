@@ -20,268 +20,380 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
+using OxyPlot;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
+    /// <summary>
+    /// プログラム側で使用するコメント共通処理。
+    /// </summary>
     public static class SmileVideoCommentUtility
     {
-        internal static readonly Color[] normalCommentColors = new[] {
-            Colors.White,
-            Colors.Red,
-            Colors.Pink,
-            Colors.Orange,
-            Colors.Yellow,
-            Colors.Green,
-            Colors.Cyan,
-            Colors.Blue,
-            Colors.Purple,
-            Colors.Black,
-        };
-        internal static readonly Color[] premiumCommentColors = new[] {
-            (Color)ColorConverter.ConvertFromString("#CCCC99"),
-            (Color)ColorConverter.ConvertFromString("#CC0033"),
-            (Color)ColorConverter.ConvertFromString("#FF6600"),
-            (Color)ColorConverter.ConvertFromString("#999900"),
-            (Color)ColorConverter.ConvertFromString("#00CC66"),
-            (Color)ColorConverter.ConvertFromString("#33FFFC"),
-            (Color)ColorConverter.ConvertFromString("#6633CC"),
-        };
+        #region define
 
-        public static bool GetIsAnonymous(IEnumerable<string> commands)
-        {
-            foreach(var command in commands) {
-                if(command == "184") {
-                    return true;
-                }
-            }
+        static readonly TimeSpan correctionTime = Constants.ServiceSmileVideoCommentCorrectionTime;
 
-            return false;
-        }
+        #endregion
 
-        public static string ConvertRawIsAnonymous(bool isAnonymous)
-        {
-            if(isAnonymous) {
-                return "184";
-            }
+        #region function
 
-            return string.Empty; ;
-        }
-
-
-        public static SmileVideoCommentVertical GetVerticalAlign(IEnumerable<string> commands)
-        {
-            var map = new Dictionary<string, SmileVideoCommentVertical>() {
-                { "naka", SmileVideoCommentVertical.Normal },
-                { "ue", SmileVideoCommentVertical.Top },
-                { "shita", SmileVideoCommentVertical.Bottom },
-            };
-
-            foreach(var command in commands) {
-                foreach(var pair in map) {
-                    SmileVideoCommentVertical resultValue;
-                    if(map.TryGetValue(command, out resultValue)) {
-                        return resultValue;
-                    }
-                }
-            }
-
-            return SmileVideoCommentVertical.Normal;
-        }
-
-        public static string ConvertRawVerticalAlign(SmileVideoCommentVertical verticalAlign)
-        {
-            var map = new Dictionary<SmileVideoCommentVertical, string>() {
-                { SmileVideoCommentVertical.Normal, "naka" },
-                { SmileVideoCommentVertical.Top, "ue" },
-                { SmileVideoCommentVertical.Bottom, "shita" },
-            };
-
-            return map[verticalAlign];
-        }
-
-        public static SmileVideoCommentSize GetFontSize(IEnumerable<string> commands)
-        {
-            var map = new Dictionary<string, SmileVideoCommentSize>() {
-                { "medium", SmileVideoCommentSize.Medium },
-                { "small", SmileVideoCommentSize.Small},
-                { "big", SmileVideoCommentSize.Big},
-            };
-
-            foreach(var command in commands) {
-                foreach(var pair in map) {
-                    SmileVideoCommentSize resultValue;
-                    if(map.TryGetValue(command, out resultValue)) {
-                        return resultValue;
-                    }
-                }
-            }
-
-            return SmileVideoCommentSize.Medium;
-        }
-
-        public static string ConvertRawFontSize(SmileVideoCommentSize fontSize)
-        {
-            var map = new Dictionary<SmileVideoCommentSize, string>() {
-                { SmileVideoCommentSize.Medium, "medium" },
-                { SmileVideoCommentSize.Small, "small" },
-                { SmileVideoCommentSize.Big, "big" },
-            };
-
-            return map[fontSize];
-        }
-
-        public static Color GetForeColor(IEnumerable<string> commands, bool isPremium)
-        {
-            var colorMap = new Dictionary<string, Color>() {
-                { "white",  Colors.White },
-                { "red",    Colors.Red },
-                { "pink",   Colors.Pink },
-                { "orange", Colors.Orange },
-                { "yellow", Colors.Yellow },
-                { "green",  Colors.Green },
-                { "cyan",   Colors.Cyan },
-                { "blue",   Colors.Blue },
-                { "purple", Colors.Purple },
-                { "black",  Colors.Black },
-            };
-
-            Regex regColorCode = null;
-            if(isPremium) {
-                var plusColorMap = new Dictionary<string, Color>() {
-                    { "niconicowhite", (Color)ColorConverter.ConvertFromString("#CCCC99") },
-                    { "white2", (Color)ColorConverter.ConvertFromString("#CCCC99")},
-
-                    { "truered", (Color)ColorConverter.ConvertFromString("#CC0033") },
-                    { "red2", (Color)ColorConverter.ConvertFromString("#CC0033") },
-
-                    { "passionorange", (Color)ColorConverter.ConvertFromString("#FF6600") },
-                    { "orange2", (Color)ColorConverter.ConvertFromString("#FF6600") },
-
-                    { "madyellow", (Color)ColorConverter.ConvertFromString("#999900") },
-                    { "yellow2", (Color)ColorConverter.ConvertFromString("#999900") },
-
-                    { "elementalgreen", (Color)ColorConverter.ConvertFromString("#00CC66") },
-                    { "green2", (Color)ColorConverter.ConvertFromString("#00CC66") },
-
-                    { "marineblue", (Color)ColorConverter.ConvertFromString("#33FFFC") },
-                    { "blue2", (Color)ColorConverter.ConvertFromString("#33FFFC") },
-
-                    { "nobleviolet", (Color)ColorConverter.ConvertFromString("#6633CC") },
-                    { "purple2", (Color)ColorConverter.ConvertFromString("#6633CC") },
-                };
-                foreach(var pair in plusColorMap) {
-                    colorMap.Add(pair.Key, pair.Value);
-                }
-
-                regColorCode = new Regex("^(?<COLOR>#[a-z0-9]{6})$", RegexOptions.ExplicitCapture);
-            }
-
-            foreach(var command in commands) {
-                Color resultColor;
-                if(colorMap.TryGetValue(command, out resultColor)) {
-                    return resultColor;
-                }
-                if(regColorCode != null) {
-                    var match = regColorCode.Match(command);
-                    if(match.Success) {
-                        var rawColor = match.Groups["COLOR"].Value;
-
-                        return (Color)ColorConverter.ConvertFromString(rawColor);
-                    }
-                }
-            }
-
-            return Colors.White;
-        }
-
-        public static string ConvertRawForeColor(Color color)
-        {
-            var colorMap = new Dictionary<Color, string>() {
-                { Colors.White,  "white"  },
-                { Colors.Red,    "red"    },
-                { Colors.Pink,   "pink"   },
-                { Colors.Orange, "orange" },
-                { Colors.Yellow, "yellow" },
-                { Colors.Green,  "green"  },
-                { Colors.Cyan,   "cyan"   },
-                { Colors.Blue,   "blue"   },
-                { Colors.Purple, "purple" },
-                { Colors.Black,  "black"  },
-
-                { (Color)ColorConverter.ConvertFromString("#CCCC99"), "niconicowhite" },
-                //{ (Color)ColorConverter.ConvertFromString("#CCCC99"), "white2"},
-
-                { (Color)ColorConverter.ConvertFromString("#CC0033"), "truered" },
-                //{ (Color)ColorConverter.ConvertFromString("#CC0033"), "red2" },
-
-                { (Color)ColorConverter.ConvertFromString("#FF6600"), "passionorange" },
-                //{ (Color)ColorConverter.ConvertFromString("#FF6600"), "orange2" },
-
-                { (Color)ColorConverter.ConvertFromString("#999900"), "madyellow" },
-                //{ (Color)ColorConverter.ConvertFromString("#999900"), "yellow2" },
-
-                { (Color)ColorConverter.ConvertFromString("#00CC66"), "elementalgreen" },
-                //{ (Color)ColorConverter.ConvertFromString("#00CC66"), "green2" },
-
-                { (Color)ColorConverter.ConvertFromString("#33FFFC"), "marineblue" },
-                //{ (Color)ColorConverter.ConvertFromString("#33FFFC"), "blue2" },
-
-                { (Color)ColorConverter.ConvertFromString("#6633CC"), "nobleviolet" },
-                //{ (Color)ColorConverter.ConvertFromString("#6633CC"), "purple2" },
-            };
-            string result;
-            if(colorMap.TryGetValue(color, out result)) {
-                return result;
-            }
-
-            return BitConverter.ToString(new byte[] { color.R, color.G, color.B }).Replace("-", "");
-        }
-
-        internal static SmileVideoCommentFilteringItemEditViewModel CreateVideoCommentFilter(SmileVideoCommentFilteringItemSettingModel model, object data)
+        /// <summary>
+        /// コメントフィルタのViewModel生成用ロジック。
+        /// <para>別に何もしないけどなんでこいつ独立してんだろう。</para>
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static SmileVideoCommentFilteringItemEditViewModel CreateVideoCommentFilter(SmileVideoCommentFilteringItemSettingModel model, object data)
         {
             return new SmileVideoCommentFilteringItemEditViewModel(model);
         }
 
-        public static string[] ConvertCommands(string rawCommand)
+        /// <summary>
+        /// コメント表示要素の生成。
+        /// </summary>
+        /// <param name="commentViewModel"></param>
+        /// <param name="commentArea"></param>
+        /// <param name="setting"></param>
+        /// <returns></returns>
+        public static SmileVideoCommentElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
         {
-            if(string.IsNullOrEmpty(rawCommand)) {
-                return new string[0];
+            var element = new SmileVideoCommentElement();
+            using(Initializer.BeginInitialize(element)) {
+                element.DataContext = commentViewModel;
             }
 
-            return rawCommand.Split(null);
+            if(commentViewModel.Vertical != SmileVideoCommentVertical.Normal) {
+                element.Width = commentArea.Width;
+            }
+
+            return element;
         }
 
-        public static int ConvertScore(string rawScore)
+        static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoSettingModel setting)
         {
-            var result = RawValueUtility.ConvertInteger(rawScore);
-            if(result == RawValueUtility.UnknownInteger) {
-                return 0;
+            var isAsc = orderBy == OrderBy.Ascending;
+            // 空いている部分に放り込む
+            var lineList = showingCommentList
+                .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
+                .GroupBy(i => (int)Canvas.GetTop(i.Element))
+                .IfOrderByAsc(g => g.Key, isAsc)
+                .ToArray()
+            ;
+
+            var myHeight = (int)element.ActualHeight;
+            var start = isAsc ? 0 : (int)commentArea.Height - myHeight;
+            var last = isAsc ? (int)commentArea.Height - myHeight : 0;
+
+            if(lineList.Length == 0) {
+                // コメントない
+                return start;
             }
+
+            for(var y = start; isAsc ? y < last : last < y;) {
+                var dupLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+                if(dupLine == null) {
+                    // 誰もいなければ入れる
+                    return y;
+                } else {
+                    // 横方向の重なりを考慮
+                    if(calculationWidth) {
+                        // 誰かいる場合はその末尾に入れられるか
+                        var lastComment = dupLine.FirstOrDefault(l => commentArea.Width < Canvas.GetLeft(l.Element) + l.Element.ActualWidth);
+                        if(lastComment == null) {
+                            return y;
+                        }
+                    }
+
+                    // 現在コメント行の最大の高さを加算して次行を検索
+                    var plusValue = (int)dupLine.Max(l => l.Element.ActualHeight);
+                    if(isAsc) {
+                        y += plusValue;
+                    } else {
+                        y -= plusValue;
+                    }
+                }
+            }
+
+            // 全走査して安全そうなところがなければ一番少なそうなところに設定する
+            var compromiseY = lineList
+                .OrderBy(line => line.Count())
+                .FirstOrDefault()
+                ?.Key ?? 0
+            ;
+            return compromiseY;
+        }
+
+        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        {
+            var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Ascending, true, setting);
+            Canvas.SetTop(element, y);
+            Canvas.SetLeft(element, commentArea.Width);
+        }
+
+        static void SetStaticCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, SmileVideoSettingModel setting)
+        {
+            var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, orderBy, false, setting);
+            Canvas.SetTop(element, y);
+            Canvas.SetLeft(element, 0);
+            element.Width = commentArea.Width;
+        }
+
+        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        {
+            switch(commentViewModel.Vertical) {
+                case SmileVideoCommentVertical.Normal:
+                    SetMarqueeCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+                    break;
+
+                case SmileVideoCommentVertical.Top:
+                    SetStaticCommentPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Ascending, setting);
+                    break;
+
+                case SmileVideoCommentVertical.Bottom:
+                    SetStaticCommentPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Descending, setting);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        static AnimationTimeline CreateMarqueeCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            var animation = new DoubleAnimation();
+            var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
+            var diffPosition = starTime / commentArea.Width;
+            if(double.IsInfinity(diffPosition)) {
+                diffPosition = 0;
+            }
+
+            animation.From = commentArea.Width + diffPosition;
+            animation.To = -element.ActualWidth;
+            animation.Duration = new Duration(showTime);
+
+            return animation;
+        }
+
+        static AnimationTimeline CreateTopBottomCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            var animation = new DoubleAnimation();
+            //var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
+            //var diffPosition = starTime / commentArea.Width;
+
+            // アニメーションさせる必要ないけど停止や移動なんかを考えるとIFとしてアニメーションの方が楽
+            animation.From = animation.To = 0;
+            animation.Duration = new Duration(showTime);
+
+            return animation;
+        }
+
+        static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
+        {
+            switch(commentViewModel.Vertical) {
+                case SmileVideoCommentVertical.Normal:
+                    return CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+
+                case SmileVideoCommentVertical.Top:
+                case SmileVideoCommentVertical.Bottom:
+                    return CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        {
+            var element = CreateCommentElement(commentViewModel, commentArea, setting);
+
+            commentViewModel.NowShowing = true;
+
+            commentParentElement.Children.Add(element);
+            commentParentElement.UpdateLayout();
+
+            SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+
+            // アニメーション設定
+            var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
+
+            var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
+            showingCommentList.Add(data);
+
+            EventDisposer<EventHandler> ev = null;
+            data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                if(element != null) {
+                    commentParentElement.Children.Remove(element);
+                }
+                element = null;
+
+                if(ev != null) {
+                    ev.Dispose();
+                }
+                ev = null;
+
+                showingCommentList.Remove(data);
+                data.ViewModel.NowShowing = false;
+
+            }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+
+            element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+        }
+
+        public static bool InShowTime(SmileVideoCommentViewModel comment, TimeSpan prevTime, TimeSpan nowTime)
+        {
+            var correction = nowTime < correctionTime ? TimeSpan.Zero : correctionTime;
+            return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
+        }
+
+        public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        {
+            //var commentArea = new Size(
+            //   commentParentElement.ActualWidth,
+            //   commentParentElement.ActualHeight
+            //);
+
+            var list = commentViewModelList.ToArray();
+            // 現在時間から-1秒したものを表示対象とする
+            var newComments = list
+                .Where(c => c.Approval)
+                .Where(c => !c.NowShowing)
+                .Where(c => InShowTime(c, prevTime, nowTime))
+                .ToArray()
+            ;
+            if(newComments.Any()) {
+                foreach(var commentViewModel in newComments) {
+                    FireShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
+                    //var element = CreateCommentElement(commentViewModel, commentArea, setting);
+
+                    //commentViewModel.NowShowing = true;
+
+                    //commentParentElement.Children.Add(element);
+                    //commentParentElement.UpdateLayout();
+
+                    //SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
+
+                    //// アニメーション設定
+                    //var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
+
+                    //var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
+                    //showingCommentList.Add(data);
+
+                    //EventDisposer<EventHandler> ev = null;
+                    //data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
+                    //    if(element != null) {
+                    //        commentParentElement.Children.Remove(element);
+                    //    }
+                    //    element = null;
+
+                    //    if(ev != null) {
+                    //        ev.Dispose();
+                    //    }
+                    //    ev = null;
+
+                    //    showingCommentList.Remove(data);
+                    //    data.ViewModel.NowShowing = false;
+
+                    //}, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
+
+                    //element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
+                }
+                // 超過分のコメントを破棄
+                if(setting.Player.IsEnabledDisplayCommentLimit && 0 < setting.Player.DisplayCommentLimitCount) {
+                    var removeList = showingCommentList
+                        .OrderBy(i => i.ViewModel.ElapsedTime)
+                        .ThenBy(i => i.ViewModel.Number)
+                        .Take(showingCommentList.Count - setting.Player.DisplayCommentLimitCount)
+                        .ToArray()
+                    ;
+                    foreach(var item in removeList) {
+                        item.Clock.Controller.SkipToFill();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// グラフ用データの生成。
+        /// </summary>
+        /// <param name="commentList"></param>
+        /// <param name="totalTime"></param>
+        /// <returns></returns>
+        public static IEnumerable<DataPoint> CreateCommentChartItems(IReadOnlyList<SmileVideoCommentViewModel> commentList, TimeSpan totalTime)
+        {
+            var srcItems = commentList
+                .GroupBy(c => (int)c.ElapsedTime.TotalSeconds)
+                .Select(cg => new DataPoint((int)cg.First().ElapsedTime.TotalSeconds, cg.Count()))
+            ;
+
+            var emptySecondItems = Enumerable.Range(0, (int)totalTime.TotalSeconds)
+                .Select(s => new DataPoint(s, 0))
+            ;
+
+            var mixItems = srcItems
+                .Concat(emptySecondItems)
+                .GroupBy(cd => cd.X)
+                .OrderBy(cg => cg.Key)
+                .Select(cg => cg.OrderByDescending(c => c.Y).First())
+            ;
+
+            return mixItems;
+        }
+
+        /// <summary>
+        /// 生メッセージからコメントViewModelを生成する。
+        /// </summary>
+        /// <param name="rawMsgPacket"></param>
+        /// <param name="setting"></param>
+        /// <returns>生成されたコメント群。いい感じに並び替えられてる。</returns>
+        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacketModel rawMsgPacket, SmileVideoSettingModel setting)
+        {
+            var comments = rawMsgPacket.Chat
+                .Where(c => !string.IsNullOrEmpty(c.Content))
+                .GroupBy(c => new { c.No, c.Fork })
+                .Select(c => new SmileVideoCommentViewModel(c.First(), setting))
+                .OrderBy(c => c.ElapsedTime)
+            ;
+
+            return comments;
+        }
+
+        /// <summary>
+        ///ユーザーのフィルタリング用データ生成。
+        ///<para>ここでのフィルタリングはNGの意味ではなくコメントリストで使用するフィルタリング。</para>
+        ///<para>投稿者と視聴者は区別しない。区別したければ上位で分けてやる必要あり。</para>
+        /// </summary>
+        /// <param name="commentList"></param>
+        /// <returns></returns>
+        public static IEnumerable<SmileVideoFilteringUserViewModel> CreateFilteringUserItems(IReadOnlyList<SmileVideoCommentViewModel> commentList)
+        {
+            var result = commentList
+                .Where(c => !string.IsNullOrWhiteSpace(c.UserId))
+                .GroupBy(c => c.UserId)
+                .Select(g => new { Count = g.Count(), Comment = g.First() })
+                .Select(cc => new SmileVideoFilteringUserViewModel(cc.Comment.UserId, cc.Comment.UserKind, cc.Count))
+                .OrderByDescending(fu => fu.Count)
+                .ThenBy(fu => fu.UserId)
+            ;
 
             return result;
         }
 
-        public static SmileVideoCommentResultStatus ConvertResultStatus(string rawStatus)
-        {
-            var map = new Dictionary<string, SmileVideoCommentResultStatus>() {
-                { "0", SmileVideoCommentResultStatus.Success  },
-                { "1", SmileVideoCommentResultStatus.Failure  },
-                { "2", SmileVideoCommentResultStatus.InvalidThread  },
-                { "3", SmileVideoCommentResultStatus.InvalidTicket  },
-                { "4", SmileVideoCommentResultStatus.InvalidPostkey  },
-                { "5", SmileVideoCommentResultStatus.Locked  },
-                { "6", SmileVideoCommentResultStatus.Readonly  },
-                { "7", SmileVideoCommentResultStatus.TooLong  },
-            };
-            SmileVideoCommentResultStatus result;
-            if(map.TryGetValue(rawStatus, out result)) {
-                return result;
-            }
-            return SmileVideoCommentResultStatus.Unknown;
-        }
+        #endregion
     }
 }

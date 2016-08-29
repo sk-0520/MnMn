@@ -46,6 +46,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         public virtual bool NeedSession { get { return false; } }
 
+        /// <summary>
+        /// 削除後に再読み込みを行うか。
+        /// </summary>
+        protected abstract bool IsRemovedReload { get; }
+
         #endregion
 
         #region command
@@ -57,16 +62,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
                 return CreateCommand(
                     o => {
                         RemoveCheckedItemsAsync().ContinueWith(task => {
-                            if(task.Result.IsSuccess) {
-                                System.Threading.Thread.Sleep(Constants.ServiceSmileVideoHistoryReloadWaitTime);
+                            if(IsRemovedReload) {
+                                if(task.Result.IsSuccess) {
+                                    System.Threading.Thread.Sleep(Constants.ServiceSmileVideoHistoryReloadWaitTime);
+                                }
+                                return task.Result;
                             }
-                            return task.Result;
+
+                            return CheckModel.Failure();
                         }).ContinueWith(task => {
-                            if(task.Result.IsSuccess) {
-                                return LoadDefaultCacheAsync();
-                            } else {
-                                return Task.CompletedTask;
+                            if(IsRemovedReload) {
+                                if(task.Result.IsSuccess) {
+                                    return LoadDefaultCacheAsync();
+                                }
                             }
+                            return Task.CompletedTask;
                         }, TaskScheduler.FromCurrentSynchronizationContext()).ConfigureAwait(false);
                     }
                 );
