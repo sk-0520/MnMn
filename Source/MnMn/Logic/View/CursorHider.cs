@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,8 +42,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         {
             Element = element;
 
-            Element.MouseMove += Element_MouseMove;
             HideWaitTimer.Tick += HideWaitTimer_Tick;
+
+            Element.MouseLeave += Element_MouseLeave;
+            Element.MouseMove += Element_MouseMove;
         }
 
         #region property
@@ -54,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         /// <summary>
         /// 隠れた状態のカーソル。
         /// </summary>
-        public Cursor HiddenCursor { get; set; } = Cursors.No;
+        public Cursor HiddenCursor { get; set; } = Cursors.None;
 
         /// <summary>
         /// 判定用タイマー。
@@ -83,14 +86,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
 
         #endregion
 
-        private void Element_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        #region function
+
+        void ShowCursor()
         {
             HideWaitTimer.Stop();
+            Element.Cursor = DefaultCursor;
+            IsHidden = false;
+        }
+
+        #endregion
+
+        private void Element_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ShowCursor();
+        }
+
+        private void Element_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
             LastCursorMoveTime = DateTime.Now;
 
             if(IsHidden) {
-                Element.Cursor = DefaultCursor;
+                ShowCursor();
             } else {
+                HideWaitTimer.Stop();
                 HideWaitTimer.Interval = HideTime;
                 HideWaitTimer.Start();
             }
@@ -99,6 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.View
         private void HideWaitTimer_Tick(object sender, EventArgs e)
         {
             if(HideTime <= DateTime.Now - LastCursorMoveTime) {
+                Debug.WriteLine("hidden!");
                 Element.Cursor = HiddenCursor;
                 IsHidden = true;
                 HideWaitTimer.Stop();
