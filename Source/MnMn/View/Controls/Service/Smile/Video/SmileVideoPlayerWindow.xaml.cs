@@ -16,6 +16,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
@@ -24,6 +25,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
     /// </summary>
     public partial class SmileVideoPlayerWindow: System.Windows.Window
     {
+        #region property
+
+        #endregion
+
         public SmileVideoPlayerWindow()
         {
             InitializeComponent();
