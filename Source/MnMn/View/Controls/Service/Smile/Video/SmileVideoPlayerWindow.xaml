@@ -628,13 +628,14 @@
                     <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
                   </ToggleButton>
                   <Slider
+                    ToolTip="コメント有効領域"
                     Orientation="Vertical"
                     Minimum="50"
                     Maximum="100"
                     IsDirectionReversed="True"
                     Value="{Binding CommentEnabledPercent}"
                   />
-                  <ToggleButton Height="20" ToolTip="投稿者コメントもコメント位置制限対象とする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
+                  <ToggleButton ToolTip="投稿者コメントもコメント有効領域の制限対象にする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
                     <Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />
                   </ToggleButton>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
