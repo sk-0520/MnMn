@@ -19,6 +19,7 @@
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ButtonDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
@@ -252,7 +253,13 @@
       </DockPanel>
     </TabItem>
 
-    <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}">
+    <TabItem DataContext="{Binding AppIssueManager}">
+      <TabItem.Header>
+        <DockPanel>
+          <Button DockPanel.Dock="Right" Command="{Binding ReloadCommand}" Style="{StaticResource ReloadButton}"/>
+          <TextBlock>次回リリース</TextBlock>
+        </DockPanel>
+      </TabItem.Header>
       <WebBrowser x:Name="issueBrowser" />
     </TabItem>
 

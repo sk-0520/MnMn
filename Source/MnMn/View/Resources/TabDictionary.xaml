@@ -4,14 +4,12 @@
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+    <ResourceDictionary Source="/View/Resources/ButtonDictionary.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <Style x:Key="TabReloadButton" TargetType="Button">
+  <Style x:Key="TabReloadButton" TargetType="Button" BasedOn="{StaticResource ReloadButton}">
     <Setter Property="Command" Value="{Binding ReloadCommand}" />
     <Setter Property="IsEnabled" Value="{Binding CanLoad}" />
-    <Setter Property="FontFamily" Value="Webdings" />
-    <!--<Setter Property="FontSize" Value="18" />-->
-    <Setter Property="Content" Value="q" />
   </Style>
 
   <Style x:Key="TabHeader" TargetType="StackPanel">

@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -38,6 +39,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region property
 
         WebBrowser IssueBrowser { get; set; }
+
+        #endregion
+
+        #region command
+
+        public ICommand ReloadCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    if(IssueBrowser.Source == null) {
+                        // 初回表示は ShowView に任せる
+                        return;
+                    }
+                    // ページ変わってるかもしれないから指定ページを読み込み
+                    IssueBrowser.Navigate(Constants.AppUriIssueResolved);
+                });
+            }
+        }
 
         #endregion
 
