@@ -230,6 +230,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            GC.Collect();
 
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Default;
 

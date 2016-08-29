@@ -2247,6 +2247,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // プレイヤー立ち上げ時は null
             if(Information != null) {
                 Information.SaveSetting(false);
+                // 軽めにGC
+                Mediation.Order(new AppCleanMemoryOrderModel(false));
             }
 
             var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);
