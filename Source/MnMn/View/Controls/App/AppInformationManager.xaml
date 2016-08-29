@@ -256,7 +256,7 @@
     <TabItem DataContext="{Binding AppIssueManager}">
       <TabItem.Header>
         <DockPanel>
-          <Button DockPanel.Dock="Right" Style="{StaticResource ReloadButton}"/>
+          <Button DockPanel.Dock="Right" Command="{Binding ReloadCommand}" Style="{StaticResource ReloadButton}"/>
           <TextBlock>次回リリース</TextBlock>
         </DockPanel>
       </TabItem.Header>
