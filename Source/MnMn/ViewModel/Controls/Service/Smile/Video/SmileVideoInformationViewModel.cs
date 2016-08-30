@@ -126,25 +126,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region property
 
+        /// <summary>
+        /// 橋渡し。
+        /// </summary>
         Mediation Mediation { get; }
+        /// <summary>
+        /// 動画サービス設定。。
+        /// </summary>
         SmileVideoSettingModel Setting { get; set; }
+        /// <summary>
+        /// 自身の初期化時に所持している動画情報。
+        /// </summary>
         SmileVideoInformationFlags InformationFlags { get; }
+        /// <summary>
+        /// 動画情報を読み込む必要があるか。
+        /// <para>全情報を保持していなければ何かしらのデータを引っ張ってくる必要あり。</para>
+        /// </summary>
         public bool NeedLoadInformationFlag { get { return InformationFlags != SmileVideoInformationFlags.All; } }
-
+        /// <summary>
+        /// 本動画に対する個別設定。
+        /// </summary>
         SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
-        FileInfo IndividualVideoSettingFile { get; set; }
+
+        #region service
 
         RawSmileVideoThumbModel Thumb { get; set; }
         FeedSmileVideoItemModel Feed { get; set; }
         RawSmileContentsSearchItemModel Search { get; }
-
+        /// <summary>
+        /// フィードデータの詳細部。
+        /// </summary>
         RawSmileVideoFeedDetailModel FeedDetail { get; set; }
 
         RawSmileVideoGetflvModel Getflv { get; set; }
         public RawSmileVideoGetthreadkeyModel Getthreadkey { get; private set; }
 
+        #endregion
+
         #region ファイル
 
+        /// <summary>
+        /// 動画個別設定。
+        /// </summary>
+        FileInfo IndividualVideoSettingFile { get; set; }
         /// <summary>
         /// キャッシュディレクトリ。
         /// </summary>
@@ -177,9 +201,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public string DescriptionHtmlSource { get; private set; }
         public string PageVideoToken { get; private set; }
-
+        /// <summary>
+        /// 元にしている動画生情報。
+        /// </summary>
         public SmileVideoInformationSource InformationSource { get; private set; }
 
+        /// <summary>
+        /// サムネイル読み込み状態。
+        /// </summary>
         public LoadState ThumbnailLoadState
         {
             get { return this._thumbnailLoadState; }
@@ -191,6 +220,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// 動画情報読込状態。
+        /// <para>使ってないと思ったらいたるところで使ってて困った。</para>
+        /// </summary>
         public LoadState InformationLoadState
         {
             get { return this._informationLoadState; }
@@ -202,24 +235,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// ページ読み込み状態。
+        /// </summary>
         public LoadState PageHtmlLoadState
         {
             get { return this._pageHtmlLoadState; }
             set { SetVariableValue(ref this._pageHtmlLoadState, value); }
         }
 
+        /// <summary>
+        /// 関連動画読み込み状態。
+        /// </summary>
         public LoadState RelationVideoLoadState
         {
             get { return this._relationVideoLoadState; }
             set { SetVariableValue(ref this._relationVideoLoadState, value); }
         }
-
+        /// <summary>
+        /// 動画の長さを保持しているか。
+        /// </summary>
         public bool HasLength { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.Length); } }
+        /// <summary>
+        /// 視聴数を保持しているか。
+        /// </summary>
         public bool HasViewConter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.ViewCounter); } }
+        /// <summary>
+        /// コメント数を保持しているか。
+        /// </summary>
         public bool HasCommentCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.CommentCounter); } }
+        /// <summary>
+        /// マイリスト数を保持しているか。
+        /// </summary>
         public bool HasMylistCounter { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.MylistCounter); } }
+        /// <summary>
+        /// 投稿日を保持しているか。
+        /// </summary>
         public bool HasFirstRetrieve { get { return InformationFlags.HasFlag(SmileVideoInformationFlags.FirstRetrieve); } }
 
+        [Obsolete]
         public bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
 
         /// <summary>
