@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override bool CanRemove { get; } = true;
 
-        public override string MyListName { get { return MyList.DefaultMyListName.DisplayText; } }
+        public override string MyListName { get { return Properties.Resources.String_Service_Smile_MyList_DefaultMyListName; } }
 
         public override string MyListFolderId { get { return string.Empty; } }
         public override string MyListSort { get { return string.Empty; } }

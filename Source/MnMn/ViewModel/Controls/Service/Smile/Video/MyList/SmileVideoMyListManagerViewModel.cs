@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         async Task CreateAccountMyListAsync()
         {
             var myListIds = AccountMyList.Select(i => i.MyListId);
-            var newMyListName = TextUtility.ToUniqueDefault(MyList.CreateGroupName.DisplayText, AccountMyList.Select(i => i.MyListName));
+            var newMyListName = TextUtility.ToUniqueDefault(Properties.Resources.String_Service_Smile_MyList_CreateGroupName, AccountMyList.Select(i => i.MyListName));
 
             var myList = GetMyListApi();
 
