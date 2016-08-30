@@ -351,7 +351,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Preparation;
 
-            var cacheFilePath = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "msg", "xml"));
+            //TODO; キャッシュチェック時のファイル処理関係は共通化可能
+            var cacheFilePath = Information.MsgFile.FullName;
             if(File.Exists(cacheFilePath)) {
                 var fileInfo = new FileInfo(cacheFilePath);
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {

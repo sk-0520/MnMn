@@ -161,6 +161,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ///動画実情報ファイル。
         /// </summary>
         public FileInfo GetflvFile { get; private set; }
+        /// <summary>
+        /// コメントファイル。
+        /// </summary>
+        public FileInfo MsgFile { get; private set; }
 
         #endregion
 
@@ -831,6 +835,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
+            MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
