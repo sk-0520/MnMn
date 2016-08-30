@@ -154,9 +154,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public FileInfo WatchPageHtmlFile { get; private set; }
         /// <summary>
-        /// サムネイル画像ファイルパス。
+        /// サムネイル画像ファイル。
         /// </summary>
         public FileInfo ThumbnaiImageFile { get; private set; }
+        /// <summary>
+        ///動画実情報ファイル。
+        /// </summary>
+        public FileInfo GetflvFile { get; private set; }
 
         #endregion
 
@@ -826,6 +830,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("page", "html")));
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
+            GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
@@ -940,8 +945,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 if(rawVideoGetflvModel != null) {
                     SetGetflvModel(rawVideoGetflvModel);
                     if(isSave) {
-                        var path = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
-                        SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+                        SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
                     }
                     return CheckModel.Success();
                 } else {
