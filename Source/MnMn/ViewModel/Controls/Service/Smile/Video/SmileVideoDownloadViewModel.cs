@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoInformationViewModel Information { get; set; }
 
-        protected DirectoryInfo DownloadDirectory { get; set; }
+        //protected DirectoryInfo DownloadDirectory { get; set; }
 
         protected FileInfo VideoFile { get; set; }
 
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(rawVideoGetflvModel != null) {
                 Information.SetGetflvModel(rawVideoGetflvModel);
 
-                var path = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
+                var path = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
                 SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
             }
 
@@ -349,7 +349,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Preparation;
 
-            var cacheFilePath = Path.Combine(DownloadDirectory.FullName, PathUtility.CreateFileName(VideoId, "msg", "xml"));
+            var cacheFilePath = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "msg", "xml"));
             if(File.Exists(cacheFilePath)) {
                 var fileInfo = new FileInfo(cacheFilePath);
                 if(msgCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
@@ -443,15 +443,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var commentTask = LoadMsgAsync(Constants.ServiceSmileVideoMsgCacheSpan).ContinueWith(task => LoadCommentAsync(task.Result), TaskScheduler.FromCurrentSynchronizationContext());
 
             // キャッシュとかエコノミー確認であれこれ分岐
-            Debug.Assert(DownloadDirectory != null);
+            Debug.Assert(Information != null);
 
             if(Information.MovieType == SmileVideoMovieType.Swf && Information.ConvertedSwf) {
-                var f = new FileInfo(Path.Combine(DownloadDirectory.FullName, Information.GetVideoFileName(false)));
+                var f = new FileInfo(Path.Combine(Information.CacheDirectory.FullName, Information.GetVideoFileName(false)));
                 LoadVideoFromCache(f);
                 return;
             }
 
-            var normalVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, Information.GetVideoFileName(false)));
+            var normalVideoFile = new FileInfo(Path.Combine(Information.CacheDirectory.FullName, Information.GetVideoFileName(false)));
             var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, Information.SizeHigh);
             if(normalHeadPosition == isDonwloaded) {
                 // ダウンロード済み
@@ -465,7 +465,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // エコノミーキャッシュが存在しても非エコノミーでダウンロードできるなら新たにファイルを落とす。
             IsEconomyMode = Information.IsEconomyMode;
             if(IsEconomyMode) {
-                var economyVideoFile = new FileInfo(Path.Combine(DownloadDirectory.FullName, Information.GetVideoFileName(true)));
+                var economyVideoFile = new FileInfo(Path.Combine(Information.CacheDirectory.FullName, Information.GetVideoFileName(true)));
                 var economyHeadPosition = GetDownloadHeadPosition(economyVideoFile, Information.SizeLow);
                 if(economyHeadPosition == isDonwloaded) {
                     // エコノミーダウンロード済み
@@ -497,13 +497,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             InformationLoadState = LoadState.Loading;
 
-            var baseDir = RestrictUtility.Block(() => {
-                var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                return (DirectoryInfo)response.Result;
-            });
-            //TODO: キャッシュディレクトリ処理重複
-            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId));
-            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
+            //var baseDir = RestrictUtility.Block(() => {
+            //    var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            //    return (DirectoryInfo)response.Result;
+            //});
+            ////TODO: キャッシュディレクトリ処理重複
+            ////DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId));
+            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
 
             OnLoadGetthumbinfoStart();
             //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
@@ -568,12 +568,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             InformationLoadState = LoadState.Loading;
 
-            var baseDir = RestrictUtility.Block(() => {
-                var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                return (DirectoryInfo)response.Result;
-            });
-            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoInformation.VideoId));
-            DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoInformation.VideoId));
+            //var baseDir = RestrictUtility.Block(() => {
+            //    var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
+            //    return (DirectoryInfo)response.Result;
+            //});
+            ////DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoInformation.VideoId));
+            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoInformation.VideoId));
 
             OnLoadGetthumbinfoStart();
             Information = videoInformation;

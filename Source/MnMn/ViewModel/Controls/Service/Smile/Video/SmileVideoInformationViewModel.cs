@@ -60,6 +60,9 @@ using HtmlAgilityPack;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
+    /// <summary>
+    /// 動画情報。
+    /// </summary>
     public class SmileVideoInformationViewModel: ViewModelBase, IGarbageCollection
     {
         #region variable
@@ -139,7 +142,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         RawSmileVideoGetflvModel Getflv { get; set; }
 
+        #region ファイル
+
+        /// <summary>
+        /// キャッシュディレクトリ。
+        /// </summary>
         public DirectoryInfo CacheDirectory { get; private set; }
+        /// <summary>
+        /// 視聴ページHTMLファイル。
+        /// </summary>
+        public FileInfo WatchPageHtmlFile { get; private set; }
+        /// <summary>
+        /// サムネイル画像ファイルパス。
+        /// </summary>
+        public FileInfo ThumbnaiImageFile { get; private set; }
+
+        #endregion
 
         /// <summary>
         /// 視聴ページのHTMLソース。
@@ -222,19 +240,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._referenceCount; }
             set { SetVariableValue(ref this._referenceCount, value); }
         }
-
-        #region ファイル
-
-        /// <summary>
-        /// 視聴ページHTMLファイル。
-        /// </summary>
-        public FileInfo WatchPageHtmlFile { get; private set; }
-        /// <summary>
-        /// サムネイル画像ファイルパス。
-        /// </summary>
-        public FileInfo ThumbnaiImageFile { get; private set; }
-
-        #endregion
 
         #region 生データから取得
 
