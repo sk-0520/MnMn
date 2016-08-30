@@ -326,10 +326,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
         {
-            var getThreadkey = new Getthreadkey(Mediation);
-            var threadkeyModel = await getThreadkey.LoadAsync(
-                Information.ThreadId
-            );
+            //var getThreadkey = new Getthreadkey(Mediation);
+            //var threadkeyModel = await getThreadkey.LoadAsync(
+            //    Information.ThreadId
+            //);
+            await Information.LoadGetthreadkeyAsync();
 
             var msg = new Msg(Mediation);
             return await msg.LoadAsync(
@@ -340,7 +341,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 getCount,
                 rangeHeadMinutes, rangeTailMinutes, rangeGetCount,
                 rangeGetAllCount,
-                threadkeyModel
+                Information.Getthreadkey
             );
         }
 

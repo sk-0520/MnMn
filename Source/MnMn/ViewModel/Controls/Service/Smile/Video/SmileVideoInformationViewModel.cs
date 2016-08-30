@@ -141,6 +141,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         RawSmileVideoFeedDetailModel FeedDetail { get; set; }
 
         RawSmileVideoGetflvModel Getflv { get; set; }
+        public RawSmileVideoGetthreadkeyModel Getthreadkey { get; private set; }
 
         #region ファイル
 
@@ -948,6 +949,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             });
         }
+
+        public Task LoadGetthreadkeyAsync()
+        {
+            var getThreadkey = new Getthreadkey(Mediation);
+            return getThreadkey.LoadAsync(ThreadId).ContinueWith(t => {
+                if(t.IsFaulted) {
+                    return CheckModel.Failure(t.Exception.InnerException);
+                } else {
+                    Getthreadkey = t.Result;
+                    return CheckModel.Success();
+                }
+            });
+        }
+
 
         public Task SetPageHtmlAsync(string html, bool isSave)
         {
