@@ -1060,7 +1060,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             RelationVideoLoadState = LoadState.Loading;
             var getRelation = new Getrelation(Mediation);
-            return getRelation.LoadAsync(VideoId, 1, "p", Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
+            return getRelation.LoadAsync(VideoId, 1, Constants.ServiceSmileVideoRelationVideoSort, Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
                 var relation = task.Result;
 
                 if(!SmileVideoGetrelationUtility.IsSuccessResponse(relation)) {

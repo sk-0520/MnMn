@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             page.ReplaceUriParameters["video-id"] = videoId;
             page.ReplaceUriParameters["page"] = pageNumber.ToString();
             page.ReplaceUriParameters["sort"] = sort;
-            page.ReplaceUriParameters["order"] = orderBy == OrderBy.Ascending? "a": "d";
+            page.ReplaceUriParameters["order"] = orderBy == OrderBy.Ascending ? Constants.ServiceSmileVideoRelationVideoOrderAscending : Constants.ServiceSmileVideoRelationVideoOrderDescending;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                 page.Dispose();

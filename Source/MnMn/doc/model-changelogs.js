@@ -152,6 +152,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '関連動画のソート関連を App.config に移動'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

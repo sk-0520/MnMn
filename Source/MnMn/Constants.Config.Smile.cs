@@ -130,6 +130,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoCommentSimpleSpace => appConfig.Get("service-smile-smilevideo-comment-simple-space");
 
+        /// <summary>
+        /// 関連動画のソート。
+        /// </summary>
+        public static string ServiceSmileVideoRelationVideoSort => appConfig.Get("service-smile-relation-video-sort");
+        /// <summary>
+        /// 関連動画の昇順。
+        /// </summary>
+        public static string ServiceSmileVideoRelationVideoOrderAscending => appConfig.Get("service-smile-relation-video-order-ascending");
+        /// <summary>
+        /// 関連動画を降順。
+        /// </summary>
+        public static string ServiceSmileVideoRelationVideoOrderDescending => appConfig.Get("service-smile-relation-video-order-descending");
+
         #endregion
 
         #region setting
