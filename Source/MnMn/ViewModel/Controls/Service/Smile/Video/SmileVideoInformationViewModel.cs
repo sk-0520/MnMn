@@ -925,6 +925,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        public Task<CheckModel> LoadGetflvAsync(bool isSave)
+        {
+            if(InformationLoadState == LoadState.Failure) {
+                return Task.FromResult(CheckModel.Failure());
+            }
+
+            var getflv = new Getflv(Mediation);
+
+            return getflv.LoadAsync(VideoId, WatchUrl, MovieType).ContinueWith(t => {
+                var rawVideoGetflvModel = t.Result;
+
+                if(rawVideoGetflvModel != null) {
+                    SetGetflvModel(rawVideoGetflvModel);
+                    if(isSave) {
+                        var path = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
+                        SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+                    }
+                    return CheckModel.Success();
+                } else {
+                    return CheckModel.Failure();
+                }
+            });
+        }
+
         public Task SetPageHtmlAsync(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loading;

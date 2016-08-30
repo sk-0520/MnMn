@@ -234,27 +234,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadGetflvEnd()
         { }
 
-        Task<RawSmileVideoGetflvModel> LoadGetflvFromServiceAsync()
-        {
-            if(Information.InformationLoadState == LoadState.Failure) {
-                return Task.FromResult(default(RawSmileVideoGetflvModel));
-            }
+        //Task<RawSmileVideoGetflvModel> LoadGetflvFromServiceAsync()
+        //{
+        //    if(Information.InformationLoadState == LoadState.Failure) {
+        //        return Task.FromResult(default(RawSmileVideoGetflvModel));
+        //    }
 
-            var getflv = new Getflv(Mediation);
-            return getflv.LoadAsync(VideoId, Information.WatchUrl, Information.MovieType);
-        }
+        //    var getflv = new Getflv(Mediation);
+        //    return getflv.LoadAsync(VideoId, Information.WatchUrl, Information.MovieType);
+        //}
 
         async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
 
-            var rawVideoGetflvModel = await LoadGetflvFromServiceAsync();
-            if(rawVideoGetflvModel != null) {
-                Information.SetGetflvModel(rawVideoGetflvModel);
+            //var rawVideoGetflvModel = await LoadGetflvFromServiceAsync();
+            //if(rawVideoGetflvModel != null) {
+            //    Information.SetGetflvModel(rawVideoGetflvModel);
 
-                var path = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
-                SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
-            }
+            //    var path = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
+            //    SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
+            //}
+            var result = await Information.LoadGetflvAsync(true);
 
             OnLoadGetflvEnd();
         }
