@@ -943,7 +943,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
-                    SetGetflvModel(rawVideoGetflvModel);
+                    Getflv = rawVideoGetflvModel;
                     if(isSave) {
                         SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
                     }
@@ -1054,10 +1054,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)
-        {
-            Getflv = getFlvModel;
-        }
+        //public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)
+        //{
+        //    Getflv = getFlvModel;
+        //}
 
         //public void SetThumbModel(RawSmileVideoThumbModel thumbModel)
         //{
