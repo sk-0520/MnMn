@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// コメントのテキスト描画方法。
         /// </summary>
-        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind => appConfig.Get("setting-service-smile-smilevideo-player-TextShowKind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
+        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind => appConfig.Get("setting-service-smile-smilevideo-player-text_show_kind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
         /// <summary>
         /// コメントを自動スクロールするか。
         /// </summary>
