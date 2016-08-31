@@ -135,7 +135,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'ヘルプのメールアドレスが古かった'
 					},
 					{
 						'revision': '',
