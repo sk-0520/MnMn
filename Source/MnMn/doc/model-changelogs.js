@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#113: プレイヤーにリサイズグリップをつける'
 					},
 					{
 						'revision': '',
