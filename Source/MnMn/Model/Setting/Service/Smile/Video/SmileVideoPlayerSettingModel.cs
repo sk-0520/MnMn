@@ -45,10 +45,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool ShowDetailArea { get; set; } = Constants.SettingServiceSmileVideoPlayerShowDetailArea;
 
         /// <summary>
-        /// プレイヤーのコメント欄を表示するか。
+        /// プレイヤーのコメント一覧を表示するか。
+        /// <para>通常ウィンドウ。</para>
         /// </summary>
         [DataMember]
-        public bool ShowCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerShowCommentList;
+        public bool ShowNormalWindowCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerShowNormalWindowCommentList;
+        /// <summary>
+        /// プレイヤーのコメント一覧を表示するか。
+        /// <para>フルスクリーン。</para>
+        /// </summary>
+        [DataMember]
+        public bool ShowFullScreenCommentList { get; set; } = Constants.SettingServiceSmileVideoPlayerShowFullScreenCommentList;
 
         /// <summary>
         /// コメント欄を自動スクロールするか。

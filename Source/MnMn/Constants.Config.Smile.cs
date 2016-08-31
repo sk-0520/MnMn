@@ -267,8 +267,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SettingServiceSmileVideoPlayerShowDetailArea => appConfig.Get("setting-service-smile-smilevideo-player-show-detail-area", bool.Parse);
         /// <summary>
         /// コメントリストを表示するか。
+        /// <para>通常ウィンドウ。</para>
         /// </summary>
-        public static bool SettingServiceSmileVideoPlayerShowCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-comment-list", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerShowNormalWindowCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-normal-window-comment-list", bool.Parse);
+        /// <summary>
+        /// コメントリストを表示するか。
+        /// <para>通常ウィンドウ。</para>
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerShowFullScreenCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-fullscreen-comment-list", bool.Parse);
         /// <summary>
         /// コメント投稿時間を表示するか。
         /// </summary>

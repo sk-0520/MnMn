@@ -328,8 +328,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool PlayerShowCommentArea
         {
-            get { return Setting.Player.ShowCommentList; }
-            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowCommentList)); }
+            get
+            {
+                return IsNormalWindow ? Setting.Player.ShowNormalWindowCommentList : Setting.Player.ShowFullScreenCommentList;
+            }
+            set
+            {
+                var propertyName = IsNormalWindow ? nameof(Setting.Player.ShowNormalWindowCommentList) : nameof(Setting.Player.ShowFullScreenCommentList);
+
+                SetPropertyValue(Setting.Player, value, propertyName);
+            }
         }
 
         /// <summary>
@@ -1141,6 +1149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         ResizeBorderThickness = new Thickness(0);
                         WindowBorderThickness = new Thickness(0);
                     }
+                    CallOnPropertyChange(nameof(PlayerShowCommentArea));
                 }
             }
         }
