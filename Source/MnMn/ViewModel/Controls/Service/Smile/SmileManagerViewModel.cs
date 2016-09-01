@@ -152,13 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            //TODO: #88
-            var tasks = new[] {
-                UsersManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
-                VideoManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
-                SettingManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
-            };
-            return Task.WhenAll(tasks).ContinueWith(t => {
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
                 return t.Result.Sum();
             });
         }
