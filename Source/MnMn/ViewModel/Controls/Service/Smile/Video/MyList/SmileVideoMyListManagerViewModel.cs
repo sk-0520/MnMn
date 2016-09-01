@@ -730,9 +730,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     IsSelectedSearch = true;
                 }
             }
-
-            base.ShowViewCore();
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

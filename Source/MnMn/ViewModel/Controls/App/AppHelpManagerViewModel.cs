@@ -45,6 +45,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region ManagerViewModelBase
 
+        protected override void ShowViewCore()
+        {
+            if(HelpBrowser.Source == null) {
+                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
+            }
+        }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             return GarbageCollectionDummyResult;
@@ -63,16 +73,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void UninitializeView(MainWindow view)
         {
         }
-
-        protected override void ShowViewCore()
-        {
-            base.ShowViewCore();
-
-            if(HelpBrowser.Source == null) {
-                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
-            }
-        }
-
         #endregion
     }
 }

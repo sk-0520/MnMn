@@ -80,8 +80,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         protected override void ShowViewCore()
         {
-            base.ShowViewCore();
-
             if(SelectedItem != null) {
                 return;
             }
@@ -89,6 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             SelectedItem = ItemsList.First();
             SelectedItem.LoadDefaultCacheAsync().ConfigureAwait(false);
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

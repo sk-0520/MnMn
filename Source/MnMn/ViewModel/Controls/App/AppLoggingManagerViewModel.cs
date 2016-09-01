@@ -179,8 +179,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            base.ShowViewCore();
-
             if(LogList.Any()) {
                 LogListBox.Dispatcher.BeginInvoke(new Action(() => {
                     LogListBox.ScrollIntoView(LogList.Last());

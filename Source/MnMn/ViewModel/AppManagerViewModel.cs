@@ -186,6 +186,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region ManagerViewModelBase
 
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task InitializeAsync()
         {
             return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));

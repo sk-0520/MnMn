@@ -61,12 +61,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        #region ManagerViewModelBas
+        #region ManagerViewModelBase
 
         protected override void ShowViewCore()
         {
-            base.ShowViewCore();
-
             if(IssueBrowser.Source == null) {
                 // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
                 dynamic activeX = IssueBrowser.GetType().InvokeMember(
@@ -81,6 +79,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 IssueBrowser.Navigate(Constants.AppUriIssueResolved);
             }
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {

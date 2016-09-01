@@ -95,8 +95,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override void ShowViewCore()
         {
-            base.ShowViewCore();
-
             CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
                 CallOnPropertyChangeDisplayItem();
             }).ConfigureAwait(false);
@@ -104,8 +102,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override void HideViewCore()
         {
-            base.HideViewCore();
-
             CallOnPropertyChangeDisplayItem();
         }
 

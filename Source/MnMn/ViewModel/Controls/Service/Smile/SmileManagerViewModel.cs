@@ -113,6 +113,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         #region ManagerViewModelBase
 
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
+
         public async override Task InitializeAsync()
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));

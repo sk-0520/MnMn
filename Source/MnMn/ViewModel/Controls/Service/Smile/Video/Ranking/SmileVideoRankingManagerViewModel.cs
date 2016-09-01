@@ -198,12 +198,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         protected override void ShowViewCore()
         {
-            base.ShowViewCore();
-
             if(!RankingCategoryGroupItems.Any()) {
                 LoadRankingCategoryAsync();
             }
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

@@ -173,6 +173,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region ManagerViewModelBase
 
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
+
         Task<long> GarbageCollectionCahceVideoAsync(string videoId, DirectoryInfo baseDirectory, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(videoId);

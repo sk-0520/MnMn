@@ -120,11 +120,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         protected override void ShowViewCore()
         {
-            base.ShowViewCore();
-
             EditingAccountName = Setting.Account.Name;
             EditingAccountPassword = Setting.Account.Password;
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

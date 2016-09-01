@@ -338,6 +338,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region ManagerViewModelBase
 
+        protected override void ShowViewCore()
+        {
+            if(UpdateBrowser.Source == null) {
+                LoadChangelogAsync().ContinueWith(_ => {
+                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
+                        SetUpdateStateViewAsync().ConfigureAwait(false);
+                    }
+                }).ConfigureAwait(false);
+            }
+        }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             return GarbageCollectionDummyResult;
@@ -360,16 +374,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             //throw new NotImplementedException();
         }
 
-        protected override void ShowViewCore()
-        {
-            if(UpdateBrowser.Source == null) {
-                LoadChangelogAsync().ContinueWith(_ => {
-                    if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
-                        SetUpdateStateViewAsync().ConfigureAwait(false);
-                    }
-                }).ConfigureAwait(false);
-            }
-        }
 
         #endregion
 

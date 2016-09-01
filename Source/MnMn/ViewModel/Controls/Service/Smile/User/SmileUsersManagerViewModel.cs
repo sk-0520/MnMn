@@ -130,8 +130,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             if(LoginUser == null) {
                 LoadLoginUserAsync().ConfigureAwait(false);
             }
-            base.ShowViewCore();
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

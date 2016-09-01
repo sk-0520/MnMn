@@ -472,6 +472,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region ManagerViewModelBase
 
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task InitializeAsync()
         {
             return Task.CompletedTask;
