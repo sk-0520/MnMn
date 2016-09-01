@@ -28,10 +28,16 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
+    /// <summary>
+    /// 各 UI を管理する基底クラス。
+    /// </summary>
     public abstract class ManagerViewModelBase: ViewModelBase
     {
         #region define
 
+        /// <summary>
+        /// <see cref="GarbageCollectionAsync(GarbageCollectionLevel, CacheSpan)"/>時に何もしない<see cref="Task"/>。
+        /// </summary>
         protected static Task<long> GarbageCollectionDummyResult { get; } = Task.FromResult(0L);
 
         #endregion
@@ -51,14 +57,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region property
 
+        /// <summary>
+        /// 通信役。
+        /// </summary>
         protected Mediation Mediation { get; set; }
 
+        /// <summary>
+        /// 表示されているか。
+        /// </summary>
         public bool IsVisible
         {
             get { return this._isVisible; }
             private set { SetVariableValue(ref this._isVisible, value); }
         }
 
+        /// <summary>
+        /// 選択(表示)中マネージャ。
+        /// </summary>
         public ManagerViewModelBase SelectedManager
         {
             get { return this._selectedManager; }
@@ -76,6 +91,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
+        /// <summary>
+        /// 自身の保持する子マネージャ一覧。
+        /// </summary>
         public IEnumerable<ManagerViewModelBase> ManagerChildren
         {
             get
@@ -101,6 +119,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <returns></returns>
         protected abstract IEnumerable<ManagerViewModelBase> GetManagerChildren();
 
+        /// <summary>
+        /// UI 表示処理。
+        /// </summary>
         protected void ShowView()
         {
             IsVisible = true;
@@ -112,19 +133,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
+        /// <summary>
+        /// UI 非表示処理。
+        /// </summary>
         protected void HideView()
         {
             IsVisible = false;
             HideViewCore();
         }
 
+        /// <summary>
+        /// UI 表示で実施される処理。
+        /// </summary>
         protected abstract void ShowViewCore();
 
+        /// <summary>
+        /// UI 非表示で実施される処理。
+        /// </summary>
         protected abstract void HideViewCore();
 
+        /// <summary>
+        /// 初期化処理。
+        /// <para>Viewが云々は関係。</para>
+        /// </summary>
+        /// <returns></returns>
         public abstract Task InitializeAsync();
 
+        /// <summary>
+        /// Viewの初期化処理。
+        /// </summary>
+        /// <param name="view"></param>
         public abstract void InitializeView(MainWindow view);
+        /// <summary>
+        /// Viewの破棄処理。
+        /// </summary>
+        /// <param name="view"></param>
         public abstract void UninitializeView(MainWindow view);
 
         /// <summary>
