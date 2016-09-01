@@ -75,7 +75,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             SearchHistoryItems = CollectionViewSource.GetDefaultView(SearchHistoryList.ViewModelList);
         }
 
-
         #region property
 
         SmileVideoSearchModel SearchModel { get; }
@@ -471,6 +470,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #endregion
 
         #region ManagerViewModelBase
+
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
 
         protected override void ShowViewCore()
         { }

@@ -58,19 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppIssueManagerViewModel AppIssueManager { get; }
         public AppHelpManagerViewModel AppHelpManager { get; }
 
-        public IEnumerable<ManagerViewModelBase> ManagerChildren
-        {
-            get
-            {
-                return new ManagerViewModelBase[] {
-                    AppAboutManager,
-                    AppLoggingManager,
-                    AppIssueManager,
-                    AppHelpManager,
-                };
-            }
-        }
-
         #endregion
 
         #region command
@@ -82,6 +69,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region ManagerViewModelBase
+
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return new ManagerViewModelBase[] {
+                AppAboutManager,
+                AppLoggingManager,
+                AppIssueManager,
+                AppHelpManager,
+            };
+        }
 
         protected override void ShowViewCore()
         { }

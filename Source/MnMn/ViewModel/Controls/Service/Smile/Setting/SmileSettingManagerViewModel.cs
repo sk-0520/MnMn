@@ -118,6 +118,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region SmileVideoCustomManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
         protected override void ShowViewCore()
         {
             EditingAccountName = Setting.Account.Name;

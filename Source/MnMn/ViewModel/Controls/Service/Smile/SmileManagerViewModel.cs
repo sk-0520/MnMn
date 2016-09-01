@@ -113,6 +113,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         #region ManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return new ManagerViewModelBase[] {
+                UsersManager,
+                VideoManager,
+                SettingManager,
+            };
+        }
+
         protected override void ShowViewCore()
         { }
 
@@ -143,6 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
+            //TODO: #88
             var tasks = new[] {
                 UsersManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
                 VideoManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),

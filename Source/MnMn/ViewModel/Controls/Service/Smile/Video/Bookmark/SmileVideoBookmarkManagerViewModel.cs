@@ -300,6 +300,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region SmileVideoCustomManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
         protected override void ShowViewCore()
         {
             if(SelectedBookmarkNode != null && SelectedBookmarkNodeFinder.CanLoad) {

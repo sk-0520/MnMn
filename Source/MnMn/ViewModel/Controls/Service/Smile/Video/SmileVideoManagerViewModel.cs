@@ -121,16 +121,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
         public SmileVideoCheckItLaterManagerViewModel CheckItLaterManager { get; }
 
-        public IEnumerable<SmileVideoCustomManagerViewModelBase> ManagerItems => new SmileVideoCustomManagerViewModelBase[] {
-            SearchManager,
-            RankingManager,
-            NewArrivalsManager,
-            MyListManager,
-            HistoryManager,
-            BookmarkManager,
-            CheckItLaterManager,
-        };
-
         #endregion
 
         #region command
@@ -172,6 +162,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region ManagerViewModelBase
+
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return new ManagerViewModelBase[] {
+                SearchManager,
+                RankingManager,
+                NewArrivalsManager,
+                MyListManager,
+                HistoryManager,
+                BookmarkManager,
+                CheckItLaterManager,
+            };
+        }
 
         protected override void ShowViewCore()
         { }
@@ -237,7 +240,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
                 // 裏で走らせとく
                 CheckUpdateAsync().ContinueWith(t => {
                     CheckItLaterCheckTimer.Start();
@@ -247,7 +250,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public override void InitializeView(MainWindow view)
         {
-            foreach(var item in ManagerItems) {
+            foreach(var item in ManagerChildren) {
                 item.InitializeView(view);
             }
         }
@@ -257,14 +260,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             CheckItLaterCheckTimer.Stop();
             CheckItLaterCheckTimer.Tick -= CheckItLaterCheckTimer_Tick;
 
-            foreach(var item in ManagerItems) {
+            foreach(var item in ManagerChildren) {
                 item.UninitializeView(view);
             }
         }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            var items = ManagerItems
+            var items = ManagerChildren
                 .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))
                 .ToList()
             ;

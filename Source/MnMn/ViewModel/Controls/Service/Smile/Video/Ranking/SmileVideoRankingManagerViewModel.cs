@@ -196,6 +196,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region SmileVideoManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
         protected override void ShowViewCore()
         {
             if(!RankingCategoryGroupItems.Any()) {

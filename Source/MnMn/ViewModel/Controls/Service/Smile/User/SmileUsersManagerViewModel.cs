@@ -125,6 +125,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region ManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
         protected override void ShowViewCore()
         {
             if(LoginUser == null) {

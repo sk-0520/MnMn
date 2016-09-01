@@ -93,19 +93,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public AppSettingManagerViewModel AppSettingManager { get; }
         public SmileManagerViewModel SmileManager { get; }
 
-        public IEnumerable<ManagerViewModelBase> ManagerItems
-        {
-            get
-            {
-                return new ManagerViewModelBase[] {
-                    AppUpdateManager,
-                    AppInformationManager,
-                    AppSettingManager,
-                    SmileManager
-                };
-            }
-        }
-
         public SessionViewModelBase SmileSession { get; }
 
         #region window
@@ -186,6 +173,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region ManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return new ManagerViewModelBase[] {
+                AppUpdateManager,
+                AppInformationManager,
+                AppSettingManager,
+                SmileManager
+            };
+        }
+
         protected override void ShowViewCore()
         { }
 
@@ -194,14 +191,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override Task InitializeAsync()
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.InitializeAsync()));
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync()));
         }
 
         public override void InitializeView(MainWindow view)
         {
             View = (MainWindow)view;
 
-            foreach(var manager in ManagerItems) {
+            foreach(var manager in ManagerChildren) {
                 manager.InitializeView(view);
             }
 
@@ -224,14 +221,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public override void UninitializeView(MainWindow view)
         {
-            foreach(var manager in ManagerItems) {
+            foreach(var manager in ManagerChildren) {
                 manager.UninitializeView(view);
             }
         }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            return Task.WhenAll(ManagerItems.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
                 return t.Result.Sum();
             });
         }

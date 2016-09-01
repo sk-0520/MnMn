@@ -93,6 +93,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         #region CheckItLaterManagerViewModel
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
         protected override void ShowViewCore()
         {
             CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
