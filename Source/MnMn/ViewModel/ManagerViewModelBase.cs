@@ -104,7 +104,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         protected void ShowView()
         {
             IsVisible = true;
+
             ShowViewCore();
+
+            if(ManagerChildren.Any()) {
+                ManagerChildren.First().ShowView();
+            }
         }
 
         protected void HideView()
