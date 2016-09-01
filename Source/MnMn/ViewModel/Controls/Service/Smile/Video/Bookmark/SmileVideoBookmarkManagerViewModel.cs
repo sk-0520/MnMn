@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return Task.CompletedTask;
         }
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
             if(SelectedBookmarkNode != null && SelectedBookmarkNodeFinder.CanLoad) {
                 SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
@@ -315,7 +315,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             if(SelectedBookmarkNode != null) {
                 SelectedBookmarkNode.IsSelected = true;
             }
-            base.ShowView();
+            base.ShowViewCore();
         }
 
         public override void InitializeView(MainWindow view)

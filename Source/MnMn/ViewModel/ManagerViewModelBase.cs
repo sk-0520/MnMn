@@ -101,15 +101,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <returns></returns>
         protected abstract IEnumerable<ManagerViewModelBase> GetManagerChildren();
 
-        protected virtual void ShowView()
+        protected void ShowView()
         {
             IsVisible = true;
+            ShowViewCore();
         }
 
-        protected virtual void HideView()
+        protected void HideView()
         {
             IsVisible = false;
+            HideViewCore();
         }
+
+        protected abstract void ShowViewCore();
+
+        protected abstract void HideViewCore();
 
         public abstract Task InitializeAsync();
 

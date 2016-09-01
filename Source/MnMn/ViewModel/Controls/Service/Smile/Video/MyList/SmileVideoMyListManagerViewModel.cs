@@ -721,7 +721,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region ManagerViewModelBase
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
             if(SelectedAccountFinder == null) {
                 if(AccountMyListViewer.Any()) {
@@ -731,7 +731,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
             }
 
-            base.ShowView();
+            base.ShowViewCore();
         }
 
         public override Task InitializeAsync()

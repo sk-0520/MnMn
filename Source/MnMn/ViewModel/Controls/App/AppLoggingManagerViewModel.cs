@@ -177,9 +177,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void UninitializeView(MainWindow view)
         { }
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
 
             if(LogList.Any()) {
                 LogListBox.Dispatcher.BeginInvoke(new Action(() => {

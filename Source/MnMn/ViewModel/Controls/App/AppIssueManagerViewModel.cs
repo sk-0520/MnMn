@@ -63,9 +63,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region ManagerViewModelBas
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
 
             if(IssueBrowser.Source == null) {
                 // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors

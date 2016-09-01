@@ -176,9 +176,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region ManagerViewModelBase
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
         }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)

@@ -64,9 +64,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
         }
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
 
             if(HelpBrowser.Source == null) {
                 HelpBrowser.Source = new Uri(Constants.HelpFilePath);

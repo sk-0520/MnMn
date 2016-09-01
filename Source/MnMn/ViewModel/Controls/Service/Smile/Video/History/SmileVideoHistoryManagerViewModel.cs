@@ -78,9 +78,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoCustomManagerViewModelBase
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
 
             if(SelectedItem != null) {
                 return;

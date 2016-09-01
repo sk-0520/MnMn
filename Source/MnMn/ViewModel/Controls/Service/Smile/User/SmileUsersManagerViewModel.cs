@@ -125,12 +125,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region ManagerViewModelBase
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
             if(LoginUser == null) {
                 LoadLoginUserAsync().ConfigureAwait(false);
             }
-            base.ShowView();
+            base.ShowViewCore();
         }
 
         public override Task InitializeAsync()

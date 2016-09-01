@@ -360,7 +360,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             //throw new NotImplementedException();
         }
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
             if(UpdateBrowser.Source == null) {
                 LoadChangelogAsync().ContinueWith(_ => {

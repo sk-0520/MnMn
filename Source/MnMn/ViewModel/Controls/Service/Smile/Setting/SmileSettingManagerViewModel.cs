@@ -118,9 +118,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region SmileVideoCustomManagerViewModelBase
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
 
             EditingAccountName = Setting.Account.Name;
             EditingAccountPassword = Setting.Account.Password;

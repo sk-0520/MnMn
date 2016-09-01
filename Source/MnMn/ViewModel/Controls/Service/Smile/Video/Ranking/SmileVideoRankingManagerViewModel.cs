@@ -196,9 +196,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region SmileVideoManagerViewModelBase
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
-            base.ShowView();
+            base.ShowViewCore();
 
             if(!RankingCategoryGroupItems.Any()) {
                 LoadRankingCategoryAsync();
