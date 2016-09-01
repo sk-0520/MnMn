@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -29,13 +30,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
     public abstract class ManagerViewModelBase: ViewModelBase
     {
+        #region define
+
+        protected static Task<long> GarbageCollectionDummyResult { get; } = Task.FromResult(0L);
+
+        #endregion
+
         #region variable
 
-        //bool _visible;
         bool _isVisible;
         ManagerViewModelBase _selectedManager;
-
-        protected Task<long> GarbageCollectionDummyResult { get; } = Task.FromResult(0L);
+        CollectionModel<ManagerViewModelBase> _managerChildren = null;
 
         #endregion
 
@@ -71,25 +76,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
-        //[Obsolete]
-        //public bool Visible
-        //{
-        //    get { return this._visible; }
-        //    set
-        //    {
-        //        if(SetVariableValue(ref this._visible, value)) {
-        //            if(this._visible) {
-        //                ShowView();
-        //            } else {
-        //                HideView();
-        //            }
-        //        }
-        //    }
-        //}
+        public IEnumerable<ManagerViewModelBase> ManagerChildren
+        {
+            get
+            {
+                if(this._managerChildren == null) {
+                    var items = GetManagerChildren();
+                    this._managerChildren = new CollectionModel<ManagerViewModelBase>(items);
+                }
+
+                return this._managerChildren;
+            }
+        }
+
 
         #endregion
 
         #region function
+
+        /// <summary>
+        /// 自身の保持する子マネージャ一覧を取得。
+        /// <para>プロパティでで使用する目的のため原則一回しか呼び出されない。</para>
+        /// </summary>
+        /// <returns></returns>
+        protected abstract IEnumerable<ManagerViewModelBase> GetManagerChildren();
 
         protected virtual void ShowView()
         {
