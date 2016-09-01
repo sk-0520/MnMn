@@ -300,12 +300,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region SmileVideoCustomManagerViewModelBase
 
-        public override Task InitializeAsync()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
-            return Task.CompletedTask;
+            return Enumerable.Empty<ManagerViewModelBase>();
         }
 
-        protected override void ShowView()
+        protected override void ShowViewCore()
         {
             if(SelectedBookmarkNode != null && SelectedBookmarkNodeFinder.CanLoad) {
                 SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
@@ -315,9 +315,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             if(SelectedBookmarkNode != null) {
                 SelectedBookmarkNode.IsSelected = true;
             }
-            base.ShowView();
         }
 
+        protected override void HideViewCore()
+        { }
+
+        public override Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
         public override void InitializeView(MainWindow view)
         {
             this._treeNodes = view.smile.bookmark.treeNodes;

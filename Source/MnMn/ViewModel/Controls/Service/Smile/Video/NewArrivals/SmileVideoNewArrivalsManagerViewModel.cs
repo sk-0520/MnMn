@@ -73,10 +73,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
 
         #region SmileVideoManagerViewModelBase
 
-        protected override void ShowView()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
-            base.ShowView();
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
 
+        protected override void ShowViewCore()
+        {
             if(SelectedItem != null) {
                 return;
             }
@@ -84,6 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
             SelectedItem = ItemsList.First();
             SelectedItem.LoadDefaultCacheAsync().ConfigureAwait(false);
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

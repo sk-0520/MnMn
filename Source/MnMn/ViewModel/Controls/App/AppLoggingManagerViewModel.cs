@@ -159,6 +159,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region AppLoggingManagerViewModel
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
+        protected override void ShowViewCore()
+        {
+            if(LogList.Any()) {
+                LogListBox.Dispatcher.BeginInvoke(new Action(() => {
+                    LogListBox.ScrollIntoView(LogList.Last());
+                }));
+            }
+        }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             return GarbageCollectionDummyResult;
@@ -176,17 +193,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override void UninitializeView(MainWindow view)
         { }
-
-        protected override void ShowView()
-        {
-            base.ShowView();
-
-            if(LogList.Any()) {
-                LogListBox.Dispatcher.BeginInvoke(new Action(() => {
-                    LogListBox.ScrollIntoView(LogList.Last());
-                }));
-            }
-        }
 
         #endregion
 

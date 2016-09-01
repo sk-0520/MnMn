@@ -93,19 +93,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         #region CheckItLaterManagerViewModel
 
-        protected override void ShowView()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
-            base.ShowView();
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
 
+        protected override void ShowViewCore()
+        {
             CheckItLaterFinder.LoadDefaultCacheAsync().ContinueWith(_ => {
                 CallOnPropertyChangeDisplayItem();
             }).ConfigureAwait(false);
         }
 
-        protected override void HideView()
+        protected override void HideViewCore()
         {
-            base.HideView();
-
             CallOnPropertyChangeDisplayItem();
         }
 

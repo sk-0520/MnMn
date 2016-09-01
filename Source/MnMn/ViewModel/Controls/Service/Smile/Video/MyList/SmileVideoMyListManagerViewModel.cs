@@ -721,7 +721,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region ManagerViewModelBase
 
-        protected override void ShowView()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
+        protected override void ShowViewCore()
         {
             if(SelectedAccountFinder == null) {
                 if(AccountMyListViewer.Any()) {
@@ -730,9 +735,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     IsSelectedSearch = true;
                 }
             }
-
-            base.ShowView();
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

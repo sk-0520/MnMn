@@ -101,6 +101,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region ManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task InitializeAsync()
         {
             return Task.CompletedTask;
