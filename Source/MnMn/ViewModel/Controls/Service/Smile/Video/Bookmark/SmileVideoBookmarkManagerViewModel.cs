@@ -141,9 +141,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get
             {
-                return CreateCommand(o => {
-                    UpNode(SelectedBookmarkNode);
-                });
+                return CreateCommand(
+                    o => UpNode(SelectedBookmarkNode),
+                    o => {
+                        if(SelectedBookmarkNode == null) {
+                            return false;
+                        }
+                        var parentNode = GetParentNode(SelectedBookmarkNode);
+                        return 0 < parentNode.NodeItems.IndexOf(SelectedBookmarkNode);
+                    }
+                );
             }
         }
 
@@ -151,9 +158,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get
             {
-                return CreateCommand(o => {
-                    DownNode(SelectedBookmarkNode);
-                });
+                return CreateCommand(
+                    o => DownNode(SelectedBookmarkNode),
+                    o => {
+                        if(SelectedBookmarkNode == null) {
+                            return false;
+                        }
+                        var parentNode = GetParentNode(SelectedBookmarkNode);
+                        return parentNode.NodeItems.Count - 1 > parentNode.NodeItems.IndexOf(SelectedBookmarkNode);
+                    }
+                );
             }
         }
 
