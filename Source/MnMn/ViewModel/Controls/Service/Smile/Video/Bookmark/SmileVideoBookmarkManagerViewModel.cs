@@ -73,9 +73,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 if(SetVariableValue(ref this._selectedBookmarkNode, value)) {
                     if(SelectedBookmarkNode != null) {
                         SelectedBookmarkNode.ClearEditingValue();
+                        var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
+                        SelectedBookmarkNodeFinder = finder;
                     }
-                    var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
-                    SelectedBookmarkNodeFinder = finder;
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             set
             {
                 if(SetVariableValue(ref this._selectedBookmarkNodeFinder, value)) {
-                    if(SelectedBookmarkNodeFinder.CanLoad) {
+                    if(SelectedBookmarkNodeFinder != null && SelectedBookmarkNodeFinder.CanLoad) {
                         SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
                     }
                 }
@@ -122,18 +122,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get
             {
-                return CreateCommand(o => {
-                    InsertNode(SelectedBookmarkNode);
-                });
+                return CreateCommand(
+                    o => InsertNode(SelectedBookmarkNode),
+                    o => SelectedBookmarkNode != null
+                );
             }
         }
         public ICommand RemoveNodeCommand
         {
             get
             {
-                return CreateCommand(o => {
-                    RemoveNode(SelectedBookmarkNode);
-                });
+                return CreateCommand(
+                    o => {
+                        RemoveNode(SelectedBookmarkNode);
+                        SelectedBookmarkNode = GetSelectedNode();
+                    },
+                    o => SelectedBookmarkNode != null
+                );
             }
         }
 
