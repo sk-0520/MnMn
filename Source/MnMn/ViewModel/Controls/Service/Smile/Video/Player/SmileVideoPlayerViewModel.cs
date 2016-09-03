@@ -92,7 +92,10 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
-    public class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView, ICaptionCommand
+    /// <summary>
+    /// プレイヤー管理。
+    /// </summary>
+    public partial class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView, ICaptionCommand
     {
         #region define
 
@@ -104,83 +107,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
         static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
         static readonly Thickness normalWindowBorderThickness = new Thickness(1);
-
-        #endregion
-
-        #region variable
-
-        bool _canVideoPlay;
-        bool _isVideoPlayng;
-
-        float _videoPosition;
-        float _prevStateChangedPosition;
-
-        WindowState _state = WindowState.Normal;
-        double _left;
-        double _top;
-        double _width;
-        double _height;
-        bool _topmost;
-
-        bool _playerShowDetailArea;
-
-        TimeSpan _totalTime;
-        TimeSpan _playTime;
-
-        SmileVideoCommentViewModel _selectedComment;
-
-        LoadState _relationVideoLoadState;
-
-        double _realVideoWidth;
-        double _realVideoHeight;
-        double _baseWidth;
-        double _baseHeight;
-        double _commentAreaWidth = 640;
-        double _commentAreaHeight = 386;
-
-        double _commentEnabledPercent = 100;
-        double _commentEnabledHeight;
-        bool _showEnabledCommentPreviewArea = false;
-        bool _isEnabledOriginalPosterCommentArea = false;
-
-        [Obsolete]
-        GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
-        [Obsolete]
-        GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
-        [Obsolete]
-        GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
-
-        PlayerState _playerState;
-        bool _isBufferingStop;
-
-        IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
-        IReadOnlyList<SmileVideoBookmarkNodeViewModel> _bookmarkItems;
-
-        SmileVideoFilteringCommentType _filteringCommentType;
-        string _filteringUserId;
-        int _commentListCount;
-        int _originalPosterCommentListCount;
-
-        bool _isSelectedComment;
-        bool _isSelectedInformation;
-        bool _isSettedMedia;
-
-        long _secondsDownloadingSize;
-
-        SmileVideoCommentVertical _postCommandVertical = SmileVideoCommentVertical.Normal;
-        SmileVideoCommentSize _postCommandSize = SmileVideoCommentSize.Medium;
-        Color _postCommandColor = Colors.White;
-        string _postBeforeCommand;
-        string _postAfterCommand;
-        string _postCommentBody;
-
-        string _commentInformation;
-
-        bool _isNormalWindow = true;
-        Thickness _resizeBorderThickness = enabledResizeBorderThickness;
-        Thickness _windowBorderThickness = normalWindowBorderThickness;
-
-        bool _showCommentChart;
 
         #endregion
 
