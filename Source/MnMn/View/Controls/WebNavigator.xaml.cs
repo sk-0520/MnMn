@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -285,6 +287,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
         }
 
+        //
+        // 概要:
+        //     ドキュメントのコンテンツを含む System.IO.Stream へ非同期に移動します。
+        //
+        // パラメーター:
+        //   stream:
+        //     ドキュメントのコンテンツを含む System.IO.Stream。
+        //
+        // 例外:
+        //   T:System.ObjectDisposedException:
+        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
+        //
+        //   T:System.InvalidOperationException:
+        //     A reference to the underlying native WebBrowser could not be retrieved.
+        public void NavigateToStream(Stream stream)
+        {
+            this.browser.NavigateToStream(stream);
+        }
+        //
+        // 概要:
+        //     ドキュメントのコンテンツを含む System.String へ非同期に移動します。
+        //
+        // パラメーター:
+        //   text:
+        //     ドキュメントのコンテンツを含む System.String。
+        //
+        // 例外:
+        //   T:System.ObjectDisposedException:
+        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
+        //
+        //   T:System.InvalidOperationException:
+        //     A reference to the underlying native WebBrowser could not be retrieved.
+        public void NavigateToString(string text)
+        {
+            this.browser.NavigateToString(text);
+        }
+        //
+        // 概要:
+        //     現在のページを再読み込みします。
+        //
+        // 例外:
+        //   T:System.ObjectDisposedException:
+        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
+        //
+        //   T:System.InvalidOperationException:
+        //     A reference to the underlying native WebBrowser could not be retrieved.
+        [SecurityCritical]
+        public void Refresh()
+        {
+            this.browser.Refresh();
+        }
+        //
+        // 概要:
+        //     オプションのキャッシュ検証を使用して現在のページを再読み込みします。
+        //
+        // パラメーター:
+        //   noCache:
+        //     キャッシュ検証を行わずに最新の情報に更新するかどうかを指定します。
+        //
+        // 例外:
+        //   T:System.ObjectDisposedException:
+        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
+        //
+        //   T:System.InvalidOperationException:
+        //     A reference to the underlying native WebBrowser could not be retrieved.
+        [SecurityCritical]
+        public void Refresh(bool noCache)
+        {
+            this.browser.Refresh(noCache);
+        }
+
         #endregion
 
         #endregion
@@ -311,7 +384,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void browser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            this.location.Text = e.Uri.ToString();
+            this.location.Text = e.Uri?.ToString() ?? string.Empty;
         }
 
         private void browser_Navigated(object sender, NavigationEventArgs e)

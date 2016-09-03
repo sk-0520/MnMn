@@ -260,7 +260,7 @@
     </TabItem>
 
     <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
-      <WebBrowser x:Name="helpBrowser" />
+      <app_view_controls:WebNavigator x:Name="helpBrowser" IsEnabledUserChangeSource="False" />
     </TabItem>
 
 
