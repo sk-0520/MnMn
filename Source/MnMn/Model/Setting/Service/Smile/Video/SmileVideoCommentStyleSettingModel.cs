@@ -20,48 +20,61 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    /// <summary>
-    /// ウィンドウ情報。
-    /// </summary>
     [DataContract]
-    public class WindowStatusModel: ModelBase, IDeepClone
+    public class SmileVideoCommentStyleSettingModel: SettingModelBase, IDeepClone
     {
         #region property
 
         /// <summary>
-        /// X座標。
+        /// フォント種別。
         /// </summary>
         [DataMember, IsDeepClone]
-        public double Left { get; set; }
+        public string FontFamily { get; set; } = Constants.SettingServiceSmileVideoCommentFontFamily;
         /// <summary>
-        /// Y座標。
+        /// フォントサイズ。
         /// </summary>
         [DataMember, IsDeepClone]
-        public double Top { get; set; }
+        public double FontSize { get; set; } = Constants.SettingServiceSmileVideoCommentFontSize;
         /// <summary>
-        /// 横幅。
+        /// フォント透明度。
         /// </summary>
         [DataMember, IsDeepClone]
-        public double Width { get; set; }
+        public double FontAlpha { get; set; } = Constants.SettingServiceSmileVideoCommentFontAlpha;
         /// <summary>
-        /// 高さ。
+        /// 太字。
         /// </summary>
         [DataMember, IsDeepClone]
-        public double Height { get; set; }
+        public bool FontBold { get; set; } = Constants.SettingServiceSmileVideoCommentFontBold;
+        /// <summary>
+        /// イタリック。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public bool FontItalic { get; set; } = Constants.SettingServiceSmileVideoCommentFontItalic;
+        /// <summary>
+        /// コメント表示時間。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public TimeSpan ShowTime { get; set; } = Constants.SettingServiceSmileVideoCommentShowTime;
+        /// <summary>
+        /// コメントの/と対になるx05cをバックスラッシュに置き換えるか。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public bool ConvertPairYenSlash { get; set; } = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
 
         /// <summary>
-        /// 最前面。
+        /// コメント描画方法。
         /// </summary>
         [DataMember, IsDeepClone]
-        public bool Topmost { get; set; }
+        public TextShowKind TextShowKind { get; set; } = Constants.SettingServiceSmileVideoCommentTextShowKind;
+
 
         #endregion
 

@@ -235,10 +235,17 @@
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
+      <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
+      <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>

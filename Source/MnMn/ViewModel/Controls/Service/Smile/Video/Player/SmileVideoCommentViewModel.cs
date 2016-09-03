@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
-        public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model, SmileVideoSettingModel setting)
+        public SmileVideoCommentViewModel(RawSmileVideoMsgChatModel model, SmileVideoCommentStyleSettingModel setting)
             : base(model)
         {
             Setting = setting;
@@ -90,14 +90,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             FreezableUtility.SafeFreeze(ActualShadow);
             FreezableUtility.SafeFreeze(ActualStroke);
 
-            FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
+            FontSize = GetFontSize(Setting.FontSize, Commands);
 
             Vertical = SmileVideoMsgUtility.GetVerticalAlign(Commands);
         }
 
         #region property
 
-        SmileVideoSettingModel Setting { get; }
+        SmileVideoCommentStyleSettingModel Setting { get; }
 
         /// <summary>
         /// 自身の投稿コメントか。
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 var s = Content;
-                if(Setting.Comment.ConvertPairYenSlash) {
+                if(Setting.ConvertPairYenSlash) {
                     s = ReplaceYenToBackslash(s);
                 }
                 return s;
@@ -224,19 +224,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// フォント名。
         /// </summary>
-        public string FontFamily { get { return Setting.Comment.FontFamily; } }
+        public string FontFamily { get { return Setting.FontFamily; } }
         /// <summary>
         /// 太字か。
         /// </summary>
-        public bool FontBold { get { return Setting.Comment.FontBold; } }
+        public bool FontBold { get { return Setting.FontBold; } }
         /// <summary>
         /// 斜体か。
         /// </summary>
-        public bool FontItalic { get { return Setting.Comment.FontItalic; } }
+        public bool FontItalic { get { return Setting.FontItalic; } }
 
         public TextShowKind TextShowKind
         {
-            get { return Setting.Player.TextShowKind; }
+            get { return Setting.TextShowKind; }
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public Brush ActualStroke { get; private set; }
 
-        public double Opacity { get { return Setting.Comment.FontAlpha; } }
+        public double Opacity { get { return Setting.FontAlpha; } }
 
         public SmileVideoCommentVertical Vertical { get; }
 
@@ -318,7 +318,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public void ChangeFontStyle()
         {
-            FontSize = GetFontSize(Setting.Comment.FontSize, Commands);
+            FontSize = GetFontSize(Setting.FontSize, Commands);
 
             var propertyNames = new[] {
                 nameof(FontSize),
