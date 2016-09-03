@@ -437,6 +437,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayerShowDetailArea = Setting.Player.ShowDetailArea;
             this._showNormalWindowCommentList = Setting.Player.ShowNormalWindowCommentList;
             this._showFullScreenCommentList = Setting.Player.ShowFullScreenCommentList;
+            PlayerVisibleComment = Setting.Player.VisibleComment;
         }
 
         void ExportSetting()
@@ -450,6 +451,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.ShowDetailArea = PlayerShowDetailArea;
             Setting.Player.ShowNormalWindowCommentList = this._showNormalWindowCommentList;
             Setting.Player.ShowFullScreenCommentList = this._showFullScreenCommentList;
+            Setting.Player.VisibleComment = PlayerVisibleComment;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)

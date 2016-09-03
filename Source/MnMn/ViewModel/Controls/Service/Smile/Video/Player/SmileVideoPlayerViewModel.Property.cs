@@ -206,8 +206,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool PlayerVisibleComment
         {
-            get { return Setting.Player.VisibleComment; }
-            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.VisibleComment)); }
+            get { return this._playerVisibleComment; }
+            set { SetVariableValue(ref this._playerVisibleComment, value); }
         }
 
         /// <summary>

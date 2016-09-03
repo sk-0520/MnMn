@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _playerShowDetailArea;
         bool _showNormalWindowCommentList;
         bool _showFullScreenCommentList;
+        bool _playerVisibleComment;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
