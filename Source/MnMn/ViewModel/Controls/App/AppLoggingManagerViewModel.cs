@@ -202,14 +202,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public void AddLog(LogItemModel item)
         {
+            var isLastSelect = SelectedLogItem == null;
+
             lock(LogList) {
+                isLastSelect = isLastSelect || LogList.LastOrDefault() == SelectedLogItem;
                 LogList.Add(item);
             }
 
-            if(IsVisible) {
+            if(IsVisible && isLastSelect) {
                 LogListBox?.Dispatcher.BeginInvoke(new Action(() => {
                     LogListBox.ScrollIntoView(item);
-                }));
+                }), DispatcherPriority.ApplicationIdle);
             }
         }
 
