@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#112: 動画個別設定に最終再生日時を保持させる'
 					},
 					{
 						'revision': '',
