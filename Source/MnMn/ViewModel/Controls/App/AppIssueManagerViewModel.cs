@@ -44,21 +44,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region command
 
-        public ICommand ReloadCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    if(IssueBrowser.Source == null) {
-                        // 初回表示は ShowView に任せる
-                        return;
-                    }
-                    // ページ変わってるかもしれないから指定ページを読み込み
-                    IssueBrowser.Navigate(Constants.AppUriIssueResolved);
-                });
-            }
-        }
-
         #endregion
 
         #region ManagerViewModelBase
@@ -72,16 +57,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         protected override void ShowViewCore()
         {
             if(IssueBrowser.Source == null) {
-                //// http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
-                //dynamic activeX = IssueBrowser.GetType().InvokeMember(
-                //    "ActiveXInstance",
-                //    BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                //    null,
-                //    IssueBrowser,
-                //    new object[] { }
-                //);
-                //activeX.Silent = true;
-
                 IssueBrowser.Navigate(Constants.AppUriIssueResolved);
             }
         }

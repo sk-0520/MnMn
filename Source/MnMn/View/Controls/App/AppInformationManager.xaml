@@ -255,8 +255,8 @@
     </TabItem>
 
     <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}">
-      <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="True" />
-      <!--<app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False" />-->
+      <!--<app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="True" />-->
+      <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False" />
     </TabItem>
 
     <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
