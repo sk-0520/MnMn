@@ -346,5 +346,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 return await RequestPost(page);
             }
         }
+
+        public async Task<SmileJsonResultModel> SortAccountGroupAsync(IReadOnlyList<string> myListIds)
+        {
+            await LoginIfNotLoginAsync();
+
+            var token = await LoadAccountGroupToken(string.Empty);
+            if(token == null) {
+                return SmileJsonResultModel.FailureLoadToken();
+            }
+
+            var multiIds = new MultiStrings(myListIds);
+
+            using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupSort, ServiceType.Smile)) {
+                page.ReplaceRequestParameters["token"] = token;
+                page.ReplaceRequestParameters["group-id-list"] = multiIds.ToString();
+
+                return await RequestPost(page);
+            }
+        }
     }
 }

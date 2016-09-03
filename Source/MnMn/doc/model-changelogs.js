@@ -114,7 +114,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#11: マイリストの並び替え'
 					},
 					{
 						'revision': '',
