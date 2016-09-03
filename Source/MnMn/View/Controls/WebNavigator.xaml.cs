@@ -126,9 +126,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public ICommand BackCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => { this.browser.GoBack(); },
+                    o => this.browser.CanGoBack
+                );
+            }
+        }
+
+        public ICommand ForwardCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => { this.browser.GoForward(); },
+                    o => this.browser.CanGoForward
+                );
+            }
+        }
+
         #endregion
 
         #region function
+
+        #region wrapper
 
         //
         // 概要:
@@ -222,6 +246,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #endregion
+
         #region UserControl
 
         #endregion
@@ -242,5 +268,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        private void browser_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            this.location.Text = e.Uri.ToString();
+        }
+
+        private void browser_Navigated(object sender, NavigationEventArgs e)
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 }

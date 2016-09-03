@@ -20,12 +20,12 @@
 
     <ToolBar Grid.Row="0" Visibility="{Binding IsVisibleToolbar, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <Button Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">home</Button>
-      <Button>back</Button>
-      <Button>next</Button>
-      <TextBox  />
+      <Button Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">back</Button>
+      <Button Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">forward</Button>
+      <TextBox x:Name="location" />
     </ToolBar>
 
-    <WebBrowser x:Name="browser" Grid.Row="1" Loaded="browser_Loaded" />
+    <WebBrowser x:Name="browser" Grid.Row="1" Loaded="browser_Loaded" Navigating="browser_Navigating" Navigated="browser_Navigated" />
 
   </Grid>
 </UserControl>
