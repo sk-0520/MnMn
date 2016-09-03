@@ -403,12 +403,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => {
-                    var finder = o as SmileVideoMyListFinderViewModelBase;
-                    if(finder != null) {
-                        AddBookmarkUserMyList(finder);
+                return CreateCommand(
+                    o => {
+                        var finder = o as SmileVideoMyListFinderViewModelBase;
+                        if(finder != null) {
+                            AddBookmarkUserMyList(finder);
+                        }
+                    },
+                    o => {
+                        var finder = o as SmileVideoMyListFinderViewModelBase;
+                        var canSaveState = new[] {
+                            SourceLoadState.InformationLoading,
+                            SourceLoadState.Completed,
+                        };
+                        return finder != null && canSaveState.Any(l => l == finder.FinderLoadState);
                     }
-                });
+                );
             }
         }
 
