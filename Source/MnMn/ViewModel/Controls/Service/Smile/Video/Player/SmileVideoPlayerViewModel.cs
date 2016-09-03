@@ -438,6 +438,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             this._showNormalWindowCommentList = Setting.Player.ShowNormalWindowCommentList;
             this._showFullScreenCommentList = Setting.Player.ShowFullScreenCommentList;
             PlayerVisibleComment = Setting.Player.VisibleComment;
+            IsAutoScroll = Setting.Player.AutoScrollCommentList;
+
+            IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
+            SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
         }
 
         void ExportSetting()
@@ -452,6 +456,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.ShowNormalWindowCommentList = this._showNormalWindowCommentList;
             Setting.Player.ShowFullScreenCommentList = this._showFullScreenCommentList;
             Setting.Player.VisibleComment = PlayerVisibleComment;
+            Setting.Player.AutoScrollCommentList = IsAutoScroll;
+
+            Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
+            Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)

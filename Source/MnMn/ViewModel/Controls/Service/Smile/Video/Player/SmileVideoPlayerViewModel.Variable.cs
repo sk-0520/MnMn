@@ -50,6 +50,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _showNormalWindowCommentList;
         bool _showFullScreenCommentList;
         bool _playerVisibleComment;
+        bool _isAutoScroll;
+
+        bool _isEnabledSharedNoGood;
+        int _sharedNoGoodScore;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;

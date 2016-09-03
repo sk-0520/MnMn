@@ -215,8 +215,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool IsAutoScroll
         {
-            get { return Setting.Player.AutoScrollCommentList; }
-            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.AutoScrollCommentList)); }
+            get { return this._isAutoScroll; }
+            set { SetVariableValue(ref this._isAutoScroll, value); }
         }
 
         /// <summary>
@@ -224,10 +224,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool IsEnabledSharedNoGood
         {
-            get { return Setting.Comment.IsEnabledSharedNoGood; }
+            get { return this._isEnabledSharedNoGood; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.IsEnabledSharedNoGood))) {
+                if(SetVariableValue(ref this._isEnabledSharedNoGood, value)) {
                     ApprovalComment();
                 }
             }
@@ -237,10 +237,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public int SharedNoGoodScore
         {
-            get { return Setting.Comment.SharedNoGoodScore; }
+            get { return this._sharedNoGoodScore; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.SharedNoGoodScore))) {
+                if(SetVariableValue(ref this._sharedNoGoodScore, value)) {
                     ApprovalComment();
                 }
             }
