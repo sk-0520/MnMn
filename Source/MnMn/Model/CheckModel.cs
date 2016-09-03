@@ -66,6 +66,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
             return new CheckModel(false, null, null);
         }
 
+        public static CheckModel Failure(string message)
+        {
+            return new CheckModel(false, null, message);
+        }
+
+        public static CheckModel Failure(Exception ex)
+        {
+            return new CheckModel(false, ex, ex.ToString());
+        }
+
         #endregion
     }
 }

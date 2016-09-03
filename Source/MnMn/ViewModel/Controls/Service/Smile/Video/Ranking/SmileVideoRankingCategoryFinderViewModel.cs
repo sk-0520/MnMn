@@ -126,6 +126,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region SmileVideoFeedFinderViewModelBase
 
+        [Obsolete]
         protected override bool IsLoadVideoInformation => false;
         protected override SmileVideoInformationFlags InformationFlags => SmileVideoInformationFlags.All;
 

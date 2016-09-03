@@ -176,10 +176,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region ManagerViewModelBase
 
-        protected override void ShowView()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
-            base.ShowView();
+            return Enumerable.Empty<ManagerViewModelBase>();
         }
+
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {

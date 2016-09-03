@@ -580,6 +580,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   新しいマイリスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_MyList_CreateGroupName {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_MyList_CreateGroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   とりあえずマイリスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_MyList_DefaultMyListName {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_MyList_DefaultMyListName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {

@@ -113,6 +113,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         #region ManagerViewModelBase
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return new ManagerViewModelBase[] {
+                UsersManager,
+                VideoManager,
+                SettingManager,
+            };
+        }
+
+        protected override void ShowViewCore()
+        { }
+
+        protected override void HideViewCore()
+        { }
+
         public async override Task InitializeAsync()
         {
             var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
@@ -137,12 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
-            var tasks = new[] {
-                UsersManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
-                VideoManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
-                SettingManager.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan),
-            };
-            return Task.WhenAll(tasks).ContinueWith(t => {
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
                 return t.Result.Sum();
             });
         }

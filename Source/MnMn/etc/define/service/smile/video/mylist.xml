@@ -53,7 +53,7 @@
 		</element>
 	</folder>
 	<sort>
-				<element key="">
+		<element key="">
 			<words>
 				<word key="ja-jp" value="登録が古い順" />
 			</words>
@@ -144,14 +144,4 @@
 			</words>
 		</element>
 	</sort>
-	<create-group-name>
-		<words>
-			<word key="ja-jp" value="新しいマイリスト" />
-		</words>
-	</create-group-name>
-	<default-mylist-name>
-		<words>
-			<word key="ja-jp" value="とりあえずマイリスト" />
-		</words>
-	</default-mylist-name>
 </mylist>

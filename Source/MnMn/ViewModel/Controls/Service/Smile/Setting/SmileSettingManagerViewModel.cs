@@ -118,13 +118,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region SmileVideoCustomManagerViewModelBase
 
-        protected override void ShowView()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
-            base.ShowView();
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
 
+        protected override void ShowViewCore()
+        {
             EditingAccountName = Setting.Account.Name;
             EditingAccountPassword = Setting.Account.Password;
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

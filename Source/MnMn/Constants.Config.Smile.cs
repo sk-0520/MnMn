@@ -130,6 +130,19 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoCommentSimpleSpace => appConfig.Get("service-smile-smilevideo-comment-simple-space");
 
+        /// <summary>
+        /// 関連動画のソート。
+        /// </summary>
+        public static string ServiceSmileVideoRelationVideoSort => appConfig.Get("service-smile-relation-video-sort");
+        /// <summary>
+        /// 関連動画の昇順。
+        /// </summary>
+        public static string ServiceSmileVideoRelationVideoOrderAscending => appConfig.Get("service-smile-relation-video-order-ascending");
+        /// <summary>
+        /// 関連動画を降順。
+        /// </summary>
+        public static string ServiceSmileVideoRelationVideoOrderDescending => appConfig.Get("service-smile-relation-video-order-descending");
+
         #endregion
 
         #region setting
@@ -243,7 +256,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// コメントのテキスト描画方法。
         /// </summary>
-        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind => appConfig.Get("setting-service-smile-smilevideo-player-TextShowKind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
+        public static TextShowKind SettingServiceSmileVideoPlayerTextShowKind => appConfig.Get("setting-service-smile-smilevideo-player-text_show_kind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
         /// <summary>
         /// コメントを自動スクロールするか。
         /// </summary>
@@ -254,8 +267,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SettingServiceSmileVideoPlayerShowDetailArea => appConfig.Get("setting-service-smile-smilevideo-player-show-detail-area", bool.Parse);
         /// <summary>
         /// コメントリストを表示するか。
+        /// <para>通常ウィンドウ。</para>
         /// </summary>
-        public static bool SettingServiceSmileVideoPlayerShowCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-comment-list", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerShowNormalWindowCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-normal-window-comment-list", bool.Parse);
+        /// <summary>
+        /// コメントリストを表示するか。
+        /// <para>通常ウィンドウ。</para>
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerShowFullScreenCommentList => appConfig.Get("setting-service-smile-smilevideo-player-show-fullscreen-comment-list", bool.Parse);
         /// <summary>
         /// コメント投稿時間を表示するか。
         /// </summary>

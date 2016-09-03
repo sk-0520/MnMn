@@ -53,8 +53,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetthreadkeyModel>(rawText);
                 return result;
             }
-
-            #endregion
         }
+
+        #endregion
     }
 }

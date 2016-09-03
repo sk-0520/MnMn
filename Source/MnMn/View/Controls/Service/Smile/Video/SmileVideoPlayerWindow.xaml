@@ -376,7 +376,20 @@
           <Setter Property="Height" Value="10" />
         </Style>
       </StatusBar.Resources>
-      <!--<ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea}">-->
+      <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
+        <StatusBarItem.Style>
+          <Style TargetType="StatusBarItem">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding State}" Value="Maximized">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+              <!-- フルスクリーンはそもそもステータスバーが消えるので考慮しない -->
+            </Style.Triggers>
+            <Setter Property="Visibility" Value="Visible" />
+          </Style>
+        </StatusBarItem.Style>
+        <ResizeGrip />
+      </StatusBarItem>
       <ToggleButton x:Name="switchInformation">
         <ToggleButton.Style>
           <Style TargetType="ToggleButton">
@@ -1081,29 +1094,35 @@
               </Grid>
             </DockPanel>
           </TabItem>
-          <TabItem Header="個別フィルタ" Margin="0">
-            <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
-              <i:Interaction.Triggers>
-                <i:EventTrigger EventName="FilteringChanged">
-                  <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
-                </i:EventTrigger>
-              </i:Interaction.Triggers>
-            </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
-          </TabItem>
-          <TabItem>
-            <TabItem.Header>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock>全体フィルタ</TextBlock>
-                <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
-              </StackPanel>
-            </TabItem.Header>
-            <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">
-              <i:Interaction.Triggers>
-                <i:EventTrigger EventName="FilteringChanged">
-                  <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
-                </i:EventTrigger>
-              </i:Interaction.Triggers>
-            </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
+          <TabItem Header="フィルタ">
+            <TabControl>
+              <TabItem Header="この動画">
+                <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="FilteringChanged">
+                      <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
+                </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
+              </TabItem>
+              <TabItem>
+                <TabItem.Header>
+                  <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!--<TextBlock>全ての動画</TextBlock>
+                    <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />-->
+                    <CheckBox Margin="0,0,4,0" ToolTip="全体フィルタ設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
+                    <TextBlock>全ての動画</TextBlock>
+                  </StackPanel>
+                </TabItem.Header>
+                <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="FilteringChanged">
+                      <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
+                </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
+              </TabItem>
+            </TabControl>
           </TabItem>
           <TabItem Header="設定">
             <StackPanel>

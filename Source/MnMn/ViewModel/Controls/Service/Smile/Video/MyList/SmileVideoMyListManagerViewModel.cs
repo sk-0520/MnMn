@@ -381,7 +381,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, true));
+                return CreateCommand(
+                    o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, true),
+                    o => IsSelectedBookmark && SelectedBookmarkFinder != null && 0 < BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoItemsMyListFinderViewModel)o)
+                );
             }
         }
 
@@ -389,7 +392,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, false));
+                return CreateCommand(
+                    o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, false),
+                    o => IsSelectedBookmark && SelectedBookmarkFinder != null && BookmarkUserMyListPairs.Count - 1 > BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoItemsMyListFinderViewModel)o)
+                );
             }
         }
 
@@ -397,12 +403,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => {
-                    var finder = o as SmileVideoMyListFinderViewModelBase;
-                    if(finder != null) {
-                        AddBookmarkUserMyList(finder);
+                return CreateCommand(
+                    o => {
+                        var finder = o as SmileVideoMyListFinderViewModelBase;
+                        if(finder != null) {
+                            AddBookmarkUserMyList(finder);
+                        }
+                    },
+                    o => {
+                        var finder = o as SmileVideoMyListFinderViewModelBase;
+                        var canSaveState = new[] {
+                            SourceLoadState.InformationLoading,
+                            SourceLoadState.Completed,
+                        };
+                        return finder != null && canSaveState.Any(l => l == finder.FinderLoadState);
                     }
-                });
+                );
             }
         }
 
@@ -472,7 +488,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         async Task CreateAccountMyListAsync()
         {
             var myListIds = AccountMyList.Select(i => i.MyListId);
-            var newMyListName = TextUtility.ToUniqueDefault(MyList.CreateGroupName.DisplayText, AccountMyList.Select(i => i.MyListName));
+            var newMyListName = TextUtility.ToUniqueDefault(Properties.Resources.String_Service_Smile_MyList_CreateGroupName, AccountMyList.Select(i => i.MyListName));
 
             var myList = GetMyListApi();
 
@@ -627,6 +643,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         void ChangePositionBookmarkUserMyList(SmileVideoItemsMyListFinderViewModel viewModel, bool isUp)
         {
             var srcIndex = BookmarkUserMyListPairs.ViewModelList.IndexOf(viewModel);
+            if(srcIndex == -1) {
+                return;
+            }
             if(isUp && srcIndex == 0) {
                 return;
             }
@@ -721,7 +740,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         #region ManagerViewModelBase
 
-        protected override void ShowView()
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
+        protected override void ShowViewCore()
         {
             if(SelectedAccountFinder == null) {
                 if(AccountMyListViewer.Any()) {
@@ -730,9 +754,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     IsSelectedSearch = true;
                 }
             }
-
-            base.ShowView();
         }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task InitializeAsync()
         {

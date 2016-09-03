@@ -291,6 +291,12 @@
   <data name="String_Log_Filter_Log" xml:space="preserve">
     <value>ログファイル</value>
   </data>
+  <data name="String_Service_Smile_MyList_CreateGroupName" xml:space="preserve">
+    <value>新しいマイリスト</value>
+  </data>
+  <data name="String_Service_Smile_MyList_DefaultMyListName" xml:space="preserve">
+    <value>とりあえずマイリスト</value>
+  </data>
   <data name="String_Service_Smile_SmileVideo_Bookmark_NewName" xml:space="preserve">
     <value>新規ブックマーク</value>
   </data>

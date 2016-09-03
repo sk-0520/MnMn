@@ -25,6 +25,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -159,6 +160,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region AppLoggingManagerViewModel
 
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
+        protected override void ShowViewCore()
+        {
+            if(LogList.Any()) {
+                LogListBox.Dispatcher.BeginInvoke(new Action(() => {
+                    SelectedLogItem = null;
+                    LogListBox.ScrollIntoView(LogList.Last());
+                }), DispatcherPriority.ApplicationIdle);
+            }
+        }
+
+        protected override void HideViewCore()
+        { }
+
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
             return GarbageCollectionDummyResult;
@@ -177,31 +196,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void UninitializeView(MainWindow view)
         { }
 
-        protected override void ShowView()
-        {
-            base.ShowView();
-
-            if(LogList.Any()) {
-                LogListBox.Dispatcher.BeginInvoke(new Action(() => {
-                    LogListBox.ScrollIntoView(LogList.Last());
-                }));
-            }
-        }
-
         #endregion
 
         #region ILogAppender
 
         public void AddLog(LogItemModel item)
         {
+            var isLastSelect = SelectedLogItem == null;
+
             lock(LogList) {
+                isLastSelect = isLastSelect || LogList.LastOrDefault() == SelectedLogItem;
                 LogList.Add(item);
             }
 
-            if(IsVisible) {
+            if(IsVisible && isLastSelect) {
                 LogListBox?.Dispatcher.BeginInvoke(new Action(() => {
                     LogListBox.ScrollIntoView(item);
-                }));
+                }), DispatcherPriority.ApplicationIdle);
             }
         }
 

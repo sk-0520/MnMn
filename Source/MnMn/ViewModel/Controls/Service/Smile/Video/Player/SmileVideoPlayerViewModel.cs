@@ -328,8 +328,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool PlayerShowCommentArea
         {
-            get { return Setting.Player.ShowCommentList; }
-            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowCommentList)); }
+            get
+            {
+                return IsNormalWindow ? Setting.Player.ShowNormalWindowCommentList : Setting.Player.ShowFullScreenCommentList;
+            }
+            set
+            {
+                var propertyName = IsNormalWindow ? nameof(Setting.Player.ShowNormalWindowCommentList) : nameof(Setting.Player.ShowFullScreenCommentList);
+
+                SetPropertyValue(Setting.Player, value, propertyName);
+            }
         }
 
         /// <summary>
@@ -1141,6 +1149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         ResizeBorderThickness = new Thickness(0);
                         WindowBorderThickness = new Thickness(0);
                     }
+                    CallOnPropertyChange(nameof(PlayerShowCommentArea));
                 }
             }
         }
@@ -1576,7 +1585,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ShowingCommentList.Clear();
         }
 
-        void MoveVideoPostion(float targetPosition)
+        /// <summary>
+        /// 動画再生位置を移動。
+        /// </summary>
+        /// <param name="targetPosition">動画再生位置。</param>
+        void MoveVideoPosition(float targetPosition)
         {
             Mediation.Logger.Debug(targetPosition.ToString());
 
@@ -2712,7 +2725,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var pos = e.GetPosition(seekbar);
             var nextPosition = (float)(pos.X / seekbar.ActualWidth);
             // TODO: 読み込んでない部分は移動不可にする
-            MoveVideoPostion(nextPosition);
+            MoveVideoPosition(nextPosition);
 
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;

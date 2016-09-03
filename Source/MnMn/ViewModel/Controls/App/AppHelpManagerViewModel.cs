@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region property
 
-        WebBrowser HelpBrowser { get; set; }
+        WebNavigator HelpBrowser { get; set; }
 
         #endregion
 
@@ -44,6 +44,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region ManagerViewModelBase
+
+        protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
+        {
+            return Enumerable.Empty<ManagerViewModelBase>();
+        }
+
+        protected override void ShowViewCore()
+        {
+            if(HelpBrowser.Source == null) {
+                var helpUri = new Uri(Constants.HelpFilePath);
+                HelpBrowser.HomeSource = helpUri;
+                HelpBrowser.Source = helpUri;
+            }
+        }
+
+        protected override void HideViewCore()
+        { }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
         {
@@ -62,15 +79,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override void UninitializeView(MainWindow view)
         {
-        }
-
-        protected override void ShowView()
-        {
-            base.ShowView();
-
-            if(HelpBrowser.Source == null) {
-                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
-            }
         }
 
         #endregion
