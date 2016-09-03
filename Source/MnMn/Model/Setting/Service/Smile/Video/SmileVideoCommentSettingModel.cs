@@ -30,41 +30,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     {
         #region property
 
-        /// <summary>
-        /// フォント種別。
-        /// </summary>
+        ///// <summary>
+        ///// フォント種別。
+        ///// </summary>
+        //[DataMember]
+        //public string FontFamily { get; set; } = Constants.SettingServiceSmileVideoCommentFontFamily;
+        ///// <summary>
+        ///// フォントサイズ。
+        ///// </summary>
+        //[DataMember]
+        //public double FontSize { get; set; } = Constants.SettingServiceSmileVideoCommentFontSize;
+        ///// <summary>
+        ///// フォント透明度。
+        ///// </summary>
+        //[DataMember]
+        //public double FontAlpha { get; set; } = Constants.SettingServiceSmileVideoCommentFontAlpha;
+        ///// <summary>
+        ///// 太字。
+        ///// </summary>
+        //[DataMember]
+        //public bool FontBold { get; set; } = Constants.SettingServiceSmileVideoCommentFontBold;
+        ///// <summary>
+        ///// イタリック。
+        ///// </summary>
+        //[DataMember]
+        //public bool FontItalic { get; set; } = Constants.SettingServiceSmileVideoCommentFontItalic;
+        ///// <summary>
+        ///// コメント表示時間。
+        ///// </summary>
+        //[DataMember]
+        //public TimeSpan ShowTime { get; set; } = Constants.SettingServiceSmileVideoCommentShowTime;
+        ///// <summary>
+        ///// コメントの/と対になるx05cをバックスラッシュに置き換えるか。
+        ///// </summary>
+        //[DataMember]
+        //public bool ConvertPairYenSlash { get; set; } = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
         [DataMember]
-        public string FontFamily { get; set; } = Constants.SettingServiceSmileVideoCommentFontFamily;
-        /// <summary>
-        /// フォントサイズ。
-        /// </summary>
-        [DataMember]
-        public double FontSize { get; set; } = Constants.SettingServiceSmileVideoCommentFontSize;
-        /// <summary>
-        /// フォント透明度。
-        /// </summary>
-        [DataMember]
-        public double FontAlpha { get; set; } = Constants.SettingServiceSmileVideoCommentFontAlpha;
-        /// <summary>
-        /// 太字。
-        /// </summary>
-        [DataMember]
-        public bool FontBold { get; set; } = Constants.SettingServiceSmileVideoCommentFontBold;
-        /// <summary>
-        /// イタリック。
-        /// </summary>
-        [DataMember]
-        public bool FontItalic { get; set; } = Constants.SettingServiceSmileVideoCommentFontItalic;
-        /// <summary>
-        /// コメント表示時間。
-        /// </summary>
-        [DataMember]
-        public TimeSpan ShowTime { get; set; } = Constants.SettingServiceSmileVideoCommentShowTime;
-        /// <summary>
-        /// コメントの/と対になるx05cをバックスラッシュに置き換えるか。
-        /// </summary>
-        [DataMember]
-        public bool ConvertPairYenSlash { get; set; } = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
+        public SmileVideoCommentStyleSettingModel StyleSetting { get; set; } = new SmileVideoCommentStyleSettingModel();
 
         /// <summary>
         /// コメントの共有NGを有効にするか。

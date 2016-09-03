@@ -70,12 +70,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool VisibleComment { get; set; } = Constants.SettingServiceSmileVideoPlayerVisibleComment;
 
         /// <summary>
-        /// コメント描画方法。
-        /// </summary>
-        [DataMember]
-        public TextShowKind TextShowKind { get; set; } = Constants.SettingServiceSmileVideoPlayerTextShowKind;
-
-        /// <summary>
         /// リプレイ再生するか。
         /// </summary>
         [DataMember]

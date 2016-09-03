@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="commentArea"></param>
         /// <param name="setting"></param>
         /// <returns></returns>
-        public static SmileVideoCommentElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoSettingModel setting)
+        public static SmileVideoCommentElement CreateCommentElement(SmileVideoCommentViewModel commentViewModel, Size commentArea, SmileVideoCommentStyleSettingModel setting)
         {
             var element = new SmileVideoCommentElement();
             using(Initializer.BeginInitialize(element)) {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return element;
         }
 
-        static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoSettingModel setting)
+        static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoCommentStyleSettingModel setting)
         {
             var isAsc = orderBy == OrderBy.Ascending;
             // 空いている部分に放り込む
@@ -139,14 +139,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return compromiseY;
         }
 
-        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        static void SetMarqueeCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
         {
             var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, OrderBy.Ascending, true, setting);
             Canvas.SetTop(element, y);
             Canvas.SetLeft(element, commentArea.Width);
         }
 
-        static void SetStaticCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, SmileVideoSettingModel setting)
+        static void SetStaticCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, SmileVideoCommentStyleSettingModel setting)
         {
             var y = GetSafeYPosition(commentViewModel, element, commentArea, showingCommentList, orderBy, false, setting);
             Canvas.SetTop(element, y);
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             element.Width = commentArea.Width;
         }
 
-        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        static void SetCommentPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
         {
             switch(commentViewModel.Vertical) {
                 case SmileVideoCommentVertical.Normal:
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
         }
 
-        public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)
         {
             var element = CreateCommentElement(commentViewModel, commentArea, setting);
 
@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
 
             // アニメーション設定
-            var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
+            var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.ShowTime + correctionTime);
 
             var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
             showingCommentList.Add(data);
@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return prevTime <= (comment.ElapsedTime - correction) && (comment.ElapsedTime - correction) <= nowTime;
         }
 
-        public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoSettingModel setting)
+        public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
         {
             //var commentArea = new Size(
             //   commentParentElement.ActualWidth,
@@ -314,11 +314,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                     //element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
                 }
                 // 超過分のコメントを破棄
-                if(setting.Player.IsEnabledDisplayCommentLimit && 0 < setting.Player.DisplayCommentLimitCount) {
+                if(isEnabledDisplayCommentLimit && 0 < displayCommentLimitCount) {
                     var removeList = showingCommentList
                         .OrderBy(i => i.ViewModel.ElapsedTime)
                         .ThenBy(i => i.ViewModel.Number)
-                        .Take(showingCommentList.Count - setting.Player.DisplayCommentLimitCount)
+                        .Take(showingCommentList.Count - displayCommentLimitCount)
                         .ToArray()
                     ;
                     foreach(var item in removeList) {
@@ -361,12 +361,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="rawMsgPacket"></param>
         /// <param name="setting"></param>
         /// <returns>生成されたコメント群。いい感じに並び替えられてる。</returns>
-        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacketModel rawMsgPacket, SmileVideoSettingModel setting)
+        public static IEnumerable<SmileVideoCommentViewModel> CreateCommentViewModels(RawSmileVideoMsgPacketModel rawMsgPacket, SmileVideoCommentStyleSettingModel styleSetting)
         {
             var comments = rawMsgPacket.Chat
                 .Where(c => !string.IsNullOrEmpty(c.Content))
                 .GroupBy(c => new { c.No, c.Fork })
-                .Select(c => new SmileVideoCommentViewModel(c.First(), setting))
+                .Select(c => new SmileVideoCommentViewModel(c.First(), styleSetting))
                 .OrderBy(c => c.ElapsedTime)
             ;
 

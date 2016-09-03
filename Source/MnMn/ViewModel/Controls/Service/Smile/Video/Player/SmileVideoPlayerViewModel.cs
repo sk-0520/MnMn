@@ -444,10 +444,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ReplayVideo = Setting.Player.ReplayVideo;
             IsEnabledDisplayCommentLimit = Setting.Player.IsEnabledDisplayCommentLimit;
             DisplayCommentLimitCount = Setting.Player.DisplayCommentLimitCount;
-            PlayerTextShowKind = Setting.Player.TextShowKind;
 
             IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
+            CommentStyleSetting = (SmileVideoCommentStyleSettingModel)Setting.Comment.StyleSetting.DeepClone();
         }
 
         void ExportSetting()
@@ -468,10 +468,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.ReplayVideo = ReplayVideo;
             Setting.Player.IsEnabledDisplayCommentLimit = IsEnabledDisplayCommentLimit;
             Setting.Player.DisplayCommentLimitCount = DisplayCommentLimitCount;
-            Setting.Player.TextShowKind = PlayerTextShowKind;
 
             Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
+            Setting.Comment.StyleSetting = (SmileVideoCommentStyleSettingModel)CommentStyleSetting.DeepClone();
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -602,8 +602,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             //Mediation.Logger.Trace($"{VideoId}: {PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
 
-            SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, Setting);
-            SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, Setting);
+            SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
+            SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
         }
 
         Size GetCommentArea(bool OriginalPoster)
@@ -1043,14 +1043,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResetCommentSetting()
         {
-            Setting.Comment.FontFamily = Constants.SettingServiceSmileVideoCommentFontFamily;
-            Setting.Comment.FontSize = Constants.SettingServiceSmileVideoCommentFontSize;
-            Setting.Comment.FontBold = Constants.SettingServiceSmileVideoCommentFontBold;
-            Setting.Comment.FontItalic = Constants.SettingServiceSmileVideoCommentFontItalic;
-            Setting.Comment.FontAlpha = Constants.SettingServiceSmileVideoCommentFontAlpha;
-            Setting.Comment.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
-            Setting.Comment.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
-            Setting.Player.TextShowKind = Constants.SettingServiceSmileVideoPlayerTextShowKind;
+            CommentStyleSetting.FontFamily = Constants.SettingServiceSmileVideoCommentFontFamily;
+            CommentStyleSetting.FontSize = Constants.SettingServiceSmileVideoCommentFontSize;
+            CommentStyleSetting.FontBold = Constants.SettingServiceSmileVideoCommentFontBold;
+            CommentStyleSetting.FontItalic = Constants.SettingServiceSmileVideoCommentFontItalic;
+            CommentStyleSetting.FontAlpha = Constants.SettingServiceSmileVideoCommentFontAlpha;
+            CommentStyleSetting.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
+            CommentStyleSetting.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
+            CommentStyleSetting.TextShowKind = Constants.SettingServiceSmileVideoCommentTextShowKind;
 
             ChangedCommentFont();
             ChangedCommentContent();
@@ -1157,11 +1157,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
                 Thread = resultPost.ChatResult.Thread,
             };
-            var commentViewModel = new SmileVideoCommentViewModel(commentModel, Setting) {
+            var commentViewModel = new SmileVideoCommentViewModel(commentModel, CommentStyleSetting) {
                 IsMyPost = true,
                 Approval = true,
             };
-            SmileVideoCommentUtility.FireShowSingleComment(commentViewModel, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, Setting);
+            SmileVideoCommentUtility.FireShowSingleComment(commentViewModel, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
 
             NormalCommentList.Add(commentViewModel);
             CommentList.Add(commentViewModel);
@@ -1362,7 +1362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override Task LoadCommentAsync(RawSmileVideoMsgPacketModel rawMsgPacket)
         {
-            var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, Setting);
+            var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, CommentStyleSetting);
             CommentList.InitializeRange(comments);
             CommentListCount = CommentList.Count;
             ApprovalComment();

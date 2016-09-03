@@ -56,10 +56,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _replayVideo;
         bool _isEnabledDisplayCommentLimit;
         int _displayCommentLimitCount;
-        TextShowKind _playerTextShowKind;
 
         bool _isEnabledSharedNoGood;
         int _sharedNoGoodScore;
+        //FontFamily _commentFontFamily;
+        //bool _commentFontBold;
+        //bool _commentFontItalic;
+        //double _commentFontSize;
+        //double _commentFontAlpha;
+        //TimeSpan _commentShowTime;
+        //bool _commentConvertPairYenSlash;
+        //TextShowKind _playerTextShowKind;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;

@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
@@ -719,19 +720,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        /// <summary>
-        /// コメントのテキスト描画方法。
-        /// </summary>
-        public TextShowKind PlayerTextShowKind
-        {
-            get { return this._playerTextShowKind; }
-            set
-            {
-                if(SetVariableValue(ref this._playerTextShowKind, value)) {
-                    ChangedCommentContent();
-                }
-            }
-        }
 
         /// <summary>
         /// コメント有効表示領域の高さ。
@@ -760,15 +748,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isEnabledOriginalPosterCommentArea, value); }
         }
 
+        SmileVideoCommentStyleSettingModel CommentStyleSetting { get; set; }
+
         /// <summary>
         /// コメントのフォント名。
         /// </summary>
         public FontFamily CommentFontFamily
         {
-            get { return FontUtility.MakeFontFamily(Setting.Comment.FontFamily, SystemFonts.MessageFontFamily); }
+            get { return FontUtility.MakeFontFamily(CommentStyleSetting.FontFamily, SystemFonts.MessageFontFamily); }
             set
             {
-                if(SetPropertyValue(Setting.Comment, FontUtility.GetOriginalFontFamilyName(value), nameof(Setting.Comment.FontFamily))) {
+                if(SetPropertyValue(CommentStyleSetting, FontUtility.GetOriginalFontFamilyName(value), nameof(CommentStyleSetting.FontFamily))) {
                     ChangedCommentFont();
                 }
             }
@@ -779,10 +769,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool CommentFontBold
         {
-            get { return Setting.Comment.FontBold; }
+            get { return CommentStyleSetting.FontBold; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontBold))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.FontBold))) {
                     ChangedCommentFont();
                 }
             }
@@ -793,10 +783,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool CommentFontItalic
         {
-            get { return Setting.Comment.FontItalic; }
+            get { return CommentStyleSetting.FontItalic; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontItalic))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.FontItalic))) {
                     ChangedCommentFont();
                 }
             }
@@ -807,10 +797,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public double CommentFontSize
         {
-            get { return Setting.Comment.FontSize; }
+            get { return CommentStyleSetting.FontSize; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontSize))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.FontSize))) {
                     ChangedCommentFont();
                 }
             }
@@ -821,10 +811,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public double CommentFontAlpha
         {
-            get { return Setting.Comment.FontAlpha; }
+            get { return CommentStyleSetting.FontAlpha; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.FontAlpha))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.FontAlpha))) {
                     ChangedCommentFont();
                 }
             }
@@ -835,11 +825,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public TimeSpan CommentShowTime
         {
-            get { return Setting.Comment.ShowTime; }
+            get { return CommentStyleSetting.ShowTime; }
             set
             {
                 var prevTime = CommentShowTime;
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.ShowTime))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.ShowTime))) {
                     ChangedCommentShowTime(prevTime);
                 }
             }
@@ -850,10 +840,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool CommentConvertPairYenSlash
         {
-            get { return Setting.Comment.ConvertPairYenSlash; }
+            get { return CommentStyleSetting.ConvertPairYenSlash; }
             set
             {
-                if(SetPropertyValue(Setting.Comment, value, nameof(Setting.Comment.ConvertPairYenSlash))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.ConvertPairYenSlash))) {
+                    ChangedCommentContent();
+                }
+            }
+        }
+
+        /// <summary>
+        /// コメントのテキスト描画方法。
+        /// </summary>
+        public TextShowKind PlayerTextShowKind
+        {
+            get { return CommentStyleSetting.TextShowKind; }
+            set
+            {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.TextShowKind))) {
                     ChangedCommentContent();
                 }
             }
