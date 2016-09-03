@@ -304,6 +304,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._referenceCount, value); }
         }
 
+        public DateTime LastShowTimestamp
+        {
+            get { return IndividualVideoSetting.LastShowTimestamp; }
+            set { SetPropertyValue(IndividualVideoSetting, value); }
+        }
+
         #region 生データから取得
 
         public string VideoId
@@ -1178,7 +1184,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 file.Refresh();
 
                 if(file.Exists) {
-                    var timestamp = file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime;
+                    //var timestamp = file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime;
+                    var timestamps = new[] {
+                        file.CreationTime,
+                        file.LastWriteTime,
+                        IndividualVideoSetting.LastShowTimestamp,
+                    };
+                    var timestamp = timestamps.Max();
                     if(!cacheSpan.IsCacheTime(timestamp)) {
                         var fileSize = file.Length;
                         file.Delete();
