@@ -25,6 +25,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -168,8 +169,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             if(LogList.Any()) {
                 LogListBox.Dispatcher.BeginInvoke(new Action(() => {
+                    SelectedLogItem = null;
                     LogListBox.ScrollIntoView(LogList.Last());
-                }));
+                }), DispatcherPriority.ApplicationIdle);
             }
         }
 
