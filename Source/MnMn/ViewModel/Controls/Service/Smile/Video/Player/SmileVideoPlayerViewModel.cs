@@ -116,6 +116,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         float _prevStateChangedPosition;
 
         WindowState _state = WindowState.Normal;
+        double _left;
+        double _top;
+        double _width;
+        double _height;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -185,6 +189,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             GlobalCommentFilering = filteringResult.Filtering;
+
+            ImportSetting();
         }
 
         #region property
@@ -1487,6 +1493,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #endregion
 
         #region function
+
+        void ImportSetting()
+        {
+            Left = Setting.Player.Window.Left;
+            Top = Setting.Player.Window.Top;
+            Width = Setting.Player.Window.Width;
+            Height = Setting.Player.Window.Height;
+        }
+
+        void ExportSetting()
+        {
+
+        }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
