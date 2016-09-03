@@ -120,8 +120,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _top;
         double _width;
         double _height;
-
         bool _topmost;
+
+        bool _playerShowDetailArea;
 
         TimeSpan _totalTime;
         TimeSpan _playTime;
@@ -328,8 +329,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool PlayerShowDetailArea
         {
-            get { return Setting.Player.ShowDetailArea; }
-            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ShowDetailArea)); }
+            get { return this._playerShowDetailArea; }
+            set { SetVariableValue(ref this._playerShowDetailArea, value); }
         }
         /// <summary>
         /// コメント一覧表示状態。
@@ -1503,6 +1504,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Width = Setting.Player.Window.Width;
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
+
+            PlayerShowDetailArea = Setting.Player.ShowDetailArea;
         }
 
         void ExportSetting()
@@ -1512,6 +1515,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
             Setting.Player.Window.Topmost = Topmost;
+
+            Setting.Player.ShowDetailArea = PlayerShowDetailArea;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
