@@ -2255,6 +2255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 item.IsPlaying = false;
             }
             videoInformation.IsPlaying = true;
+            videoInformation.LastShowTimestamp = DateTime.Now;
             IsSelectedInformation = true;
 
             // プレイヤー立ち上げ時は null

@@ -304,6 +304,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._referenceCount, value); }
         }
 
+        public DateTime LastShowTimestamp
+        {
+            get { return IndividualVideoSetting.LastShowTimestamp; }
+            set { SetPropertyValue(IndividualVideoSetting, value); }
+        }
+
         #region 生データから取得
 
         public string VideoId
