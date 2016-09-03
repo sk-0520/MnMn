@@ -347,24 +347,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
             }
         }
 
-        public async Task<bool> SortAccountGroupAsync(IReadOnlyList<string> myListIds)
+        public async Task<SmileJsonResultModel> SortAccountGroupAsync(IReadOnlyList<string> myListIds)
         {
             await LoginIfNotLoginAsync();
 
             var token = await LoadAccountGroupToken(string.Empty);
             if(token == null) {
-                return false;
+                return SmileJsonResultModel.FailureLoadToken();
             }
 
             var multiIds = new MultiStrings(myListIds);
 
             using(var page = new PageLoader(Mediation, Session, SmileMediationKey.mylistGroupSort, ServiceType.Smile)) {
                 page.ReplaceRequestParameters["token"] = token;
-                page.ReplaceRequestParameters["group-id-list"] = multiIds.ToString(); ;
+                page.ReplaceRequestParameters["group-id-list"] = multiIds.ToString();
 
-                var response = await page.GetResponseTextAsync(PageLoaderMethod.Post);
-
-                return true;
+                return await RequestPost(page);
             }
         }
     }

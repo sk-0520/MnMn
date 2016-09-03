@@ -45,6 +45,6 @@
 	</param>
 	<param key="smile-video-mylist-account-group-sort">
 		<item key="token" value="${token}" />
-		<item key="group_id_list[][]" value="${group-id-list}" />
+		<item key="group_id_list[]" value="${group-id-list}" />
 	</param>
 </parameters>
