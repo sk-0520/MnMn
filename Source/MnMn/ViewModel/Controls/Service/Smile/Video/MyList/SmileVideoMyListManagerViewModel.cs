@@ -381,7 +381,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, true));
+                return CreateCommand(
+                    o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, true),
+                    o => IsSelectedBookmark && SelectedBookmarkFinder != null && 0 < BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoItemsMyListFinderViewModel)o)
+                );
             }
         }
 
@@ -389,7 +392,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, false));
+                return CreateCommand(
+                    o => ChangePositionBookmarkUserMyList((SmileVideoItemsMyListFinderViewModel)o, false),
+                    o => IsSelectedBookmark && SelectedBookmarkFinder != null && BookmarkUserMyListPairs.Count - 1 > BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoItemsMyListFinderViewModel)o)
+                );
             }
         }
 
@@ -627,6 +633,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         void ChangePositionBookmarkUserMyList(SmileVideoItemsMyListFinderViewModel viewModel, bool isUp)
         {
             var srcIndex = BookmarkUserMyListPairs.ViewModelList.IndexOf(viewModel);
+            if(srcIndex == -1) {
+                return;
+            }
             if(isUp && srcIndex == 0) {
                 return;
             }
