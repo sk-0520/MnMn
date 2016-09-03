@@ -439,6 +439,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             this._showFullScreenCommentList = Setting.Player.ShowFullScreenCommentList;
             PlayerVisibleComment = Setting.Player.VisibleComment;
             IsAutoScroll = Setting.Player.AutoScrollCommentList;
+            Volume = Setting.Player.Volume;
+            IsMute = Setting.Player.IsMute;
+            ReplayVideo = Setting.Player.ReplayVideo;
+            IsEnabledDisplayCommentLimit = Setting.Player.IsEnabledDisplayCommentLimit;
+            DisplayCommentLimitCount = Setting.Player.DisplayCommentLimitCount;
+            PlayerTextShowKind = Setting.Player.TextShowKind;
 
             IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
@@ -457,6 +463,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.ShowFullScreenCommentList = this._showFullScreenCommentList;
             Setting.Player.VisibleComment = PlayerVisibleComment;
             Setting.Player.AutoScrollCommentList = IsAutoScroll;
+            Setting.Player.Volume = Volume;
+            Setting.Player.IsMute = IsMute;
+            Setting.Player.ReplayVideo = ReplayVideo;
+            Setting.Player.IsEnabledDisplayCommentLimit = IsEnabledDisplayCommentLimit;
+            Setting.Player.DisplayCommentLimitCount = DisplayCommentLimitCount;
+            Setting.Player.TextShowKind = PlayerTextShowKind;
 
             Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;

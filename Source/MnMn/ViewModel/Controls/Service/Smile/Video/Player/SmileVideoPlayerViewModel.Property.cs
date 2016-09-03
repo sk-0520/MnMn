@@ -218,6 +218,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._isAutoScroll; }
             set { SetVariableValue(ref this._isAutoScroll, value); }
         }
+        /// <summary>
+        /// 動画音声。
+        /// </summary>
+        public int Volume
+        {
+            get { return this._volume; }
+            set
+            {
+                if(SetVariableValue(ref this._volume, value)) {
+                    if(Player != null) {
+                        Player.Volume = Volume;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// ミュート状態。
+        /// </summary>
+        public bool IsMute
+        {
+            get { return this._isMute; }
+            set
+            {
+                if(SetVariableValue(ref this._isMute, value)) {
+                    if(Player != null) {
+                        Player.IsMute = IsMute;
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// 共有NG有効状態。
@@ -228,7 +259,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._isEnabledSharedNoGood, value)) {
-                    ApprovalComment();
+                    if(LocalCommentFilering != null) {
+                        ApprovalComment();
+                    }
                 }
             }
         }
@@ -241,7 +274,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._sharedNoGoodScore, value)) {
-                    ApprovalComment();
+                    if(LocalCommentFilering != null) {
+                        ApprovalComment();
+                    }
                 }
             }
         }
@@ -431,33 +466,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         /// <summary>
-        /// 動画音声。
-        /// </summary>
-        public int Volume
-        {
-            get { return Setting.Player.Volume; }
-            set
-            {
-                if(SetPropertyValue(Setting.Player, value, nameof(Setting.Player.Volume))) {
-                    Player.Volume = Setting.Player.Volume;
-                }
-            }
-        }
-        /// <summary>
-        /// ミュート状態。
-        /// </summary>
-        public bool IsMute
-        {
-            get { return Setting.Player.IsMute; }
-            set
-            {
-                if(SetPropertyValue(Setting.Player, value, nameof(Setting.Player.IsMute))) {
-                    Player.IsMute = Setting.Player.IsMute;
-                }
-            }
-        }
-
-        /// <summary>
         /// 動画の再生中時間。
         /// </summary>
         public TimeSpan PlayTime
@@ -598,8 +606,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool ReplayVideo
         {
-            get { return Setting.Player.ReplayVideo; }
-            set { SetPropertyValue(Setting.Player, value, nameof(Setting.Player.ReplayVideo)); }
+            get { return this._replayVideo; }
+            set { SetVariableValue(ref this._replayVideo, value); }
         }
 
         /// <summary>
@@ -669,16 +677,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool IsEnabledDisplayCommentLimit
         {
-            get { return Setting.Player.IsEnabledDisplayCommentLimit; }
-            set { SetPropertyValue(Setting.Player, value); }
+            get { return this._isEnabledDisplayCommentLimit; }
+            set { SetVariableValue(ref this._isEnabledDisplayCommentLimit, value); }
         }
         /// <summary>
         /// コメント表示制限数。
         /// </summary>
         public int DisplayCommentLimitCount
         {
-            get { return Setting.Player.DisplayCommentLimitCount; }
-            set { SetPropertyValue(Setting.Player, value); }
+            get { return this._displayCommentLimitCount; }
+            set { SetVariableValue(ref this._displayCommentLimitCount, value); }
         }
         /// <summary>
         /// 動画情報欄選択状態。
@@ -716,13 +724,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public TextShowKind PlayerTextShowKind
         {
-            get { return Setting.Player.TextShowKind; }
+            get { return this._playerTextShowKind; }
             set
             {
-                if(SetPropertyValue(Setting.Player, value, nameof(Setting.Player.TextShowKind))) {
+                if(SetVariableValue(ref this._playerTextShowKind, value)) {
                     ChangedCommentContent();
                 }
-
             }
         }
 
