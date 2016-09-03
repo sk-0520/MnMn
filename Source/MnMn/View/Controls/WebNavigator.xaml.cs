@@ -103,6 +103,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsEnabledUserChangeSourceProperty
+
+        public static readonly DependencyProperty IsEnabledUserChangeSourceProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsEnabledUserChangeSourceProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledUserChangeSourceChanged))
+        );
+
+        private static void OnIsEnabledUserChangeSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsEnabledUserChangeSource = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsEnabledUserChangeSource
+        {
+            get { return (bool)GetValue(IsEnabledUserChangeSourceProperty); }
+            set { SetValue(IsEnabledUserChangeSourceProperty, value); }
+        }
+
+        #endregion
+
         #region property
 
         public Uri Source
@@ -144,6 +169,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 return new DelegateCommand(
                     o => { this.browser.GoForward(); },
                     o => this.browser.CanGoForward
+                );
+            }
+        }
+
+        public ICommand ChangeSourceCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => {
+                        Uri inputUri;
+                        if(Uri.TryCreate(location.Text, UriKind.Absolute, out inputUri)) {
+                            Navigate(location.Text);
+                        }
+                    },
+                    o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
                 );
             }
         }
