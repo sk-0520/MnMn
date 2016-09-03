@@ -84,36 +84,19 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.14.1',
-		'isRc': true,
+		'date': '2016/09/04',
+		'version': '0.15.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '5793ef45f3f0ea5a1253a5fd151e213ad5fbf2a2',
 						'subject': '#113: プレイヤーにリサイズグリップをつける'
 					},
 					{
-						'revision': '',
+						'revision': '00aabc3cad8c661fad08cd4dbc8f2221e7e1ff56',
 						'subject': '#104: コメントフィルタタブをまとめましょう',
 						'comments': [
 							'そう頻繁にさわるものじゃないと思うので1タブの中に2タブ入れておいた',
@@ -121,11 +104,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '5f206bd67cf5eeb9c2c760de57aad5c1724e0dec',
 						'subject': '#102: コメント一覧の表示状態を通常ウィンドウとフルスクリーンで分ける'
 					},
 					{
-						'revision': '',
+						'revision': 'f356e251333d5e542b15f3123916f3c954918be9',
 						'subject': '#42: WebBrowserコントロールの制御',
 						'comments': [
 							'ヘルプは本対応では厳しかったので後回し(#42)',
@@ -139,19 +122,19 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '7d81b8fa7a0deb748cbec50d4512daa7c5b643a3',
 						'subject': 'ヘルプのメールアドレスが古かった'
 					},
 					{
-						'revision': '',
+						'revision': 'd0bdceb6966f4ea08f45cb47f5a6b62fb3e4a208',
 						'subject': '#107: ログ表示機能のスクロールとか表示とかの制御'
 					},
 					{
-						'revision': '',
+						'revision': '4e0272849f1375c3abca527cfa4cc2c6bb24520d',
 						'subject': '#119: マイリスト・動画のブックマーク位置移動で落ちる'
 					},
 					{
-						'revision': '',
+						'revision': 'd55877b933b9a2bb041f8ff9983d175d6b2089ff',
 						'subject': '#121: マイリストをブックマークに追加した時に該当ブックマーク内の動画がすべて「あとで見る」動画としてマークされる',
 						'comments': [
 							'動画一覧が読み込めていない、つまりは動画IDの一覧が取得できていない状態でブックマークに登録した後にあとで見るチェックが走ると全件がブックマーク設定時からの差分判定されてた',
@@ -163,31 +146,27 @@
 			{
 				'type': 'developer',
 				'logs': [
-				{
-					'revision': '',
-					'subject': '#110: 動画情報・ダウンローダー・プレイヤーの歪な役割分担を誰かに押し付けたい'
-				},
-				{
-					'revision': '',
-					'subject': 'マイリストの定義ファイルからプロパティに文字列を移した'
-				},
-				{
-					'revision': '',
-					'subject': '関連動画のソート関連を App.config に移動'
-				},
-				{
-					'revision': '',
-					'subject': '#88: 各種マネージャの子マネージャの初期表示処理が呼び出されないからわざわざ回避してる手順をなくしたい',
-					'comments': [
-						'テストしてないけど動くっしょ',
-						'動くっしょ',
-						'動いてね'
-					]
-				},
-				{
-					'revision': '',
-					'subject': ''
-				}
+					{
+						'revision': '6d37015a6cf816f4ba9685c601a4da8b1eb99978',
+						'subject': '#110: 動画情報・ダウンローダー・プレイヤーの歪な役割分担を誰かに押し付けたい'
+					},
+					{
+						'revision': '96817004c59acf6ec4904fda65f12f4044cb904e',
+						'subject': 'マイリストの定義ファイルからプロパティに文字列を移した'
+					},
+					{
+						'revision': 'e8f03b26b6f4ba1fbe730771bca949b5f7c5cee3',
+						'subject': '関連動画のソート関連を App.config に移動'
+					},
+					{
+						'revision': '8871220543c38cade28b5dd7e81568e38021a475',
+						'subject': '#88: 各種マネージャの子マネージャの初期表示処理が呼び出されないからわざわざ回避してる手順をなくしたい',
+						'comments': [
+							'テストしてないけど動くっしょ',
+							'動くっしょ',
+							'動いてね'
+						]
+					},
 				]
 			}
 		]
