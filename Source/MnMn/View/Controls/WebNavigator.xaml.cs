@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -52,6 +53,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsVisibleHomeProperty
+
+        public static readonly DependencyProperty IsVisibleHomeProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsVisibleHomeProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsVisibleHomeChanged))
+        );
+
+        private static void OnIsVisibleHomeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsVisibleHome = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsVisibleHome
+        {
+            get { return (bool)GetValue(IsVisibleHomeProperty); }
+            set { SetValue(IsVisibleHomeProperty, value); }
+        }
+
+        #endregion
+
+        #region HomeSourceProperty
+
+        public static readonly DependencyProperty HomeSourceProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(HomeSourceProperty)),
+            typeof(Uri),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(default(Uri), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHomeSourceChanged))
+        );
+
+        private static void OnHomeSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.HomeSource = e.NewValue as Uri;
+            }
+        }
+
+        public Uri HomeSource
+        {
+            get { return GetValue(HomeSourceProperty) as Uri; }
+            set { SetValue(HomeSourceProperty, value); }
+        }
+
+        #endregion
+
         #region property
 
         public Uri Source
@@ -60,7 +111,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             set { this.browser.Source = value; }
         }
 
-        public Uri HomeSource { get; set; }
+        #endregion
+
+        #region command
+
+        public ICommand HomeCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => { Navigate(HomeSource); },
+                    o => IsVisibleHome && HomeSource != null
+                );
+            }
+        }
 
         #endregion
 
@@ -177,5 +241,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 this.browser.Loaded -= browser_Loaded;
             }
         }
+
     }
 }

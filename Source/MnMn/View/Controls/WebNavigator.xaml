@@ -19,8 +19,10 @@
     </Grid.RowDefinitions>
 
     <ToolBar Grid.Row="0" Visibility="{Binding IsVisibleToolbar, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <Button Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">home</Button>
       <Button>back</Button>
       <Button>next</Button>
+      <TextBox  />
     </ToolBar>
 
     <WebBrowser x:Name="browser" Grid.Row="1" Loaded="browser_Loaded" />
