@@ -127,7 +127,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#122: せきゅ®ひてぃ保護'
 					},
 					{
 						'revision': '',
