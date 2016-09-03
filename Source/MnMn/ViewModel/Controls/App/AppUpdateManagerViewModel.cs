@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         DispatcherTimer BackgroundUpdateCheckTimer { get; }
 
-        WebBrowser UpdateBrowser { get; set; }
+        WebNavigator UpdateBrowser { get; set; }
 
         public Uri ArchiveUri
         {

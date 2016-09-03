@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region property
 
-        WebBrowser HelpBrowser { get; set; }
+        WebNavigator HelpBrowser { get; set; }
 
         #endregion
 
@@ -53,7 +53,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         protected override void ShowViewCore()
         {
             if(HelpBrowser.Source == null) {
-                HelpBrowser.Source = new Uri(Constants.HelpFilePath);
+                var helpUri = new Uri(Constants.HelpFilePath);
+                HelpBrowser.HomeSource = helpUri;
+                HelpBrowser.Source = helpUri;
             }
         }
 
@@ -78,6 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void UninitializeView(MainWindow view)
         {
         }
+
         #endregion
     }
 }
