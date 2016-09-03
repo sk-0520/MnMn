@@ -180,9 +180,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get
             {
-                return CreateCommand(o => {
-                    UpParentNode(SelectedBookmarkNode);
-                });
+                return CreateCommand(
+                    o => UpParentNode(SelectedBookmarkNode),
+                    o => GetParentNode(SelectedBookmarkNode) != Node
+                );
             }
         }
 
