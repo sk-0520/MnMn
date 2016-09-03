@@ -263,11 +263,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public double Left
         {
-            get { return Setting.Player.Window.Left; }
+            get { return this._left; }
             set
             {
                 if(IsNormalWindow && State == WindowState.Normal) {
-                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Left));
+                    SetVariableValue(ref this._left, value);
                 }
             }
         }
@@ -276,11 +276,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public double Top
         {
-            get { return Setting.Player.Window.Top; }
+            get { return this._top; }
             set
             {
                 if(IsNormalWindow && State == WindowState.Normal) {
-                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Top));
+                    SetVariableValue(ref this._top, value);
                 }
             }
         }
@@ -289,11 +289,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public double Width
         {
-            get { return Setting.Player.Window.Width; }
+            get { return this._width; }
             set
             {
                 if(IsNormalWindow && State == WindowState.Normal) {
-                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Width));
+                    SetVariableValue(ref this._width, value);
                 }
             }
         }
@@ -302,11 +302,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public double Height
         {
-            get { return Setting.Player.Window.Height; }
+            get { return this._height; }
             set
             {
                 if(IsNormalWindow && State == WindowState.Normal) {
-                    SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height));
+                    SetVariableValue(ref this._height, value);
                 }
             }
         }
@@ -1504,7 +1504,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ExportSetting()
         {
-
+            Setting.Player.Window.Left = Left;
+            Setting.Player.Window.Top = Top;
+            Setting.Player.Window.Width = Width;
+            Setting.Player.Window.Height = Height;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -2644,6 +2647,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void View_Closing(object sender, CancelEventArgs e)
         {
             //TODO: closingはまずくね…?
+            ExportSetting();
 
             View.Loaded -= View_Loaded;
             View.Closing -= View_Closing;
