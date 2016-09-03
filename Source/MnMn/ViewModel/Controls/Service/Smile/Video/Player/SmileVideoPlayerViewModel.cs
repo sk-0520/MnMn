@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _width;
         double _height;
 
+        bool _topmost;
+
         TimeSpan _totalTime;
         TimeSpan _playTime;
 
@@ -315,8 +317,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool Topmost
         {
-            get { return Setting.Player.Window.Tommost; }
-            set { SetPropertyValue(Setting.Player.Window, value, nameof(Setting.Player.Window.Height)); }
+            get { return this._topmost; }
+            set { SetVariableValue(ref _topmost, value); }
         }
 
         #endregion
@@ -1500,6 +1502,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Top = Setting.Player.Window.Top;
             Width = Setting.Player.Window.Width;
             Height = Setting.Player.Window.Height;
+            Topmost = Setting.Player.Window.Topmost;
         }
 
         void ExportSetting()
@@ -1508,6 +1511,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.Window.Top = Top;
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
+            Setting.Player.Window.Topmost = Topmost;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)

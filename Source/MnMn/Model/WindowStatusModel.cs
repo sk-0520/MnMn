@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// 最前面。
         /// </summary>
         [DataMember, IsDeepClone]
-        public bool Tommost { get; set; }
+        public bool Topmost { get; set; }
 
         #endregion
 

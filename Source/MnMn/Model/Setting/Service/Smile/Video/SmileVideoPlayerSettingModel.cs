@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
             Top = Constants.SettingServiceSmileVideoWindowTop,
             Width = Constants.SettingServiceSmileVideoWindowWidth,
             Height = Constants.SettingServiceSmileVideoWindowHeight,
-            Tommost = Constants.SettingServiceSmileVideoWindowTopmost,
+            Topmost = Constants.SettingServiceSmileVideoWindowTopmost,
         };
 
         /// <summary>
