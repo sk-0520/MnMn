@@ -186,13 +186,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             get
             {
-                return IsNormalWindow ? Setting.Player.ShowNormalWindowCommentList : Setting.Player.ShowFullScreenCommentList;
+                return IsNormalWindow
+                    ? this._showNormalWindowCommentList
+                    : this._showFullScreenCommentList
+                ;
             }
             set
             {
-                var propertyName = IsNormalWindow ? nameof(Setting.Player.ShowNormalWindowCommentList) : nameof(Setting.Player.ShowFullScreenCommentList);
-
-                SetPropertyValue(Setting.Player, value, propertyName);
+                if(IsNormalWindow) {
+                    SetVariableValue(ref this._showNormalWindowCommentList, value);
+                } else {
+                    SetVariableValue(ref this._showFullScreenCommentList, value);
+                }
             }
         }
 
