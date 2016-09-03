@@ -7,7 +7,7 @@
 	<item key="smile-user-page" uri="http://www.nicovideo.jp/user" param="hierarchy" />
 	<item key="smile-user-mylist-page" uri="http://www.nicovideo.jp/user/${user-id}/mylist" param="none" />
 	<item key="smile-user-post-video" uri="http://www.nicovideo.jp/user/${user-id}/video?rss=${lang}" param="none" />
-	
+
 	<item key="smile-contents-search" uri="http://api.search.nicovideo.jp/api/v2/${service}/contents/search" param="query" />
 
 	<item key="smile-video-mylist-account-default" uri="http://www.nicovideo.jp/api/deflist/list" param="none" />
@@ -16,14 +16,14 @@
 
 	<item key="smile-video-mylist-account-add" uri="http://www.nicovideo.jp/api/mylist/add" param="none" />
 	<item key="smile-video-mylist-account-delete" uri="http://www.nicovideo.jp/api/mylist/delete" param="none" />
-	
 
 	<item key="smile-video-mylist-account-group" uri="http://www.nicovideo.jp/api/mylistgroup/list" param="none" />
 	<item key="smile-video-mylist-account-group-token" uri="http://www.nicovideo.jp/my/mylist/#" param="hierarchy" />
 	<item key="smile-video-mylist-account-group-delete" uri="http://www.nicovideo.jp/api/mylistgroup/delete" param="none" />
 	<item key="smile-video-mylist-account-group-create" uri="http://www.nicovideo.jp/api/mylistgroup/add" param="none" />
 	<item key="smile-video-mylist-account-group-update" uri="http://www.nicovideo.jp/api/mylistgroup/update" param="none" />
-	
+	<item key="smile-video-mylist-account-group-sort" uri="http://www.nicovideo.jp/api/mylistgroup/sort" param="none" />
+
 	<item key="smile-video-mylist-user" uri="http://www.nicovideo.jp/mylist" param="ps-fix" />
 	<item key="smile-video-mylist-search" uri="http://www.nicovideo.jp/mylist_search" param="ps-fix" />
 
