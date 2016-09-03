@@ -117,6 +117,7 @@
               <Button Command="{Binding LoadAccountMyListCommand}">読込</Button>
               <Button Command="{Binding CreateAccountMyListCommand}">作成</Button>
               <Button Command="{Binding RemoveSelectedAccountMyListCommand}">削除</Button>
+              <Separator />
               <ToggleButton IsChecked="{Binding ShowAccountSortMyList}">並び替え</ToggleButton>
             </ToolBar>
 
@@ -175,7 +176,7 @@
               </Grid>
             </Expander>
 
-            <Border Grid.Row="1" Grid.RowSpan="2" Background="#80ffffff" Visibility="{Binding ShowAccountSortMyList, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Border Grid.Row="1" Grid.RowSpan="2" Padding="8" Background="#88888888" Visibility="{Binding ShowAccountSortMyList, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition Height="*" />
@@ -188,12 +189,12 @@
                 </Grid.ColumnDefinitions>
 
                 <ListBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountSortMyListItems}" SelectedItem="{Binding SelectedAccountSortFinder}" />
-                <Button Grid.Row="1" Grid.Column="0" Command="{Binding UpAccountSortMyListCommand}">
+                <RepeatButton Grid.Row="1" Grid.Column="0" Command="{Binding UpAccountSortMyListCommand}">
                   <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
-                </Button>
-                <Button Grid.Row="1" Grid.Column="1" Command="{Binding DownAccountSortMyListCommand}">
+                </RepeatButton>
+                <RepeatButton Grid.Row="1" Grid.Column="1" Command="{Binding DownAccountSortMyListCommand}">
                   <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
-                </Button>
+                </RepeatButton>
                 <Button Grid.Row="1" Grid.Column="2" Command="{Binding SaveAccountSortMyListCommand}">保存</Button>
               </Grid>
             </Border>

@@ -524,6 +524,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 if(selectedFinder.FinderLoadState != SourceLoadState.Completed) {
                     selectedFinder.LoadDefaultCacheAsync();
                 }
+                ShowAccountSortMyList = false;
             }
             SelectedCurrentFinder = selectedFinder;
         }
