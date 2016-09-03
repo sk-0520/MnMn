@@ -10,6 +10,7 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -260,7 +261,8 @@
           <TextBlock>次回リリース</TextBlock>
         </DockPanel>
       </TabItem.Header>
-      <WebBrowser x:Name="issueBrowser" />
+      <!--<WebBrowser x:Name="issueBrowser" />-->
+      <app_view_controls:WebNavigator x:Name="issueBrowser" />
     </TabItem>
 
     <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
