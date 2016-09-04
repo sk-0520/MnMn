@@ -152,7 +152,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#129: ファイルGCのサイズ単位が byte'
 					}
 				]
 			},
