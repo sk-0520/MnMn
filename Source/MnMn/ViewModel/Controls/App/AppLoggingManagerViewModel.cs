@@ -189,7 +189,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             dialog.Filter = filter.FilterText;
             if(dialog.ShowDialog().GetValueOrDefault()) {
                 try {
-                    Writer = new StreamWriter(dialog.OpenFile());
+                    Writer = new StreamWriter(dialog.OpenFile()) {
+                        AutoFlush = true,
+                    };
                     Mediation.Logger.LoggerConfig.PutsStream = true;
                     ((AppLogger)Mediation.Logger).AttachmentStream(Writer, true);
                     return true;
