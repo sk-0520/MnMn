@@ -30,6 +30,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -44,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region variable
 
         LogItemModel _selectedLogItem;
+        bool _attachmentOutputLogging;
 
         #endregion
 
@@ -72,6 +74,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 if(SetVariableValue(ref this._selectedLogItem, value)) {
                     CommandManager.InvalidateRequerySuggested();
+                }
+            }
+        }
+
+        TextWriter Writer { get; set; }
+        public bool AttachmentOutputLogging
+        {
+            get { return this._attachmentOutputLogging; }
+            set
+            {
+                if(AttachmentOutputLogging) {
+                    if(Writer != null) {
+                        if(!VariableConstants.HasOptionLogDirectoryPath) {
+                            Mediation.Logger.LoggerConfig.PutsStream = false;
+                        }
+                        ((AppLogger)Mediation.Logger).DetachmentStream(Writer);
+                        Writer.Dispose();
+                        Writer = null;
+                    }
+                    SetVariableValue(ref this._attachmentOutputLogging, value);
+                } else {
+                    var result = AttachmentOutputLoggingFromDialog();
+                    SetVariableValue(ref this._attachmentOutputLogging, result);
                 }
             }
         }
@@ -155,6 +180,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        bool AttachmentOutputLoggingFromDialog()
+        {
+            var filter = new DialogFilterList();
+            filter.Add(new DialogFilterItem(Properties.Resources.String_Log_Filter_Log, "*.log"));
+
+            var dialog = new SaveFileDialog();
+            dialog.Filter = filter.FilterText;
+            if(dialog.ShowDialog().GetValueOrDefault()) {
+                try {
+                    Writer = new StreamWriter(dialog.OpenFile());
+                    Mediation.Logger.LoggerConfig.PutsStream = true;
+                    ((AppLogger)Mediation.Logger).AttachmentStream(Writer, true);
+                    return true;
+                } catch(Exception ex) {
+                    Mediation.Logger.Error(ex);
+                }
+            }
+
+            return false;
+        }
 
         #endregion
 
