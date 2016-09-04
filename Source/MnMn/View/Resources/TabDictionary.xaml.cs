@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
         {
             var tabItems = UIUtility.FindChildren<TabItem>(tabControl);
             var baseItem = tabItems.FirstOrDefault();
+
             if(baseItem != null) {
                 return tabItems.Where(t => t.Parent == baseItem.Parent).ToList();
             }
@@ -61,14 +62,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
         static int GetNextIndex(IList<TabItem> tabItems, int currentIndex, bool isUp)
         {
             if(isUp) {
-                return currentIndex == 0
-                    ? tabItems.Count - 1
-                    : currentIndex - 1
-                ;
-            } else {
                 return currentIndex == tabItems.Count - 1
                     ? 0
                     : currentIndex + 1
+                ;
+            } else {
+                return currentIndex == 0
+                    ? tabItems.Count - 1
+                    : currentIndex - 1
                 ;
             }
         }
@@ -80,12 +81,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             var tabControl = GetTabControl((DependencyObject)sender);
             var tabItems = GetTabItems(tabControl);
             if(1 < tabItems.Count) {
-                var selectedItem = tabItems.First(t => t.IsSelected);
-                var selectedIndex = tabItems.FindIndex(i => i == selectedItem);
+                //var selectedItem = tabItems.First(t => t.IsSelected);
+                //var selectedIndex = tabItems.FindIndex(i => i == selectedItem);
+                var selectedIndex = tabControl.SelectedIndex;
 
                 var nextIndex = GetNextIndex(tabItems, selectedIndex, 0 < e.Delta);
+                //Debug.WriteLine($"{tabItems.Count}: {selectedIndex} -> {nextIndex}");
 
-                tabControl.SelectedItem = tabItems[nextIndex].DataContext;
+                tabControl.SelectedIndex = nextIndex;
             }
         }
     }

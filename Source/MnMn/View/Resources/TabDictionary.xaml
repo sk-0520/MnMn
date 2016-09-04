@@ -32,6 +32,8 @@
   </Style>
 
   <Style x:Key="FindTabItem" TargetType="TabItem">
+    <!--<Setter Property="BorderBrush" Value="Red" />
+    <Setter Property="BorderThickness" Value="5" />-->
     <!--<Setter Property="HeaderTemplate">
       <Setter.Value>
         <DataTemplate>
