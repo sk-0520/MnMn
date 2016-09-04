@@ -250,6 +250,9 @@
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Resources\TabDictionary.xaml.cs">
+      <DependentUpon>TabDictionary.xaml</DependentUpon>
+    </Compile>
     <Content Include="doc\help\html\development.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
