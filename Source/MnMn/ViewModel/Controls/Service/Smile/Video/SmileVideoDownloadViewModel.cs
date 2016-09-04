@@ -278,6 +278,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
+                Mediation.Logger.Information($"{VideoId}: download start: uri: {Information.MovieServerUrl}, head: {headPosition}, size: {VideoTotalSize}");
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 var fileMode = downloader.UsingRangeDonwload ? FileMode.Append : FileMode.Create;
                 using(VideoStream = new FileStream(VideoFile.FullName, fileMode, FileAccess.Write, FileShare.Read)) {
                     try {
@@ -309,6 +313,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         downloader.Downloaded -= Downloader_Downloaded;
 
                         //OnLoadVideoEnd();
+                        stopWatch.Stop();
+                        Mediation.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
                     }
                 }
             }
@@ -629,7 +635,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
-            Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}, {e.SecondsDownlodingSize}");
+            //Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}, {e.SecondsDownlodingSize}");
 
             Information.IsDownloading = true;
 
