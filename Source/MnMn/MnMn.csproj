@@ -72,7 +72,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.71\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.75\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -232,15 +232,26 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoBookmarkUtility.cs" />
     <Compile Include="Logic\View\CursorHider.cs" />
+    <Compile Include="Logic\Wrapper\WrapperBase.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
+      <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
+      <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Resources\TabDictionary.xaml.cs">
+      <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>
     <Content Include="doc\help\html\development.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

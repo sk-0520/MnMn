@@ -167,6 +167,13 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
           </Style>
         </ListBox.ItemContainerStyle>
+        <ListBox.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}">
+
+            </MenuItem>
+          </ContextMenu>
+        </ListBox.ContextMenu>
         <ListBox.ItemTemplate>
           <DataTemplate>
             <ContentControl x:Name="detail">

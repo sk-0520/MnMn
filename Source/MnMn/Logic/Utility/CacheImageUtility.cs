@@ -77,12 +77,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         {
             var count = 0;
             byte[] binary = null;
+            logger.Trace($"{nameof(loadUri)}: {loadUri}");
             do {
                 try {
-                    logger.Trace($"img -> {loadUri}");
                     binary = await client.GetByteArrayAsync(loadUri);
                 } catch(Exception ex) {
-                    logger.Error($"error img -> {loadUri}");
                     logger.Warning(ex);
                     if(count != 0) {
                         Thread.Sleep(waitTime);
@@ -91,9 +90,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             } while(count++ < maxCount && binary == null);
 
             if(binary != null) {
-               return CacheImageUtility.GetBitmapSource(binary);
+                return CacheImageUtility.GetBitmapSource(binary);
             }
 
+            logger.Error($"error {nameof(loadUri)} -> {loadUri}");
             return null;
         }
 

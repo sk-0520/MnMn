@@ -30,6 +30,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
     public class AppHelpManagerViewModel: ManagerViewModelBase
     {
+        #region variable
+
+        bool _showHelpOpenWebBrowserTips = true;
+
+        #endregion
+
         public AppHelpManagerViewModel(Mediation mediation)
             : base(mediation)
         { }
@@ -38,9 +44,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         WebNavigator HelpBrowser { get; set; }
 
+        public bool ShowHelpOpenWebBrowserTips
+        {
+            get { return this._showHelpOpenWebBrowserTips; }
+            set { SetVariableValue(ref _showHelpOpenWebBrowserTips, value); }
+        }
+
         #endregion
 
         #region command
+
+        public ICommand HideHelpOpenWebBrowserTipsCommand
+        {
+            get { return CreateCommand(o => ShowHelpOpenWebBrowserTips = false); }
+        }
+
+        public ICommand OpenHelpCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    try {
+                        Process.Start(Constants.HelpFilePath);
+                    } catch(Exception ex) {
+                        Mediation.Logger.Error(ex);
+                    }
+                });
+            }
+        }
         #endregion
 
         #region ManagerViewModelBase

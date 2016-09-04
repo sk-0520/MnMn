@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget'
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning'
 						'comments': [
 							''
 						]
@@ -84,6 +84,120 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.15.1',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '740c2d51baf8184f22b6cc8993021a7e1f621b37',
+						'class': 'compatibility',
+						'subject': '#105の実装に伴い 0.16.0 未満のコメント設定(フォントやサイズ等)が失われます'
+					},
+					{
+						'revision': 'eae33f23d6730d7bffad26a7e3fc42ebabd3c5c9',
+						'class': 'warning',
+						'subject': '#106の実装に伴いログ出力内容が変わりました。通信内容を出力するようにしたため認証で使用する資格情報がログ出力されます',
+						'comments': [
+							'障害報告等でログを送っていただく際にはパスワードなどが含まれていないか確認してください',
+							'標準では View 以外に出力は行いませんが明示的にファイル出力・クリップボードコピーする場合は注意してください',
+							'View 側のログリスト内容も SecureString を使用していないため知らない人(やプログラム)にメモリを直接読まれないようにしてください',
+							'でもまぁメモリ内容を読まれる恐れがある環境では遅かれ早かれ情報抜かれるので気にしなくてもいいと思います',
+							'こんなこと書くとセキュリティが心配な人から変なメール飛んでくるので先に伝えておきます。',
+							'MnMn ではパスワード保存に DPAPI を使用して端末のユーザーに紐付けた暗号化を行っているので Microsoft(っていうか Windows と .NET Framework)依存で安全です',
+							'https://bitbucket.org/sk_0520/mnmn/src/master/Source/MnMn/Logic/Converter/PasswordConverter.cs',
+							'死ぬときは MS と一緒に死にましょう'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '0460b30cdd690ac10d766e3070bc5f31114d7aac',
+						'subject': '#112: 動画個別設定に最終再生日時を保持させる'
+					},
+					{
+						'revision': '433483be34e14cfef7d6a0b1b2826b20b40f015e',
+						'subject': '#11: マイリストの並び替え'
+					},
+					{
+						'revision': '8b98e4768bf5636fffbd0d99bedda9d07c894493',
+						'subject': '#28: ユーザー制御で「あとで見る」に追加する'
+					},
+					{
+						'revision': '871bfca4dd2cf0f7f8adc304054fc7d75dc1fcf2',
+						'subject': '#125: タブ操作におけるUXを改善する',
+						'comments': [
+							'タブ上でマウスホイール操作を行うことでタブ移動します(左右スクロール可能なタブのみ)',
+							'タブアイテム上でマウスホイールクリックで該当タブを閉じます(×ボタンありタブのみ)'
+						]
+					},
+					{
+						'revision': '7781a8a1376d7e3fa593cc2610ae7ee4fb549302',
+						'subject': '#132: ヘルプファイルをWebブラウザで直接開く',
+						'comments': [
+							'別件(#120)でローカルのヘルプを直接のさ',
+							'開いたところで何も書いてないけどね！'
+						]
+					},
+					{
+						'revision': '66f9a2ddedbb81bde3547f0aae9fa2048ef70e5a',
+						'subject': '#96: ユーザーの任意操作でログの継続出力を実行する'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '16e9c166eea3e0945e5c50d8c9af66c4c2f9fa31',
+						'subject': '#122: せきゅ®ひてぃ保護'
+					},
+					{
+						'revision': '740c2d51baf8184f22b6cc8993021a7e1f621b37',
+						'subject': '#105: プレイヤー情報はプレイヤーウィンドウ破棄時に保存させる',
+						'comments': [
+							'コメント設定周りを一新したため過去の設定部分を破棄',
+							'バージョンが 1.0.0 以下だと気楽に互換切れて開発側に優しい！',
+							'もしかしたらどっかおかしいかもね'
+						]
+					},
+					{
+						'revision': 'e0a3002e3a659cb15ce3cfbd741b289a46759c1c',
+						'subject': '#129: ファイルGCのサイズ単位が byte'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'c5d4f861c9349c165ca8f0c7938c91b7a39abb9c',
+						'subject': '0.15.0 の更新履歴で #42 の後続課題が #120 でなかった部分を修正',
+						'comments': [
+							'単独更新履歴の方は手で修正'
+						]
+					},
+					{
+						'revision': '75e81587d6a5b617c2c685f7efcc2e996b74ee17',
+						'subject': '#130: 起動時のGC処理を抑制(ほぼデバッグ用)',
+						'comments': [
+							'App.config: background-garbage-collection-is-enabled-startup'
+						]
+					},
+					{
+						'revision': 'eae33f23d6730d7bffad26a7e3fc42ebabd3c5c9',
+						'subject': '#106: ログ出力内容を見直す'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2016/09/04',
 		'version': '0.15.0',
 		'isRc': false,
@@ -111,7 +225,7 @@
 						'revision': 'f356e251333d5e542b15f3123916f3c954918be9',
 						'subject': '#42: WebBrowserコントロールの制御',
 						'comments': [
-							'ヘルプは本対応では厳しかったので後回し(#42)',
+							'ヘルプは本対応では厳しかったので後回し(#120)',
 							'WebBrowserほんと嫌なんだけど',
 							'百歩譲って Forms はいいよ。でもせっかく WPF 使ってるのに Trident 強制って言うやるせなさよ'
 						]

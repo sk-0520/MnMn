@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Resources.TabDictionary"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
@@ -21,6 +24,7 @@
   </Style>
 
   <Style x:Key="TabCloseButton" TargetType="Button">
+    <Setter Property="Tag" Value="{x:Static app:Constants.TagTabCloseButton}" />
     <Setter Property="VerticalAlignment" Value="Top" />
     <Setter Property="Margin" Value="2,0,-2,0" />
     <Setter Property="FontFamily" Value="Webdings" />
@@ -28,6 +32,21 @@
     <Setter Property="Content" Value="r" />
     <Setter Property="Command" Value="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     <Setter Property="CommandParameter" Value="{Binding}" />
+  </Style>
+
+  <Style x:Key="FindTabItem" TargetType="TabItem">
+    <EventSetter Event="MouseDown" Handler="FindTabItem_MouseDown" />
+    <!--<Setter Property="BorderBrush" Value="Red" />
+    <Setter Property="BorderThickness" Value="5" />-->
+    <!--<Setter Property="HeaderTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <Border BorderBrush="Red" BorderThickness="10">
+            <ContentPresenter />
+          </Border>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>-->
   </Style>
 
   <!--
@@ -43,7 +62,10 @@
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}">
+            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}" PreviewMouseWheel="DockPanel_PreviewMouseWheel">
+              <!--<DockPanel.ContextMenu>
+                <ContextMenu x:Name="tabMenu" />
+              </DockPanel.ContextMenu>-->
               <RepeatButton
                 Name="PART_HeadMoveLeft"
                 DockPanel.Dock="Left"
@@ -114,6 +136,9 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+
+    <Setter Property="ItemContainerStyle" Value="{StaticResource FindTabItem}"></Setter>
   </Style>
+
 
 </ResourceDictionary>

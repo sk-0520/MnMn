@@ -65,6 +65,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         SmileVideoMyListFinderViewModelBase _selectedSearchFinder;
         SmileVideoMyListFinderViewModelBase _selectedHistoryFinder;
 
+        SmileVideoAccountMyListFinderViewModel _selectedAccountSortFinder;
+        CollectionModel<SmileVideoMyListFinderViewModelBase> _accountSortMyListItems;
+        bool _showAccountSortMyList;
+
         bool _isSelectedAccount;
         bool _isSelectedSearch;
         bool _isSelectedBookmark;
@@ -98,6 +102,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         CollectionModel<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoAccountMyListFinderViewModel>();
         public ICollectionView AccountMyListItems { get; }
         public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyListViewer => AccountMyList;
+
+        /// <summary>
+        /// 並べ替え用マイリスト一覧。
+        /// </summary>
+        public CollectionModel<SmileVideoMyListFinderViewModelBase> AccountSortMyListItems
+        {
+            get { return this._accountSortMyListItems; }
+            set { SetVariableValue(ref this._accountSortMyListItems, value); }
+        }
+        /// <summary>
+        /// 並べ替え用選択マイリスト。
+        /// </summary>
+        public SmileVideoAccountMyListFinderViewModel SelectedAccountSortFinder
+        {
+            get { return this._selectedAccountSortFinder; }
+            set { SetVariableValue(ref this._selectedAccountSortFinder, value); }
+        }
+        public bool ShowAccountSortMyList
+        {
+            get { return this._showAccountSortMyList; }
+            set
+            {
+                if(SetVariableValue(ref this._showAccountSortMyList, value)) {
+                    if(ShowAccountSortMyList) {
+                        AccountSortMyListItems = new CollectionModel<SmileVideoMyListFinderViewModelBase>(AccountMyListViewer.Where(f => f.CanEdit));
+                    } else {
+                        IsSortChanged = false;
+                    }
+                }
+            }
+        }
+        public bool IsSortChanged { get; set; }
 
         CollectionModel<SmileVideoMyListFinderViewModelBase> SearchUserMyList { get; } = new CollectionModel<SmileVideoMyListFinderViewModelBase>();
         public ICollectionView SearchUserMyListItems { get; }
@@ -291,6 +327,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public ICommand UpAccountSortMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var index = AccountSortMyListItems.IndexOf(SelectedAccountSortFinder);
+                        AccountSortMyListItems.SwapIndex(index, index - 1);
+                    },
+                    o => {
+                        if(SelectedAccountSortFinder == null) {
+                            return false;
+                        }
+                        var index = AccountSortMyListItems.IndexOf(SelectedAccountSortFinder);
+                        return 0 < index;
+                    }
+                );
+            }
+        }
+
+        public ICommand DownAccountSortMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var index = AccountSortMyListItems.IndexOf(SelectedAccountSortFinder);
+                        AccountSortMyListItems.SwapIndex(index, index + 1);
+                    },
+                    o => {
+                        if(SelectedAccountSortFinder == null) {
+                            return false;
+                        }
+                        var index = AccountSortMyListItems.IndexOf(SelectedAccountSortFinder);
+                        return AccountSortMyListItems.Count - 1 > index;
+                    }
+                );
+            }
+        }
+
+        public ICommand SaveAccountSortMyListCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SaveAccountSortMyListTask().ConfigureAwait(false)
+                );
+            }
+        }
+
         public ICommand RemoveCheckedAccountMyListVideoCommand
         {
             get
@@ -438,6 +524,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 if(selectedFinder.FinderLoadState != SourceLoadState.Completed) {
                     selectedFinder.LoadDefaultCacheAsync();
                 }
+                ShowAccountSortMyList = false;
             }
             SelectedCurrentFinder = selectedFinder;
         }
@@ -483,6 +570,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             if(isFinderSelected) {
                 SelectedAccountFinder = list.FirstOrDefault(i => i.MyListId == selectedMyListId) ?? defaultMyList;
             }
+
+            ShowAccountSortMyList = false;
         }
 
         async Task CreateAccountMyListAsync()
@@ -537,6 +626,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return await myList.RemoveAccountMyListFromVideo(myListId, itemIdList);
             }
         }
+
+        async Task SaveAccountSortMyListTask()
+        {
+            var myList = GetMyListApi();
+            var myListIds = AccountSortMyListItems
+                .Select(f => f.MyListId)
+                .ToList()
+            ;
+            var sortResult = await myList.SortAccountGroupAsync(myListIds);
+
+            await LoadAccountMyListAsync(true, null);
+        }
+
 
         public Task SearchUserMyListFromParameterAsync(SmileVideoSearchMyListParameterModel parameter)
         {

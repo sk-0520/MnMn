@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile
         public const string mylistGroupDelete = "smile-video-mylist-account-group-delete";
         public const string mylistGroupUpdate = "smile-video-mylist-account-group-update";
         public const string mylistGroupCreate = "smile-video-mylist-account-group-create";
+        public const string mylistGroupSort = "smile-video-mylist-account-group-sort";
         public const string mylist = "smile-video-mylist-user";
         public const string mylistSearch = "smile-video-mylist-search";
 

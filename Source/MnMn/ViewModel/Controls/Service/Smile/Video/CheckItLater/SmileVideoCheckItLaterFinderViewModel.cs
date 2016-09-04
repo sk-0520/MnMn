@@ -64,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         public override bool IsUsingFinderFilter { get; } = false;
 
+        public override bool IsEnabledCheckItLaterMenu { get; } = false;
+
         protected override bool FilterItems(object obj)
         {
             var baseResult = base.FilterItems(obj);

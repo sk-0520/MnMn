@@ -59,6 +59,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan BackgroundUpdateCheckTime => appConfig.Get("background-update-check-time", TimeSpan.Parse);
         /// <summary>
+        /// 起動時にGCを行うか。
+        /// <para>デバッグ時に抑制する目的なのでリリース時は行う運用。</para>
+        /// </summary>
+        public static bool BackgroundGarbageCollectionIsEnabledStartup => appConfig.Get("background-garbage-collection-is-enabled-startup", bool.Parse);
+        /// <summary>
         /// ゴミ処理タイミング。
         /// </summary>
         public static TimeSpan BackgroundGarbageCollectionTime => appConfig.Get("background-garbage-collection-time", TimeSpan.Parse);

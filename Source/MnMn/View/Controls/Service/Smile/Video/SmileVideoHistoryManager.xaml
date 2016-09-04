@@ -37,7 +37,7 @@
         </DataTemplate>
       </TabControl.ItemTemplate>
       <TabControl.ItemContainerStyle>
-        <Style TargetType="TabItem">
+        <Style TargetType="TabItem" BasedOn="{StaticResource FindTabItem}">
           <Style.Triggers>
             <DataTrigger Binding="{Binding NeedSession}" Value="True">
               <Setter Property="IsEnabled" Value="{Binding DataContext.Session.IsLoggedIn, RelativeSource={RelativeSource AncestorType=UserControl}}"/>

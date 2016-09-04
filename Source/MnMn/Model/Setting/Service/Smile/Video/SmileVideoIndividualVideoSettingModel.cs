@@ -45,6 +45,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool ConvertedSwf { get; set; } = false;
 
         /// <summary>
+        /// 最終視聴日時。
+        /// </summary>
+        [DataMember]
+        public DateTime LastShowTimestamp { get; set; } = DateTime.MinValue;
+
+
+        /// <summary>
         /// フィルタリングデータ。
         /// </summary>
         [DataMember]
