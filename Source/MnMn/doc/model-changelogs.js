@@ -161,18 +161,21 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
 						'subject': '0.15.0 の更新履歴で #42 の後続課題が #120 でなかった部分を修正',
 						'comments': [
 							'単独更新履歴の方は手で修正'
 						]
+					},
+					{
+						'revision': '',
+						'subject': '起動時のGC処理を抑制(ほぼデバッグ用)',
+						'comments': [
+							'App.config: background-garbage-collection-is-enabled-startup'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
 					}
 				]
 			}
