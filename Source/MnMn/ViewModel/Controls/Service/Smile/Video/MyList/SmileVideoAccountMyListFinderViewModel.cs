@@ -213,6 +213,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public override bool IsUsingFinderFilter { get; } = false;
 
+        public override bool IsEnabledCheckItLaterMenu { get; } = false;
+
         #endregion
     }
 }

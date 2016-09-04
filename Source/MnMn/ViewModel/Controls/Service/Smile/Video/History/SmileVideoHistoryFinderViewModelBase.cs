@@ -93,6 +93,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region SmileVideoFeedFinderViewModelBase
 
+        public override bool IsEnabledCheckItLaterMenu { get; } = false;
+
         #endregion
     }
 }
