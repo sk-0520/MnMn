@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget'
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning'
 						'comments': [
 							''
 						]
@@ -94,11 +94,22 @@
 					{
 						'revision': '',
 						'class': 'compatibility',
-						'subject': '#105 実装に伴い 0.16.0 未満のコメント設定(フォントやサイズ等)が失われます'
+						'subject': '#105の実装に伴い 0.16.0 未満のコメント設定(フォントやサイズ等)が失われます'
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'warning',
+						'subject': '#106の実装に伴いログ出力内容が変わりました。通信内容を出力するようにしたため認証で使用する資格情報がログ出力されます',
+						'comments': [
+							'障害報告等でログを送っていただく際にはパスワードなどが含まれていないか確認してください',
+							'標準では View 以外に出力は行いませんが明示的にファイル出力・クリップボードコピーする場合は注意してください',
+							'View 側のログリスト内容も SecureString を使用していないため知らない人(やプログラム)にメモリを直接読まれないようにしてください',
+							'でもまぁメモリ内容を読まれる恐れがある環境では遅かれ早かれ情報抜かれるので気にしなくてもいいと思います',
+							'こんなこと書くとセキュリティが心配な人から変なメール飛んでくるので先に伝えておきます。',
+							'MnMn ではパスワード保存に DPAPI を使用して端末のユーザーに紐付けた暗号化を行っているので Microsoft 依存で安全です',
+							'https://bitbucket.org/sk_0520/mnmn/src/master/Source/MnMn/Logic/Converter/PasswordConverter.cs',
+							'死ぬときは MS と一緒に死にましょう'
+						]
 					},
 					{
 						'revision': '',
@@ -187,7 +198,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#106: ログ出力内容を見直す'
 					}
 				]
 			}
