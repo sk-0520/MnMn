@@ -16,18 +16,76 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 {
     partial class TabDictionary
     {
-        private void TabItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if(e.MiddleButton == System.Windows.Input.MouseButtonState.Pressed) {
+        #region function
 
+        static TabControl GetTabControl(DependencyObject childElement)
+        {
+            var visual = childElement;
+
+            do {
+                var tabControl = visual as TabControl;
+                if(tabControl != null) {
+                    return tabControl;
+                }
+                visual = VisualTreeHelper.GetParent(visual);
+            } while(true);
+
+            throw new Exception($"{nameof(TabDictionary)}としては使用スコープ的に到達不可");
+        }
+
+        static IList<TabItem> GetTabItems(TabControl tabControl)
+        {
+            var tabItems = UIUtility.FindChildren<TabItem>(tabControl);
+            var baseItem = tabItems.FirstOrDefault();
+            if(baseItem != null) {
+                return tabItems.Where(t => t.Parent == baseItem.Parent).ToList();
+            }
+
+            return new List<TabItem>();
+        }
+
+        static int GetNextIndex(IList<TabItem> tabItems, int currentIndex, bool isUp)
+        {
+            if(isUp) {
+                return currentIndex == 0
+                    ? tabItems.Count - 1
+                    : currentIndex - 1
+                ;
+            } else {
+                return currentIndex == tabItems.Count - 1
+                    ? 0
+                    : currentIndex + 1
+                ;
+            }
+        }
+
+        #endregion
+
+        private void DockPanel_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            var tabControl = GetTabControl((DependencyObject)sender);
+            var tabItems = GetTabItems(tabControl);
+            if(1 < tabItems.Count) {
+                var selectedItem = tabItems.First(t => t.IsSelected);
+                var selectedIndex = tabItems.FindIndex(i => i == selectedItem);
+
+                var nextIndex = GetNextIndex(tabItems, selectedIndex, 0 < e.Delta);
+
+                tabControl.SelectedItem = tabItems[nextIndex].DataContext;
             }
         }
     }

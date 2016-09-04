@@ -32,10 +32,17 @@
   </Style>
 
   <Style x:Key="FindTabItem" TargetType="TabItem">
-    <Setter Property="BorderBrush" Value="Red" />
-    <Setter Property="BorderThickness" Value="5" />
-
+    <!--<Setter Property="HeaderTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <Border BorderBrush="Red" BorderThickness="10">
+            <ContentPresenter />
+          </Border>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>-->
   </Style>
+
   <!--
   http://www.kanazawa-net.ne.jp/~pmansato/wpf/wpf_custom_tabcontrol.htm
   -->
@@ -49,7 +56,7 @@
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}">
+            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}" PreviewMouseWheel="DockPanel_PreviewMouseWheel">
               <RepeatButton
                 Name="PART_HeadMoveLeft"
                 DockPanel.Dock="Left"
@@ -120,6 +127,7 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+
     <Setter Property="ItemContainerStyle" Value="{StaticResource FindTabItem}"></Setter>
   </Style>
 
