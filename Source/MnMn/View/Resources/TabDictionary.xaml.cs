@@ -23,8 +23,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 {
@@ -49,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         static IList<TabItem> GetTabItems(TabControl tabControl)
         {
-            var tabItems = UIUtility.FindChildren<TabItem>(tabControl);
+            var tabItems = UIUtility.FindChildren<TabItem>(tabControl).Distinct();
             var baseItem = tabItems.FirstOrDefault();
 
             if(baseItem != null) {
@@ -74,6 +77,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             }
         }
 
+        void SelectTabMenuItem(TabControl tabControl, TabItem tabItem)
+        {
+            var targetTab = GetTabItems(tabControl)
+                .Select((item, index) => new { Item = item, Index = index })
+                .FirstOrDefault(i => i.Item == tabItem)
+            ;
+            if(targetTab != null && targetTab.Index != -1) {
+                tabControl.SelectedIndex = targetTab.Index;
+            }
+        }
+
         #endregion
 
         private void DockPanel_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
@@ -90,6 +104,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
                 tabControl.SelectedIndex = nextIndex;
             }
+        }
+
+        private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var tabControl = GetTabControl((DependencyObject)sender);
+            var tabItems = GetTabItems(tabControl).Reverse();
+
+            var contextMenu = ((FrameworkElement)sender).ContextMenu;
+
+            var menuItems = new List<MenuItem>();
+            foreach(var tabItem in tabItems) {
+                var item = new MenuItem();
+                var text = UIUtility.FindChildren<TextBlock>(tabItem).First();
+                //item.DataContext = tabItem;
+                item.Header = text.Text;
+                item.Command = new DelegateCommand(
+                    o => SelectTabMenuItem(tabControl, tabItem),
+                    o => tabItem.IsEnabled
+                );
+                menuItems.Add(item);
+            }
+            foreach(var menuItem in contextMenu.Items.Cast<MenuItem>()) {
+                menuItem.Command = null;
+            }
+
+            contextMenu.ItemsSource = menuItems;
         }
     }
 }
