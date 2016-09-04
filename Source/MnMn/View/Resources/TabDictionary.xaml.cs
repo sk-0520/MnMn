@@ -22,7 +22,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -88,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         #endregion
 
-        private void DockPanel_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void DockPanel_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             var tabControl = GetTabControl((DependencyObject)sender);
             var tabItems = GetTabItems(tabControl);
@@ -132,5 +134,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         //    contextMenu.ItemsSource = menuItems;
         //}
+
+        void FindTabItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.MiddleButton == MouseButtonState.Pressed) {
+                var tabItem = (TabItem)sender;
+
+                var closeButton = UIUtility.FindChildren<Button>(tabItem)
+                    .FirstOrDefault(b => b.Tag == Constants.TagTabCloseButton)
+                ;
+                if(closeButton != null) {
+                    closeButton.Command.TryExecute(tabItem.DataContext);
+                }
+            }
+        }
     }
 }

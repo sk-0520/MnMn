@@ -132,6 +132,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
+        #region tag
+
+        public static object TagTabCloseButton { get; } = "TabCloseButton";
+
+        #endregion
 
         /// <summary>
         /// 最小XMLファイルサイズ。
