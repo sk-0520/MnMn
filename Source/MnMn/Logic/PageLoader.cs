@@ -255,6 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var executor = GetExecutor(httpMethod);
 
                 using(var response = await executor()) {
+                    Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {response.StatusCode}", response.ToString());
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {
                             var judge = JudgeFailureStatusCode(response);
@@ -307,10 +308,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        private void Count(Func<object, bool> p)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region DisposeFinalizeBase
