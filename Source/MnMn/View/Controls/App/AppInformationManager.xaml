@@ -160,6 +160,8 @@
           <Button Command="{Binding CopySelectedLogCommand}">選択ログをコピー</Button>
           <Separator />
           <Button Command="{Binding ClearAllLogCommand}">クリア</Button>
+          <Separator />
+          <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
         </ToolBar>
 
         <ListView x:Name="listLog" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
