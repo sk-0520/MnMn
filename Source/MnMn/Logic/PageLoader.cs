@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 },
                 uri => uri
             );
-            Mediation.Logger.Trace($"{nameof(Uri)}-> {Uri}, {nameof(rawUri.RequestParameterType)} -> {rawUri.RequestParameterType}");
+            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Uri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
         }
 
         protected void MakeRequestParameter()
@@ -188,6 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 convertedContent.AddRange(pairs);
                             }
                         }
+                        Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {convertedContent.Count}", convertedContent.Any() ? string.Join(Environment.NewLine, convertedContent.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
                         var content = new FormUrlEncodedContent(convertedContent);
                         PlainContent = content;
                     }
@@ -196,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case ParameterType.Mapping: {
                         var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
                         var convertedContent = Mediation.ConvertRequestMapping(mappingResult.Result, ServiceType);
-                        Mediation.Logger.Trace("request param", convertedContent);
+                        Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", convertedContent);
                         MappingContent = new StringContent(convertedContent);
                         if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
                             MappingContent.Headers.ContentType = new MediaTypeHeaderValue(mappingResult.ContentType);
@@ -254,6 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var executor = GetExecutor(httpMethod);
 
                 using(var response = await executor()) {
+                    Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {response.StatusCode}", response.ToString());
                     if(!response.IsSuccessStatusCode) {
                         if(JudgeFailureStatusCode != null) {
                             var judge = JudgeFailureStatusCode(response);
@@ -306,10 +308,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        private void Count(Func<object, bool> p)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region DisposeFinalizeBase
