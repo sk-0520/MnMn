@@ -94,9 +94,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
         public virtual ICollectionView FinderItems { get; }
 
-        //public virtual SmileVideoFilteringViweModel Filtering { get; }
+        /// <summary>
+        /// フィルタリング。
+        /// </summary>
         public SmileVideoFilteringViweModel FinderFilering { get; }
 
+        /// <summary>
+        /// 昇順か。
+        /// </summary>
         public virtual bool IsAscending
         {
             get { return this._isAscending; }
@@ -108,6 +113,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// ソート方法。
+        /// </summary>
         public virtual SmileVideoSortType SelectedSortType
         {
             get { return this._selectedSortType; }
@@ -119,18 +127,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// 現在読み込み中か。
+        /// </summary>
         public virtual bool NowLoading
         {
             get { return this._nowLoading; }
             set { SetVariableValue(ref this._nowLoading, value); }
         }
 
+        /// <summary>
+        /// 選択中アイテム。
+        /// </summary>
         public SmileVideoFinderItemViewModel SelectedFinderItem
         {
             get { return this._selectedFinderItem; }
             set { SetVariableValue(ref this._selectedFinderItem, value); }
         }
 
+        /// <summary>
+        /// 読込状態。
+        /// </summary>
         public virtual SourceLoadState FinderLoadState
         {
             get { return this._finderLoadState; }
@@ -146,6 +163,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// タイトルフィルター文字列。
+        /// </summary>
         public virtual string InputTitleFilter
         {
             get { return this._inputTitleFilter; }
@@ -156,6 +176,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
+
+        /// <summary>
+        /// タイトルフィルタを除外として扱うか。
+        /// </summary>
         public virtual bool IsBlacklist
         {
             get { return this._isBlacklist; }
@@ -195,6 +219,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool IsUsingFinderFilter { get; } = true;
 
+        /// <summary>
+        /// 読込可能か。
+        /// </summary>
         public virtual bool CanLoad
         {
             get
@@ -212,6 +239,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._showContinuousPlaybackMenu; }
             set { SetVariableValue(ref this._showContinuousPlaybackMenu, value); }
         }
+
+        /// <summary>
+        /// 「あとで見る」メニューを有効にするか。
+        /// </summary>
+        public virtual bool IsEnabledCheckItLaterMenu { get; } = true;
 
         #endregion
 
@@ -247,6 +279,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public ICommand ChangedFilteringCommand
         {
             get { return CreateCommand(o => ChangedFiltering()); }
+        }
+
+        public ICommand AddCheckItLaterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCheckItLater(SelectedFinderItem),
+                    o => IsEnabledCheckItLaterMenu && SelectedFinderItem != null
+                );
+            }
         }
 
         #endregion
@@ -464,6 +507,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ChangedFiltering()
         {
             FinderItems.Refresh();
+        }
+
+        void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
         }
 
         #endregion
