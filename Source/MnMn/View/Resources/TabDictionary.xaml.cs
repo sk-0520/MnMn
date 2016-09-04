@@ -52,7 +52,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         static IList<TabItem> GetTabItems(TabControl tabControl)
         {
-            var tabItems = UIUtility.FindChildren<TabItem>(tabControl).Distinct();
+            var tabItems = tabControl.Items.OfType<TabItem>();
+            if(!tabItems.Any()) {
+                tabItems = UIUtility.FindVisualChildren<TabItem>(tabControl);
+            }
+
             var baseItem = tabItems.FirstOrDefault();
 
             if(baseItem != null) {
@@ -77,16 +81,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             }
         }
 
-        void SelectTabMenuItem(TabControl tabControl, TabItem tabItem)
-        {
-            var targetTab = GetTabItems(tabControl)
-                .Select((item, index) => new { Item = item, Index = index })
-                .FirstOrDefault(i => i.Item == tabItem)
-            ;
-            if(targetTab != null && targetTab.Index != -1) {
-                tabControl.SelectedIndex = targetTab.Index;
-            }
-        }
+        //void SelectTabMenuItem(TabControl tabControl, TabItem tabItem, int index)
+        //{
+        //    tabControl.SelectedIndex = index;
+        //}
 
         #endregion
 
@@ -106,30 +104,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
             }
         }
 
-        private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            var tabControl = GetTabControl((DependencyObject)sender);
-            var tabItems = GetTabItems(tabControl).Reverse();
+        //private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        //{
+        //    var tabControl = GetTabControl((DependencyObject)sender);
+        //    var tabs = GetTabItems(tabControl)
+        //        //.Reverse()
+        //        .Select((t, i) => new { TabItem = t, Index = i })
+        //    ;
+        //    //var itemssss = tabControl.Items;
+        //    var contextMenu = ((FrameworkElement)sender).ContextMenu;
 
-            var contextMenu = ((FrameworkElement)sender).ContextMenu;
+        //    var menuItems = new List<MenuItem>();
+        //    foreach(var tab in tabs) {
+        //        var menuItem = new MenuItem();
+        //        var text = UIUtility.FindChildren<TextBlock>(tab.TabItem).First();
+        //        menuItem.DataContext = menuItem;
+        //        menuItem.Header = text.Text;
+        //        menuItem.Command = new DelegateCommand(
+        //            o => SelectTabMenuItem(tabControl, tab.TabItem, tab.Index),
+        //            o => menuItem.IsEnabled
+        //        );
+        //        menuItems.Add(menuItem);
+        //    }
+        //    foreach(var menuItem in contextMenu.Items.Cast<MenuItem>()) {
+        //        menuItem.Command = null;
+        //    }
 
-            var menuItems = new List<MenuItem>();
-            foreach(var tabItem in tabItems) {
-                var item = new MenuItem();
-                var text = UIUtility.FindChildren<TextBlock>(tabItem).First();
-                //item.DataContext = tabItem;
-                item.Header = text.Text;
-                item.Command = new DelegateCommand(
-                    o => SelectTabMenuItem(tabControl, tabItem),
-                    o => tabItem.IsEnabled
-                );
-                menuItems.Add(item);
-            }
-            foreach(var menuItem in contextMenu.Items.Cast<MenuItem>()) {
-                menuItem.Command = null;
-            }
-
-            contextMenu.ItemsSource = menuItems;
-        }
+        //    contextMenu.ItemsSource = menuItems;
+        //}
     }
 }

@@ -58,10 +58,10 @@
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}" PreviewMouseWheel="DockPanel_PreviewMouseWheel" ContextMenuOpening="ContextMenu_ContextMenuOpening">
-              <DockPanel.ContextMenu>
+            <DockPanel Grid.Row="0" Height="{TemplateBinding TabPanel.Height}" PreviewMouseWheel="DockPanel_PreviewMouseWheel">
+              <!--<DockPanel.ContextMenu>
                 <ContextMenu x:Name="tabMenu" />
-              </DockPanel.ContextMenu>
+              </DockPanel.ContextMenu>-->
               <RepeatButton
                 Name="PART_HeadMoveLeft"
                 DockPanel.Dock="Left"
