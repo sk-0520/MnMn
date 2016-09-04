@@ -62,14 +62,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
         static int GetNextIndex(IList<TabItem> tabItems, int currentIndex, bool isUp)
         {
             if(isUp) {
-                return currentIndex == tabItems.Count - 1
-                    ? 0
-                    : currentIndex + 1
-                ;
-            } else {
                 return currentIndex == 0
                     ? tabItems.Count - 1
                     : currentIndex - 1
+                ;
+            } else {
+                return currentIndex == tabItems.Count - 1
+                    ? 0
+                    : currentIndex + 1
                 ;
             }
         }
