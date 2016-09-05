@@ -535,7 +535,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Information($"{CommentAreaWidth}");
 
                 var realScale = RealVideoHeight / CommentAreaHeight;
-                CommentAreaWidth *= realScale;
+                //CommentAreaWidth *= realScale;
 
                 Mediation.Logger.Information($"{CommentAreaWidth}");
             }
