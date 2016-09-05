@@ -553,7 +553,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// コメント表領域。
         /// </summary>
-        public Size CommentArea { get; } = new Size(640, 386);
+        public Size CommentArea { get; } = new Size(Constants.ServiceSmileVideoPlayerCommentWidth, Constants.ServiceSmileVideoPlayerCommentHeight);
         ///// <summary>
         ///// コメント表示領域の幅。
         ///// </summary>

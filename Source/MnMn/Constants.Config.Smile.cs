@@ -131,6 +131,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string ServiceSmileVideoCommentSimpleSpace => appConfig.Get("service-smile-smilevideo-comment-simple-space");
 
         /// <summary>
+        /// コメント表示領域実サイズ。
+        /// <para>横。</para>
+        /// </summary>
+        public static double ServiceSmileVideoPlayerCommentWidth => appConfig.Get("service-smile-smilevideo-player-comment-width", double.Parse);
+        /// <summary>
+        /// コメント表示領域実サイズ。
+        /// <para>縦。</para>
+        /// </summary>
+        public static double ServiceSmileVideoPlayerCommentHeight => appConfig.Get("service-smile-smilevideo-player-comment-height", double.Parse);
+
+        /// <summary>
         /// 関連動画のソート。
         /// </summary>
         public static string ServiceSmileVideoRelationVideoSort => appConfig.Get("service-smile-relation-video-sort");
