@@ -551,21 +551,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseHeight, value); }
         }
         /// <summary>
-        /// コメント表示領域の幅。
+        /// コメント表領域。
         /// </summary>
-        public FewViewModel<double> CommentAreaWidth { get; } = new FewViewModel<double>(640);
-        //{
-        //    get { return this._commentAreaWidth; }
-        //    set { SetVariableValue(ref this._commentAreaWidth, value); }
-        //}
-        /// <summary>
-        /// コメント表示領域の高さ。
-        /// </summary>
-        public FewViewModel<double> CommentAreaHeight { get; } = new FewViewModel<double>(386);
-        //{
-        //    get { return this._commentAreaHeight; }
-        //    set { SetVariableValue(ref this._commentAreaHeight, value); }
-        //}
+        public Size CommentArea { get; } = new Size(640, 386);
+        ///// <summary>
+        ///// コメント表示領域の幅。
+        ///// </summary>
+        //public FewViewModel<double> CommentAreaWidth { get; } = new FewViewModel<double>(640);
+        ////{
+        ////    get { return this._commentAreaWidth; }
+        ////    set { SetVariableValue(ref this._commentAreaWidth, value); }
+        ////}
+        ///// <summary>
+        ///// コメント表示領域の高さ。
+        ///// </summary>
+        //public FewViewModel<double> CommentAreaHeight { get; } = new FewViewModel<double>(386);
+        ////{
+        ////    get { return this._commentAreaHeight; }
+        ////    set { SetVariableValue(ref this._commentAreaHeight, value); }
+        ////}
 
         [Obsolete]
         public GridLength VisualPlayerWidth
