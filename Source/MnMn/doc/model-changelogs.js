@@ -138,6 +138,17 @@
 					},
 					{
 						'revision': '',
+						'subject': '#64: 動画サイズによってコメントがでかかったり表示領域が不思議',
+						'comments': [
+							'さわった感じプレイヤー(Meta.Vlc)のUIにおける実サイズと比率保持したうえでの動画描画サイズを算出した残骸っぽかった',
+							'通常の動画だと動画の描画サイズに一致するけど縦長の動画の場合はコメント描画用領域の実サイズに合わせる形で横方向へ補正かかるようになりました',
+							'コメント描画用領域の実サイズをどうしてもいじりたい人は App.config の以下項目を編集してくらはい',
+							'service-smile-smilevideo-player-comment-width',
+							'service-smile-smilevideo-player-comment-height'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
