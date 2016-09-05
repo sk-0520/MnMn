@@ -228,7 +228,21 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Button Grid.Column="0">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseRightButtonDown">
+            <i:InvokeCommandAction Command="{Binding ShowSystemMenuCommand}"/>
+          </i:EventTrigger>
+          <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding CaptionCloseCommand}"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.Template>
+          <ControlTemplate>
+            <Image Width="16" Height="16" WindowChrome.IsHitTestVisibleInChrome="True" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
+          </ControlTemplate>
+        </Button.Template>
+      </Button>
       <Grid Grid.Column="1" >
         <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
       </Grid>

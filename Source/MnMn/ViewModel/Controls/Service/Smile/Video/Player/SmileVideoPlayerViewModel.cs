@@ -422,6 +422,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ShowSystemMenuCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var hWnd = HandleUtility.GetWindowHandle(View);
+                    var _WM_SYSTEM_MENU = 0x313;
+                    var devicePoint = MouseUtility.GetDevicePosition();
+                    var desktopPoint = PodStructUtility.Convert(devicePoint);
+                    var lParam = new IntPtr(desktopPoint.X | desktopPoint.Y << 16);
+                    NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
+                });
+            }
+        }
+
         #endregion
 
         #region function
