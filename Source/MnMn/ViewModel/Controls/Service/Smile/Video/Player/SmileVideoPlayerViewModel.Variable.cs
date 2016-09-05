@@ -79,8 +79,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         double _realVideoHeight;
         double _baseWidth;
         double _baseHeight;
-        //double _commentAreaWidth = 640;
-        //double _commentAreaHeight = 386;
 
         double _commentEnabledPercent = 100;
         double _commentEnabledHeight;
