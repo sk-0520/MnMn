@@ -543,18 +543,20 @@
             </vlc_wpf:VlcPlayer>
 
             <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
-              <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
-                <Canvas x:Name="normalCommentArea" />
-                <Canvas x:Name="originalPosterCommentArea" />
-                <Rectangle
-                  VerticalAlignment="Top"
-                  HorizontalAlignment="Stretch"
-                  Fill="#80ffffff"
-                  Width="{Binding CommentAreaWidth}"
-                  Height="{Binding CommentEnabledHeight}"
-                  Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
-                />
-              </Grid>
+              <Border BorderBrush="Red" BorderThickness="1">
+                <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
+                  <Canvas x:Name="normalCommentArea" />
+                  <Canvas x:Name="originalPosterCommentArea" />
+                  <Rectangle
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    Fill="#80ffffff"
+                    Width="{Binding CommentAreaWidth}"
+                    Height="{Binding CommentEnabledHeight}"
+                    Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  />
+                </Grid>
+              </Border>
             </Viewbox>
 
           </Grid>

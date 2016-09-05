@@ -497,6 +497,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //View.SizeToContent = SizeToContent.Width;
         }
 
+        void ChangeBaseSize()
+        {
+            if(RealVideoHeight <= 0 || RealVideoWidth <= 0) {
+                BaseWidth = Player.ActualHeight;
+                BaseHeight = Player.ActualWidth;
+                return;
+            } else if(IsFirstPlay) {
+                var desktopScale = UIUtility.GetDpiScale(Player);
+                VisualVideoSize = new Size(
+                    RealVideoWidth * desktopScale.X,
+                    RealVideoHeight * desktopScale.Y
+                );
+            }
+
+            var scale = new Point(
+                Player.ActualWidth / VisualVideoSize.Width,
+                Player.ActualHeight / VisualVideoSize.Height
+            );
+            var baseScale = Math.Min(scale.X, scale.Y);
+
+            BaseWidth = VisualVideoSize.Width * baseScale;
+            BaseHeight = VisualVideoSize.Height * baseScale;
+
+            ChangedEnabledCommentPercent();
+        }
+
         void SetVideoDataInformation()
         {
             RealVideoWidth = Player.VlcMediaPlayer.PixelWidth;
@@ -506,8 +532,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ChangeBaseSize();
 
             if(RealVideoHeight < CommentAreaHeight) {
+                Mediation.Logger.Information($"{CommentAreaWidth}");
+
                 var realScale = RealVideoHeight / CommentAreaHeight;
                 CommentAreaWidth *= realScale;
+
+                Mediation.Logger.Information($"{CommentAreaWidth}");
             }
         }
 
@@ -735,32 +765,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
             });
-        }
-
-        void ChangeBaseSize()
-        {
-            if(RealVideoHeight <= 0 || RealVideoWidth <= 0) {
-                BaseWidth = Player.ActualHeight;
-                BaseHeight = Player.ActualWidth;
-                return;
-            } else if(IsFirstPlay) {
-                var desktopScale = UIUtility.GetDpiScale(Player);
-                VisualVideoSize = new Size(
-                    RealVideoWidth * desktopScale.X,
-                    RealVideoHeight * desktopScale.Y
-                );
-            }
-
-            var scale = new Point(
-                Player.ActualWidth / VisualVideoSize.Width,
-                Player.ActualHeight / VisualVideoSize.Height
-            );
-            var baseScale = Math.Min(scale.X, scale.Y);
-
-            BaseWidth = VisualVideoSize.Width * baseScale;
-            BaseHeight = VisualVideoSize.Height * baseScale;
-
-            ChangedEnabledCommentPercent();
         }
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
