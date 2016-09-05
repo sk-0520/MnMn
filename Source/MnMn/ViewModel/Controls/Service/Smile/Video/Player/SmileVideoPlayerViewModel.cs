@@ -1213,8 +1213,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetWindowMode(bool toNormalWindow)
         {
             IsNormalWindow = toNormalWindow;
+
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(toNormalWindow) {
+                ResizeBorderThickness = enabledResizeBorderThickness;
+                //重複
+                if(State == WindowState.Maximized) {
+                    WindowBorderThickness = maximumWindowBorderThickness;
+                    State = WindowState.Normal;
+                } else {
+                    WindowBorderThickness = normalWindowBorderThickness;
+                }
+
                 View.Deactivated -= View_Deactivated;
 
                 var logicalViewArea = new Rect(Left, Top, Width, Height);
@@ -1223,6 +1233,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
             } else {
                 View.Deactivated += View_Deactivated;
+
+                ResizeBorderThickness = new Thickness(0);
+                WindowBorderThickness = new Thickness(0);
 
                 var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);

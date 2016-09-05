@@ -1008,19 +1008,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._isNormalWindow, value)) {
-                    if(IsNormalWindow) {
-                        ResizeBorderThickness = enabledResizeBorderThickness;
-                        //重複
-                        if(State == WindowState.Maximized) {
-                            WindowBorderThickness = maximumWindowBorderThickness;
-                            State = WindowState.Normal;
-                        } else {
-                            WindowBorderThickness = normalWindowBorderThickness;
-                        }
-                    } else {
-                        ResizeBorderThickness = new Thickness(0);
-                        WindowBorderThickness = new Thickness(0);
-                    }
                     CallOnPropertyChange(nameof(PlayerShowCommentArea));
                 }
             }
