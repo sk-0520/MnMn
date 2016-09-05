@@ -521,7 +521,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
 
             if(BaseWidth < BaseHeight) {
-                var realScale = RealVideoHeight / CommentAreaHeight;
+                var realScale = RealVideoHeight / CommentAreaHeight.Value;
                 BaseWidth *= realScale;
             }
 
@@ -535,15 +535,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // コメントエリアのサイズ設定
             ChangeBaseSize();
-
-            if(RealVideoHeight < CommentAreaHeight) {
-                Mediation.Logger.Information($"{CommentAreaWidth}");
-
-                var realScale = RealVideoHeight / CommentAreaHeight;
-                //CommentAreaWidth *= realScale;
-
-                Mediation.Logger.Information($"{CommentAreaWidth}");
-            }
         }
 
         [HandleProcessCorruptedStateExceptions]
