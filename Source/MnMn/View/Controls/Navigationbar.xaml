@@ -114,10 +114,10 @@
                 PlacementTarget="{Binding ElementName=PART_ProgressBar}"
                 Width="{Binding ActualWidth, ElementName=PART_ProgressBar}"
                 MinHeight="{Binding ActualHeight, ElementName=PART_ProgressBar}"
-                Placement="{Binding SliderPopupPlacement, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                IsOpen="{Binding SliderPopupIsOpen, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Placement="{Binding SeekbarPopupPlacement, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                IsOpen="{Binding SeekbarPopupIsOpen, RelativeSource={RelativeSource AncestorType=UserControl}}"
               >
-                <ContentControl Content="{Binding SliderPopupContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                <ContentControl Content="{Binding SeekbarPopupContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
               </Popup>
             </Grid>
           </Border>
