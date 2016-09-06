@@ -52,10 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
             SelectedPeriod = PeriodItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultPeriodKey) ?? PeriodItems.First();
             SelectedTarget = TargetItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultTargetKey) ?? TargetItems.First();
 
-            // 初期化で読み込みが動いちゃう対応
-            var categoryItems = new CollectionModel<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
-            SelectedCategory = categoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? categoryItems.First();
-            CategoryItems = categoryItems;
+            //MakeUsingCategory();
         }
 
         #region property
@@ -142,6 +139,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         #region function
 
+        void MakeUsingCategory()
+        {
+            // 初期化で読み込みが動いちゃう対応
+            var categoryItems = new List<SmileVideoRankingCategoryDefinedElementViewModel>(GetLinearRankingElementList(RankingModel.Items));
+
+            if(!Session.IsLoggedIn || !Session.IsOver18) {
+                var expitems = categoryItems
+                    .Where(c => c.Extends.ContainsKey("age"))
+                    .Where(c => Session.Age < int.Parse(c.Extends["age"]))
+                ;
+                categoryItems = categoryItems.Except(expitems).ToList();
+            }
+            CategoryItems = null;
+            SelectedCategory = categoryItems.FirstOrDefault(m => m.Model.Key == Setting.Ranking.DefaultCategoryKey) ?? categoryItems.First();
+            CategoryItems = CollectionModel.Create(categoryItems);
+            CallOnPropertyChange(nameof(CategoryItems));
+        }
+
         IEnumerable<SmileVideoRankingCategoryDefinedElementViewModel> GetLinearRankingElementList(IEnumerable<SmileVideoCategoryGroupModel> items)
         {
             foreach(var item in items) {
@@ -203,6 +218,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         protected override void ShowViewCore()
         {
+            if(CategoryItems == null) {
+                MakeUsingCategory();
+            }
+
             if(!RankingCategoryGroupItems.Any()) {
                 LoadRankingCategoryAsync();
             }
@@ -213,6 +232,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
         public override Task InitializeAsync()
         {
+            MakeUsingCategory();
+
             return Task.CompletedTask;
         }
 

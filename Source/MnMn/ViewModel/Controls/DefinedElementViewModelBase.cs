@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public IReadOnlyDictionary<string, string> Extends => Model.Extends;
+
         #endregion
     }
 }
