@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#108: コメント数が 0 ならコメントグラフは表示しない'
 					},
 					{
 						'revision': '',

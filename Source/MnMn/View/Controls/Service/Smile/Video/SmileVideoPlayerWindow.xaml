@@ -7,11 +7,8 @@
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
 
   xmlns:oxy="http://oxyplot.org/wpf"
-  xmlns:oxy_a="http://oxyplot.org"
-
 
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
 
@@ -635,7 +632,7 @@
               StopCommand="{Binding StopCommand}"
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
-              SliderPopupIsOpen="{Binding ShowCommentChart}"
+              SeekbarPopupIsOpen="{Binding ShowCommentChart}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
@@ -670,7 +667,7 @@
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
-              <app_view_controls:Navigationbar.SliderPopupContent>
+              <app_view_controls:Navigationbar.SeekbarPopupContent>
                 <Border>
                   <Viewbox Stretch="Fill" >
                     <oxy:Plot Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
@@ -684,7 +681,7 @@
                     </oxy:Plot>
                   </Viewbox>
                 </Border>
-              </app_view_controls:Navigationbar.SliderPopupContent>
+              </app_view_controls:Navigationbar.SeekbarPopupContent>
             </app_view_controls:Navigationbar>
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">

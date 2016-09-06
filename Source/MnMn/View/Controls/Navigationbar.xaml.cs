@@ -516,77 +516,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        #region SliderPopupContentProperty
+        #region SeekbarPopupContentProperty
 
-        public static readonly DependencyProperty SliderPopupContentProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SliderPopupContentProperty)),
+        public static readonly DependencyProperty SeekbarPopupContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SeekbarPopupContentProperty)),
             typeof(object),
             typeof(Navigationbar),
-            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSliderPopupContentChanged))
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSeekbarPopupContentChanged))
         );
 
-        private static void OnSliderPopupContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSeekbarPopupContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Navigationbar;
             if(control != null) {
-                control.SliderPopupContent = e.NewValue;
+                control.SeekbarPopupContent = e.NewValue;
             }
         }
 
-        public object SliderPopupContent
+        public object SeekbarPopupContent
         {
-            get { return GetValue(SliderPopupContentProperty); }
-            set { SetValue(SliderPopupContentProperty, value); }
+            get { return GetValue(SeekbarPopupContentProperty); }
+            set { SetValue(SeekbarPopupContentProperty, value); }
         }
 
         #endregion
 
-        #region SliderPopupIsOpenProperty
+        #region SeekbarPopupIsOpenProperty
 
-        public static readonly DependencyProperty SliderPopupIsOpenProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SliderPopupIsOpenProperty)),
+        public static readonly DependencyProperty SeekbarPopupIsOpenProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SeekbarPopupIsOpenProperty)),
             typeof(bool),
             typeof(Navigationbar),
-            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSliderPopupIsOpenChanged))
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSeekbarPopupIsOpenChanged))
         );
 
-        private static void OnSliderPopupIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSeekbarPopupIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Navigationbar;
             if(control != null) {
-                control.SliderPopupIsOpen = (bool)e.NewValue;
+                control.SeekbarPopupIsOpen = (bool)e.NewValue;
             }
         }
 
-        public bool SliderPopupIsOpen
+        public bool SeekbarPopupIsOpen
         {
-            get { return (bool)GetValue(SliderPopupIsOpenProperty); }
-            set { SetValue(SliderPopupIsOpenProperty, value); }
+            get { return (bool)GetValue(SeekbarPopupIsOpenProperty); }
+            set { SetValue(SeekbarPopupIsOpenProperty, value); }
         }
 
         #endregion
 
-        #region SliderPopupPlacementProperty
+        #region SeekbarPopupPlacementProperty
 
-        public static readonly DependencyProperty SliderPopupPlacementProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SliderPopupPlacementProperty)),
+        public static readonly DependencyProperty SeekbarPopupPlacementProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SeekbarPopupPlacementProperty)),
             typeof(PlacementMode),
             typeof(Navigationbar),
-            new FrameworkPropertyMetadata(PlacementMode.Center, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSliderPopupPlacementChanged))
+            new FrameworkPropertyMetadata(PlacementMode.Center, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSeekbarPopupPlacementChanged))
         );
 
-        private static void OnSliderPopupPlacementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSeekbarPopupPlacementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Navigationbar;
             if(control != null) {
-                control.SliderPopupPlacement = (PlacementMode)e.NewValue;
+                control.SeekbarPopupPlacement = (PlacementMode)e.NewValue;
             }
         }
 
-        public PlacementMode SliderPopupPlacement
+        public PlacementMode SeekbarPopupPlacement
         {
-            get { return (PlacementMode)GetValue(SliderPopupPlacementProperty); }
-            set { SetValue(SliderPopupPlacementProperty, value); }
+            get { return (PlacementMode)GetValue(SeekbarPopupPlacementProperty); }
+            set { SetValue(SeekbarPopupPlacementProperty, value); }
         }
 
         #endregion

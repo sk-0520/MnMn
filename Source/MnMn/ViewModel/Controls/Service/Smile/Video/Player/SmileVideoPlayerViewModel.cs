@@ -1858,7 +1858,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowCommentChart = true;
+            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
         }
 
         private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
