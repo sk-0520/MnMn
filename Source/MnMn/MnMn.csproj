@@ -188,7 +188,7 @@
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
     <Compile Include="Define\GarbageCollectionLevel.cs" />
     <Compile Include="Define\OrderKind.cs" />
-    <Compile Include="Define\Service\Smile\Video\SmileVideoExecuteMode.cs" />
+    <Compile Include="Define\ExecuteOrOpenMode.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoFinderFilteringTarget.cs" />
     <Compile Include="Define\UpdateCheckState.cs" />
     <Compile Include="Define\DefinedImageSourceKind.cs" />

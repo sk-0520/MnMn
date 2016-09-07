@@ -20,12 +20,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     /// <summary>
     /// 動画再生方法。
     /// </summary>
-    public enum SmileVideoExecuteMode
+    public enum ExecuteOrOpenMode
     {
         /// <summary>
         /// 本ソフト。

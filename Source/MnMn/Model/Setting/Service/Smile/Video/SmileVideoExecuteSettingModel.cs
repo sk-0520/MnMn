@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
@@ -36,17 +37,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 動画再生方法。
         /// </summary>
-        public SmileVideoExecuteMode ExecuteMode { get; set; } = Constants.SettingServiceSmileVideoExecuteExecuteMode;
+        [DataMember]
+        public ExecuteOrOpenMode ExecuteMode { get; set; } = Constants.SettingServiceSmileVideoExecuteExecuteOrOpenMode;
 
         /// <summary>
         /// 外部プログラムのパス。
         /// </summary>
+        [DataMember]
         public string LauncherPath { get; set; }
 
         /// <summary>
         /// 外部プログラム実行時のパラメータ。
         /// </summary>
-        public string LauncherOption { get; set; }
+        [DataMember]
+        public string LauncherParameter { get; set; }
 
         #endregion
     }

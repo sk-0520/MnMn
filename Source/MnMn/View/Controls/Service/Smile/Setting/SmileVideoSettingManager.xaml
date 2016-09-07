@@ -7,19 +7,25 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
+  xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300" d:DesignWidth="300"
+  d:DesignHeight="300"
+  d:DesignWidth="500"
 >
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
@@ -65,10 +71,36 @@
                 </StackPanel>
               </Button>
               <Border Width="8" />
-              <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis">ログインチェックするまでアカウント情報は有効になりません。</TextBlock>
+              <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis">ログインチェックするまでアカウント情報は有効になりません。</TextBlock>
             </StackPanel>
           </Grid>
+        </StackPanel>
+      </GroupBox>
 
+      <GroupBox Header="動画再生方法">
+        <StackPanel>
+          <RadioButton Content="本体機能で開く" IsChecked="{Binding ExecuteMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}}" />
+          <RadioButton Content="ブラウザで開く" IsChecked="{Binding ExecuteMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}}" />
+          <RadioButton Content="外部プログラムで開く" IsChecked="{Binding ExecuteMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}}" />
+
+          <GroupBox Header="外部プログラム設定">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0" Content="プログラム"/>
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath}" Style="{StaticResource DefaultTextBox}"/>
+
+              <Label Grid.Row="1" Grid.Column="0" Content="パラメータ"/>
+              <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter}" Style="{StaticResource DefaultTextBox}"/>
+            </Grid>
+          </GroupBox>
 
         </StackPanel>
       </GroupBox>

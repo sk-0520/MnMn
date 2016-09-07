@@ -52,15 +52,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         SmileSettingModel Setting { get; }
         public SmileSessionViewModel Session { get; }
 
+        /// <summary>
+        /// 編集用アカウント名。
+        /// </summary>
         public string EditingAccountName
         {
             get { return this._editingAccountName; }
             set { SetVariableValue(ref this._editingAccountName, value); }
         }
+        /// <summary>
+        /// 編集用アカウントパスワード。
+        /// </summary>
         public string EditingAccountPassword
         {
             get { return this._editingAccountPassword; }
             set { SetVariableValue(ref this._editingAccountPassword, value); }
+        }
+
+        /// <summary>
+        /// 動画再生方法。
+        /// </summary>
+        public ExecuteOrOpenMode ExecuteMode
+        {
+            get { return Setting.Video.Execute.ExecuteMode; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
+        }
+        /// <summary>
+        /// 外部プログラムパス。
+        /// </summary>
+        public string LauncherPath
+        {
+            get { return Setting.Video.Execute.LauncherPath; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
+        }
+        /// <summary>
+        /// 外部プログラムパラメータ。
+        /// </summary>
+        public string LauncherParameter
+        {
+            get { return Setting.Video.Execute.LauncherParameter; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
         }
 
         #endregion
