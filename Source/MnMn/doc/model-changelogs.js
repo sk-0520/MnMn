@@ -84,24 +84,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.16.1',
-		'isRc': true,
+		'date': '2016/09/07',
+		'version': '0.17.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': 'ワタクシにメールをくださった誰かに',
+						'comments': [
+							'メールくれること自体は構いません',
+							'内容がなんであれ判断はこちらの勝手なので要望でも要求でもなんでもいいんですが、使い捨てメール使われますと返信できないのでそこのとこ いい感じにお願いします'
+						]
 					}
 				]
 			},
@@ -109,16 +105,8 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'f83b8a851dd2d8b608aa3b1bb7e45acfd5232bb7',
 						'subject': '#108: コメント数が 0 ならコメントグラフは表示しない'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -126,18 +114,18 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '44257edcc10bcd05a449a27e905d3c3d6a24798e',
 						'subject': '#98: マイリストから動画を削除した時表示上まだ残ってる',
 						'comments': [
 							'律儀にキャッシュを読み込んでた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'e0f6045842a5176f989b8abcb59ed2c88532f65b',
 						'subject': '#79: 検索やマイリスト遷移時でメインウィンドウ内自動遷移がうまくいかない'
 					},
 					{
-						'revision': '',
+						'revision': 'cb44891a365fc4ea1aa07d63df56f74306b09211',
 						'subject': '#64: 動画サイズによってコメントがでかかったり表示領域が不思議',
 						'comments': [
 							'さわった感じプレイヤー(Meta.Vlc)のUIにおける実サイズと比率保持したうえでの動画描画サイズを算出した残骸っぽかった',
@@ -148,7 +136,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'dda9edc66451ba438b86967e4b1095ee89d4eb64',
 						'subject': '#103: プレイヤーウィンドウのアイコン部分ダブルクリックでウィンドウを閉じられるようにする',
 						'comments': [
 							'Windows の UX だと左クリックでも出せないとダメなんだろうけど InvokeCommandAction だと気楽に実現できないので ダブルクリックと右クリックだけ対応',
@@ -156,29 +144,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '9cf10fae2523dee812c158661c2f5dea58efed13',
 						'subject': '#6: ランキングに年齢制限を反映する',
 						'comments': [
 							'20-30分で実装・テスト終わると思ってたけどえらい時間かかった',
 							'(どっちにしろ再生できないけど)青少年に清い灰色な青春を'
 						]
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
