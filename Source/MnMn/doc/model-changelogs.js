@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#51: 外部再生機能の追加'
 					},
 					{
 						'revision': '',
