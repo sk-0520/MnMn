@@ -36,21 +36,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoCommentSettingModel Comment { get; set; } = new SmileVideoCommentSettingModel();
 
+        /// <summary>
+        /// 検索設定。
+        /// </summary>
         [DataMember]
         public SmileVideoSearchSettingModel Search { get; set; } = new SmileVideoSearchSettingModel();
 
+        /// <summary>
+        /// プレイヤー設定。
+        /// </summary>
         [DataMember]
         public SmileVideoPlayerSettingModel Player { get; set; } = new SmileVideoPlayerSettingModel();
 
+        /// <summary>
+        /// 動画再生設定。
+        /// </summary>
+        [DataMember]
+        public SmileVideoExecuteSettingModel Execute { get; set; } = new SmileVideoExecuteSettingModel();
+
+        /// <summary>
+        /// ランキング設定。
+        /// </summary>
         [DataMember]
         public SmileVideoRankingSettingModel Ranking { get; set; } = new SmileVideoRankingSettingModel();
 
+        /// <summary>
+        /// 履歴。
+        /// </summary>
         [DataMember]
         public FixedSizeCollectionModel<SmileVideoPlayHistoryModel> History { get; set; } = new FixedSizeCollectionModel<SmileVideoPlayHistoryModel>(Constants.ServiceSmileVideoPlayHistoryCount, false);
 
+        /// <summary>
+        /// ブックマーク。
+        /// </summary>
         [DataMember]
         public SmileVideoBookmarkItemSettingModel Bookmark { get; } = new SmileVideoBookmarkItemSettingModel();
 
+        /// <summary>
+        /// あとで見る。
+        /// </summary>
         [DataMember]
         public FixedSizeCollectionModel<SmileVideoCheckItLaterModel> CheckItLater { get; set; } = new FixedSizeCollectionModel<SmileVideoCheckItLaterModel>(Constants.ServiceSmileVideoCheckItLaterCount, false);
 
