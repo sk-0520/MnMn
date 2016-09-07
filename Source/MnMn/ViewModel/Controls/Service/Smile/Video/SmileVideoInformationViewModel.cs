@@ -1204,8 +1204,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
-            // TODO: パラメータとかその辺りの選定
-            var args = Setting.Execute.LauncherParameter;
+            var args = SmileVideoInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
             try {
                 Process.Start(Setting.Execute.LauncherPath, args);
             } catch(Exception ex) {
