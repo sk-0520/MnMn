@@ -7,11 +7,8 @@
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
 
   xmlns:oxy="http://oxyplot.org/wpf"
-  xmlns:oxy_a="http://oxyplot.org"
-
 
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
 
@@ -228,7 +225,21 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
+      <Button Grid.Column="0">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseRightButtonDown">
+            <i:InvokeCommandAction Command="{Binding ShowSystemMenuCommand}"/>
+          </i:EventTrigger>
+          <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding CaptionCloseCommand}"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.Template>
+          <ControlTemplate>
+            <Image Width="16" Height="16" WindowChrome.IsHitTestVisibleInChrome="True" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
+          </ControlTemplate>
+        </Button.Template>
+      </Button>
       <Grid Grid.Column="1" >
         <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
       </Grid>
@@ -543,14 +554,14 @@
             </vlc_wpf:VlcPlayer>
 
             <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
-              <Grid Width="{Binding CommentAreaWidth}" Height="{Binding CommentAreaHeight}" >
+              <Grid Width="{Binding CommentArea.Width, Mode=OneTime}" Height="{Binding CommentArea.Height, Mode=OneTime}" >
                 <Canvas x:Name="normalCommentArea" />
                 <Canvas x:Name="originalPosterCommentArea" />
                 <Rectangle
                   VerticalAlignment="Top"
                   HorizontalAlignment="Stretch"
                   Fill="#80ffffff"
-                  Width="{Binding CommentAreaWidth}"
+                  Width="{Binding CommentArea.Width, Mode=OneTime}"
                   Height="{Binding CommentEnabledHeight}"
                   Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
                 />
@@ -621,7 +632,7 @@
               StopCommand="{Binding StopCommand}"
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
-              SliderPopupIsOpen="{Binding ShowCommentChart}"
+              SeekbarPopupIsOpen="{Binding ShowCommentChart}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">
@@ -656,7 +667,7 @@
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
-              <app_view_controls:Navigationbar.SliderPopupContent>
+              <app_view_controls:Navigationbar.SeekbarPopupContent>
                 <Border>
                   <Viewbox Stretch="Fill" >
                     <oxy:Plot Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
@@ -670,7 +681,7 @@
                     </oxy:Plot>
                   </Viewbox>
                 </Border>
-              </app_view_controls:Navigationbar.SliderPopupContent>
+              </app_view_controls:Navigationbar.SeekbarPopupContent>
             </app_view_controls:Navigationbar>
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">

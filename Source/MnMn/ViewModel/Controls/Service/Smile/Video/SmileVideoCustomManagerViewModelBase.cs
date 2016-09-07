@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected SmileVideoSettingModel Setting { get; }
 
-        public SessionViewModelBase Session { get; }
+        public SmileSessionViewModel Session { get; }
 
         public virtual SmileVideoFinderViewModelBase SelectedItem
         {

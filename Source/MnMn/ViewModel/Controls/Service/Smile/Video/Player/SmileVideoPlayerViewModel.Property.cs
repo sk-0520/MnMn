@@ -25,6 +25,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -550,21 +551,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseHeight, value); }
         }
         /// <summary>
-        /// コメント表示領域の幅。
+        /// コメント表領域。
         /// </summary>
-        public double CommentAreaWidth
-        {
-            get { return this._commentAreaWidth; }
-            set { SetVariableValue(ref this._commentAreaWidth, value); }
-        }
-        /// <summary>
-        /// コメント表示領域の高さ。
-        /// </summary>
-        public double CommentAreaHeight
-        {
-            get { return this._commentAreaHeight; }
-            set { SetVariableValue(ref this._commentAreaHeight, value); }
-        }
+        public Size CommentArea { get; } = new Size(Constants.ServiceSmileVideoPlayerCommentWidth, Constants.ServiceSmileVideoPlayerCommentHeight);
 
         [Obsolete]
         public GridLength VisualPlayerWidth
@@ -1008,19 +997,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set
             {
                 if(SetVariableValue(ref this._isNormalWindow, value)) {
-                    if(IsNormalWindow) {
-                        ResizeBorderThickness = enabledResizeBorderThickness;
-                        //重複
-                        if(State == WindowState.Maximized) {
-                            WindowBorderThickness = maximumWindowBorderThickness;
-                            State = WindowState.Normal;
-                        } else {
-                            WindowBorderThickness = normalWindowBorderThickness;
-                        }
-                    } else {
-                        ResizeBorderThickness = new Thickness(0);
-                        WindowBorderThickness = new Thickness(0);
-                    }
                     CallOnPropertyChange(nameof(PlayerShowCommentArea));
                 }
             }

@@ -422,6 +422,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ShowSystemMenuCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    var hWnd = HandleUtility.GetWindowHandle(View);
+                    var _WM_SYSTEM_MENU = 0x313;
+                    var devicePoint = MouseUtility.GetDevicePosition();
+                    var desktopPoint = PodStructUtility.Convert(devicePoint);
+                    var lParam = new IntPtr(desktopPoint.X | desktopPoint.Y << 16);
+                    NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -497,6 +512,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //View.SizeToContent = SizeToContent.Width;
         }
 
+        void ChangeBaseSize()
+        {
+            if(RealVideoHeight <= 0 || RealVideoWidth <= 0) {
+                BaseWidth = Player.ActualHeight;
+                BaseHeight = Player.ActualWidth;
+                return;
+            } else if(IsFirstPlay) {
+                var desktopScale = UIUtility.GetDpiScale(Player);
+                VisualVideoSize = new Size(
+                    RealVideoWidth * desktopScale.X,
+                    RealVideoHeight * desktopScale.Y
+                );
+            }
+
+            var scale = new Point(
+                Player.ActualWidth / VisualVideoSize.Width,
+                Player.ActualHeight / VisualVideoSize.Height
+            );
+            var baseScale = Math.Min(scale.X, scale.Y);
+
+            BaseWidth = VisualVideoSize.Width * baseScale;
+            BaseHeight = VisualVideoSize.Height * baseScale;
+
+            if(BaseWidth < BaseHeight) {
+                var realScale = RealVideoHeight / CommentArea.Height;
+                BaseWidth *= realScale;
+            }
+
+            ChangedEnabledCommentPercent();
+        }
+
         void SetVideoDataInformation()
         {
             RealVideoWidth = Player.VlcMediaPlayer.PixelWidth;
@@ -504,11 +550,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // コメントエリアのサイズ設定
             ChangeBaseSize();
-
-            if(RealVideoHeight < CommentAreaHeight) {
-                var realScale = RealVideoHeight / CommentAreaHeight;
-                CommentAreaWidth *= realScale;
-            }
         }
 
         [HandleProcessCorruptedStateExceptions]
@@ -735,32 +776,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
             });
-        }
-
-        void ChangeBaseSize()
-        {
-            if(RealVideoHeight <= 0 || RealVideoWidth <= 0) {
-                BaseWidth = Player.ActualHeight;
-                BaseHeight = Player.ActualWidth;
-                return;
-            } else if(IsFirstPlay) {
-                var desktopScale = UIUtility.GetDpiScale(Player);
-                VisualVideoSize = new Size(
-                    RealVideoWidth * desktopScale.X,
-                    RealVideoHeight * desktopScale.Y
-                );
-            }
-
-            var scale = new Point(
-                Player.ActualWidth / VisualVideoSize.Width,
-                Player.ActualHeight / VisualVideoSize.Height
-            );
-            var baseScale = Math.Min(scale.X, scale.Y);
-
-            BaseWidth = VisualVideoSize.Width * baseScale;
-            BaseHeight = VisualVideoSize.Height * baseScale;
-
-            ChangedEnabledCommentPercent();
         }
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
@@ -1213,8 +1228,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetWindowMode(bool toNormalWindow)
         {
             IsNormalWindow = toNormalWindow;
+
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(toNormalWindow) {
+                ResizeBorderThickness = enabledResizeBorderThickness;
+                //重複
+                if(State == WindowState.Maximized) {
+                    WindowBorderThickness = maximumWindowBorderThickness;
+                    State = WindowState.Normal;
+                } else {
+                    WindowBorderThickness = normalWindowBorderThickness;
+                }
+
                 View.Deactivated -= View_Deactivated;
 
                 var logicalViewArea = new Rect(Left, Top, Width, Height);
@@ -1223,6 +1248,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
             } else {
                 View.Deactivated += View_Deactivated;
+
+                ResizeBorderThickness = new Thickness(0);
+                WindowBorderThickness = new Thickness(0);
 
                 var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
@@ -1830,7 +1858,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowCommentChart = true;
+            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
         }
 
         private void Seekbar_MouseLeave(object sender, MouseEventArgs e)

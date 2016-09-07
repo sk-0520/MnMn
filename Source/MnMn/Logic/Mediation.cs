@@ -153,6 +153,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 switch(request.ServiceType) {
                     case ServiceType.Smile:
                     case ServiceType.SmileVideo:
+                        ManagerPack.AppManager.SelectedManager = ManagerPack.SmileManager;
                         ManagerPack.SmileManager.SelectedManager = viewModel as ManagerViewModelBase;
                         return new ResponseModel(request, null);
 

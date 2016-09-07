@@ -70,6 +70,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
             get { return RawValueUtility.ConvertBoolean(SimpleUserAccount.IsOver18); }
         }
 
+        /// <summary>
+        /// 年齢取得。
+        /// <para>ログインしていない、何かしらの事情で年齢が取得できない場合は 0 未満が返る。</para>
+        /// </summary>
+        public int Age
+        {
+            get
+            {
+                if(IsLoggedIn) {
+                    return RawValueUtility.ConvertInteger(SimpleUserAccount.Age);
+                }
+                return -1;
+            }
+        }
+
         #endregion
 
         #region function

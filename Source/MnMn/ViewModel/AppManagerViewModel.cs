@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             AppInformationManager = new AppInformationManagerViewModel(Mediation, appLogger);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(AppSettingManager, SmileManager));
+            Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(this, AppSettingManager, SmileManager));
 
             SmileSession = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.App;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
 
@@ -27,14 +28,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     public class ApplicationManagerPackModel: ManagerPackModelBase
     {
-        public ApplicationManagerPackModel(AppSettingManagerViewModel appSettingManager, SmileManagerViewModel smileManager)
+        public ApplicationManagerPackModel(AppManagerViewModel appManager, AppSettingManagerViewModel appSettingManager, SmileManagerViewModel smileManager)
         {
+            AppManager = appManager;
             AppSettingManager = appSettingManager;
             SmileManager = smileManager;
         }
 
         #region
 
+        public AppManagerViewModel AppManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
         public SmileManagerViewModel SmileManager { get; }
 

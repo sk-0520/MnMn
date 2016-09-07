@@ -94,24 +94,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region function
 
-        Task LoginAsync()
+        async Task LoginAsync()
         {
             Setting.Account.Name = EditingAccountName;
             Setting.Account.Password = EditingAccountPassword;
 
-            return Session.ChangeUserAccountAsync(Setting.Account).ContinueWith(t => {
-                return Session.LoginAsync();
-            }).ContinueWith(t => {
-                //if(Session.IsLoggedIn) {
-                var tasks = new[] {
-                        Mediation.Smile.ManagerPack.UsersManager.InitializeAsync(),
-                        Mediation.Smile.ManagerPack.VideoManager.InitializeAsync(),
-                    };
-                return Task.WhenAll(tasks);
-                //}
+            await Session.ChangeUserAccountAsync(Setting.Account);
 
-                //return Task.CompletedTask;
-            });
+            await Session.LoginAsync();
+
+            var tasks = new[] {
+                Mediation.Smile.ManagerPack.UsersManager.InitializeAsync(),
+                Mediation.Smile.ManagerPack.VideoManager.InitializeAsync(),
+            };
+            await Task.WhenAll(tasks);
         }
 
         #endregion

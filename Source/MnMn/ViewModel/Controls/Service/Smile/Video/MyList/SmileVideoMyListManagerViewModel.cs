@@ -392,7 +392,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                                 return task.Result;
                             }).ContinueWith(task => {
                                 if(task.Result.IsSuccess) {
-                                    return finder.LoadDefaultCacheAsync();
+                                    //public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+                                    finder.IgnoreCache = true;
+                                    return finder.LoadDefaultCacheAsync().ContinueWith(t => {
+                                        finder.IgnoreCache = false;
+                                    });
                                 } else {
                                     return Task.CompletedTask;
                                 }
