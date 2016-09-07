@@ -88,17 +88,23 @@
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
               <Label Grid.Row="0" Grid.Column="0" Content="プログラム"/>
-              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath}" Style="{StaticResource DefaultTextBox}"/>
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}"/>
+              <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}">開く</Button>
 
               <Label Grid.Row="1" Grid.Column="0" Content="パラメータ"/>
-              <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LauncherParameter}" Style="{StaticResource DefaultTextBox}"/>
+              <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}"/>
+
+              <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />
+
             </Grid>
           </GroupBox>
 
