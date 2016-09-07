@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +25,12 @@ using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
@@ -52,15 +55,59 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         SmileSettingModel Setting { get; }
         public SmileSessionViewModel Session { get; }
 
+        /// <summary>
+        /// 編集用アカウント名。
+        /// </summary>
         public string EditingAccountName
         {
             get { return this._editingAccountName; }
             set { SetVariableValue(ref this._editingAccountName, value); }
         }
+        /// <summary>
+        /// 編集用アカウントパスワード。
+        /// </summary>
         public string EditingAccountPassword
         {
             get { return this._editingAccountPassword; }
             set { SetVariableValue(ref this._editingAccountPassword, value); }
+        }
+
+        /// <summary>
+        /// 動画再生方法。
+        /// </summary>
+        public ExecuteOrOpenMode OpenMode
+        {
+            get { return Setting.Video.Execute.OpenMode; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
+        }
+        /// <summary>
+        /// 外部プログラムパス。
+        /// </summary>
+        public string LauncherPath
+        {
+            get { return Setting.Video.Execute.LauncherPath; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
+        }
+        /// <summary>
+        /// 外部プログラムパラメータ。
+        /// </summary>
+        public string LauncherParameter
+        {
+            get { return Setting.Video.Execute.LauncherParameter; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
+        }
+
+        public string LauncherParameterList
+        {
+            get
+            {
+                var list = new[] {
+                    SmileVideoInformationUtility.launcherParameterVideoId,
+                    SmileVideoInformationUtility.launcherParameterVideoTitle,
+                    SmileVideoInformationUtility.launcherParameterVideoPage,
+                };
+                return string.Join(", ", list.Select(s => "${" + s + "}"));
+            }
         }
 
         #endregion
@@ -90,6 +137,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             }
         }
 
+        public ICommand OpenDialogLauncherPathCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LauncherPath = OpenDialog(LauncherPath);
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -108,6 +167,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
                 Mediation.Smile.ManagerPack.VideoManager.InitializeAsync(),
             };
             await Task.WhenAll(tasks);
+        }
+
+        string OpenDialog(string path)
+        {
+            var existFile = File.Exists(path);
+
+            var dialog = new OpenFileDialog() {
+                FileName = existFile ? path : string.Empty,
+                InitialDirectory = existFile ? Path.GetDirectoryName(path) : Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                CheckFileExists = true,
+            };
+            if(dialog.ShowDialog().GetValueOrDefault()) {
+                return dialog.FileName;
+            }
+
+            return path;
         }
 
         #endregion

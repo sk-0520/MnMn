@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -298,6 +299,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 全体フィルタリングを有効にするか。
         /// </summary>
         public static bool SettingServiceSmileVideoGlobalCommentFileringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
+
+        /// <summary>
+        /// 動画再生方法。
+        /// </summary>
+        public static ExecuteOrOpenMode SettingServiceSmileVideoExecuteOpenMode => appConfig.Get("setting-service-smile-smilevideo-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
+
         /// <summary>
         /// 重複したコメントを無視するか。
         /// </summary>

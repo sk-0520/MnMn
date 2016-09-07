@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -38,6 +39,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// Flashを変換した後のファイル拡張子。
         /// </summary>
         public const string flashConvertedExtension = "flv";
+
+        public const string launcherParameterVideoId = "video-id";
+        public const string launcherParameterVideoTitle = "video-title";
+        public const string launcherParameterVideoPage = "video-page";
 
         #endregion
 
@@ -105,7 +110,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
 
             return rawGetthumbinfo;
+        }
 
+        /// <summary>
+        /// 外部プログラムで実行する際のパラメータを生成する。
+        /// </summary>
+        /// <param name="information"></param>
+        /// <param name="baseParameter"></param>
+        /// <returns></returns>
+        public static string MakeLauncherParameter(SmileVideoInformationViewModel information, string baseParameter)
+        {
+            var map = new Dictionary<string, string>() {
+                { launcherParameterVideoId, information.VideoId },
+                { launcherParameterVideoTitle, information.Title },
+                { launcherParameterVideoPage, information.WatchUrl.OriginalString },
+            };
+            var result = AppUtility.ReplaceString(baseParameter, map);
+
+            return result;
         }
 
         #endregion
