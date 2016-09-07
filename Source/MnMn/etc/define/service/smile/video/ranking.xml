@@ -53,7 +53,7 @@
 			</words>
 		</element>
 	</targets>
-	
+
 	<!-- カテゴリ -->
 	<categories>
 		<element key="all">
@@ -244,6 +244,9 @@
 			<words>
 				<word key="ja-jp" value="R-18" />
 			</words>
+			<extends>
+				<extend key="age" value="18" />
+			</extends>
 		</element>
 	</categories>
 

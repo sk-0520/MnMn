@@ -130,10 +130,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public async override Task InitializeAsync()
         {
-            var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-            await session.LoginAsync();
+            await Session.LoginAsync();
+            //var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            //await session.LoginAsync();
             // TODO: ログインできない場合は設定画面へ
-            if(session.LoginState != LoginState.LoggedIn) {
+            if(Session.LoginState != LoginState.LoggedIn) {
 
             } else {
                 await VideoManager.InitializeAsync();
