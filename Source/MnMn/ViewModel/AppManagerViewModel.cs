@@ -169,6 +169,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             return windows;
         }
 
+        void OutputLogGarbageCollection(long gcSize)
+        {
+            Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)} byte", $"{gcSize:n0} byte");
+        }
+
         #endregion
 
         #region ManagerViewModelBase
@@ -207,8 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             if(Constants.BackgroundGarbageCollectionIsEnabledStartup) {
                 // GCは裏で走らせておく
                 GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
-                    var gcSize = t.Result;
-                    Mediation.Logger.Information($"GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)} byte", $"{gcSize:n0} byte");
+                    OutputLogGarbageCollection(t.Result);
                     Mediation.Order(new AppCleanMemoryOrderModel(true));
                     BackgroundGarbageCollectionTimer.Start();
                 });
@@ -295,7 +299,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
                 var cacheSpan = new CacheSpan(DateTime.Now, Setting.CacheLifeTime);
                 var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan);
-                Mediation.Logger.Information($"GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)} byte", $"{gcSize:n0} byte");
+                OutputLogGarbageCollection(gcSize);
                 Mediation.Order(new AppCleanMemoryOrderModel(true));
             } finally {
                 BackgroundGarbageCollectionTimer.Start();

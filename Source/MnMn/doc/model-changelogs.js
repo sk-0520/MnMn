@@ -144,7 +144,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'ゴミ処理後のログ出力処理を統一'
 					},
 					{
 						'revision': '',
