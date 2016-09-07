@@ -1176,7 +1176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public Task OpenVideoBrowserAsync(bool forceEconomy)
         {
             try {
-                Process.Start(MovieServerUrl.OriginalString);
+                Process.Start(WatchUrl.OriginalString);
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
             }
@@ -1186,6 +1186,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
+            // TODO: パラメータとかその辺りの選定
             var args = Setting.Execute.LauncherParameter;
             try {
                 Process.Start(Setting.Execute.LauncherPath, args);
