@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 動画再生方法。
         /// </summary>
-        public static ExecuteOrOpenMode SettingServiceSmileVideoExecuteExecuteOrOpenMode => appConfig.Get("setting-service-smile-smilevideo-execute-execute_or_open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
+        public static ExecuteOrOpenMode SettingServiceSmileVideoExecuteOpenMode => appConfig.Get("setting-service-smile-smilevideo-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
 
         /// <summary>
         /// 重複したコメントを無視するか。

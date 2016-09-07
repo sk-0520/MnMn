@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 動画再生方法。
         /// </summary>
         [DataMember]
-        public ExecuteOrOpenMode ExecuteMode { get; set; } = Constants.SettingServiceSmileVideoExecuteExecuteOrOpenMode;
+        public ExecuteOrOpenMode OpenMode { get; set; } = Constants.SettingServiceSmileVideoExecuteOpenMode;
 
         /// <summary>
         /// 外部プログラムのパス。

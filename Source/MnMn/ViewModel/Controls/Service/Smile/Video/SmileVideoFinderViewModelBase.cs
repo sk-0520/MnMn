@@ -245,6 +245,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool IsEnabledCheckItLaterMenu { get; } = true;
 
+        /// <summary>
+        /// 動画再生方法。
+        /// </summary>
+        public virtual ExecuteOrOpenMode OpenMode => Setting.Execute.OpenMode;
+
         #endregion
 
         #region command

@@ -802,14 +802,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        public ICommand OpenVideoCommand
+        public ICommand OpenVideoDefaultCommand
         {
             get { return CreateCommand(o => { OpenVideoDefaultAsync(false); }); }
         }
 
-        public ICommand OpenEconomyVideoCommand
+        public ICommand OpenEconomyVideoDefaultCommand
         {
             get { return CreateCommand(o => { OpenVideoDefaultAsync(true); }); }
+        }
+
+        public ICommand OpenVideoFrommParameterCommnad
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var openMode = (ExecuteOrOpenMode)o;
+                        OpenVideoFromOpenModeAsync(false, openMode);
+                    }
+                );
+            }
         }
 
         #endregion
@@ -1143,7 +1156,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoDefaultAsync(bool forceEconomy)
         {
-            switch(Setting.Execute.ExecuteMode) {
+            return OpenVideoFromOpenModeAsync(forceEconomy, Setting.Execute.OpenMode);
+        }
+
+        Task OpenVideoFromOpenModeAsync(bool forceEconomy, ExecuteOrOpenMode openMode)
+        {
+            switch(openMode) {
                 case ExecuteOrOpenMode.Application:
                     return OpenVideoPlayerAsync(forceEconomy);
 

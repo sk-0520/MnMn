@@ -72,9 +72,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         /// <summary>
         /// 動画再生方法。
         /// </summary>
-        public ExecuteOrOpenMode ExecuteMode
+        public ExecuteOrOpenMode OpenMode
         {
-            get { return Setting.Video.Execute.ExecuteMode; }
+            get { return Setting.Video.Execute.OpenMode; }
             set { SetPropertyValue(Setting.Video.Execute, value); }
         }
         /// <summary>
