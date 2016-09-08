@@ -64,10 +64,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime => appConfig.Get("service-smile-smilevideo-watch-to-movie-wait-time", TimeSpan.Parse);
         /// <summary>
-        /// 再生可能判定までの動画サイズ。
-        /// </summary>
-        public static long ServiceSmileVideoPlayLowestSize => appConfig.Get("service-smile-smilevideo-play-lowest-size", long.Parse);
-        /// <summary>
         /// 動画受信時のバッファサイズ。
         /// <para>確保するだけで受け取るかどうかはサーバー次第。</para>
         /// </summary>
@@ -213,6 +209,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 自動再生を行うか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-auto-play", bool.Parse);
+        /// <summary>
+        /// 再生可能判定までの動画サイズ。
+        /// </summary>
+        public static long SettingServiceSmileVideoPlayerAutoPlayLowestSize => appConfig.Get("setting-service-smile-smilevideo-player-auto-play-lowest-size", long.Parse);
         /// <summary>
         /// リプレイを行うか。
         /// </summary>

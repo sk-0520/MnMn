@@ -425,8 +425,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool IsViewClosed { get; set; }
         /// <summary>
         /// 自動再生可能サイズ。
+        /// <para>プレイヤー毎では分けない。</para>
         /// </summary>
-        long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
+        long VideoPlayLowestSize { get { return Setting.Player.AutoPlayLowestSize; } }
         /// <summary>
         /// プレイリスト。
         /// </summary>
