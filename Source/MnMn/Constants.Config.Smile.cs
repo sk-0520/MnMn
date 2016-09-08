@@ -143,6 +143,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 自動再生タイミング上下限値。
         /// </summary>
         public static IReadOnlyRange<long> ServiceSmileVideoPlayerAutoPlayLowestSizeRange => appConfig.Get("service-smile-smilevideo-player-auto-play-lowest-size-range", RangeModel.Parse<long>);
+        public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Head;
+        public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Tail;
 
         /// <summary>
         /// 関連動画のソート。
