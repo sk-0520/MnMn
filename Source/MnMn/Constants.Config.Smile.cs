@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
@@ -137,6 +139,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>縦。</para>
         /// </summary>
         public static double ServiceSmileVideoPlayerCommentHeight => appConfig.Get("service-smile-smilevideo-player-comment-height", double.Parse);
+        /// <summary>
+        /// 自動再生タイミング上下限値。
+        /// </summary>
+        public static IReadOnlyRange<long> ServiceSmileVideoPlayerAutoPlayLowestSizeRange => appConfig.Get("service-smile-smilevideo-player-auto-play-lowest-size-range", RangeModel.Parse<long>);
 
         /// <summary>
         /// 関連動画のソート。
