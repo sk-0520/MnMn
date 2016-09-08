@@ -5,6 +5,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Setting.SmileSettingManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -29,6 +30,7 @@
       </ResourceDictionary.MergedDictionaries>
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+      <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -135,12 +137,14 @@
                 Grid.Column="1"
                 Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum}}"
                 Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum}}"
-              />
-              <xctk:LongUpDown
+              >
+                <Slider.Value>
+                  <sys:Double>1024</sys:Double>
+                </Slider.Value>
+              </Slider>
+              <TextBlock
                 Grid.Column="2"
-                Value="{Binding Value, ElementName=sliderBuffer}"
-                Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum}}"
-                Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum}}"
+                Text="{Binding Value, ElementName=sliderBuffer, Converter={StaticResource HumanLikeByteConverter}}"
               />
             </Grid>
           </StackPanel>
