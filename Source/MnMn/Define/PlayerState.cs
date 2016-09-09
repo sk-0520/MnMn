@@ -36,10 +36,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 一時停止。
         /// </summary>
         Pause,
-        /// <summary>
-        /// 再生待ち。
-        /// <para>再生準備が整っていない。</para>
-        /// </summary>
-        Wait,
     }
 }

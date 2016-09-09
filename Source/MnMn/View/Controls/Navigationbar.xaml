@@ -51,9 +51,13 @@
               <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop">
                 <Setter Property="Source" Value="/Resources/Navigationbar/Play.png" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Wait">
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding IsFirstPlay, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False" />
+                  <Condition Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Source" Value="/Resources/Navigationbar/Wait.png" />
-              </DataTrigger>
+              </MultiDataTrigger>
             </Style.Triggers>
           </Style>
 

@@ -633,6 +633,7 @@
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
               SeekbarPopupIsOpen="{Binding ShowCommentChart}"
+              IsFirstPlay="{Binding IsFirstPlay.Value}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">

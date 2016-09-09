@@ -176,7 +176,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 return;
 
                             case PlayerState.Playing:
-                            case PlayerState.Wait:
                                 Player.PauseOrResume();
                                 return;
 
@@ -209,9 +208,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        UserOperationStop = true;
+                        UserOperationStop.Value = true;
                         StopMovie(true);
-                        UserOperationStop = false;
+                        //UserOperationStop = false;
                     }
                 );
             }
@@ -519,7 +518,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 BaseWidth = Player.ActualHeight;
                 BaseHeight = Player.ActualWidth;
                 return;
-            } else if(IsFirstPlay) {
+            } else if(IsFirstPlay.Value) {
                 var desktopScale = UIUtility.GetDpiScale(Player);
                 VisualVideoSize = new Size(
                     RealVideoWidth * desktopScale.X,
@@ -1331,10 +1330,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     CanVideoPlay = Setting.Player.AutoPlayLowestSize < VideoFile.Length;
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
-                    } else if(Setting.Player.IsAutoPlay) {
-                        if(!IsFirstPlay && PlayerState == PlayerState.Stop) {
-                            PlayerState = PlayerState.Wait;
-                        }
                     }
                 }
             }
@@ -1454,12 +1449,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void InitializeStatus()
         {
             base.InitializeStatus();
-            IsFirstPlay = true;
+            IsFirstPlay.Value = false;
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
             _prevStateChangedPosition = initPrevStateChangedPosition;
             IsBufferingStop = false;
-            UserOperationStop = false;
+            UserOperationStop.Value = false;
             IsMadeDescription = false;
             IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
@@ -1683,9 +1678,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
-                if(IsFirstPlay) {
+                if(!IsFirstPlay.Value) {
                     SetVideoDataInformation();
-                    IsFirstPlay = false;
+                    //IsFirstPlay = false;
                 }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
@@ -1803,10 +1798,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Pause();
                         }
-                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop) {
+                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
                         Mediation.Logger.Debug("next playlist item");
                         LoadNextPlayListItemAsync();
-                    } else if(ReplayVideo && !UserOperationStop) {
+                    } else if(ReplayVideo && !UserOperationStop.Value) {
                         Mediation.Logger.Debug("replay");
                         //Player.BeginStop(() => {
                         //    Player.Dispatcher.Invoke(() => {

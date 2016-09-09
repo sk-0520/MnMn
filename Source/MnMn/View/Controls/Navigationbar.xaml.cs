@@ -229,6 +229,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsFirstPlayProperty
+
+        // smile-video側都合でなんつーかやだなー。
+        public static readonly DependencyProperty IsFirstPlayProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsFirstPlayProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsFirstPlayChanged))
+        );
+
+        private static void OnIsFirstPlayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.IsFirstPlay = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsFirstPlay
+        {
+            get { return (bool)GetValue(IsFirstPlayProperty); }
+            set { SetValue(IsFirstPlayProperty, value); }
+        }
+
+        #endregion
+
         #region TotalTimeProperty
 
         public static readonly DependencyProperty TotalTimeProperty = DependencyProperty.Register(

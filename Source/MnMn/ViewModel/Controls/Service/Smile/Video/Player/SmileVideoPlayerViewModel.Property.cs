@@ -348,11 +348,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 初回再生か。
         /// </summary>
-        bool IsFirstPlay { get; set; } = true;
+        public FewViewModel<bool> IsFirstPlay { get; } = new FewViewModel<bool>(false);
         /// <summary>
         /// ユーザー操作で停止されたか。
         /// </summary>
-        bool UserOperationStop { get; set; } = false;
+        public FewViewModel<bool> UserOperationStop { get; } = new FewViewModel<bool>(false);
 
         /// <summary>
         /// 投降者コメントが構築されたか。
