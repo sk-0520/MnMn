@@ -91,7 +91,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 自動再生を行うか。
         /// </summary>
         [DataMember]
-        public bool AutoPlay { get; set; } = Constants.SettingServiceSmileVideoPlayerAutoPlay;
+        public bool IsAutoPlay { get; set; } = Constants.SettingServiceSmileVideoPlayerIsAutoPlay;
+
+        /// <summary>
+        /// 自動再生に必要なバッファイサイズ。
+        /// </summary>
+        [DataMember]
+        public long AutoPlayLowestSize { get; set; } = Constants.SettingServiceSmileVideoPlayerAutoPlayLowestSize;
 
         /// <summary>
         /// プレイリスト実行中に動画読込がどれだけ停止したら次に進むか。

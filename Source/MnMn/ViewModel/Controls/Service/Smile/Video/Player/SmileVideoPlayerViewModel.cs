@@ -563,7 +563,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StartIfAutoPlay()
         {
-            if(Setting.Player.AutoPlay && !IsViewClosed) {
+            if(VideoPlayIsAutoPlay && !IsViewClosed) {
                 SetMedia();
                 PlayMovie();
             }

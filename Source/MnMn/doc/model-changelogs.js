@@ -114,7 +114,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#21: 自動再生のタイミングを設定可能にする'
 					},
 					{
 						'revision': '',
