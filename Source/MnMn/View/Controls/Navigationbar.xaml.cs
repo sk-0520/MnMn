@@ -229,6 +229,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsAutoPlayProperty
+
+        public static readonly DependencyProperty IsAutoPlayProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsAutoPlayProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsAutoPlayChanged))
+        );
+
+        private static void OnIsAutoPlayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.IsAutoPlay = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsAutoPlay
+        {
+            get { return (bool)GetValue(IsAutoPlayProperty); }
+            set { SetValue(IsAutoPlayProperty, value); }
+        }
+
+        #endregion
+
         #region IsFirstPlayProperty
 
         // smile-video側都合でなんつーかやだなー。
@@ -251,6 +276,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get { return (bool)GetValue(IsFirstPlayProperty); }
             set { SetValue(IsFirstPlayProperty, value); }
+        }
+
+        #endregion
+
+        #region IsUserOperationStopProperty
+
+        // smile-video側都合でなんつーかやだなー。
+        public static readonly DependencyProperty IsUserOperationStopProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsUserOperationStopProperty)),
+            typeof(bool),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsUserOperationStopChanged))
+        );
+
+        private static void OnIsUserOperationStopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.IsUserOperationStop = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsUserOperationStop
+        {
+            get { return (bool)GetValue(IsUserOperationStopProperty); }
+            set { SetValue(IsUserOperationStopProperty, value); }
         }
 
         #endregion

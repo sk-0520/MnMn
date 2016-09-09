@@ -346,6 +346,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsEnabledPostAnonymous { get { return Information?.IsOfficialVideo ?? false; } }
 
         /// <summary>
+        /// 自動再生か。
+        /// </summary>
+        public bool IsAutoPlay
+        {
+            get { return Setting.Player.IsAutoPlay; }
+        }
+        /// <summary>
         /// 初回再生か。
         /// </summary>
         public FewViewModel<bool> IsFirstPlay { get; } = new FewViewModel<bool>(false);

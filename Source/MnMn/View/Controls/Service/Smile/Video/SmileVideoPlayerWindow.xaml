@@ -634,6 +634,8 @@
               IsMute="{Binding IsMute}"
               SeekbarPopupIsOpen="{Binding ShowCommentChart}"
               IsFirstPlay="{Binding IsFirstPlay.Value}"
+              IsAutoPlay="{Binding IsAutoPlay, Mode=OneWay}"
+              IsUserOperationStop="{Binding UserOperationStop.Value}"
             >
               <app_view_controls:Navigationbar.Style>
                 <Style TargetType="app_view_controls:Navigationbar">

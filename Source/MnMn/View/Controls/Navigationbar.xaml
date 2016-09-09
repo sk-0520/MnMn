@@ -52,8 +52,11 @@
                 <Setter Property="Source" Value="/Resources/Navigationbar/Play.png" />
               </DataTrigger>
               <MultiDataTrigger>
+                <!-- 条件見るにこれで問題ないはず… -->
                 <MultiDataTrigger.Conditions>
                   <Condition Binding="{Binding IsFirstPlay, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False" />
+                  <Condition Binding="{Binding IsUserOperationStop, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False" />
+                  <Condition Binding="{Binding IsAutoPlay, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True" />
                   <Condition Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Source" Value="/Resources/Navigationbar/Wait.png" />
