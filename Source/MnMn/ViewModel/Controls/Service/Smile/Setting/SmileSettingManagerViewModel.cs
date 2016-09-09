@@ -110,11 +110,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             }
         }
 
+        /// <summary>
+        /// 自動再生を行うか。
+        /// </summary>
+        public bool IsAutoPlay
+        {
+            get { return Setting.Video.Player.IsAutoPlay; }
+            set { SetPropertyValue(Setting.Video.Player, value, nameof(Setting.Video.Player.IsAutoPlay)); }
+        }
+        /// <summary>
+        /// 自動再生のファイルサイズ閾値。
+        /// </summary>
         public long AutoPlayLowestSize
         {
             get { return Setting.Video.Player.AutoPlayLowestSize; }
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
+
 
         #endregion
 

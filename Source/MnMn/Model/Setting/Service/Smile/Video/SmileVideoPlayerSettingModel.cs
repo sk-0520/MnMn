@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 自動再生を行うか。
         /// </summary>
         [DataMember]
-        public bool AutoPlay { get; set; } = Constants.SettingServiceSmileVideoPlayerAutoPlay;
+        public bool IsAutoPlay { get; set; } = Constants.SettingServiceSmileVideoPlayerIsAutoPlay;
 
         /// <summary>
         /// 自動再生に必要なバッファイサイズ。

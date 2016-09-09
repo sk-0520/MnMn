@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 自動再生を行うか。
         /// </summary>
-        public static bool SettingServiceSmileVideoPlayerAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-auto-play", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerIsAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-is-auto-play", bool.Parse);
         /// <summary>
         /// 再生可能判定までの動画サイズ。
         /// </summary>
