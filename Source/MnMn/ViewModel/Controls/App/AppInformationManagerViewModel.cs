@@ -47,6 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
             AppIssueManager = new AppIssueManagerViewModel(Mediation);
             AppHelpManager = new AppHelpManagerViewModel(Mediation);
+            AppSettingManager = new AppSettingManagerViewModel(Mediation);
         }
 
         #region property
@@ -57,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppLoggingManagerViewModel AppLoggingManager { get; }
         public AppIssueManagerViewModel AppIssueManager { get; }
         public AppHelpManagerViewModel AppHelpManager { get; }
+        public AppSettingManagerViewModel AppSettingManager { get; }
 
         #endregion
 
@@ -77,6 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 AppLoggingManager,
                 AppIssueManager,
                 AppHelpManager,
+                AppSettingManager,
             };
         }
 

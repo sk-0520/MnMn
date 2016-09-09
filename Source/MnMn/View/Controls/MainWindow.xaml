@@ -54,9 +54,6 @@
       <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
-      <TabItem Header="本体設定" DataContext="{Binding AppSettingManager}">
-        <app_view_controls_app:AppSettingManager VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  />
-      </TabItem>
       <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}">
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>

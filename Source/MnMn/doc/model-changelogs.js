@@ -135,7 +135,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#135: 本体設定タブをMnMnに入れる',
+						'comments': [
+							'こんなもん誰も頻繁にさわらん'
+						]
 					},
 					{
 						'revision': '',
