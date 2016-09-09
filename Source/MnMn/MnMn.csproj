@@ -71,9 +71,8 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6095.21220, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.80\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+    <Reference Include="ContentTypeTextNet.SharedLibrary">
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.81\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
