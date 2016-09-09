@@ -318,8 +318,6 @@
         <MenuItem Header="プレイリスト">
           <MenuItem.ItemsSource>
             <CompositeCollection>
-              <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
-              <Separator />
               <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
                 <MenuItem.Icon>
                   <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource DefaultImage}" />
@@ -331,6 +329,8 @@
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
+              <Separator />
+              <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
           </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>
