@@ -24,8 +24,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     public enum PlayerState
     {
+        /// <summary>
+        /// 停止。
+        /// </summary>
         Stop,
+        /// <summary>
+        /// 再生中。
+        /// </summary>
         Playing,
+        /// <summary>
+        /// 一時停止。
+        /// </summary>
         Pause,
+        /// <summary>
+        /// 再生待ち。
+        /// <para>再生準備が整っていない。</para>
+        /// </summary>
+        Wait,
     }
 }
