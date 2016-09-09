@@ -176,6 +176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                 return;
 
                             case PlayerState.Playing:
+                            case PlayerState.Wait:
                                 Player.PauseOrResume();
                                 return;
 
@@ -1330,6 +1331,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     CanVideoPlay = Setting.Player.AutoPlayLowestSize < VideoFile.Length;
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
+                    } else if(Setting.Player.IsAutoPlay) {
+                        if(!IsFirstPlay && PlayerState == PlayerState.Stop) {
+                            PlayerState = PlayerState.Wait;
+                        }
                     }
                 }
             }
