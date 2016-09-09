@@ -89,8 +89,8 @@
 
         <GroupBox Grid.Column="0" Header="動画再生方法">
           <StackPanel>
-            <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" />
             <RadioButton Content="プレイヤーで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}" />
+            <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" />
             <RadioButton Content="外部プログラムで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}, Converter={StaticResource EnumToBooleanConverter}}" />
 
             <GroupBox Header="外部プログラム設定">
@@ -127,21 +127,18 @@
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="3*" />
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0">自動再生判定</Label>
               <Slider
                 x:Name="sliderBuffer"
                 Grid.Column="1"
+                Value="{Binding AutoPlayLowestSize}"
                 Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum}}"
                 Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum}}"
-              >
-                <Slider.Value>
-                  <sys:Double>1024</sys:Double>
-                </Slider.Value>
-              </Slider>
+              />
               <TextBlock
                 Grid.Column="2"
                 Text="{Binding Value, ElementName=sliderBuffer, Converter={StaticResource HumanLikeByteConverter}}"

@@ -110,6 +110,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             }
         }
 
+        public long AutoPlayLowestSize
+        {
+            get { return Setting.Video.Player.AutoPlayLowestSize; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
         #endregion
 
         #region command
