@@ -424,6 +424,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         bool IsViewClosed { get; set; }
         /// <summary>
+        /// 自動再生を行うか。
+        /// <para>プレイヤー毎では分けない。</para>
+        /// </summary>
+        bool VideoPlayIsAutoPlay { get { return Setting.Player.IsAutoPlay; } }
+        /// <summary>
         /// 自動再生可能サイズ。
         /// <para>プレイヤー毎では分けない。</para>
         /// </summary>
