@@ -563,7 +563,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StartIfAutoPlay()
         {
-            if(VideoPlayIsAutoPlay && !IsViewClosed) {
+            if(Setting.Player.IsAutoPlay && !IsViewClosed) {
                 SetMedia();
                 PlayMovie();
             }
@@ -1324,9 +1324,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(Information.MovieType != SmileVideoMovieType.Swf) {
                 if(!CanVideoPlay) {
-                    // とりあえず待って
+                    // とりあえず待って、
                     VideoFile.Refresh();
-                    CanVideoPlay = VideoPlayLowestSize < VideoFile.Length;
+                    // チェック。
+                    CanVideoPlay = Setting.Player.AutoPlayLowestSize < VideoFile.Length;
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
                     }
