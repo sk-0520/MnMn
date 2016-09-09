@@ -123,7 +123,7 @@
 
         <GroupBox Grid.Column="1" Header="プレイヤー">
           <StackPanel>
-            <CheckBox>動画を自動的に再生する</CheckBox>
+            <CheckBox IsChecked="{Binding IsAutoPlay}">動画を自動的に再生する</CheckBox>
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
