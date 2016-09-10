@@ -594,6 +594,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 ClearComment();
                 if(!IsViewClosed) {
                     Player.Play();
+                    CanVideoPlay = true;
                 }
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
