@@ -501,20 +501,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            // TODO: うーん、ださい
-            var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
-
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
                 View.ActualHeight - Player.ActualHeight
             );
-
-            Mediation.Logger.Information($"{leaveSize}");
-
             var videoSize = new Size(
                 VisualVideoSize.Width,
                 VisualVideoSize.Height
             );
+
+            if(PlayerShowCommentArea) {
+                // リスト部は比率レイアウトなので補正が必要
+
+                // TODO: うーん、ださい
+                var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
+
+                var baseWidth = videoSize.Width + leaveSize.Width - defaultGridSplitterLength;
+                if(CommentAreaLength.IsChanged) {
+                    // エリアサイズ変えていれば * から実値になってるけど単位は変わらない
+                    //leaveSize.Width = (baseWidth / 10) * CommentAreaLength.Value.Value;
+                    Mediation.Logger.Information(PlayerAreaLength.Value.Value.ToString());
+                } else {
+                    //leaveSize.Width = (baseWidth / 10) * CommentAreaLength.Value.Value + defaultGridSplitterLength;
+                    leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
+                }
+            }
+
+            Mediation.Logger.Information($"{leaveSize}");
+            Mediation.Logger.Information($"{videoSize}");
+
 
             Width = leaveSize.Width + videoSize.Width;
             Height = leaveSize.Height + videoSize.Height;

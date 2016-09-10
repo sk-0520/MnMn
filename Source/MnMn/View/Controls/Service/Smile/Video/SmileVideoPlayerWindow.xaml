@@ -523,9 +523,9 @@
           </Style>
         </Grid.Style>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="{Binding PlayerAreaLength.Value}" />
+          <ColumnDefinition Width="{Binding PlayerAreaLength.Value, Mode=TwoWay}" />
           <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="{Binding CommentAreaLength.Value}" />
+          <ColumnDefinition Width="{Binding CommentAreaLength.Value, Mode=TwoWay}" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" x:Name="viewPlayer">
