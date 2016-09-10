@@ -524,10 +524,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
             }
 
-            Mediation.Logger.Information($"{leaveSize}");
-            Mediation.Logger.Information($"{videoSize}");
-
-
             Width = leaveSize.Width + videoSize.Width;
             Height = leaveSize.Height + videoSize.Height;
         }
