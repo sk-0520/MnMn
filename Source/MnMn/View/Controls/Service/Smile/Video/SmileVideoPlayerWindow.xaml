@@ -633,7 +633,7 @@
               IsReplayChecked="{Binding ReplayVideo}"
               IsMute="{Binding IsMute}"
               SeekbarPopupIsOpen="{Binding ShowCommentChart}"
-              IsFirstPlay="{Binding IsFirstPlay.Value}"
+              WaitingFirstPlay="{Binding WaitingFirstPlay.Value}"
               IsAutoPlay="{Binding IsAutoPlay, Mode=OneWay}"
               IsUserOperationStop="{Binding UserOperationStop.Value}"
             >

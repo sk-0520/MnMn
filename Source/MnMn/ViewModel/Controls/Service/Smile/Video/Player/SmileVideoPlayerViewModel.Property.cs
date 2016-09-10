@@ -353,9 +353,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.IsAutoPlay; }
         }
         /// <summary>
-        /// 初回再生か。
+        /// 初回再生待ちか。
         /// </summary>
-        public FewViewModel<bool> IsFirstPlay { get; } = new FewViewModel<bool>(false);
+        public FewViewModel<bool> WaitingFirstPlay { get; } = new FewViewModel<bool>(false);
         /// <summary>
         /// ユーザー操作で停止されたか。
         /// </summary>

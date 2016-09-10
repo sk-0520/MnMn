@@ -345,7 +345,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        [Obsolete]
         public ICommand ChangePlayerSizeCommand
         {
             get
@@ -496,7 +495,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        [Obsolete]
         void ChangePlayerSizeFromPercent(int percent)
         {
             if(VisualVideoSize.IsEmpty) {
@@ -505,8 +503,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var baseLength = 100.0;
             var scale = percent / baseLength;
             var videoWidth = VisualVideoSize.Width * scale;
-            VisualPlayerWidth = new GridLength(videoWidth);
-            CommentListLength = new GridLength(Width - videoWidth);
             //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
 
             //View.SizeToContent = SizeToContent.Width;
@@ -518,7 +514,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 BaseWidth = Player.ActualHeight;
                 BaseHeight = Player.ActualWidth;
                 return;
-            } else if(IsFirstPlay.Value) {
+            } else if(WaitingFirstPlay.Value) {
                 var desktopScale = UIUtility.GetDpiScale(Player);
                 VisualVideoSize = new Size(
                     RealVideoWidth * desktopScale.X,
@@ -573,6 +569,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Player.IsMute = IsMute;
             Player.Volume = Volume;
+
             return View.Dispatcher.BeginInvoke(new Action(() => {
                 ClearComment();
                 if(!IsViewClosed) {
@@ -1449,7 +1446,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void InitializeStatus()
         {
             base.InitializeStatus();
-            IsFirstPlay.Value = false;
+            WaitingFirstPlay.Value = true;
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
             _prevStateChangedPosition = initPrevStateChangedPosition;
@@ -1678,9 +1675,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
-                if(!IsFirstPlay.Value) {
+                if(WaitingFirstPlay.Value) {
                     SetVideoDataInformation();
-                    //IsFirstPlay = false;
+                    WaitingFirstPlay.Value = false;
                 }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;

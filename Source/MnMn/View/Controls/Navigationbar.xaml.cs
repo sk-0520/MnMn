@@ -254,28 +254,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        #region IsFirstPlayProperty
+        #region WaitingFirstPlayProperty
 
         // smile-video側都合でなんつーかやだなー。
-        public static readonly DependencyProperty IsFirstPlayProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(IsFirstPlayProperty)),
+        public static readonly DependencyProperty WaitingFirstPlayProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(WaitingFirstPlayProperty)),
             typeof(bool),
             typeof(Navigationbar),
-            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsFirstPlayChanged))
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnWaitingFirstPlayChanged))
         );
 
-        private static void OnIsFirstPlayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnWaitingFirstPlayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Navigationbar;
             if(control != null) {
-                control.IsFirstPlay = (bool)e.NewValue;
+                control.WaitingFirstPlay = (bool)e.NewValue;
             }
         }
 
-        public bool IsFirstPlay
+        public bool WaitingFirstPlay
         {
-            get { return (bool)GetValue(IsFirstPlayProperty); }
-            set { SetValue(IsFirstPlayProperty, value); }
+            get { return (bool)GetValue(WaitingFirstPlayProperty); }
+            set { SetValue(WaitingFirstPlayProperty, value); }
         }
 
         #endregion
