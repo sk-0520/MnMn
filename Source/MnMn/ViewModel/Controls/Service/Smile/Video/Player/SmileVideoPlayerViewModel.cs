@@ -501,6 +501,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
+            // TODO: うーん、ださい
+            var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
+
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
                 View.ActualHeight - Player.ActualHeight
