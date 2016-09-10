@@ -346,13 +346,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool IsEnabledPostAnonymous { get { return Information?.IsOfficialVideo ?? false; } }
 
         /// <summary>
-        /// 初回再生か。
+        /// 自動再生か。
         /// </summary>
-        bool IsFirstPlay { get; set; } = true;
+        public bool IsAutoPlay
+        {
+            get { return Setting.Player.IsAutoPlay; }
+        }
+        /// <summary>
+        /// 初回再生待ちか。
+        /// </summary>
+        public FewViewModel<bool> WaitingFirstPlay { get; } = new FewViewModel<bool>(false);
         /// <summary>
         /// ユーザー操作で停止されたか。
         /// </summary>
-        bool UserOperationStop { get; set; } = false;
+        public FewViewModel<bool> UserOperationStop { get; } = new FewViewModel<bool>(false);
 
         /// <summary>
         /// 投降者コメントが構築されたか。
@@ -423,10 +430,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// ビューが閉じられたか。
         /// </summary>
         bool IsViewClosed { get; set; }
-        /// <summary>
-        /// 自動再生可能サイズ。
-        /// </summary>
-        long VideoPlayLowestSize => Constants.ServiceSmileVideoPlayLowestSize;
         /// <summary>
         /// プレイリスト。
         /// </summary>
@@ -555,24 +558,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public Size CommentArea { get; } = new Size(Constants.ServiceSmileVideoPlayerCommentWidth, Constants.ServiceSmileVideoPlayerCommentHeight);
 
-        [Obsolete]
-        public GridLength VisualPlayerWidth
-        {
-            get { return this._visualPlayerWidth; }
-            set { SetVariableValue(ref this._visualPlayerWidth, value); }
-        }
-        [Obsolete]
-        public GridLength VisualPlayerHeight
-        {
-            get { return this._visualPlayerHeight; }
-            set { SetVariableValue(ref this._visualPlayerHeight, value); }
-        }
+        //[Obsolete]
+        //public GridLength VisualPlayerWidth
+        //{
+        //    get { return this._visualPlayerWidth; }
+        //    set { SetVariableValue(ref this._visualPlayerWidth, value); }
+        //}
+        //[Obsolete]
+        //public GridLength VisualPlayerHeight
+        //{
+        //    get { return this._visualPlayerHeight; }
+        //    set { SetVariableValue(ref this._visualPlayerHeight, value); }
+        //}
         [Obsolete]
         public GridLength CommentListLength
         {
             get { return this._commentListLength; }
             set { SetVariableValue(ref this._commentListLength, value); }
         }
+
+        public FewViewModel<GridLength> PlayerAreaLength { get; } = new FewViewModel<GridLength>(new GridLength(7, GridUnitType.Star));
+        public FewViewModel<GridLength> CommentAreaLength { get; } = new FewViewModel<GridLength>(new GridLength(3, GridUnitType.Star));
+
+
         public PlayerState PlayerState
         {
             get { return this._playerState; }

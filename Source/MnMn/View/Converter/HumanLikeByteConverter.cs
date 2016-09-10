@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var size = (long)value;
+            var size = System.Convert.ToInt64(value);
             return RawValueUtility.ConvertHumanLikeByte(size);
         }
 

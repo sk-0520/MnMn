@@ -28,17 +28,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     public class ApplicationManagerPackModel: ManagerPackModelBase
     {
-        public ApplicationManagerPackModel(AppManagerViewModel appManager, AppSettingManagerViewModel appSettingManager, SmileManagerViewModel smileManager)
+        public ApplicationManagerPackModel(AppManagerViewModel appManager, SmileManagerViewModel smileManager)
         {
             AppManager = appManager;
-            AppSettingManager = appSettingManager;
             SmileManager = smileManager;
         }
 
-        #region
+        #region property
 
         public AppManagerViewModel AppManager { get; }
-        public AppSettingManagerViewModel AppSettingManager { get; }
         public SmileManagerViewModel SmileManager { get; }
 
         #endregion

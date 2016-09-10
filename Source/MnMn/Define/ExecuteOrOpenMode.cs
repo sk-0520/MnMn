@@ -22,19 +22,22 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public enum PlayerState
+    /// <summary>
+    /// 動画再生方法。
+    /// </summary>
+    public enum ExecuteOrOpenMode
     {
         /// <summary>
-        /// 停止。
+        /// 本ソフト。
         /// </summary>
-        Stop,
+        Application,
         /// <summary>
-        /// 再生中。
+        /// 標準ブラウザ。
         /// </summary>
-        Playing,
+        Browser,
         /// <summary>
-        /// 一時停止。
+        /// 外部プログラム。
         /// </summary>
-        Pause,
+        Launcher,
     }
 }

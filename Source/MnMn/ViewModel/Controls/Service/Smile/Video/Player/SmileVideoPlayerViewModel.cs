@@ -208,9 +208,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        UserOperationStop = true;
+                        UserOperationStop.Value = true;
                         StopMovie(true);
-                        UserOperationStop = false;
+                        //UserOperationStop = false;
                     }
                 );
             }
@@ -345,7 +345,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        [Obsolete]
         public ICommand ChangePlayerSizeCommand
         {
             get
@@ -496,20 +495,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
 
-        [Obsolete]
         void ChangePlayerSizeFromPercent(int percent)
         {
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
-            var baseLength = 100.0;
-            var scale = percent / baseLength;
-            var videoWidth = VisualVideoSize.Width * scale;
-            VisualPlayerWidth = new GridLength(videoWidth);
-            CommentListLength = new GridLength(Width - videoWidth);
-            //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
 
-            //View.SizeToContent = SizeToContent.Width;
+            var leaveSize = new Size(
+                View.ActualWidth - Player.ActualWidth,
+                View.ActualHeight - Player.ActualHeight
+            );
+            var videoSize = new Size(
+                VisualVideoSize.Width / 100 * percent,
+                VisualVideoSize.Height / 100 * percent
+            );
+
+            if(PlayerShowCommentArea) {
+                // リスト部は比率レイアウトなので補正が必要
+
+                // TODO: うーん、ださい
+                var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
+
+                //if(CommentAreaLength.IsChanged) {
+                //    // エリアサイズ変えていれば * から実値になってるけど単位は変わらない
+                //} else {
+                //    leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
+                //}
+                leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
+            }
+
+            Width = leaveSize.Width + videoSize.Width;
+            Height = leaveSize.Height + videoSize.Height;
         }
 
         void ChangeBaseSize()
@@ -518,7 +534,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 BaseWidth = Player.ActualHeight;
                 BaseHeight = Player.ActualWidth;
                 return;
-            } else if(IsFirstPlay) {
+            } else if(WaitingFirstPlay.Value) {
                 var desktopScale = UIUtility.GetDpiScale(Player);
                 VisualVideoSize = new Size(
                     RealVideoWidth * desktopScale.X,
@@ -563,7 +579,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StartIfAutoPlay()
         {
-            if(Setting.Player.AutoPlay && !IsViewClosed) {
+            if(IsAutoPlay && !UserOperationStop.Value && !IsViewClosed) {
                 SetMedia();
                 PlayMovie();
             }
@@ -573,10 +589,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Player.IsMute = IsMute;
             Player.Volume = Volume;
+
             return View.Dispatcher.BeginInvoke(new Action(() => {
                 ClearComment();
                 if(!IsViewClosed) {
                     Player.Play();
+                    CanVideoPlay = true;
                 }
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
@@ -1324,9 +1342,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(Information.MovieType != SmileVideoMovieType.Swf) {
                 if(!CanVideoPlay) {
-                    // とりあえず待って
+                    // とりあえず待って、
                     VideoFile.Refresh();
-                    CanVideoPlay = VideoPlayLowestSize < VideoFile.Length;
+                    // チェック。
+                    CanVideoPlay = Setting.Player.AutoPlayLowestSize < VideoFile.Length;
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
                     }
@@ -1377,7 +1396,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         ResetSwf();
                     }
                     // あまりにも小さい場合は読み込み完了時にも再生できなくなっている
-                    if(!CanVideoPlay) {
+                    if(!CanVideoPlay && !UserOperationStop.Value) {
                         CanVideoPlay = true;
                         StartIfAutoPlay();
                     }
@@ -1448,12 +1467,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected override void InitializeStatus()
         {
             base.InitializeStatus();
-            IsFirstPlay = true;
+            WaitingFirstPlay.Value = true;
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
             _prevStateChangedPosition = initPrevStateChangedPosition;
             IsBufferingStop = false;
-            UserOperationStop = false;
+            UserOperationStop.Value = false;
             IsMadeDescription = false;
             IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
@@ -1677,9 +1696,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_PositionChanged(object sender, EventArgs e)
         {
             if(CanVideoPlay && !ChangingVideoPosition) {
-                if(IsFirstPlay) {
+                if(WaitingFirstPlay.Value) {
                     SetVideoDataInformation();
-                    IsFirstPlay = false;
+                    WaitingFirstPlay.Value = false;
                 }
                 VideoPosition = Player.Position;
                 PlayTime = Player.Time;
@@ -1797,10 +1816,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Pause();
                         }
-                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop) {
+                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
                         Mediation.Logger.Debug("next playlist item");
                         LoadNextPlayListItemAsync();
-                    } else if(ReplayVideo && !UserOperationStop) {
+                    } else if(ReplayVideo && !UserOperationStop.Value) {
                         Mediation.Logger.Debug("replay");
                         //Player.BeginStop(() => {
                         //    Player.Dispatcher.Invoke(() => {

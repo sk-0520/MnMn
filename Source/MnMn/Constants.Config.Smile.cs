@@ -20,7 +20,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -62,10 +65,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 視聴ページから動画データ取得までの待ち時間。
         /// </summary>
         public static TimeSpan ServiceSmileVideoWatchToMovieWaitTime => appConfig.Get("service-smile-smilevideo-watch-to-movie-wait-time", TimeSpan.Parse);
-        /// <summary>
-        /// 再生可能判定までの動画サイズ。
-        /// </summary>
-        public static long ServiceSmileVideoPlayLowestSize => appConfig.Get("service-smile-smilevideo-play-lowest-size", long.Parse);
         /// <summary>
         /// 動画受信時のバッファサイズ。
         /// <para>確保するだけで受け取るかどうかはサーバー次第。</para>
@@ -140,6 +139,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>縦。</para>
         /// </summary>
         public static double ServiceSmileVideoPlayerCommentHeight => appConfig.Get("service-smile-smilevideo-player-comment-height", double.Parse);
+        /// <summary>
+        /// 自動再生タイミング上下限値。
+        /// </summary>
+        public static IReadOnlyRange<long> ServiceSmileVideoPlayerAutoPlayLowestSizeRange => appConfig.Get("service-smile-smilevideo-player-auto-play-lowest-size-range", RangeModel.Parse<long>);
+        public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Head;
+        public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Tail;
 
         /// <summary>
         /// 関連動画のソート。
@@ -211,7 +216,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 自動再生を行うか。
         /// </summary>
-        public static bool SettingServiceSmileVideoPlayerAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-auto-play", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerIsAutoPlay => appConfig.Get("setting-service-smile-smilevideo-player-is-auto-play", bool.Parse);
+        /// <summary>
+        /// 再生可能判定までの動画サイズ。
+        /// </summary>
+        public static long SettingServiceSmileVideoPlayerAutoPlayLowestSize => appConfig.Get("setting-service-smile-smilevideo-player-auto-play-lowest-size", long.Parse);
         /// <summary>
         /// リプレイを行うか。
         /// </summary>
@@ -298,6 +307,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 全体フィルタリングを有効にするか。
         /// </summary>
         public static bool SettingServiceSmileVideoGlobalCommentFileringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
+
+        /// <summary>
+        /// 動画再生方法。
+        /// </summary>
+        public static ExecuteOrOpenMode SettingServiceSmileVideoExecuteOpenMode => appConfig.Get("setting-service-smile-smilevideo-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
+
         /// <summary>
         /// 重複したコメントを無視するか。
         /// </summary>

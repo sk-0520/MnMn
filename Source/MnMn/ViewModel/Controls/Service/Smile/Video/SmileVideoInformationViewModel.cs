@@ -802,14 +802,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        public ICommand OpenVideoCommand
+        public ICommand OpenVideoDefaultCommand
         {
-            get { return CreateCommand(o => { OpenPlayerAsync(false); }); }
+            get { return CreateCommand(o => { OpenVideoDefaultAsync(false); }); }
         }
 
-        public ICommand OpeneconomyVideoCommand
+        public ICommand OpenEconomyVideoDefaultCommand
         {
-            get { return CreateCommand(o => { OpenPlayerAsync(true); }); }
+            get { return CreateCommand(o => { OpenVideoDefaultAsync(true); }); }
+        }
+
+        public ICommand OpenVideoFrommParameterCommnad
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var openMode = (ExecuteOrOpenMode)o;
+                        OpenVideoFromOpenModeAsync(false, openMode);
+                    }
+                );
+            }
         }
 
         #endregion
@@ -1141,7 +1154,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return true;
         }
 
-        public Task OpenPlayerAsync(bool forceEconomy)
+        public Task OpenVideoDefaultAsync(bool forceEconomy)
+        {
+            return OpenVideoFromOpenModeAsync(forceEconomy, Setting.Execute.OpenMode);
+        }
+
+        Task OpenVideoFromOpenModeAsync(bool forceEconomy, ExecuteOrOpenMode openMode)
+        {
+            switch(openMode) {
+                case ExecuteOrOpenMode.Application:
+                    return OpenVideoPlayerAsync(forceEconomy);
+
+                case ExecuteOrOpenMode.Browser:
+                    return OpenVideoBrowserAsync(forceEconomy);
+
+                case ExecuteOrOpenMode.Launcher:
+                    return OpenVideoLauncherAsync(forceEconomy);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public Task OpenVideoPlayerAsync(bool forceEconomy)
         {
             if(IsPlaying) {
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
@@ -1154,6 +1189,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 return task;
             }
+        }
+
+        public Task OpenVideoBrowserAsync(bool forceEconomy)
+        {
+            try {
+                Process.Start(WatchUrl.OriginalString);
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task OpenVideoLauncherAsync(bool forceEconomy)
+        {
+            var args = SmileVideoInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
+            try {
+                Process.Start(Setting.Execute.LauncherPath, args);
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
+
+            return Task.CompletedTask;
         }
 
         /// <summary>

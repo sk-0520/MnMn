@@ -165,9 +165,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return (long)elapsedTime.TotalSeconds;
         }
 
-        public static string ConvertHumanLikeByte(long byteSize)
+        public static string ConvertHumanLikeByte(long byteSize, string[] terms)
         {
-            var terms = new[] { "byte", "KB", "MB", "GB" };
             double size = byteSize;
             int order = 0;
             while(size >= 1024 && ++order < terms.Length) {
@@ -175,6 +174,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
 
             return $"{size:0.##} {terms[order]}";
+        }
+
+        public static string ConvertHumanLikeByte(long byteSize)
+        {
+            var terms = new[] { "byte", "KB", "MB", "GB" };
+            return ConvertHumanLikeByte(byteSize, terms);
         }
 
         #endregion
