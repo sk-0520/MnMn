@@ -558,18 +558,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public Size CommentArea { get; } = new Size(Constants.ServiceSmileVideoPlayerCommentWidth, Constants.ServiceSmileVideoPlayerCommentHeight);
 
-        [Obsolete]
-        public GridLength VisualPlayerWidth
-        {
-            get { return this._visualPlayerWidth; }
-            set { SetVariableValue(ref this._visualPlayerWidth, value); }
-        }
-        [Obsolete]
-        public GridLength VisualPlayerHeight
-        {
-            get { return this._visualPlayerHeight; }
-            set { SetVariableValue(ref this._visualPlayerHeight, value); }
-        }
+        //[Obsolete]
+        //public GridLength VisualPlayerWidth
+        //{
+        //    get { return this._visualPlayerWidth; }
+        //    set { SetVariableValue(ref this._visualPlayerWidth, value); }
+        //}
+        //[Obsolete]
+        //public GridLength VisualPlayerHeight
+        //{
+        //    get { return this._visualPlayerHeight; }
+        //    set { SetVariableValue(ref this._visualPlayerHeight, value); }
+        //}
         [Obsolete]
         public GridLength CommentListLength
         {

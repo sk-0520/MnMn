@@ -500,12 +500,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
-            var baseLength = 100.0;
-            var scale = percent / baseLength;
-            var videoWidth = VisualVideoSize.Width * scale;
-            //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
 
-            //View.SizeToContent = SizeToContent.Width;
+            var leaveSize = new Size(
+                View.ActualWidth - Player.ActualWidth,
+                View.ActualHeight - Player.ActualHeight
+            );
+
+            Mediation.Logger.Information($"{leaveSize}");
+
+            var videoSize = new Size(
+                VisualVideoSize.Width,
+                VisualVideoSize.Height
+            );
+
+            Width = leaveSize.Width + videoSize.Width;
+            Height = leaveSize.Height + videoSize.Height;
         }
 
         void ChangeBaseSize()

@@ -87,10 +87,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         [Obsolete]
         GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
-        [Obsolete]
-        GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
-        [Obsolete]
-        GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
+        //[Obsolete]
+        //GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
+        //[Obsolete]
+        //GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
 
         PlayerState _playerState;
         bool _isBufferingStop;
