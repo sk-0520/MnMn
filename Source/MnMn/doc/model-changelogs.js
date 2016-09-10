@@ -84,40 +84,23 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.17.1',
-		'isRc': true,
+		'date': '2016/09/10',
+		'version': '0.18.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '1ba34884a05f5813e5a3a6da44af5133d01ef6a5',
 						'subject': '#51: 外部再生機能の追加'
 					},
 					{
-						'revision': '',
+						'revision': 'e30d376a7ab45174ed797d93b54f0dd1cd7db0a3',
 						'subject': '#21: 自動再生のタイミングを設定可能にする'
 					},
 					{
-						'revision': '',
+						'revision': '9c10cefa0c7891ef6b76c5a2f99ea2cf04e0dac1',
 						'subject': '#24: 自動再生制御を確認できるUIが必要',
 						'comments': [
 							'自動再生で待ち状態のイメージに再生ボタンを砂時計にした',
@@ -125,7 +108,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f2a1a337ed087aeed260ead0dc374ecbcadaa181',
 						'subject': '#12: プレイヤーサイズを動画サイズにより調整',
 						'comments': [
 							'制限としてディスプレイの解像度を超過することは来ません',
@@ -140,23 +123,19 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'cb88d1123d06a3d3d1c53e97a41f0fc9f32f5423',
 						'subject': '#135: 本体設定タブをMnMnに入れる',
 						'comments': [
 							'こんなもん誰も頻繁にさわらん'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'd8a8f2fdd41e5419086e76b4d33da9044472b56b',
 						'subject': '#114: プレイリストメニューの次とか前とかのコントロール部分を上に持っていくべきか',
 						'comments': [
 							'試してみて思ったけどどう考えても上部配置が標準だわ',
 							'> プレイリストが多いとスクロールが発生するから下にあるとなんだかなーと'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -164,20 +143,16 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '81427f0826140150e73b64ecdd084b9e001e019b',
 						'subject': 'ゴミ処理後のログ出力処理を統一'
 					},
 					{
-						'revision': '',
+						'revision': 'ab296b85b767c3ff4ad9c422c9aaee15e2383829',
 						'subject': '#139: β版実行を分かりやすくする',
 						'comments': [
 							'β版をいい感じに走らせるには <MnMn>\bat\beta.bat を実行してください',
 							'多分いい感じにβ版が動きます'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
