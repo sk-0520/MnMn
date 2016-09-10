@@ -354,21 +354,7 @@
       <Separator />
 
       <Menu Style="{StaticResource DummyMenu}">
-        <MenuItem Header="player size">
-          <MenuItem>
-            <MenuItem.Header>
-              <TextBlock>
-                思った以上に計算ややこしいから
-                <LineBreak/>
-                動画サイズに連動したプレイヤーサイズ変更は
-                <LineBreak/>
-                あとまわし
-              </TextBlock>
-            </MenuItem.Header>
-            <MenuItem.Icon>
-              <Label FontSize="30">☃</Label>
-            </MenuItem.Icon>
-          </MenuItem>
+        <MenuItem Header="プレイヤーサイズ">
           <MenuItem Header="50%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="50"  />
           <MenuItem Header="75%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="75"  />
           <MenuItem Header="100%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="100"  />
@@ -523,9 +509,9 @@
           </Style>
         </Grid.Style>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="7*" />
+          <ColumnDefinition Width="{Binding PlayerAreaLength.Value, Mode=TwoWay}" />
           <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="3*" />
+          <ColumnDefinition Width="{Binding CommentAreaLength.Value, Mode=TwoWay}" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" x:Name="viewPlayer">

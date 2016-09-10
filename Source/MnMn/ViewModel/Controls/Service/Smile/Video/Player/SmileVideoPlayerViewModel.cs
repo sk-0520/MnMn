@@ -500,12 +500,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
-            var baseLength = 100.0;
-            var scale = percent / baseLength;
-            var videoWidth = VisualVideoSize.Width * scale;
-            //VisualPlayerHeight = new GridLength(VisualVideoSize.Height * scale);
 
-            //View.SizeToContent = SizeToContent.Width;
+            var leaveSize = new Size(
+                View.ActualWidth - Player.ActualWidth,
+                View.ActualHeight - Player.ActualHeight
+            );
+            var videoSize = new Size(
+                VisualVideoSize.Width / 100 * percent,
+                VisualVideoSize.Height / 100 * percent
+            );
+
+            if(PlayerShowCommentArea) {
+                // リスト部は比率レイアウトなので補正が必要
+
+                // TODO: うーん、ださい
+                var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
+
+                //if(CommentAreaLength.IsChanged) {
+                //    // エリアサイズ変えていれば * から実値になってるけど単位は変わらない
+                //} else {
+                //    leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
+                //}
+                leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
+            }
+
+            Width = leaveSize.Width + videoSize.Width;
+            Height = leaveSize.Height + videoSize.Height;
         }
 
         void ChangeBaseSize()
