@@ -506,8 +506,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.ActualHeight - Player.ActualHeight
             );
             var videoSize = new Size(
-                VisualVideoSize.Width,
-                VisualVideoSize.Height
+                VisualVideoSize.Width / 100 * percent,
+                VisualVideoSize.Height / 100 * percent
             );
 
             if(PlayerShowCommentArea) {
