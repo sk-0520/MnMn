@@ -516,15 +516,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // TODO: うーん、ださい
                 var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
 
-                var baseWidth = videoSize.Width + leaveSize.Width - defaultGridSplitterLength;
-                if(CommentAreaLength.IsChanged) {
-                    // エリアサイズ変えていれば * から実値になってるけど単位は変わらない
-                    //leaveSize.Width = (baseWidth / 10) * CommentAreaLength.Value.Value;
-                    Mediation.Logger.Information(PlayerAreaLength.Value.Value.ToString());
-                } else {
-                    //leaveSize.Width = (baseWidth / 10) * CommentAreaLength.Value.Value + defaultGridSplitterLength;
-                    leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
-                }
+                //if(CommentAreaLength.IsChanged) {
+                //    // エリアサイズ変えていれば * から実値になってるけど単位は変わらない
+                //} else {
+                //    leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
+                //}
+                leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
             }
 
             Mediation.Logger.Information($"{leaveSize}");
