@@ -291,6 +291,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     };
                     window.Closed += Player_Closed;
                     Players.Add(window);
+                    if(!Players.Any()) {
+                        player.IsWorkingPlayer.Value = true;
+                    }
                     return window;
                 }
                 var information = request.ViewModel as SmileVideoInformationViewModel;
@@ -328,7 +331,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         private void Player_Closed(object sender, EventArgs e)
         {
-            Players.Remove((SmileVideoPlayerWindow)sender);
+            var window = (SmileVideoPlayerWindow)sender;
+            var player = (SmileVideoPlayerViewModel)window.DataContext;
+            player.IsWorkingPlayer.Value = false;
+            Players.Remove(window);
+
+            var nextPlayer = Players
+                .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
+                .FirstOrDefault()
+            ;
+            nextPlayer.IsWorkingPlayer.Value = true;
         }
 
     }

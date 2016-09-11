@@ -108,6 +108,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetPropertyValue(PlayListItems, value, nameof(PlayListItems.IsRandom)); }
         }
 
+        public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
+
         #region window
 
         /// <summary>

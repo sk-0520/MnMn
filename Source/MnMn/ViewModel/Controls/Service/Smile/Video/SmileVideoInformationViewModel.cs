@@ -1186,6 +1186,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var vm = new SmileVideoPlayerViewModel(Mediation);
                 var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
+                if(!openPlayerInNewWindow) {
+                    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+                    if(players.Any()) {
+                        // 再生中プレイヤーで再生
+                        return Task.CompletedTask;
+                    }
+                }
+
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
                 return task;
