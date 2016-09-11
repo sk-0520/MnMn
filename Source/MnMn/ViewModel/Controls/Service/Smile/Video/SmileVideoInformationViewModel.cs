@@ -45,6 +45,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
@@ -818,8 +819,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        var openMode = (ExecuteOrOpenMode)o;
-                        OpenVideoFromOpenModeAsync(false, openMode, Setting.Execute.OpenPlayerInNewWindow);
+                        var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
+                        OpenVideoFromOpenModeAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
                     }
                 );
             }

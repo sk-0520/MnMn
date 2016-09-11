@@ -16,19 +16,26 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter
+namespace ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video
 {
-    public class MultiCommandParameterBase: ModelBase
+    public class SmileVideoOpenVideoCommandParameterModel: MultiCommandParameterModelBase
     {
-        public MultiCommandParameterBase(object[] values, Type targetType, CultureInfo culture)
+        //TODO: 側だけ
+        public SmileVideoOpenVideoCommandParameterModel(object[] values, Type targetType, CultureInfo culture) : base(values, targetType, culture)
         { }
 
+        #region property
+
+        public ExecuteOrOpenMode OpenMode { get; }
+
+        public bool OpenPlayerInNewWindow { get; }
+
+        #endregion
     }
 }

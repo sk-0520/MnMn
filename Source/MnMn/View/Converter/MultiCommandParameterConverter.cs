@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var baseNamespace = typeof(MultiCommandParameterBase).Namespace;
+            var baseNamespace = typeof(MultiCommandParameterModelBase).Namespace;
             var extensionName = (string)parameter;
 
             var typeName = baseNamespace + "." + extensionName.TrimStart('.');
