@@ -41,6 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public ExecuteOrOpenMode OpenMode { get; set; } = Constants.SettingServiceSmileVideoExecuteOpenMode;
 
         /// <summary>
+        /// プレイヤーを新規ウィンドウで表示する｡
+        /// <para><see cref="SmileVideoPlayerSettingModel"/>に入れようか悩んだけどなんとなくこっち。</para>
+        /// </summary>
+        public bool OpenPlayerInNewWindow { get; set; } = Constants.SettingServiceSmileVideoExecuteOpenPlayerInNewWindow;
+
+        /// <summary>
         /// 外部プログラムのパス。
         /// </summary>
         [DataMember]
