@@ -234,6 +234,8 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoBookmarkUtility.cs" />
     <Compile Include="Logic\View\CursorHider.cs" />
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
+    <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
+    <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
@@ -252,6 +254,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Resources\TabDictionary.xaml.cs">
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>

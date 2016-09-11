@@ -329,6 +329,7 @@
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
+              <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource PlayListChangeMenuItem}" />
               <Separator />
               <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
@@ -409,6 +410,11 @@
         <TextBlock>[</TextBlock>
         <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
         <TextBlock>]</TextBlock>
+      </TextBlock>
+      <TextBlock VerticalAlignment="Center" Text="🌸" Foreground="Pink" ToolTip="酷使するプレイヤーウィンドウ！" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TextBlock.Effect>
+          <DropShadowEffect Color="#88000000" ShadowDepth="1.5" BlurRadius="2" />
+        </TextBlock.Effect>
       </TextBlock>
       <Canvas Style="{StaticResource StatePanel}">
         <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />

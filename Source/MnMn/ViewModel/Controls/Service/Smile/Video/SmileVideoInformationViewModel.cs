@@ -45,6 +45,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
@@ -818,8 +819,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => {
-                        var openMode = (ExecuteOrOpenMode)o;
-                        OpenVideoFromOpenModeAsync(false, openMode);
+                        var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
+                        OpenVideoFromOpenParameterAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
                     }
                 );
             }
@@ -1156,14 +1157,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoDefaultAsync(bool forceEconomy)
         {
-            return OpenVideoFromOpenModeAsync(forceEconomy, Setting.Execute.OpenMode);
+            return OpenVideoFromOpenParameterAsync(forceEconomy, Setting.Execute.OpenMode, Setting.Execute.OpenPlayerInNewWindow);
         }
 
-        Task OpenVideoFromOpenModeAsync(bool forceEconomy, ExecuteOrOpenMode openMode)
+        Task OpenVideoFromOpenParameterAsync(bool forceEconomy, ExecuteOrOpenMode openMode, bool openPlayerInNewWindow)
         {
             switch(openMode) {
                 case ExecuteOrOpenMode.Application:
-                    return OpenVideoPlayerAsync(forceEconomy);
+                    return OpenVideoPlayerAsync(forceEconomy, openPlayerInNewWindow);
 
                 case ExecuteOrOpenMode.Browser:
                     return OpenVideoBrowserAsync(forceEconomy);
@@ -1176,12 +1177,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public Task OpenVideoPlayerAsync(bool forceEconomy)
+        public Task OpenVideoPlayerAsync(bool forceEconomy, bool openPlayerInNewWindow)
         {
             if(IsPlaying) {
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
             } else {
+                if(!openPlayerInNewWindow) {
+                    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+                    var workingPlayer = players.FirstOrDefault(p => p.IsWorkingPlayer.Value);
+                    if(workingPlayer != null) {
+                        // 再生中プレイヤーで再生
+                        return workingPlayer.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                        //return Task.CompletedTask;
+                    }
+                }
+
                 var vm = new SmileVideoPlayerViewModel(Mediation);
                 var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 

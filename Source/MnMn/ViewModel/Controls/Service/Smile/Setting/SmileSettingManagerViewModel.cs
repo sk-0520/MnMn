@@ -111,6 +111,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         }
 
         /// <summary>
+        /// 新規ウィンドウでプレイヤーを表示するか。
+        /// </summary>
+        public bool OpenPlayerInNewWindow
+        {
+            get { return Setting.Video.Execute.OpenPlayerInNewWindow; }
+            set { SetPropertyValue(Setting.Video.Execute, value); }
+        }
+
+        /// <summary>
         /// 自動再生を行うか。
         /// </summary>
         public bool IsAutoPlay
