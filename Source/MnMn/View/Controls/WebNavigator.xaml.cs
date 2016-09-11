@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -138,6 +139,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             set { this.browser.Source = value; }
         }
 
+        public GeckoWebBrowser Gecko { get; private set; }
+
         #endregion
 
         #region command
@@ -207,6 +210,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public void Navigate(string source)
         {
             this.browser.Navigate(source);
+            Dispatcher.BeginInvoke(new Action(() => {
+                while(!Gecko.IsHandleCreated) {
+                    Gecko.CreateControl();
+                }
+                Action<string> action = url => Gecko.Navigate(url);
+                Gecko.Invoke(action, new object[] { "http://www.google.com/" });
+                //Gecko.Navigate("http://google.com");
+            }));
         }
         //
         // 概要:
@@ -390,6 +401,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void browser_Navigated(object sender, NavigationEventArgs e)
         {
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void browserHost_Loaded(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() => {
+                Gecko = new GeckoWebBrowser();
+                browserHost.Child = Gecko;
+            }));
         }
     }
 }

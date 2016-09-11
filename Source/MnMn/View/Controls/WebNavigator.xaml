@@ -22,7 +22,8 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="1*" />
     </Grid.RowDefinitions>
 
     <ToolBar Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Visibility="{Binding IsVisibleToolbar, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -55,6 +56,8 @@
     </ToolBar>
 
     <WebBrowser x:Name="browser" Grid.Row="1" Loaded="browser_Loaded" Navigating="browser_Navigating" Navigated="browser_Navigated" />
+
+    <WindowsFormsHost x:Name="browserHost" Grid.Row="2" Loaded="browserHost_Loaded" />
 
   </Grid>
 </UserControl>
