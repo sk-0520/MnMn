@@ -251,7 +251,6 @@
     </Grid>
 
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
-      <Label Content="{Binding IsWorkingPlayer.Value, StringFormat=WORK:{0}}" />
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />
@@ -411,6 +410,11 @@
         <TextBlock>[</TextBlock>
         <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
         <TextBlock>]</TextBlock>
+      </TextBlock>
+      <TextBlock VerticalAlignment="Center" Text="🌸" Foreground="Pink" ToolTip="酷使するプレイヤーウィンドウ！" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TextBlock.Effect>
+          <DropShadowEffect Color="#88000000" ShadowDepth="1.5" BlurRadius="2" />
+        </TextBlock.Effect>
       </TextBlock>
       <Canvas Style="{StaticResource StatePanel}">
         <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />
