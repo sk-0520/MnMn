@@ -491,6 +491,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             PlayListItems.AddRange(videoInformations);
+            CanPlayNextVieo.Value = true;
             return LoadAsync(PlayListItems.GetFirstItem(), false, thumbCacheSpan, imageCacheSpan);
         }
 
@@ -1822,7 +1823,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Pause();
                         }
-                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+                    } else if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
                         Mediation.Logger.Debug("next playlist item");
                         LoadNextPlayListItemAsync();
                     } else if(ReplayVideo && !UserOperationStop.Value) {
