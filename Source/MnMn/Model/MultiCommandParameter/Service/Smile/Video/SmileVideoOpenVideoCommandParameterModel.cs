@@ -26,9 +26,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile
 {
     public class SmileVideoOpenVideoCommandParameterModel: MultiCommandParameterModelBase
     {
-        //TODO: 側だけ
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="values">
+        /// <list type="list">
+        ///     <item>
+        ///         <term>0</term>
+        ///         <description><see cref="ExecuteOrOpenMode"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>1</term>
+        ///         <description>bool: 新規ウィンドウで開くか</description>
+        ///     </item>
+        /// </list>
+        /// </param>
+        /// <param name="targetType"></param>
+        /// <param name="culture"></param>
         public SmileVideoOpenVideoCommandParameterModel(object[] values, Type targetType, CultureInfo culture) : base(values, targetType, culture)
-        { }
+        {
+            var paramCount = 2;
+            if(values.Length != paramCount) {
+                throw new ArgumentException($"{nameof(values)}.{nameof(values)} != {paramCount}");
+            }
+
+            OpenMode = (ExecuteOrOpenMode)values[0];
+            OpenPlayerInNewWindow = (bool)values[1];
+        }
 
         #region property
 

@@ -820,7 +820,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => {
                         var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
-                        OpenVideoFromOpenModeAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
+                        OpenVideoFromOpenParameterAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
                     }
                 );
             }
@@ -1157,10 +1157,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoDefaultAsync(bool forceEconomy)
         {
-            return OpenVideoFromOpenModeAsync(forceEconomy, Setting.Execute.OpenMode, Setting.Execute.OpenPlayerInNewWindow);
+            return OpenVideoFromOpenParameterAsync(forceEconomy, Setting.Execute.OpenMode, Setting.Execute.OpenPlayerInNewWindow);
         }
 
-        Task OpenVideoFromOpenModeAsync(bool forceEconomy, ExecuteOrOpenMode openMode, bool openPlayerInNewWindow)
+        Task OpenVideoFromOpenParameterAsync(bool forceEconomy, ExecuteOrOpenMode openMode, bool openPlayerInNewWindow)
         {
             switch(openMode) {
                 case ExecuteOrOpenMode.Application:

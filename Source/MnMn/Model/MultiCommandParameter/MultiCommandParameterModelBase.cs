@@ -28,6 +28,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter
     public abstract class MultiCommandParameterModelBase: ModelBase
     {
         public MultiCommandParameterModelBase(object[] values, Type targetType, CultureInfo culture)
-        { }
+        {
+            ParameterMap = values
+                .OfType<string>()
+                .Where(s => !string.IsNullOrEmpty(s) && s.Any(c => c == ':'))
+                .Select(s => s.Split(new[] { ':' }, 2))
+                .ToDictionary(
+                    kv => kv[0],
+                    kv => kv[1]
+                )
+            ;
+        }
+
+        #region property
+
+        /// <summary>
+        /// キーと値を : で区切って格納。
+        /// <para>キーは重複しない前提。</para>
+        /// </summary>
+        IDictionary<string, string> ParameterMap { get; }
+
+        #endregion
     }
 }
