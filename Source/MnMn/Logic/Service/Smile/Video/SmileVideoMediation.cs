@@ -343,7 +343,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
                 .FirstOrDefault()
             ;
-            nextPlayer.IsWorkingPlayer.Value = true;
+            if(nextPlayer != null) {
+                nextPlayer.IsWorkingPlayer.Value = true;
+            }
         }
 
     }
