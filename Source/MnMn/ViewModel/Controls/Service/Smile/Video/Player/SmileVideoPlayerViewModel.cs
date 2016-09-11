@@ -1294,6 +1294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // プレイヤー立ち上げ時は null
             if(Information != null) {
+                Information.IsPlaying = false;
                 Information.SaveSetting(false);
                 // 軽めにGC
                 Mediation.Order(new AppCleanMemoryOrderModel(false));
