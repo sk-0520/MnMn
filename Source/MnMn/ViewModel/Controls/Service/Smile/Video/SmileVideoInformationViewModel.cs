@@ -1183,16 +1183,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
             } else {
-                var vm = new SmileVideoPlayerViewModel(Mediation);
-                var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-
                 if(!openPlayerInNewWindow) {
                     var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
-                    if(players.Any()) {
+                    var workingPlayer = players.FirstOrDefault(p => p.IsWorkingPlayer.Value);
+                    if(workingPlayer != null) {
                         // 再生中プレイヤーで再生
-                        return Task.CompletedTask;
+                        return workingPlayer.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                        //return Task.CompletedTask;
                     }
                 }
+
+                var vm = new SmileVideoPlayerViewModel(Mediation);
+                var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 

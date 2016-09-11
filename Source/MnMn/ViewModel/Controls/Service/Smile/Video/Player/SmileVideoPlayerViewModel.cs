@@ -766,7 +766,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 #endif
 #endif
+            if(DocumentDescription == null) {
 
+            }
             DocumentDescription.Dispatcher.Invoke(() => {
                 var document = DocumentDescription.Document;
 
