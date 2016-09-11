@@ -168,6 +168,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     CurrenItem = this.FirstOrDefault();
                 } else if(Items.IndexOf(CurrenItem) == -1) {
                     CurrenItem = this.FirstOrDefault();
+                } else {
+                    CurrenItem = this.Last();
                 }
                 CurrenIndex = Items.IndexOf(CurrenItem);
             }
