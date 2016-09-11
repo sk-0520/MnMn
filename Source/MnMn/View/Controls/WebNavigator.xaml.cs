@@ -406,7 +406,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void browserHost_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => {
-                Gecko = new GeckoWebBrowser();
+                Gecko = new GeckoWebBrowser() {
+                    Dock = System.Windows.Forms.DockStyle.Fill,
+                };
                 browserHost.Child = Gecko;
             }));
         }
