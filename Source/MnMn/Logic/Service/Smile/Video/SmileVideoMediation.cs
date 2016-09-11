@@ -290,10 +290,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         DataContext = player,
                     };
                     window.Closed += Player_Closed;
-                    Players.Add(window);
                     if(!Players.Any()) {
                         player.IsWorkingPlayer.Value = true;
                     }
+                    Players.Add(window);
                     return window;
                 }
                 var information = request.ViewModel as SmileVideoInformationViewModel;
@@ -339,6 +339,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             player.IsWorkingPlayer.Value = false;
             Players.Remove(window);
 
+            // 判断基準なし
             var nextPlayer = Players
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
                 .FirstOrDefault()
