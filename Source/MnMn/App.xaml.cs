@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -107,6 +108,30 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return true;
         }
 
+        void InitializeBrowserGeckoFx()
+        {
+            var settingDirectory = VariableConstants.GetSettingDirectory();
+            var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.BrowserProfileDirectoryName);
+            var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
+            Xpcom.ProfileDirectory = profileDirectory.FullName;
+            Xpcom.Initialize(Constants.BrowserLibraryDirectoryPath);
+
+            var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.BrowserPreferencesFileName);
+            if(File.Exists(preferencesFilePath)) {
+                GeckoPreferences.Load(preferencesFilePath);
+            } else {
+                // http://pieceofnostalgy.blogspot.jp/2013/10/wpf-geckofx.html
+                GeckoPreferences.User["browser.cache.disk.enable"] = false;
+                GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
+                GeckoPreferences.Save(preferencesFilePath);
+            }
+        }
+
+        void InitializeBrowser()
+        {
+            InitializeBrowserGeckoFx();
+        }
+
         #endregion
 
         #region Application
@@ -173,6 +198,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             SplashWindow.Show();
+
+            // gecko設定
+            InitializeBrowser();
 
             await AppManager.InitializeAsync();
             View = new MainWindow() {

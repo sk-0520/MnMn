@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
         public static string AppUriIssueResolved => ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved"));
 
+        public static string BrowserLibraryDirectoryName => appConfig.Get("browser-lib-dir-name");
+        public static string BrowserProfileDirectoryName => appConfig.Get("browser-profile-dir-name");
+        public static string BrowserPreferencesFileName => appConfig.Get("browser-preferences-name");
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 

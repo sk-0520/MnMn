@@ -214,6 +214,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
 
         /// <summary>
+        /// lib/
+        /// </summary>
+        public static string LibraryDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "lib");
+
+        public static string BrowserLibraryDirectoryPath { get; } = Path.Combine(LibraryDirectoryPath, BrowserLibraryDirectoryName);
+
+        /// <summary>
         /// 外部ライブラリファイルパス。
         /// </summary>
         public static string ComponentListFileName { get { return Path.Combine(ApplicationDocDirectoryPath, "components.xml"); } }
