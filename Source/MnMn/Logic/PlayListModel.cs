@@ -173,6 +173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             base.OnCollectionChanged(e);
+            base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanItemChange)));
         }
 
         #endregion
