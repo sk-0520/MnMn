@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// プレイヤーを新規ウィンドウで表示する｡
         /// <para><see cref="SmileVideoPlayerSettingModel"/>に入れようか悩んだけどなんとなくこっち。</para>
         /// </summary>
+        [DataMember]
         public bool OpenPlayerInNewWindow { get; set; } = Constants.SettingServiceSmileVideoExecuteOpenPlayerInNewWindow;
 
         /// <summary>
