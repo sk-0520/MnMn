@@ -332,6 +332,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         private void Player_Closed(object sender, EventArgs e)
         {
             var window = (SmileVideoPlayerWindow)sender;
+
+            window.Closed -= Player_Closed;
+
             var player = (SmileVideoPlayerViewModel)window.DataContext;
             player.IsWorkingPlayer.Value = false;
             Players.Remove(window);
