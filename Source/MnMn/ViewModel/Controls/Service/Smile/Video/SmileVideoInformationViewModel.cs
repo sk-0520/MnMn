@@ -819,7 +819,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => {
                         var openMode = (ExecuteOrOpenMode)o;
-                        OpenVideoFromOpenModeAsync(false, openMode);
+                        OpenVideoFromOpenModeAsync(false, openMode, Setting.Execute.OpenPlayerInNewWindow);
                     }
                 );
             }
@@ -1156,14 +1156,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoDefaultAsync(bool forceEconomy)
         {
-            return OpenVideoFromOpenModeAsync(forceEconomy, Setting.Execute.OpenMode);
+            return OpenVideoFromOpenModeAsync(forceEconomy, Setting.Execute.OpenMode, Setting.Execute.OpenPlayerInNewWindow);
         }
 
-        Task OpenVideoFromOpenModeAsync(bool forceEconomy, ExecuteOrOpenMode openMode)
+        Task OpenVideoFromOpenModeAsync(bool forceEconomy, ExecuteOrOpenMode openMode, bool openPlayerInNewWindow)
         {
             switch(openMode) {
                 case ExecuteOrOpenMode.Application:
-                    return OpenVideoPlayerAsync(forceEconomy);
+                    return OpenVideoPlayerAsync(forceEconomy, openPlayerInNewWindow);
 
                 case ExecuteOrOpenMode.Browser:
                     return OpenVideoBrowserAsync(forceEconomy);
@@ -1176,7 +1176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public Task OpenVideoPlayerAsync(bool forceEconomy)
+        public Task OpenVideoPlayerAsync(bool forceEconomy, bool openPlayerInNewWindow)
         {
             if(IsPlaying) {
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
