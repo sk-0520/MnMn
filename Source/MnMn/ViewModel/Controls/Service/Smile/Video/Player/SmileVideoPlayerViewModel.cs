@@ -766,9 +766,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 #endif
 #endif
-            if(DocumentDescription == null) {
-
-            }
             DocumentDescription.Dispatcher.Invoke(() => {
                 var document = DocumentDescription.Document;
 
@@ -1288,6 +1285,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
                 item.IsPlaying = false;
             }
+
+            if(PlayListItems.All(i => i != videoInformation)) {
+                // プレイリストに存在しない動画は追加する
+                PlayListItems.Add(videoInformation);
+            }
+
             videoInformation.IsPlaying = true;
             videoInformation.LastShowTimestamp = DateTime.Now;
             IsSelectedInformation = true;
