@@ -240,6 +240,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public void Navigate(Uri source)
         {
             this.browser.Navigate(source);
+            Gecko.Navigate(source.OriginalString);
         }
 
         //
