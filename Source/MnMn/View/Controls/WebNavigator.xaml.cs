@@ -143,16 +143,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get
             {
-                switch(WebNavigatorCore.Engine) {
-                    case Define.WebNavigatorEngine.Default:
-                        return BrowserDefault.Source;
+                //switch(WebNavigatorCore.Engine) {
+                //    case Define.WebNavigatorEngine.Default:
+                //        return BrowserDefault.Source;
 
-                    case Define.WebNavigatorEngine.GeckoFx:
-                        return BrowserGeckoFx.Url;
+                //    case Define.WebNavigatorEngine.GeckoFx:
+                //        return BrowserGeckoFx.Url;
 
-                    default:
-                        throw new NotImplementedException();
-                }
+                //    default:
+                //        throw new NotImplementedException();
+                //}
+                return DoFunction(
+                    b => b.Source,
+                    b => b.Url
+                );
             }
             //set { browser.Source = value; }
         }
@@ -170,16 +174,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get
             {
-                switch(WebNavigatorCore.Engine) {
-                    case Define.WebNavigatorEngine.Default:
-                        return BrowserDefault.CanGoBack;
+                //switch(WebNavigatorCore.Engine) {
+                //    case Define.WebNavigatorEngine.Default:
+                //        return BrowserDefault.CanGoBack;
 
-                    case Define.WebNavigatorEngine.GeckoFx:
-                        return BrowserGeckoFx.CanGoBack;
+                //    case Define.WebNavigatorEngine.GeckoFx:
+                //        return BrowserGeckoFx.CanGoBack;
 
-                    default:
-                        throw new NotImplementedException();
-                }
+                //    default:
+                //        throw new NotImplementedException();
+                //}
+                return DoFunction(
+                    b => b.CanGoBack,
+                    b => b.CanGoBack
+                );
             }
         }
 
@@ -190,16 +198,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get
             {
-                switch(WebNavigatorCore.Engine) {
-                    case Define.WebNavigatorEngine.Default:
-                        return BrowserDefault.CanGoForward;
+                //switch(WebNavigatorCore.Engine) {
+                //    case Define.WebNavigatorEngine.Default:
+                //        return BrowserDefault.CanGoForward;
 
-                    case Define.WebNavigatorEngine.GeckoFx:
-                        return BrowserGeckoFx.CanGoForward;
+                //    case Define.WebNavigatorEngine.GeckoFx:
+                //        return BrowserGeckoFx.CanGoForward;
 
-                    default:
-                        throw new NotImplementedException();
-                }
+                //    default:
+                //        throw new NotImplementedException();
+                //}
+                return DoFunction(
+                    b => b.CanGoForward,
+                    b => b.CanGoForward
+                );
             }
         }
 
