@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand ChangePlayerSizeCommand
+        public ICommand ChangePlayerSizeFromPercentCommand
         {
             get
             {
