@@ -258,10 +258,16 @@
     <Compile Include="View\Resources\TabDictionary.xaml.cs">
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>
-    <Content Include="doc\help\html\development.ja-jp.html">
+    <Content Include="doc\help\html\others-beta.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="doc\help\html\development-source.ja-jp.html">
+    <Content Include="doc\help\html\others-communication.ja-jp.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\help\html\others-development-source.ja-jp.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\help\html\others-development.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\image\help-security.png">
