@@ -138,13 +138,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region property
 
+        public GeckoWebBrowser Gecko { get; private set; }
+
         public Uri Source
         {
-            get { return this.browser.Source; }
-            set { this.browser.Source = value; }
+            get
+            {
+                switch(WebNavigatorConfiguration.Engine) {
+                    case Define.WebNavigatorEngine.Default:
+                        return browser.Source;
+
+                    case Define.WebNavigatorEngine.GeckoFx:
+                        return Gecko.Url;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            //set { browser.Source = value; }
         }
 
-        public GeckoWebBrowser Gecko { get; private set; }
+        /// <summary>
+        /// 「戻る」は使用可能か。
+        /// </summary>
+        public bool CanGoBack
+        {
+            get
+            {
+                switch(WebNavigatorConfiguration.Engine) {
+                    case Define.WebNavigatorEngine.Default:
+                        return browser.CanGoBack;
+
+                    case Define.WebNavigatorEngine.GeckoFx:
+                        return Gecko.CanGoBack;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 「進む」は使用可能か。
+        /// </summary>
+        public bool CanGoForward
+        {
+            get
+            {
+                switch(WebNavigatorConfiguration.Engine) {
+                    case Define.WebNavigatorEngine.Default:
+                        return browser.CanGoForward;
+
+                    case Define.WebNavigatorEngine.GeckoFx:
+                        return Gecko.CanGoForward;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         #endregion
 
@@ -166,8 +218,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(
-                    o => { this.browser.GoBack(); },
-                    o => this.browser.CanGoBack
+                    o => { GoBack(); },
+                    o => CanGoBack
                 );
             }
         }
@@ -177,8 +229,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(
-                    o => { this.browser.GoForward(); },
-                    o => this.browser.CanGoForward
+                    o => { GoForward(); },
+                    o => CanGoForward
                 );
             }
         }
@@ -203,9 +255,67 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region function
 
+        void GoBackGecko()
+        {
+            browser.GoBack();
+        }
+
+        void GoBackDefault()
+        {
+            Gecko.GoBack();
+        }
+
+        /// <summary>
+        /// 戻る。
+        /// </summary>
+        public void GoBack()
+        {
+            switch(WebNavigatorConfiguration.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    GoBackDefault();
+                    break;
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    GoBackGecko();
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        void GoForwardGecko()
+        {
+            browser.GoForward();
+        }
+
+        void GoForwardDefault()
+        {
+            Gecko.GoForward();
+        }
+
+        /// <summary>
+        /// 進む。
+        /// </summary>
+        public void GoForward()
+        {
+            switch(WebNavigatorConfiguration.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    GoForwardDefault();
+                    break;
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    GoForwardGecko();
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         void NavigateDefault(Uri uri)
         {
-            this.browser.Navigate(uri);
+            browser.Navigate(uri);
         }
 
         void NavigateGecko(Uri uri)
@@ -235,7 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void LoadHtmlDefault(string htmlSource)
         {
-            this.browser.NavigateToString(htmlSource);
+            browser.NavigateToString(htmlSource);
         }
 
         void LoadHtmlGecko(string htmlSource)
@@ -266,7 +376,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         [SecurityCritical]
         void RefreshDefault(bool noCache)
         {
-            this.browser.Refresh(noCache);
+            browser.Refresh(noCache);
         }
 
         void RefreshGecko(bool noCache)
@@ -297,13 +407,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedDefault()
         {
-            this.browser = new WebBrowser();
+            browser = new WebBrowser();
 
-            this.browser.Loaded += browser_Loaded;
-            this.browser.Navigating += browser_Navigating;
-            this.browser.Navigated += browser_Navigated;
+            browser.Loaded += browser_Loaded;
+            browser.Navigating += browser_Navigating;
+            browser.Navigated += browser_Navigated;
 
-            this.container.Content = this.browser;
+            this.container.Content = browser;
         }
 
         void InitializedGecko()
@@ -311,8 +421,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             Gecko = WebNavigatorConfiguration.CreateBrowser();
             Gecko.CreateControl();
 
-            var host = new WindowsFormsHost();
-            host.Child = Gecko;
+            var host = new WindowsFormsHost() {
+                Child = Gecko,
+            };
 
             this.container.Content = host;
         }
@@ -323,6 +434,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         protected override void OnInitialized(EventArgs e)
         {
+            base.OnInitialized(e);
+
             switch(WebNavigatorConfiguration.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     InitializedDefault();
@@ -335,8 +448,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 default:
                     throw new NotImplementedException();
             }
-
-            base.OnInitialized(e);
         }
 
         #endregion
@@ -344,16 +455,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void browser_Loaded(object sender, RoutedEventArgs e)
         {
             // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
-            dynamic activeX = this.browser.GetType().InvokeMember(
+            dynamic activeX = browser.GetType().InvokeMember(
                 "ActiveXInstance",
                 BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                this.browser,
+                browser,
                 new object[] { }
             );
             if(activeX != null) {
                 activeX.Silent = true;
-                this.browser.Loaded -= browser_Loaded;
+                browser.Loaded -= browser_Loaded;
             }
         }
 
@@ -366,6 +477,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             CommandManager.InvalidateRequerySuggested();
         }
-
     }
 }
