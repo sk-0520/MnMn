@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -210,14 +211,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public void Navigate(string source)
         {
             this.browser.Navigate(source);
-            Dispatcher.BeginInvoke(new Action(() => {
-                while(!Gecko.IsHandleCreated) {
-                    Gecko.CreateControl();
-                }
-                Action<string> action = url => Gecko.Navigate(url);
-                Gecko.Invoke(action, new object[] { "http://www.google.com/" });
-                //Gecko.Navigate("http://google.com");
-            }));
+            Gecko.Navigate(source);
         }
         //
         // 概要:
@@ -334,6 +328,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public void NavigateToString(string text)
         {
             this.browser.NavigateToString(text);
+            Gecko.LoadHtml(text);
         }
         //
         // 概要:
@@ -407,11 +402,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void browserHost_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() => {
-                Gecko = new GeckoWebBrowser() {
-                    Dock = System.Windows.Forms.DockStyle.Fill,
-                };
-                browserHost.Child = Gecko;
             }));
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+            Gecko = new GeckoWebBrowser() {
+                Dock = System.Windows.Forms.DockStyle.Fill,
+            };
+            Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
+            Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
+            Gecko.CreateControl();
+            Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
+            Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
+
+
+            browserHost.Child = Gecko;
         }
     }
 }
