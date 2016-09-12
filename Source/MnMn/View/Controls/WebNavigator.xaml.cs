@@ -260,73 +260,111 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region function
 
-        void GoBackDefault()
+        TResult DoFunction<TResult>(Func<WebBrowser, TResult> defaultFunction, Func<GeckoWebBrowser, TResult> geckoFxFunction)
         {
-            BrowserDefault.GoBack();
+            CheckUtility.DebugEnforceNotNull(defaultFunction);
+            CheckUtility.DebugEnforceNotNull(geckoFxFunction);
+
+            switch(WebNavigatorCore.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    return defaultFunction(BrowserDefault);
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    return geckoFxFunction(BrowserGeckoFx);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
-        void GoBackGeckoFx()
+        void DoAction(Action<WebBrowser> defaultAction, Action<GeckoWebBrowser> geckoFxAction)
         {
-            BrowserGeckoFx.GoBack();
+            CheckUtility.DebugEnforceNotNull(defaultAction);
+            CheckUtility.DebugEnforceNotNull(geckoFxAction);
+
+            var dmy = -1;
+
+            DoFunction(
+                b => { defaultAction(b); return dmy; },
+                b => { geckoFxAction(b); return dmy; }
+            );
         }
+
+        //void GoBackDefault()
+        //{
+        //    BrowserDefault.GoBack();
+        //}
+
+        //void GoBackGeckoFx()
+        //{
+        //    BrowserGeckoFx.GoBack();
+        //}
 
         /// <summary>
         /// 戻る。
         /// </summary>
         public void GoBack()
         {
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    GoBackDefault();
-                    break;
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        GoBackDefault();
+            //        break;
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    GoBackGeckoFx();
-                    break;
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        GoBackGeckoFx();
+            //        break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+            DoAction(
+                b => b.GoBack(),
+                b => b.GoBack()
+            );
         }
 
-        void GoForwardDefault()
-        {
-            BrowserDefault.GoForward();
-        }
+        //void GoForwardDefault()
+        //{
+        //    BrowserDefault.GoForward();
+        //}
 
-        void GoForwardGeckoFx()
-        {
-            BrowserGeckoFx.GoForward();
-        }
+        //void GoForwardGeckoFx()
+        //{
+        //    BrowserGeckoFx.GoForward();
+        //}
 
         /// <summary>
         /// 進む。
         /// </summary>
         public void GoForward()
         {
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    GoForwardDefault();
-                    break;
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        GoForwardDefault();
+            //        break;
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    GoForwardGeckoFx();
-                    break;
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        GoForwardGeckoFx();
+            //        break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+            DoAction(
+                b => b.GoForward(),
+                b => b.GoForward()
+            );
         }
 
-        void NavigateDefault(Uri uri)
-        {
-            BrowserDefault.Navigate(uri);
-        }
+        //void NavigateDefault(Uri uri)
+        //{
+        //    BrowserDefault.Navigate(uri);
+        //}
 
-        void NavigateGeckoFx(Uri uri)
-        {
-            BrowserGeckoFx.Navigate(uri.OriginalString);
-        }
+        //void NavigateGeckoFx(Uri uri)
+        //{
+        //    BrowserGeckoFx.Navigate(uri.OriginalString);
+        //}
 
         /// <summary>
         /// 指定 URI に移動。
@@ -334,30 +372,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="uri"></param>
         public void Navigate(Uri uri)
         {
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    NavigateDefault(uri);
-                    break;
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        NavigateDefault(uri);
+            //        break;
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    NavigateGeckoFx(uri);
-                    break;
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        NavigateGeckoFx(uri);
+            //        break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+            DoAction(
+                b => b.Navigate(uri),
+                b => b.Navigate(uri.OriginalString)
+            );
             IsEmptyContent = false;
         }
 
-        void LoadHtmlDefault(string htmlSource)
-        {
-            BrowserDefault.NavigateToString(htmlSource);
-        }
+        //void LoadHtmlDefault(string htmlSource)
+        //{
+        //    BrowserDefault.NavigateToString(htmlSource);
+        //}
 
-        void LoadHtmlGeckoFx(string htmlSource)
-        {
-            BrowserGeckoFx.LoadHtml(htmlSource);
-        }
+        //void LoadHtmlGeckoFx(string htmlSource)
+        //{
+        //    BrowserGeckoFx.LoadHtml(htmlSource);
+        //}
 
         /// <summary>
         /// HTMLを直接読み込み。
@@ -365,51 +407,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="htmlSource"></param>
         public void LoadHtml(string htmlSource)
         {
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    LoadHtmlDefault(htmlSource);
-                    break;
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        LoadHtmlDefault(htmlSource);
+            //        break;
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    LoadHtmlGeckoFx(htmlSource);
-                    break;
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        LoadHtmlGeckoFx(htmlSource);
+            //        break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+            DoAction(
+                b => b.NavigateToString(htmlSource),
+                b => b.LoadHtml(htmlSource)
+            );
             IsEmptyContent = false;
         }
 
-        [SecurityCritical]
-        void RefreshDefault(bool noCache)
-        {
-            BrowserDefault.Refresh(noCache);
-        }
+        //[SecurityCritical]
+        //void RefreshDefault(bool noCache)
+        //{
+        //    BrowserDefault.Refresh(noCache);
+        //}
 
-        void RefreshGeckoFx(bool noCache)
-        {
-            if(noCache) {
-                BrowserGeckoFx.Reload(GeckoLoadFlags.IsRefresh);
-            } else {
-                BrowserGeckoFx.Reload(GeckoLoadFlags.BypassCache);
-            }
-        }
+        //void RefreshGeckoFx(bool noCache)
+        //{
+        //    if(noCache) {
+        //        BrowserGeckoFx.Reload(GeckoLoadFlags.IsRefresh);
+        //    } else {
+        //        BrowserGeckoFx.Reload(GeckoLoadFlags.BypassCache);
+        //    }
+        //}
 
         [SecurityCritical]
         public void Refresh(bool noCache = false)
         {
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    RefreshDefault(noCache);
-                    break;
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        RefreshDefault(noCache);
+            //        break;
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    RefreshGeckoFx(noCache);
-                    break;
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        RefreshGeckoFx(noCache);
+            //        break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+            DoAction(
+                b => b.Refresh(noCache),
+                b => {
+                    if(noCache) {
+                        b.Reload(GeckoLoadFlags.IsRefresh);
+                    } else {
+                        b.Reload(GeckoLoadFlags.BypassCache);
+                    }
+                }
+            );
         }
 
         void InitializedDefault()
@@ -449,18 +505,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             base.OnInitialized(e);
 
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    InitializedDefault();
-                    break;
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        InitializedDefault();
+            //        break;
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    InitializedGeckoFx();
-                    break;
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        InitializedGeckoFx();
+            //        break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+            DoAction(
+                b => InitializedDefault(),
+                b => InitializedGeckoFx()
+            );
+
             IsEmptyContent = true;
         }
 
