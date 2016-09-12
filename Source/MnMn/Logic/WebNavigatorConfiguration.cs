@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         #region property
 
+        //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
         public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.GeckoFx;
 
         static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();

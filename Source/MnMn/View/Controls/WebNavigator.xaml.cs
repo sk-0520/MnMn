@@ -262,12 +262,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void GoBackDefault()
         {
-            BrowserGeckoFx.GoBack();
+            BrowserDefault.GoBack();
         }
 
         void GoBackGeckoFx()
         {
-            BrowserDefault.GoBack();
+            BrowserGeckoFx.GoBack();
         }
 
         /// <summary>
@@ -291,12 +291,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void GoForwardDefault()
         {
-            BrowserGeckoFx.GoForward();
+            BrowserDefault.GoForward();
         }
 
         void GoForwardGeckoFx()
         {
-            BrowserDefault.GoForward();
+            BrowserGeckoFx.GoForward();
         }
 
         /// <summary>
@@ -416,9 +416,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             BrowserDefault = new WebBrowser();
 
-            BrowserDefault.Loaded += browser_Loaded;
-            BrowserDefault.Navigating += browser_Navigating;
-            BrowserDefault.Navigated += browser_Navigated;
+            BrowserDefault.Unloaded += BrowserDefault_Unloaded;
+            BrowserDefault.Loaded += BrowserDefault_Loaded;
+            BrowserDefault.Navigating += BrowserDefault_Navigating;
+            BrowserDefault.Navigated += BrowserDefault_Navigated;
 
             this.container.Content = BrowserDefault;
         }
@@ -427,6 +428,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             BrowserGeckoFx = WebNavigatorConfiguration.CreateBrowser();
             BrowserGeckoFx.CreateControl();
+
+            BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
+            BrowserGeckoFx.Navigating += BrowserGeckoFx_Navigating;
+            BrowserGeckoFx.Navigated += BrowserGeckoFx_Navigated;
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -461,7 +466,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        private void browser_Loaded(object sender, RoutedEventArgs e)
+        private void BrowserDefault_Loaded(object sender, RoutedEventArgs e)
         {
             // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
             dynamic activeX = BrowserDefault.GetType().InvokeMember(
@@ -473,18 +478,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             );
             if(activeX != null) {
                 activeX.Silent = true;
-                BrowserDefault.Loaded -= browser_Loaded;
+                BrowserDefault.Loaded -= BrowserDefault_Loaded;
             }
         }
 
-        private void browser_Navigating(object sender, NavigatingCancelEventArgs e)
+        private void BrowserDefault_Unloaded(object sender, RoutedEventArgs e)
+        {
+            BrowserDefault.Unloaded -= BrowserDefault_Unloaded;
+            BrowserDefault.Loaded -= BrowserDefault_Loaded;
+            BrowserDefault.Navigating -= BrowserDefault_Navigating;
+            BrowserDefault.Navigated -= BrowserDefault_Navigated;
+        }
+
+        private void BrowserGeckoFx_Disposed(object sender, EventArgs e)
+        {
+            BrowserGeckoFx.Disposed -= BrowserGeckoFx_Disposed;
+            BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
+            BrowserGeckoFx.Navigated -= BrowserGeckoFx_Navigated;
+        }
+
+        private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
         }
 
-        private void browser_Navigated(object sender, NavigationEventArgs e)
+        private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
+        {
+            this.location.Text = e.Uri?.ToString() ?? string.Empty;
+        }
+
+
+        private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
         {
             CommandManager.InvalidateRequerySuggested();
         }
+
+        private void BrowserGeckoFx_Navigated(object sender, GeckoNavigatedEventArgs e)
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
+
     }
 }
