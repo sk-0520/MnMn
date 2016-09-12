@@ -502,6 +502,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
+            Debug.Assert(!WaitingFirstPlay.Value, "到達不可のはず");
 
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
