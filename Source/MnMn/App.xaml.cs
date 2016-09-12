@@ -108,28 +108,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return true;
         }
 
-        void InitializeBrowserGeckoFx()
-        {
-            var settingDirectory = VariableConstants.GetSettingDirectory();
-            var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.BrowserProfileDirectoryName);
-            var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
-            Xpcom.ProfileDirectory = profileDirectory.FullName;
-            Xpcom.Initialize(Constants.BrowserLibraryDirectoryPath);
-
-            var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.BrowserPreferencesFileName);
-            if(File.Exists(preferencesFilePath)) {
-                GeckoPreferences.Load(preferencesFilePath);
-            } else {
-                // http://pieceofnostalgy.blogspot.jp/2013/10/wpf-geckofx.html
-                GeckoPreferences.User["browser.cache.disk.enable"] = false;
-                GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
-                GeckoPreferences.Save(preferencesFilePath);
-            }
-        }
-
         void InitializeBrowser()
         {
-            InitializeBrowserGeckoFx();
+            CustomBrowser.Initialize();
         }
 
         #endregion
@@ -245,6 +226,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
+            CustomBrowser.Uninitialize();
+
             AppManager.UninitializeView(View);
 
             Mutex.Dispose();

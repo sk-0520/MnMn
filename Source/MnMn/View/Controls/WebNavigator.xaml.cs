@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -407,15 +408,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void UserControl_Initialized(object sender, EventArgs e)
         {
-            Gecko = new GeckoWebBrowser() {
-                Dock = System.Windows.Forms.DockStyle.Fill,
-            };
+            Gecko = CustomBrowser.CreateBrowser();
             Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
             Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
             Gecko.CreateControl();
             Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
             Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
-
 
             browserHost.Child = Gecko;
         }
