@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// <summary>
     /// <see cref="MnMn.View.Controls.WebNavigator"/> で動作するブラウザ挙動の担当。
     /// </summary>
-    public static class WebNavigatorConfiguration
+    public static class WebNavigatorCore
     {
         #region property
 

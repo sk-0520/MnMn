@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get
             {
-                switch(WebNavigatorConfiguration.Engine) {
+                switch(WebNavigatorCore.Engine) {
                     case Define.WebNavigatorEngine.Default:
                         return BrowserDefault.Source;
 
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get
             {
-                switch(WebNavigatorConfiguration.Engine) {
+                switch(WebNavigatorCore.Engine) {
                     case Define.WebNavigatorEngine.Default:
                         return BrowserDefault.CanGoBack;
 
@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get
             {
-                switch(WebNavigatorConfiguration.Engine) {
+                switch(WebNavigatorCore.Engine) {
                     case Define.WebNavigatorEngine.Default:
                         return BrowserDefault.CanGoForward;
 
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         public void GoBack()
         {
-            switch(WebNavigatorConfiguration.Engine) {
+            switch(WebNavigatorCore.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     GoBackDefault();
                     break;
@@ -304,7 +304,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         public void GoForward()
         {
-            switch(WebNavigatorConfiguration.Engine) {
+            switch(WebNavigatorCore.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     GoForwardDefault();
                     break;
@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="uri"></param>
         public void Navigate(Uri uri)
         {
-            switch(WebNavigatorConfiguration.Engine) {
+            switch(WebNavigatorCore.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     NavigateDefault(uri);
                     break;
@@ -365,7 +365,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="htmlSource"></param>
         public void LoadHtml(string htmlSource)
         {
-            switch(WebNavigatorConfiguration.Engine) {
+            switch(WebNavigatorCore.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     LoadHtmlDefault(htmlSource);
                     break;
@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         [SecurityCritical]
         public void Refresh(bool noCache = false)
         {
-            switch(WebNavigatorConfiguration.Engine) {
+            switch(WebNavigatorCore.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     RefreshDefault(noCache);
                     break;
@@ -426,7 +426,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedGeckoFx()
         {
-            BrowserGeckoFx = WebNavigatorConfiguration.CreateBrowser();
+            BrowserGeckoFx = WebNavigatorCore.CreateBrowser();
             BrowserGeckoFx.CreateControl();
 
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
@@ -449,7 +449,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             base.OnInitialized(e);
 
-            switch(WebNavigatorConfiguration.Engine) {
+            switch(WebNavigatorCore.Engine) {
                 case Define.WebNavigatorEngine.Default:
                     InitializedDefault();
                     break;
