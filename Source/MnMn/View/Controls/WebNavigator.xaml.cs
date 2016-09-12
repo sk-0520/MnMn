@@ -405,7 +405,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void UserControl_Initialized(object sender, EventArgs e)
         {
-            Gecko = CustomBrowser.CreateBrowser();
+            Gecko = CustomWebNavigator.CreateBrowser();
             Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
             Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
             Gecko.CreateControl();

@@ -26,13 +26,13 @@ using Gecko;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     /// <summary>
-    /// Gecko に対する MnMn の固有処理も含めて担当。
+    /// <see cref="MnMn.View.Controls.WebNavigator"/> で動作するブラウザ挙動の担当。
     /// </summary>
-    public static class CustomBrowser
+    public static class CustomWebNavigator
     {
         #region property
 
-        static ISet<GeckoWebBrowser> CreatedBrowsers { get; } = new HashSet<GeckoWebBrowser>();
+        static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();
 
         #endregion
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public static void Uninitialize()
         {
-            foreach(var browser in CreatedBrowsers) {
+            foreach(var browser in CreatedGeckoBrowsers) {
                 browser.Disposed -= Browser_Disposed;
                 browser.Dispose();
             }
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     Dock = System.Windows.Forms.DockStyle.Fill,
                 };
                 browser.Disposed += Browser_Disposed;
-                CreatedBrowsers.Add(browser);
+                CreatedGeckoBrowsers.Add(browser);
             });
 
             return browser;
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var browser = (GeckoWebBrowser)sender;
 
             browser.Disposed -= Browser_Disposed;
-            CreatedBrowsers.Remove(browser);
+            CreatedGeckoBrowsers.Remove(browser);
         }
 
         #endregion
