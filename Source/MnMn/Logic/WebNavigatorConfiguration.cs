@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -28,20 +29,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// <summary>
     /// <see cref="MnMn.View.Controls.WebNavigator"/> で動作するブラウザ挙動の担当。
     /// </summary>
-    public static class CustomWebNavigator
+    public static class WebNavigatorConfiguration
     {
         #region property
 
-        static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();
+        public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
+
+        static ISet<GeckoWebBrowser> CreatedGeckoBrowsers
+        { get; } = new HashSet<GeckoWebBrowser>();
 
         #endregion
 
         #region function
 
-        /// <summary>
-        /// 初期化。
-        /// </summary>
-        public static void Initialize()
+        static void InitializeGecko()
         {
             var settingDirectory = VariableConstants.GetSettingDirectory();
             var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.BrowserProfileDirectoryName);
@@ -61,15 +62,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         /// <summary>
+        /// 初期化。
+        /// </summary>
+        public static void Initialize()
+        {
+            InitializeGecko();
+        }
+
+        static void UninitializeGecko()
+        {
+            foreach(var browser in CreatedGeckoBrowsers) {
+                browser.Disposed -= GeckoBrowser_Disposed;
+                browser.Dispose();
+            }
+            Xpcom.Shutdown();
+        }
+
+        /// <summary>
         /// さよなら。
         /// </summary>
         public static void Uninitialize()
         {
-            foreach(var browser in CreatedGeckoBrowsers) {
-                browser.Disposed -= Browser_Disposed;
-                browser.Dispose();
-            }
-            Xpcom.Shutdown();
+            UninitializeGecko();
         }
 
         public static GeckoWebBrowser CreateBrowser()
@@ -80,18 +94,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 browser = new GeckoWebBrowser() {
                     Dock = System.Windows.Forms.DockStyle.Fill,
                 };
-                browser.Disposed += Browser_Disposed;
+                browser.Disposed += GeckoBrowser_Disposed;
                 CreatedGeckoBrowsers.Add(browser);
             });
 
             return browser;
         }
 
-        private static void Browser_Disposed(object sender, EventArgs e)
+        private static void GeckoBrowser_Disposed(object sender, EventArgs e)
         {
             var browser = (GeckoWebBrowser)sender;
 
-            browser.Disposed -= Browser_Disposed;
+            browser.Disposed -= GeckoBrowser_Disposed;
             CreatedGeckoBrowsers.Remove(browser);
         }
 

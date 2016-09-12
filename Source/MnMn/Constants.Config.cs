@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriUpdate => ReplaceAppConfig(appConfig.Get("app-uri-update"));
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
-        public static string AppUriIssueResolved => ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved"));
+        public static Uri AppUriIssueResolved => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved")));
 
         public static string BrowserLibraryDirectoryName => appConfig.Get("browser-lib-dir-name");
         public static string BrowserProfileDirectoryName => appConfig.Get("browser-profile-dir-name");

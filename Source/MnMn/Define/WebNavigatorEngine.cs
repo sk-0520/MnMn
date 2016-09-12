@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     /// <summary>
     /// <see cref="View.Controls.WebNavigator"/>で使用するブラウザ。
     /// </summary>
-    public enum CustomBrowserMode
+    public enum WebNavigatorEngine
     {
         /// <summary>
         /// 通常のやつ。

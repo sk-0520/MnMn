@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
                     UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                        UpdateBrowser.NavigateToString(htmlSource);
+                        UpdateBrowser.LoadHtml(htmlSource);
                     }));
                 });
             }
@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                         {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },
                     };
                 var htmlSource = AppUtility.ReplaceString(rawHtmlSource, map);
-                UpdateBrowser.NavigateToString(htmlSource);
+                UpdateBrowser.LoadHtml(htmlSource);
             })).Task;
         }
 

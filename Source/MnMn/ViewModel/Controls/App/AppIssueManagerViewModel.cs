@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void InitializeView(MainWindow view)
         {
             IssueBrowser = view.information.issueBrowser;
-            IssueBrowser.HomeSource = new Uri(Constants.AppUriIssueResolved);
+            IssueBrowser.HomeSource = Constants.AppUriIssueResolved;
         }
 
         public override void UninitializeView(MainWindow view)

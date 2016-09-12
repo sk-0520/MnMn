@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void InitializeBrowser()
         {
-            CustomWebNavigator.Initialize();
+            WebNavigatorConfiguration.Initialize();
         }
 
         #endregion
@@ -226,7 +226,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-            CustomWebNavigator.Uninitialize();
+            WebNavigatorConfiguration.Uninitialize();
 
             AppManager.UninitializeView(View);
 

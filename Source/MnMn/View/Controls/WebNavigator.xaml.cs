@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,6 +29,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class WebNavigator: UserControl
     {
+        WebBrowser browser = null;
+
         public WebNavigator()
         {
             InitializeComponent();
@@ -188,7 +191,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     o => {
                         Uri inputUri;
                         if(Uri.TryCreate(location.Text, UriKind.Absolute, out inputUri)) {
-                            Navigate(location.Text);
+                            Navigate(inputUri);
                         }
                     },
                     o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
@@ -200,180 +203,141 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region function
 
-        #region wrapper
-
-        //
-        // 概要:
-        //     指定された URL にあるドキュメントに非同期に移動します。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の URL。
-        public void Navigate(string source)
+        void NavigateDefault(Uri uri)
         {
-            this.browser.Navigate(source);
-            Gecko.Navigate(source);
-        }
-        //
-        // 概要:
-        //     指定された System.Uri にあるドキュメントに非同期に移動します。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の System.Uri。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        //
-        //   T:System.Security.SecurityException:
-        //     Navigation from an application that is running in partial trust to a System.Uri
-        //     that is not located at the site of origin.
-        public void Navigate(Uri source)
-        {
-            this.browser.Navigate(source);
-            Gecko.Navigate(source.OriginalString);
+            this.browser.Navigate(uri);
         }
 
-        //
-        // 概要:
-        //     指定された URL にあるドキュメントに非同期に移動し、ドキュメントのコンテンツを読み込むターゲット フレームを指定します。追加の HTTP POST データおよび
-        //     HTTP ヘッダーを、ナビゲーション要求の一部としてサーバーに送信できます。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の URL。
-        //
-        //   targetFrameName:
-        //     ドキュメントのコンテンツを表示するフレームの名前。
-        //
-        //   postData:
-        //     ソースが要求されたときにサーバーに送信する HTTP POST データ。
-        //
-        //   additionalHeaders:
-        //     ソースが要求されたときにサーバーに送信する HTTP ヘッダー。
-        [Obsolete]
-        public void Navigate(string source, string targetFrameName, byte[] postData, string additionalHeaders)
+        void NavigateGecko(Uri uri)
         {
-            this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
+            Gecko.Navigate(uri.OriginalString);
         }
 
-        //
-        // 概要:
-        //     指定された System.Uri にあるドキュメントに非同期に移動し、ドキュメントのコンテンツを読み込むターゲット フレームを指定します。追加の HTTP
-        //     POST データおよび HTTP ヘッダーを、ナビゲーション要求の一部としてサーバーに送信できます。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の System.Uri。
-        //
-        //   targetFrameName:
-        //     ドキュメントのコンテンツを表示するフレームの名前。
-        //
-        //   postData:
-        //     ソースが要求されたときにサーバーに送信する HTTP POST データ。
-        //
-        //   additionalHeaders:
-        //     ソースが要求されたときにサーバーに送信する HTTP ヘッダー。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        //
-        //   T:System.Security.SecurityException:
-        //     Navigation from an application that is running in partial trust:To a System.Uri
-        //     that is not located at the site of origin, or targetFrameName name is not null
-        //     or empty.
-        [Obsolete]
-        public void Navigate(Uri source, string targetFrameName, byte[] postData, string additionalHeaders)
+        /// <summary>
+        /// 指定 URI に移動。
+        /// </summary>
+        /// <param name="uri"></param>
+        public void Navigate(Uri uri)
         {
-            this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
+            switch(WebNavigatorConfiguration.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    NavigateDefault(uri);
+                    break;
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    NavigateGecko(uri);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
-        //
-        // 概要:
-        //     ドキュメントのコンテンツを含む System.IO.Stream へ非同期に移動します。
-        //
-        // パラメーター:
-        //   stream:
-        //     ドキュメントのコンテンツを含む System.IO.Stream。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        [Obsolete]
-        public void NavigateToStream(Stream stream)
+        void LoadHtmlDefault(string htmlSource)
         {
-            this.browser.NavigateToStream(stream);
+            this.browser.NavigateToString(htmlSource);
         }
-        //
-        // 概要:
-        //     ドキュメントのコンテンツを含む System.String へ非同期に移動します。
-        //
-        // パラメーター:
-        //   text:
-        //     ドキュメントのコンテンツを含む System.String。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        public void NavigateToString(string text)
+
+        void LoadHtmlGecko(string htmlSource)
         {
-            this.browser.NavigateToString(text);
-            Gecko.LoadHtml(text);
+            Gecko.LoadHtml(htmlSource);
         }
-        //
-        // 概要:
-        //     現在のページを再読み込みします。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
+
+        /// <summary>
+        /// HTMLを直接読み込み。
+        /// </summary>
+        /// <param name="htmlSource"></param>
+        public void LoadHtml(string htmlSource)
+        {
+            switch(WebNavigatorConfiguration.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    LoadHtmlDefault(htmlSource);
+                    break;
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    LoadHtmlGecko(htmlSource);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         [SecurityCritical]
-        public void Refresh()
-        {
-            this.browser.Refresh();
-        }
-        //
-        // 概要:
-        //     オプションのキャッシュ検証を使用して現在のページを再読み込みします。
-        //
-        // パラメーター:
-        //   noCache:
-        //     キャッシュ検証を行わずに最新の情報に更新するかどうかを指定します。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        [SecurityCritical]
-        public void Refresh(bool noCache)
+        void RefreshDefault(bool noCache)
         {
             this.browser.Refresh(noCache);
         }
 
-        #endregion
+        void RefreshGecko(bool noCache)
+        {
+            if(noCache) {
+                Gecko.Reload(GeckoLoadFlags.IsRefresh);
+            } else {
+                Gecko.Reload(GeckoLoadFlags.BypassCache);
+            }
+        }
+
+        [SecurityCritical]
+        public void Refresh(bool noCache = false)
+        {
+            switch(WebNavigatorConfiguration.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    RefreshDefault(noCache);
+                    break;
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    RefreshGecko(noCache);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        void InitializedDefault()
+        {
+            this.browser = new WebBrowser();
+
+            this.browser.Loaded += browser_Loaded;
+            this.browser.Navigating += browser_Navigating;
+            this.browser.Navigated += browser_Navigated;
+
+            this.container.Content = this.browser;
+        }
+
+        void InitializedGecko()
+        {
+            Gecko = WebNavigatorConfiguration.CreateBrowser();
+            Gecko.CreateControl();
+
+            var host = new WindowsFormsHost();
+            host.Child = Gecko;
+
+            this.container.Content = host;
+        }
 
         #endregion
 
         #region UserControl
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            switch(WebNavigatorConfiguration.Engine) {
+                case Define.WebNavigatorEngine.Default:
+                    InitializedDefault();
+                    break;
+
+                case Define.WebNavigatorEngine.GeckoFx:
+                    InitializedGecko();
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            base.OnInitialized(e);
+        }
 
         #endregion
 
@@ -403,16 +367,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void UserControl_Initialized(object sender, EventArgs e)
-        {
-            Gecko = CustomWebNavigator.CreateBrowser();
-            Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
-            Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
-            Gecko.CreateControl();
-            Debug.WriteLine($"Gecko.Created: {Gecko.Created}");
-            Debug.WriteLine($"Gecko.IsHandleCreated: {Gecko.IsHandleCreated}");
-
-            browserHost.Child = Gecko;
-        }
     }
 }
