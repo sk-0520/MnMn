@@ -255,6 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         //
         //   additionalHeaders:
         //     ソースが要求されたときにサーバーに送信する HTTP ヘッダー。
+        [Obsolete]
         public void Navigate(string source, string targetFrameName, byte[] postData, string additionalHeaders)
         {
             this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
@@ -289,6 +290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         //     Navigation from an application that is running in partial trust:To a System.Uri
         //     that is not located at the site of origin, or targetFrameName name is not null
         //     or empty.
+        [Obsolete]
         public void Navigate(Uri source, string targetFrameName, byte[] postData, string additionalHeaders)
         {
             this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
@@ -308,6 +310,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         //
         //   T:System.InvalidOperationException:
         //     A reference to the underlying native WebBrowser could not be retrieved.
+        [Obsolete]
         public void NavigateToStream(Stream stream)
         {
             this.browser.NavigateToStream(stream);
