@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand ChangePlayerSizeCommand
+        public ICommand ChangePlayerSizeFromPercentCommand
         {
             get
             {
@@ -353,7 +353,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         var percent = int.Parse((string)o);
                         ChangePlayerSizeFromPercent(percent);
-                    }
+                    },
+                    o => !WaitingFirstPlay.Value
                 );
             }
         }
@@ -501,6 +502,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
+            Debug.Assert(!WaitingFirstPlay.Value, "到達不可のはず");
 
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,

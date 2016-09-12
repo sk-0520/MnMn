@@ -356,11 +356,11 @@
 
       <Menu Style="{StaticResource DummyMenu}">
         <MenuItem Header="プレイヤーサイズ">
-          <MenuItem Header="50%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="50"  />
-          <MenuItem Header="75%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="75"  />
-          <MenuItem Header="100%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="100"  />
-          <MenuItem Header="150%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="150"  />
-          <MenuItem Header="200%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="200" />
+          <MenuItem Header="50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
+          <MenuItem Header="75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
+          <MenuItem Header="100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
+          <MenuItem Header="150%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="150"  />
+          <MenuItem Header="200%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="200" />
         </MenuItem>
       </Menu>
 
