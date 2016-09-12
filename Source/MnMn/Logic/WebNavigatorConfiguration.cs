@@ -35,8 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.GeckoFx;
 
-        static ISet<GeckoWebBrowser> CreatedGeckoBrowsers
-        { get; } = new HashSet<GeckoWebBrowser>();
+        static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();
 
         #endregion
 
@@ -86,6 +85,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             UninitializeGecko();
         }
 
+        /// <summary>
+        /// GeckFxのブラウザ生成。
+        /// <para><see cref="Engine"/>には影響されない。</para>
+        /// <para>あくまで呼び出し側で<see cref="WebNavigatorEngine.GeckoFx"/>を保証すること</para>
+        /// </summary>
+        /// <returns></returns>
         public static GeckoWebBrowser CreateBrowser()
         {
             GeckoWebBrowser browser = null;

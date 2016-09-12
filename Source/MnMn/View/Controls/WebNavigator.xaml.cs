@@ -29,8 +29,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class WebNavigator: UserControl
     {
-        WebBrowser browser = null;
-
         public WebNavigator()
         {
             InitializeComponent();
@@ -138,7 +136,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region property
 
-        GeckoWebBrowser GeckoBrowser { get; set; }
+        WebBrowser BrowserDefault { get; set; }
+        GeckoWebBrowser BrowserGeckoFx { get; set; }
 
         public Uri Source
         {
@@ -146,10 +145,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             {
                 switch(WebNavigatorConfiguration.Engine) {
                     case Define.WebNavigatorEngine.Default:
-                        return browser.Source;
+                        return BrowserDefault.Source;
 
                     case Define.WebNavigatorEngine.GeckoFx:
-                        return GeckoBrowser.Url;
+                        return BrowserGeckoFx.Url;
 
                     default:
                         throw new NotImplementedException();
@@ -173,10 +172,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             {
                 switch(WebNavigatorConfiguration.Engine) {
                     case Define.WebNavigatorEngine.Default:
-                        return browser.CanGoBack;
+                        return BrowserDefault.CanGoBack;
 
                     case Define.WebNavigatorEngine.GeckoFx:
-                        return GeckoBrowser.CanGoBack;
+                        return BrowserGeckoFx.CanGoBack;
 
                     default:
                         throw new NotImplementedException();
@@ -193,10 +192,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             {
                 switch(WebNavigatorConfiguration.Engine) {
                     case Define.WebNavigatorEngine.Default:
-                        return browser.CanGoForward;
+                        return BrowserDefault.CanGoForward;
 
                     case Define.WebNavigatorEngine.GeckoFx:
-                        return GeckoBrowser.CanGoForward;
+                        return BrowserGeckoFx.CanGoForward;
 
                     default:
                         throw new NotImplementedException();
@@ -261,14 +260,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region function
 
-        void GoBackGecko()
-        {
-            browser.GoBack();
-        }
-
         void GoBackDefault()
         {
-            GeckoBrowser.GoBack();
+            BrowserGeckoFx.GoBack();
+        }
+
+        void GoBackGeckoFx()
+        {
+            BrowserDefault.GoBack();
         }
 
         /// <summary>
@@ -282,7 +281,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     break;
 
                 case Define.WebNavigatorEngine.GeckoFx:
-                    GoBackGecko();
+                    GoBackGeckoFx();
                     break;
 
                 default:
@@ -290,14 +289,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-        void GoForwardGecko()
-        {
-            browser.GoForward();
-        }
-
         void GoForwardDefault()
         {
-            GeckoBrowser.GoForward();
+            BrowserGeckoFx.GoForward();
+        }
+
+        void GoForwardGeckoFx()
+        {
+            BrowserDefault.GoForward();
         }
 
         /// <summary>
@@ -311,7 +310,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     break;
 
                 case Define.WebNavigatorEngine.GeckoFx:
-                    GoForwardGecko();
+                    GoForwardGeckoFx();
                     break;
 
                 default:
@@ -321,12 +320,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void NavigateDefault(Uri uri)
         {
-            browser.Navigate(uri);
+            BrowserDefault.Navigate(uri);
         }
 
-        void NavigateGecko(Uri uri)
+        void NavigateGeckoFx(Uri uri)
         {
-            GeckoBrowser.Navigate(uri.OriginalString);
+            BrowserGeckoFx.Navigate(uri.OriginalString);
         }
 
         /// <summary>
@@ -341,7 +340,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     break;
 
                 case Define.WebNavigatorEngine.GeckoFx:
-                    NavigateGecko(uri);
+                    NavigateGeckoFx(uri);
                     break;
 
                 default:
@@ -352,12 +351,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void LoadHtmlDefault(string htmlSource)
         {
-            browser.NavigateToString(htmlSource);
+            BrowserDefault.NavigateToString(htmlSource);
         }
 
-        void LoadHtmlGecko(string htmlSource)
+        void LoadHtmlGeckoFx(string htmlSource)
         {
-            GeckoBrowser.LoadHtml(htmlSource);
+            BrowserGeckoFx.LoadHtml(htmlSource);
         }
 
         /// <summary>
@@ -372,7 +371,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     break;
 
                 case Define.WebNavigatorEngine.GeckoFx:
-                    LoadHtmlGecko(htmlSource);
+                    LoadHtmlGeckoFx(htmlSource);
                     break;
 
                 default:
@@ -384,15 +383,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         [SecurityCritical]
         void RefreshDefault(bool noCache)
         {
-            browser.Refresh(noCache);
+            BrowserDefault.Refresh(noCache);
         }
 
-        void RefreshGecko(bool noCache)
+        void RefreshGeckoFx(bool noCache)
         {
             if(noCache) {
-                GeckoBrowser.Reload(GeckoLoadFlags.IsRefresh);
+                BrowserGeckoFx.Reload(GeckoLoadFlags.IsRefresh);
             } else {
-                GeckoBrowser.Reload(GeckoLoadFlags.BypassCache);
+                BrowserGeckoFx.Reload(GeckoLoadFlags.BypassCache);
             }
         }
 
@@ -405,7 +404,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     break;
 
                 case Define.WebNavigatorEngine.GeckoFx:
-                    RefreshGecko(noCache);
+                    RefreshGeckoFx(noCache);
                     break;
 
                 default:
@@ -415,23 +414,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedDefault()
         {
-            browser = new WebBrowser();
+            BrowserDefault = new WebBrowser();
 
-            browser.Loaded += browser_Loaded;
-            browser.Navigating += browser_Navigating;
-            browser.Navigated += browser_Navigated;
+            BrowserDefault.Loaded += browser_Loaded;
+            BrowserDefault.Navigating += browser_Navigating;
+            BrowserDefault.Navigated += browser_Navigated;
 
-            this.container.Content = browser;
+            this.container.Content = BrowserDefault;
         }
 
-        void InitializedGecko()
+        void InitializedGeckoFx()
         {
-            GeckoBrowser = WebNavigatorConfiguration.CreateBrowser();
-            GeckoBrowser.CreateControl();
+            BrowserGeckoFx = WebNavigatorConfiguration.CreateBrowser();
+            BrowserGeckoFx.CreateControl();
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
-                host.Child = GeckoBrowser;
+                host.Child = BrowserGeckoFx;
             }
 
             this.container.Content = host;
@@ -451,7 +450,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     break;
 
                 case Define.WebNavigatorEngine.GeckoFx:
-                    InitializedGecko();
+                    InitializedGeckoFx();
                     break;
 
                 default:
@@ -465,16 +464,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void browser_Loaded(object sender, RoutedEventArgs e)
         {
             // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
-            dynamic activeX = browser.GetType().InvokeMember(
+            dynamic activeX = BrowserDefault.GetType().InvokeMember(
                 "ActiveXInstance",
                 BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                browser,
+                BrowserDefault,
                 new object[] { }
             );
             if(activeX != null) {
                 activeX.Silent = true;
-                browser.Loaded -= browser_Loaded;
+                BrowserDefault.Loaded -= browser_Loaded;
             }
         }
 
