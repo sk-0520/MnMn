@@ -44,11 +44,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static void InitializeGecko()
         {
+            //if(Environment.GetEnvironmentVariable("MOZ_PLUGIN_PATH") == null) {
+            var pluginDirPath = Path.Combine(Constants.LibraryDirectoryPath, "plugins");
+            //Environment.SetEnvironmentVariable("MOZ_PLUGIN_PATH", pluginDirPath);
+            //}
+
             var settingDirectory = VariableConstants.GetSettingDirectory();
             var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.BrowserProfileDirectoryName);
             var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
             Xpcom.ProfileDirectory = profileDirectory.FullName;
             Xpcom.Initialize(Constants.BrowserLibraryDirectoryPath);
+
+            GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
+            GeckoPreferences.Default["plugin.scan.plid.all"] = false;
 
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.BrowserPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
@@ -57,8 +65,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 // http://pieceofnostalgy.blogspot.jp/2013/10/wpf-geckofx.html
                 GeckoPreferences.User["browser.cache.disk.enable"] = false;
                 GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
+                //GeckoPreferences.Default["plugins.load_appdir_plugins"] = true;
+
                 GeckoPreferences.Save(preferencesFilePath);
             }
+
         }
 
         /// <summary>
