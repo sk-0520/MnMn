@@ -400,12 +400,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void browserHost_Loaded(object sender, RoutedEventArgs e)
-        {
-            Dispatcher.BeginInvoke(new Action(() => {
-            }));
-        }
-
         private void UserControl_Initialized(object sender, EventArgs e)
         {
             Gecko = CustomBrowser.CreateBrowser();

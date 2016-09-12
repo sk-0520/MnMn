@@ -86,7 +86,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             if(HelpBrowser.Source == null) {
                 var helpUri = new Uri(Constants.HelpFilePath);
                 HelpBrowser.HomeSource = helpUri;
-                HelpBrowser.Source = helpUri;
+                //HelpBrowser.Source = helpUri;
+                HelpBrowser.Navigate(helpUri);
             }
         }
 
