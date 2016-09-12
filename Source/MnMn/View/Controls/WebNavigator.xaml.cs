@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region property
 
-        public GeckoWebBrowser Gecko { get; private set; }
+        GeckoWebBrowser GeckoBrowser { get; set; }
 
         public Uri Source
         {
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         return browser.Source;
 
                     case Define.WebNavigatorEngine.GeckoFx:
-                        return Gecko.Url;
+                        return GeckoBrowser.Url;
 
                     default:
                         throw new NotImplementedException();
@@ -157,6 +157,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
             //set { browser.Source = value; }
         }
+
+        /// <summary>
+        /// 何も読み込まれていない状態か。
+        /// <para>初期化した後とか</para>
+        /// </summary>
+        public bool IsEmptyContent { get; private set; }
 
         /// <summary>
         /// 「戻る」は使用可能か。
@@ -170,7 +176,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         return browser.CanGoBack;
 
                     case Define.WebNavigatorEngine.GeckoFx:
-                        return Gecko.CanGoBack;
+                        return GeckoBrowser.CanGoBack;
 
                     default:
                         throw new NotImplementedException();
@@ -190,7 +196,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         return browser.CanGoForward;
 
                     case Define.WebNavigatorEngine.GeckoFx:
-                        return Gecko.CanGoForward;
+                        return GeckoBrowser.CanGoForward;
 
                     default:
                         throw new NotImplementedException();
@@ -262,7 +268,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void GoBackDefault()
         {
-            Gecko.GoBack();
+            GeckoBrowser.GoBack();
         }
 
         /// <summary>
@@ -291,7 +297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void GoForwardDefault()
         {
-            Gecko.GoForward();
+            GeckoBrowser.GoForward();
         }
 
         /// <summary>
@@ -320,7 +326,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void NavigateGecko(Uri uri)
         {
-            Gecko.Navigate(uri.OriginalString);
+            GeckoBrowser.Navigate(uri.OriginalString);
         }
 
         /// <summary>
@@ -341,6 +347,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 default:
                     throw new NotImplementedException();
             }
+            IsEmptyContent = false;
         }
 
         void LoadHtmlDefault(string htmlSource)
@@ -350,7 +357,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void LoadHtmlGecko(string htmlSource)
         {
-            Gecko.LoadHtml(htmlSource);
+            GeckoBrowser.LoadHtml(htmlSource);
         }
 
         /// <summary>
@@ -371,6 +378,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 default:
                     throw new NotImplementedException();
             }
+            IsEmptyContent = false;
         }
 
         [SecurityCritical]
@@ -382,9 +390,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         void RefreshGecko(bool noCache)
         {
             if(noCache) {
-                Gecko.Reload(GeckoLoadFlags.IsRefresh);
+                GeckoBrowser.Reload(GeckoLoadFlags.IsRefresh);
             } else {
-                Gecko.Reload(GeckoLoadFlags.BypassCache);
+                GeckoBrowser.Reload(GeckoLoadFlags.BypassCache);
             }
         }
 
@@ -418,12 +426,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedGecko()
         {
-            Gecko = WebNavigatorConfiguration.CreateBrowser();
-            Gecko.CreateControl();
+            GeckoBrowser = WebNavigatorConfiguration.CreateBrowser();
+            GeckoBrowser.CreateControl();
 
-            var host = new WindowsFormsHost() {
-                Child = Gecko,
-            };
+            var host = new WindowsFormsHost();
+            using(Initializer.BeginInitialize(host)) {
+                host.Child = GeckoBrowser;
+            }
 
             this.container.Content = host;
         }
@@ -448,6 +457,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 default:
                     throw new NotImplementedException();
             }
+            IsEmptyContent = true;
         }
 
         #endregion

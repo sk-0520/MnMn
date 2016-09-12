@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            if(UpdateBrowser.Source == null) {
+            if(UpdateBrowser.IsEmptyContent) {
                 LoadChangelogAsync().ContinueWith(_ => {
                     if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
                         SetUpdateStateViewAsync().ConfigureAwait(false);
