@@ -59,12 +59,13 @@
               <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}">自分が何をしようとしているか理解している</CheckBox>
               <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}">プラグインディレクトリを開発用に構築する</Button>
 
-              <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="4" >
+              <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8" >
                 <TextBlock FontWeight="Bold">開発者が開発用に使う機能です！！</TextBlock>
-                <TextBlock>処理の成否に関係なく再起動します</TextBlock>
-                <TextBlock>既存のプラグインは全て破棄されます</TextBlock>
+                <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
+                <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
+                <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
                 <TextBlock>
-                  プラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
+                  構築するプラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
                   動作しない場合に問い合わせをいただいても何もできません。
                 </TextBlock>
               </StackPanel>
@@ -74,6 +75,31 @@
       </GroupBox>
     </StackPanel>
     <!-- タブ移動出来るけど今はいいや -->
-    <Rectangle Fill="#88ffffff" Visibility="{Binding RebuildingWebNavigatorGeckoFxPlugin.Value, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <Border Background="#88ffffff">
+      <Border.Style>
+        <Style TargetType="Border">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding RebuildingWebNavigatorGeckoFxPlugin.Value}">
+              <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+      </Border.Style>
+      <Border Background="#aaffff88" Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border.Effect>
+          <DropShadowEffect
+            ShadowDepth="0"
+            Color="Yellow"
+            Opacity="0.8"
+            BlurRadius="20"
+          />
+        </Border.Effect>
+        <TextBlock FontWeight="Bold" FontSize="18" VerticalAlignment="Center" TextAlignment="Center">
+          プラグインディレクトリ構築中<LineBreak />
+          排他制御してないので安静にすること
+        </TextBlock>
+      </Border>
+    </Border>
   </Grid>
 </UserControl>
