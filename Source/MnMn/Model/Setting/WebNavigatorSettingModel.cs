@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// プラグインをシステムから読み込むか。
         /// </summary>
         [DataMember]
-        public bool ScanPlugin { get; set; } = Constants.SettingApplicationWebNavigatorGeckoFxScanPlugin;
+        public bool GeckoFxScanPlugin { get; set; } = Constants.SettingApplicationWebNavigatorGeckoFxScanPlugin;
 
         #endregion
     }

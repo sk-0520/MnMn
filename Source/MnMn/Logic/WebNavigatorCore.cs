@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Xpcom.Initialize(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
 
             GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
-            GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.ScanPlugin;
+            GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.GeckoFxScanPlugin;
 
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {

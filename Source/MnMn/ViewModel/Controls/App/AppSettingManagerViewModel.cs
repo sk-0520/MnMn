@@ -53,6 +53,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             set { SetPropertyValue(AppSetting, value); }
         }
 
+        public bool WebNavigatorGeckoFxScanPlugin
+        {
+            get { return AppSetting.WebNavigator.GeckoFxScanPlugin; }
+            set { SetPropertyValue(AppSetting.WebNavigator, value, nameof(AppSetting.WebNavigator.GeckoFxScanPlugin)); }
+        }
+
         #endregion
 
         #region command

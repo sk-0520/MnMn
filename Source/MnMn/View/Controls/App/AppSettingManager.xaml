@@ -1,39 +1,51 @@
 ﻿<!--
   呼び出し元から DataContext を設定して使用。
 -->
-<UserControl 
+<UserControl
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.App.AppSettingManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  
+
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="300"
 >
-  <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-    <GroupBox Header="cache">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+  <Grid>
+    <StackPanel>
+      <GroupBox Header="cache">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0">path</Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CacheDirectoryPath}"/>
-        <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectCacheDirectoryCommand}">directory</Button>
-        <Button Grid.Row="0" Grid.Column="3" Command="{Binding SetDefaultCacheDirectoryCommand}" >default</Button>
+          <Label Grid.Row="0" Grid.Column="0">path</Label>
+          <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CacheDirectoryPath}"/>
+          <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectCacheDirectoryCommand}">directory</Button>
+          <Button Grid.Row="0" Grid.Column="3" Command="{Binding SetDefaultCacheDirectoryCommand}" >default</Button>
 
-        <Label Grid.Row="1" Grid.Column="0">time</Label>
-        <xctk:TimeSpanUpDown Grid.Row="1" Grid.Column="1" Value="{Binding CacheLifeTime}" />
-      </Grid>
-    </GroupBox>
+          <Label Grid.Row="1" Grid.Column="0">time</Label>
+          <xctk:TimeSpanUpDown Grid.Row="1" Grid.Column="1" Value="{Binding CacheLifeTime}" />
+        </Grid>
+      </GroupBox>
+      <GroupBox Header="browser">
+        <StackPanel>
+          <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[Gecko, about:config] plugin.scan.plid.all (要再起動)</CheckBox>
+          <Separator />
+          <StackPanel Orientation="Horizontal">
+            <Button>プラグインディレクトリを開発用に構築する</Button>
+            <TextBlock FontWeight="Bold">開発用にね！(要Gecko破棄と再起動)</TextBlock>
+          </StackPanel>
+        </StackPanel>
+      </GroupBox>
+    </StackPanel>
   </Grid>
 </UserControl>
