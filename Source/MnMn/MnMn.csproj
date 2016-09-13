@@ -261,6 +261,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
+    <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
@@ -1071,6 +1072,7 @@
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />

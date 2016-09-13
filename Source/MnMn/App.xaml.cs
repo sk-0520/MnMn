@@ -108,11 +108,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return true;
         }
 
-        void InitializeBrowser()
-        {
-            WebNavigatorCore.Initialize();
-        }
-
         #endregion
 
         #region Application
@@ -180,8 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             SplashWindow.Show();
 
-            // gecko設定
-            InitializeBrowser();
+            WebNavigatorCore.Initialize(Mediation);
 
             await AppManager.InitializeAsync();
             View = new MainWindow() {

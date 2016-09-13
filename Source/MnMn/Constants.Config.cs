@@ -92,6 +92,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan SettingApplicationCacheLifeTime => appConfig.Get("setting-application-cache-life-time", TimeSpan.Parse);
 
         /// <summary>
+        /// about:config
+        ///<para>plugin.scan.plid.all</para>
+        /// </summary>
+        public static bool SettingApplicationWebNavigatorGeckoFxScanPlugin => appConfig.Get("setting-application-web_navigator-geckofx-scan-plugin", bool.Parse);
+
+        /// <summary>
         /// ウィンドウ: 左
         /// </summary>
         public static int SettingApplicationWindowLeft => appConfig.Get("setting-application-window-top", int.Parse);

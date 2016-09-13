@@ -22,6 +22,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -32,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public static class WebNavigatorCore
     {
         #region property
+
+        static Mediation Mediation { get; set; }
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
         public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.GeckoFx;
@@ -44,10 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static void InitializeGecko()
         {
-            //if(Environment.GetEnvironmentVariable("MOZ_PLUGIN_PATH") == null) {
-            var pluginDirPath = Path.Combine(Constants.LibraryDirectoryPath, "plugins");
-            //Environment.SetEnvironmentVariable("MOZ_PLUGIN_PATH", pluginDirPath);
-            //}
+            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
             var settingDirectory = VariableConstants.GetSettingDirectory();
             var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.BrowserProfileDirectoryName);
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Xpcom.Initialize(Constants.BrowserLibraryDirectoryPath);
 
             GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
-            GeckoPreferences.Default["plugin.scan.plid.all"] = false;
+            GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.ScanPlugin;
 
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.BrowserPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
@@ -75,8 +76,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// 初期化。
         /// </summary>
-        public static void Initialize()
+        public static void Initialize(Mediation mediation)
         {
+            Mediation = mediation;
+
             InitializeGecko();
         }
 
