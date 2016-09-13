@@ -12,6 +12,9 @@
   mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="500"
 >
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+  </UserControl.Resources>
   <Grid>
     <StackPanel>
       <GroupBox Header="cache">
@@ -70,5 +73,7 @@
         </GroupBox>
       </GroupBox>
     </StackPanel>
+    <!-- タブ移動出来るけど今はいいや -->
+    <Rectangle Fill="#88ffffff" Visibility="{Binding RebuildingWebNavigatorGeckoFxPlugin.Value, Converter={StaticResource BooleanToVisibilityConverter}}" />
   </Grid>
 </UserControl>

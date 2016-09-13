@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         AppSettingModel AppSetting { get; }
 
         public FewViewModel<bool> WebNavigatorGeckoFxOwnResponsibility { get; } = new FewViewModel<bool>(false);
+        public FewViewModel<bool> RebuildingWebNavigatorGeckoFxPlugin { get; } = new FewViewModel<bool>(false);
 
         public string CacheDirectoryPath
         {
@@ -162,6 +163,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task RebuildWebNavigatorGeckoFxPluginAsync()
         {
+            RebuildingWebNavigatorGeckoFxPlugin.Value = true;
+
             Mediation.Order(new AppSaveOrderModel(true));
 
             WebNavigatorCore.Uninitialize();
