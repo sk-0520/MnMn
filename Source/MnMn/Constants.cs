@@ -218,7 +218,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string LibraryDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "lib");
 
-        public static string BrowserLibraryDirectoryPath { get; } = Path.Combine(LibraryDirectoryPath, BrowserLibraryDirectoryName);
+        public static string WebNavigatorGeckoFxLibraryDirectoryPath { get; } = Path.Combine(LibraryDirectoryPath, WebNavigatorGeckoFxLibraryDirectoryName);
+        public static string WebNavigatorGeckoFxPluginsDirectoryPath { get; } = Path.Combine(WebNavigatorGeckoFxLibraryDirectoryPath, WebNavigatorGeckoFxPluginsDirectoryName);
 
         /// <summary>
         /// 外部ライブラリファイルパス。

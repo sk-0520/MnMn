@@ -51,15 +51,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
             var settingDirectory = VariableConstants.GetSettingDirectory();
-            var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.BrowserProfileDirectoryName);
+            var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.WebNavigatorGeckoFxProfileDirectoryName);
             var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
             Xpcom.ProfileDirectory = profileDirectory.FullName;
-            Xpcom.Initialize(Constants.BrowserLibraryDirectoryPath);
+            Xpcom.Initialize(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
 
             GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
             GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.ScanPlugin;
 
-            var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.BrowserPreferencesFileName);
+            var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
                 GeckoPreferences.Load(preferencesFilePath);
             } else {
