@@ -42,7 +42,7 @@
           <Separator />
           <StackPanel Orientation="Horizontal">
             <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}">プラグインディレクトリを開発用に構築する</Button>
-            <TextBlock FontWeight="Bold">開発用にね！(要Gecko破棄と再起動)</TextBlock>
+            <TextBlock FontWeight="Bold">開発用にね！(処理の成否に関係なく再起動します)</TextBlock>
           </StackPanel>
         </StackPanel>
       </GroupBox>

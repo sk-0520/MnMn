@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -133,9 +134,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return new FileInfo(filePath);
         }
 
+        DirectoryInfo ClearPluginDirectory()
+        {
+            var dir = new DirectoryInfo(Constants.WebNavigatorGeckoFxPluginsDirectoryPath);
+            if(dir.Exists) {
+                dir.Delete(true);
+            }
+            dir.Create();
+            return dir;
+        }
+
+        void ExpandPlugin(FileInfo archiveFile, DirectoryInfo pluginDirectory)
+        {
+            ZipFile.ExtractToDirectory(archiveFile.FullName, pluginDirectory.FullName);
+        }
+
         async Task RebuildWebNavigatorGeckoFxPluginAsync()
         {
-            var archiveFile = await DownloadWebNavigatorGeckoFxPluginAsync();
+            WebNavigatorCore.Uninitialize();
+
+            try {
+                var archiveFile = await DownloadWebNavigatorGeckoFxPluginAsync();
+                var pluginDir = ClearPluginDirectory();
+                ExpandPlugin(archiveFile, pluginDir);
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
+            }
         }
 
         #endregion

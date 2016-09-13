@@ -42,6 +42,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();
 
+        static bool IsInitialized { get; set; } = false;
+        static bool IsUninitialized { get; set; } = false;
+
         #endregion
 
         #region function
@@ -78,18 +81,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public static void Initialize(Mediation mediation)
         {
+            if(IsInitialized) {
+                return;
+            }
+
             Mediation = mediation;
 
             InitializeGecko();
+
+            IsInitialized = true;
+            IsUninitialized = false;
         }
 
         static void UninitializeGecko()
         {
+            if(IsUninitialized) {
+                return;
+            }
+
             foreach(var browser in CreatedGeckoBrowsers) {
                 browser.Disposed -= GeckoBrowser_Disposed;
                 browser.Dispose();
             }
             Xpcom.Shutdown();
+
+            IsUninitialized = true;
+            IsInitialized = false;
         }
 
         /// <summary>
