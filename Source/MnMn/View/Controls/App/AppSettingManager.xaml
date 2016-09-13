@@ -41,7 +41,7 @@
           <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[Gecko, about:config] plugin.scan.plid.all (要再起動)</CheckBox>
           <Separator />
           <StackPanel Orientation="Horizontal">
-            <Button>プラグインディレクトリを開発用に構築する</Button>
+            <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}">プラグインディレクトリを開発用に構築する</Button>
             <TextBlock FontWeight="Bold">開発用にね！(要Gecko破棄と再起動)</TextBlock>
           </StackPanel>
         </StackPanel>

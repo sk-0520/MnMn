@@ -239,6 +239,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ArchiveSearchPattern { get; } = "*.zip";
 
+        public static string ArchiveWebNavigatorGeckFxPluginSearchPattern { get; } = "*.zip";
+
         /// <summary>
         /// 設定ディレクトリ名。
         /// </summary>
@@ -251,6 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// アーカイブディレクトリ名。
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
+        public static string ArchiveWebNavigatorGeckFxPluginDirectoryName { get; } = "archive-plugin";
         /// <summary>
         /// バックアップディレクトリ名。
         /// </summary>

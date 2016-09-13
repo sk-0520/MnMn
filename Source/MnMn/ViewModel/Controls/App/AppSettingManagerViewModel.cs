@@ -16,11 +16,13 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -87,6 +89,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        public ICommand RebuildWebNavigatorGeckoFxPluginCommand
+        {
+            get { return CreateCommand(o => RebuildWebNavigatorGeckoFxPluginAsync().ConfigureAwait(false)); }
+        }
+
         #endregion
 
         #region function
@@ -101,6 +108,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
 
             return initialDirectoryPath;
+        }
+
+        async Task<FileInfo> DownloadWebNavigatorGeckoFxPluginAsync()
+        {
+            var host = new HttpUserAgentHost();
+            var client = host.CreateHttpUserAgent();
+
+            var archiveDir = VariableConstants.GetWebNavigatorGeckFxPluginDirectory();
+
+            FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveWebNavigatorGeckFxPluginSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupWebNavigatorGeckoFxPluginCount, e => {
+                Mediation.Logger.Warning(e);
+                return true;
+            });
+
+            var fileName = PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), "zip");
+            var filePath = Path.Combine(archiveDir.FullName, fileName);
+
+            using(var webStream = await client.GetStreamAsync(Constants.AppUriWebNavigatorGeckoFxPlugins))
+            using(var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                webStream.CopyTo(fileStream);
+            }
+
+            return new FileInfo(filePath);
+        }
+
+        async Task RebuildWebNavigatorGeckoFxPluginAsync()
+        {
+            var archiveFile = await DownloadWebNavigatorGeckoFxPluginAsync();
         }
 
         #endregion

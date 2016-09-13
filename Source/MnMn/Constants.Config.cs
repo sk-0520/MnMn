@@ -83,6 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static int BackupArchiveCount => appConfig.Get("backup-archive-count", int.Parse);
         public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);
+        public static int BackupWebNavigatorGeckoFxPluginCount => appConfig.Get("backup-web_navigator-geckofx-plugin-count", int.Parse);
 
         /// <summary>
         /// プレイヤー部分のカーソルを隠すまでの時間。
