@@ -24,9 +24,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -43,6 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region property
 
         AppSettingModel AppSetting { get; }
+
+        public FewViewModel<bool> WebNavigatorGeckoFxOwnResponsibility { get; } = new FewViewModel<bool>(false);
 
         public string CacheDirectoryPath
         {
@@ -92,7 +97,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public ICommand RebuildWebNavigatorGeckoFxPluginCommand
         {
-            get { return CreateCommand(o => RebuildWebNavigatorGeckoFxPluginAsync().ConfigureAwait(false)); }
+            get
+            {
+                return CreateCommand(
+                    o => RebuildWebNavigatorGeckoFxPluginAsync().ConfigureAwait(false),
+                    o => WebNavigatorGeckoFxOwnResponsibility.Value
+                );
+            }
         }
 
         #endregion
@@ -151,6 +162,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         async Task RebuildWebNavigatorGeckoFxPluginAsync()
         {
+            Mediation.Order(new AppSaveOrderModel(true));
+
             WebNavigatorCore.Uninitialize();
 
             try {
@@ -160,6 +173,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
             }
+
+            Mediation.Order(new OrderModel(OrderKind.Reboot, ServiceType.Application));
         }
 
         #endregion

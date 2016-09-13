@@ -78,6 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static GarbageCollectionLevel BackgroundGarbageCollectionLevel => appConfig.Get("background-garbage-collection-level", s => (GarbageCollectionLevel)Enum.Parse(typeof(GarbageCollectionLevel), s));
 
+        public static TimeSpan MutexWaitTime => appConfig.Get("mutex-wait-time", TimeSpan.Parse);
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 

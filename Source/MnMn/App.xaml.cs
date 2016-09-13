@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             logger.Information(Constants.ApplicationName, new AppInformationCollection().ToString());
 
-            if(!Mutex.WaitOne(0, false)) {
+            if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 Shutdown();
                 return;
             }
