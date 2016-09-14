@@ -799,6 +799,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        /// <summary>
+        /// <see cref="GarbageCollection(GarbageCollectionLevel, CacheSpan, bool)"/>を呼び出し可能か。
+        /// <para>あくまでGCを実行できるかどうかであり削除可能ファイルが存在するかではない。</para>
+        /// </summary>
+        public bool CanGarbageCollection
+        {
+            get
+            {
+                if(IsPlaying || IsDownloading || IsDisposed) {
+                    return false;
+                }
+                if(InformationSource != SmileVideoInformationSource.Getthumbinfo) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         #endregion
 
         #region command
@@ -822,6 +841,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
                         OpenVideoFromOpenParameterAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
                     }
+                );
+            }
+        }
+
+        public ICommand ClearCacheCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var checkResult = GarbageCollection(GarbageCollectionLevel.Large, CacheSpan.NoCache, true);
+                        if(checkResult.IsSuccess) {
+                            Mediation.Logger.Information($"cache remove: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
+                        } else {
+                            Mediation.Logger.Warning($"cache remove: [{VideoId}] fail");
+                        }
+                    },
+                    o => CanGarbageCollection
                 );
             }
         }
@@ -1326,10 +1363,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
-            if(IsPlaying || IsDownloading || IsDisposed) {
-                return CheckResultModel.Failure<long>();
-            }
-            if(InformationSource != SmileVideoInformationSource.Getthumbinfo) {
+            if(!CanGarbageCollection) {
                 return CheckResultModel.Failure<long>();
             }
 

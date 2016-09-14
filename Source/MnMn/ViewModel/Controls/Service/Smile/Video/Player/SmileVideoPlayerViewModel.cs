@@ -1363,6 +1363,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
                 StopMovie(true);
+                Information.IsDownloading = false;
             }
             SecondsDownloadingSize = e.SecondsDownlodingSize;
 
