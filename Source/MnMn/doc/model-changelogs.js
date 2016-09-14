@@ -84,32 +84,15 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.18.1',
-		'isRc': true,
+		'date': '2016/09/14',
+		'version': '0.19.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '932bb3aa446eab65ed511a3115187cc332ef088d',
 						'subject': '#138: プレイヤーウィンドウの開き方をユーザー制御に任せる',
 						'comments': [
 							'初期値は「新しいウィンドウで動画再生を行う」です。設定で好きに変えるかコンテキストメニューで適当に選択して下さい',
@@ -118,12 +101,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '83a1c18bf13055adb93de8ed5bcbe1ea61f7cb07',
 						'subject': '#116: ユーザーによるキャッシュ破棄'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -131,16 +110,16 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'a27fe43f8e0ee2817f38e53123eacd5681c4ab7e',
 						'subject': '1.18.0 の更新履歴 #139 がエスケープシーケンス死んでた'
 					},
 					{
-						'revision': '',
+						'revision': '0b44d629cbdef69995abb13b489e56c1d7054f35',
 						'subject': '#150: 動画読込中にプレイヤーサイズをメニューから変更するとキュッてなる'
 					},
 					{
-						'revision': '',
-						'subject': ''
+						'revision': '3737563c5161459d6227e4718c138ac7e76c7453',
+						'subject': '#145: マイリスト連続再生では並び替えてもマイリストの番号順に再生されるので、並び替えた順番で再生されるようにして欲しい'
 					}
 				]
 			},
@@ -148,11 +127,11 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '503ea1c60339ef23695e1afd4275261653a2f4c8',
 						'subject': '#151: β版はバージョン番号を分かりやすくする'
 					},
 					{
-						'revision': '',
+						'revision': '81568531f96d52a771db9ac387355ca293fc7168',
 						'subject': '#153: WebBrowser置き換え準備',
 						'comments': [
 							'アップデート用アーカイブダウンロード待ち時間を増やそうと思ったけど今時点で以外と待ってたので少し増やした',
@@ -160,7 +139,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f939d4e5a7852dbf0d7b23b5760755998fb121b6',
 						'class': 'nuget',
 						'subject': 'OxyPlot: 1.0.0-unstable2100 -> 1.0.0'
 					}
