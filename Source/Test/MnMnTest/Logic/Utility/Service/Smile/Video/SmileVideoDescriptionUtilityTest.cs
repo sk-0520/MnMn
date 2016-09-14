@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video.Tests
 {
@@ -30,6 +31,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video.Tests
         {
             var s = SmileVideoDescriptionUtility.ConvertSafeXaml("<Run><Run>a</Run></Run>");
             Assert.AreEqual(s, "<TextBlock><TextBlock>a</TextBlock></TextBlock>");
+        }
+
+        static string GetParam(string s)
+        {
+            var m = Regex.Match(s, "CommandParameter='(.+?)'");
+            return m.Groups[1].Value;
+        }
+
+        [TestMethod]
+        public void ConvertLinkFromPlainTextTest()
+        {
+            var list = new[] {
+                new { Success = true, Uri = "http://abc", },
+                new { Success = true, Uri = "http://abc.com", },
+                new { Success = true, Uri = "http://abc.com/index", },
+                new { Success = true, Uri = "http://abc.com/index.html", },
+                new { Success = true, Uri = "http://abc.com/index.html?", },
+                new { Success = true, Uri = "http://abc.com/index.html?param", },
+                new { Success = true, Uri = "http://abc.com/index.html?param=123", },
+                new { Success = true, Uri = "http://abc.com/index.html?param=%0d%0a", },
+            };
+            foreach(var u in list) {
+                var s = SmileVideoDescriptionUtility.ConvertLinkFromPlainText(u.Uri);
+                var a = GetParam(s);
+                if(u.Success) {
+                    Assert.AreEqual(a, u.Uri);
+                } else {
+                    Assert.AreNotEqual(a, u.Uri);
+                }
+            }
         }
     }
 }

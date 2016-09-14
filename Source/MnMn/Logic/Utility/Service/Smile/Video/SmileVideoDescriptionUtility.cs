@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return string.Join(string.Empty, linkElementSource);
         }
 
-        static string ConvertLinkFromPlainText(string flowDocumentSource)
+        public static string ConvertLinkFromPlainText(string flowDocumentSource)
         {
             var regLink = new Regex(
                 @"
