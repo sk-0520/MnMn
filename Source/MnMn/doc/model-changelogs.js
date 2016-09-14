@@ -161,7 +161,8 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': 'OxyPlot: 1.0.0-unstable2100 -> 1.0.0'
 					}
 				]
 			}
