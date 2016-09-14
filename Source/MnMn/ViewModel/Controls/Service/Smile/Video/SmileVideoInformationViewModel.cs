@@ -850,14 +850,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 return CreateCommand(
-                    o => {
-                        var checkResult = GarbageCollection(GarbageCollectionLevel.Large, CacheSpan.NoCache, true);
-                        if(checkResult.IsSuccess) {
-                            Mediation.Logger.Information($"cache remove: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
-                        } else {
-                            Mediation.Logger.Warning($"cache remove: [{VideoId}] fail");
-                        }
-                    },
+                    o => ClearCache(),
                     o => CanGarbageCollection
                 );
             }
@@ -866,6 +859,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region function
+
+        void ClearCache()
+        {
+            try {
+                var checkResult = GarbageCollection(GarbageCollectionLevel.Large | GarbageCollectionLevel.Temporary, CacheSpan.NoCache, true);
+                if(checkResult.IsSuccess) {
+                    Mediation.Logger.Information($"cache remove: [{VideoId}] {RawValueUtility.ConvertHumanLikeByte(checkResult.Result)}");
+                } else {
+                    Mediation.Logger.Warning($"cache remove: [{VideoId}] fail");
+                }
+                CallOnPropertyChangeDisplayItem();
+            } catch(Exception ex) {
+                Mediation.Logger.Warning(ex);
+            }
+        }
 
         public SmileVideoVideoItemModel ToVideoItemModel()
         {
@@ -1297,7 +1305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         IndividualVideoSetting.LastShowTimestamp,
                     };
                     var timestamp = timestamps.Max();
-                    if(!cacheSpan.IsCacheTime(timestamp)) {
+                    if(force || !cacheSpan.IsCacheTime(timestamp)) {
                         var fileSize = file.Length;
                         file.Delete();
                         return CheckResultModel.Success(fileSize);
@@ -1312,7 +1320,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         long GarbageCollectionLarge(CacheSpan cacheSpan, bool force)
         {
-            if(cacheSpan.IsNoExpiration) {
+            if(!force && cacheSpan.IsNoExpiration) {
                 return 0;
             }
 
@@ -1334,17 +1342,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(normalCheck.IsSuccess) {
                 var temp = IndividualVideoSetting.LoadedNormal;
                 IndividualVideoSetting.LoadedNormal = false;
-                needSave |= IndividualVideoSetting.LoadedNormal == temp;
+                needSave = true;
             }
             if(economyCheck.IsSuccess) {
                 var temp = IndividualVideoSetting.LoadedEconomyMode;
                 IndividualVideoSetting.LoadedEconomyMode = false;
-                needSave |= IndividualVideoSetting.LoadedEconomyMode == temp;
+                needSave = true;
             }
             if(normalFlashCheck.IsSuccess || economyFlashCheck.IsSuccess) {
                 var temp = IndividualVideoSetting.ConvertedSwf;
                 IndividualVideoSetting.ConvertedSwf = false;
-                needSave |= IndividualVideoSetting.ConvertedSwf == temp;
+                needSave = true;
             }
 
             var checks = new[] {
@@ -1355,7 +1363,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             };
 
             if(needSave) {
-                SaveSetting(false);
+                SaveSetting(true);
             }
 
             return checks.Where(c => c.IsSuccess).Sum(c => c.Result);
@@ -1373,6 +1381,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             return CheckResultModel.Success(largeSize);
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            base.CallOnPropertyChangeDisplayItem();
+
+            var propertyNames = new[] {
+                nameof(LoadedNormalVideo),
+                nameof(LoadedEconomyVideo),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion
