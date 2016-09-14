@@ -25,6 +25,10 @@ var helpLanguage = {
 	}
 };
 
+var words = {
+	'app': 'MnMn'
+};
+
 var menuList = [
 	{
 		name: 'general',
@@ -51,7 +55,23 @@ var menuList = [
 		}
 	},
 	{
-		name: 'development',
+		name: 'others-communication',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '連絡とか'
+		}
+	},
+	{
+		name: 'others-beta',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'β版'
+		}
+	},
+	{
+		name: 'others-development',
 		localize: true,
 		level: 1,
 		title: {
@@ -59,7 +79,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'development-source',
+		name: 'others-development-source',
 		localize: true,
 		level: 2,
 		title: {
@@ -166,6 +186,12 @@ function createLink(lang) {
 	var param = 'lang=' + lang;
 
 	var $content = $('#content');
+	$content.find('.word').each(function () {
+		var $word = $(this);
+		var key = $word.text();
+		var text = words[key];
+		$word.text(text)
+	});
 	$content.find('.page').each(function () {
 		var $page = $(this);
 		// TODO: 内部リンク

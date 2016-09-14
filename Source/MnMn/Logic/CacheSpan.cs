@@ -27,7 +27,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     {
         #region define
 
+        /// <summary>
+        /// 期間なし。
+        /// </summary>
         public static CacheSpan NoCache => new CacheSpan();
+        /// <summary>
+        /// 無限。
+        /// </summary>
         public static CacheSpan InfinityCache => new CacheSpan(DateTime.MaxValue, TimeSpan.MaxValue);
 
         #endregion

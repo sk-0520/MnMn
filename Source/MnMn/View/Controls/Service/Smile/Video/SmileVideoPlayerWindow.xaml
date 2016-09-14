@@ -329,6 +329,7 @@
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
+              <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource PlayListChangeMenuItem}" />
               <Separator />
               <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
@@ -355,11 +356,11 @@
 
       <Menu Style="{StaticResource DummyMenu}">
         <MenuItem Header="プレイヤーサイズ">
-          <MenuItem Header="50%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="50"  />
-          <MenuItem Header="75%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="75"  />
-          <MenuItem Header="100%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="100"  />
-          <MenuItem Header="150%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="150"  />
-          <MenuItem Header="200%" Command="{Binding ChangePlayerSizeCommand}" CommandParameter="200" />
+          <MenuItem Header="50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
+          <MenuItem Header="75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
+          <MenuItem Header="100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
+          <MenuItem Header="150%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="150"  />
+          <MenuItem Header="200%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="200" />
         </MenuItem>
       </Menu>
 
@@ -409,6 +410,11 @@
         <TextBlock>[</TextBlock>
         <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
         <TextBlock>]</TextBlock>
+      </TextBlock>
+      <TextBlock VerticalAlignment="Center" Text="🌸" Foreground="Pink" ToolTip="酷使するプレイヤーウィンドウ！" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <TextBlock.Effect>
+          <DropShadowEffect Color="#88000000" ShadowDepth="1.5" BlurRadius="2" />
+        </TextBlock.Effect>
       </TextBlock>
       <Canvas Style="{StaticResource StatePanel}">
         <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />

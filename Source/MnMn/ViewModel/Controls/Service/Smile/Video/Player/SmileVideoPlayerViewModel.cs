@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand ChangePlayerSizeCommand
+        public ICommand ChangePlayerSizeFromPercentCommand
         {
             get
             {
@@ -353,7 +353,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         var percent = int.Parse((string)o);
                         ChangePlayerSizeFromPercent(percent);
-                    }
+                    },
+                    o => !WaitingFirstPlay.Value
                 );
             }
         }
@@ -491,6 +492,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
         {
             PlayListItems.AddRange(videoInformations);
+            CanPlayNextVieo.Value = true;
             return LoadAsync(PlayListItems.GetFirstItem(), false, thumbCacheSpan, imageCacheSpan);
         }
 
@@ -500,6 +502,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(VisualVideoSize.IsEmpty) {
                 return;
             }
+            Debug.Assert(!WaitingFirstPlay.Value, "到達不可のはず");
 
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
@@ -766,7 +769,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 #endif
 #endif
-
             DocumentDescription.Dispatcher.Invoke(() => {
                 var document = DocumentDescription.Document;
 
@@ -1286,12 +1288,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
                 item.IsPlaying = false;
             }
+
+            if(PlayListItems.All(i => i != videoInformation)) {
+                // プレイリストに存在しない動画は追加する
+                PlayListItems.Add(videoInformation);
+            }
+
             videoInformation.IsPlaying = true;
             videoInformation.LastShowTimestamp = DateTime.Now;
             IsSelectedInformation = true;
 
             // プレイヤー立ち上げ時は null
             if(Information != null) {
+                Information.IsPlaying = false;
                 Information.SaveSetting(false);
                 // 軽めにGC
                 Mediation.Order(new AppCleanMemoryOrderModel(false));
@@ -1354,6 +1363,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
                 StopMovie(true);
+                Information.IsDownloading = false;
             }
             SecondsDownloadingSize = e.SecondsDownlodingSize;
 
@@ -1816,7 +1826,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         foreach(var data in ShowingCommentList) {
                             data.Clock.Controller.Pause();
                         }
-                    } else if(PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+                    } else if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
                         Mediation.Logger.Debug("next playlist item");
                         LoadNextPlayListItemAsync();
                     } else if(ReplayVideo && !UserOperationStop.Value) {

@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override void HideViewCore()
         { }
 
-        Task<long> GarbageCollectionCahceVideoAsync(string videoId, DirectoryInfo baseDirectory, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        Task<long> GarbageCollectionCahceVideoAsync(string videoId, DirectoryInfo baseDirectory, GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(videoId);
 
@@ -215,13 +215,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     return GarbageCollectionDummyResult.Result;
                 } else {
                     var viewModel = t.Result;
-                    var checkResult = viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan);
+                    var checkResult = viewModel.GarbageCollection(garbageCollectionLevel, cacheSpan, force);
                     return checkResult.Result;
                 }
             });
         }
 
-        Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             return Task.Run(() => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 //    //TODO: オーバーフロー
                 //    result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
                 //};
-                var tasks = cacheDirInfos.Select(dir => GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan));
+                var tasks = cacheDirInfos.Select(dir => GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan, force));
                 var result = Task.WhenAll(tasks).Result.Sum();
 
                 return result;
@@ -265,13 +265,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             var items = ManagerChildren
-                .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))
+                .Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan, force))
                 .ToList()
             ;
-            items.Add(GarbageCollectionCahceVideosAsync(garbageCollectionLevel, cacheSpan));
+            items.Add(GarbageCollectionCahceVideosAsync(garbageCollectionLevel, cacheSpan, force));
 
             return Task.WhenAll(items).ContinueWith(t => {
                 return t.Result.Sum();

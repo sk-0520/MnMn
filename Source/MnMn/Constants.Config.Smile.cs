@@ -312,6 +312,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 動画再生方法。
         /// </summary>
         public static ExecuteOrOpenMode SettingServiceSmileVideoExecuteOpenMode => appConfig.Get("setting-service-smile-smilevideo-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
+        /// <summary>
+        /// プレイヤーを常に新規ウィンドウ表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoExecuteOpenPlayerInNewWindow => appConfig.Get("setting-service-smile-smilevideo-execute-open-player-in-new-window", bool.Parse);
 
         /// <summary>
         /// 重複したコメントを無視するか。

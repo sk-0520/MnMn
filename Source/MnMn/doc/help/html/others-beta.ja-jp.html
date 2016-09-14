@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<div class="warning">
+			<p>
+				β版は保守対象ではありません。
+			</p>
+		</div>
+
+		<h2>βの扱い</h2>
+		<p>
+			<span class="word">app</span> では日々の開発単位に対してCIを通してβ版の発行を行っています。
+		</p>
+		<p>
+			基本的に直近のコミットが使用されます。
+		</p>
+
+		<h2>要望・不具合のユーザー確認</h2>
+		<p>
+			要望・不具合の報告をいただき、対応を行った際には可能な限りユーザー側で動作確認をお願いします。
+		</p>
+		<p>
+			その際には開発側から対象の URI が渡されます。
+		</p>
+		<ul>
+			<li>URI を開いて Artifacts に遷移</li>
+			<li>対象アーカイブをダンロード</li>
+			<li>
+				アーカイブを展開後、&lt;MnMn&gt;\bat\beta.bat を実行
+				<ul>
+					<li>beta.bat の配置ディレクトリに beta ディレクトリが作成されます</li>
+					<li>beta ディレクトリにキャッシュや設定なのでデータが配置されます</li>
+					<li>設定は本番データを引き継がないため再入力をお願いします</li>
+					<li>用が済んだら全部破棄してください</li>
+				</ul>
+			</li>
+		</ul>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

@@ -37,8 +37,10 @@
       <cttn_sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+      <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
@@ -172,13 +174,60 @@
         <ListBox.ContextMenu>
           <ContextMenu>
             <!--EnumToBooleanConverter-->
-            <MenuItem Header="開く">
-              <MenuItem Header="プレイヤーで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" CommandParameter="{x:Static app_define:ExecuteOrOpenMode.Application}" />
-              <MenuItem Header="ブラウザで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" CommandParameter="{x:Static app_define:ExecuteOrOpenMode.Browser}" />
-              <MenuItem Header="外部プログラムで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" CommandParameter="{x:Static app_define:ExecuteOrOpenMode.Launcher}" />
+            <MenuItem Header="プレイヤーで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}}" >
+              <MenuItem Header="再生中プレイヤー" IsChecked="{Binding OpenPlayerInNewWindow, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
+                    <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
+                    <Binding>
+                      <Binding.Source>
+                        <sys:Boolean>False</sys:Boolean>
+                      </Binding.Source>
+                    </Binding>
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <MenuItem Header="新規プレイヤー" IsChecked="{Binding OpenPlayerInNewWindow, Mode=OneWay}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
+                    <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
+                    <Binding>
+                      <Binding.Source>
+                        <sys:Boolean>True</sys:Boolean>
+                      </Binding.Source>
+                    </Binding>
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+            </MenuItem>
+            <MenuItem Header="ブラウザで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+              <MenuItem.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
+                  <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Browser}" />
+                  <Binding>
+                    <Binding.Source>
+                      <sys:Boolean>False</sys:Boolean>
+                    </Binding.Source>
+                  </Binding>
+                </MultiBinding>
+              </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="外部プログラムで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+              <MenuItem.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
+                  <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Launcher}" />
+                  <Binding>
+                    <Binding.Source>
+                      <sys:Boolean>False</sys:Boolean>
+                    </Binding.Source>
+                  </Binding>
+                </MultiBinding>
+              </MenuItem.CommandParameter>
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
+            <Separator />
+            <MenuItem Header="キャッシュ破棄" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
           </ContextMenu>
         </ListBox.ContextMenu>
         <ListBox.ItemTemplate>

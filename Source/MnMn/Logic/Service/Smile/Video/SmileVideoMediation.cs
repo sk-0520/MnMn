@@ -290,6 +290,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         DataContext = player,
                     };
                     window.Closed += Player_Closed;
+                    if(!Players.Any()) {
+                        player.IsWorkingPlayer.Value = true;
+                    }
                     Players.Add(window);
                     return window;
                 }
@@ -328,7 +331,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         private void Player_Closed(object sender, EventArgs e)
         {
-            Players.Remove((SmileVideoPlayerWindow)sender);
+            var window = (SmileVideoPlayerWindow)sender;
+
+            window.Closed -= Player_Closed;
+
+            var player = (SmileVideoPlayerViewModel)window.DataContext;
+            player.IsWorkingPlayer.Value = false;
+            Players.Remove(window);
+
+            // 判断基準なし
+            var nextPlayer = Players
+                .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
+                .FirstOrDefault()
+            ;
+            if(nextPlayer != null) {
+                nextPlayer.IsWorkingPlayer.Value = true;
+            }
         }
 
     }

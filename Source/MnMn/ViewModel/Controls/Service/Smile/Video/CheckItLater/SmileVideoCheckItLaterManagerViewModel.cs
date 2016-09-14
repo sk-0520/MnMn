@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         public override void UninitializeView(MainWindow view)
         { }
 
-        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             var span = Constants.ServiceSmileVideoCheckItLaterCacheSpan;
             var gcItems = Setting.CheckItLater
