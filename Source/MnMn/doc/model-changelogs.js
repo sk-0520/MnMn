@@ -119,7 +119,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#116: ユーザーによるキャッシュ破棄'
 					},
 					{
 						'revision': '',
