@@ -149,7 +149,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#151: β版はバージョン番号を分かりやすくする'
 					},
 					{
 						'revision': '',

@@ -94,12 +94,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         {
             if(AssociatedObject != null) {
                 var build = Constants.BuildTypeInformation;
-                if(!string.IsNullOrEmpty(build)) {
+                var isReleaseVersion = string.IsNullOrEmpty(build);
+                if(!isReleaseVersion) {
                     build = $"<{build}> ";
                 }
 
                 var serviceText = DisplayTextUtility.GetDisplayText(Service);
-                AssociatedObject.Title = $"{build}{serviceText}: {Title}";
+                var baseTitle = $"{build}{serviceText}: {Title}";
+                if(!isReleaseVersion) {
+                    baseTitle += $" <{Constants.ApplicationVersionRevision}>";
+                }
+                AssociatedObject.Title = $"{build}{baseTitle}";
             }
         }
 
