@@ -415,7 +415,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public IEnumerable<SmileVideoFinderItemViewModel> GetCheckedItems()
         {
-            return FinderItemsViewer
+            return FinderItems
                 .Cast<SmileVideoFinderItemViewModel>()
                 .Where(i => i.IsChecked.GetValueOrDefault())
             ;
