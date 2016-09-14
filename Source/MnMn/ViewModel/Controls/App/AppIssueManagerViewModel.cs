@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         protected override void HideViewCore()
         { }
 
-        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             return GarbageCollectionDummyResult;
         }

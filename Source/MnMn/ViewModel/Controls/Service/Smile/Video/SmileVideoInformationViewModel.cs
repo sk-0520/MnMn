@@ -1247,7 +1247,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region IGarbageCollection
 
-        CheckResultModel<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan)
+        CheckResultModel<long> GarbageCollectionFromFile(FileInfo file, CacheSpan cacheSpan, bool force)
         {
             try {
                 file.Refresh();
@@ -1273,7 +1273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return CheckResultModel.Failure<long>();
         }
 
-        long GarbageCollectionLarge(CacheSpan cacheSpan)
+        long GarbageCollectionLarge(CacheSpan cacheSpan, bool force)
         {
             if(cacheSpan.IsNoExpiration) {
                 return 0;
@@ -1287,10 +1287,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             // エコノミーでFlashってのは多分ないんだろうね
             var economyFlashConvertedFile = new FileInfo(PathUtility.AppendExtension(normalFile.FullName, SmileVideoInformationUtility.flashConvertedExtension));
 
-            var normalCheck = GarbageCollectionFromFile(normalFile, cacheSpan);
-            var economyCheck = GarbageCollectionFromFile(economyFile, cacheSpan);
-            var normalFlashCheck = GarbageCollectionFromFile(normalFlashConvertedFile, cacheSpan);
-            var economyFlashCheck = GarbageCollectionFromFile(economyFlashConvertedFile, cacheSpan);
+            var normalCheck = GarbageCollectionFromFile(normalFile, cacheSpan, force);
+            var economyCheck = GarbageCollectionFromFile(economyFile, cacheSpan, force);
+            var normalFlashCheck = GarbageCollectionFromFile(normalFlashConvertedFile, cacheSpan, force);
+            var economyFlashCheck = GarbageCollectionFromFile(economyFlashConvertedFile, cacheSpan, force);
 
             var needSave = false;
 
@@ -1324,7 +1324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return checks.Where(c => c.IsSuccess).Sum(c => c.Result);
         }
 
-        public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             if(IsPlaying || IsDownloading || IsDisposed) {
                 return CheckResultModel.Failure<long>();
@@ -1335,7 +1335,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             long largeSize = 0;
             if(garbageCollectionLevel.HasFlag(GarbageCollectionLevel.Large)) {
-                largeSize = GarbageCollectionLarge(cacheSpan);
+                largeSize = GarbageCollectionLarge(cacheSpan, force);
             }
 
             return CheckResultModel.Success(largeSize);

@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void UninitializeView(MainWindow view)
         { }
 
-        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             return GarbageCollectionDummyResult;
         }

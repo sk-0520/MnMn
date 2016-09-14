@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
             if(Constants.BackgroundGarbageCollectionIsEnabledStartup) {
                 // GCは裏で走らせておく
-                GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime)).ContinueWith(t => {
+                GarbageCollectionAsync(GarbageCollectionLevel.Large, new CacheSpan(DateTime.Now, Setting.CacheLifeTime), false).ContinueWith(t => {
                     OutputLogGarbageCollection(t.Result);
                     Mediation.Order(new AppCleanMemoryOrderModel(true));
                     BackgroundGarbageCollectionTimer.Start();
@@ -231,9 +231,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             }
         }
 
-        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan)
+        public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
-            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan))).ContinueWith(t => {
+            return Task.WhenAll(ManagerChildren.Select(m => m.GarbageCollectionAsync(garbageCollectionLevel, cacheSpan, force))).ContinueWith(t => {
                 return t.Result.Sum();
             });
         }
@@ -295,7 +295,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 BackgroundGarbageCollectionTimer.Stop();
 
                 var cacheSpan = new CacheSpan(DateTime.Now, Setting.CacheLifeTime);
-                var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan);
+                var gcSize = await GarbageCollectionAsync(Constants.BackgroundGarbageCollectionLevel, cacheSpan, false);
                 OutputLogGarbageCollection(gcSize);
                 Mediation.Order(new AppCleanMemoryOrderModel(true));
             } finally {

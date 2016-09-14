@@ -35,7 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
         /// </summary>
         /// <param name="garbageCollectionLevel">どんだけ処理するか。</param>
         /// <param name="cacheSpan">対象キャッシュ時間。</param>
+        /// <param name="force">強制実行するか。</param>
         /// <returns>処理の成功・失敗と成功時に処理サイズ</returns>
-        CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan);
+        CheckResultModel<long> GarbageCollection(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force);
     }
 }
