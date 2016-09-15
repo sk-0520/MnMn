@@ -274,7 +274,7 @@
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <app_view_controls:WebNavigator x:Name="helpBrowser" Grid.Row="0" IsEnabledUserChangeSource="False" />
+        <app_view_controls:WebNavigator x:Name="helpBrowser" Grid.Row="0" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding HelpNewWindowCommand}" />
         <DockPanel Grid.Row="1" Visibility="{Binding ShowHelpOpenWebBrowserTips, Converter={StaticResource BooleanToVisibilityConverter}}">
           <DockPanel.Style>
             <Style TargetType="DockPanel">

@@ -197,6 +197,7 @@
     <Compile Include="Constants.Function.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />

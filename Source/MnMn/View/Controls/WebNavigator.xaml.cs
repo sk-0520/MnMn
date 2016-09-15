@@ -17,9 +17,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -131,6 +136,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get { return (bool)GetValue(IsEnabledUserChangeSourceProperty); }
             set { SetValue(IsEnabledUserChangeSourceProperty, value); }
         }
+
+        #endregion
+
+        #region NewWindowCommand
+
+        #region NewWindowCommandProperty
+
+        public static readonly DependencyProperty NewWindowCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(NewWindowCommandProperty)),
+            typeof(ICommand),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNewWindowCommandChanged))
+        );
+
+        private static void OnNewWindowCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.NewWindowCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand NewWindowCommand
+        {
+            get { return GetValue(NewWindowCommandProperty) as ICommand; }
+            set { SetValue(NewWindowCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region NewWindowCommandParameterProperty
+
+        public static readonly DependencyProperty NewWindowCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(NewWindowCommandParameterProperty)),
+            typeof(object),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNewWindowCommandParameterChanged))
+        );
+
+        private static void OnNewWindowCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.NewWindowCommandParameter = e.NewValue;
+            }
+        }
+
+        public object NewWindowCommandParameter
+        {
+            get { return GetValue(NewWindowCommandParameterProperty); }
+            set { SetValue(NewWindowCommandParameterProperty, value); }
+        }
+
+        #endregion
 
         #endregion
 
@@ -259,19 +318,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <returns></returns>
         TResult DoFunction<TResult>(Func<WebBrowser, TResult> defaultFunction, Func<GeckoWebBrowser, TResult> geckoFxFunction)
         {
-            CheckUtility.DebugEnforceNotNull(defaultFunction);
-            CheckUtility.DebugEnforceNotNull(geckoFxFunction);
+            //CheckUtility.DebugEnforceNotNull(defaultFunction);
+            //CheckUtility.DebugEnforceNotNull(geckoFxFunction);
 
-            switch(WebNavigatorCore.Engine) {
-                case Define.WebNavigatorEngine.Default:
-                    return defaultFunction(BrowserDefault);
+            //switch(WebNavigatorCore.Engine) {
+            //    case Define.WebNavigatorEngine.Default:
+            //        return defaultFunction(BrowserDefault);
 
-                case Define.WebNavigatorEngine.GeckoFx:
-                    return geckoFxFunction(BrowserGeckoFx);
+            //    case Define.WebNavigatorEngine.GeckoFx:
+            //        return geckoFxFunction(BrowserGeckoFx);
 
-                default:
-                    throw new NotImplementedException();
-            }
+            //    default:
+            //        throw new NotImplementedException();
+            //}
+
+            return WebNavigatorUtility.DoFunction(
+                WebNavigatorCore.Engine,
+                () => defaultFunction(BrowserDefault),
+                () => geckoFxFunction(BrowserGeckoFx)
+            );
         }
 
         /// <summary>
@@ -281,14 +346,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="geckoFxAction">Gecko版使用時の処理。</param>
         void DoAction(Action<WebBrowser> defaultAction, Action<GeckoWebBrowser> geckoFxAction)
         {
-            CheckUtility.DebugEnforceNotNull(defaultAction);
-            CheckUtility.DebugEnforceNotNull(geckoFxAction);
+            //CheckUtility.DebugEnforceNotNull(defaultAction);
+            //CheckUtility.DebugEnforceNotNull(geckoFxAction);
 
-            var dmy = -1;
+            //var dmy = -1;
 
-            DoFunction(
-                b => { defaultAction(b); return dmy; },
-                b => { geckoFxAction(b); return dmy; }
+            //DoFunction(
+            //    b => { defaultAction(b); return dmy; },
+            //    b => { geckoFxAction(b); return dmy; }
+            //);
+            WebNavigatorUtility.DoAction(
+                WebNavigatorCore.Engine,
+                () => defaultAction(BrowserDefault),
+                () => geckoFxAction(BrowserGeckoFx)
             );
         }
 
@@ -375,6 +445,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating += BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated += BrowserGeckoFx_Navigated;
+            BrowserGeckoFx.CreateWindow += BrowserGeckoFx_CreateWindow;
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -431,6 +502,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.Disposed -= BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated -= BrowserGeckoFx_Navigated;
+            BrowserGeckoFx.CreateWindow -= BrowserGeckoFx_CreateWindow;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -452,6 +524,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_Navigated(object sender, GeckoNavigatedEventArgs e)
         {
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
+        {
+            if(NewWindowCommand != null) {
+                var eventData = WebNavigatorEventData.Create(WebNavigatorEngine.GeckoFx, sender, e, NewWindowCommandParameter);
+                NewWindowCommand.TryExecute(eventData);
+            }
         }
 
     }
