@@ -24,6 +24,7 @@ using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -48,6 +49,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region function
+
+        static void InitializeDefault()
+        {
+            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+            Mediation.Logger.Information("IE version: " + ieVersion);
+            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+        }
 
         static void InitializeGecko()
         {
@@ -87,18 +95,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             Mediation = mediation;
 
-            InitializeGecko();
+            switch(Engine) {
+                case WebNavigatorEngine.Default:
+                    InitializeDefault();
+                    break;
+
+                case WebNavigatorEngine.GeckoFx:
+                    InitializeGecko();
+                    break;
+
+                default:
+                    break;
+            }
 
             IsInitialized = true;
             IsUninitialized = false;
         }
 
+        static void UninitializeDefault()
+        {
+            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
+        }
+
         static void UninitializeGecko()
         {
-            if(IsUninitialized) {
-                return;
-            }
-
             foreach(var browser in CreatedGeckoBrowsers) {
                 browser.Disposed -= GeckoBrowser_Disposed;
                 browser.Dispose();
@@ -114,7 +134,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public static void Uninitialize()
         {
-            UninitializeGecko();
+            if(IsUninitialized) {
+                return;
+            }
+
+            switch(Engine) {
+                case WebNavigatorEngine.Default:
+                    UninitializeDefault();
+                    break;
+
+                case WebNavigatorEngine.GeckoFx:
+                    UninitializeGecko();
+                    break;
+
+                default:
+                    break;
+            }
+
         }
 
         /// <summary>

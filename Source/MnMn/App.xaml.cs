@@ -175,9 +175,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var setting = settingResult.Result;
             SetLanguage(setting.CultureName);
 
-            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
-            logger.Information("IE version: " + ieVersion);
-            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+            Mediation = new Mediation(setting, logger);
+
+            //var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+            //logger.Information("IE version: " + ieVersion);
+            //SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
 
             if(!CheckAccept(setting.RunningInformation, logger)) {
                 var accept = new AcceptWindow();
@@ -197,14 +199,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
-            Mediation = new Mediation(setting, logger);
             AppManager = new AppManagerViewModel(Mediation, logger);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            SplashWindow.Show();
-
             WebNavigatorCore.Initialize(Mediation);
+
+            SplashWindow.Show();
 
             await AppManager.InitializeAsync();
             View = new MainWindow() {
@@ -220,8 +221,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         protected override void OnExit(ExitEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
-
-            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
 
             base.OnExit(e);
         }
