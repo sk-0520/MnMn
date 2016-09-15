@@ -240,6 +240,7 @@
               SelectedSort="{Binding SelectedSort}"
               MethodItems="{Binding MethodItems}"
               SortItems="{Binding SortItems}"
+              IsEnabled="{Binding CanLoad}"
             />
             <Button Style="{StaticResource TabReloadButton}" />
             <Button Style="{StaticResource TabCloseButton}" />
