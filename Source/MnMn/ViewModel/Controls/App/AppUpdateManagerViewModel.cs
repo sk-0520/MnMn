@@ -228,9 +228,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
                 var rawHtmlSource = File.ReadAllText(Constants.UpdateStateHtmlFilePath);
                 var map = new Dictionary<string, string>() {
-                        {"UPDATE-TITLE", Properties.Resources.String_App_Update_Title },
-                        {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },
-                    };
+                    {"UPDATE-TITLE", Properties.Resources.String_App_Update_Title },
+                    {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },
+                    {"UPDATE-TIMESTAMP",  DateTime.Now.ToString("s") },
+                };
                 var htmlSource = AppUtility.ReplaceString(rawHtmlSource, map);
                 UpdateBrowser.NavigateToString(htmlSource);
             })).Task;

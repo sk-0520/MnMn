@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#155: 前回アップデートチェックした時間を表示する'
 					},
 					{
 						'revision': '',
