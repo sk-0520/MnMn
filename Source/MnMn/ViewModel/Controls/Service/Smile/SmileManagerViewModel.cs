@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             VideoManager = new SmileVideoManagerViewModel(Mediation);
             UsersManager = new SmileUsersManagerViewModel(Mediation);
             SettingManager = new SmileSettingManagerViewModel(Mediation);
+            WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, SettingManager));
 
@@ -68,6 +69,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileVideoManagerViewModel VideoManager { get; set; }
         public SmileUsersManagerViewModel UsersManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; set; }
+
+        public SmileWebSiteManagerViewModel WebSiteManager { get; }
 
         public string InputVideoId
         {
@@ -118,6 +121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             return new ManagerViewModelBase[] {
                 UsersManager,
                 VideoManager,
+                WebSiteManager,
                 SettingManager,
             };
         }
@@ -143,12 +147,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override void InitializeView(MainWindow view)
         {
-            VideoManager.InitializeView(view);
+            foreach(var manager in ManagerChildren) {
+                manager.InitializeView(view);
+            }
         }
 
         public override void UninitializeView(MainWindow view)
         {
-            VideoManager.UninitializeView(view);
+            foreach(var manager in ManagerChildren) {
+                manager.UninitializeView(view);
+            }
         }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)

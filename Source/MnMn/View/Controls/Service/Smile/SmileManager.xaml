@@ -56,6 +56,9 @@
       <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}">
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
+      <TabItem Header="web" DataContext="{Binding WebSiteManager}">
+        <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
+      </TabItem>
       <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}">
         <TabItem.Header>
           <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
