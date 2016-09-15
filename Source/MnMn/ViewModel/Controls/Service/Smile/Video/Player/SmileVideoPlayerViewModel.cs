@@ -1277,6 +1277,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public void MoveForeground()
+        {
+            // 経験則上これが一番確実という悲しさ
+            if(!Topmost) {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                    Topmost = true;
+                }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
+                    Topmost = false;
+                    t.Dispose();
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
