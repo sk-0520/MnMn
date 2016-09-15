@@ -151,6 +151,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     break;
             }
 
+            // #159
+            UninitializeDefault();
         }
 
         /// <summary>
