@@ -202,7 +202,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <summary>
         /// Gecko版。
         /// </summary>
-        GeckoWebBrowser BrowserGeckoFx { get; set; }
+        ServiceGeckoWebBrowser BrowserGeckoFx { get; set; }
+
+        /// <summary>
+        /// サービス種別。
+        /// </summary>
+        public ServiceType ServiceType { get; set; }
 
         /// <summary>
         /// 現在ページ。
@@ -316,7 +321,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="defaultFunction">標準ブラウザ使用時の処理。</param>
         /// <param name="geckoFxFunction">Gecko版使用時の処理。</param>
         /// <returns></returns>
-        TResult DoFunction<TResult>(Func<WebBrowser, TResult> defaultFunction, Func<GeckoWebBrowser, TResult> geckoFxFunction)
+        TResult DoFunction<TResult>(Func<WebBrowser, TResult> defaultFunction, Func<ServiceGeckoWebBrowser, TResult> geckoFxFunction)
         {
             return WebNavigatorUtility.DoFunction(
                 WebNavigatorCore.Engine,
@@ -406,8 +411,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             BrowserDefault = new WebBrowser();
 
-            BrowserDefault.Unloaded += BrowserDefault_Unloaded;
+            BrowserDefault.Loaded += Browser_Loaded;
             BrowserDefault.Loaded += BrowserDefault_Loaded;
+            BrowserDefault.Unloaded += BrowserDefault_Unloaded;
             BrowserDefault.Navigating += BrowserDefault_Navigating;
             BrowserDefault.Navigated += BrowserDefault_Navigated;
 
@@ -427,6 +433,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
                 host.Child = BrowserGeckoFx;
+                host.Loaded += Browser_Loaded;
             }
 
             this.container.Content = host;
@@ -449,6 +456,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         }
 
         #endregion
+
+        private void Browser_Loaded(object sender, RoutedEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            element.Loaded -= Browser_Loaded;
+            DoAction(
+                b => b.Tag = ServiceType, // IEもうどうでもいいわ
+                b => {
+                    var type = b.GetType();
+                    var property = type.GetProperty(nameof(ServiceGeckoWebBrowser.ServiceType));
+                    property.SetValue(b, ServiceType);
+                }
+            );
+        }
 
         private void BrowserDefault_Loaded(object sender, RoutedEventArgs e)
         {

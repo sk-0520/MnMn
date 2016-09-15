@@ -26,6 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
 
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
         public static WebNavigatorEngine Engine { get; } = Constants.WebNavigatorEngine;
 
-        static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();
+        static ISet<ServiceGeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<ServiceGeckoWebBrowser>();
 
         static bool IsInitialized { get; set; } = false;
         static bool IsUninitialized { get; set; } = false;
@@ -171,12 +172,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <para>あくまで呼び出し側で<see cref="WebNavigatorEngine.GeckoFx"/>を保証すること</para>
         /// </summary>
         /// <returns></returns>
-        public static GeckoWebBrowser CreateBrowser()
+        public static ServiceGeckoWebBrowser CreateBrowser()
         {
-            GeckoWebBrowser browser = null;
+            ServiceGeckoWebBrowser browser = null;
 
             Application.Current.Dispatcher.Invoke(() => {
-                browser = new GeckoWebBrowser() {
+                browser = new ServiceGeckoWebBrowser() {
                     Dock = System.Windows.Forms.DockStyle.Fill,
                 };
                 browser.Disposed += GeckoBrowser_Disposed;
@@ -188,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         private static void GeckoBrowser_Disposed(object sender, EventArgs e)
         {
-            var browser = (GeckoWebBrowser)sender;
+            var browser = (ServiceGeckoWebBrowser)sender;
 
             browser.Disposed -= GeckoBrowser_Disposed;
             CreatedGeckoBrowsers.Remove(browser);

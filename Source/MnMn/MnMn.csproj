@@ -270,6 +270,9 @@
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
