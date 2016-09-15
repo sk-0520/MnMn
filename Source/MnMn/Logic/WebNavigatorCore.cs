@@ -24,6 +24,7 @@ using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
@@ -62,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
 
-            var settingDirectory = VariableConstants.GetSettingDirectory();
+            var settingDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
             var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.WebNavigatorGeckoFxProfileDirectoryName);
             var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
             Xpcom.ProfileDirectory = profileDirectory.FullName;
