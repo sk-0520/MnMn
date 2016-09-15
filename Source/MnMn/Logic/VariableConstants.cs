@@ -67,6 +67,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return Directory.CreateDirectory(path);
         }
 
+        public static DirectoryInfo GetWebNavigatorGeckFxPluginDirectory()
+        {
+            var baseDir = GetSettingBaseDirectory();
+            var path = Path.Combine(baseDir, Constants.ArchiveWebNavigatorGeckFxPluginDirectoryName);
+
+            return Directory.CreateDirectory(path);
+        }
+
         public static DirectoryInfo GetBackupDirectory()
         {
             var baseDir = GetSettingBaseDirectory();

@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -129,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             logger.Information(Constants.ApplicationName, new AppInformationCollection().ToString());
 
-            if(!Mutex.WaitOne(0, false)) {
+            if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 Shutdown();
                 return;
             }
@@ -174,6 +175,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             SplashWindow.Show();
 
+            WebNavigatorCore.Initialize(Mediation);
+
             await AppManager.InitializeAsync();
             View = new MainWindow() {
                 DataContext = AppManager,
@@ -217,6 +220,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
+            WebNavigatorCore.Uninitialize();
+
             AppManager.UninitializeView(View);
 
             Mutex.Dispose();

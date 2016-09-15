@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
 
+        [DataMember]
+        public WebNavigatorSettingModel WebNavigator { get; set; } = new WebNavigatorSettingModel();
 
         #region service
 

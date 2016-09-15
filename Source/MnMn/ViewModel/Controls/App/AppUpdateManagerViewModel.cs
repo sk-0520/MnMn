@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
                     UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                        UpdateBrowser.NavigateToString(htmlSource);
+                        UpdateBrowser.LoadHtml(htmlSource);
                     }));
                 });
             }
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     {"UPDATE-TIMESTAMP",  DateTime.Now.ToString("s") },
                 };
                 var htmlSource = AppUtility.ReplaceString(rawHtmlSource, map);
-                UpdateBrowser.NavigateToString(htmlSource);
+                UpdateBrowser.LoadHtml(htmlSource);
             })).Task;
         }
 
@@ -346,7 +346,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            if(UpdateBrowser.Source == null) {
+            if(UpdateBrowser.IsEmptyContent) {
                 LoadChangelogAsync().ContinueWith(_ => {
                     if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
                         SetUpdateStateViewAsync().ConfigureAwait(false);

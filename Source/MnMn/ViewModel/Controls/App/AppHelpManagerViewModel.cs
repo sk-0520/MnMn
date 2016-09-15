@@ -83,10 +83,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            if(HelpBrowser.Source == null) {
+            if(HelpBrowser.IsEmptyContent) {
                 var helpUri = new Uri(Constants.HelpFilePath);
                 HelpBrowser.HomeSource = helpUri;
-                HelpBrowser.Source = helpUri;
+                //HelpBrowser.Source = helpUri;
+                HelpBrowser.Navigate(helpUri);
             }
         }
 
