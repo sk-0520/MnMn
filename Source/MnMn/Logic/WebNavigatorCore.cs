@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         static Mediation Mediation { get; set; }
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
-        public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.GeckoFx;
+        public static WebNavigatorEngine Engine { get; } = Constants.WebNavigatorEngine;
 
         static ISet<GeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<GeckoWebBrowser>();
 
