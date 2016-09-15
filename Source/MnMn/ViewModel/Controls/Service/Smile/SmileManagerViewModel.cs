@@ -52,14 +52,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileManagerViewModel(Mediation mediation)
             : base(mediation)
         {
+            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
             VideoManager = new SmileVideoManagerViewModel(Mediation);
             UsersManager = new SmileUsersManagerViewModel(Mediation);
             SettingManager = new SmileSettingManagerViewModel(Mediation);
+
             WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, SettingManager));
-
-            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, WebSiteManager, SettingManager));
         }
 
         #region property

@@ -28,10 +28,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
     public class SmileManagerPackModel: ManagerPackModelBase
     {
-        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileUsersManagerViewModel usersManager, SmileSettingManagerViewModel settingManager)
+        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileUsersManagerViewModel usersManager, SmileWebSiteManagerViewModel webSiteManager, SmileSettingManagerViewModel settingManager)
         {
             VideoManager = videoManager;
             UsersManager = usersManager;
+            WebSiteManager = webSiteManager;
             SettingManager = settingManager;
         }
 
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 
         public SmileVideoManagerViewModel VideoManager { get; }
         public SmileUsersManagerViewModel UsersManager { get; }
+        public SmileWebSiteManagerViewModel WebSiteManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; }
 
         #endregion

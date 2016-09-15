@@ -21,12 +21,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
 
@@ -164,6 +166,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             // #159
             UninitializeDefault();
+        }
+
+        internal static void SetSession(WebBrowser browser, SessionViewModelBase session, Uri uri)
+        {
+            Mediation.Logger.Warning($"{nameof(NotImplementedException)}/{browser.Tag}: {uri}");
+        }
+
+        static void SetSessionDefault(ServiceType serviceType, SessionViewModelBase session, Uri uri)
+        {
+            Mediation.Logger.Warning($"{nameof(NotImplementedException)}/{serviceType}: {uri}");
+        }
+
+        internal static void SetSession(ServiceGeckoWebBrowser browser, SessionViewModelBase session, Uri uri)
+        {
+            browser.SetSession(session, uri);
+        }
+
+        static void SetSessionGeckoFxs(ServiceType serviceType, SessionViewModelBase session, Uri uri)
+        {
+            var targetBrowsers = CreatedGeckoBrowsers.Where(b => b.ServiceType == serviceType);
+            foreach(var targetBrowser in targetBrowsers) {
+                SetSession(targetBrowser, session, uri);
+            }
+        }
+
+        public static void SetSession(ServiceType serviceType, SessionViewModelBase session, Uri uri)
+        {
+            WebNavigatorUtility.DoAction(
+                Engine,
+                () => SetSessionDefault(serviceType, session, uri),
+                () => SetSessionGeckoFxs(serviceType, session, uri)
+            );
         }
 
         /// <summary>

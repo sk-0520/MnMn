@@ -24,19 +24,25 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 {
     public class SmileWebSiteManagerViewModel: ManagerViewModelBase
     {
         public SmileWebSiteManagerViewModel(Mediation mediation) : base(mediation)
-        { }
+        {
+            Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+        }
 
         #region propert
 
         WebNavigator WebSiteNavigator { get; set; }
+        SmileSessionViewModel Session { get; }
 
         #endregion
 
@@ -74,7 +80,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             WebSiteNavigator = view.smile.webSite.navigator;
             var homeUriResult = Mediation.GetUri(SmileMediationKey.webSite, null, ServiceType.Smile);
             WebSiteNavigator.HomeSource = new Uri(homeUriResult.Uri);
-
         }
 
         public override void UninitializeView(MainWindow view)
@@ -92,6 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         protected override void ShowViewCore()
         {
             if(WebSiteNavigator.IsEmptyContent) {
+                WebSiteNavigator.SetSession(Session, WebSiteNavigator.HomeSource);
                 WebSiteNavigator.Navigate(WebSiteNavigator.HomeSource);
             }
         }

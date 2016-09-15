@@ -25,6 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -437,6 +438,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             this.container.Content = host;
+        }
+
+        public void SetSession(SessionViewModelBase session, Uri uri)
+        {
+            DoAction(
+                b => WebNavigatorCore.SetSession(BrowserDefault, session, uri),
+                b => WebNavigatorCore.SetSession(BrowserGeckoFx, session, uri)
+            );
+
         }
 
         #endregion

@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
     /// </summary>
     public class SmileSessionViewModel: SessionViewModelBase
     {
-
         public SmileSessionViewModel(Mediation mediation, SmileUserAccountModel userAccountModel)
             : base(mediation)
         {
@@ -89,9 +89,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         #region function
 
-        public string GetSession(Uri uri)
+        public IEnumerable<Cookie> GetCookies(Uri uri)
         {
-            return ClientHandler.CookieContainer.GetCookies(uri)["user_session"].Value;
+            //return ClientHandler.CookieContainer.GetCookies(uri).[Constants.ServiceSmileSessionKey].Value;
+            var cookies = ClientHandler.CookieContainer.GetCookies(uri)
+                .Cast<Cookie>()
+            //.Select(c => $"{c.Name}={c.Value}")
+            ;
+            //return string.Join(";", cookies);
+            return cookies;
         }
 
         public Task ChangeUserAccountAsync(SmileUserAccountModel userAccount)
