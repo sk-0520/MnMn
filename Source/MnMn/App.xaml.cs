@@ -19,11 +19,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -108,6 +110,32 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return true;
         }
 
+        void SetLanguage(string cultureName)
+        {
+            CultureInfo usingCultureInfo = null;
+            CultureInfo usingUICultureInfo = null;
+
+            if(!string.IsNullOrWhiteSpace(cultureName)) {
+                usingUICultureInfo = usingCultureInfo = CultureInfo.GetCultures(CultureTypes.AllCultures)
+                    .FirstOrDefault(c => c.Name == cultureName)
+                ;
+            }
+            if(usingCultureInfo == null) {
+                usingCultureInfo = CultureInfo.CurrentCulture;
+                usingUICultureInfo = CultureInfo.CurrentUICulture;
+            }
+
+            CultureInfo.DefaultThreadCurrentCulture = usingCultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = usingUICultureInfo;
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    XmlLanguage.GetLanguage(usingCultureInfo.IetfLanguageTag)
+                )
+            );
+        }
+
         #endregion
 
         #region Application
@@ -145,6 +173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
             var settingResult = LoadSetting(logger);
             var setting = settingResult.Result;
+            SetLanguage(setting.CultureName);
 
             var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
             logger.Information("IE version: " + ieVersion);

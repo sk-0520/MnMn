@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
         {
             var page = new PageLoader(Mediation, Session, SmileMediationKey.userPostVideo, ServiceType.Smile);
             page.ReplaceUriParameters["user-id"] = userId;
-            page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+            page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(task => {
                 var feedResult = task.Result;
                 if(!feedResult.IsSuccess) {

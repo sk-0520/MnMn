@@ -36,8 +36,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         {
             InitializeComponent();
 
-            this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
-
             PlayerCursorHider = new CursorHider(this.player);
         }
 

@@ -324,10 +324,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
-        /// <summary>
-        /// TODO: カルチャからどうこうしたい。
-        /// </summary>
-        public static string CurrentLanguageCode => "ja-jp";
+        ///// <summary>
+        ///// TODO: カルチャからどうこうしたい。
+        ///// </summary>
+        //public static string CurrentLanguageCode => "ja-jp";
 
         public static string ExtensionTemporaryFile { get; } = "tmp";
 

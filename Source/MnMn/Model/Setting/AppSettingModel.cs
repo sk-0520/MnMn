@@ -36,6 +36,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         #region property
 
         /// <summary>
+        /// 言語。
+        /// <para>nullでカレント。</para>
+        /// </summary>
+        [DataMember]
+        public string CultureName { get; set; }
+
+        /// <summary>
         /// キャッシュディレクトリ。
         /// </summary>
         [DataMember]
