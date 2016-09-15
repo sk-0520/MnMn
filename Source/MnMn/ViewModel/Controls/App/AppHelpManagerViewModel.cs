@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        public ICommand HelpNewWindowCommand
+        public ICommand NewWindowCommand
         {
             get
             {

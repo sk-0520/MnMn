@@ -318,20 +318,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <returns></returns>
         TResult DoFunction<TResult>(Func<WebBrowser, TResult> defaultFunction, Func<GeckoWebBrowser, TResult> geckoFxFunction)
         {
-            //CheckUtility.DebugEnforceNotNull(defaultFunction);
-            //CheckUtility.DebugEnforceNotNull(geckoFxFunction);
-
-            //switch(WebNavigatorCore.Engine) {
-            //    case Define.WebNavigatorEngine.Default:
-            //        return defaultFunction(BrowserDefault);
-
-            //    case Define.WebNavigatorEngine.GeckoFx:
-            //        return geckoFxFunction(BrowserGeckoFx);
-
-            //    default:
-            //        throw new NotImplementedException();
-            //}
-
             return WebNavigatorUtility.DoFunction(
                 WebNavigatorCore.Engine,
                 () => defaultFunction(BrowserDefault),
@@ -346,15 +332,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <param name="geckoFxAction">Gecko版使用時の処理。</param>
         void DoAction(Action<WebBrowser> defaultAction, Action<GeckoWebBrowser> geckoFxAction)
         {
-            //CheckUtility.DebugEnforceNotNull(defaultAction);
-            //CheckUtility.DebugEnforceNotNull(geckoFxAction);
-
-            //var dmy = -1;
-
-            //DoFunction(
-            //    b => { defaultAction(b); return dmy; },
-            //    b => { geckoFxAction(b); return dmy; }
-            //);
             WebNavigatorUtility.DoAction(
                 WebNavigatorCore.Engine,
                 () => defaultAction(BrowserDefault),

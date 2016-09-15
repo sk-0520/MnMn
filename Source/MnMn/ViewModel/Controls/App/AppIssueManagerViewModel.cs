@@ -24,8 +24,10 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
@@ -43,6 +45,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #endregion
 
         #region command
+
+        public ICommand NewWindowCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var data = (WebNavigatorEventDataBase)o;
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    }
+                );
+            }
+        }
 
         #endregion
 

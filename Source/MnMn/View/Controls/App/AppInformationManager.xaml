@@ -260,11 +260,11 @@
     </TabItem>
 
     <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}">
-      <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False" />
+      <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
     <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}">
-      <app_view_controls:WebNavigator x:Name="flashPlayerBrowser" IsEnabledUserChangeSource="False" />
+      <app_view_controls:WebNavigator x:Name="flashPlayerBrowser" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
     <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
@@ -274,7 +274,7 @@
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <app_view_controls:WebNavigator x:Name="helpBrowser" Grid.Row="0" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding HelpNewWindowCommand}" />
+        <app_view_controls:WebNavigator x:Name="helpBrowser" Grid.Row="0" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding NewWindowCommand}" />
         <DockPanel Grid.Row="1" Visibility="{Binding ShowHelpOpenWebBrowserTips, Converter={StaticResource BooleanToVisibilityConverter}}">
           <DockPanel.Style>
             <Style TargetType="DockPanel">

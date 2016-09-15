@@ -29,6 +29,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -126,6 +127,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 });
             }
         }
+
+        public ICommand NewWindowCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var data = (WebNavigatorEventDataBase)o;
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
