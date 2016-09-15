@@ -79,7 +79,7 @@
       <Border.Style>
         <Style TargetType="Border">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding RebuildingWebNavigatorGeckoFxPlugin.Value}">
+            <DataTrigger Binding="{Binding RebuildingWebNavigatorGeckoFxPlugin.Value}" Value="True">
               <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
           </Style.Triggers>
