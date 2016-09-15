@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
@@ -81,6 +82,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 GeckoPreferences.Save(preferencesFilePath);
             }
+            var langs = new[] {
+                AppUtility.GetCultureLanguage(),
+                AppUtility.GetCultureName(),
+                "en-US",
+                "en"
+            };
+            GeckoPreferences.User["intl.accept_languages"] = string.Join(",", langs);
+            GeckoPreferences.User["font.language.group"] = AppUtility.GetCultureLanguage();
 
         }
 

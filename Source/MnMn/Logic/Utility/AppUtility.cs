@@ -39,10 +39,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         }
 
         /// <summary>
-        /// カルチャ名を取得。
-        /// TODO: 言語コードとか地域は必要になったらなんとかする。
+        /// 現在の言語を取得。
         /// </summary>
         /// <returns></returns>
+        public static string GetCultureLanguage()
+        {
+            var culture = CultureInfo.CurrentCulture;
+            if(culture.IsNeutralCulture) {
+                return culture.Name;
+            } else {
+                return culture.Parent.Name;
+            }
+        }
+
+        /// <summary>
+        /// 現在の国を取得。
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCultureCountry()
+        {
+            return RegionInfo.CurrentRegion.TwoLetterISORegionName;
+        }
+
+        /// <summary>
+        /// 現在のカルチャ名を取得。
+        /// </summary>
+        /// <returns>言語/国</returns>
         public static string GetCultureName()
         {
             return CultureInfo.CurrentCulture.Name;
