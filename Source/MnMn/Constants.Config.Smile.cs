@@ -150,6 +150,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Head;
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Tail;
 
+        public static RangeModel<int> ServiceSmileVideoPlayerStepSoundRange = appConfig.Get("service-smile-smilevideo-player-setep-sound-range", RangeModel.Parse<int>);
+        public static RangeModel<int> ServiceSmileVideoPlayerStepSeekRangePercent => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-percent", RangeModel.Parse<int>);
+        public static RangeModel<int> ServiceSmileVideoPlayerStepSeekRangeAbsolutep => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-absolute", RangeModel.Parse<int>);
+
         /// <summary>
         /// 関連動画のソート。
         /// </summary>
