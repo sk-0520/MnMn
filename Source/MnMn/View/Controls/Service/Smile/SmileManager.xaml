@@ -56,9 +56,6 @@
       <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}">
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
-      <TabItem Header="web" DataContext="{Binding WebSiteManager}">
-        <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
-      </TabItem>
       <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}">
         <TabItem.Header>
           <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -69,6 +66,9 @@
           </Grid>
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
+      </TabItem>
+      <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}">
+        <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
       </TabItem>
       <TabItem Header="設定" DataContext="{Binding SettingManager}" >
         <app_view_controls_service_smile_setting:SmileSettingManager />

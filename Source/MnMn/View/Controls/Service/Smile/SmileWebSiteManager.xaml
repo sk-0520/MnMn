@@ -10,6 +10,6 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <Grid>
-    <app_view_controls:WebNavigator x:Name="navigator" ServiceType="Smile" NewWindowCommand="{Binding NewWindowCommand}" />
+    <app_view_controls:WebNavigator x:Name="navigator" IsEnabledUserChangeSource="False" ServiceType="Smile" NewWindowCommand="{Binding NewWindowCommand}" />
   </Grid>
 </UserControl>

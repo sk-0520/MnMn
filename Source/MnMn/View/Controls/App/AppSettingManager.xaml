@@ -60,7 +60,7 @@
               <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}">プラグインディレクトリを開発用に構築する</Button>
 
               <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8" >
-                <TextBlock FontWeight="Bold">開発者が開発用に使う機能です！！</TextBlock>
+                <TextBlock FontWeight="Bold">開発者が開発用環境を同一にするために使う機能です！！</TextBlock>
                 <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
                 <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
                 <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
