@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\UI\Player\WheelOperation.cs" />
     <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
     <Compile Include="Define\GarbageCollectionLevel.cs" />

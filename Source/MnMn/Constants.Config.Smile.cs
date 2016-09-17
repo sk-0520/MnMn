@@ -22,8 +22,10 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -301,6 +303,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// コメント投稿時間を表示するか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerShowPostTimestamp => appConfig.Get("setting-service-smile-smilevideo-player-show-post-timestamp", bool.Parse);
+        /// <summary>
+        /// スペースで一時停止するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerKeySpaceToPause => appConfig.Get("setting-service-smile-smilevideo-player-key-space-to-pause", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerMoseClickToPause => appConfig.Get("setting-service-smile-smilevideo-player-mouse-click-to-pause", bool.Parse);
+        /// <summary>
+        /// ホイール操作。
+        /// </summary>
+        public static WheelOperation SettingServiceSmileVideoPlayerWheelOperation => appConfig.Get("setting-service-smile-smilevideo-player-wheel-operation", s => EnumUtility.Parse<WheelOperation>(s, false));
+
+        public static int SettingServiceSmileVideoPlayerSoundOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-sound-operation-step", int.Parse);
+        public static bool SettingServiceSmileVideoPlayerSeekOperationIsPercent => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-is-percent", bool.Parse);
+        public static int SettingServiceSmileVideoPlayerSeekOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-step", int.Parse);
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>

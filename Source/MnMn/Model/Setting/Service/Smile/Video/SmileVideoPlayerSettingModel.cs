@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -134,6 +135,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool ShowPostTimestamp { get; set; } = Constants.SettingServiceSmileVideoPlayerShowPostTimestamp;
+
+        /// <summary>
+        /// スペースで一時停止するか。
+        /// </summary>
+        [DataMember]
+        public bool KeySpaceToPause { get; set; } = Constants.SettingServiceSmileVideoPlayerKeySpaceToPause;
+
+        /// <summary>
+        /// ホイール操作。
+        /// </summary>
+        [DataMember]
+        public WheelOperation WheelOperation { get; set; } = Constants.SettingServiceSmileVideoPlayerWheelOperation;
+
+        public int SoundOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSoundOperationStep;
+        public bool SeekOperationIsPercent { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationIsPercent;
+        public int SeekOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationStep;
 
         #endregion
     }
