@@ -19,11 +19,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -37,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -107,6 +110,32 @@ namespace ContentTypeTextNet.MnMn.MnMn
             return true;
         }
 
+        void SetLanguage(string cultureName)
+        {
+            CultureInfo usingCultureInfo = null;
+            CultureInfo usingUICultureInfo = null;
+
+            if(!string.IsNullOrWhiteSpace(cultureName)) {
+                usingUICultureInfo = usingCultureInfo = CultureInfo.GetCultures(CultureTypes.AllCultures)
+                    .FirstOrDefault(c => c.Name == cultureName)
+                ;
+            }
+            if(usingCultureInfo == null) {
+                usingCultureInfo = CultureInfo.CurrentCulture;
+                usingUICultureInfo = CultureInfo.CurrentUICulture;
+            }
+
+            CultureInfo.DefaultThreadCurrentCulture = usingCultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = usingUICultureInfo;
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    XmlLanguage.GetLanguage(usingCultureInfo.IetfLanguageTag)
+                )
+            );
+        }
+
         #endregion
 
         #region Application
@@ -129,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             logger.Information(Constants.ApplicationName, new AppInformationCollection().ToString());
 
-            if(!Mutex.WaitOne(0, false)) {
+            if(!Mutex.WaitOne(Constants.MutexWaitTime, false)) {
                 Shutdown();
                 return;
             }
@@ -144,10 +173,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
             var settingResult = LoadSetting(logger);
             var setting = settingResult.Result;
+            SetLanguage(setting.CultureName);
 
-            var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
-            logger.Information("IE version: " + ieVersion);
-            SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
+            Mediation = new Mediation(setting, logger);
+
+            //var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
+            //logger.Information("IE version: " + ieVersion);
+            //SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
 
             if(!CheckAccept(setting.RunningInformation, logger)) {
                 var accept = new AcceptWindow();
@@ -167,10 +199,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
 
-            Mediation = new Mediation(setting, logger);
             AppManager = new AppManagerViewModel(Mediation, logger);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            WebNavigatorCore.Initialize(Mediation);
 
             SplashWindow.Show();
 
@@ -188,8 +221,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         protected override void OnExit(ExitEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
-
-            SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
 
             base.OnExit(e);
         }
@@ -217,6 +248,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
+            WebNavigatorCore.Uninitialize();
+
             AppManager.UninitializeView(View);
 
             Mutex.Dispose();

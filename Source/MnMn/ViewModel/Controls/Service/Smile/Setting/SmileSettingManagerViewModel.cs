@@ -192,6 +192,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             var tasks = new[] {
                 Mediation.Smile.ManagerPack.UsersManager.InitializeAsync(),
                 Mediation.Smile.ManagerPack.VideoManager.InitializeAsync(),
+                Mediation.Smile.ManagerPack.WebSiteManager.InitializeAsync(),
             };
             await Task.WhenAll(tasks);
         }

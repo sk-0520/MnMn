@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
@@ -119,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
             get
             {
                 string resultValue;
-                if(Words.TryGetValue(Constants.CurrentLanguageCode, out resultValue)) {
+                if(Words.TryGetValue(AppUtility.GetCultureName(), out resultValue)) {
                     return resultValue;
                 }
 

@@ -191,6 +191,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return true;
         }
 
+        private bool OrderCore_Rebbot(OrderModel order)
+        {
+            Process.Start(Constants.AssemblyPath, Environment.CommandLine);
+            Application.Current.Shutdown();
+            return true;
+        }
+
+
         bool OrderCore_Save(AppSaveOrderModel order)
         {
             var settingDirectory = VariableConstants.GetSettingDirectory();
@@ -254,6 +262,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(order.OrderKind) {
                 case OrderKind.Exit:
                     return OrderCore_Exit(order);
+
+                case OrderKind.Reboot:
+                    return OrderCore_Rebbot(order);
 
                 case OrderKind.Save:
                     return OrderCore_Save((AppSaveOrderModel)order);

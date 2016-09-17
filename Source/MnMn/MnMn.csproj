@@ -30,6 +30,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +44,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <NoWarn>RECS0154</NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -54,6 +57,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <NoWarn>RECS0154</NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -73,6 +77,16 @@
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
       <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.82\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Geckofx-Core">
+      <HintPath>..\packages\Geckofx45.45.0.20\lib\net40\Geckofx-Core.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Geckofx-Winforms">
+      <HintPath>..\packages\Geckofx45.45.0.20\lib\net40\Geckofx-Winforms.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -112,10 +126,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -128,9 +144,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Xceed.Wpf.AvalonDock">
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>True</Private>
@@ -179,7 +197,9 @@
     <Compile Include="Constants.Function.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
     <Compile Include="Define\GarbageCollectionLevel.cs" />
     <Compile Include="Define\OrderKind.cs" />
@@ -224,6 +244,8 @@
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
+    <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoBookmarkUtility.cs" />
@@ -237,8 +259,11 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
+    <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
@@ -246,6 +271,12 @@
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\SmileWebSiteManager.xaml.cs">
+      <DependentUpon>SmileWebSiteManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
@@ -563,6 +594,10 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
+    <Page Include="View\Controls\Service\Smile\SmileWebSiteManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\WebNavigator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1053,6 +1088,7 @@
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
@@ -1118,6 +1154,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
+  <Import Project="..\packages\Geckofx45.45.0.20\build\Geckofx45.targets" Condition="Exists('..\packages\Geckofx45.45.0.20\build\Geckofx45.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Geckofx45.45.0.20\build\Geckofx45.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx45.45.0.20\build\Geckofx45.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -33,6 +33,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region service
 
+        public static string ServiceSmileSessionKey => appConfig.Get("service-smile-session-key");
+
         /// <summary>
         /// アカウント登録先URI。
         /// </summary>

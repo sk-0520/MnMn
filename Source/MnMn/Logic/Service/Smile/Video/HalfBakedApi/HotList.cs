@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
         public async Task<HtmlDocument> LoadPageHtmlDocument()
         {
             using(var page = new PageLoader(Mediation, new HttpUserAgentHost(), SmileVideoMediationKey.hotlist, ServiceType.SmileVideo)) {
-                page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+                page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
 
                 var result = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!result.IsSuccess) {

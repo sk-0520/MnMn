@@ -23,11 +23,12 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
-    public class NewArrivals:ApiBase
+    public class NewArrivals: ApiBase
     {
         public NewArrivals(Mediation mediation)
             : base(mediation)
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         async Task<FeedSmileVideoModel> LoadFeedAsync(string key)
         {
             using(var page = new PageLoader(Mediation, new HttpUserAgentHost(), key, ServiceType.SmileVideo)) {
-                page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+                page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
                 var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!feedResult.IsSuccess) {
                     return null;

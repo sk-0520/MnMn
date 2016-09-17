@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 {
@@ -39,7 +41,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
     /// </summary>
     public class SmileSessionViewModel: SessionViewModelBase
     {
-
         public SmileSessionViewModel(Mediation mediation, SmileUserAccountModel userAccountModel)
             : base(mediation)
         {
@@ -89,10 +90,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         #region function
 
-        public string GetSession(Uri uri)
-        {
-            return ClientHandler.CookieContainer.GetCookies(uri)["user_session"].Value;
-        }
+        //public IEnumerable<Cookie> GetCookies(Uri uri)
+        //{
+        //    //return ClientHandler.CookieContainer.GetCookies(uri).[Constants.ServiceSmileSessionKey].Value;
+        //    var cookies = ClientHandler.CookieContainer.GetCookies(uri)
+        //        .Cast<Cookie>()
+        //    //.Select(c => $"{c.Name}={c.Value}")
+        //    ;
+        //    //return string.Join(";", cookies);
+        //    return cookies;
+        //}
 
         public Task ChangeUserAccountAsync(SmileUserAccountModel userAccount)
         {
@@ -197,7 +204,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 var result = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 return result.IsSuccess;
             }
+        }
 
+        protected override void ApplyToWebNavigatorEngineCore(WebNavigatorEngine engine, Uri uri)
+        {
+            var cookies = ClientHandler.CookieContainer.GetCookies(uri)
+                .Cast<System.Net.Cookie>()
+            ;
+            foreach(var cookie in cookies) {
+                if(IsLoggedIn) {
+                    CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
+                } else {
+                    CookieManager.Remove(cookie.Domain, cookie.Name, cookie.Path, false);
+                }
+            }
+            //foreach(var cookie in cookies) {
+            //    CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
+            //}
         }
 
         #endregion

@@ -26,6 +26,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
@@ -166,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
             var htmlDocument = await LoadPageAsync();
 
             var result = new RawSmileVideoTagListModel();
-            result.Domain = Constants.CurrentLanguageCode;
+            result.Domain = AppUtility.GetCultureName();
             var tagsElement = htmlDocument.DocumentNode.Descendants("div")
                 .Where(n => n.Attributes.Contains("class"))
                 .Where(n => n.Attributes["class"].Value.Contains("text_list"))

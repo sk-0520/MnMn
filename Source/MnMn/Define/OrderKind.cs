@@ -36,6 +36,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         Exit,
         /// <summary>
+        /// 再起動。
+        /// </summary>
+        Reboot,
+        /// <summary>
         /// メモリのGC。
         /// </summary>
         CleanMemory
