@@ -96,6 +96,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             GeckoPreferences.User["intl.accept_languages"] = string.Join(",", langs);
             GeckoPreferences.User["font.language.group"] = AppUtility.GetCultureLanguage();
 
+            var historyMan = Xpcom.GetService<nsIBrowserHistory>(Gecko.Contracts.NavHistoryService);
+            historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
+            historyMan.RemoveAllPages();
+
             //CacheService.Clear(new CacheStoragePolicy());
             ImageCache.ClearCache(true);
             ImageCache.ClearCache(false);
