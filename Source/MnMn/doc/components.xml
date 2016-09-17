@@ -6,6 +6,7 @@
 	<Component Kind="Library" Name="Json.NET" Uri="http://www.newtonsoft.com/json" License="MIT" />
 	<Component Kind="Library" Name="Extended WPF Toolkit™ Community Edition" Uri="http://wpftoolkit.codeplex.com/" License="Ms-PL" />
 	<Component Kind="Library" Name="OxyPlot.Wpf" Uri="http://www.oxyplot.org/" License="MIT" />
+	<Component Kind="Library" Name="GeckoFX" Uri="https://bitbucket.org/geckofx/" License="MPL" />
 
 	<Component Kind="Library" Name="FFmpeg" Uri="https://ffmpeg.org/" License="GPL2" />
 	<Component Kind="Image" Name="Crystal Project" Uri="https://www.iconfinder.com/icons/18023/battery_power_icon" License="LGPL" />

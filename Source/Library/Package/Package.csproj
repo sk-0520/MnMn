@@ -167,6 +167,9 @@
     <Content Include="Firefox\nssdbm3.dll" />
     <Content Include="Firefox\plugin-container.exe" />
     <Content Include="Firefox\plugin-hang-ui.exe" />
+    <Content Include="Firefox\plugins\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Firefox\sandboxbroker.dll" />
     <Content Include="Firefox\softokn3.dll" />
     <Content Include="Firefox\xul.dll" />
