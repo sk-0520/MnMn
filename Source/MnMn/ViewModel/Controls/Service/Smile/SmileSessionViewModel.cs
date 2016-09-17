@@ -212,8 +212,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 .Cast<System.Net.Cookie>()
             ;
             foreach(var cookie in cookies) {
-                CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
+                if(IsLoggedIn) {
+                    CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
+                } else {
+                    CookieManager.Remove(cookie.Domain, cookie.Name, cookie.Path, false);
+                }
             }
+            //foreach(var cookie in cookies) {
+            //    CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
+            //}
         }
 
         #endregion

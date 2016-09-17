@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using Gecko;
+using Gecko.Cache;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -95,6 +96,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             GeckoPreferences.User["intl.accept_languages"] = string.Join(",", langs);
             GeckoPreferences.User["font.language.group"] = AppUtility.GetCultureLanguage();
 
+            //CacheService.Clear(new CacheStoragePolicy());
+            ImageCache.ClearCache(true);
+            ImageCache.ClearCache(false);
+            CookieManager.RemoveAll();
         }
 
         /// <summary>
