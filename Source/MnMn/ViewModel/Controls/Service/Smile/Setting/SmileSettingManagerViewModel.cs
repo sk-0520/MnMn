@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -136,6 +137,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public WheelOperation WheelOperation
+        {
+            get { return Setting.Video.Player.WheelOperation; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public int SoundOperationStep
+        {
+            get { return Setting.Video.Player.SoundOperationStep; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public bool SeekOperationIsPercent
+        {
+            get { return Setting.Video.Player.SeekOperationIsPercent; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public int SeekOperationStep
+        {
+            get { return Setting.Video.Player.SeekOperationStep; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
 
         #endregion
 

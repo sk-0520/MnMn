@@ -147,9 +147,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public WheelOperation WheelOperation { get; set; } = Constants.SettingServiceSmileVideoPlayerWheelOperation;
-
+        /// <summary>
+        /// 音量増減値。
+        /// </summary>
         public int SoundOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSoundOperationStep;
+        /// <summary>
+        /// シーク値の計算単位はパーセントか。
+        /// </summary>
         public bool SeekOperationIsPercent { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationIsPercent;
+        /// <summary>
+        /// シーク増減値。
+        /// </summary>
         public int SeekOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationStep;
 
         #endregion
