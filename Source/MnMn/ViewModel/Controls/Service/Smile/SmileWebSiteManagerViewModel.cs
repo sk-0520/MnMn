@@ -72,6 +72,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public override Task InitializeAsync()
         {
+            if(WebSiteNavigator != null) {
+                WebSiteNavigator.NavigateEmpty();
+            }
+
             return Task.CompletedTask;
         }
 
@@ -97,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         protected override void ShowViewCore()
         {
             if(WebSiteNavigator.IsEmptyContent) {
-                WebSiteNavigator.SetSession(Session, WebSiteNavigator.HomeSource);
+                WebNavigatorCore.SetSessionEngine(Session, WebSiteNavigator.HomeSource);
                 WebSiteNavigator.Navigate(WebSiteNavigator.HomeSource);
             }
         }

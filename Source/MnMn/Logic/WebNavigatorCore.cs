@@ -168,36 +168,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             UninitializeDefault();
         }
 
-        internal static void SetSession(WebBrowser browser, SessionViewModelBase session, Uri uri)
+        /// <summary>
+        /// セッションをエンジンに設定。
+        /// <para><see cref="WebBrowser"/>? しらん。</para>
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="uri"></param>
+        public static void SetSessionEngine(SessionViewModelBase session, Uri uri)
         {
-            Mediation.Logger.Warning($"{nameof(NotImplementedException)}/{browser.Tag}: {uri}");
-        }
-
-        static void SetSessionDefault(ServiceType serviceType, SessionViewModelBase session, Uri uri)
-        {
-            Mediation.Logger.Warning($"{nameof(NotImplementedException)}/{serviceType}: {uri}");
-        }
-
-        internal static void SetSession(ServiceGeckoWebBrowser browser, SessionViewModelBase session, Uri uri)
-        {
-            browser.SetSession(session, uri);
-        }
-
-        static void SetSessionGeckoFxs(ServiceType serviceType, SessionViewModelBase session, Uri uri)
-        {
-            var targetBrowsers = CreatedGeckoBrowsers.Where(b => b.ServiceType == serviceType);
-            foreach(var targetBrowser in targetBrowsers) {
-                SetSession(targetBrowser, session, uri);
-            }
-        }
-
-        public static void SetSession(ServiceType serviceType, SessionViewModelBase session, Uri uri)
-        {
-            WebNavigatorUtility.DoAction(
-                Engine,
-                () => SetSessionDefault(serviceType, session, uri),
-                () => SetSessionGeckoFxs(serviceType, session, uri)
-            );
+            session.ApplyToWebNavigatorEngine(Engine, uri);
         }
 
         /// <summary>

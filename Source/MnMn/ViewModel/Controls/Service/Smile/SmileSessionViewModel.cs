@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 {
@@ -89,16 +90,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         #region function
 
-        public IEnumerable<Cookie> GetCookies(Uri uri)
-        {
-            //return ClientHandler.CookieContainer.GetCookies(uri).[Constants.ServiceSmileSessionKey].Value;
-            var cookies = ClientHandler.CookieContainer.GetCookies(uri)
-                .Cast<Cookie>()
-            //.Select(c => $"{c.Name}={c.Value}")
-            ;
-            //return string.Join(";", cookies);
-            return cookies;
-        }
+        //public IEnumerable<Cookie> GetCookies(Uri uri)
+        //{
+        //    //return ClientHandler.CookieContainer.GetCookies(uri).[Constants.ServiceSmileSessionKey].Value;
+        //    var cookies = ClientHandler.CookieContainer.GetCookies(uri)
+        //        .Cast<Cookie>()
+        //    //.Select(c => $"{c.Name}={c.Value}")
+        //    ;
+        //    //return string.Join(";", cookies);
+        //    return cookies;
+        //}
 
         public Task ChangeUserAccountAsync(SmileUserAccountModel userAccount)
         {
@@ -203,7 +204,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                 var result = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 return result.IsSuccess;
             }
+        }
 
+        protected override void ApplyToWebNavigatorEngineCore(WebNavigatorEngine engine, Uri uri)
+        {
+            var cookies = ClientHandler.CookieContainer.GetCookies(uri)
+                .Cast<System.Net.Cookie>()
+            ;
+            foreach(var cookie in cookies) {
+                CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
+            }
         }
 
         #endregion

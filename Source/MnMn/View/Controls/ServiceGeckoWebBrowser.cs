@@ -44,25 +44,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region function
 
-        void SetSessionSmile(SmileSessionViewModel session, Uri uri)
-        {
-            var cookies = session.GetCookies(uri);
-            //Document.Cookie = $"{cookie}; {Document.Cookie}";
-            //CookieManager.Add(uri.Host, uri.PathAndQuery, Constants.ServiceSmileSessionKey, sessionValue, true, true, true, (long)TimeSpan.FromMinutes(30).TotalMilliseconds);
-            foreach(var cookie in cookies) {
-                CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
-            }
-        }
-
-        public void SetSession(SessionViewModelBase session, Uri uri)
-        {
-            switch(ServiceType) {
-                case ServiceType.Smile:
-                    SetSessionSmile((SmileSessionViewModel)session, uri);
-                    break;
-            }
-        }
-
         #endregion
     }
 }

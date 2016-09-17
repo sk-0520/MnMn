@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 {
@@ -136,6 +137,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         {
             LastLoginTime = NotLoginTime;
         }
+
+        protected abstract void ApplyToWebNavigatorEngineCore(WebNavigatorEngine engine, Uri uri);
+        //protected virtual void ApplyToWebNavigatorCore(WebNavigator webNavigator, Uri uri)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public void ApplyToWebNavigatorEngine(WebNavigatorEngine engine, Uri uri)
+        {
+            ApplyToWebNavigatorEngineCore(engine, uri);
+        }
+
+        //public void ApplyToWebNavigator(WebNavigator webNavigator, Uri uri)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         #endregion
 

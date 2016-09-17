@@ -380,6 +380,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             IsEmptyContent = false;
         }
 
+        public void NavigateEmpty()
+        {
+            var uri = new Uri("about:blank");
+            Navigate(uri);
+            DoAction(
+                b => { },
+                b => b.History.Clear()
+            );
+            IsEmptyContent = true;
+        }
+
         /// <summary>
         /// HTMLを直接読み込み。
         /// </summary>
@@ -438,15 +449,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             this.container.Content = host;
-        }
-
-        public void SetSession(SessionViewModelBase session, Uri uri)
-        {
-            DoAction(
-                b => WebNavigatorCore.SetSession(BrowserDefault, session, uri),
-                b => WebNavigatorCore.SetSession(BrowserGeckoFx, session, uri)
-            );
-
         }
 
         #endregion

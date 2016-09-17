@@ -142,7 +142,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             if(Session.LoginState != LoginState.LoggedIn) {
 
             } else {
-                await VideoManager.InitializeAsync();
+                foreach(var manager in ManagerChildren) {
+                    await manager.InitializeAsync();
+                }
             }
         }
 
