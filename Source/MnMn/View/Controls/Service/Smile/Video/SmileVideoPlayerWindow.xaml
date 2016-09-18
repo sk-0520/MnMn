@@ -52,6 +52,7 @@
         <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Double x:Key="ImageWidth">100</sys:Double>
       <sys:Double x:Key="ImageHeight">80</sys:Double>
@@ -163,6 +164,79 @@
   <Window.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
+    <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
+    <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
+      <KeyBinding.CommandParameter>
+        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
+          <Binding>
+            <Binding.Source>
+              <sys:Boolean>True</sys:Boolean>
+            </Binding.Source>
+          </Binding>
+          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoChangeVideoPositionType.Setting}" />
+        </MultiBinding>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
+    <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding ChangeSeekVideoPositionCommand}">
+      <KeyBinding.CommandParameter>
+        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
+          <Binding>
+            <Binding.Source>
+              <sys:Boolean>True</sys:Boolean>
+            </Binding.Source>
+          </Binding>
+          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoChangeVideoPositionType.Percent}" />
+        </MultiBinding>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
+    <KeyBinding Key="Right" Modifiers="Ctrl" Command="{Binding ChangeSeekVideoPositionCommand}">
+      <KeyBinding.CommandParameter>
+        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
+          <Binding>
+            <Binding.Source>
+              <sys:Boolean>True</sys:Boolean>
+            </Binding.Source>
+          </Binding>
+          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoChangeVideoPositionType.Absolute}" />
+        </MultiBinding>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
+    <KeyBinding Key="Left" Command="{Binding ChangeSeekVideoPositionCommand}">
+      <KeyBinding.CommandParameter>
+        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
+          <Binding>
+            <Binding.Source>
+              <sys:Boolean>False</sys:Boolean>
+            </Binding.Source>
+          </Binding>
+          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoChangeVideoPositionType.Setting}" />
+        </MultiBinding>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
+    <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding ChangeSeekVideoPositionCommand}">
+      <KeyBinding.CommandParameter>
+        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
+          <Binding>
+            <Binding.Source>
+              <sys:Boolean>False</sys:Boolean>
+            </Binding.Source>
+          </Binding>
+          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoChangeVideoPositionType.Percent}" />
+        </MultiBinding>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
+    <KeyBinding Key="Left" Modifiers="Ctrl" Command="{Binding ChangeSeekVideoPositionCommand}">
+      <KeyBinding.CommandParameter>
+        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
+          <Binding>
+            <Binding.Source>
+              <sys:Boolean>False</sys:Boolean>
+            </Binding.Source>
+          </Binding>
+          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoChangeVideoPositionType.Absolute}" />
+        </MultiBinding>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
   </Window.InputBindings>
   <Window.Style>
     <Style TargetType="Window">

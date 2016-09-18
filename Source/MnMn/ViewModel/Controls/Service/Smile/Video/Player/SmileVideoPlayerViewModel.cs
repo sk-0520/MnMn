@@ -89,6 +89,7 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using OxyPlot;
 using OxyPlot.Wpf;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
+using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -462,6 +463,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var lParam = new IntPtr(desktopPoint.X | desktopPoint.Y << 16);
                     NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
                 });
+            }
+        }
+
+        public ICommand ChangeSeekVideoPositionCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var param = (SmileVideoChangeVideoPositionCommandParameterModel)o;
+                        Mediation.Logger.Information($"{param.PositionType}: {Setting.Player.SeekOperationAbsoluteStep}");
+                        switch(param.PositionType) {
+                            case SmileVideoChangeVideoPositionType.Setting:
+                                ChangeSeekVideoPosition(param.IsNext, Setting.Player.SeekOperationIsPercent, Setting.Player.SeekOperationIsPercent ? Setting.Player.SeekOperationPercentStep : Setting.Player.SeekOperationAbsoluteStep);
+                                break;
+
+                            case SmileVideoChangeVideoPositionType.Percent:
+                                ChangeSeekVideoPosition(param.IsNext, true, Setting.Player.SeekOperationPercentStep);
+                                break;
+
+                            case SmileVideoChangeVideoPositionType.Absolute:
+                                ChangeSeekVideoPosition(param.IsNext, false, Setting.Player.SeekOperationAbsoluteStep);
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                );
             }
         }
 
@@ -1325,16 +1355,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Volume = RangeUtility.Clamp(setVolume, Constants.NavigatorVolumeRange);
         }
 
-        void StepChangeSeekPosition(bool isNext)
+        void ChangeSeekVideoPosition(bool isNext, bool isPercent, int stepValue)
         {
-            if(Setting.Player.SeekOperationIsPercent) {
-                var step = (float)(Setting.Player.SeekOperationPercentStep * 0.01);
+            if(isPercent) {
+                var step = (float)(stepValue * 0.01);
                 if(!isNext) {
                     step *= -1;
                 }
                 Player.Position += step;
             } else {
-                var nextTime = Player.Time.Add(TimeSpan.FromSeconds(isNext ? Setting.Player.SeekOperationAbsoluteStep : -Setting.Player.SeekOperationAbsoluteStep));
+                var nextTime = Player.Time.Add(TimeSpan.FromSeconds(isNext ? stepValue : -stepValue));
                 if(nextTime.Ticks <= 0) {
                     nextTime = TimeSpan.Zero;
                 }
@@ -1937,7 +1967,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case Define.UI.Player.WheelOperation.Seek:
-                    StepChangeSeekPosition(isUp);
+                    ChangeSeekVideoPosition(isUp, Setting.Player.SeekOperationIsPercent, Setting.Player.SeekOperationIsPercent ? Setting.Player.SeekOperationPercentStep : Setting.Player.SeekOperationAbsoluteStep);
                     break;
 
                 default:
