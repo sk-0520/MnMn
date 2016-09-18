@@ -154,20 +154,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// 音量増減値。
         /// </summary>
-        public int SoundOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSoundOperationStep;
+        [DataMember]
+        public int VolumeOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerVolumeOperationStep;
         /// <summary>
         /// シーク値の計算単位はパーセントか。
         /// </summary>
+        [DataMember]
         public bool SeekOperationIsPercent { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationIsPercent;
         /// <summary>
         /// シーク増減値。
         /// <para>絶対値。</para>
         /// </summary>
+        [DataMember]
         public int SeekOperationAbsoluteStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep;
         /// <summary>
         /// シーク増減値。
         /// <para>パーセント。</para>
         /// </summary>
+        [DataMember]
         public int SeekOperationPercentStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationPercentStep;
 
         #endregion

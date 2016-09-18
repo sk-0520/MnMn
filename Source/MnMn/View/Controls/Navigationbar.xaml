@@ -7,6 +7,8 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignHeight="30" d:DesignWidth="300"
@@ -181,8 +183,8 @@
         Grid.Column="2"
         Orientation="Horizontal"
         Width="40"
-        Minimum="0"
-        Maximum="100"
+        Minimum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMinimum}}"
+        Maximum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMaximum}}"
         Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
       <ContentControl

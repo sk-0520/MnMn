@@ -162,7 +162,7 @@
               <TextBlock Grid.Row="0" Grid.Column="0">ホイール操作:</TextBlock>
               <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                 <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.None}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.None}, Converter={StaticResource EnumDisplayConverter}}" />
-                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Sound}}" Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Sound}, Converter={StaticResource EnumDisplayConverter}}" />
+                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Volume}}" Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Volume}, Converter={StaticResource EnumDisplayConverter}}" />
                 <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Seek}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Seek}, Converter={StaticResource EnumDisplayConverter}}"/>
               </WrapPanel>
 
@@ -173,15 +173,15 @@
                   <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Slider
-                  x:Name="sliderSound"
+                  x:Name="sliderVolume"
                   Grid.Column="0"
                   LargeChange="2"
                   SmallChange="1"
-                  Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMinimum}}"
-                  Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMaximum}}"
-                  Value="{Binding SoundOperationStep}"
+                  Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepVolumeRangeMinimum}}"
+                  Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepVolumeRangeMaximum}}"
+                  Value="{Binding VolumeOperationStep}"
                 />
-                <TextBlock Grid.Column="1" Text="{Binding Value, ElementName=sliderSound}" />
+                <TextBlock Grid.Column="1" Text="{Binding Value, ElementName=sliderVolume}" />
               </Grid>
 
               <TextBlock Grid.Row="2" Grid.Column="0">シーク増減値</TextBlock>

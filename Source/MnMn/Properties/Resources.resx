@@ -275,7 +275,7 @@
   <data name="String_App_Define_UI_Player_WheelOperation_Seek" xml:space="preserve">
     <value>シーク調整</value>
   </data>
-  <data name="String_App_Define_UI_Player_WheelOperation_Sound" xml:space="preserve">
+  <data name="String_App_Define_UI_Player_WheelOperation_Volume" xml:space="preserve">
     <value>音量調整</value>
   </data>
   <data name="String_App_Define_UpdateCheckState_CurrentIsNew" xml:space="preserve">

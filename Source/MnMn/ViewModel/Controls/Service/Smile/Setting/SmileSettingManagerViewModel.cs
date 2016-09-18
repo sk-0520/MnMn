@@ -155,9 +155,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
-        public int SoundOperationStep
+        public int VolumeOperationStep
         {
-            get { return Setting.Video.Player.SoundOperationStep; }
+            get { return Setting.Video.Player.VolumeOperationStep; }
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 

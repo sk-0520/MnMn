@@ -21,6 +21,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -120,6 +122,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ウィンドウ: 高さ
         /// </summary>
         public static int SettingApplicationWindowHeight => appConfig.Get("setting-application-window-height", int.Parse);
+
+        public static IReadOnlyRange<int> NavigatorVolumeRange = appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
+        public static int NavigatorVolumeRangeMinimum => NavigatorVolumeRange.Head;
+        public static int NavigatorVolumeRangeMaximum => NavigatorVolumeRange.Tail;
+
 
         #endregion
     }

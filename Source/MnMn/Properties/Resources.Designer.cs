@@ -536,9 +536,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         /// <summary>
         ///   音量調整 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_App_Define_UI_Player_WheelOperation_Sound {
+        internal static string String_App_Define_UI_Player_WheelOperation_Volume {
             get {
-                return ResourceManager.GetString("String_App_Define_UI_Player_WheelOperation_Sound", resourceCulture);
+                return ResourceManager.GetString("String_App_Define_UI_Player_WheelOperation_Volume", resourceCulture);
             }
         }
         

@@ -150,9 +150,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Head;
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Tail;
 
-        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSoundRange = appConfig.Get("service-smile-smilevideo-player-setep-sound-range", RangeModel.Parse<int>);
-        public static int ServiceSmileVideoPlayerStepSoundRangeMinimum => ServiceSmileVideoPlayerStepSoundRange.Head;
-        public static int ServiceSmileVideoPlayerStepSoundRangeMaximum => ServiceSmileVideoPlayerStepSoundRange.Tail;
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepVolumeRange = appConfig.Get("service-smile-smilevideo-player-setep-volume-range", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepVolumeRangeMinimum => ServiceSmileVideoPlayerStepVolumeRange.Head;
+        public static int ServiceSmileVideoPlayerStepVolumeRangeMaximum => ServiceSmileVideoPlayerStepVolumeRange.Tail;
         public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSeekRangePercent => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-percent", RangeModel.Parse<int>);
         public static int ServiceSmileVideoPlayerStepSeekRangePercentMinimum => ServiceSmileVideoPlayerStepSeekRangePercent.Head;
         public static int ServiceSmileVideoPlayerStepSeekRangePercentMaximum => ServiceSmileVideoPlayerStepSeekRangePercent.Tail;
@@ -326,7 +326,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static WheelOperation SettingServiceSmileVideoPlayerWheelOperation => appConfig.Get("setting-service-smile-smilevideo-player-wheel-operation", s => EnumUtility.Parse<WheelOperation>(s, false));
 
-        public static int SettingServiceSmileVideoPlayerSoundOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-sound-operation-step", int.Parse);
+        public static int SettingServiceSmileVideoPlayerVolumeOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-volume-operation-step", int.Parse);
         public static bool SettingServiceSmileVideoPlayerSeekOperationIsPercent => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-is-percent", bool.Parse);
         public static int SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-absolute-step", int.Parse);
         public static int SettingServiceSmileVideoPlayerSeekOperationPercentStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-percent-step", int.Parse);

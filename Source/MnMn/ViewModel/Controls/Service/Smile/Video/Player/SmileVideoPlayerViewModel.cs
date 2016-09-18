@@ -1318,6 +1318,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void StepChangeVolume(bool isUp)
+        {
+            var step = isUp ? Setting.Player.VolumeOperationStep : -Setting.Player.VolumeOperationStep;
+            var setVolume = Volume + step;
+            Volume = RangeUtility.Clamp(setVolume, Constants.NavigatorVolumeRange);
+        }
+
+        void StepChangeSeekPosition(bool isNext)
+        { }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1599,6 +1609,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
+            Player.MouseWheel += Player_MouseWheel;
             SetNavigationbarBaseEvent(Navigationbar);
             DetailComment.LostFocus += DetailComment_LostFocus;
         }
@@ -1716,6 +1727,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
             Player.StateChanged -= Player_StateChanged;
+            Player.MouseWheel -= Player_MouseWheel;
             UnsetNavigationbarBaseEvent(Navigationbar);
 
             if(EnabledCommentSlider != null) {
@@ -1892,6 +1904,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 default:
                     break;
+            }
+        }
+
+        private void Player_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var isUp = 0 < e.Delta;
+            switch(Setting.Player.WheelOperation) {
+                case Define.UI.Player.WheelOperation.None:
+                    break;
+
+                case Define.UI.Player.WheelOperation.Volume:
+                    StepChangeVolume(isUp);
+                    break;
+
+                case Define.UI.Player.WheelOperation.Seek:
+                    StepChangeSeekPosition(isUp);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
 

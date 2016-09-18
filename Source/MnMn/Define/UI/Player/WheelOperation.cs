@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
         /// <summary>
         /// 音量調整。
         /// </summary>
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_WheelOperation_Sound))]
-        Sound,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_WheelOperation_Volume))]
+        Volume,
         /// <summary>
         /// シーク調整。
         /// </summary>
