@@ -1327,20 +1327,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void StepChangeSeekPosition(bool isNext)
         {
-            float step = float.NaN;
-
             if(Setting.Player.SeekOperationIsPercent) {
-                step = (float)(Setting.Player.SeekOperationPercentStep * 0.01);
+                var step = (float)(Setting.Player.SeekOperationPercentStep * 0.01);
                 if(!isNext) {
                     step *= -1;
                 }
+                Player.Position += step;
             } else {
+                var nextTime = Player.Time.Add(TimeSpan.FromSeconds(isNext ? Setting.Player.SeekOperationAbsoluteStep : -Setting.Player.SeekOperationAbsoluteStep));
+                if(nextTime.Ticks <= 0) {
+                    nextTime = TimeSpan.Zero;
+                }
+                Player.Time = nextTime;
             }
 
             ClearComment();
-            Player.Position += step;
             VideoPosition = Player.Position;
-            PrevPlayedTime = Player.Time;
+            PlayTime = PrevPlayedTime = Player.Time;
         }
 
         #endregion
