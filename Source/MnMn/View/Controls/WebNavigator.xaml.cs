@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,13 +11,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
@@ -130,12 +140,122 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region NewWindowCommand
+
+        #region NewWindowCommandProperty
+
+        public static readonly DependencyProperty NewWindowCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(NewWindowCommandProperty)),
+            typeof(ICommand),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNewWindowCommandChanged))
+        );
+
+        private static void OnNewWindowCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.NewWindowCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand NewWindowCommand
+        {
+            get { return GetValue(NewWindowCommandProperty) as ICommand; }
+            set { SetValue(NewWindowCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region NewWindowCommandParameterProperty
+
+        public static readonly DependencyProperty NewWindowCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(NewWindowCommandParameterProperty)),
+            typeof(object),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNewWindowCommandParameterChanged))
+        );
+
+        private static void OnNewWindowCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.NewWindowCommandParameter = e.NewValue;
+            }
+        }
+
+        public object NewWindowCommandParameter
+        {
+            get { return GetValue(NewWindowCommandParameterProperty); }
+            set { SetValue(NewWindowCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
         #region property
 
+        /// <summary>
+        /// 標準ブラウザ。
+        /// </summary>
+        WebBrowser BrowserDefault { get; set; }
+        /// <summary>
+        /// Gecko版。
+        /// </summary>
+        ServiceGeckoWebBrowser BrowserGeckoFx { get; set; }
+
+        /// <summary>
+        /// サービス種別。
+        /// </summary>
+        public ServiceType ServiceType { get; set; }
+
+        /// <summary>
+        /// 現在ページ。
+        /// </summary>
         public Uri Source
         {
-            get { return this.browser.Source; }
-            set { this.browser.Source = value; }
+            get
+            {
+                return DoFunction(
+                    b => b.Source,
+                    b => b.Url
+                );
+            }
+        }
+
+        /// <summary>
+        /// 何も読み込まれていない状態か。
+        /// <para>初期化した後とか</para>
+        /// </summary>
+        public bool IsEmptyContent { get; private set; }
+
+        /// <summary>
+        /// 「戻る」は使用可能か。
+        /// </summary>
+        public bool CanGoBack
+        {
+            get
+            {
+                return DoFunction(
+                    b => b.CanGoBack,
+                    b => b.CanGoBack
+                );
+            }
+        }
+
+        /// <summary>
+        /// 「進む」は使用可能か。
+        /// </summary>
+        public bool CanGoForward
+        {
+            get
+            {
+                return DoFunction(
+                    b => b.CanGoForward,
+                    b => b.CanGoForward
+                );
+            }
         }
 
         #endregion
@@ -147,7 +267,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(
-                    o => { Navigate(HomeSource); },
+                    o => Navigate(HomeSource),
                     o => IsVisibleHome && HomeSource != null
                 );
             }
@@ -158,8 +278,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(
-                    o => { this.browser.GoBack(); },
-                    o => this.browser.CanGoBack
+                    o => GoBack(),
+                    o => CanGoBack
                 );
             }
         }
@@ -169,8 +289,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             get
             {
                 return new DelegateCommand(
-                    o => { this.browser.GoForward(); },
-                    o => this.browser.CanGoForward
+                    o => GoForward(),
+                    o => CanGoForward
                 );
             }
         }
@@ -183,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     o => {
                         Uri inputUri;
                         if(Uri.TryCreate(location.Text, UriKind.Absolute, out inputUri)) {
-                            Navigate(location.Text);
+                            Navigate(inputUri);
                         }
                     },
                     o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
@@ -195,201 +315,234 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #region function
 
-        #region wrapper
-
-        //
-        // 概要:
-        //     指定された URL にあるドキュメントに非同期に移動します。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の URL。
-        public void Navigate(string source)
+        /// <summary>
+        /// 戻り値を有する処理の実施。
+        /// </summary>
+        /// <typeparam name="TResult">戻り値</typeparam>
+        /// <param name="defaultFunction">標準ブラウザ使用時の処理。</param>
+        /// <param name="geckoFxFunction">Gecko版使用時の処理。</param>
+        /// <returns></returns>
+        TResult DoFunction<TResult>(Func<WebBrowser, TResult> defaultFunction, Func<ServiceGeckoWebBrowser, TResult> geckoFxFunction)
         {
-            this.browser.Navigate(source);
-        }
-        //
-        // 概要:
-        //     指定された System.Uri にあるドキュメントに非同期に移動します。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の System.Uri。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        //
-        //   T:System.Security.SecurityException:
-        //     Navigation from an application that is running in partial trust to a System.Uri
-        //     that is not located at the site of origin.
-        public void Navigate(Uri source)
-        {
-            this.browser.Navigate(source);
+            return WebNavigatorUtility.DoFunction(
+                WebNavigatorCore.Engine,
+                () => defaultFunction(BrowserDefault),
+                () => geckoFxFunction(BrowserGeckoFx)
+            );
         }
 
-        //
-        // 概要:
-        //     指定された URL にあるドキュメントに非同期に移動し、ドキュメントのコンテンツを読み込むターゲット フレームを指定します。追加の HTTP POST データおよび
-        //     HTTP ヘッダーを、ナビゲーション要求の一部としてサーバーに送信できます。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の URL。
-        //
-        //   targetFrameName:
-        //     ドキュメントのコンテンツを表示するフレームの名前。
-        //
-        //   postData:
-        //     ソースが要求されたときにサーバーに送信する HTTP POST データ。
-        //
-        //   additionalHeaders:
-        //     ソースが要求されたときにサーバーに送信する HTTP ヘッダー。
-        public void Navigate(string source, string targetFrameName, byte[] postData, string additionalHeaders)
+        /// <summary>
+        /// 戻り値の無い処理の実施。
+        /// </summary>
+        /// <param name="defaultAction">標準ブラウザ使用時の処理。</param>
+        /// <param name="geckoFxAction">Gecko版使用時の処理。</param>
+        void DoAction(Action<WebBrowser> defaultAction, Action<GeckoWebBrowser> geckoFxAction)
         {
-            this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
+            WebNavigatorUtility.DoAction(
+                WebNavigatorCore.Engine,
+                () => defaultAction(BrowserDefault),
+                () => geckoFxAction(BrowserGeckoFx)
+            );
         }
 
-        //
-        // 概要:
-        //     指定された System.Uri にあるドキュメントに非同期に移動し、ドキュメントのコンテンツを読み込むターゲット フレームを指定します。追加の HTTP
-        //     POST データおよび HTTP ヘッダーを、ナビゲーション要求の一部としてサーバーに送信できます。
-        //
-        // パラメーター:
-        //   source:
-        //     移動先の System.Uri。
-        //
-        //   targetFrameName:
-        //     ドキュメントのコンテンツを表示するフレームの名前。
-        //
-        //   postData:
-        //     ソースが要求されたときにサーバーに送信する HTTP POST データ。
-        //
-        //   additionalHeaders:
-        //     ソースが要求されたときにサーバーに送信する HTTP ヘッダー。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        //
-        //   T:System.Security.SecurityException:
-        //     Navigation from an application that is running in partial trust:To a System.Uri
-        //     that is not located at the site of origin, or targetFrameName name is not null
-        //     or empty.
-        public void Navigate(Uri source, string targetFrameName, byte[] postData, string additionalHeaders)
+        /// <summary>
+        /// 戻る。
+        /// </summary>
+        public void GoBack()
         {
-            this.browser.Navigate(source, targetFrameName, postData, additionalHeaders);
+            DoAction(
+                b => b.GoBack(),
+                b => b.GoBack()
+            );
         }
 
-        //
-        // 概要:
-        //     ドキュメントのコンテンツを含む System.IO.Stream へ非同期に移動します。
-        //
-        // パラメーター:
-        //   stream:
-        //     ドキュメントのコンテンツを含む System.IO.Stream。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        public void NavigateToStream(Stream stream)
+        /// <summary>
+        /// 進む。
+        /// </summary>
+        public void GoForward()
         {
-            this.browser.NavigateToStream(stream);
+            DoAction(
+                b => b.GoForward(),
+                b => b.GoForward()
+            );
         }
-        //
-        // 概要:
-        //     ドキュメントのコンテンツを含む System.String へ非同期に移動します。
-        //
-        // パラメーター:
-        //   text:
-        //     ドキュメントのコンテンツを含む System.String。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        public void NavigateToString(string text)
+
+        /// <summary>
+        /// 指定 URI に移動。
+        /// </summary>
+        /// <param name="uri"></param>
+        public void Navigate(Uri uri)
         {
-            this.browser.NavigateToString(text);
+            DoAction(
+                b => b.Navigate(uri),
+                b => b.Navigate(uri.OriginalString)
+            );
+            IsEmptyContent = false;
         }
-        //
-        // 概要:
-        //     現在のページを再読み込みします。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
+
+        public void NavigateEmpty()
+        {
+            var uri = new Uri("about:blank");
+            Navigate(uri);
+            DoAction(
+                b => { },
+                b => b.History.Clear()
+            );
+            IsEmptyContent = true;
+        }
+
+        /// <summary>
+        /// HTMLを直接読み込み。
+        /// </summary>
+        /// <param name="htmlSource"></param>
+        public void LoadHtml(string htmlSource)
+        {
+            DoAction(
+                b => b.NavigateToString(htmlSource),
+                b => b.LoadHtml(htmlSource)
+            );
+            IsEmptyContent = false;
+        }
+
         [SecurityCritical]
-        public void Refresh()
+        public void Refresh(bool noCache = false)
         {
-            this.browser.Refresh();
-        }
-        //
-        // 概要:
-        //     オプションのキャッシュ検証を使用して現在のページを再読み込みします。
-        //
-        // パラメーター:
-        //   noCache:
-        //     キャッシュ検証を行わずに最新の情報に更新するかどうかを指定します。
-        //
-        // 例外:
-        //   T:System.ObjectDisposedException:
-        //     The System.Windows.Controls.WebBrowser instance is no longer valid.
-        //
-        //   T:System.InvalidOperationException:
-        //     A reference to the underlying native WebBrowser could not be retrieved.
-        [SecurityCritical]
-        public void Refresh(bool noCache)
-        {
-            this.browser.Refresh(noCache);
+            DoAction(
+                b => b.Refresh(noCache),
+                b => {
+                    if(noCache) {
+                        b.Reload(GeckoLoadFlags.IsRefresh);
+                    } else {
+                        b.Reload(GeckoLoadFlags.BypassCache);
+                    }
+                }
+            );
         }
 
-        #endregion
+        void InitializedDefault()
+        {
+            BrowserDefault = new WebBrowser();
+
+            BrowserDefault.Loaded += Browser_Loaded;
+            BrowserDefault.Loaded += BrowserDefault_Loaded;
+            BrowserDefault.Unloaded += BrowserDefault_Unloaded;
+            BrowserDefault.Navigating += BrowserDefault_Navigating;
+            BrowserDefault.Navigated += BrowserDefault_Navigated;
+
+            this.container.Content = BrowserDefault;
+        }
+
+        void InitializedGeckoFx()
+        {
+            BrowserGeckoFx = WebNavigatorCore.CreateBrowser();
+            BrowserGeckoFx.CreateControl();
+
+            BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
+            BrowserGeckoFx.Navigating += BrowserGeckoFx_Navigating;
+            BrowserGeckoFx.Navigated += BrowserGeckoFx_Navigated;
+            BrowserGeckoFx.CreateWindow += BrowserGeckoFx_CreateWindow;
+
+            var host = new WindowsFormsHost();
+            using(Initializer.BeginInitialize(host)) {
+                host.Child = BrowserGeckoFx;
+                host.Loaded += Browser_Loaded;
+            }
+
+            this.container.Content = host;
+        }
 
         #endregion
 
         #region UserControl
 
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            DoAction(
+                b => InitializedDefault(),
+                b => InitializedGeckoFx()
+            );
+
+            IsEmptyContent = true;
+        }
+
         #endregion
 
-        private void browser_Loaded(object sender, RoutedEventArgs e)
+        private void Browser_Loaded(object sender, RoutedEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            element.Loaded -= Browser_Loaded;
+            DoAction(
+                b => b.Tag = ServiceType, // IEもうどうでもいいわ
+                b => {
+                    var type = b.GetType();
+                    var property = type.GetProperty(nameof(ServiceGeckoWebBrowser.ServiceType));
+                    property.SetValue(b, ServiceType);
+                }
+            );
+        }
+
+        private void BrowserDefault_Loaded(object sender, RoutedEventArgs e)
         {
             // http://stackoverflow.com/questions/6138199/wpf-webbrowser-control-how-to-supress-script-errors
-            dynamic activeX = this.browser.GetType().InvokeMember(
+            dynamic activeX = BrowserDefault.GetType().InvokeMember(
                 "ActiveXInstance",
                 BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                this.browser,
+                BrowserDefault,
                 new object[] { }
             );
             if(activeX != null) {
                 activeX.Silent = true;
-                this.browser.Loaded -= browser_Loaded;
+                BrowserDefault.Loaded -= BrowserDefault_Loaded;
             }
         }
 
-        private void browser_Navigating(object sender, NavigatingCancelEventArgs e)
+        private void BrowserDefault_Unloaded(object sender, RoutedEventArgs e)
+        {
+            BrowserDefault.Unloaded -= BrowserDefault_Unloaded;
+            BrowserDefault.Loaded -= BrowserDefault_Loaded;
+            BrowserDefault.Navigating -= BrowserDefault_Navigating;
+            BrowserDefault.Navigated -= BrowserDefault_Navigated;
+        }
+
+        private void BrowserGeckoFx_Disposed(object sender, EventArgs e)
+        {
+            BrowserGeckoFx.Disposed -= BrowserGeckoFx_Disposed;
+            BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
+            BrowserGeckoFx.Navigated -= BrowserGeckoFx_Navigated;
+            BrowserGeckoFx.CreateWindow -= BrowserGeckoFx_CreateWindow;
+        }
+
+        private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
         }
 
-        private void browser_Navigated(object sender, NavigationEventArgs e)
+        private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
+        {
+            this.location.Text = e.Uri?.ToString() ?? string.Empty;
+        }
+
+
+        private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
         {
             CommandManager.InvalidateRequerySuggested();
         }
+
+        private void BrowserGeckoFx_Navigated(object sender, GeckoNavigatedEventArgs e)
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void BrowserGeckoFx_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
+        {
+            if(NewWindowCommand != null) {
+                var eventData = WebNavigatorEventData.Create(WebNavigatorEngine.GeckoFx, sender, e, NewWindowCommandParameter);
+                NewWindowCommand.TryExecute(eventData);
+            }
+        }
+
     }
 }

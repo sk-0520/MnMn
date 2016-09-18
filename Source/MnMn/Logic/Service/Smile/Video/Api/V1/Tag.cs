@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             foreach(var tag in values) {
                 var item = new RawSmileVideoTagItemModel();
                 item.Text = tag["tag"].Value<string>();
-                result.Domain = Constants.CurrentLanguageCode;
+                result.Domain = AppUtility.GetCultureName();
                 result.Tags.Add(item);
             }
 

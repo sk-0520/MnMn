@@ -24,8 +24,10 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
@@ -44,6 +46,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #region command
 
+        public ICommand NewWindowCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var data = (WebNavigatorEventDataBase)o;
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region ManagerViewModelBase
@@ -56,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            if(IssueBrowser.Source == null) {
+            if(IssueBrowser.IsEmptyContent) {
                 IssueBrowser.Navigate(Constants.AppUriIssueResolved);
             }
         }
@@ -77,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public override void InitializeView(MainWindow view)
         {
             IssueBrowser = view.information.issueBrowser;
-            IssueBrowser.HomeSource = new Uri(Constants.AppUriIssueResolved);
+            IssueBrowser.HomeSource = Constants.AppUriIssueResolved;
         }
 
         public override void UninitializeView(MainWindow view)

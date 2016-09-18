@@ -78,6 +78,7 @@
               PeriodItemsSource="{Binding PeriodItems}"
               SelectedTarget="{Binding SelectedTarget, Mode=TwoWay}"
               SelectedPeriod="{Binding SelectedPeriod, Mode=TwoWay}"
+              IsEnabled="{Binding CanLoad}"
             />
             <Button Style="{StaticResource TabReloadButton}" />
             <Button Style="{StaticResource TabCloseButton}" />

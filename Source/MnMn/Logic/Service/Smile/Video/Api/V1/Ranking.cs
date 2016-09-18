@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
@@ -41,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 page.ReplaceUriParameters["target"] = target;
                 page.ReplaceUriParameters["period"] = period;
                 page.ReplaceUriParameters["category"] = category;
-                page.ReplaceUriParameters["lang"] = Constants.CurrentLanguageCode;
+                page.ReplaceUriParameters["lang"] = AppUtility.GetCultureName();
 
                 var feedResult = await page.GetResponseTextAsync(PageLoaderMethod.Get);
                 if(!feedResult.IsSuccess) {

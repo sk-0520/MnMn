@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
@@ -134,6 +135,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool ShowPostTimestamp { get; set; } = Constants.SettingServiceSmileVideoPlayerShowPostTimestamp;
+
+        /// <summary>
+        /// スペースで一時停止するか。
+        /// </summary>
+        [DataMember]
+        public bool KeySpaceToPause { get; set; } = Constants.SettingServiceSmileVideoPlayerKeySpaceToPause;
+        /// <summary>
+        /// クリックで一時停止するか。
+        /// </summary>
+        [DataMember]
+        public bool MoseClickToPause { get; set; } = Constants.SettingServiceSmileVideoPlayerMoseClickToPause;
+        /// <summary>
+        /// ホイール操作。
+        /// </summary>
+        [DataMember]
+        public WheelOperation WheelOperation { get; set; } = Constants.SettingServiceSmileVideoPlayerWheelOperation;
+        /// <summary>
+        /// 音量増減値。
+        /// </summary>
+        [DataMember]
+        public int VolumeOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerVolumeOperationStep;
+        /// <summary>
+        /// シーク値の計算単位はパーセントか。
+        /// </summary>
+        [DataMember]
+        public bool SeekOperationIsPercent { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationIsPercent;
+        /// <summary>
+        /// シーク増減値。
+        /// <para>絶対値。</para>
+        /// </summary>
+        [DataMember]
+        public int SeekOperationAbsoluteStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep;
+        /// <summary>
+        /// シーク増減値。
+        /// <para>パーセント。</para>
+        /// </summary>
+        [DataMember]
+        public int SeekOperationPercentStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationPercentStep;
 
         #endregion
     }

@@ -105,7 +105,7 @@
             <Button Command="{Binding UpdateCheckCommand}">アップデートチェック</Button>
           </StackPanel>
 
-          <app_view_controls:WebNavigator x:Name="updateBrowser" Grid.Row="1" IsVisibleToolbar="False" IsEnabled="{Binding HasUpdate}" />
+          <app_view_controls:WebNavigator x:Name="updateBrowser" Grid.Row="1" IsVisibleToolbar="False" IsEnabled="{Binding HasUpdate}" NewWindowCommand="{Binding NewWindowCommand}" />
 
           <StackPanel Grid.Row="2" IsEnabled="{Binding HasUpdate}">
             <TextBlock Text="{Binding UpdateText}" />

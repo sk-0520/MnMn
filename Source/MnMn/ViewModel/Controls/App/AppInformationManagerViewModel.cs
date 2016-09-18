@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             AppIssueManager = new AppIssueManagerViewModel(Mediation);
             AppHelpManager = new AppHelpManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
+            AppFlashPlayerManager = new AppFlashPlayerManagerViewModel(Mediation);
         }
 
         #region property
@@ -59,6 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppIssueManagerViewModel AppIssueManager { get; }
         public AppHelpManagerViewModel AppHelpManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
+        public AppFlashPlayerManagerViewModel AppFlashPlayerManager { get; }
 
         #endregion
 
@@ -80,6 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 AppIssueManager,
                 AppHelpManager,
                 AppSettingManager,
+                AppFlashPlayerManager
             };
         }
 

@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,9 +31,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
     public static class AppUtility
     {
+        #region function
+
         public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
         {
             return s.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map);
         }
+
+        /// <summary>
+        /// 現在の言語を取得。
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCultureLanguage()
+        {
+            var culture = CultureInfo.CurrentCulture;
+            if(culture.IsNeutralCulture) {
+                return culture.Name;
+            } else {
+                return culture.Parent.Name;
+            }
+        }
+
+        /// <summary>
+        /// 現在の国を取得。
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCultureCountry()
+        {
+            return RegionInfo.CurrentRegion.TwoLetterISORegionName;
+        }
+
+        /// <summary>
+        /// 現在のカルチャ名を取得。
+        /// </summary>
+        /// <returns>言語/国</returns>
+        public static string GetCultureName()
+        {
+            return CultureInfo.CurrentCulture.Name;
+        }
+
+        #endregion
     }
 }

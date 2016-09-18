@@ -1233,6 +1233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var workingPlayer = players.FirstOrDefault(p => p.IsWorkingPlayer.Value);
                     if(workingPlayer != null) {
                         // 再生中プレイヤーで再生
+                        workingPlayer.MoveForeground();
                         return workingPlayer.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
                         //return Task.CompletedTask;
                     }

@@ -90,9 +90,9 @@
         <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
       </Button>
       <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
-        <xctk:SplitButton.Content>連続再生</xctk:SplitButton.Content>
+        <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
-          <MenuItem Header="ランダム連続再生" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
+          <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
 
@@ -165,6 +165,11 @@
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
       >
+        <ListBox.InputBindings>
+          <KeyBinding Key="Return" Command="{Binding SelectedFinderItem.Information.OpenVideoDefaultCommand}" />
+          <KeyBinding Key="Space" Command="{Binding SelectedFinderItem.ToggleCheckCommand}" />
+          <KeyBinding Modifiers="Ctrl" Key="A" Command="{Binding AllCheckCommand}" />
+        </ListBox.InputBindings>
         <ListBox.ItemContainerStyle>
           <Style TargetType="{x:Type ListBoxItem}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

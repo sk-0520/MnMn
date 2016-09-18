@@ -17,10 +17,14 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn
@@ -45,8 +49,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriUpdate => ReplaceAppConfig(appConfig.Get("app-uri-update"));
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
-        public static string AppUriIssueResolved => ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved"));
+        public static Uri AppUriIssueResolved => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved")));
+        public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
+        public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
 
+        public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
+        public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");
+        public static string WebNavigatorGeckoFxProfileDirectoryName => appConfig.Get("web_navigator-geckofx-profile-dir-name");
+        public static string WebNavigatorGeckoFxPreferencesFileName => appConfig.Get("web_navigator-geckofx-preferences-name");
+        public static string WebNavigatorGeckoFxPluginsDirectoryName => appConfig.Get("web_navigator-geckofx-plugin-dir-name");
 
         public static TimeSpan UpdateAppExitWaitTime => appConfig.Get("update-app-exit-wait-time", TimeSpan.Parse);
 
@@ -72,11 +83,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static GarbageCollectionLevel BackgroundGarbageCollectionLevel => appConfig.Get("background-garbage-collection-level", s => (GarbageCollectionLevel)Enum.Parse(typeof(GarbageCollectionLevel), s));
 
+        public static TimeSpan MutexWaitTime => appConfig.Get("mutex-wait-time", TimeSpan.Parse);
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
 
         public static int BackupArchiveCount => appConfig.Get("backup-archive-count", int.Parse);
         public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);
+        public static int BackupWebNavigatorGeckoFxPluginCount => appConfig.Get("backup-web_navigator-geckofx-plugin-count", int.Parse);
 
         /// <summary>
         /// プレイヤー部分のカーソルを隠すまでの時間。
@@ -86,6 +99,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// キャッシュファイル有効期間。
         /// </summary>
         public static TimeSpan SettingApplicationCacheLifeTime => appConfig.Get("setting-application-cache-life-time", TimeSpan.Parse);
+
+        /// <summary>
+        /// about:config
+        ///<para>plugin.scan.plid.all</para>
+        /// </summary>
+        public static bool SettingApplicationWebNavigatorGeckoFxScanPlugin => appConfig.Get("setting-application-web_navigator-geckofx-scan-plugin", bool.Parse);
 
         /// <summary>
         /// ウィンドウ: 左
@@ -103,6 +122,17 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// ウィンドウ: 高さ
         /// </summary>
         public static int SettingApplicationWindowHeight => appConfig.Get("setting-application-window-height", int.Parse);
+
+        public static IReadOnlyRange<int> NavigatorVolumeRange = appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
+        public static int NavigatorVolumeRangeMinimum => NavigatorVolumeRange.Head;
+        public static int NavigatorVolumeRangeMaximum => NavigatorVolumeRange.Tail;
+
+        /// <summary>
+        /// タブヘッダ部をマウスホイールでスクロールするか。
+        /// <para>暫定対応: https://groups.google.com/d/topic/mnmn-forum/jm663Y8Wnn4/discussion </para>
+        /// </summary>
+        public static bool FinderTabTabHeaderUsingMouseWheel => appConfig.Get("finder_tab-tab_header-using-mouse-wheel", bool.Parse);
+
 
         #endregion
     }

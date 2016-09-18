@@ -29,6 +29,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -126,6 +127,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 });
             }
         }
+
+        public ICommand NewWindowCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var data = (WebNavigatorEventDataBase)o;
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -208,7 +223,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 return client.GetStringAsync(Constants.AppUriChangelogRelease).ContinueWith(t => {
                     var htmlSource = t.Result;
                     UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                        UpdateBrowser.NavigateToString(htmlSource);
+                        UpdateBrowser.LoadHtml(htmlSource);
                     }));
                 });
             }
@@ -228,11 +243,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
                 var rawHtmlSource = File.ReadAllText(Constants.UpdateStateHtmlFilePath);
                 var map = new Dictionary<string, string>() {
-                        {"UPDATE-TITLE", Properties.Resources.String_App_Update_Title },
-                        {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },
-                    };
+                    {"UPDATE-TITLE", Properties.Resources.String_App_Update_Title },
+                    {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },
+                    {"UPDATE-TIMESTAMP",  DateTime.Now.ToString("s") },
+                };
                 var htmlSource = AppUtility.ReplaceString(rawHtmlSource, map);
-                UpdateBrowser.NavigateToString(htmlSource);
+                UpdateBrowser.LoadHtml(htmlSource);
             })).Task;
         }
 
@@ -345,7 +361,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            if(UpdateBrowser.Source == null) {
+            if(UpdateBrowser.IsEmptyContent) {
                 LoadChangelogAsync().ContinueWith(_ => {
                     if(UpdateCheckState != UpdateCheckState.CurrentIsOld) {
                         SetUpdateStateViewAsync().ConfigureAwait(false);

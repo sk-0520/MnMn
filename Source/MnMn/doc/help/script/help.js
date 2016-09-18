@@ -47,6 +47,22 @@ var menuList = [
 		}
 	},
 	{
+		name: 'smile-video-finder',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'ファインダー'
+		}
+	},
+	{
+		name: 'smile-video-player',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '動画プレイヤー'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,

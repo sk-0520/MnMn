@@ -52,13 +52,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileManagerViewModel(Mediation mediation)
             : base(mediation)
         {
+            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
             VideoManager = new SmileVideoManagerViewModel(Mediation);
             UsersManager = new SmileUsersManagerViewModel(Mediation);
             SettingManager = new SmileSettingManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, SettingManager));
+            WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
 
-            Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, WebSiteManager, SettingManager));
         }
 
         #region property
@@ -68,6 +70,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SmileVideoManagerViewModel VideoManager { get; set; }
         public SmileUsersManagerViewModel UsersManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; set; }
+
+        public SmileWebSiteManagerViewModel WebSiteManager { get; }
 
         public string InputVideoId
         {
@@ -118,6 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             return new ManagerViewModelBase[] {
                 UsersManager,
                 VideoManager,
+                WebSiteManager,
                 SettingManager,
             };
         }
@@ -137,18 +142,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             if(Session.LoginState != LoginState.LoggedIn) {
 
             } else {
-                await VideoManager.InitializeAsync();
+                foreach(var manager in ManagerChildren) {
+                    await manager.InitializeAsync();
+                }
             }
         }
 
         public override void InitializeView(MainWindow view)
         {
-            VideoManager.InitializeView(view);
+            foreach(var manager in ManagerChildren) {
+                manager.InitializeView(view);
+            }
         }
 
         public override void UninitializeView(MainWindow view)
         {
-            VideoManager.UninitializeView(view);
+            foreach(var manager in ManagerChildren) {
+                manager.UninitializeView(view);
+            }
         }
 
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)

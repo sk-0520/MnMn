@@ -27,8 +27,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         public MainWindow()
         {
             InitializeComponent();
-
-            this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
         }
     }
 }

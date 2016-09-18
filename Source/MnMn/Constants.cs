@@ -214,6 +214,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string EtcDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "etc");
 
         /// <summary>
+        /// lib/
+        /// </summary>
+        public static string LibraryDirectoryPath { get; } = Path.Combine(AssemblyRootDirectoryPath, "lib");
+
+        public static string WebNavigatorGeckoFxLibraryDirectoryPath { get; } = Path.Combine(LibraryDirectoryPath, WebNavigatorGeckoFxLibraryDirectoryName);
+        public static string WebNavigatorGeckoFxPluginsDirectoryPath { get; } = Path.Combine(WebNavigatorGeckoFxLibraryDirectoryPath, WebNavigatorGeckoFxPluginsDirectoryName);
+
+        /// <summary>
         /// 外部ライブラリファイルパス。
         /// </summary>
         public static string ComponentListFileName { get { return Path.Combine(ApplicationDocDirectoryPath, "components.xml"); } }
@@ -231,6 +239,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ArchiveSearchPattern { get; } = "*.zip";
 
+        public static string ArchiveWebNavigatorGeckFxPluginSearchPattern { get; } = "*.zip";
+
         /// <summary>
         /// 設定ディレクトリ名。
         /// </summary>
@@ -243,6 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// アーカイブディレクトリ名。
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
+        public static string ArchiveWebNavigatorGeckFxPluginDirectoryName { get; } = "archive-plugin";
         /// <summary>
         /// バックアップディレクトリ名。
         /// </summary>
@@ -313,10 +324,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
-        /// <summary>
-        /// TODO: カルチャからどうこうしたい。
-        /// </summary>
-        public static string CurrentLanguageCode => "ja-jp";
+        ///// <summary>
+        ///// TODO: カルチャからどうこうしたい。
+        ///// </summary>
+        //public static string CurrentLanguageCode => "ja-jp";
 
         public static string ExtensionTemporaryFile { get; } = "tmp";
 
