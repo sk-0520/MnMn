@@ -127,6 +127,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int NavigatorVolumeRangeMinimum => NavigatorVolumeRange.Head;
         public static int NavigatorVolumeRangeMaximum => NavigatorVolumeRange.Tail;
 
+        /// <summary>
+        /// タブヘッダ部をマウスホイールでスクロールするか。
+        /// <para>暫定対応: https://groups.google.com/d/topic/mnmn-forum/jm663Y8Wnn4/discussion </para>
+        /// </summary>
+        public static bool FinderTabTabHeaderUsingMouseWheel => appConfig.Get("finder_tab-tab_header-using-mouse-wheel", bool.Parse);
+
 
         #endregion
     }
