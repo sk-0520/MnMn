@@ -167,25 +167,33 @@
               </WrapPanel>
 
               <TextBlock Grid.Row="1" Grid.Column="0">音量増減値</TextBlock>
-              <Slider
-                Grid.Row="1"
-                Grid.Column="1"
-                LargeChange="2"
-                SmallChange="1"
-                Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMinimum}}"
-                Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMaximum}}"
-                Value="{Binding SoundOperationStep}"
-              />
+              <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="7*" />
+                  <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Slider
+                  x:Name="sliderSound"
+                  Grid.Column="0"
+                  LargeChange="2"
+                  SmallChange="1"
+                  Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMinimum}}"
+                  Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMaximum}}"
+                  Value="{Binding SoundOperationStep}"
+                />
+                <TextBlock Grid.Column="1" Text="{Binding Value, ElementName=sliderSound}" />
+              </Grid>
 
               <TextBlock Grid.Row="2" Grid.Column="0">シーク増減値</TextBlock>
               <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="8*" />
+                  <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
                 <CheckBox Grid.Column="0" IsChecked="{Binding SeekOperationIsPercent}">比率</CheckBox>
-                <Slider Grid.Column="1" LargeChange="2" SmallChange="1">
+                <Slider x:Name="sliderSeek" Grid.Column="1" LargeChange="2" SmallChange="1">
                   <Slider.Style>
                     <Style TargetType="Slider">
                       <Style.Triggers>
@@ -203,6 +211,23 @@
                     </Style>
                   </Slider.Style>
                 </Slider>
+                <TextBlock Grid.Column="2">
+                  <Run Text="{Binding Value, ElementName=sliderSeek, Mode=OneWay}" />
+                  <Run>
+                    <Run.Style>
+                      <Style TargetType="Run">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding SeekOperationIsPercent}" Value="True">
+                            <Setter Property="Text" Value="%" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding SeekOperationIsPercent}" Value="False">
+                            <Setter Property="Text" Value="秒" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Run.Style>
+                  </Run>
+                </TextBlock>
               </Grid>
             </Grid>
           </StackPanel>
