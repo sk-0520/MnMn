@@ -422,6 +422,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand PlayerKeySpaceCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(Setting.Player.KeySpaceToPause) {
+                            PlayCommand.TryExecute(null);
+                        }
+                    }
+                );
+            }
+        }
+
         public ICommand FullScreenCancelCommand
         {
             get

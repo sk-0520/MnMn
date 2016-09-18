@@ -161,7 +161,8 @@
     </ResourceDictionary>
   </Window.Resources>
   <Window.InputBindings>
-    <KeyBinding Command="{Binding FullScreenCancelCommand}" Key="Esc" />
+    <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
+    <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
   </Window.InputBindings>
   <Window.Style>
     <Style TargetType="Window">
