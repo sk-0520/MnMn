@@ -158,6 +158,15 @@
 					},
 					{
 						'revision': '',
+						'subject': '一部環境でファインダーリスト部のホイールスクロールがタブヘッダのスクロールになる問題への暫定対応',
+						'comments': [
+							'MnMn.exe.config の以下パラメータを false に変更してください',
+							'finder_tab-tab_header-using-mouse-wheel',
+							'注意: このファイルはアップデート等で上書きされます'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
@@ -165,10 +174,6 @@
 			{
 				'type': 'developer',
 				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
 					{
 						'revision': '',
 						'subject': ''
