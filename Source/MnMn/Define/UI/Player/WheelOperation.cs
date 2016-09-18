@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
 {
@@ -30,14 +31,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
         /// <summary>
         /// 何もしない。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_WheelOperation_None))]
         None,
         /// <summary>
         /// 音量調整。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_WheelOperation_Sound))]
         Sound,
         /// <summary>
         /// シーク調整。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_WheelOperation_Seek))]
         Seek,
     }
 }

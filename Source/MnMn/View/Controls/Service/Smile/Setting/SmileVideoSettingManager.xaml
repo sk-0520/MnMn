@@ -14,14 +14,15 @@
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
+  xmlns:app_define_ui_player="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.UI.Player"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300"
-  d:DesignWidth="500"
+  d:DesignHeight="350"
+  d:DesignWidth="600"
 >
   <UserControl.Resources>
     <ResourceDictionary>
@@ -144,6 +145,65 @@
                 Grid.Column="2"
                 Text="{Binding Value, ElementName=sliderBuffer, Converter={StaticResource HumanLikeByteConverter}}"
               />
+            </Grid>
+            <CheckBox IsChecked="{Binding KeySpaceToPause}">スペースキーで一時停止</CheckBox>
+            <CheckBox IsChecked="{Binding MoseClickToPause}">クリックで一時停止</CheckBox>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Grid.Row="0" Grid.Column="0">ホイール操作:</TextBlock>
+              <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.None}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.None}, Converter={StaticResource EnumDisplayConverter}}" />
+                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Sound}}" Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Sound}, Converter={StaticResource EnumDisplayConverter}}" />
+                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Seek}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Seek}, Converter={StaticResource EnumDisplayConverter}}"/>
+              </WrapPanel>
+
+              <TextBlock Grid.Row="1" Grid.Column="0">音量増減値</TextBlock>
+              <Slider
+                Grid.Row="1"
+                Grid.Column="1"
+                LargeChange="2"
+                SmallChange="1"
+                Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMinimum}}"
+                Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSoundRangeMaximum}}"
+                Value="{Binding SoundOperationStep}"
+              />
+
+              <TextBlock Grid.Row="2" Grid.Column="0">シーク増減値</TextBlock>
+              <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Column="0" IsChecked="{Binding SeekOperationIsPercent}">比率</CheckBox>
+                <Slider Grid.Column="1" LargeChange="2" SmallChange="1">
+                  <Slider.Style>
+                    <Style TargetType="Slider">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding SeekOperationIsPercent}" Value="True">
+                          <Setter Property="Value" Value="{Binding SeekOperationPercentStep}" />
+                          <Setter Property="Minimum" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSeekRangePercentMinimum}}" />
+                          <Setter Property="Maximum" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSeekRangePercentMaximum}}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SeekOperationIsPercent}" Value="False">
+                          <Setter Property="Value" Value="{Binding SeekOperationAbsoluteStep}" />
+                          <Setter Property="Minimum" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSeekRangeAbsoluteMinimum}}" />
+                          <Setter Property="Maximum" Value="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepSeekRangeAbsoluteMaximum}}" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Slider.Style>
+                </Slider>
+              </Grid>
             </Grid>
           </StackPanel>
         </GroupBox>

@@ -150,9 +150,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Head;
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Tail;
 
-        public static RangeModel<int> ServiceSmileVideoPlayerStepSoundRange = appConfig.Get("service-smile-smilevideo-player-setep-sound-range", RangeModel.Parse<int>);
-        public static RangeModel<int> ServiceSmileVideoPlayerStepSeekRangePercent => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-percent", RangeModel.Parse<int>);
-        public static RangeModel<int> ServiceSmileVideoPlayerStepSeekRangeAbsolutep => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-absolute", RangeModel.Parse<int>);
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSoundRange = appConfig.Get("service-smile-smilevideo-player-setep-sound-range", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepSoundRangeMinimum => ServiceSmileVideoPlayerStepSoundRange.Head;
+        public static int ServiceSmileVideoPlayerStepSoundRangeMaximum => ServiceSmileVideoPlayerStepSoundRange.Tail;
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSeekRangePercent => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-percent", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepSeekRangePercentMinimum => ServiceSmileVideoPlayerStepSeekRangePercent.Head;
+        public static int ServiceSmileVideoPlayerStepSeekRangePercentMaximum => ServiceSmileVideoPlayerStepSeekRangePercent.Tail;
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSeekRangeAbsolute => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-absolute", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepSeekRangeAbsoluteMinimum => ServiceSmileVideoPlayerStepSeekRangeAbsolute.Head;
+        public static int ServiceSmileVideoPlayerStepSeekRangeAbsoluteMaximum => ServiceSmileVideoPlayerStepSeekRangeAbsolute.Tail;
 
         /// <summary>
         /// 関連動画のソート。
@@ -311,6 +317,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// スペースで一時停止するか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerKeySpaceToPause => appConfig.Get("setting-service-smile-smilevideo-player-key-space-to-pause", bool.Parse);
+        /// <summary>
+        /// クリックで一時停止するか。
+        /// </summary>
         public static bool SettingServiceSmileVideoPlayerMoseClickToPause => appConfig.Get("setting-service-smile-smilevideo-player-mouse-click-to-pause", bool.Parse);
         /// <summary>
         /// ホイール操作。
@@ -319,7 +328,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static int SettingServiceSmileVideoPlayerSoundOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-sound-operation-step", int.Parse);
         public static bool SettingServiceSmileVideoPlayerSeekOperationIsPercent => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-is-percent", bool.Parse);
-        public static int SettingServiceSmileVideoPlayerSeekOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-step", int.Parse);
+        public static int SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-absolute-step", int.Parse);
+        public static int SettingServiceSmileVideoPlayerSeekOperationPercentStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-percent-step", int.Parse);
 
         /// <summary>
         /// コメントを表示するか。

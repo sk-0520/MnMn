@@ -141,7 +141,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool KeySpaceToPause { get; set; } = Constants.SettingServiceSmileVideoPlayerKeySpaceToPause;
-
+        /// <summary>
+        /// クリックで一時停止するか。
+        /// </summary>
+        [DataMember]
+        public bool MoseClickToPause { get; set; } = Constants.SettingServiceSmileVideoPlayerMoseClickToPause;
         /// <summary>
         /// ホイール操作。
         /// </summary>
@@ -157,8 +161,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool SeekOperationIsPercent { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationIsPercent;
         /// <summary>
         /// シーク増減値。
+        /// <para>絶対値。</para>
         /// </summary>
-        public int SeekOperationStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationStep;
+        public int SeekOperationAbsoluteStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep;
+        /// <summary>
+        /// シーク増減値。
+        /// <para>パーセント。</para>
+        /// </summary>
+        public int SeekOperationPercentStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationPercentStep;
 
         #endregion
     }

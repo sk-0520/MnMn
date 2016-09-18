@@ -516,6 +516,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   何もしない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UI_Player_WheelOperation_None {
+            get {
+                return ResourceManager.GetString("String_App_Define_UI_Player_WheelOperation_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   シーク調整 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UI_Player_WheelOperation_Seek {
+            get {
+                return ResourceManager.GetString("String_App_Define_UI_Player_WheelOperation_Seek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   音量調整 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UI_Player_WheelOperation_Sound {
+            get {
+                return ResourceManager.GetString("String_App_Define_UI_Player_WheelOperation_Sound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   現在バージョンは最新版です に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_UpdateCheckState_CurrentIsNew {
