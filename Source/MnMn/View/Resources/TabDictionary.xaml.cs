@@ -92,6 +92,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
         private void DockPanel_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            if(!Constants.FinderTabTabHeaderUsingMouseWheel) {
+                return;
+            }
+
             var tabControl = GetTabControl((DependencyObject)sender);
             var tabItems = GetTabItems(tabControl);
             if(1 < tabItems.Count) {
@@ -104,6 +108,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
 
                 tabControl.SelectedIndex = nextIndex;
             }
+
+            e.Handled = true;
         }
 
         //private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
