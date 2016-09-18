@@ -22,8 +22,10 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn
 {
@@ -147,6 +149,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<long> ServiceSmileVideoPlayerAutoPlayLowestSizeRange => appConfig.Get("service-smile-smilevideo-player-auto-play-lowest-size-range", RangeModel.Parse<long>);
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Head;
         public static long ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum => ServiceSmileVideoPlayerAutoPlayLowestSizeRange.Tail;
+
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepVolumeRange = appConfig.Get("service-smile-smilevideo-player-setep-volume-range", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepVolumeRangeMinimum => ServiceSmileVideoPlayerStepVolumeRange.Head;
+        public static int ServiceSmileVideoPlayerStepVolumeRangeMaximum => ServiceSmileVideoPlayerStepVolumeRange.Tail;
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSeekRangePercent => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-percent", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepSeekRangePercentMinimum => ServiceSmileVideoPlayerStepSeekRangePercent.Head;
+        public static int ServiceSmileVideoPlayerStepSeekRangePercentMaximum => ServiceSmileVideoPlayerStepSeekRangePercent.Tail;
+        public static IReadOnlyRange<int> ServiceSmileVideoPlayerStepSeekRangeAbsolute => appConfig.Get("service-smile-smilevideo-player-setep-seek-range-absolute", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoPlayerStepSeekRangeAbsoluteMinimum => ServiceSmileVideoPlayerStepSeekRangeAbsolute.Head;
+        public static int ServiceSmileVideoPlayerStepSeekRangeAbsoluteMaximum => ServiceSmileVideoPlayerStepSeekRangeAbsolute.Tail;
 
         /// <summary>
         /// 関連動画のソート。
@@ -301,6 +313,24 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// コメント投稿時間を表示するか。
         /// </summary>
         public static bool SettingServiceSmileVideoPlayerShowPostTimestamp => appConfig.Get("setting-service-smile-smilevideo-player-show-post-timestamp", bool.Parse);
+        /// <summary>
+        /// スペースで一時停止するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerKeySpaceToPause => appConfig.Get("setting-service-smile-smilevideo-player-key-space-to-pause", bool.Parse);
+        /// <summary>
+        /// クリックで一時停止するか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoPlayerMoseClickToPause => appConfig.Get("setting-service-smile-smilevideo-player-mouse-click-to-pause", bool.Parse);
+        /// <summary>
+        /// ホイール操作。
+        /// </summary>
+        public static WheelOperation SettingServiceSmileVideoPlayerWheelOperation => appConfig.Get("setting-service-smile-smilevideo-player-wheel-operation", s => EnumUtility.Parse<WheelOperation>(s, false));
+
+        public static int SettingServiceSmileVideoPlayerVolumeOperationStep => appConfig.Get("setting-service-smile-smilevideo-player-volume-operation-step", int.Parse);
+        public static bool SettingServiceSmileVideoPlayerSeekOperationIsPercent => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-is-percent", bool.Parse);
+        public static int SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-absolute-step", int.Parse);
+        public static int SettingServiceSmileVideoPlayerSeekOperationPercentStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-percent-step", int.Parse);
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>

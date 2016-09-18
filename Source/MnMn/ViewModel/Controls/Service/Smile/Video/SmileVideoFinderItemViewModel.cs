@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 
@@ -70,6 +71,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             get { return this._approval; }
             set { SetVariableValue(ref this._approval, value); }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand ToggleCheckCommand
+        {
+            get { return CreateCommand(o => IsChecked = !IsChecked.GetValueOrDefault()); }
         }
 
         #endregion

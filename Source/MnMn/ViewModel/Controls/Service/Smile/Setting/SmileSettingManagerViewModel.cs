@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -136,6 +137,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public bool KeySpaceToPause
+        {
+            get { return Setting.Video.Player.KeySpaceToPause; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public bool MoseClickToPause
+        {
+            get { return Setting.Video.Player.MoseClickToPause; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public WheelOperation WheelOperation
+        {
+            get { return Setting.Video.Player.WheelOperation; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public int VolumeOperationStep
+        {
+            get { return Setting.Video.Player.VolumeOperationStep; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public bool SeekOperationIsPercent
+        {
+            get { return Setting.Video.Player.SeekOperationIsPercent; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public int SeekOperationAbsoluteStep
+        {
+            get { return Setting.Video.Player.SeekOperationAbsoluteStep; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+        public int SeekOperationPercentStep
+        {
+            get { return Setting.Video.Player.SeekOperationPercentStep; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
 
         #endregion
 

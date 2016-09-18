@@ -269,6 +269,15 @@
   <data name="String_App_Define_SourceLoadState_SourceLoading" xml:space="preserve">
     <value>ソース読込</value>
   </data>
+  <data name="String_App_Define_UI_Player_WheelOperation_None" xml:space="preserve">
+    <value>何もしない</value>
+  </data>
+  <data name="String_App_Define_UI_Player_WheelOperation_Seek" xml:space="preserve">
+    <value>シーク調整</value>
+  </data>
+  <data name="String_App_Define_UI_Player_WheelOperation_Volume" xml:space="preserve">
+    <value>音量調整</value>
+  </data>
   <data name="String_App_Define_UpdateCheckState_CurrentIsNew" xml:space="preserve">
     <value>現在バージョンは最新版です</value>
   </data>

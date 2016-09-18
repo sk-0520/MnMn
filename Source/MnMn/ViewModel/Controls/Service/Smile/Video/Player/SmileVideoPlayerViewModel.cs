@@ -89,6 +89,7 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using OxyPlot;
 using OxyPlot.Wpf;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
+using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -408,6 +409,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => SwitchFullScreen()); }
         }
 
+        public ICommand PlayerMouseClickCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(Setting.Player.MoseClickToPause) {
+                            PlayCommand.TryExecute(null);
+                        }
+                    }
+                );
+            }
+        }
+
+        public ICommand PlayerKeySpaceCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(Setting.Player.KeySpaceToPause) {
+                            PlayCommand.TryExecute(null);
+                        }
+                    }
+                );
+            }
+        }
+
         public ICommand FullScreenCancelCommand
         {
             get
@@ -435,6 +464,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
                 });
             }
+        }
+
+        public ICommand ChangeSeekVideoPositionCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var param = (SmileVideoChangeVideoPositionCommandParameterModel)o;
+                        Mediation.Logger.Information($"{param.PositionType}: {Setting.Player.SeekOperationAbsoluteStep}");
+                        switch(param.PositionType) {
+                            case SmileVideoChangeVideoPositionType.Setting:
+                                ChangeSeekVideoPosition(param.IsNext, Setting.Player.SeekOperationIsPercent, Setting.Player.SeekOperationIsPercent ? Setting.Player.SeekOperationPercentStep : Setting.Player.SeekOperationAbsoluteStep);
+                                break;
+
+                            case SmileVideoChangeVideoPositionType.Percent:
+                                ChangeSeekVideoPosition(param.IsNext, true, Setting.Player.SeekOperationPercentStep);
+                                break;
+
+                            case SmileVideoChangeVideoPositionType.Absolute:
+                                ChangeSeekVideoPosition(param.IsNext, false, Setting.Player.SeekOperationAbsoluteStep);
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                );
+            }
+        }
+
+        public ICommand ChangeVolumeCommand
+        {
+            get { return CreateCommand(o => ChangeVolume((bool)o)); }
         }
 
         #endregion
@@ -1290,6 +1353,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ChangeVolume(bool isUp)
+        {
+            var step = isUp ? Setting.Player.VolumeOperationStep : -Setting.Player.VolumeOperationStep;
+            var setVolume = Volume + step;
+            Volume = RangeUtility.Clamp(setVolume, Constants.NavigatorVolumeRange);
+        }
+
+        void ChangeSeekVideoPosition(bool isNext, bool isPercent, int stepValue)
+        {
+            if(isPercent) {
+                var step = (float)(stepValue * 0.01);
+                if(!isNext) {
+                    step *= -1;
+                }
+                Player.Position += step;
+            } else {
+                var nextTime = Player.Time.Add(TimeSpan.FromSeconds(isNext ? stepValue : -stepValue));
+                if(nextTime.Ticks <= 0) {
+                    nextTime = TimeSpan.Zero;
+                }
+                Player.Time = nextTime;
+            }
+
+            ClearComment();
+            VideoPosition = Player.Position;
+            PlayTime = PrevPlayedTime = Player.Time;
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1571,6 +1662,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
+            Player.MouseWheel += Player_MouseWheel;
             SetNavigationbarBaseEvent(Navigationbar);
             DetailComment.LostFocus += DetailComment_LostFocus;
         }
@@ -1688,6 +1780,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
             Player.StateChanged -= Player_StateChanged;
+            Player.MouseWheel -= Player_MouseWheel;
             UnsetNavigationbarBaseEvent(Navigationbar);
 
             if(EnabledCommentSlider != null) {
@@ -1864,6 +1957,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 default:
                     break;
+            }
+        }
+
+        private void Player_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var isUp = 0 < e.Delta;
+            switch(Setting.Player.WheelOperation) {
+                case Define.UI.Player.WheelOperation.None:
+                    break;
+
+                case Define.UI.Player.WheelOperation.Volume:
+                    ChangeVolume(isUp);
+                    break;
+
+                case Define.UI.Player.WheelOperation.Seek:
+                    ChangeSeekVideoPosition(isUp, Setting.Player.SeekOperationIsPercent, Setting.Player.SeekOperationIsPercent ? Setting.Player.SeekOperationPercentStep : Setting.Player.SeekOperationAbsoluteStep);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
 
