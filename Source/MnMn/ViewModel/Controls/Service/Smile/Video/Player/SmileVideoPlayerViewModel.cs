@@ -1326,7 +1326,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         void StepChangeSeekPosition(bool isNext)
-        { }
+        {
+            float step = float.NaN;
+
+            if(Setting.Player.SeekOperationIsPercent) {
+                step = (float)(Setting.Player.SeekOperationPercentStep * 0.01);
+                if(!isNext) {
+                    step *= -1;
+                }
+            } else {
+            }
+
+            ClearComment();
+            Player.Position += step;
+            VideoPosition = Player.Position;
+            PrevPlayedTime = Player.Time;
+        }
 
         #endregion
 
