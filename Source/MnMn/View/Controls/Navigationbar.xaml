@@ -185,6 +185,7 @@
         Grid.Column="2"
         Orientation="Horizontal"
         Width="40"
+        Focusable="False"
         Minimum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMinimum}}"
         Maximum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMaximum}}"
         Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"

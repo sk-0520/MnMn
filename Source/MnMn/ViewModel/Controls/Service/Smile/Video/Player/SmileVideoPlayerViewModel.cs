@@ -495,6 +495,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ChangeVolumeCommand
+        {
+            get { return CreateCommand(o => ChangeVolume((bool)o)); }
+        }
+
         #endregion
 
         #region function
@@ -1348,7 +1353,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void StepChangeVolume(bool isUp)
+        void ChangeVolume(bool isUp)
         {
             var step = isUp ? Setting.Player.VolumeOperationStep : -Setting.Player.VolumeOperationStep;
             var setVolume = Volume + step;
@@ -1963,7 +1968,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case Define.UI.Player.WheelOperation.Volume:
-                    StepChangeVolume(isUp);
+                    ChangeVolume(isUp);
                     break;
 
                 case Define.UI.Player.WheelOperation.Seek:

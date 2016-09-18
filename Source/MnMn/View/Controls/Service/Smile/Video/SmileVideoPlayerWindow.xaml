@@ -237,6 +237,16 @@
         </MultiBinding>
       </KeyBinding.CommandParameter>
     </KeyBinding>
+    <KeyBinding Key="Up" Command="{Binding ChangeVolumeCommand}">
+      <KeyBinding.CommandParameter>
+        <sys:Boolean>True</sys:Boolean>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
+    <KeyBinding Key="Down" Command="{Binding ChangeVolumeCommand}">
+      <KeyBinding.CommandParameter>
+        <sys:Boolean>False</sys:Boolean>
+      </KeyBinding.CommandParameter>
+    </KeyBinding>
   </Window.InputBindings>
   <Window.Style>
     <Style TargetType="Window">
@@ -730,6 +740,7 @@
                     Minimum="50"
                     Maximum="100"
                     IsDirectionReversed="True"
+                    Focusable="False"
                     Value="{Binding CommentEnabledPercent}"
                   />
                   <ToggleButton ToolTip="投稿者コメントもコメント有効領域の制限対象にする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
