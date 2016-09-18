@@ -539,6 +539,9 @@
           <Grid x:Name="viewMedia" Grid.Row="0">
             <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing">
               <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonUp" >
+                  <i:InvokeCommandAction Command="{Binding PlayerMouseClickCommand}" />
+                </i:EventTrigger>
                 <i:EventTrigger EventName="MouseDoubleClick" >
                   <i:InvokeCommandAction Command="{Binding FullScreenCancelCommand}" />
                 </i:EventTrigger>

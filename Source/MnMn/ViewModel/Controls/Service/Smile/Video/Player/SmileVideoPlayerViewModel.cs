@@ -408,6 +408,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => SwitchFullScreen()); }
         }
 
+        public ICommand PlayerMouseClickCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        if(Setting.Player.MoseClickToPause) {
+                            PlayCommand.TryExecute(null);
+                        }
+                    }
+                );
+            }
+        }
+
         public ICommand FullScreenCancelCommand
         {
             get
