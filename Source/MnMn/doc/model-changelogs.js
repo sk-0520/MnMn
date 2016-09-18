@@ -84,9 +84,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.19.1',
-		'isRc': true,
+		'date': '2016/09/19',
+		'version': '0.20.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -100,14 +100,6 @@
 							'0.19.0 からのアップデートは最大45分DL待機します',
 							'0.18.0 以下からのアップデートは最大30分DL待機します',
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -115,11 +107,11 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'b72a51264d86c408e66234787b5fe899c3eeb941',
 						'subject': '#155: 前回アップデートチェックした時間を表示する'
 					},
 					{
-						'revision': '',
+						'revision': 'c527e56c38d402e667aa63361a8532b6b3c841b0',
 						'subject': '#137: WebBrowser死なねーかなぁ',
 						'comments': [
 							'死にました ;-)',
@@ -132,7 +124,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '627938e23efe57904f01c1f573c6546aa7b57c8e',
 						'subject': '#118: キーバインドの設定',
 						'comments': [
 							'画面クリックとかスペースキーとかマウスホイールとか地味なやつを実装',
@@ -146,41 +138,24 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '021bc64fa90e8ca69647e02a7f257d04327fd643',
 						'subject': '#156: 単一プレイヤーで再生する際に新しい動画を再生するのであればウィンドウを前面に移動させる'
 					},
 					{
-						'revision': '',
+						'revision': '2a4cfa7682667394f3ef26b14ccaa60e4c7680ee',
 						'subject': '#158: ランキングや検索のタブヘッダ部のコントロールの活性・非活性はリロードボタンに連動させる',
 						'comments': [
 							'長いことほったらかしてたけど本修正の挙動がまともな姿'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'b0fdb992f7e40a9d49d23becf1fc7056fd2ab9f8',
 						'subject': '一部環境でファインダーリスト部のホイールスクロールがタブヘッダのスクロールになる問題への暫定対応',
 						'comments': [
 							'MnMn.exe.config の以下パラメータを false に変更してください',
 							'finder_tab-tab_header-using-mouse-wheel',
 							'注意: このファイルはアップデート等で上書きされます'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
