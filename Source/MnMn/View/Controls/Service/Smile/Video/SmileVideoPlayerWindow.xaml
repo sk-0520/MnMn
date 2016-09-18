@@ -163,8 +163,8 @@
   </Window.Resources>
   <Window.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
-    <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
+    <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
     <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
       <KeyBinding.CommandParameter>
         <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
