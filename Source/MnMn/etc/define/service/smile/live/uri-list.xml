@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<uri>
+	<item key="live-ranking" uri="http://live.nicovideo.jp/recent/rss" param="query" request-type="plain" />
+
+</uri>
+
