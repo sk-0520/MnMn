@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -55,12 +56,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             Session = Mediation.GetResultFromRequest<SessionViewModelBase>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             VideoManager = new SmileVideoManagerViewModel(Mediation);
+            LiveManager = new SmileLiveManagerViewModel(Mediation);
             UsersManager = new SmileUsersManagerViewModel(Mediation);
             SettingManager = new SmileSettingManagerViewModel(Mediation);
 
             WebSiteManager = new SmileWebSiteManagerViewModel(Mediation);
 
-            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, UsersManager, WebSiteManager, SettingManager));
+            Mediation.SetManager(ServiceType.Smile, new SmileManagerPackModel(VideoManager, LiveManager, UsersManager, WebSiteManager, SettingManager));
         }
 
         #region property
@@ -68,6 +70,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
         public SessionViewModelBase Session { get; }
 
         public SmileVideoManagerViewModel VideoManager { get; set; }
+        public SmileLiveManagerViewModel LiveManager { get; }
         public SmileUsersManagerViewModel UsersManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; set; }
 
