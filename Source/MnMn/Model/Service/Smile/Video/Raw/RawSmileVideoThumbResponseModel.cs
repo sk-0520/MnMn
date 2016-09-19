@@ -26,7 +26,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
     [Serializable, XmlRoot("nicovideo_thumb_response")]
-    public class RawSmileVideoThumbResponseModel: ModelBase
+    public class RawSmileVideoThumbResponseModel: RawModelBase
     {
         #region property
 

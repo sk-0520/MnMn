@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             var plainXml = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
             using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
                 var result = ConvertFromRawData(stream);
+                result.Raw = plainXml.Result;
                 return result;
             }
         }
