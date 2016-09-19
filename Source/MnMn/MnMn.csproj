@@ -257,6 +257,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
+    <Compile Include="Model\RawModelBase.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />

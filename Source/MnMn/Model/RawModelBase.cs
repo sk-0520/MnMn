@@ -17,27 +17,23 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [Serializable, XmlRoot("nicovideo_thumb_response")]
-    public class RawSmileVideoThumbResponseModel: RawModelBase
+    [Serializable, DataContract]
+    public abstract class RawModelBase: ModelBase
     {
         #region property
 
-        [XmlAttribute("status")]
-        public string Status { get; set; }
-
-        [XmlElement("thumb")]
-        public RawSmileVideoThumbModel Thumb { get; set; } = new RawSmileVideoThumbModel();
-
-        [XmlElement("error")]
-        RawSmileVideoErrorModel Error { get; set; } = new RawSmileVideoErrorModel();
+        /// <summary>
+        /// 生値。
+        /// </summary>
+        public string Raw { get; set; }
 
         #endregion
     }

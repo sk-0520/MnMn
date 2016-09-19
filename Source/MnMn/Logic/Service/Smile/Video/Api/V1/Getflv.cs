@@ -54,7 +54,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public static RawSmileVideoGetflvModel ConvertFromRawData(string rawWwwFormData)
         {
-            return RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(rawWwwFormData);
+            var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(rawWwwFormData);
+            result.Raw = rawWwwFormData;
+
+            return result;
         }
 
         async Task<RawSmileVideoGetflvModel> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType)
