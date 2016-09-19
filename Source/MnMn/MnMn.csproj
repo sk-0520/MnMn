@@ -267,6 +267,7 @@
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveCustomManagerViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
@@ -1115,6 +1116,7 @@
     <Folder Include="etc\image\service\smile\video\" />
     <Folder Include="etc\script\smile\" />
     <Folder Include="Resources\Service\Smile\Video\Search\" />
+    <Folder Include="View\Controls\Service\Smile\Live\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">
