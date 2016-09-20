@@ -26,5 +26,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
     [Serializable, XmlRoot("rss")]
     public class FeedSmileLiveModel: Rss2ModelBase<FeedSmileLiveChannelModel, FeedSmileLiveItemModel, FeedSmileLiveGuidModel>
-    { }
+    {
+        #region Rss2ModelBase
+
+        protected override IEnumerable<KeyValuePair<string, string>> GetXmlns()
+        {
+            yield return new KeyValuePair<string, string>("nicolive", "http://live.nicovideo.jp/");
+        }
+
+        #endregion
+    }
 }
