@@ -44,6 +44,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         PlayListDefine,
         /// <summary>
+        /// カテゴリ定義オブジェクト。
+        /// </summary>
+        CategoryDefine,
+        /// <summary>
         /// キャッシュ用ディレクトリパス。
         /// </summary>
         CacheDirectory,

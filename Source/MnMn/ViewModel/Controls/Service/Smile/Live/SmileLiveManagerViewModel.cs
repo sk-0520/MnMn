@@ -34,11 +34,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             : base(mediation)
         {
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            CategoryManager = new SmileLiveCategoryManagerViewModel(Mediation);
         }
 
         #region property
 
         public SmileSessionViewModel Session { get; }
+
+        public SmileLiveCategoryManagerViewModel CategoryManager { get; }
+
 
         #endregion
 
@@ -72,7 +77,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
-            return Enumerable.Empty<ManagerViewModelBase>();
+            return new ManagerViewModelBase[] {
+                CategoryManager,
+            };
         }
 
         protected override void HideViewCore()

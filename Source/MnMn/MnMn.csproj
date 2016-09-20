@@ -274,6 +274,7 @@
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveCategoryManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveCustomManagerViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveManagerViewModel.cs" />
@@ -288,6 +289,9 @@
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\Live\SmileLiveCategoryManager.xaml.cs">
+      <DependentUpon>SmileLiveCategoryManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\Service\Smile\SmileWebSiteManager.xaml.cs">
       <DependentUpon>SmileWebSiteManager.xaml</DependentUpon>
@@ -629,6 +633,10 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
+    <Page Include="View\Controls\Service\Smile\Live\SmileLiveCategoryManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\SmileWebSiteManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1138,7 +1146,6 @@
     <Folder Include="etc\image\service\smile\video\" />
     <Folder Include="etc\script\smile\" />
     <Folder Include="Resources\Service\Smile\Video\Search\" />
-    <Folder Include="View\Controls\Service\Smile\Live\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="etc\define\service\smile\uri-list.xml">
