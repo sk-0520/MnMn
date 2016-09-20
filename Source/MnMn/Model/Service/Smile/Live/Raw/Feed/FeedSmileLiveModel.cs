@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw.Feed;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
     [Serializable, XmlRoot("rss")]
-    public class FeedSmileLiveModel: Rss2ModelBase<FeedSmileLiveChannelModel, FeedSmileLiveItemModel, FeedSmileLiveGuidModel>
+    public class FeedSmileLiveModel: Rss2ModelBase<FeedSmileLiveChannelModel, FeedSmileLiveItemModel, Rss2GuidModel>
     {
         #region Rss2ModelBase
 

@@ -25,7 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
     [Serializable]
-    public class FeedSmileLiveItemModel: Rss2ItemModelBase<FeedSmileLiveGuidModel>
+    public class FeedSmileLiveItemModel: Rss2ItemModelBase<Rss2GuidModel>
     {
         #region property
 

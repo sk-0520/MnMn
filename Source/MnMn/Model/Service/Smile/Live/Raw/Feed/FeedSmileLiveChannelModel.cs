@@ -24,7 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
-    public class FeedSmileLiveChannelModel: Rss2ChannelModelBase<FeedSmileLiveItemModel, FeedSmileLiveGuidModel>
+    public class FeedSmileLiveChannelModel: Rss2ChannelModelBase<FeedSmileLiveItemModel, Rss2GuidModel>
     {
         [XmlElement(ElementName = "total_count", Namespace = "http://live.nicovideo.jp/")]
         public string TotalCount { get; set; }
