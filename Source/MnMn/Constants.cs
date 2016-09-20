@@ -328,10 +328,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
 
-        public static string SmileLiveUriListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
-        public static string SmileLiveUriParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
-        public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
-        public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
+        public static string SmileLiveUriListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-list.xml");
+        public static string SmileLiveUriParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-params.xml");
+        public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-params.xml");
+        public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-mappings.xml");
+
+        public static string SmileLiveCategoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "category.xml");
 
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 

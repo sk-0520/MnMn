@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<category first-page="1" max-count="30">
+	<sort>
+		<element key="start_time">
+			<words>
+				<word key="ja-jp" value="放送日時" />
+			</words>
+		</element>
+		<element key="view_counter">
+			<words>
+				<word key="ja-jp" value="来場者数" />
+			</words>
+		</element>
+		<element key="comment_num">
+			<words>
+				<word key="ja-jp" value="コメント数" />
+			</words>
+		</element>
+		<element key="community_level">
+			<words>
+				<word key="ja-jp" value="コミュニティレベル" />
+			</words>
+		</element>
+		<element key="community_create_time">
+			<words>
+				<word key="ja-jp" value="コミュニティ作成日" />
+			</words>
+		</element>
+	</sort>
+	<order>
+		<element key="asc">
+			<words>
+				<word key="ja-jp" value="昇順" />
+			</words>
+		</element>
+		<element key="desc">
+			<words>
+				<word key="ja-jp" value="降順" />
+			</words>
+		</element>
+	</order>
+	<categories>
+		<element key="common">
+			<words>
+				<word key="ja-jp" value="一般" />
+			</words>
+		</element>
+		<element key="try">
+			<words>
+				<word key="ja-jp" value="やってみた" />
+			</words>
+		</element>
+		<element key="live">
+			<words>
+				<word key="ja-jp" value="ゲーム" />
+			</words>
+		</element>
+		<element key="req">
+			<words>
+				<word key="ja-jp" value="動画紹介" />
+			</words>
+		</element>
+		<element key="face">
+			<words>
+				<word key="ja-jp" value="顔出し" />
+			</words>
+		</element>
+		<element key="totu">
+			<words>
+				<word key="ja-jp" value="凸待ち" />
+			</words>
+		</element>
+		<element key="r18">
+			<words>
+				<word key="ja-jp" value="R-18" />
+			</words>
+			<extends>
+				<!-- ユーザーの場合は関係ない? -->
+				<extend key="age" value="18" />
+			</extends>
+		</element>
+	</categories>
+</category>

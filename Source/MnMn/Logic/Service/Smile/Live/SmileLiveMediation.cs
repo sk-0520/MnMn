@@ -19,9 +19,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
@@ -31,8 +33,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         public SmileLiveMediation(Mediation mediation, SmileLiveSettingModel setting)
             : base(mediation, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
-
+            Category = SerializeUtility.LoadXmlSerializeFromFile<SmileLiveCategoryModel>(Constants.SmileLiveCategoryPath);
         }
+
+        #region property
+
+        SmileLiveCategoryModel Category { get; }
+
+        #endregion
 
         #region MediationBase
 
