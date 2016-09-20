@@ -275,6 +275,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoName { get; } = "video";
         /// <summary>
+        /// サービス名: ニコニコ生放送。
+        /// </summary>
+        public static string ServiceSmileLiveName { get; } = "live";
+        /// <summary>
         ///
         /// </summary>
         public static string BinaryDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "bin"); } }
@@ -309,6 +313,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
 
         public static string DefineSmileVideoDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
+        public static string DefineSmileLiveDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileLiveName);
 
         public static string SmileVideoUriListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
         public static string SmileVideoUriParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
@@ -322,6 +327,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
+
+        public static string SmileLiveUriListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
+        public static string SmileLiveUriParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
+        public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
+        public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
+
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
         ///// <summary>
