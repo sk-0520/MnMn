@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
         public string Description { get; set; }
 
         [XmlElement("category")]
-        public string Category { get; set; }
+        public CollectionModel<string> Category { get; set; } = new CollectionModel<string>();
 
         #endregion
     }

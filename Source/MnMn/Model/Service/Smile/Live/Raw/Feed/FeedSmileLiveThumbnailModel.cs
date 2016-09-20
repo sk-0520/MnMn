@@ -20,14 +20,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw.Feed
 {
     [Serializable]
-    public class FeedSmileLiveItemModel: Rss2ItemModelBase<FeedSmileLiveGuidModel>
+    public class FeedSmileLiveThumbnailModel: RawModelBase
     {
         #region property
+
+        [XmlElement("height")]
+        public string Height { get; set; }
+
+        [XmlElement("width")]
+        public string Width { get; set; }
+
+        [XmlElement("url")]
+        public string Url { get; set; }
 
         #endregion
     }

@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 {
@@ -31,7 +32,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed
 
         protected override IEnumerable<KeyValuePair<string, string>> GetXmlns()
         {
+            yield return new KeyValuePair<string, string>("dc", "http://purl.org/dc/elements/1.1/");
             yield return new KeyValuePair<string, string>("nicolive", "http://live.nicovideo.jp/");
+            yield return new KeyValuePair<string, string>("media", "http://search.yahoo.com/mrss/");
         }
 
         #endregion
