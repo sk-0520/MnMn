@@ -2008,7 +2008,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void View_Deactivated(object sender, EventArgs e)
         {
-            SwitchFullScreen();
+            if(Setting.Player.InactiveIsFullScreenRestore) {
+                SetWindowMode(true);
+            }
         }
 
         private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
