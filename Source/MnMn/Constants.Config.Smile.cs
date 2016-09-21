@@ -331,6 +331,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-absolute-step", int.Parse);
         public static int SettingServiceSmileVideoPlayerSeekOperationPercentStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-percent-step", int.Parse);
 
+        public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore", bool.Parse);
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>
