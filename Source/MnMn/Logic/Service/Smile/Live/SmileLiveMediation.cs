@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
             }
 
@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
             }
 
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportConvertRequestMapping(mapping, serviceType);
             }
 

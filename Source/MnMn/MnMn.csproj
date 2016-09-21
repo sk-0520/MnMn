@@ -247,6 +247,7 @@
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
+    <Compile Include="Logic\Service\Smile\Live\Api\Category.cs" />
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
@@ -1156,6 +1157,7 @@
   <ItemGroup>
     <Folder Include="etc\image\service\smile\video\" />
     <Folder Include="etc\script\smile\" />
+    <Folder Include="Logic\Service\Smile\Live\HalfBakedApi\" />
     <Folder Include="Resources\Service\Smile\Video\Search\" />
   </ItemGroup>
   <ItemGroup>
