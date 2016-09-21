@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
             CategoryManager = new SmileLiveCategoryManagerViewModel(Mediation);
+
         }
 
         #region property

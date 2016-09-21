@@ -39,7 +39,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live
         [XmlAttribute("max-count")]
         public int MaxCount { get; set; }
 
+        [XmlArray("sort"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> SortItems { get; set; } = new CollectionModel<DefinedElementModel>();
+
+        [XmlArray("order"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> OrderItems { get; set; } = new CollectionModel<DefinedElementModel>();
+
         [XmlArray("categories"), XmlArrayItem("element")]
-        public CollectionModel<DefinedElementModel> Items { get; set; } = new CollectionModel<DefinedElementModel>();
+        public CollectionModel<DefinedElementModel> CategoryItems { get; set; } = new CollectionModel<DefinedElementModel>();
     }
 }

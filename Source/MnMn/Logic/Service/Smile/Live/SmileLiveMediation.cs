@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -42,8 +43,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #endregion
 
-        #region MediationBase
+        #region function
 
+        ResponseModel RequestCore(RequestModel request)
+        {
+            switch(request.RequestKind) {
+                case RequestKind.CategoryDefine:
+                    return new ResponseModel(request, Category);
+
+                //case RequestKind.CacheData:
+                //    return Request_CacheData((SmileVideoInformationCacheRequestModel)request);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        bool ValueConvertCore(out object outputValue, string inputKey, object inputValue, Type inputType, Type outputType, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
+
+        #region MediationBase
 
         internal override object RequestShowView(ShowViewRequestModel reque)
         {
@@ -55,17 +79,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             throw new NotImplementedException();
         }
 
-        /*
-        internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
-        {
-            CheckUtility.Enforce(serviceType == ServiceType.SmileVideo);
-
-            ManagerPack = (SmileVideoManagerPackModel)managerPack;
-        }
-
         public override ResponseModel Request(RequestModel request)
         {
-            if(request.ServiceType != ServiceType.SmileVideo) {
+            if(request.ServiceType != ServiceType.SmileLive) {
                 ThrowNotSupportRequest(request);
             }
 
@@ -74,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
             }
 
@@ -83,7 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override string ConvertUri(string uri, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportConvertUri(uri, serviceType);
             }
 
@@ -92,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
             }
 
@@ -148,69 +164,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
         {
-            if(serviceType != ServiceType.SmileVideo) {
+            if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
             }
 
-            switch(serviceType) {
-                case ServiceType.SmileVideo:
-                    return ValueConvertCore(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
-
-                default:
-                    ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
-                    throw new NotImplementedException();
-            }
+            return ValueConvertCore(out outputValue, inputKey, inputValue, inputType, outputType, serviceType);
         }
-
-        internal override object RequestShowView(ShowViewRequestModel request)
-        {
-            CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileVideo);
-
-            if(request.ParameterIsViewModel) {
-                var player = request.ViewModel as SmileVideoPlayerViewModel;
-                if(player != null) {
-                    var window = new SmileVideoPlayerWindow() {
-                        DataContext = player,
-                    };
-                    window.Closed += Player_Closed;
-                    if(!Players.Any()) {
-                        player.IsWorkingPlayer.Value = true;
-                    }
-                    Players.Add(window);
-                    return window;
-                }
-                var information = request.ViewModel as SmileVideoInformationViewModel;
-                if(information != null) {
-                    var plaingItem = Players
-                        .Select(w => new { View = w, ViewModel = w.DataContext as SmileVideoPlayerViewModel })
-                        .Where(p => p.ViewModel != null)
-                        .FirstOrDefault(p => p.ViewModel.VideoId == information.VideoId)
-                    ;
-
-                    return plaingItem.View;
-                }
-            } else {
-                var finder = request.ShowRequestParameter as SmileVideoSearchParameterModel;
-                if(finder != null) {
-                    ManagerPack.SearchManager.LoadSearchFromParameterAsync(finder).ConfigureAwait(false);
-                    return ManagerPack.SearchManager;
-                } else {
-                    var mylist = request.ShowRequestParameter as SmileVideoSearchMyListParameterModel;
-                    if(mylist != null) {
-                        ManagerPack.MyListManager.SearchUserMyListFromParameterAsync(mylist).ConfigureAwait(false);
-                        ManagerPack.MyListManager.IsSelectedAccount = false;
-                        ManagerPack.MyListManager.IsSelectedBookmark = false;
-                        ManagerPack.MyListManager.IsSelectedHistory = false;
-                        ManagerPack.MyListManager.IsSelectedSearch = true;
-                        return ManagerPack.MyListManager;
-                    }
-                }
-            }
-
-            throw new NotImplementedException();
-        }
-        */
-
 
         #endregion
 
