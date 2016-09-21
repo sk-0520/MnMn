@@ -194,12 +194,40 @@
                 </Button>
               </DockPanel>
               <DockPanel>
-                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding Count, StringFormat=回数: {0:#,#.}}" />
-                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding TotalCount, StringFormat=結果: {0:#,#.}}" />
+                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding Count, StringFormat=回数: {0:N0}}" />
+                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding TotalCount, StringFormat=結果: {0:N0}}" />
 
                 <StackPanel Orientation="Horizontal" Margin="2,2">
-                  <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">タグ検索</Button>
-                  <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">キーワード検索</Button>
+                  <Button CommandParameter="{Binding}">
+                    <Button.Style>
+                      <Style TargetType="Button">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                            <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <StackPanel Orientation="Horizontal">
+                                  <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
+                                  <TextBlock VerticalAlignment="Center">タグ検索</TextBlock>
+                                </StackPanel>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                            <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <StackPanel Orientation="Horizontal">
+                                  <Image Source="/Resources/SearchType/Keyword.png" Style="{StaticResource ItemImage}" />
+                                  <TextBlock VerticalAlignment="Center">キーワード検索</TextBlock>
+                                </StackPanel>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Button.Style>
+                  </Button>
                   <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">削除</Button>
                 </StackPanel>
               </DockPanel>
