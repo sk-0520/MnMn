@@ -178,6 +178,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public bool InactiveIsFullScreenRestore
+        {
+            get { return Setting.Video.Player.InactiveIsFullScreenRestore; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
         #endregion
 
         #region command
