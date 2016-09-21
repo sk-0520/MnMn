@@ -126,6 +126,7 @@
           <StackPanel>
             <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}">新しいウィンドウで動画再生を行う</CheckBox>
             <CheckBox IsChecked="{Binding IsAutoPlay}">動画を自動的に再生する</CheckBox>
+            <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}">フルスクリーン時に非アクティブで通常ウィンドウに戻す</CheckBox>
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
