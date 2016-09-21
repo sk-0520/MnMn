@@ -19,22 +19,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Category
 {
-    public class SmileLiveFinderViewModel: ViewModelBase
+    public class SmileLiveCategoryItemFinderViewModel: SmileLiveFinderViewModelBase
     {
-        public SmileLiveFinderViewModel()
-        { }
-
-        #region property
-        #endregion
-
-        #region command
-        #endregion
-
-        #region function
-        #endregion
     }
 }

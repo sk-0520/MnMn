@@ -276,9 +276,11 @@
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveCustomManagerViewModelBase.cs" />
-    <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
