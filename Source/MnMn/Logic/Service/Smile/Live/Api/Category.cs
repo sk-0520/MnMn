@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
             return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
                 var response = t.Result;
                 t.Dispose();
+                page.Dispose();
 
                 if(!response.IsSuccess) {
                     return default(FeedSmileLiveModel);
