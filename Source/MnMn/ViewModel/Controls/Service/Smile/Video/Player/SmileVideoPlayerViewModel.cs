@@ -1337,6 +1337,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+
+                // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
+                var scope = FocusManager.GetFocusScope(View);
+                FocusManager.SetFocusedElement(scope, null);
+                Keyboard.ClearFocus();
             }
         }
 
