@@ -20,12 +20,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
-    public abstract class SmileLiveFinderViewModelBase: ViewModelBase
+    public abstract class SmileLiveFinderViewModelBase: FinderViewModelBase<SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>
     {
-        public SmileLiveFinderViewModelBase()
+        public SmileLiveFinderViewModelBase(Mediation mediation)
+            : base(mediation)
         { }
 
         #region property
