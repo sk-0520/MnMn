@@ -460,7 +460,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         internal override void ToggleAllCheck()
         {
-            DoSearchAction(nameof(ToggleAllCheck));
+            //DoSearchAction(nameof(ToggleAllCheck));
+            PagerFinderProvider.DoFinderAction(nameof(ToggleAllCheck));
         }
 
         internal override Task ContinuousPlaybackAsync(bool isRandom)
