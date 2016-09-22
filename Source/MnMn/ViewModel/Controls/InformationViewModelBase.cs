@@ -17,16 +17,26 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
     public abstract class InformationViewModelBase: ViewModelBase
     {
         #region variable
+
+        LoadState _thumbnailLoadState;
+        LoadState _informationLoadState;
+
+        BitmapSource _thumbnailImage;
 
         int _referenceCount;
 
@@ -41,6 +51,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get { return this._referenceCount; }
             set { SetVariableValue(ref this._referenceCount, value); }
+        }
+
+        /// <summary>
+        /// サムネイル読み込み状態。
+        /// </summary>
+        public LoadState ThumbnailLoadState
+        {
+            get { return this._thumbnailLoadState; }
+            set
+            {
+                if(SetVariableValue(ref this._thumbnailLoadState, value)) {
+                    CallOnPropertyChange(nameof(ThumbnailImage));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 動画情報読込状態。
+        /// <para>使ってないと思ったらいたるところで使ってて困った。</para>
+        /// </summary>
+        public LoadState InformationLoadState
+        {
+            get { return this._informationLoadState; }
+            set
+            {
+                if(SetVariableValue(ref this._informationLoadState, value)) {
+                    CallOnPropertyChange(nameof(ThumbnailImage));
+                }
+            }
+        }
+
+        public ImageSource ThumbnailImage
+        {
+            get
+            {
+                switch(ThumbnailLoadState) {
+                    case LoadState.None:
+                        return null;
+
+                    case LoadState.Preparation:
+                        return null;
+
+                    case LoadState.Loading:
+                        return null;
+
+                    case LoadState.Loaded:
+                        return this._thumbnailImage;
+
+                    case LoadState.Failure:
+                        return null;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
         }
 
         #endregion
@@ -63,6 +128,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             if(ReferenceCount > 0) {
                 ReferenceCount -= 1;
             }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cacheSpan"></param>
+        /// <param name="client"></param>
+        /// <returns>読み込めたかどうか。</returns>
+        protected abstract Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client);
+
+        public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            ThumbnailLoadState = LoadState.Preparation;
+
+            return LoadThumbnaiImageCoreAsync(cacheSpan, client).ContinueWith(t => {
+                if(t.IsFaulted) {
+                    ThumbnailLoadState = LoadState.Failure;
+                    return;
+                }
+
+                var result = t.Result;
+                if(result) {
+                    ThumbnailLoadState = LoadState.Loaded;
+                } else {
+                    ThumbnailLoadState = LoadState.Failure;
+                }
+            });
+        }
+
+        public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
+        {
+            var client = new HttpClient();
+            return LoadThumbnaiImageAsync(cacheSpan, client).ContinueWith(_ => {
+                client.Dispose();
+            });
+        }
+
+        protected void SetThumbnaiImage(BitmapSource image)
+        {
+            this._thumbnailImage = image;
         }
 
         #endregion

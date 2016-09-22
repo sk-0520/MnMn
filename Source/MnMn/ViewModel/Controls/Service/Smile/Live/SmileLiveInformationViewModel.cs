@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -51,6 +52,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public SmileLiveInformationSource InformationSource { get; }
 
         FeedSmileLiveItemModel Feed { get; }
+
+        #endregion
+
+        #region InformationViewModelBase
+
+        protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }

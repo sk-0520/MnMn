@@ -68,12 +68,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region variable
 
-        LoadState _thumbnailLoadState;
-        LoadState _informationLoadState;
+        //LoadState _thumbnailLoadState;
+        //LoadState _informationLoadState;
         LoadState _pageHtmlLoadState;
         LoadState _relationVideoLoadState;
 
-        BitmapSource _thumbnailImage;
+        //BitmapSource _thumbnailImage;
 
         bool? _isEconomyMode;
 
@@ -207,34 +207,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public SmileVideoInformationSource InformationSource { get; private set; }
 
-        /// <summary>
-        /// サムネイル読み込み状態。
-        /// </summary>
-        public LoadState ThumbnailLoadState
-        {
-            get { return this._thumbnailLoadState; }
-            set
-            {
-                if(SetVariableValue(ref this._thumbnailLoadState, value)) {
-                    CallOnPropertyChange(nameof(ThumbnailImage));
-                }
-            }
-        }
+        ///// <summary>
+        ///// サムネイル読み込み状態。
+        ///// </summary>
+        //public LoadState ThumbnailLoadState
+        //{
+        //    get { return this._thumbnailLoadState; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._thumbnailLoadState, value)) {
+        //            CallOnPropertyChange(nameof(ThumbnailImage));
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// 動画情報読込状態。
-        /// <para>使ってないと思ったらいたるところで使ってて困った。</para>
-        /// </summary>
-        public LoadState InformationLoadState
-        {
-            get { return this._informationLoadState; }
-            set
-            {
-                if(SetVariableValue(ref this._informationLoadState, value)) {
-                    CallOnPropertyChange(nameof(ThumbnailImage));
-                }
-            }
-        }
+        ///// <summary>
+        ///// 動画情報読込状態。
+        ///// <para>使ってないと思ったらいたるところで使ってて困った。</para>
+        ///// </summary>
+        //public LoadState InformationLoadState
+        //{
+        //    get { return this._informationLoadState; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._informationLoadState, value)) {
+        //            CallOnPropertyChange(nameof(ThumbnailImage));
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// ページ読み込み状態。
@@ -714,31 +714,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public ImageSource ThumbnailImage
-        {
-            get
-            {
-                switch(ThumbnailLoadState) {
-                    case LoadState.None:
-                        return null;
+        //public ImageSource ThumbnailImage
+        //{
+        //    get
+        //    {
+        //        switch(ThumbnailLoadState) {
+        //            case LoadState.None:
+        //                return null;
 
-                    case LoadState.Preparation:
-                        return null;
+        //            case LoadState.Preparation:
+        //                return null;
 
-                    case LoadState.Loading:
-                        return null;
+        //            case LoadState.Loading:
+        //                return null;
 
-                    case LoadState.Loaded:
-                        return this._thumbnailImage;
+        //            case LoadState.Loaded:
+        //                return this._thumbnailImage;
 
-                    case LoadState.Failure:
-                        return null;
+        //            case LoadState.Failure:
+        //                return null;
 
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
+        //            default:
+        //                throw new NotImplementedException();
+        //        }
+        //    }
+        //}
 
         public bool HasGetflv => Getflv != null;
 
@@ -988,38 +988,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
         }
 
-        public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
-        {
-            ThumbnailLoadState = LoadState.Preparation;
+        //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
+        //{
+        //    ThumbnailLoadState = LoadState.Preparation;
 
-            //var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
-            if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
-                ThumbnailLoadState = LoadState.Loading;
-                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
-                ThumbnailLoadState = LoadState.Loaded;
-                return Task.CompletedTask;
-            }
+        //    //var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
+        //    if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
+        //        ThumbnailLoadState = LoadState.Loading;
+        //        this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
+        //        ThumbnailLoadState = LoadState.Loaded;
+        //        return Task.CompletedTask;
+        //    }
 
-            ThumbnailLoadState = LoadState.Loading;
-            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
-                var image = task.Result;
-                if(image != null) {
-                    this._thumbnailImage = image;
-                    ThumbnailLoadState = LoadState.Loaded;
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
-                } else {
-                    ThumbnailLoadState = LoadState.Failure;
-                }
-            });
-        }
+        //    ThumbnailLoadState = LoadState.Loading;
+        //    return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+        //        var image = task.Result;
+        //        if(image != null) {
+        //            this._thumbnailImage = image;
+        //            ThumbnailLoadState = LoadState.Loaded;
+        //            CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+        //        } else {
+        //            ThumbnailLoadState = LoadState.Failure;
+        //        }
+        //    });
+        //}
 
-        public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
-        {
-            var client = new HttpClient();
-            return LoadThumbnaiImageAsync(cacheSpan, client).ContinueWith(_ => {
-                client.Dispose();
-            });
-        }
+        //public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
+        //{
+        //    var client = new HttpClient();
+        //    return LoadThumbnaiImageAsync(cacheSpan, client).ContinueWith(_ => {
+        //        client.Dispose();
+        //    });
+        //}
 
         public Task LoadInformationAsync(CacheSpan cacheSpan, HttpClient client)
         {
@@ -1417,6 +1417,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region ViewModelBase
+
+        protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            ThumbnailLoadState = LoadState.Preparation;
+
+            if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
+                ThumbnailLoadState = LoadState.Loading;
+                var cacheImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
+                SetThumbnaiImage(cacheImage);
+                //ThumbnailLoadState = LoadState.Loaded;
+                return Task.FromResult(true);
+            }
+
+            ThumbnailLoadState = LoadState.Loading;
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+                var image = task.Result;
+                if(image != null) {
+                    //this._thumbnailImage = image;
+                    SetThumbnaiImage(image);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
 
         protected override void CallOnPropertyChangeDisplayItem()
         {

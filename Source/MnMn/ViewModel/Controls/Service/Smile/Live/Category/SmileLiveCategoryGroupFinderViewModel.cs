@@ -20,12 +20,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Category
 {
     public class SmileLiveCategoryGroupFinderViewModel: SmileLiveFinderViewModelBase
     {
-        #region propert
+        public SmileLiveCategoryGroupFinderViewModel(Mediation mediation)
+            : base(mediation)
+        { }
+
+        #region property
 
         public CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>>();
 

@@ -18,15 +18,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Category
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
-    public class SmileLiveCategoryItemFinderViewModel: SmileLiveFinderViewModelBase
+    public class SmileLiveInformationLoader
     {
-        public SmileLiveCategoryItemFinderViewModel(Mediation mediation)
-            : base(mediation)
-        { }
+        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> list)
+        {
+            List = new List<SmileLiveInformationViewModel>(list);
+        }
+
+        #region property
+
+        IReadOnlyList<SmileLiveInformationViewModel> List { get; }
+
+        public CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
+
+        #endregion
+
+        #region function
+
+        //public Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
+        //{ }
+
+        #endregion
     }
 }

@@ -48,6 +48,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileLiveImageCacheSpan;
         public override object DefaultExtends { get; } = null;
 
+        protected override Task LoadInformationAsync(CacheSpan informationCacheSpan)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task LoadImageAsync(CacheSpan imageCacheSpan)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void ChangeSortItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override SmileLiveFinderItemViewModel CreateFinderItem(SmileLiveInformationViewModel information, int number)
+        {
+            return new SmileLiveFinderItemViewModel(information, number);
+        }
+
+
         #endregion
     }
 }
