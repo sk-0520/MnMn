@@ -448,8 +448,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override bool IsEnabledFinderFiltering
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<bool>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         public override bool ShowFilterSetting
