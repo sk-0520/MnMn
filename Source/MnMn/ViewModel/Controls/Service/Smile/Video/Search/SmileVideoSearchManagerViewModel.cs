@@ -370,7 +370,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             //var nowType = SelectedType;
             var nowQuery = InputQuery;
 
-            return SearchCoreAsync(nowMethod, nowSort, SelectedSearchType, nowQuery);
+            return SearchCoreAsync(nowMethod, nowSort, SelectedSearchType, nowQuery, true);
         }
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
@@ -382,10 +382,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
 
-            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query);
+            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query, parameter.IsLoad);
         }
 
-        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
+        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, bool isLoad)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
@@ -403,7 +403,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             );
 
-            SelectedSearchGroup = selectViewModel;
+            if(isLoad) {
+                SelectedSearchGroup = selectViewModel;
+            }
+
             var history = new SmileVideoSearchHistoryModel() {
                 Query = query,
                 SearchType = type,
@@ -419,7 +422,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             historyViewModel.LastTimestamp = DateTime.Now;
             selectViewModel.History = historyViewModel;
 
-            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+            if(isLoad) {
+                return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+            } else {
+                return Task.CompletedTask;
+            }
         }
 
         public Task LoadRecommendTagItemsAsync()
