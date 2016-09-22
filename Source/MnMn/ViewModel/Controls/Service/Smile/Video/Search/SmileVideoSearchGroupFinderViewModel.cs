@@ -454,8 +454,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override bool ShowFilterSetting
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<bool>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         internal override void ToggleAllCheck()

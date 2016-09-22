@@ -230,6 +230,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             Debug.Assert(pair.Key.PropertyType == typeof(TValue));
 
             pair.Key.SetValue(pair.Value, value);
+            CallPageItemOnPropertyChange();
         }
 
         public void DoFinderAction(string methodName, params object[] parameters)
