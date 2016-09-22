@@ -48,12 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileLiveImageCacheSpan;
         public override object DefaultExtends { get; } = null;
 
-        protected override Task LoadInformationAsync(CacheSpan informationCacheSpan)
+        protected override Task LoadInformationAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
             throw new NotImplementedException();
         }
 
-        protected override Task LoadImageAsync(CacheSpan imageCacheSpan)
+        protected override Task LoadImageAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
             throw new NotImplementedException();
         }

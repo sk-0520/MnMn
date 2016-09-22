@@ -31,7 +31,9 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
-    public abstract class FinderViewModelBase: ViewModelBase
+    public abstract class FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>: ViewModelBase
+        where TInformationViewModel : InformationViewModelBase
+        where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
         #region variable
 
@@ -39,14 +41,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         bool _nowLoading;
         SourceLoadState _finderLoadState;
 
+        TFinderItemViewModel _selectedFinderItem;
+
+        string _inputTitleFilter;
+        bool _isBlacklist;
+
         #endregion
 
-        protected FinderViewModelBase(Mediation mediation)
+        public FinderViewModelBase(Mediation mediation)
         {
             Mediation = mediation;
+            FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
         }
 
         #region property
+
+        protected CollectionModel<TFinderItemViewModel> FinderItemList { get; } = new CollectionModel<TFinderItemViewModel>();
+        public virtual IReadOnlyList<TFinderItemViewModel> FinderItemsViewer => FinderItemList;
+        public virtual ICollectionView FinderItems { get; }
 
         protected Mediation Mediation { get; }
         protected CancellationTokenSource CancelLoading { get; set; }
@@ -112,124 +124,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 return !loadSkips.Any(l => l == FinderLoadState);
             }
         }
-
-        #endregion
-
-        #region command
-
-        public virtual ICommand ReloadCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        LoadDefaultCacheAsync().ConfigureAwait(false);
-                    }
-                );
-            }
-        }
-
-        #endregion
-
-        #region function
-
-        internal abstract void ChangeSortItems();
-
-        public Task LoadDefaultCacheAsync()
-        {
-            return LoadAsync(DefaultInformationCacheSpan, DefaultImageCacheSpan);
-        }
-
-        public Task LoadAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
-        {
-            return LoadAsync(informationCacheSpan, imageCacheSpan, DefaultExtends);
-        }
-
-        public Task LoadAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
-        {
-            if(CanLoad) {
-                if(NowLoading) {
-                    Mediation.Logger.Trace("CANCEL!");
-                    CancelLoading.Cancel(true);
-                }
-
-                FinderLoadState = SourceLoadState.SourceLoading;
-                NowLoading = true;
-
-                CancelLoading = new CancellationTokenSource();
-
-                return LoadCoreAsync(informationCacheSpan, imageCacheSpan, extends).ContinueWith(task => {
-                    return LoadFinderAsync(informationCacheSpan, imageCacheSpan);
-                }, CancelLoading.Token);
-            } else {
-                return Task.CompletedTask;
-            }
-        }
-
-        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            return Task.Run(() => {
-                FinderLoadState = SourceLoadState.InformationLoading;
-                return LoadImageAsync(imageCacheSpan);
-            }, CancelLoading.Token).ContinueWith(t => {
-                FinderLoadState = SourceLoadState.Completed;
-                NowLoading = false;
-            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
-        }
-
-        protected abstract Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends);
-        protected abstract Task LoadInformationAsync(CacheSpan informationCacheSpan);
-        protected abstract Task LoadImageAsync(CacheSpan imageCacheSpan);
-
-
-        protected void DisposeCancelLoading()
-        {
-            if(CancelLoading != null) {
-                CancelLoading.Dispose();
-                CancelLoading = null;
-            }
-        }
-
-        #endregion
-
-        #region ViewModelBase
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                DisposeCancelLoading();
-            }
-            base.Dispose(disposing);
-        }
-
-        #endregion
-    }
-
-    public abstract class FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>: FinderViewModelBase
-        where TInformationViewModel : InformationViewModelBase
-        where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
-    {
-        #region variable
-
-        TFinderItemViewModel _selectedFinderItem;
-
-        string _inputTitleFilter;
-        bool _isBlacklist;
-
-        #endregion
-
-        public FinderViewModelBase(Mediation mediation)
-            : base(mediation)
-        {
-            FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
-        }
-
-        #region property
-
-        protected CollectionModel<TFinderItemViewModel> FinderItemList { get; } = new CollectionModel<TFinderItemViewModel>();
-        public virtual IReadOnlyList<TFinderItemViewModel> FinderItemsViewer => FinderItemList;
-        public virtual ICollectionView FinderItems { get; }
-
         /// <summary>
         /// 選択中アイテム。
         /// </summary>
@@ -276,9 +170,70 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get { return CreateCommand(o => ToggleAllCheck()); }
         }
 
+        public virtual ICommand ReloadCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+
         #endregion
 
         #region function
+
+        internal abstract void ChangeSortItems();
+
+        public Task LoadDefaultCacheAsync()
+        {
+            return LoadAsync(DefaultInformationCacheSpan, DefaultImageCacheSpan);
+        }
+
+        public Task LoadAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
+        {
+            return LoadAsync(informationCacheSpan, imageCacheSpan, DefaultExtends);
+        }
+
+        public Task LoadAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            if(CanLoad) {
+                if(NowLoading) {
+                    Mediation.Logger.Trace("CANCEL!");
+                    CancelLoading.Cancel(true);
+                }
+
+                FinderLoadState = SourceLoadState.SourceLoading;
+                NowLoading = true;
+
+                CancelLoading = new CancellationTokenSource();
+
+                return LoadCoreAsync(informationCacheSpan, imageCacheSpan, extends).ContinueWith(task => {
+                    return LoadFinderAsync(informationCacheSpan, imageCacheSpan);
+                }, CancelLoading.Token);
+            } else {
+                return Task.CompletedTask;
+            }
+        }
+
+        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            return Task.Run(() => {
+                FinderLoadState = SourceLoadState.InformationLoading;
+                return LoadImageAsync(FinderItemList.Select(i => i.Information), imageCacheSpan);
+            }, CancelLoading.Token).ContinueWith(t => {
+                FinderLoadState = SourceLoadState.Completed;
+                NowLoading = false;
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        }
+
+        protected abstract Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends);
+        protected abstract Task LoadInformationAsync(IEnumerable<TInformationViewModel> informationItems, CacheSpan informationCacheSpan);
+        protected abstract Task LoadImageAsync(IEnumerable<TInformationViewModel> informationItems, CacheSpan imageCacheSpan);
 
         internal virtual void ToggleAllCheck()
         {
@@ -317,12 +272,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 .ToArray()
             ;
 
-            return LoadInformationAsync(informationCacheSpan).ContinueWith(t => {
+            return LoadInformationAsync(finderItems.Select(i => i.Information), informationCacheSpan).ContinueWith(t => {
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     FinderItemList.InitializeRange(finderItems);
                     ChangeSortItems();
                 }));
             }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        }
+
+        protected void DisposeCancelLoading()
+        {
+            if(CancelLoading != null) {
+                CancelLoading.Dispose();
+                CancelLoading = null;
+            }
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DisposeCancelLoading();
+            }
+            base.Dispose(disposing);
         }
 
         #endregion

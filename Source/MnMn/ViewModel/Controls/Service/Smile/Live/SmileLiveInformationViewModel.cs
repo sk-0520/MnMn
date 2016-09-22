@@ -57,6 +57,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #region InformationViewModelBase
 
+        protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
             throw new NotImplementedException();

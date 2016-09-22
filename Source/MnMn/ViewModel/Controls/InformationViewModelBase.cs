@@ -130,6 +130,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        protected abstract Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client);
+
+        public Task LoadInformationAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            InformationLoadState = LoadState.Preparation;
+
+            InformationLoadState = LoadState.Loading;
+
+            return LoadInformationCoreAsync(cacheSpan, client).ContinueWith(t => {
+                if(t.IsFaulted) {
+                    InformationLoadState = LoadState.Failure;
+                    return;
+                }
+
+                var result = t.Result;
+                if(result) {
+                    InformationLoadState = LoadState.Loaded;
+                } else {
+                    InformationLoadState = LoadState.Failure;
+                }
+            });
+        }
+
+        public Task LoadInformationDefaultAsync(CacheSpan cacheSpan)
+        {
+            var host = new HttpUserAgentHost();
+            var userAgent = host.CreateHttpUserAgent();
+            return LoadInformationAsync(cacheSpan, userAgent).ContinueWith(_ => {
+                userAgent.Dispose();
+                host.Dispose();
+            });
+        }
+
+
         /// <summary>
         ///
         /// </summary>
@@ -159,9 +193,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
         {
-            var client = new HttpClient();
-            return LoadThumbnaiImageAsync(cacheSpan, client).ContinueWith(_ => {
-                client.Dispose();
+            var host = new HttpUserAgentHost();
+            var userAgent = host.CreateHttpUserAgent();
+            return LoadThumbnaiImageAsync(cacheSpan, userAgent).ContinueWith(_ => {
+                userAgent.Dispose();
+                host.Dispose();
             });
         }
 

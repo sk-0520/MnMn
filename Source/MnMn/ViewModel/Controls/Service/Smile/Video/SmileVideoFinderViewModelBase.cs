@@ -538,15 +538,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return new SmileVideoFinderItemViewModel(information, number);
         }
 
-        protected override Task LoadInformationAsync(CacheSpan informationCacheSpan)
+        protected override Task LoadInformationAsync(IEnumerable<SmileVideoInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
-            var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
+            var loader = new SmileVideoInformationLoader(informationItems);
             return loader.LoadInformationAsync(informationCacheSpan);
         }
 
-        protected override Task LoadImageAsync(CacheSpan imageCacheSpan)
+        protected override Task LoadImageAsync(IEnumerable<SmileVideoInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
-            var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
+            var loader = new SmileVideoInformationLoader(informationItems);
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
 

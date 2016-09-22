@@ -26,26 +26,25 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
-    public class SmileVideoInformationLoader
+    public class SmileVideoInformationLoader: InformationLoader<SmileVideoInformationViewModel>
     {
-        public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> list)
-        {
-            List = new List<SmileVideoInformationViewModel>(list);
-        }
+        public SmileVideoInformationLoader(IEnumerable<SmileVideoInformationViewModel> informations)
+            : base(informations)
+        { }
 
-        #region property
+        //#region property
 
-        IReadOnlyList<SmileVideoInformationViewModel> List { get; }
+        //IReadOnlyList<SmileVideoInformationViewModel> List { get; }
 
-        public CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
+        //public CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
 
-        #endregion
+        //#endregion
 
 
-        public Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
+        public override Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
         {
             var tasks = new List<Task>();
-            var groups = List
+            var groups = InformationItems
                 .GroupBy(i => i.ThumbnailUri.IsAbsoluteUri ? i.ThumbnailUri.Host : string.Empty)
                 .OrderByDescending(g => g.Count())
                 .ToArray()
@@ -74,20 +73,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return Task.WhenAll(tasks);
         }
 
-        public Task LoadInformationAsync(CacheSpan cacheSpan)
-        {
-            var client = new HttpClient();
-            var tasks = new List<Task>();
+        //public Task LoadInformationAsync(CacheSpan cacheSpan)
+        //{
+        //    var client = new HttpClient();
+        //    var tasks = new List<Task>();
 
-            foreach(var item in List) {
-                var task = item.LoadInformationAsync(cacheSpan, client);
-                tasks.Add(task);
-            }
+        //    foreach(var item in List) {
+        //        var task = item.LoadInformationAsync(cacheSpan, client);
+        //        tasks.Add(task);
+        //    }
 
-            return Task.WhenAll(tasks).ContinueWith(_ => {
-                client.Dispose();
-            });
-        }
+        //    return Task.WhenAll(tasks).ContinueWith(_ => {
+        //        client.Dispose();
+        //    });
+        //}
 
     }
 }

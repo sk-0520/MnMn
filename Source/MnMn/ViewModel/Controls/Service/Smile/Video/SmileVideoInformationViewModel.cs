@@ -1021,39 +1021,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    });
         //}
 
-        public Task LoadInformationAsync(CacheSpan cacheSpan, HttpClient client)
-        {
-            InformationLoadState = LoadState.Preparation;
+        //public Task LoadInformationAsync(CacheSpan cacheSpan, HttpClient client)
+        //{
+        //    InformationLoadState = LoadState.Preparation;
 
-            InformationLoadState = LoadState.Loading;
+        //    InformationLoadState = LoadState.Loading;
 
-            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
-                var rawGetthumbinfo = task.Result;
-                if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
-                    InformationLoadState = LoadState.Failure;
-                    return;
-                }
-                //SmileVideoTh
-                //if(rawGetthumbinfo.Status)
-                Thumb = rawGetthumbinfo.Thumb;
-                InformationLoadState = LoadState.Loaded;
-                InformationSource = SmileVideoInformationSource.Getthumbinfo;
-                var propertyNames = new[] {
-                    nameof(Length),
-                    nameof(HasLength),
-                    nameof(InformationLoadState),
-                };
-                CallOnPropertyChange(propertyNames);
-            });
-        }
+        //    return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
+        //        var rawGetthumbinfo = task.Result;
+        //        if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+        //            InformationLoadState = LoadState.Failure;
+        //            return;
+        //        }
+        //        //SmileVideoTh
+        //        //if(rawGetthumbinfo.Status)
+        //        Thumb = rawGetthumbinfo.Thumb;
+        //        InformationLoadState = LoadState.Loaded;
+        //        InformationSource = SmileVideoInformationSource.Getthumbinfo;
+        //        var propertyNames = new[] {
+        //            nameof(Length),
+        //            nameof(HasLength),
+        //            nameof(InformationLoadState),
+        //        };
+        //        CallOnPropertyChange(propertyNames);
+        //    });
+        //}
 
-        public Task LoadInformationDefaultAsync(CacheSpan cacheSpan)
-        {
-            var client = new HttpClient();
-            return LoadInformationAsync(cacheSpan, client).ContinueWith(_ => {
-                client.Dispose();
-            });
-        }
+        //public Task LoadInformationDefaultAsync(CacheSpan cacheSpan)
+        //{
+        //    var client = new HttpClient();
+        //    return LoadInformationAsync(cacheSpan, client).ContinueWith(_ => {
+        //        client.Dispose();
+        //    });
+        //}
 
         public Task<CheckModel> LoadGetflvAsync(bool isSave)
         {
@@ -1417,6 +1417,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         #endregion
 
         #region ViewModelBase
+
+        protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
+                var rawGetthumbinfo = task.Result;
+                if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
+                    return false;
+                }
+
+                Thumb = rawGetthumbinfo.Thumb;
+                InformationSource = SmileVideoInformationSource.Getthumbinfo;
+                var propertyNames = new[] {
+                    nameof(Length),
+                    nameof(HasLength),
+                    nameof(InformationLoadState),
+                };
+                CallOnPropertyChange(propertyNames);
+
+                return true;
+            });
+        }
 
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
