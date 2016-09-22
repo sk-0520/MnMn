@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     {
         #region define
 
-        static IEnumerable<string> ChangePagePropertyNames => new[] {
+        static IEnumerable<string> DefaultChangePagePropertyNames => new[] {
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderItemsViewer),
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderItems),
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderLoadState),
@@ -86,7 +86,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #region property
 
         Mediation Mediation { get; }
-        CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(ChangePagePropertyNames);
+        CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(DefaultChangePagePropertyNames);
+        public IReadOnlyList<string> ChangePagePropertyNames => CustomChangePagePropertyNames;
 
         IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> ParentFinder { get; }
         public TChildFinderViewModel CurrentFinder

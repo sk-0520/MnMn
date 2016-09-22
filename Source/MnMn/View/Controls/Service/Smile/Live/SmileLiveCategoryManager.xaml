@@ -44,5 +44,14 @@
       <Button Command="{Binding SearchCategoryCommand}">search</Button>
     </StackPanel>
 
+    <TabControl
+      Grid.Row="1"
+      ItemsSource="{Binding CategoryGroups}"
+      SelectedItem="{Binding SelectedCategoryGroup}"
+      Style="{StaticResource FinderTab}"
+    >
+
+    </TabControl>
+
   </Grid>
 </UserControl>

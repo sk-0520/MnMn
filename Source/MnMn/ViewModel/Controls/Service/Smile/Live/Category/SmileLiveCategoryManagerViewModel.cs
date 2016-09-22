@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -31,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Category;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
@@ -41,6 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         DefinedElementModel _selectedSortItem;
         DefinedElementModel _selectedOrderItem;
         DefinedElementModel _selectedCategoryItem;
+
+        SmileLiveCategoryGroupFinderViewModel _selectedSearchGroup;
 
         #endregion
 
@@ -56,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         #region property
 
         SmileLiveCategoryModel CategoryModel { get; }
+
+        public CollectionModel<SmileLiveCategoryGroupFinderViewModel> CategoryGroups { get; } = new CollectionModel<SmileLiveCategoryGroupFinderViewModel>();
 
         public IList<DefinedElementModel> SortItems { get { return CategoryModel.SortItems; } }
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
@@ -78,6 +84,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             get { return this._selectedCategoryItem; }
             set { SetVariableValue(ref this._selectedCategoryItem, value); }
         }
+
+        public SmileLiveCategoryGroupFinderViewModel SelectedCategoryGroup
+        {
+            get { return this._selectedSearchGroup; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSearchGroup, value)) {
+                    if(this._selectedSearchGroup != null) {
+                        //var items = this._selectedSearchGroup.SearchItems;
+                        //this._selectedSearchGroup.SearchItems.InitializeRange(items);
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -103,12 +124,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         Task SearchCoreAsync(DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category)
         {
-            var test = new Logic.Service.Smile.Live.Api.Category(Mediation);
-            var a = test.LoadAsync(category.Key, sort.Key, order.Key, 1);
-            a.ContinueWith(t => {
-                SerializeUtility.SaveXmlSerializeToFile("z:\\a.xml", t.Result);
-            });
-            return Task.CompletedTask;
+            //var test = new Logic.Service.Smile.Live.Api.Category(Mediation);
+            //var a = test.LoadAsync(category.Key, sort.Key, order.Key, 1);
+            //a.ContinueWith(t => {
+            //    SerializeUtility.SaveXmlSerializeToFile("z:\\a.xml", t.Result);
+            //});
+            //return Task.CompletedTask;
+
+            // 存在する場合は該当タブへ遷移
+            var selectViewModel = RestrictUtility.IsNotNull(
+                CategoryGroups.FirstOrDefault(g => g.Category.Key == category.Key),
+                viewModel => {
+                    viewModel.SetContextElements(sort, order);
+                    return viewModel;
+                },
+                () => {
+                    var finder = new SmileLiveCategoryGroupFinderViewModel(Mediation, CategoryModel, sort, order, category);
+                    CategoryGroups.Insert(0, finder);
+                    return finder;
+                }
+            );
+
+            SelectedCategoryGroup = selectViewModel;
+
+            return SelectedCategoryGroup.LoadDefaultCacheAsync();
         }
 
         #endregion

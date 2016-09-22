@@ -19,30 +19,120 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Category
 {
-    public class SmileLiveCategoryGroupFinderViewModel: SmileLiveFinderViewModelBase
+    public class SmileLiveCategoryGroupFinderViewModel: SmileLiveFinderViewModelBase, IPagerFinder<SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>
     {
-        public SmileLiveCategoryGroupFinderViewModel(Mediation mediation)
+        #region variable
+
+        DefinedElementModel _selectedSort;
+        DefinedElementModel _selectedOrder;
+
+        #endregion
+
+        public SmileLiveCategoryGroupFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category)
             : base(mediation)
-        { }
+        {
+            CategoryModel = categoryDefine;
+
+            Category = category;
+            SetContextElements(sort, order);
+
+            PagerFinderProvider = new PagerFinderProvider<SmileLiveFinderViewModelBase, SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>(
+                Mediation,
+                this
+            );
+        }
 
         #region property
 
-        SmileLiveCategoryItemFinderViewModel SearchFinder { get; set; }
+        SmileLiveCategoryModel CategoryModel { get; }
 
-        public CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>>();
+        PagerFinderProvider<SmileLiveFinderViewModelBase, SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel> PagerFinderProvider { get; }
+
+        public DefinedElementModel LoadingSort { get; private set; }
+        public DefinedElementModel LoadingOrder { get; private set; }
+        public DefinedElementModel Category { get; set; }
+
+        public DefinedElementModel SelectedSort
+        {
+            get { return this._selectedSort; }
+            set { SetVariableValue(ref this._selectedSort, value); }
+        }
+
+        public DefinedElementModel SelectedOrder
+        {
+            get { return this._selectedOrder; }
+            set { SetVariableValue(ref this._selectedOrder, value); }
+        }
+
+        public IList<DefinedElementModel> SortItems { get { return CategoryModel.SortItems; } }
+        public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
+
+        SmileLiveCategoryItemFinderViewModel SearchFinder { get; set; }
 
         #endregion
 
         #region function
 
+        DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
+        {
+            if(items.Any(i => i == element)) {
+                return element;
+            } else {
+                return items.FirstOrDefault(i => i.Key == element.Key);
+            }
+        }
+
+        public void SetContextElements(DefinedElementModel sort, DefinedElementModel order)
+        {
+            SelectedPage = null;
+
+            LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
+            LoadingOrder = SelectedOrder = GetContextElemetFromChangeElement(OrderItems, order);
+        }
+
+
         public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
         {
             return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, isReload);
+        }
+
+        #endregion
+
+        #region IPagerFinder
+
+        public CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>> PageItems
+        {
+            get { return PagerFinderProvider.PageItems; }
+        }
+
+        public PageViewModel<SmileLiveCategoryItemFinderViewModel> SelectedPage
+        {
+            get { return PagerFinderProvider?.SelectedPage; }
+            set
+            {
+                if(PagerFinderProvider != null) {
+                    PagerFinderProvider.SelectedPage = value;
+                }
+            }
+        }
+
+        public void CallPageItemOnPropertyChange()
+        {
+            CallOnPropertyChange(PagerFinderProvider.ChangePagePropertyNames);
+        }
+
+        public ICommand PageChangeCommand
+        {
+            get { return PagerFinderProvider.PageChangeCommand; }
         }
 
         #endregion
@@ -56,5 +146,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         }
 
         #endregion
+
     }
 }

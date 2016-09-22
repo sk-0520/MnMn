@@ -20,13 +20,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Category
 {
     public class SmileLiveCategoryItemFinderViewModel: SmileLiveFinderViewModelBase
     {
-        public SmileLiveCategoryItemFinderViewModel(Mediation mediation)
+        public SmileLiveCategoryItemFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index, int count)
             : base(mediation)
-        { }
+        {
+            CategoryDefine = categoryDefine;
+
+            Sort = sort;
+            Order = order;
+            Category = category;
+            Index = index;
+            Count = count;
+        }
+
+        #region property
+
+        SmileLiveCategoryModel CategoryDefine { get; }
+
+        public DefinedElementModel Sort { get; }
+        public DefinedElementModel Order { get; }
+        public DefinedElementModel Category { get; }
+        public int Index { get; }
+        public int Count { get; }
+
+        #endregion
     }
 }

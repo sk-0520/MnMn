@@ -519,7 +519,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public void CallPageItemOnPropertyChange()
         {
-            CallOnPropertyChange(ChangePagePropertyNames);
+            CallOnPropertyChange(PagerFinderProvider.ChangePagePropertyNames);
         }
 
         public ICommand PageChangeCommand
