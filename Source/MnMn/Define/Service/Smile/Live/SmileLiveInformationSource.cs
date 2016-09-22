@@ -19,25 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
 {
-    public abstract class SmileLiveFinderViewModelBase: ViewModelBase
+    public enum SmileLiveInformationSource
     {
-        public SmileLiveFinderViewModelBase()
-        { }
-
-        #region property
-        #endregion
-
-        #region command
-        #endregion
-
-        #region function
-
-
-
-        #endregion
+        /// <summary>
+        /// フィードから取得。
+        /// </summary>
+        Feed,
     }
 }

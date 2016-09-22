@@ -20,23 +20,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
-    public abstract class SmileLiveFinderViewModelBase: ViewModelBase
+    public class SmileLiveInformationViewModel: ViewModelBase
     {
-        public SmileLiveFinderViewModelBase()
-        { }
+        #region variable
+        #endregion
+
+        SmileLiveInformationViewModel(Mediation mediation)
+        {
+            Mediation = mediation;
+        }
+
+        public SmileLiveInformationViewModel(Mediation mediation, FeedSmileLiveItemModel feed)
+            : this(mediation)
+        {
+            Feed = feed;
+
+            InformationSource = SmileLiveInformationSource.Feed;
+        }
 
         #region property
-        #endregion
 
-        #region command
-        #endregion
+        Mediation Mediation { get; }
 
-        #region function
+        public SmileLiveInformationSource InformationSource { get; }
 
-
+        FeedSmileLiveItemModel Feed { get; }
 
         #endregion
     }

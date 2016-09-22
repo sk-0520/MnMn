@@ -19,19 +19,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
     /// <summary>
-    /// <see cref="View.Controls.Service.Smile.Video.SmileVideoFinderControl"/>に設定するアイテム。
-    /// <para><see cref="SmileVideoInformationViewModel"/>を<see cref="View.Controls.Service.Smile.Video.SmileVideoFinderControl"/>に設定するために超頑張ったのである。</para>
+    /// <see cref="View.Controls.Service.Smile.Live.SmileLiveFinderControl"/>に設定するアイテム。
     /// </summary>
-    public sealed class SmileVideoFinderItemViewModel: FinderItemViewModelBase<SmileVideoInformationViewModel>
+    public sealed class SmileLiveFinderItemViewModel: FinderItemViewModelBase<SmileLiveInformationViewModel>
     {
-        public SmileVideoFinderItemViewModel(SmileVideoInformationViewModel information, int number)
+        public SmileLiveFinderItemViewModel(SmileLiveInformationViewModel information, int number)
             : base(information, number)
         { }
     }
