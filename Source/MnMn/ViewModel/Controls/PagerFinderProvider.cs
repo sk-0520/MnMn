@@ -280,6 +280,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                     if(SelectedPage != null && oldSelectedPage != null) {
                         SelectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
                         //SelectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+                        // #168
+                        SelectedPage.ViewModel.IsAscending = oldSelectedPage.ViewModel.IsAscending;
+                        SelectedPage.ViewModel.IsBlacklist = oldSelectedPage.ViewModel.IsBlacklist;
+
                         SelectedPage.ViewModel.FinderItems.Refresh();
                     }
 
