@@ -17,7 +17,10 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -30,8 +33,9 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
-    public class PagerFinderProvider<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>: ViewModelBase, IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>
-        where TFinderViewModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
+    public class PagerFinderProvider<TBaseFinderVideModel, TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>: ViewModelBase, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>
+        where TBaseFinderVideModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
+        where TChildFinderViewModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
         where TInformationViewModel : InformationViewModelBase
         where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
@@ -43,8 +47,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.FinderLoadState),
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.CanLoad),
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.NowLoading),
-            nameof(IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageItems),
-            nameof(IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageChangeCommand),
+            nameof(IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageItems),
+            nameof(IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageChangeCommand),
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.IsAscending),
             //nameof(TFinderViewModel.SelectedSortType),
             //nameof(TFinderViewModel.IsEnabledFinderFiltering),
@@ -55,18 +59,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region event
 
-        public event EventHandler<ChangedSelectedPageEventArgs<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>> ChangedSelectedPage;
+        public event EventHandler<ChangedSelectedPageEventArgs<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>> ChangedSelectedPage;
 
         #endregion
 
         #region variable
 
-        TFinderViewModel _currentFinder;
-        PageViewModel<TFinderViewModel> _selectedPage;
+        TChildFinderViewModel _currentFinder;
+        PageViewModel<TChildFinderViewModel> _selectedPage;
 
         #endregion
 
-        public PagerFinderProvider(Mediation mediation, IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
+        public PagerFinderProvider(Mediation mediation, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
         {
             Mediation = mediation;
             ParentFinder = parentFinder;
@@ -75,7 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
-        public PagerFinderProvider(Mediation mediation, IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
+        public PagerFinderProvider(Mediation mediation, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
             : this(mediation, parentFinder, Enumerable.Empty<string>())
         { }
 
@@ -84,8 +88,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         Mediation Mediation { get; }
         CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(ChangePagePropertyNames);
 
-        IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> ParentFinder { get; }
-        public TFinderViewModel CurrentFinder
+        IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> ParentFinder { get; }
+        public TChildFinderViewModel CurrentFinder
         {
             get { return this._currentFinder; }
             set
@@ -103,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        public TFinderViewModel SelectedFinder => SelectedPage.ViewModel;
+        public TChildFinderViewModel SelectedFinder => SelectedPage.ViewModel;
 
         public ICollectionView FinderItems
         {
@@ -151,14 +155,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region function
 
-        protected void OnChangedSelectedPage(PageViewModel<TFinderViewModel> oldSelectedPage, PageViewModel<TFinderViewModel> newSelectedPage)
+        protected void OnChangedSelectedPage(PageViewModel<TChildFinderViewModel> oldSelectedPage, PageViewModel<TChildFinderViewModel> newSelectedPage)
         {
             if(ChangedSelectedPage == null) {
                 return;
             }
 
             //var e = new ChangedSelectedPageEventArgs(oldSelectedPage, newSelectedPage);
-            var e = new ChangedSelectedPageEventArgs<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>(oldSelectedPage, newSelectedPage);
+            var e = new ChangedSelectedPageEventArgs<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>(oldSelectedPage, newSelectedPage);
             ChangedSelectedPage(this, e);
         }
 
@@ -172,6 +176,78 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             target.PropertyChanged -= PageVm_PropertyChanged;
         }
 
+        KeyValuePair<MemberInfo, TBaseFinderVideModel> GetMemberInfo(bool getMethod, string memberName)
+        {
+            object target;
+            if(SelectedPage == null) {
+                if(CurrentFinder != null) {
+                    target = CurrentFinder;
+                } else {
+                    target = ParentFinder;
+                }
+            } else {
+                target = SelectedPage.ViewModel;
+            }
+            var type = target.GetType();
+            MemberInfo[] members = getMethod
+                ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(m => m.Name == memberName).ToArray()
+                : type.GetMember(memberName)
+            ;
+            MemberInfo member;
+            if(target == this) {
+                member = members.First(m => m.DeclaringType == typeof(TBaseFinderVideModel));
+            } else {
+                member = members.First();
+            }
+
+            return new KeyValuePair<MemberInfo, TBaseFinderVideModel>(member, (TBaseFinderVideModel)target);
+        }
+
+        KeyValuePair<PropertyInfo, TBaseFinderVideModel> GetPropertyInfo([CallerMemberName] string propertyName = "")
+        {
+            var pair = GetMemberInfo(false, propertyName);
+
+            return new KeyValuePair<PropertyInfo, TBaseFinderVideModel>((PropertyInfo)pair.Key, pair.Value);
+        }
+
+        KeyValuePair<MethodInfo, TBaseFinderVideModel> GetMethodInfo([CallerMemberName] string propertyName = "")
+        {
+            var pair = GetMemberInfo(true, propertyName);
+
+            return new KeyValuePair<MethodInfo, TBaseFinderVideModel>((MethodInfo)pair.Key, pair.Value);
+        }
+
+        public TResult GetFinderProperty<TResult>([CallerMemberName] string propertyName = "")
+        {
+            var pair = GetPropertyInfo(propertyName);
+            Debug.Assert(pair.Key.PropertyType == typeof(TResult));
+
+            return (TResult)pair.Key.GetValue(pair.Value);
+        }
+        public void SetFinderProperty<TValue>(TValue value, [CallerMemberName] string propertyName = "")
+        {
+            var pair = GetPropertyInfo(propertyName);
+            Debug.Assert(pair.Key.PropertyType == typeof(TValue));
+
+            pair.Key.SetValue(pair.Value, value);
+        }
+
+        public void DoFinderAction(string methodName, params object[] parameters)
+        {
+            var pair = GetMethodInfo(methodName);
+            Debug.Assert(pair.Key.ReturnType == typeof(void));
+
+            pair.Key.Invoke(pair.Value, parameters);
+        }
+
+        public TResult DoFinderFunction<TResult>(string methodName, params object[] parameters)
+        {
+            var pair = GetMethodInfo(methodName);
+            Debug.Assert(pair.Key.ReturnType == typeof(TResult));
+
+            return (TResult)pair.Key.Invoke(pair.Value, parameters);
+        }
+
         #endregion
 
         #region IPagerFinder
@@ -179,12 +255,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         /// <summary>
         /// 保持するページャ。
         /// </summary>
-        public CollectionModel<PageViewModel<TFinderViewModel>> PageItems { get; } = new CollectionModel<PageViewModel<TFinderViewModel>>();
+        public CollectionModel<PageViewModel<TChildFinderViewModel>> PageItems { get; } = new CollectionModel<PageViewModel<TChildFinderViewModel>>();
 
         /// <summary>
         /// 選択中ページ。
         /// </summary>
-        public PageViewModel<TFinderViewModel> SelectedPage
+        public PageViewModel<TChildFinderViewModel> SelectedPage
         {
             get { return this._selectedPage; }
             set
@@ -218,7 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             {
                 return CreateCommand(
                     o => {
-                        var pageVm = (PageViewModel<TFinderViewModel>)o;
+                        var pageVm = (PageViewModel<TChildFinderViewModel>)o;
                         if(pageVm.LoadState != LoadState.Loaded) {
                             SelectedPage = pageVm;
                             //pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;

@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SetContextElements(method, sort);
 
-            PagerFinderProvider = new PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>(
+            PagerFinderProvider = new PagerFinderProvider<SmileVideoFinderViewModelBase, SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>(
                 Mediation,
                 this,
                 new[] {
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { PagerFinderProvider.CurrentFinder = value; }
         }
 
-        PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> PagerFinderProvider { get; }
+        PagerFinderProvider<SmileVideoFinderViewModelBase, SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> PagerFinderProvider { get; }
 
 
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
@@ -465,7 +465,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         internal override Task ContinuousPlaybackAsync(bool isRandom)
         {
-            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
+            //return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
+            return PagerFinderProvider.DoFinderFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
         }
 
         public override bool IsAscending
