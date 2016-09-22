@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -187,6 +188,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set { SetVariableValue(ref this._notfound, value); }
         }
 
+        /// <summary>
+        /// ピン止めされているか。
+        /// </summary>
+        public bool IsPin
+        {
+            get
+            {
+                return SmileVideoSearchUtility.IsPinItem(Setting.Search.SearchPinItems, Query, Type);
+            }
+        }
+
         public override SourceLoadState FinderLoadState
         {
             get
@@ -255,6 +267,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand SwitchPinCommand
+        {
+            get { return CreateCommand(o => SwitchPin()); }
+        }
+
         #endregion
 
         #region function
@@ -262,6 +279,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         void CallPageItemOnPropertyChange()
         {
             CallOnPropertyChange(ChangePagePropertyNames);
+        }
+
+        void SwitchPin()
+        {
+            if(IsPin) {
+                RemovePin();
+            } else {
+                AddPin();
+            }
+        }
+
+        void AddPin()
+        {
+        }
+
+        void RemovePin()
+        {
         }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)

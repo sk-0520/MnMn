@@ -247,6 +247,16 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
+            <StackPanel.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="ピン止め" IsChecked="{Binding IsPin, Mode=OneWay}" Command="{Binding SwitchPinCommand}" />
+              </ContextMenu>
+            </StackPanel.ContextMenu>
+
+            <TextBlock Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}">
+              lock
+            </TextBlock>
+
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
             <Image>
