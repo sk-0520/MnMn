@@ -105,6 +105,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public TFinderViewModel SelectedFinder => SelectedPage.ViewModel;
 
+        public ICollectionView FinderItems
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    if(CurrentFinder != null) {
+                        return CurrentFinder.FinderItems;
+                    } else {
+                        return ParentFinder.FinderItems;
+                    }
+                }
+                return SelectedPage.ViewModel.FinderItems;
+            }
+        }
+
         #endregion
 
         #region function

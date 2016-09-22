@@ -182,14 +182,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get
             {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        return SearchFinder.FinderItems;
-                    } else {
-                        return base.FinderItems;
-                    }
-                }
-                return SelectedPage.ViewModel.FinderItems;
+                //if(SelectedPage == null) {
+                //    if(SearchFinder != null) {
+                //        return SearchFinder.FinderItems;
+                //    } else {
+                //        return base.FinderItems;
+                //    }
+                //}
+                //return SelectedPage.ViewModel.FinderItems;
+                return PagerFinderProvider?.FinderItems ?? base.FinderItems;
             }
         }
 

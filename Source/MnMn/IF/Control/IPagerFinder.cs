@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
         /// 選択中ページ。
         /// </summary>
         PageViewModel<TFinderViewModel> SelectedPage { get; set; }
+
+        /// <summary>
+        /// <see cref="FinderViewModelBase.FinderItems"/>。
+        /// </summary>
+        ICollectionView FinderItems { get; }
 
         #endregion
 
