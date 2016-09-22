@@ -19,36 +19,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
 {
-    /// <summary>
-    /// ページャを保持するFinder。
-    /// </summary>
-    public interface IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>
+    public class ChangedSelectedPageEventArgs<TFinderViewModel, TInformationViewModel, TFinderItemViewModel>: EventArgs
         where TFinderViewModel : FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>
         where TInformationViewModel : InformationViewModelBase
         where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
+        public ChangedSelectedPageEventArgs(PageViewModel<TFinderViewModel> oldSelectedPage, PageViewModel<TFinderViewModel> newSelectedPage)
+        {
+            OldSelectedPage = oldSelectedPage;
+            NewSelectedPage = newSelectedPage;
+        }
+
         #region property
 
-        /// <summary>
-        /// 保持するページャ。
-        /// </summary>
-        CollectionModel<PageViewModel<TFinderViewModel>> PageItems { get; }
-        /// <summary>
-        /// 選択中ページ。
-        /// </summary>
-        PageViewModel<TFinderViewModel> SelectedPage { get; set; }
-
-        #endregion
-
-        #region command
-
-        ICommand PageChangeCommand { get; }
+        public PageViewModel<TFinderViewModel> OldSelectedPage { get; }
+        public PageViewModel<TFinderViewModel> NewSelectedPage { get; }
 
         #endregion
     }
