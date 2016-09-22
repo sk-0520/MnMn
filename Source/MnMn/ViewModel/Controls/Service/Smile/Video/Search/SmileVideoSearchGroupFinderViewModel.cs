@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         //ICollectionView _selectedVideoInformationItems;
 
         int _totalCount;
-        PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
+        //PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
 
         bool _notfound;
 
@@ -95,6 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     nameof(ShowFilterSetting),
                 }
             );
+            PagerFinderProvider.ChangedSelectedPage += PagerFinderProvider_ChangedSelectedPage;
         }
 
         #region property
@@ -146,32 +147,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public SmileVideoSearchHistoryViewModel History { get; set; }
 
-        public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
-        {
-            get { return this._selectedPage; }
-            set
-            {
-                var oldSelectedPage = this._selectedPage;
-                if(SetVariableValue(ref this._selectedPage, value)) {
-                    if(this._selectedPage != null) {
-                        this._selectedPage.IsChecked = true;
-                    }
-                    if(oldSelectedPage != null) {
-                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
-                        oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
-                        oldSelectedPage.IsChecked = false;
-                    }
+        //public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
+        //{
+        //    get { return this._selectedPage; }
+        //    set
+        //    {
+        //        var oldSelectedPage = this._selectedPage;
+        //        if(SetVariableValue(ref this._selectedPage, value)) {
+        //            if(this._selectedPage != null) {
+        //                this._selectedPage.IsChecked = true;
+        //            }
+        //            if(oldSelectedPage != null) {
+        //                oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+        //                oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+        //                oldSelectedPage.IsChecked = false;
+        //            }
 
-                    CallPageItemOnPropertyChange();
+        //            if(this._selectedPage != null && oldSelectedPage != null) {
+        //                this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
+        //                this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+        //                this._selectedPage.ViewModel.FinderItems.Refresh();
+        //            }
 
-                    if(this._selectedPage != null && oldSelectedPage != null) {
-                        this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
-                        this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
-                        this._selectedPage.ViewModel.FinderItems.Refresh();
-                    }
-                }
-            }
-        }
+        //            CallPageItemOnPropertyChange();
+        //        }
+        //    }
+        //}
 
         public override ICollectionView FinderItems
         {
@@ -480,6 +481,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             get { return PagerFinderProvider.PageItems; }
         }
 
+        public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
+        {
+            get { return PagerFinderProvider?.SelectedPage; }
+            set
+            {
+                if(PagerFinderProvider != null) {
+                    PagerFinderProvider.SelectedPage = value;
+                }
+            }
+        }
+
         public void CallPageItemOnPropertyChange()
         {
             CallOnPropertyChange(ChangePagePropertyNames);
@@ -533,6 +545,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         SelectedPage = PageItems.First();
                     }
                 }));
+            }
+        }
+
+        void PagerFinderProvider_ChangedSelectedPage(object sender, Define.Event.ChangedSelectedPageEventArgs<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> e)
+        {
+            if(e.OldSelectedPage != null) {
+                e.OldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+            }
+            if(e.NewSelectedPage != null && e.OldSelectedPage != null) {
+                e.NewSelectedPage.ViewModel.SelectedSortType = e.OldSelectedPage.ViewModel.SelectedSortType;
             }
         }
 

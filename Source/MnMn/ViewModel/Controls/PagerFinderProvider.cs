@@ -123,9 +123,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             get { return this._selectedPage; }
             set
             {
-                var prevSelectedPage = SelectedPage;
+                var oldSelectedPage = SelectedPage;
                 if(SetVariableValue(ref this._selectedPage, value)) {
-                    OnChangedSelectedPage(prevSelectedPage, SelectedPage);
+                    if(SelectedPage != null) {
+                        SelectedPage.IsChecked = true;
+                    }
+                    if(oldSelectedPage != null) {
+                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+                        //oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                        oldSelectedPage.IsChecked = false;
+                    }
+
+                    if(SelectedPage != null && oldSelectedPage != null) {
+                        SelectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
+                        //SelectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+                        SelectedPage.ViewModel.FinderItems.Refresh();
+                    }
+
+                    OnChangedSelectedPage(oldSelectedPage, SelectedPage);
+                    CallPageItemOnPropertyChange();
                 }
             }
         }
