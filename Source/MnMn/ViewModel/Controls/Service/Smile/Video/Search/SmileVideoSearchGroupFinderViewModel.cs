@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
+        //public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
         public CollectionModel<SmileVideoTagViewModel> RelationTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
@@ -466,6 +466,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get { return GetSearchProperty<SmileVideoSortType>(); }
             set { SetSearchProperty(value); }
+        }
+
+        #endregion
+
+        #region IPagerFinder
+
+        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems
+        {
+            get { return PagerFinderProvider.PageItems; }
         }
 
         #endregion
