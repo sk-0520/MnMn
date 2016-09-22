@@ -281,7 +281,18 @@
               IsEnabled="{Binding CanLoad}"
             />
             <Button Style="{StaticResource TabReloadButton}" />
-            <Button Style="{StaticResource TabCloseButton}" />
+            <Button>
+              <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsPin}" Value="True">
+                      <Setter Property="Visibility" Value="Collapsed" />
+                      <Setter Property="Tag" Value="{x:Null}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Button.Style>
+            </Button>
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>

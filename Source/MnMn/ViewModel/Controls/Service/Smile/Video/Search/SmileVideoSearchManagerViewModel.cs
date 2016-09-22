@@ -404,7 +404,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             );
 
             SelectedSearchGroup = selectViewModel;
-
             var history = new SmileVideoSearchHistoryModel() {
                 Query = query,
                 SearchType = type,
