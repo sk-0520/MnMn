@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.IF.ReadOnly;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <para>記述の正しい外部設定が用いられる前提のデータ定義を持ち運ぶ。</para>
     /// </summary>
     [Serializable]
-    public class DefinedElementModel: ModelBase, IDeepClone
+    public class DefinedElementModel: ModelBase, IDeepClone, ReadOnlyDefinedElement
     {
         #region variable
 
