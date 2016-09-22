@@ -585,6 +585,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
             if(e.NewSelectedPage != null && e.OldSelectedPage != null) {
                 e.NewSelectedPage.ViewModel.SelectedSortType = e.OldSelectedPage.ViewModel.SelectedSortType;
+                // #168
+                e.NewSelectedPage.ViewModel.IsEnabledFinderFiltering = e.OldSelectedPage.ViewModel.IsEnabledFinderFiltering;
             }
         }
 
