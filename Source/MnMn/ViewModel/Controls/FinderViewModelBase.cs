@@ -46,6 +46,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         string _inputTitleFilter;
         bool _isBlacklist;
 
+        bool _showFilterSetting;
+        bool _isEnabledFinderFiltering;
+
         #endregion
 
         public FinderViewModelBase(Mediation mediation)
@@ -159,6 +162,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                     FinderItems.Refresh();
                 }
             }
+        }
+
+        /// <summary>
+        /// 設定フィルタを使用するか。
+        /// </summary>
+        public virtual bool IsEnabledFinderFiltering
+        {
+            get { return this._isEnabledFinderFiltering; }
+            set
+            {
+                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 設定フィルタ有効無効UI表示。
+        /// </summary>
+        public virtual bool ShowFilterSetting
+        {
+            get { return this._showFilterSetting; }
+            set { SetVariableValue(ref this._showFilterSetting, value); }
         }
 
         #endregion

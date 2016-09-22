@@ -20,7 +20,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
@@ -28,9 +33,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
     {
         public SmileLiveFinderViewModelBase(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
+        }
 
         #region property
+
+        protected SmileLiveSettingModel Setting { get; }
+
         #endregion
 
         #region command
@@ -50,12 +60,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task LoadInformationAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
-            throw new NotImplementedException();
+            var loader = new SmileLiveInformationLoader(informationItems);
+            return loader.LoadInformationAsync(informationCacheSpan);
         }
 
         protected override Task LoadImageAsync(IEnumerable<SmileLiveInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
-            throw new NotImplementedException();
+            var loader = new SmileLiveInformationLoader(informationItems);
+            return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
 
         protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)

@@ -34,13 +34,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         public SmileLiveMediation(Mediation mediation, SmileLiveSettingModel setting)
             : base(mediation, Constants.SmileLiveUriListPath, Constants.SmileLiveUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
+            Setting = setting;
             Category = SerializeUtility.LoadXmlSerializeFromFile<SmileLiveCategoryModel>(Constants.SmileLiveCategoryPath);
         }
 
         #region property
 
+        SmileLiveSettingModel Setting { get; }
         SmileLiveCategoryModel Category { get; }
-
         #endregion
 
         #region function
@@ -50,6 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             switch(request.RequestKind) {
                 case RequestKind.CategoryDefine:
                     return new ResponseModel(request, Category);
+
+                case RequestKind.Setting:
+                    return new ResponseModel(request, Setting);
 
                 //case RequestKind.CacheData:
                 //    return Request_CacheData((SmileVideoInformationCacheRequestModel)request);

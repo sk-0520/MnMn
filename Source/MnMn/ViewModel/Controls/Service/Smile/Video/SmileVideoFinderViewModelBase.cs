@@ -53,12 +53,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoFinderItemViewModel _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
-        string _inputTitleFilter;
-        bool _isBlacklist;
-        bool _showFilterSetting;
-        bool _isEnabledFinderFiltering;
+        //string _inputTitleFilter;
+        //bool _isBlacklist;
+        //bool _showFilterSetting;
+        //bool _isEnabledFinderFiltering;
 
-        bool _isAscending = true;
+        //bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
         bool _showContinuousPlaybackMenu;
 
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             FinderFilering = filteringResult.Filtering;
 
-            this._isEnabledFinderFiltering = Constants.ServiceSmileVideoIsEnabledFiltering;
+            //this._isEnabledFinderFiltering = Constants.ServiceSmileVideoIsEnabledFiltering;
 
             //FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
@@ -192,28 +192,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    }
         //}
 
-        /// <summary>
-        /// 設定フィルタを使用するか。
-        /// </summary>
-        public virtual bool IsEnabledFinderFiltering
-        {
-            get { return this._isEnabledFinderFiltering; }
-            set
-            {
-                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
-                    FinderItems.Refresh();
-                }
-            }
-        }
+        ///// <summary>
+        ///// 設定フィルタを使用するか。
+        ///// </summary>
+        //public virtual bool IsEnabledFinderFiltering
+        //{
+        //    get { return this._isEnabledFinderFiltering; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+        //            FinderItems.Refresh();
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// 設定フィルタ有効無効UI表示。
-        /// </summary>
-        public virtual bool ShowFilterSetting
-        {
-            get { return this._showFilterSetting; }
-            set { SetVariableValue(ref this._showFilterSetting, value); }
-        }
+        ///// <summary>
+        ///// 設定フィルタ有効無効UI表示。
+        ///// </summary>
+        //public virtual bool ShowFilterSetting
+        //{
+        //    get { return this._showFilterSetting; }
+        //    set { SetVariableValue(ref this._showFilterSetting, value); }
+        //}
 
         ///// <summary>
         ///// フィルタリング設定をそもそも使用するか。

@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
     {
         #region variable
 
-        DefinedElementModel _selectedSortItem;
-        DefinedElementModel _selectedOrderItem;
-        DefinedElementModel _selectedCategoryItem;
+        DefinedElementModel _selectedSort;
+        DefinedElementModel _selectedOrder;
+        DefinedElementModel _selectedCategory;
 
         SmileLiveCategoryGroupFinderViewModel _selectedSearchGroup;
 
@@ -52,9 +52,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             : base(mediation)
         {
             CategoryModel = Mediation.GetResultFromRequest<SmileLiveCategoryModel>(new RequestModel(RequestKind.CategoryDefine, ServiceType.SmileLive));
-            SelectedSortItem = SortItems.First();
-            SelectedOrderItem = OrderItems.First();
-            SelectedCategoryItem = CategoryItems.First();
+            SelectedSort = SortItems.First();
+            SelectedOrder = OrderItems.First();
+            SelectedCategory = CategoryItems.First();
         }
 
         #region property
@@ -67,22 +67,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
         public IList<DefinedElementModel> CategoryItems { get { return CategoryModel.CategoryItems; } }
 
-        public DefinedElementModel SelectedSortItem
+        public DefinedElementModel SelectedSort
         {
-            get { return this._selectedSortItem; }
-            set { SetVariableValue(ref this._selectedSortItem, value); }
+            get { return this._selectedSort; }
+            set { SetVariableValue(ref this._selectedSort, value); }
         }
 
-        public DefinedElementModel SelectedOrderItem
+        public DefinedElementModel SelectedOrder
         {
-            get { return this._selectedOrderItem; }
-            set { SetVariableValue(ref this._selectedOrderItem, value); }
+            get { return this._selectedOrder; }
+            set { SetVariableValue(ref this._selectedOrder, value); }
         }
 
-        public DefinedElementModel SelectedCategoryItem
+        public DefinedElementModel SelectedCategory
         {
-            get { return this._selectedCategoryItem; }
-            set { SetVariableValue(ref this._selectedCategoryItem, value); }
+            get { return this._selectedCategory; }
+            set { SetVariableValue(ref this._selectedCategory, value); }
         }
 
         public SmileLiveCategoryGroupFinderViewModel SelectedCategoryGroup
@@ -115,9 +115,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         public Task SearchAsync()
         {
-            var nowSortItem = SelectedSortItem;
-            var nowOrderItem = SelectedOrderItem;
-            var nowCategory = SelectedCategoryItem;
+            var nowSortItem = SelectedSort;
+            var nowOrderItem = SelectedOrder;
+            var nowCategory = SelectedCategory;
 
             return SearchCoreAsync(nowSortItem, nowOrderItem, nowCategory);
         }
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
             SelectedCategoryGroup = selectViewModel;
 
-            return SelectedCategoryGroup.LoadDefaultCacheAsync();
+            return SelectedCategoryGroup.LoadAsync(Constants.ServiceSmileLiveInformationCacheSpan, Constants.ServiceSmileLiveImageCacheSpan, true);
         }
 
         #endregion

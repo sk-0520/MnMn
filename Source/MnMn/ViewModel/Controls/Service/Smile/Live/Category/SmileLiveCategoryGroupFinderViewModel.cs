@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         #endregion
 
+        #region command
+
+        public override ICommand ReloadCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LoadAsync(Constants.ServiceSmileLiveInformationCacheSpan, Constants.ServiceSmileLiveImageCacheSpan, true).ConfigureAwait(true);
+                    }
+                );
+            }
+        }
+
+        #endregion
+
         #region function
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
@@ -98,7 +115,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             LoadingSort = SelectedSort = GetContextElemetFromChangeElement(SortItems, sort);
             LoadingOrder = SelectedOrder = GetContextElemetFromChangeElement(OrderItems, order);
         }
-
 
         public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
         {
@@ -141,11 +157,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
         {
+            var isReload = (bool)extends;
 
-            return base.LoadCoreAsync(informationCacheSpan, imageCacheSpan, extends);
+            DefinedElementModel nowSort;
+            DefinedElementModel nowOrder;
+            if(isReload) {
+                nowSort = SelectedSort;
+                nowOrder = SelectedOrder;
+                SelectedPage = null;
+            } else {
+                nowSort = LoadingSort;
+                nowOrder = LoadingOrder;
+            }
+
+            SearchFinder = new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, nowSort, nowOrder, Category, 0);
+            //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            //PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
+
+            if(isReload) {
+                SearchFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+            }
+
+            return SearchFinder.LoadAsync(informationCacheSpan, imageCacheSpan);
         }
 
         #endregion
+
+        void SearchFinder_PropertyChanged_TotalCount(object sender, PropertyChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
 
     }
 }

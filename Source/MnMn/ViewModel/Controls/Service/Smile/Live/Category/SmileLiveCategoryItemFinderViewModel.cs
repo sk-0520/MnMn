@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 {
     public class SmileLiveCategoryItemFinderViewModel: SmileLiveFinderViewModelBase
     {
-        public SmileLiveCategoryItemFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index, int count)
+        public SmileLiveCategoryItemFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index)
             : base(mediation)
         {
             CategoryDefine = categoryDefine;
@@ -36,7 +36,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             Order = order;
             Category = category;
             Index = index;
-            Count = count;
         }
 
         #region property
@@ -47,7 +46,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         public DefinedElementModel Order { get; }
         public DefinedElementModel Category { get; }
         public int Index { get; }
-        public int Count { get; }
+
+        #endregion
+
+        #region SmileLiveCategoryItemFinderViewModel
+
+        protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            var category = new Logic.Service.Smile.Live.Api.Category(Mediation);
+            return category.LoadAsync(Category.Key, Sort.Key, Order.Key, Index + 1).ContinueWith(t => {
+                var rss = t.Result;
+            });
+        }
 
         #endregion
     }

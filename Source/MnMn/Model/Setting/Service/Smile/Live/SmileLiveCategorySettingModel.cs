@@ -17,17 +17,18 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
 {
-    public class SmileLiveInformationLoader: InformationLoader<SmileLiveInformationViewModel>
+    [DataContract]
+    public class SmileLiveCategorySettingModel: SettingModelBase
     {
-        public SmileLiveInformationLoader(IEnumerable<SmileLiveInformationViewModel> informations)
-            : base(informations)
-        { }
+        #region property
+
+
+        #endregion
     }
 }
