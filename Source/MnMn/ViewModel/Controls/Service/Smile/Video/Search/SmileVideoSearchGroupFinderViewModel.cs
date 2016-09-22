@@ -529,13 +529,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #endregion
 
-        private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            Mediation.Logger.Information(e.PropertyName);
-            if(ChangePagePropertyNames.Any(n => n == e.PropertyName)) {
-                CallPageItemOnPropertyChange();
-            }
-        }
+        //private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    Mediation.Logger.Information(e.PropertyName);
+        //    if(ChangePagePropertyNames.Any(n => n == e.PropertyName)) {
+        //        CallPageItemOnPropertyChange();
+        //    }
+        //}
 
         private void SearchFinder_PropertyChanged_TotalCount(object sender, PropertyChangedEventArgs e)
         {
