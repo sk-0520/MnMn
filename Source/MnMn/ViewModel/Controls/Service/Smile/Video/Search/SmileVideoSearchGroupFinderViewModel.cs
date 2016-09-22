@@ -31,17 +31,19 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
     /// <summary>
     /// <para>配列的な操作はこのクラス内で完結させたい思い</para>
     /// </summary>
-    public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase, IPagerFinder<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
         #region define
 
@@ -60,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         };
 
         #endregion
+
         #region variable
 
         DefinedElementModel _selectedMethod;
@@ -82,6 +85,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             Type = type;
 
             SetContextElements(method, sort);
+
+            PagerFinderProvider = new PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>(this);
         }
 
         #region property
@@ -89,6 +94,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         SmileVideoSearchModel SearchModel { get; }
 
         SmileVideoSearchItemFinderViewModel SearchFinder { get; set; }
+
+        PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> PagerFinderProvider { get; }
+
 
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
