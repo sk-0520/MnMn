@@ -51,5 +51,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
         ICommand PageChangeCommand { get; }
 
         #endregion
+
+        #region function
+
+        void CallPageItemOnPropertyChange();
+
+        #endregion
     }
 }

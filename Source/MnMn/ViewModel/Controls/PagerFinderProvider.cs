@@ -16,14 +16,17 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 {
@@ -62,20 +65,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public PagerFinderProvider(IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
+        public PagerFinderProvider(Mediation mediation, IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder, IEnumerable<string> changePropertyNames)
         {
+            Mediation = mediation;
             ParentFinder = parentFinder;
             if(changePropertyNames.Any()) {
                 CustomChangePagePropertyNames.AddRange(changePropertyNames);
             }
         }
 
-        public PagerFinderProvider(IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
-            : this(parentFinder, Enumerable.Empty<string>())
+        public PagerFinderProvider(Mediation mediation, IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
+            : this(mediation, parentFinder, Enumerable.Empty<string>())
         { }
 
         #region property
 
+        Mediation Mediation { get; }
         CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(ChangePagePropertyNames);
 
         IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> ParentFinder { get; }
@@ -129,12 +134,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             get
             {
-                throw new NotImplementedException();
+                return CreateCommand(
+                    o => {
+                        var pageVm = (PageViewModel<TFinderViewModel>)o;
+                        if(pageVm.LoadState != LoadState.Loaded) {
+                            SelectedPage = pageVm;
+                            pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+                            pageVm.ViewModel.LoadDefaultCacheAsync().ConfigureAwait(true);
+                        } else {
+                            SelectedPage = pageVm;
+                        }
+                    }
+                );
             }
         }
 
+        public void CallPageItemOnPropertyChange()
+        {
+            ParentFinder.CallPageItemOnPropertyChange();
+        }
 
         #endregion
+
+        private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Mediation.Logger.Information(e.PropertyName);
+            if(CustomChangePagePropertyNames.Any(n => n == e.PropertyName)) {
+                CallPageItemOnPropertyChange();
+            }
+        }
 
     }
 }

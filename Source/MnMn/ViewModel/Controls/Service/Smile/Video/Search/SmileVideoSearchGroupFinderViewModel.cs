@@ -86,7 +86,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SetContextElements(method, sort);
 
-            PagerFinderProvider = new PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>(this);
+            PagerFinderProvider = new PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>(
+                Mediation,
+                this,
+                new[] {
+                    nameof(SelectedSortType),
+                    nameof(IsEnabledFinderFiltering),
+                    nameof(ShowFilterSetting),
+                }
+            );
         }
 
         #region property
@@ -265,11 +273,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #endregion
 
         #region function
-
-        void CallPageItemOnPropertyChange()
-        {
-            CallOnPropertyChange(ChangePagePropertyNames);
-        }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
         {
@@ -475,6 +478,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems
         {
             get { return PagerFinderProvider.PageItems; }
+        }
+
+        public void CallPageItemOnPropertyChange()
+        {
+            CallOnPropertyChange(ChangePagePropertyNames);
         }
 
         #endregion
