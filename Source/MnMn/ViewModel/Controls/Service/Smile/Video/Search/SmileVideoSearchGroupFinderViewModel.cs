@@ -60,6 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         };
 
         #endregion
+
         #region variable
 
         DefinedElementModel _selectedMethod;
