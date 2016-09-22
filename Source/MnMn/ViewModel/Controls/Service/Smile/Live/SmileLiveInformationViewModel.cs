@@ -53,6 +53,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         FeedSmileLiveItemModel Feed { get; }
 
+        public string Title
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return Feed.Title;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
         #endregion
 
         #region InformationViewModelBase

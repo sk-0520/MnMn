@@ -170,7 +170,7 @@
                 </Grid>
 
                 <Grid>
-                  <TextBlock>asd</TextBlock>
+                  <TextBlock Text="{Binding Information.Title}"/>
                 </Grid>
               </DockPanel>
             </ContentControl>
