@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
@@ -46,9 +47,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
         PageViewModel<TFinderViewModel> SelectedPage { get; set; }
 
         /// <summary>
-        /// <see cref="FinderViewModelBase.FinderItems"/>。
+        /// <see cref="FinderViewModelBase{TInformationViewModel, TFinderItemViewModel}.FinderItems"/>。
         /// </summary>
         ICollectionView FinderItems { get; }
+        /// <summary>
+        /// <see cref="FinderViewModelBase{TInformationViewModel, TFinderItemViewModel}.FinderLoadState"/>。
+        /// </summary>
+        SourceLoadState FinderLoadState { get; set; }
 
         #endregion
 

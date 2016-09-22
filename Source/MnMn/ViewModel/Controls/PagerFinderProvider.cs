@@ -120,6 +120,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public SourceLoadState FinderLoadState
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    if(CurrentFinder != null) {
+                        return CurrentFinder.FinderLoadState;
+                    } else {
+                        return ParentFinder.FinderLoadState;
+                    }
+                }
+                return SelectedPage.ViewModel.FinderLoadState;
+            }
+            set
+            {
+                if(SelectedPage == null) {
+                    if(CurrentFinder != null) {
+                        CurrentFinder.FinderLoadState = value;
+                    } else {
+                        ParentFinder.FinderLoadState = value;
+                    }
+                } else {
+                    SelectedPage.ViewModel.FinderLoadState = value;
+                }
+            }
+        }
+
         #endregion
 
         #region function

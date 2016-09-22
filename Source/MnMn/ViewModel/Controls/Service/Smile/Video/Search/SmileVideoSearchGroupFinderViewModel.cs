@@ -210,30 +210,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override SourceLoadState FinderLoadState
         {
-            get
-            {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        return SearchFinder.FinderLoadState;
-                    } else {
-                        return base.FinderLoadState;
-                    }
-                }
-                return SelectedPage.ViewModel.FinderLoadState;
-            }
+            //get
+            //{
+            //    if(SelectedPage == null) {
+            //        if(SearchFinder != null) {
+            //            return SearchFinder.FinderLoadState;
+            //        } else {
+            //            return base.FinderLoadState;
+            //        }
+            //    }
+            //    return SelectedPage.ViewModel.FinderLoadState;
+            //}
 
-            set
-            {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        SearchFinder.FinderLoadState = value;
-                    } else {
-                        base.FinderLoadState = value;
-                    }
-                } else {
-                    SelectedPage.ViewModel.FinderLoadState = value;
-                }
-            }
+            //set
+            //{
+            //    if(SelectedPage == null) {
+            //        if(SearchFinder != null) {
+            //            SearchFinder.FinderLoadState = value;
+            //        } else {
+            //            base.FinderLoadState = value;
+            //        }
+            //    } else {
+            //        SelectedPage.ViewModel.FinderLoadState = value;
+            //    }
+            //}
+            get { return PagerFinderProvider.FinderLoadState; }
+            set { PagerFinderProvider.FinderLoadState = value; }
         }
 
 
