@@ -83,7 +83,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         public IList<DefinedElementModel> SortItems { get { return CategoryModel.SortItems; } }
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
 
-        SmileLiveCategoryItemFinderViewModel SearchFinder { get; set; }
+        SmileLiveCategoryItemFinderViewModel SearchFinder
+        {
+            get { return PagerFinderProvider?.CurrentFinder; }
+            set { PagerFinderProvider.CurrentFinder = value; }
+        }
 
         public int TotalCount
         {
@@ -95,6 +99,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         {
             get { return this._notfound; }
             set { SetVariableValue(ref this._notfound, value); }
+        }
+
+        public override ICollectionView FinderItems { get { return PagerFinderProvider?.FinderItems ?? base.FinderItems; } }
+
+        public override IReadOnlyList<SmileLiveFinderItemViewModel> FinderItemsViewer => PagerFinderProvider.GetFinderProperty<IReadOnlyList<SmileLiveFinderItemViewModel>>();
+
+        public override SourceLoadState FinderLoadState
+        {
+            get { return PagerFinderProvider.FinderLoadState; }
+            set { PagerFinderProvider.FinderLoadState = value; }
         }
 
         #endregion
@@ -172,6 +186,46 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         #endregion
 
         #region SmileLiveFinderViewModelBase
+
+        public override bool CanLoad
+        {
+            get
+            {
+                if(SelectedPage == null) {
+                    return false;
+                }
+
+                return SelectedPage.ViewModel.CanLoad;
+            }
+        }
+        public override string InputTitleFilter
+        {
+            get { return PagerFinderProvider.GetFinderProperty<string>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
+        }
+        public override bool IsBlacklist
+        {
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
+        }
+
+        public override bool IsEnabledFinderFiltering
+        {
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
+        }
+
+        public override bool ShowFilterSetting
+        {
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
+        }
+        public override bool IsAscending
+        {
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
+        }
+
 
         protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
         {

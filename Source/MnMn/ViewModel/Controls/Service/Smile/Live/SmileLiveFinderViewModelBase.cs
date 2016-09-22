@@ -70,14 +70,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
 
-        protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
-        {
-            throw new NotImplementedException();
-        }
+        //protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         internal override void ChangeSortItems()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override SmileLiveFinderItemViewModel CreateFinderItem(SmileLiveInformationViewModel information, int number)

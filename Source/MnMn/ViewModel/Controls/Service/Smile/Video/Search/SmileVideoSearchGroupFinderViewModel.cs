@@ -45,23 +45,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
     /// </summary>
     public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase, IPagerFinder<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
-        #region define
+        //#region define
 
-        static IEnumerable<string> ChangePagePropertyNames => new[] {
-            nameof(FinderItemsViewer),
-            nameof(FinderItems),
-            nameof(FinderLoadState),
-            nameof(CanLoad),
-            nameof(NowLoading),
-            nameof(PageItems),
-            nameof(PageChangeCommand),
-            nameof(IsAscending),
-            nameof(SelectedSortType),
-            nameof(IsEnabledFinderFiltering),
-            nameof(ShowFilterSetting),
-        };
+        //static IEnumerable<string> ChangePagePropertyNames => new[] {
+        //    nameof(FinderItemsViewer),
+        //    nameof(FinderItems),
+        //    nameof(FinderLoadState),
+        //    nameof(CanLoad),
+        //    nameof(NowLoading),
+        //    nameof(PageItems),
+        //    nameof(PageChangeCommand),
+        //    nameof(IsAscending),
+        //    nameof(SelectedSortType),
+        //    nameof(IsEnabledFinderFiltering),
+        //    nameof(ShowFilterSetting),
+        //};
 
-        #endregion
+        //#endregion
 
         #region variable
 

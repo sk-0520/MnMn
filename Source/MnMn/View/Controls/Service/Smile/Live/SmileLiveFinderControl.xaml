@@ -170,6 +170,7 @@
                 </Grid>
 
                 <Grid>
+                  <TextBlock>asd</TextBlock>
                 </Grid>
               </DockPanel>
             </ContentControl>

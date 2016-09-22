@@ -59,12 +59,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         #endregion

@@ -70,6 +70,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             return category.LoadAsync(Category.Key, Sort.Key, Order.Key, Index + 1).ContinueWith(t => {
                 var rss = t.Result;
                 TotalCount = RawValueUtility.ConvertInteger(rss.Channel.TotalCount);
+
+                return rss.Channel.Items;
+            }).ContinueWith(t => {
+                var items = t.Result;
+                var list = items.Select(i => new SmileLiveInformationViewModel(Mediation, i));
+                SetItemsAsync(list, informationCacheSpan);
             });
         }
 
