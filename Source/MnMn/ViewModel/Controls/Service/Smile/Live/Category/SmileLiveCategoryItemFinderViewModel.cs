@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 
@@ -27,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 {
     public class SmileLiveCategoryItemFinderViewModel: SmileLiveFinderViewModelBase
     {
+        #region variable
+
+        int _totalCount;
+
+        #endregion
+
         public SmileLiveCategoryItemFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index)
             : base(mediation)
         {
@@ -47,6 +54,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         public DefinedElementModel Category { get; }
         public int Index { get; }
 
+        public int TotalCount
+        {
+            get { return this._totalCount; }
+            set { SetVariableValue(ref this._totalCount, value); }
+        }
+
         #endregion
 
         #region SmileLiveCategoryItemFinderViewModel
@@ -56,6 +69,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             var category = new Logic.Service.Smile.Live.Api.Category(Mediation);
             return category.LoadAsync(Category.Key, Sort.Key, Order.Key, Index + 1).ContinueWith(t => {
                 var rss = t.Result;
+                TotalCount = RawValueUtility.ConvertInteger(rss.Channel.TotalCount);
             });
         }
 

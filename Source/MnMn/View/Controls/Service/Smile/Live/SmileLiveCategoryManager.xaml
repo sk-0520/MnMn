@@ -71,6 +71,45 @@
       <TabControl.ContentTemplate>
         <DataTemplate>
           <app_view_controls_service_smile_live:SmileLiveFinderControl x:Name="finder" DataContext="{Binding}">
+            <app_view_controls_service_smile_live:SmileLiveFinderControl.FooterContent>
+              <Grid Height="24">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="7*" />
+                  <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding TotalCount, StringFormat=検索件数: {0}}" />
+
+                <!--<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding RelationTagItems}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel VerticalAlignment="Top" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Margin="4,0">
+                          <Hyperlink
+                            Command="{Binding DataContext.SearchTagCommand, ElementName=root }"
+                            CommandParameter="{Binding}"
+                          >
+                            <Run Text="{Binding TagName, Mode=OneTime}" />
+                          </Hyperlink>
+                          </TextBlock>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </ScrollViewer>-->
+
+                <app_view_controls:Pager
+                  Grid.Column="2"
+                  PageItems="{Binding PageItems}"
+                  Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_live:SmileLiveFinderControl}}"
+                />
+              </Grid>
+            </app_view_controls_service_smile_live:SmileLiveFinderControl.FooterContent>
           </app_view_controls_service_smile_live:SmileLiveFinderControl>
         </DataTemplate>
       </TabControl.ContentTemplate>

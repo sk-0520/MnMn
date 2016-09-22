@@ -284,6 +284,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         // #168
                         SelectedPage.ViewModel.IsAscending = oldSelectedPage.ViewModel.IsAscending;
                         SelectedPage.ViewModel.IsBlacklist = oldSelectedPage.ViewModel.IsBlacklist;
+                        SelectedPage.ViewModel.IsEnabledFinderFiltering = oldSelectedPage.ViewModel.IsEnabledFinderFiltering;
 
                         SelectedPage.ViewModel.FinderItems.Refresh();
                     }

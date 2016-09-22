@@ -20,8 +20,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -35,6 +37,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         DefinedElementModel _selectedSort;
         DefinedElementModel _selectedOrder;
+
+        int _totalCount;
+        bool _notfound;
 
         #endregion
 
@@ -50,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                 Mediation,
                 this
             );
+            PagerFinderProvider.ChangedSelectedPage += PagerFinderProvider_ChangedSelectedPage;
         }
 
         #region property
@@ -78,6 +84,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
 
         SmileLiveCategoryItemFinderViewModel SearchFinder { get; set; }
+
+        public int TotalCount
+        {
+            get { return this._totalCount; }
+            set { SetVariableValue(ref this._totalCount, value); }
+        }
+
+        public bool NotFound
+        {
+            get { return this._notfound; }
+            set { SetVariableValue(ref this._notfound, value); }
+        }
 
         #endregion
 
@@ -181,11 +199,64 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             return SearchFinder.LoadAsync(informationCacheSpan, imageCacheSpan);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            PagerFinderProvider.ChangedSelectedPage -= PagerFinderProvider_ChangedSelectedPage;
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         void SearchFinder_PropertyChanged_TotalCount(object sender, PropertyChangedEventArgs e)
         {
             //throw new NotImplementedException();
+            var searchFinder = (SmileLiveCategoryItemFinderViewModel)sender;
+            if(e.PropertyName == nameof(searchFinder.TotalCount)) {
+                searchFinder.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                    TotalCount = searchFinder.TotalCount;
+
+                    var usingList = Enumerable.Empty<PageViewModel<SmileLiveCategoryItemFinderViewModel>>();
+
+                    if(TotalCount > CategoryModel.MaxCount) {
+                        var pageCount = TotalCount / CategoryModel.MaxCount;
+                        //var correctionPage = TotalCount > (SearchModel.MaximumIndex + SearchModel.MaximumCount) ? 1 : 0;
+                        var preList = Enumerable.Range(1, pageCount - 1)
+                            .Select((n, i) => new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, searchFinder.Sort, searchFinder.Order, searchFinder.Category, i + 1))
+                            .Select((v, i) => new PageViewModel<SmileLiveCategoryItemFinderViewModel>(v, i + 2))
+                            .ToList()
+                        ;
+                        var pageVm = new PageViewModel<SmileLiveCategoryItemFinderViewModel>(searchFinder, 1) {
+                            LoadState = LoadState.Loaded,
+                        };
+                        preList.Insert(0, pageVm);
+                        usingList = preList;
+                    } else if(TotalCount > 0) {
+                        var pageVm = new PageViewModel<SmileLiveCategoryItemFinderViewModel>(searchFinder, 1) {
+                            LoadState = LoadState.Loaded,
+                        };
+                        usingList = new[] { pageVm };
+                    }
+
+                    PageItems.InitializeRange(usingList);
+                    NotFound = !PageItems.Any();
+                    if(!NotFound) {
+                        SelectedPage = PageItems.First();
+                    }
+                }));
+            }
+        }
+
+        void PagerFinderProvider_ChangedSelectedPage(object sender, Define.Event.ChangedSelectedPageEventArgs<SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel> e)
+        {
+            if(e.OldSelectedPage != null) {
+                e.OldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+            }
+            if(e.NewSelectedPage != null && e.OldSelectedPage != null) {
+                //e.NewSelectedPage.ViewModel.SelectedSortType = e.OldSelectedPage.ViewModel.SelectedSortType;
+            }
         }
 
     }
