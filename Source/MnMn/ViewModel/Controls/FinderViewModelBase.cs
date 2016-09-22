@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
     public abstract class FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>: FinderViewModelBase
         where TInformationViewModel : InformationViewModelBase
-        where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>, new()
+        where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>
     {
         #region variable
 
@@ -216,10 +216,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         string _inputTitleFilter;
         bool _isBlacklist;
 
-
         #endregion
 
-        public FinderViewModelBase(Mediation mediation) : base(mediation)
+        public FinderViewModelBase(Mediation mediation)
+            : base(mediation)
         {
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
         }
