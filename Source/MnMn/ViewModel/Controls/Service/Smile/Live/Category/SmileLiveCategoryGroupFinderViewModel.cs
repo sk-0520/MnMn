@@ -32,7 +32,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         #region property
 
+        SmileLiveCategoryItemFinderViewModel SearchFinder { get; set; }
+
         public CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileLiveCategoryItemFinderViewModel>>();
+
+        #endregion
+
+        #region function
+
+        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)
+        {
+            return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, isReload);
+        }
+
+        #endregion
+
+        #region SmileLiveFinderViewModelBase
+
+        protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+
+            return base.LoadCoreAsync(informationCacheSpan, imageCacheSpan, extends);
+        }
 
         #endregion
     }
