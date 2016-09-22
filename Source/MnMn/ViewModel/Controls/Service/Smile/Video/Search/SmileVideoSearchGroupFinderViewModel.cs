@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public override IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => GetSearchProperty<IReadOnlyList<SmileVideoFinderItemViewModel>>();
+        public override IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => PagerFinderProvider.GetFinderProperty<IReadOnlyList<SmileVideoFinderItemViewModel>>();
 
         public int TotalCount
         {
@@ -347,77 +347,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             throw new NotSupportedException();
         }
 
-        KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase> GetMemberInfo(bool getMethod, string memberName)
-        {
-            SmileVideoFinderViewModelBase target;
-            if(SelectedPage == null) {
-                if(SearchFinder != null) {
-                    target = SearchFinder;
-                } else {
-                    target = this;
-                }
-            } else {
-                target = SelectedPage.ViewModel;
-            }
-            var type = target.GetType();
-            MemberInfo[] members = getMethod
-                ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(m => m.Name == memberName).ToArray()
-                : type.GetMember(memberName)
-            ;
-            MemberInfo member;
-            if(target == this) {
-                member = members.First(m => m.DeclaringType == typeof(SmileVideoFinderViewModelBase));
-            } else {
-                member = members.First();
-            }
+        //KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase> GetMemberInfo(bool getMethod, string memberName)
+        //{
+        //    SmileVideoFinderViewModelBase target;
+        //    if(SelectedPage == null) {
+        //        if(SearchFinder != null) {
+        //            target = SearchFinder;
+        //        } else {
+        //            target = this;
+        //        }
+        //    } else {
+        //        target = SelectedPage.ViewModel;
+        //    }
+        //    var type = target.GetType();
+        //    MemberInfo[] members = getMethod
+        //        ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(m => m.Name == memberName).ToArray()
+        //        : type.GetMember(memberName)
+        //    ;
+        //    MemberInfo member;
+        //    if(target == this) {
+        //        member = members.First(m => m.DeclaringType == typeof(SmileVideoFinderViewModelBase));
+        //    } else {
+        //        member = members.First();
+        //    }
 
-            return new KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase>(member, target);
-        }
+        //    return new KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase>(member, target);
+        //}
 
-        KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase> GetPropertyInfo([CallerMemberName] string propertyName = "")
-        {
-            var pair = GetMemberInfo(false, propertyName);
+        //KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase> GetPropertyInfo([CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetMemberInfo(false, propertyName);
 
-            return new KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase>((PropertyInfo)pair.Key, pair.Value);
-        }
+        //    return new KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase>((PropertyInfo)pair.Key, pair.Value);
+        //}
 
-        KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase> GetMethodInfo([CallerMemberName] string propertyName = "")
-        {
-            var pair = GetMemberInfo(true, propertyName);
+        //KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase> GetMethodInfo([CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetMemberInfo(true, propertyName);
 
-            return new KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase>((MethodInfo)pair.Key, pair.Value);
-        }
+        //    return new KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase>((MethodInfo)pair.Key, pair.Value);
+        //}
 
-        TResult GetSearchProperty<TResult>([CallerMemberName] string propertyName = "")
-        {
-            var pair = GetPropertyInfo(propertyName);
-            Debug.Assert(pair.Key.PropertyType == typeof(TResult));
+        //TResult GetSearchProperty<TResult>([CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetPropertyInfo(propertyName);
+        //    Debug.Assert(pair.Key.PropertyType == typeof(TResult));
 
-            return (TResult)pair.Key.GetValue(pair.Value);
-        }
-        void SetSearchProperty<TValue>(TValue value, [CallerMemberName] string propertyName = "")
-        {
-            var pair = GetPropertyInfo(propertyName);
-            Debug.Assert(pair.Key.PropertyType == typeof(TValue));
+        //    return (TResult)pair.Key.GetValue(pair.Value);
+        //}
+        //void SetSearchProperty<TValue>(TValue value, [CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetPropertyInfo(propertyName);
+        //    Debug.Assert(pair.Key.PropertyType == typeof(TValue));
 
-            pair.Key.SetValue(pair.Value, value);
-        }
+        //    pair.Key.SetValue(pair.Value, value);
+        //}
 
-        void DoSearchAction(string methodName, params object[] parameters)
-        {
-            var pair = GetMethodInfo(methodName);
-            Debug.Assert(pair.Key.ReturnType == typeof(void));
+        //void DoSearchAction(string methodName, params object[] parameters)
+        //{
+        //    var pair = GetMethodInfo(methodName);
+        //    Debug.Assert(pair.Key.ReturnType == typeof(void));
 
-            pair.Key.Invoke(pair.Value, parameters);
-        }
+        //    pair.Key.Invoke(pair.Value, parameters);
+        //}
 
-        TResult DoSearchFunction<TResult>(string methodName, params object[] parameters)
-        {
-            var pair = GetMethodInfo(methodName);
-            Debug.Assert(pair.Key.ReturnType == typeof(TResult));
+        //TResult DoSearchFunction<TResult>(string methodName, params object[] parameters)
+        //{
+        //    var pair = GetMethodInfo(methodName);
+        //    Debug.Assert(pair.Key.ReturnType == typeof(TResult));
 
-            return (TResult)pair.Key.Invoke(pair.Value, parameters);
-        }
+        //    return (TResult)pair.Key.Invoke(pair.Value, parameters);
+        //}
 
         #endregion
 
@@ -437,13 +437,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override string InputTitleFilter
         {
-            get { return GetSearchProperty<string>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<string>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<string>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
         public override bool IsBlacklist
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<bool>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         public override bool IsEnabledFinderFiltering
@@ -476,14 +480,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override bool IsAscending
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         public override SmileVideoSortType SelectedSortType
         {
-            get { return GetSearchProperty<SmileVideoSortType>(); }
-            set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<SmileVideoSortType>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         protected override void Dispose(bool disposing)
