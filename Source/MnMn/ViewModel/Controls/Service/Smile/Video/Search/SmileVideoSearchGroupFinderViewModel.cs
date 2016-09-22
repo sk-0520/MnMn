@@ -102,7 +102,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
-        SmileVideoSearchItemFinderViewModel SearchFinder { get; set; }
+        SmileVideoSearchItemFinderViewModel SearchFinder
+        {
+            get { return PagerFinderProvider?.CurrentFinder; }
+            set { PagerFinderProvider.CurrentFinder = value; }
+        }
 
         PagerFinderProvider<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> PagerFinderProvider { get; }
 
@@ -309,7 +313,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
             //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
-            PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
+            //PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
 
             var query = Query;
 
@@ -471,6 +475,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get { return GetSearchProperty<SmileVideoSortType>(); }
             set { SetSearchProperty(value); }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            PagerFinderProvider.ChangedSelectedPage -= PagerFinderProvider_ChangedSelectedPage;
+
+            base.Dispose(disposing);
         }
 
         #endregion

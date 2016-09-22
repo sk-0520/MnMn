@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region variable
 
+        TFinderViewModel _currentFinder;
         PageViewModel<TFinderViewModel> _selectedPage;
 
         #endregion
@@ -84,6 +85,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(ChangePagePropertyNames);
 
         IPagerFinder<TFinderViewModel, TInformationViewModel, TFinderItemViewModel> ParentFinder { get; }
+        public TFinderViewModel CurrentFinder
+        {
+            get { return this._currentFinder; }
+            set
+            {
+                if(SetVariableValue(ref this._currentFinder, value)) {
+                    if(CurrentFinder != null) {
+                        DetachmentChildProprtyChange(CurrentFinder);
+                        AttachmentChildProprtyChange(CurrentFinder);
+                    }
+                }
+            }
+        }
 
         #endregion
 
