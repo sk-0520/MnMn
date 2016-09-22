@@ -41,5 +41,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
 
         #endregion
+
+        #region FinderViewModelBase
+
+        public override CacheSpan DefaultInformationCacheSpan => Constants.ServiceSmileLiveInformationCacheSpan;
+        public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileLiveImageCacheSpan;
+        public override object DefaultExtends { get; } = null;
+
+        #endregion
     }
 }

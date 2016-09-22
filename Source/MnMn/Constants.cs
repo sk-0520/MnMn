@@ -190,6 +190,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static CacheSpan ServiceSmileVideoCheckItLaterCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
         /// <summary>
+        /// ニコニコ生放送: 動画情報キャッシュ時間。
+        /// </summary>
+        public static CacheSpan ServiceSmileLiveInformationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        /// <summary>
+        /// ニコニコ生放送: 動画サムネイルキャッシュ時間。
+        /// </summary>
+        public static CacheSpan ServiceSmileLiveImageCacheSpan => CacheSpan.InfinityCache;
+        /// <summary>
         /// sbin/
         /// </summary>
         public static string SbinDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "sbin"); } }
