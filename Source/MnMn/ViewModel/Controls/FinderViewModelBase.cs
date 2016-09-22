@@ -1,0 +1,331 @@
+﻿/*
+This file is part of MnMn.
+
+MnMn is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MnMn is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
+{
+    public abstract class FinderViewModelBase: ViewModelBase
+    {
+        #region variable
+
+        bool _isAscending = true;
+        bool _nowLoading;
+        SourceLoadState _finderLoadState;
+
+        #endregion
+
+        protected FinderViewModelBase(Mediation mediation)
+        {
+            Mediation = mediation;
+        }
+
+        #region property
+
+        protected Mediation Mediation { get; }
+        protected CancellationTokenSource CancelLoading { get; set; }
+
+        /// <summary>
+        /// フィルタリング設定をそもそも使用するか。
+        /// </summary>
+        public virtual bool IsUsingFinderFilter { get; } = true;
+
+        public abstract CacheSpan DefaultInformationCacheSpan { get; }
+        public abstract CacheSpan DefaultImageCacheSpan { get; }
+        public abstract object DefaultExtends { get; }
+
+        /// <summary>
+        /// 昇順か。
+        /// </summary>
+        public virtual bool IsAscending
+        {
+            get { return this._isAscending; }
+            set
+            {
+                if(SetVariableValue(ref this._isAscending, value)) {
+                    ChangeSortItems();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 現在読み込み中か。
+        /// </summary>
+        public virtual bool NowLoading
+        {
+            get { return this._nowLoading; }
+            set { SetVariableValue(ref this._nowLoading, value); }
+        }
+
+        /// <summary>
+        /// 読込状態。
+        /// </summary>
+        public virtual SourceLoadState FinderLoadState
+        {
+            get { return this._finderLoadState; }
+            set
+            {
+                if(SetVariableValue(ref this._finderLoadState, value)) {
+                    var propertyNames = new[] {
+                        nameof(CanLoad),
+                        nameof(NowLoading),
+                    };
+                    CallOnPropertyChange(propertyNames);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 読込可能か。
+        /// </summary>
+        public virtual bool CanLoad
+        {
+            get
+            {
+                var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
+                return !loadSkips.Any(l => l == FinderLoadState);
+            }
+        }
+
+        #endregion
+
+        #region command
+
+        public virtual ICommand ReloadCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        LoadDefaultCacheAsync().ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        internal abstract void ChangeSortItems();
+
+        public Task LoadDefaultCacheAsync()
+        {
+            return LoadAsync(DefaultInformationCacheSpan, DefaultImageCacheSpan);
+        }
+
+        public Task LoadAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
+        {
+            return LoadAsync(informationCacheSpan, imageCacheSpan, DefaultExtends);
+        }
+
+        public Task LoadAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
+        {
+            if(CanLoad) {
+                if(NowLoading) {
+                    Mediation.Logger.Trace("CANCEL!");
+                    CancelLoading.Cancel(true);
+                }
+
+                FinderLoadState = SourceLoadState.SourceLoading;
+                NowLoading = true;
+
+                CancelLoading = new CancellationTokenSource();
+
+                return LoadCoreAsync(informationCacheSpan, imageCacheSpan, extends).ContinueWith(task => {
+                    return LoadFinderAsync(informationCacheSpan, imageCacheSpan);
+                }, CancelLoading.Token);
+            } else {
+                return Task.CompletedTask;
+            }
+        }
+
+        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        {
+            return Task.Run(() => {
+                FinderLoadState = SourceLoadState.InformationLoading;
+                return LoadImageAsync(imageCacheSpan);
+            }, CancelLoading.Token).ContinueWith(t => {
+                FinderLoadState = SourceLoadState.Completed;
+                NowLoading = false;
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        }
+
+        protected abstract Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends);
+        protected abstract Task LoadInformationAsync(CacheSpan informationCacheSpan);
+        protected abstract Task LoadImageAsync(CacheSpan imageCacheSpan);
+
+
+        protected void DisposeCancelLoading()
+        {
+            if(CancelLoading != null) {
+                CancelLoading.Dispose();
+                CancelLoading = null;
+            }
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DisposeCancelLoading();
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+    }
+
+    public abstract class FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>: FinderViewModelBase
+        where TInformationViewModel : InformationViewModelBase
+        where TFinderItemViewModel : FinderItemViewModelBase<TInformationViewModel>, new()
+    {
+        #region variable
+
+        TFinderItemViewModel _selectedFinderItem;
+
+        string _inputTitleFilter;
+        bool _isBlacklist;
+
+
+        #endregion
+
+        public FinderViewModelBase(Mediation mediation) : base(mediation)
+        {
+            FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
+        }
+
+        #region property
+
+        protected CollectionModel<TFinderItemViewModel> FinderItemList { get; } = new CollectionModel<TFinderItemViewModel>();
+        public virtual IReadOnlyList<TFinderItemViewModel> FinderItemsViewer => FinderItemList;
+        public virtual ICollectionView FinderItems { get; }
+
+        /// <summary>
+        /// 選択中アイテム。
+        /// </summary>
+        public TFinderItemViewModel SelectedFinderItem
+        {
+            get { return this._selectedFinderItem; }
+            set { SetVariableValue(ref this._selectedFinderItem, value); }
+        }
+
+        /// <summary>
+        /// タイトルフィルター文字列。
+        /// </summary>
+        public virtual string InputTitleFilter
+        {
+            get { return this._inputTitleFilter; }
+            set
+            {
+                if(SetVariableValue(ref this._inputTitleFilter, value)) {
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// タイトルフィルタを除外として扱うか。
+        /// </summary>
+        public virtual bool IsBlacklist
+        {
+            get { return this._isBlacklist; }
+            set
+            {
+                if(SetVariableValue(ref this._isBlacklist, value)) {
+                    FinderItems.Refresh();
+                }
+            }
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand AllCheckCommand
+        {
+            get { return CreateCommand(o => ToggleAllCheck()); }
+        }
+
+        #endregion
+
+        #region function
+
+        internal virtual void ToggleAllCheck()
+        {
+            var items = FinderItems.Cast<TFinderItemViewModel>().ToArray();
+            var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
+
+            foreach(var item in items) {
+                item.IsChecked = isChecked;
+            }
+        }
+
+        public IEnumerable<TFinderItemViewModel> GetCheckedItems()
+        {
+            return FinderItems
+                .Cast<TFinderItemViewModel>()
+                .Where(i => i.IsChecked.GetValueOrDefault())
+            ;
+        }
+
+        protected abstract TFinderItemViewModel CreateFinderItem(TInformationViewModel information, int number);
+
+        protected virtual Task SetItemsAsync(IEnumerable<TInformationViewModel> items, CacheSpan informationCacheSpan)
+        {
+            var prevInformations = FinderItemList
+                .Select(i => i.Information)
+                .ToArray()
+            ;
+            foreach(var item in prevInformations) {
+                item.DecrementReference();
+            }
+
+            var finderItems = items
+                .Select((v, i) => new { Information = v, Index = i })
+                .Where(v => v.Information != null)
+                .Select(v => CreateFinderItem(v.Information, v.Index + 1))
+                .ToArray()
+            ;
+
+            return LoadInformationAsync(informationCacheSpan).ContinueWith(t => {
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    FinderItemList.InitializeRange(finderItems);
+                    ChangeSortItems();
+                }));
+            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        }
+
+        #endregion
+    }
+
+}

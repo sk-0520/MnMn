@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     /// <summary>
     /// 動画情報。
     /// </summary>
-    public class SmileVideoInformationViewModel: ViewModelBase, IGarbageCollection
+    public class SmileVideoInformationViewModel: InformationViewModelBase, IGarbageCollection
     {
         #region variable
 
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isPlaying = false;
         bool _isDownloading = false;
 
-        int _referenceCount;
+        //int _referenceCount;
 
         #endregion
 
@@ -295,15 +295,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._isPlaying, value); }
         }
 
-        /// <summary>
-        /// キャッシュ上の参照カウンタ。
-        /// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で減算して<see cref="Logic.Service.Smile.Video.SmileVideoInformationCaching"/>で加算するイメージ。</para>
-        /// </summary>
-        public int ReferenceCount
-        {
-            get { return this._referenceCount; }
-            set { SetVariableValue(ref this._referenceCount, value); }
-        }
+        ///// <summary>
+        ///// キャッシュ上の参照カウンタ。
+        ///// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で減算して<see cref="Logic.Service.Smile.Video.SmileVideoInformationCaching"/>で加算するイメージ。</para>
+        ///// </summary>
+        //public int ReferenceCount
+        //{
+        //    get { return this._referenceCount; }
+        //    set { SetVariableValue(ref this._referenceCount, value); }
+        //}
 
         public DateTime LastShowTimestamp
         {
@@ -1271,23 +1271,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// <see cref="ReferenceCount"/>を加算。
-        /// </summary>
-        public void IncrementReference()
-        {
-            ReferenceCount = RangeUtility.Increment(ReferenceCount);
-        }
+        ///// <summary>
+        ///// <see cref="ReferenceCount"/>を加算。
+        ///// </summary>
+        //public void IncrementReference()
+        //{
+        //    ReferenceCount = RangeUtility.Increment(ReferenceCount);
+        //}
 
-        /// <summary>
-        /// <see cref="ReferenceCount"/>を減算。
-        /// </summary>
-        public void DecrementReference()
-        {
-            if(ReferenceCount > 0) {
-                ReferenceCount -= 1;
-            }
-        }
+        ///// <summary>
+        ///// <see cref="ReferenceCount"/>を減算。
+        ///// </summary>
+        //public void DecrementReference()
+        //{
+        //    if(ReferenceCount > 0) {
+        //        ReferenceCount -= 1;
+        //    }
+        //}
 
         #endregion
 

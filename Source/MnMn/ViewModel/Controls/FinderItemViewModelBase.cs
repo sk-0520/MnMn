@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     }
 
     public class FinderItemViewModelBase<TInformationViewModel>: FinderItemViewModelBase
-        where TInformationViewModel : ViewModelBase
+        where TInformationViewModel : InformationViewModelBase
     {
         protected FinderItemViewModelBase(TInformationViewModel information, int number)
             : base(number)
