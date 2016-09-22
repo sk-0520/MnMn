@@ -106,6 +106,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             ChangedSelectedPage(this, e);
         }
 
+        public void AttachmentChildProprtyChange(INotifyPropertyChanged target)
+        {
+            target.PropertyChanged += PageVm_PropertyChanged;
+        }
+
+        public void DetachmentChildProprtyChange(INotifyPropertyChanged target)
+        {
+            target.PropertyChanged -= PageVm_PropertyChanged;
+        }
+
         #endregion
 
         #region IPagerFinder
@@ -155,7 +165,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         var pageVm = (PageViewModel<TFinderViewModel>)o;
                         if(pageVm.LoadState != LoadState.Loaded) {
                             SelectedPage = pageVm;
-                            pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+                            //pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+                            AttachmentChildProprtyChange(pageVm.ViewModel);
                             pageVm.ViewModel.LoadDefaultCacheAsync().ConfigureAwait(true);
                         } else {
                             SelectedPage = pageVm;

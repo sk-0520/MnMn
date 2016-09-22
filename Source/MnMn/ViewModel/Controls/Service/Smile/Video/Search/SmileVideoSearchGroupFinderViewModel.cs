@@ -237,27 +237,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region command
 
-        public ICommand PageChangeCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var pageVm = (PageViewModel<SmileVideoSearchItemFinderViewModel>)o;
-                        if(pageVm.LoadState != LoadState.Loaded) {
-                            var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
-                            var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
+        //public ICommand PageChangeCommand
+        //{
+        //    get
+        //    {
+        //        return CreateCommand(
+        //            o => {
+        //                var pageVm = (PageViewModel<SmileVideoSearchItemFinderViewModel>)o;
+        //                if(pageVm.LoadState != LoadState.Loaded) {
+        //                    var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
+        //                    var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
 
-                            SelectedPage = pageVm;
-                            pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
-                            pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ConfigureAwait(true);
-                        } else {
-                            SelectedPage = pageVm;
-                        }
-                    }
-                );
-            }
-        }
+        //                    SelectedPage = pageVm;
+        //                    pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+        //                    pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ConfigureAwait(true);
+        //                } else {
+        //                    SelectedPage = pageVm;
+        //                }
+        //            }
+        //        );
+        //    }
+        //}
 
         public override ICommand ReloadCommand
         {
@@ -308,7 +308,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
-            SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
 
             var query = Query;
 
@@ -495,6 +496,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         public void CallPageItemOnPropertyChange()
         {
             CallOnPropertyChange(ChangePagePropertyNames);
+        }
+
+        public ICommand PageChangeCommand
+        {
+            get { return PagerFinderProvider.PageChangeCommand; }
         }
 
         #endregion
