@@ -26,7 +26,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
-    public class SmileLiveInformationViewModel: ViewModelBase
+    public class SmileLiveInformationViewModel: InformationViewModelBase
     {
         #region variable
         #endregion
