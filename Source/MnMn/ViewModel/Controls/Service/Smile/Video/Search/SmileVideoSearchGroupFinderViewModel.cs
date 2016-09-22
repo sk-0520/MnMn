@@ -151,6 +151,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     if(this._selectedPage != null && oldSelectedPage != null) {
                         this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
                         this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+                        // #168
+                        this._selectedPage.ViewModel.IsAscending = oldSelectedPage.ViewModel.IsAscending;
+                        this._selectedPage.ViewModel.IsBlacklist = oldSelectedPage.ViewModel.IsBlacklist;
+                        this._selectedPage.ViewModel.IsEnabledFinderFiltering = oldSelectedPage.ViewModel.IsEnabledFinderFiltering;
+
                         this._selectedPage.ViewModel.FinderItems.Refresh();
                     }
                 }
