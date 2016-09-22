@@ -31,17 +31,19 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search
 {
     /// <summary>
     /// <para>配列的な操作はこのクラス内で完結させたい思い</para>
     /// </summary>
-    public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase
+    public class SmileVideoSearchGroupFinderViewModel: SmileVideoFinderViewModelBase, IPagerFinder<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
         #region define
 
@@ -60,6 +62,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         };
 
         #endregion
+
         #region variable
 
         DefinedElementModel _selectedMethod;
@@ -68,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         //ICollectionView _selectedVideoInformationItems;
 
         int _totalCount;
-        PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
+        //PageViewModel<SmileVideoSearchItemFinderViewModel> _selectedPage;
 
         bool _notfound;
 
@@ -82,13 +85,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             Type = type;
 
             SetContextElements(method, sort);
+
+            PagerFinderProvider = new PagerFinderProvider<SmileVideoFinderViewModelBase, SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>(
+                Mediation,
+                this,
+                new[] {
+                    nameof(SelectedSortType),
+                    nameof(IsEnabledFinderFiltering),
+                    nameof(ShowFilterSetting),
+                }
+            );
+            PagerFinderProvider.ChangedSelectedPage += PagerFinderProvider_ChangedSelectedPage;
         }
 
         #region property
 
         SmileVideoSearchModel SearchModel { get; }
 
-        SmileVideoSearchItemFinderViewModel SearchFinder { get; set; }
+        SmileVideoSearchItemFinderViewModel SearchFinder
+        {
+            get { return PagerFinderProvider?.CurrentFinder; }
+            set { PagerFinderProvider.CurrentFinder = value; }
+        }
+
+        PagerFinderProvider<SmileVideoFinderViewModelBase, SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> PagerFinderProvider { get; }
+
 
         public IList<DefinedElementModel> MethodItems => SearchModel.Methods;
         public IList<DefinedElementModel> SortItems => SearchModel.Sort;
@@ -124,55 +145,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
-        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
+        //public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems { get; set; } = new CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>>();
 
         public CollectionModel<SmileVideoTagViewModel> RelationTagItems { get; } = new CollectionModel<SmileVideoTagViewModel>();
 
         public SmileVideoSearchHistoryViewModel History { get; set; }
 
-        public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
-        {
-            get { return this._selectedPage; }
-            set
-            {
-                var oldSelectedPage = this._selectedPage;
-                if(SetVariableValue(ref this._selectedPage, value)) {
-                    if(this._selectedPage != null) {
-                        this._selectedPage.IsChecked = true;
-                    }
-                    if(oldSelectedPage != null) {
-                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
-                        oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
-                        oldSelectedPage.IsChecked = false;
-                    }
+        //public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
+        //{
+        //    get { return this._selectedPage; }
+        //    set
+        //    {
+        //        var oldSelectedPage = this._selectedPage;
+        //        if(SetVariableValue(ref this._selectedPage, value)) {
+        //            if(this._selectedPage != null) {
+        //                this._selectedPage.IsChecked = true;
+        //            }
+        //            if(oldSelectedPage != null) {
+        //                oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+        //                oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+        //                oldSelectedPage.IsChecked = false;
+        //            }
 
-                    CallPageItemOnPropertyChange();
+        //            if(this._selectedPage != null && oldSelectedPage != null) {
+        //                this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
+        //                this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+        //                this._selectedPage.ViewModel.FinderItems.Refresh();
+        //            }
 
-                    if(this._selectedPage != null && oldSelectedPage != null) {
-                        this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
-                        this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
-                        this._selectedPage.ViewModel.FinderItems.Refresh();
-                    }
-                }
-            }
-        }
+        //            CallPageItemOnPropertyChange();
+        //        }
+        //    }
+        //}
 
         public override ICollectionView FinderItems
         {
             get
             {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        return SearchFinder.FinderItems;
-                    } else {
-                        return base.FinderItems;
-                    }
-                }
-                return SelectedPage.ViewModel.FinderItems;
+                //if(SelectedPage == null) {
+                //    if(SearchFinder != null) {
+                //        return SearchFinder.FinderItems;
+                //    } else {
+                //        return base.FinderItems;
+                //    }
+                //}
+                //return SelectedPage.ViewModel.FinderItems;
+                return PagerFinderProvider?.FinderItems ?? base.FinderItems;
             }
         }
 
-        public override IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => GetSearchProperty<IReadOnlyList<SmileVideoFinderItemViewModel>>();
+        public override IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => PagerFinderProvider.GetFinderProperty<IReadOnlyList<SmileVideoFinderItemViewModel>>();
 
         public int TotalCount
         {
@@ -188,30 +210,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override SourceLoadState FinderLoadState
         {
-            get
-            {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        return SearchFinder.FinderLoadState;
-                    } else {
-                        return base.FinderLoadState;
-                    }
-                }
-                return SelectedPage.ViewModel.FinderLoadState;
-            }
+            //get
+            //{
+            //    if(SelectedPage == null) {
+            //        if(SearchFinder != null) {
+            //            return SearchFinder.FinderLoadState;
+            //        } else {
+            //            return base.FinderLoadState;
+            //        }
+            //    }
+            //    return SelectedPage.ViewModel.FinderLoadState;
+            //}
 
-            set
-            {
-                if(SelectedPage == null) {
-                    if(SearchFinder != null) {
-                        SearchFinder.FinderLoadState = value;
-                    } else {
-                        base.FinderLoadState = value;
-                    }
-                } else {
-                    SelectedPage.ViewModel.FinderLoadState = value;
-                }
-            }
+            //set
+            //{
+            //    if(SelectedPage == null) {
+            //        if(SearchFinder != null) {
+            //            SearchFinder.FinderLoadState = value;
+            //        } else {
+            //            base.FinderLoadState = value;
+            //        }
+            //    } else {
+            //        SelectedPage.ViewModel.FinderLoadState = value;
+            //    }
+            //}
+            get { return PagerFinderProvider.FinderLoadState; }
+            set { PagerFinderProvider.FinderLoadState = value; }
         }
 
 
@@ -220,27 +244,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         #region command
 
-        public ICommand PageChangeCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var pageVm = (PageViewModel<SmileVideoSearchItemFinderViewModel>)o;
-                        if(pageVm.LoadState != LoadState.Loaded) {
-                            var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
-                            var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
+        //public ICommand PageChangeCommand
+        //{
+        //    get
+        //    {
+        //        return CreateCommand(
+        //            o => {
+        //                var pageVm = (PageViewModel<SmileVideoSearchItemFinderViewModel>)o;
+        //                if(pageVm.LoadState != LoadState.Loaded) {
+        //                    var thumbCacheSpan = Constants.ServiceSmileVideoThumbCacheSpan;
+        //                    var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
 
-                            SelectedPage = pageVm;
-                            pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
-                            pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ConfigureAwait(true);
-                        } else {
-                            SelectedPage = pageVm;
-                        }
-                    }
-                );
-            }
-        }
+        //                    SelectedPage = pageVm;
+        //                    pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+        //                    pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ConfigureAwait(true);
+        //                } else {
+        //                    SelectedPage = pageVm;
+        //                }
+        //            }
+        //        );
+        //    }
+        //}
 
         public override ICommand ReloadCommand
         {
@@ -257,11 +281,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         #endregion
 
         #region function
-
-        void CallPageItemOnPropertyChange()
-        {
-            CallOnPropertyChange(ChangePagePropertyNames);
-        }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
         {
@@ -296,7 +315,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
-            SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            //PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
 
             var query = Query;
 
@@ -327,77 +347,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             throw new NotSupportedException();
         }
 
-        KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase> GetMemberInfo(bool getMethod, string memberName)
-        {
-            SmileVideoFinderViewModelBase target;
-            if(SelectedPage == null) {
-                if(SearchFinder != null) {
-                    target = SearchFinder;
-                } else {
-                    target = this;
-                }
-            } else {
-                target = SelectedPage.ViewModel;
-            }
-            var type = target.GetType();
-            MemberInfo[] members = getMethod
-                ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(m => m.Name == memberName).ToArray()
-                : type.GetMember(memberName)
-            ;
-            MemberInfo member;
-            if(target == this) {
-                member = members.First(m => m.DeclaringType == typeof(SmileVideoFinderViewModelBase));
-            } else {
-                member = members.First();
-            }
+        //KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase> GetMemberInfo(bool getMethod, string memberName)
+        //{
+        //    SmileVideoFinderViewModelBase target;
+        //    if(SelectedPage == null) {
+        //        if(SearchFinder != null) {
+        //            target = SearchFinder;
+        //        } else {
+        //            target = this;
+        //        }
+        //    } else {
+        //        target = SelectedPage.ViewModel;
+        //    }
+        //    var type = target.GetType();
+        //    MemberInfo[] members = getMethod
+        //        ? type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(m => m.Name == memberName).ToArray()
+        //        : type.GetMember(memberName)
+        //    ;
+        //    MemberInfo member;
+        //    if(target == this) {
+        //        member = members.First(m => m.DeclaringType == typeof(SmileVideoFinderViewModelBase));
+        //    } else {
+        //        member = members.First();
+        //    }
 
-            return new KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase>(member, target);
-        }
+        //    return new KeyValuePair<MemberInfo, SmileVideoFinderViewModelBase>(member, target);
+        //}
 
-        KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase> GetPropertyInfo([CallerMemberName] string propertyName = "")
-        {
-            var pair = GetMemberInfo(false, propertyName);
+        //KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase> GetPropertyInfo([CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetMemberInfo(false, propertyName);
 
-            return new KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase>((PropertyInfo)pair.Key, pair.Value);
-        }
+        //    return new KeyValuePair<PropertyInfo, SmileVideoFinderViewModelBase>((PropertyInfo)pair.Key, pair.Value);
+        //}
 
-        KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase> GetMethodInfo([CallerMemberName] string propertyName = "")
-        {
-            var pair = GetMemberInfo(true, propertyName);
+        //KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase> GetMethodInfo([CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetMemberInfo(true, propertyName);
 
-            return new KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase>((MethodInfo)pair.Key, pair.Value);
-        }
+        //    return new KeyValuePair<MethodInfo, SmileVideoFinderViewModelBase>((MethodInfo)pair.Key, pair.Value);
+        //}
 
-        TResult GetSearchProperty<TResult>([CallerMemberName] string propertyName = "")
-        {
-            var pair = GetPropertyInfo(propertyName);
-            Debug.Assert(pair.Key.PropertyType == typeof(TResult));
+        //TResult GetSearchProperty<TResult>([CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetPropertyInfo(propertyName);
+        //    Debug.Assert(pair.Key.PropertyType == typeof(TResult));
 
-            return (TResult)pair.Key.GetValue(pair.Value);
-        }
-        void SetSearchProperty<TValue>(TValue value, [CallerMemberName] string propertyName = "")
-        {
-            var pair = GetPropertyInfo(propertyName);
-            Debug.Assert(pair.Key.PropertyType == typeof(TValue));
+        //    return (TResult)pair.Key.GetValue(pair.Value);
+        //}
+        //void SetSearchProperty<TValue>(TValue value, [CallerMemberName] string propertyName = "")
+        //{
+        //    var pair = GetPropertyInfo(propertyName);
+        //    Debug.Assert(pair.Key.PropertyType == typeof(TValue));
 
-            pair.Key.SetValue(pair.Value, value);
-        }
+        //    pair.Key.SetValue(pair.Value, value);
+        //}
 
-        void DoSearchAction(string methodName, params object[] parameters)
-        {
-            var pair = GetMethodInfo(methodName);
-            Debug.Assert(pair.Key.ReturnType == typeof(void));
+        //void DoSearchAction(string methodName, params object[] parameters)
+        //{
+        //    var pair = GetMethodInfo(methodName);
+        //    Debug.Assert(pair.Key.ReturnType == typeof(void));
 
-            pair.Key.Invoke(pair.Value, parameters);
-        }
+        //    pair.Key.Invoke(pair.Value, parameters);
+        //}
 
-        TResult DoSearchFunction<TResult>(string methodName, params object[] parameters)
-        {
-            var pair = GetMethodInfo(methodName);
-            Debug.Assert(pair.Key.ReturnType == typeof(TResult));
+        //TResult DoSearchFunction<TResult>(string methodName, params object[] parameters)
+        //{
+        //    var pair = GetMethodInfo(methodName);
+        //    Debug.Assert(pair.Key.ReturnType == typeof(TResult));
 
-            return (TResult)pair.Key.Invoke(pair.Value, parameters);
-        }
+        //    return (TResult)pair.Key.Invoke(pair.Value, parameters);
+        //}
 
         #endregion
 
@@ -417,58 +437,105 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override string InputTitleFilter
         {
-            get { return GetSearchProperty<string>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<string>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<string>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
         public override bool IsBlacklist
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<bool>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         public override bool IsEnabledFinderFiltering
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<bool>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         public override bool ShowFilterSetting
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            //get { return GetSearchProperty<bool>(); }
+            //set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         internal override void ToggleAllCheck()
         {
-            DoSearchAction(nameof(ToggleAllCheck));
+            //DoSearchAction(nameof(ToggleAllCheck));
+            PagerFinderProvider.DoFinderAction(nameof(ToggleAllCheck));
         }
 
         internal override Task ContinuousPlaybackAsync(bool isRandom)
         {
-            return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
+            //return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
+            return PagerFinderProvider.DoFinderFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
         }
 
         public override bool IsAscending
         {
-            get { return GetSearchProperty<bool>(); }
-            set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<bool>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
         }
 
         public override SmileVideoSortType SelectedSortType
         {
-            get { return GetSearchProperty<SmileVideoSortType>(); }
-            set { SetSearchProperty(value); }
+            get { return PagerFinderProvider.GetFinderProperty<SmileVideoSortType>(); }
+            set { PagerFinderProvider.SetFinderProperty(value); }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            PagerFinderProvider.ChangedSelectedPage -= PagerFinderProvider_ChangedSelectedPage;
+
+            base.Dispose(disposing);
         }
 
         #endregion
 
-        private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        #region IPagerFinder
+
+        public CollectionModel<PageViewModel<SmileVideoSearchItemFinderViewModel>> PageItems
         {
-            Mediation.Logger.Information(e.PropertyName);
-            if(ChangePagePropertyNames.Any(n => n == e.PropertyName)) {
-                CallPageItemOnPropertyChange();
+            get { return PagerFinderProvider.PageItems; }
+        }
+
+        public PageViewModel<SmileVideoSearchItemFinderViewModel> SelectedPage
+        {
+            get { return PagerFinderProvider?.SelectedPage; }
+            set
+            {
+                if(PagerFinderProvider != null) {
+                    PagerFinderProvider.SelectedPage = value;
+                }
             }
         }
+
+        public void CallPageItemOnPropertyChange()
+        {
+            CallOnPropertyChange(ChangePagePropertyNames);
+        }
+
+        public ICommand PageChangeCommand
+        {
+            get { return PagerFinderProvider.PageChangeCommand; }
+        }
+
+        #endregion
+
+        //private void PageVm_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    Mediation.Logger.Information(e.PropertyName);
+        //    if(ChangePagePropertyNames.Any(n => n == e.PropertyName)) {
+        //        CallPageItemOnPropertyChange();
+        //    }
+        //}
 
         private void SearchFinder_PropertyChanged_TotalCount(object sender, PropertyChangedEventArgs e)
         {
@@ -508,6 +575,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         SelectedPage = PageItems.First();
                     }
                 }));
+            }
+        }
+
+        void PagerFinderProvider_ChangedSelectedPage(object sender, Define.Event.ChangedSelectedPageEventArgs<SmileVideoSearchItemFinderViewModel, SmileVideoInformationViewModel, SmileVideoFinderItemViewModel> e)
+        {
+            if(e.OldSelectedPage != null) {
+                e.OldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+            }
+            if(e.NewSelectedPage != null && e.OldSelectedPage != null) {
+                e.NewSelectedPage.ViewModel.SelectedSortType = e.OldSelectedPage.ViewModel.SelectedSortType;
+                // #168
+                e.NewSelectedPage.ViewModel.IsEnabledFinderFiltering = e.OldSelectedPage.ViewModel.IsEnabledFinderFiltering;
             }
         }
 

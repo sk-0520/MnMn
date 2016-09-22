@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
+    <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveInformationSource.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveMediationKey.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoChangeVideoPositionType.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Define\SourceLoadState.cs" />
     <Compile Include="Define\TextShowType.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
+    <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
@@ -282,6 +284,7 @@
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />
+    <Compile Include="ViewModel\Controls\PagerFinderProvider.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryItemFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryGroupFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Category\SmileLiveCategoryManagerViewModel.cs" />
