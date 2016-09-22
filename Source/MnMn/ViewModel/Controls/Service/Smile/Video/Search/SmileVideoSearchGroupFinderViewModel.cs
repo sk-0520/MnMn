@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         SmileVideoSearchModel SearchModel { get; }
 
-        SmileVideoSearchItemFinderViewModel SearchFinder
+        public SmileVideoSearchItemFinderViewModel CurrentFinder
         {
             get { return PagerFinderProvider?.CurrentFinder; }
             set { PagerFinderProvider.CurrentFinder = value; }
@@ -314,14 +314,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 nowSort = LoadingSort;
             }
 
-            SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
+            CurrentFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
             //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
             //PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
 
             var query = Query;
 
             if(isReload) {
-                SearchFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+                CurrentFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
 
                 var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
                 var tagTask = tag.LoadRelationTagListAsync(query).ContinueWith(task => {
@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
 
-            return SearchFinder.LoadAsync(thumbCacheSpan, imageCacheSpan);
+            return CurrentFinder.LoadAsync(thumbCacheSpan, imageCacheSpan);
         }
 
         public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, bool isReload)

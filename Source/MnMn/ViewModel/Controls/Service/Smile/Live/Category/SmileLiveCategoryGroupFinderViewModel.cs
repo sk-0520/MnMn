@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         public IList<DefinedElementModel> SortItems { get { return CategoryModel.SortItems; } }
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
 
-        SmileLiveCategoryItemFinderViewModel SearchFinder
+        public SmileLiveCategoryItemFinderViewModel CurrentFinder
         {
             get { return PagerFinderProvider?.CurrentFinder; }
             set { PagerFinderProvider.CurrentFinder = value; }
@@ -242,15 +242,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                 nowOrder = LoadingOrder;
             }
 
-            SearchFinder = new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, nowSort, nowOrder, Category, 0);
+            CurrentFinder = new SmileLiveCategoryItemFinderViewModel(Mediation, CategoryModel, nowSort, nowOrder, Category, 0);
             //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
             //PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
 
             if(isReload) {
-                SearchFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+                CurrentFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
             }
 
-            return SearchFinder.LoadAsync(informationCacheSpan, imageCacheSpan);
+            return CurrentFinder.LoadAsync(informationCacheSpan, imageCacheSpan);
         }
 
         protected override void Dispose(bool disposing)

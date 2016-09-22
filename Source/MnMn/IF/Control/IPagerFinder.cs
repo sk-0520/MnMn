@@ -55,6 +55,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
         /// </summary>
         SourceLoadState FinderLoadState { get; set; }
 
+        TFinderViewModel CurrentFinder { get; set; }
+
         #endregion
 
         #region command
