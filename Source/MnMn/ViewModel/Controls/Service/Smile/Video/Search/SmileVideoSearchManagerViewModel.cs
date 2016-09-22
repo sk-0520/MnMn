@@ -134,7 +134,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set
             {
                 if(SetVariableValue(ref this._selectedSearchGroup, value)) {
-                    if(this._selectedSearchGroup != null) {
+                    if(SelectedSearchGroup != null) {
+                        if(SelectedSearchGroup.IsPin && SelectedSearchGroup.FinderLoadState == SourceLoadState.None) {
+                            SelectedSearchGroup.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+                        }
                         //var items = this._selectedSearchGroup.SearchItems;
                         //this._selectedSearchGroup.SearchItems.InitializeRange(items);
                     }
@@ -500,8 +503,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             Task.WhenAll(tasks).ContinueWith(t => {
                 var group = SearchGroups.FirstOrDefault();
-                SelectedSearchGroup = group;
                 group.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+                SelectedSearchGroup = group;
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
