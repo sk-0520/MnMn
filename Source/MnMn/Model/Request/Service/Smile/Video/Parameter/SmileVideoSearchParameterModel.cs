@@ -27,6 +27,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
     {
         public SearchType SearchType { get; set; }
         public string Query { get; set; }
-        public bool IsLoad { get; set; } = true;
     }
 }

@@ -382,7 +382,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
 
-            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query, parameter.IsLoad);
+            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query, true);
+        }
+
+        public Task LoadSearchFromPinAsync(SmileVideoSearchPinModel pin)
+        {
+            if(string.IsNullOrWhiteSpace(pin.Query)) {
+                return Task.CompletedTask;
+            }
+
+            var method = MethodItems.FirstOrDefault(i => i.Key == pin.MethodKey) ?? SelectedMethod;
+            var sort = SortItems.FirstOrDefault(i => i.Key == pin.SortKey) ?? SelectedSort;
+
+            return SearchCoreAsync(method, sort, pin.SearchType, pin.Query, false);
         }
 
         Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, bool isLoad)
@@ -483,7 +495,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         }
 
         protected override void ShowViewCore()
-        { }
+        {
+            var tasks = Setting.Search.SearchPinItems.Select(p => LoadSearchFromPinAsync(p));
+
+            Task.WhenAll(tasks).ContinueWith(t => {
+                var group = SearchGroups.FirstOrDefault();
+                SelectedSearchGroup = group;
+                group.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
 
         protected override void HideViewCore()
         { }
