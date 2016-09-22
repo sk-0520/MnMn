@@ -292,10 +292,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         void AddPin()
         {
+            var item = new SmileVideoSearchPinModel() {
+                MethodKey = SelectedMethod.Key,
+                SortKey = SelectedSort.Key,
+                Query = this.Query,
+                SearchType = Type,
+            };
+            Setting.Search.SearchPinItems.Add(item);
+
+            CallOnPropertyChangeDisplayItem();
         }
 
         void RemovePin()
         {
+            var item = SmileVideoSearchUtility.FindPinItem(Setting.Search.SearchPinItems, Query, Type);
+            if(item != null) {
+                Setting.Search.SearchPinItems.Remove(item);
+            }
+
+            CallOnPropertyChangeDisplayItem();
         }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
@@ -493,6 +508,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get { return GetSearchProperty<SmileVideoSortType>(); }
             set { SetSearchProperty(value); }
+        }
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            base.CallOnPropertyChangeDisplayItem();
+
+            var propertyNames = new[] {
+                nameof(IsPin),
+            };
+
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion
