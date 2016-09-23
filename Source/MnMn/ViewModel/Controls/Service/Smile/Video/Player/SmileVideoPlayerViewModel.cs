@@ -360,6 +360,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ResetPlayerAreaCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        SetAreaLength(
+                            Constants.SettingServiceSmileVideoPlayerPlayerAreaStar,
+                            Constants.SettingServiceSmileVideoPlayerCommentAreaStar,
+                            Constants.SettingServiceSmileVideoPlayerInformationAreaPixel
+                        );
+                    }
+                );
+            }
+        }
+
         public ICommand ChangedFilteringCommand
         {
             get
@@ -504,6 +520,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
+        void SetAreaLength(double playerArea, double commentArea, double informationArea)
+        {
+            PlayerAreaLength.Value = new GridLength(playerArea, GridUnitType.Star);
+            CommentAreaLength.Value = new GridLength(commentArea, GridUnitType.Star);
+            InformationAreaLength.Value = new GridLength(informationArea, GridUnitType.Pixel);
+        }
+
         void ImportSetting()
         {
             Left = Setting.Player.Window.Left;
@@ -512,9 +535,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
 
-            PlayerAreaLength.Value = new GridLength(Setting.Player.PlayerArea, GridUnitType.Star);
-            CommentAreaLength.Value = new GridLength(Setting.Player.CommentArea, GridUnitType.Star);
-            InformationAreaLength.Value = new GridLength(Setting.Player.InformationArea, GridUnitType.Pixel);
+            SetAreaLength(Setting.Player.PlayerArea, Setting.Player.CommentArea, Setting.Player.InformationArea);
 
             PlayerShowDetailArea = Setting.Player.ShowDetailArea;
             this._showNormalWindowCommentList = Setting.Player.ShowNormalWindowCommentList;
