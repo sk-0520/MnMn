@@ -512,6 +512,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
 
+            PlayerAreaLength.Value = new GridLength(Setting.Player.PlayerArea, GridUnitType.Star);
+            CommentAreaLength.Value = new GridLength(Setting.Player.CommentArea, GridUnitType.Star);
+            InformationAreaLength.Value = new GridLength(Setting.Player.InformationArea, GridUnitType.Pixel);
+
             PlayerShowDetailArea = Setting.Player.ShowDetailArea;
             this._showNormalWindowCommentList = Setting.Player.ShowNormalWindowCommentList;
             this._showFullScreenCommentList = Setting.Player.ShowFullScreenCommentList;
@@ -535,6 +539,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
             Setting.Player.Window.Topmost = Topmost;
+
+            Setting.Player.PlayerArea = PlayerAreaLength.Value.Value;
+            Setting.Player.CommentArea = CommentAreaLength.Value.Value;
+            Setting.Player.InformationArea = InformationAreaLength.Value.Value;
 
             Setting.Player.ShowDetailArea = PlayerShowDetailArea;
             Setting.Player.ShowNormalWindowCommentList = this._showNormalWindowCommentList;

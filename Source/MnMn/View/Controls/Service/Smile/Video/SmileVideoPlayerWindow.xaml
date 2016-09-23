@@ -585,7 +585,7 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="*"  />
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="120" />
+        <RowDefinition Height="{Binding InformationAreaLength.Value, Mode=TwoWay}" />
       </Grid.RowDefinitions>
 
       <Grid Grid.Row="0" VerticalAlignment="Stretch">

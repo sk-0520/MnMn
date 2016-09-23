@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// 
         /// </summary>
         [DataMember]
-        public double VideoArea { get; set; } = Constants.SettingServiceSmileVideoPlayerVideoAreaStar;
+        public double PlayerArea { get; set; } = Constants.SettingServiceSmileVideoPlayerPlayerAreaStar;
         [DataMember]
         public double CommentArea { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentAreaStar;
         [DataMember]
