@@ -333,6 +333,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore", bool.Parse);
 
+        public static double SettingServiceSmileVideoPlayerVideoAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-video-area-star", double.Parse);
+        public static double SettingServiceSmileVideoPlayerCommentAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-comment-area-star", double.Parse);
+        public static double SettingServiceSmileVideoPlayerInformationAreaPixel => appConfig.Get("setting-service-smile-smilevideo-player-information-area-pixel", double.Parse);
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>

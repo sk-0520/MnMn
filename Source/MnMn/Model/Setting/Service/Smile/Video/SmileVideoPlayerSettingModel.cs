@@ -180,6 +180,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public bool InactiveIsFullScreenRestore { get; set; } = Constants.SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public double VideoArea { get; set; } = Constants.SettingServiceSmileVideoPlayerVideoAreaStar;
+        [DataMember]
+        public double CommentArea { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentAreaStar;
+        [DataMember]
+        public double InformationArea { get; set; } = Constants.SettingServiceSmileVideoPlayerInformationAreaPixel;
+
         #endregion
     }
 }
