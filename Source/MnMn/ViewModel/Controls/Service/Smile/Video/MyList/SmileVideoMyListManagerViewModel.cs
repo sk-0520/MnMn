@@ -793,6 +793,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
 
             return newMyListTask.ContinueWith(t => {
+                nowMyList.MyListName = t.Result.Channel.Title;
+
                 var newModels = t.Result.Channel.Items;
                 var newViewModels = newModels
                     .Select(item => {
@@ -812,6 +814,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
                 if(exceptVideoViewModel.Any()) {
                     nowMyList.Videos.InitializeRange(newViewModels.Select(i => i.VideoId));
+                    nowMyList.UpdateTimestamp = DateTime.Now;
                 }
 
                 return (IEnumerable<SmileVideoVideoItemModel>)exceptVideoViewModel;
