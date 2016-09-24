@@ -30,6 +30,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         #region property
 
         /// <summary>
+        /// 編集した名前。
+        /// </summary>
+        [DataMember]
+        public string MyListCustomName { get; set; }
+
+        /// <summary>
         /// 登録動画。
         /// </summary>
         [DataMember]
