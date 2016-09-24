@@ -152,6 +152,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#171: マイリストのRSSから名称取得がゴミ混ざる'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
