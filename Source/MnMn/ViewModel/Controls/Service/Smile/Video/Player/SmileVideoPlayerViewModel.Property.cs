@@ -581,9 +581,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._commentListLength, value); }
         }
 
-        public FewViewModel<GridLength> PlayerAreaLength { get; } = new FewViewModel<GridLength>(new GridLength(7, GridUnitType.Star));
-        public FewViewModel<GridLength> CommentAreaLength { get; } = new FewViewModel<GridLength>(new GridLength(3, GridUnitType.Star));
-
+        public FewViewModel<GridLength> PlayerAreaLength { get; } = new FewViewModel<GridLength>();
+        public FewViewModel<GridLength> CommentAreaLength { get; } = new FewViewModel<GridLength>();
+        public FewViewModel<GridLength> InformationAreaLength { get; } = new FewViewModel<GridLength>();
 
         public PlayerState PlayerState
         {
