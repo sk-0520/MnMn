@@ -1381,8 +1381,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                     Topmost = true;
                 }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
-                    Topmost = false;
                     t.Dispose();
+                    Topmost = false;
+                    View.Activate();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
