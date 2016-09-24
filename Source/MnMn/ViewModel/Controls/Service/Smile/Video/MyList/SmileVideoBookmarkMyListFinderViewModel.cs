@@ -19,38 +19,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 {
-    public class SmileVideoItemsMyListFinderViewModel: SmileVideoMyListFinderViewModelBase
+    public class SmileVideoBookmarkMyListFinderViewModel: SmileVideoItemsMyListFinderViewModel
     {
-        public SmileVideoItemsMyListFinderViewModel(Mediation mediation, SmileMyListItemModel item)
-            : base(mediation, false)
+        public SmileVideoBookmarkMyListFinderViewModel(Mediation mediation, SmileMyListBookmarkItemModel item)
+            : base(mediation, item)
         {
-            IgnoreAddHistory = false;
-
-            Item = item;
+            BookmarkItem = item;
         }
 
         #region property
 
-        SmileMyListItemModel Item { get; }
+        SmileMyListBookmarkItemModel BookmarkItem { get; }
+
+        public string MyListCustomName
+        {
+            get { return BookmarkItem.MyListCustomName; }
+            set { SetPropertyValue(BookmarkItem, value, nameof(BookmarkItem.MyListCustomName)); }
+        }
 
         #endregion
 
-        #region SmileVideoMyListFinderViewModelBase
+        #region command
 
-        public override string MyListId
+        public ICommand RefreshBookmarkItemCommand
         {
-            get { return Item?.MyListId; }
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                    }
+                );
+            }
         }
+
+
+        #endregion
+
+        #region SmileVideoItemsMyListFinderViewModel
 
         public override string MyListName
         {
-            get { return Item?.MyListName; }
+            get { return BookmarkItem?.MyListCustomName ?? base.MyListName; }
         }
 
         #endregion
