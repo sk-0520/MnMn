@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
@@ -39,8 +40,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public string MyListCustomName
         {
-            get { return BookmarkItem.MyListCustomName; }
-            set { SetPropertyValue(BookmarkItem, value, nameof(BookmarkItem.MyListCustomName)); }
+            get { return BookmarkItem.MyListCustomName ?? base.MyListName; }
+            set
+            {
+                if(SetPropertyValue(BookmarkItem, value, nameof(BookmarkItem.MyListCustomName))) {
+                    CallOnPropertyChange(nameof(MyListName));
+                }
+            }
         }
 
         #endregion
@@ -51,14 +57,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             get
             {
-                return CreateCommand(
-                    o => {
-
-                    }
-                );
+                return CreateCommand(o => RefreshBookmarkItemAsync().ConfigureAwait(false));
             }
         }
 
+        #endregion
+
+        #region function
+
+        Task RefreshBookmarkItemAsync()
+        {
+            MyListCustomName = null;
+            // 実は変わってるかもしれないので裏で読み直しておく
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
+
+            return mylist.LoadGroupAsync(MyListId).ContinueWith(t => {
+                if(t.IsFaulted) {
+                    return;
+                }
+                var rawMyList = t.Result;
+
+                var title = SmileMyListUtility.TrimTitle(rawMyList.Channel.Title);
+                if(BookmarkItem.MyListName != title) {
+                    Mediation.Logger.Information($"changed mylist name: {BookmarkItem.MyListName} -> {title}");
+                    BookmarkItem.MyListName = title;
+                    CallOnPropertyChange(nameof(MyListName));
+                    CallOnPropertyChange(nameof(MyListCustomName));
+                }
+            });
+        }
 
         #endregion
 
