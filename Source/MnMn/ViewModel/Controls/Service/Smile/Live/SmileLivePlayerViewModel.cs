@@ -17,22 +17,32 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
-    [DataContract]
-    public class SmileLiveSettingModel: SettingModelBase
+    public class SmileLivePlayerViewModel: ViewModelBase
     {
-        #region property
+        public SmileLivePlayerViewModel(Mediation mediation)
+        {
+            Mediation = mediation;
+        }
 
-        [DataMember]
-        public SmileLiveCategorySettingModel Category { get; set; } = new SmileLiveCategorySettingModel();
+        #region proeprty
 
-        [DataMember]
-        public SmileLiveExecuteSettingModel Execute { get; set; } = new SmileLiveExecuteSettingModel();
+        Mediation Mediation { get; }
+
+        #endregion
+
+        #region function
+
+        internal Task LoadAsync(SmileLiveInformationViewModel information, bool forceEconomy, CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

@@ -20,19 +20,38 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
 {
     [DataContract]
-    public class SmileLiveSettingModel: SettingModelBase
+    public class SmileLiveExecuteSettingModel: SettingModelBase
     {
         #region property
 
+        /// 動画再生方法。
+        /// </summary>
         [DataMember]
-        public SmileLiveCategorySettingModel Category { get; set; } = new SmileLiveCategorySettingModel();
+        public ExecuteOrOpenMode OpenMode { get; set; } = Constants.SettingServiceSmileLiveExecuteOpenMode;
 
+        /// <summary>
+        /// プレイヤーを新規ウィンドウで表示する｡
+        /// </summary>
         [DataMember]
-        public SmileLiveExecuteSettingModel Execute { get; set; } = new SmileLiveExecuteSettingModel();
+        public bool OpenPlayerInNewWindow { get; set; } = Constants.SettingServiceSmileVideoExecuteOpenPlayerInNewWindow;
+
+        /// <summary>
+        /// 外部プログラムのパス。
+        /// </summary>
+        [DataMember]
+        public string LauncherPath { get; set; }
+
+        /// <summary>
+        /// 外部プログラム実行時のパラメータ。
+        /// </summary>
+        [DataMember]
+        public string LauncherParameter { get; set; }
+
 
         #endregion
     }

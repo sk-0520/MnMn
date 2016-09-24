@@ -256,6 +256,7 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveInformationLoader.cs" />
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveFeedUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
@@ -276,6 +277,7 @@
     <Compile Include="Model\Service\Smile\Live\SmileLiveCategoryModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
@@ -296,6 +298,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveFinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveInformationViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLiveManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Live\SmileLivePlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
