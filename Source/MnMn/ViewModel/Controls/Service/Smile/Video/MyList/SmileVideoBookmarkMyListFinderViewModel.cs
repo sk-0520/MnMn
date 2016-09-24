@@ -68,6 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         Task RefreshBookmarkItemAsync()
         {
             MyListCustomName = null;
+            BookmarkItem.UpdateTimestamp = DateTime.Now;
+
             // 実は変わってるかもしれないので裏で読み直しておく
             var mylist = new Logic.Service.Smile.Api.V1.MyList(Mediation);
 
@@ -77,10 +79,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 }
                 var rawMyList = t.Result;
 
-                var title = SmileMyListUtility.TrimTitle(rawMyList.Channel.Title);
-                if(BookmarkItem.MyListName != title) {
-                    Mediation.Logger.Information($"changed mylist name: {BookmarkItem.MyListName} -> {title}");
-                    BookmarkItem.MyListName = title;
+                var newTitle = rawMyList.Channel.Title;
+                if(BookmarkItem.MyListName != newTitle) {
+                    Mediation.Logger.Information($"changed mylist name: {BookmarkItem.MyListName} -> {newTitle}");
+                    BookmarkItem.MyListName = newTitle;
+                    BookmarkItem.UpdateTimestamp = DateTime.Now;
+
                     CallOnPropertyChange(nameof(MyListName));
                     CallOnPropertyChange(nameof(MyListCustomName));
                 }
