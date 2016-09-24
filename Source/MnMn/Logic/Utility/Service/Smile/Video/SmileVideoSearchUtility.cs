@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 {
@@ -50,5 +51,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return SearchType.Keyword;
         }
 
+        public static SmileVideoSearchPinModel FindPinItem(IEnumerable<SmileVideoSearchPinModel> items, string query, SearchType searchType)
+        {
+            return items.FirstOrDefault(p => p.SearchType == searchType && p.Query == query);
+        }
+
+        public static bool IsPinItem(IEnumerable<SmileVideoSearchPinModel> items, string query, SearchType searchType)
+        {
+            return FindPinItem(items, query, searchType) != null;
+        }
     }
 }
