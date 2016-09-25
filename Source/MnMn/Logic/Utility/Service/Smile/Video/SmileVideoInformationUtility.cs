@@ -18,11 +18,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -128,6 +130,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var result = AppUtility.ReplaceString(baseParameter, map);
 
             return result;
+        }
+
+        public static Task<string> LoadWatchPageHtmlSource(HttpClient userAgent, Uri watchPageUri)
+        {
+            return userAgent.GetStringAsync(watchPageUri).ContinueWith(t => {
+                return t.Result;
+            });
+        }
+
+        public static Task<string> LoadWatchPageHtmlSource(ICreateHttpUserAgent userAgentCreator, Uri watchPageUri)
+        {
+            var userAgent = userAgentCreator.CreateHttpUserAgent();
+            return LoadWatchPageHtmlSource(userAgent, watchPageUri);
         }
 
         #endregion
