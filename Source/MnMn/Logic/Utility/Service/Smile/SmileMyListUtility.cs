@@ -57,13 +57,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
         public static string TrimTitle(string rawTitle)
         {
-            var target = "マイリスト ";
+            //var target = "マイリスト ";
 
-            if(rawTitle.IndexOf(target) == 0) {
-                return rawTitle.Substring(target.Length);
+            //if(rawTitle.IndexOf(target) == 0) {
+            //    return rawTitle.Substring(target.Length);
+            //}
+
+            //return rawTitle;
+
+            var patterns = new[] {
+                new {
+                    Word = Constants.ServiceSmileMyListTitleTrimHead,
+                    Head = true,
+                },
+                new {
+                    Word = Constants.ServiceSmileMyListTitleTrimTail,
+                    Head = false,
+                },
+            };
+
+            var workTitle = rawTitle;
+
+            foreach(var pattern in patterns) {
+                if(pattern.Head) {
+                    if(workTitle.StartsWith(pattern.Word)) {
+                        workTitle = workTitle.Substring(pattern.Word.Length);
+                    }
+                } else {
+                    if(workTitle.EndsWith(pattern.Word)) {
+                        workTitle = workTitle.Substring(0, workTitle.Length - pattern.Word.Length);
+                    }
+                }
             }
 
-            return rawTitle;
+            return workTitle;
         }
     }
 }

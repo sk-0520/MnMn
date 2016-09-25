@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -56,6 +57,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
 
+        /// <summary>
+        /// マイリストのタイトルから除外する文字列。
+        /// <para>先頭。</para>
+        /// </summary>
+        public static string ServiceSmileMyListTitleTrimHead => appConfig.Get("service-smile-mylist-title-trim-head");
+        /// <summary>
+        /// マイリストのタイトルから除外する文字列。
+        /// <para>末尾</para>
+        /// </summary>
+        public static string ServiceSmileMyListTitleTrimTail => appConfig.Get("service-smile-mylist-title-trim-tail");
 
         /// <summary>
         /// 動画データ取得中になんかエラー発生から再開までの待ち時間。
