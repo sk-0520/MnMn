@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 if(SetVariableValue(ref this._selectedBookmarkNode, value)) {
                     if(SelectedBookmarkNode != null) {
-                        SelectedBookmarkNode.ClearEditingValue();
+                        //SelectedBookmarkNode.ClearEditingValue();
                         var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
                         SelectedBookmarkNodeFinder = finder;
                     }
