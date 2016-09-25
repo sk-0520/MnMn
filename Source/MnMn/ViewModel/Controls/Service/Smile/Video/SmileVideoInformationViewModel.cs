@@ -1161,7 +1161,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         /// <summary>
-        /// <para>通信はしない！</para>
         /// </summary>
         public Task LoadLocalPageHtmlAsync()
         {
@@ -1174,8 +1173,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     return SetPageHtmlAsync(html, false);
                 }
             } else {
-                PageHtmlLoadState = LoadState.None;
-                return Task.CompletedTask;
+                var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+                return SmileVideoInformationUtility.LoadWatchPageHtmlSource(session, WatchUrl).ContinueWith(t => {
+                    var htmlSource = t.Result;
+                    SetPageHtmlAsync(htmlSource, true).Wait();
+                }, TaskContinuationOptions.AttachedToParent);
             }
         }
 
