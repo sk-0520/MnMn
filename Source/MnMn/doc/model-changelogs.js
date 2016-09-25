@@ -160,7 +160,7 @@
 	},
 	{
 		'date': '2016/09/25',
-		'version': '0.21.1',
+		'version': '0.21.2',
 		'isRc': false,
 		'contents': [
 			{
