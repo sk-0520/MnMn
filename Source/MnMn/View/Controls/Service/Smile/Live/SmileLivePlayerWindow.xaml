@@ -150,7 +150,14 @@
         <RowDefinition Height="120" />
       </Grid.RowDefinitions>
 
-      <app_view_controls:WebNavigator x:Name="navigatorPlayer" Grid.Row="0" ServiceType="SmileLive" />
+      <app_view_controls:WebNavigator
+        x:Name="navigatorPlayer"
+        Grid.Row="0"
+        ServiceType="SmileLive"
+        NewWindowCommand="{Binding NewWindowCommand}"
+        SourceLoadedCommand="{Binding SourceLoadedCommand}"
+        DomLoadedCommand="{Binding DomLoadedCommand}"
+      />
 
       <GridSplitter
         Grid.Row="1"

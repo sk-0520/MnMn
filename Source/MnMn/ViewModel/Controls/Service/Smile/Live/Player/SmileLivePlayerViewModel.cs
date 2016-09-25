@@ -25,14 +25,17 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
+using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player
 {
@@ -81,6 +84,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
+        #region command
+
+        public ICommand NewWindowCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var data = (WebNavigatorEventDataBase)o;
+                        WebNavigatorUtility.OpenNewWindowWrapper(data, Mediation.Logger);
+                    }
+                );
+            }
+        }
+
+        public ICommand SourceLoadedCommand
+        {
+            get { return CreateCommand(o => SourceLoaded((WebNavigatorEventDataBase)o)); }
+        }
+
+        public ICommand DomLoadedCommand
+        {
+            get { return CreateCommand(o => DomLoaded((WebNavigatorEventDataBase)o)); }
+        }
+
+
+
+        #endregion
+
         #region function
 
         Task LoadWatchPageAsync()
@@ -102,6 +134,73 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             return Task.CompletedTask;
         }
+
+        void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
+        {
+            var browser = (GeckoWebBrowser)eventData.Sender;
+            var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
+            if(flvplayerElement == null) {
+                return;
+            }
+
+            var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
+            var bodyElement = browser.Document.GetElementsByTagName("body").FirstOrDefault();
+            var firstElements = bodyElement.ChildNodes
+                .OfType<GeckoHtmlElement>()
+                .ToArray()
+            ;
+
+            foreach(var element in firstElements) {
+                element.Style.SetPropertyValue("display", "none");
+            }
+            var rootElements = new[] {
+                htmlElement,
+                bodyElement
+            };
+            foreach(var element in rootElements) {
+                element.Style.SetPropertyValue("height", "100%");
+                element.Style.SetPropertyValue("margin", "0");
+            }
+
+            var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
+            flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
+            flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
+            //flvplayerElement.RemoveAttribute("width");
+            //flvplayerElement.RemoveAttribute("height");
+            flvplayerElement.Style.SetPropertyValue("width", "100%");
+            flvplayerElement.Style.SetPropertyValue("height", "100%");
+            flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
+            bodyElement.AppendChild(flvplayerContainerElement);
+        }
+
+        void SourceLoaded(WebNavigatorEventDataBase eventData)
+        {
+            switch(eventData.Engine) {
+                case WebNavigatorEngine.GeckoFx:
+                    SourceLoadedGeckoFx((WebNavigatorEventData<DomEventArgs>)eventData);
+                    break;
+
+                default: //TODO: IE側余なし
+                    break;
+            }
+        }
+
+        private void DomLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
+        {
+        }
+
+        private void DomLoaded(WebNavigatorEventDataBase eventData)
+        {
+            switch(eventData.Engine) {
+                case WebNavigatorEngine.GeckoFx:
+                    DomLoadedGeckoFx((WebNavigatorEventData<DomEventArgs>)eventData);
+                    break;
+
+                default: //TODO: IE側余なしっていうか、そもそも飛んでこない
+                    break;
+            }
+        }
+
 
         #endregion
 
@@ -193,6 +292,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         {
             NavigatorPlayer.NavigateEmpty();
         }
+
 
     }
 }
