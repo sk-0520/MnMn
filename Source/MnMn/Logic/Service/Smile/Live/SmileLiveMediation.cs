@@ -28,6 +28,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {

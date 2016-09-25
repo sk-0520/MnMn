@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
@@ -210,10 +211,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 //}
 
                 var vm = new SmileLivePlayerViewModel(Mediation);
-                var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, vm, ShowViewState.Foreground));
 
+                var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
                 return task;
             }
         }
