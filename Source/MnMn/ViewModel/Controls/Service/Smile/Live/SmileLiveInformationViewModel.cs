@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -47,8 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         {
             Mediation = mediation;
 
-            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.SmileLive));
-
+            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
         }
 
         public SmileLiveInformationViewModel(Mediation mediation, FeedSmileLiveItemModel feed)
@@ -57,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             Feed = feed;
 
             InformationSource = SmileLiveInformationSource.Feed;
+
+            Initialize();
         }
 
         #region property
@@ -67,6 +69,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         public SmileLiveInformationSource InformationSource { get; }
 
         FeedSmileLiveItemModel Feed { get; }
+
+        #region file
+
+        /// <summary>
+        /// キャッシュディレクトリ。
+        /// </summary>
+        public DirectoryInfo CacheDirectory { get; private set; }
+
+        /// <summary>
+        /// サムネイル画像ファイル。
+        /// </summary>
+        public FileInfo ThumbnaiImageFile { get; private set; }
+
+        #endregion
 
         public bool IsPlaying
         {
@@ -148,6 +164,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #region function
 
+        void Initialize()
+        {
+            var cacheBaseDir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
+            CacheDirectory = Directory.CreateDirectory(Path.Combine(cacheBaseDir.FullName, Id));
+        }
+
         public Task OpenVideoDefaultAsync(bool forceEconomy)
         {
             return OpenVideoFromOpenParameterAsync(forceEconomy, Setting.Execute.OpenMode, Setting.Execute.OpenPlayerInNewWindow);
@@ -190,7 +212,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 var vm = new SmileLivePlayerViewModel(Mediation);
                 var task = vm.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
 
-                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, vm, ShowViewState.Foreground));
 
                 return task;
             }

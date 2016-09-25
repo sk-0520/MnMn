@@ -320,6 +320,9 @@
     <Compile Include="View\Controls\Service\Smile\Live\SmileLiveFinderControl.xaml.cs">
       <DependentUpon>SmileLiveFinderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Service\Smile\Live\SmileLivePlayerWindow.xaml.cs">
+      <DependentUpon>SmileLivePlayerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Service\Smile\SmileWebSiteManager.xaml.cs">
       <DependentUpon>SmileWebSiteManager.xaml</DependentUpon>
     </Compile>
@@ -672,6 +675,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveFinderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Service\Smile\Live\SmileLivePlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

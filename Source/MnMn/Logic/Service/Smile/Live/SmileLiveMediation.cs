@@ -26,6 +26,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 {
@@ -42,6 +44,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         SmileLiveSettingModel Setting { get; }
         SmileLiveCategoryModel Category { get; }
+
+        HashSet<SmileLivePlayerWindow> Players { get; } = new HashSet<SmileLivePlayerWindow>();
+
         #endregion
 
         #region function
@@ -73,9 +78,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #region MediationBase
 
-        internal override object RequestShowView(ShowViewRequestModel reque)
+        internal override object RequestShowView(ShowViewRequestModel request)
         {
-            throw new NotImplementedException();
+            CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileLive);
+
+            if(request.ParameterIsViewModel) {
+                var player = request.ViewModel as SmileLivePlayerViewModel;
+                if(player != null) {
+                    var window = new SmileLivePlayerWindow() {
+                        DataContext = player,
+                    };
+                    window.Closed += Player_Closed;
+                    if(!Players.Any()) {
+                        player.IsWorkingPlayer.Value = true;
+                    }
+                    Players.Add(window);
+                    return window;
+                }
+
+                throw new NotImplementedException();
+            } else {
+                throw new NotImplementedException();
+            }
         }
 
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
@@ -176,6 +200,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         }
 
         #endregion
+
+        void Player_Closed(object sender, EventArgs e)
+        {
+            var window = (SmileLivePlayerWindow)sender;
+
+            window.Closed -= Player_Closed;
+
+            var player = (SmileLivePlayerViewModel)window.DataContext;
+            player.IsWorkingPlayer.Value = false;
+            Players.Remove(window);
+
+            // 判断基準なし
+            var nextPlayer = Players
+                .Select(p => (SmileLivePlayerViewModel)p.DataContext)
+                .FirstOrDefault()
+            ;
+            if(nextPlayer != null) {
+                nextPlayer.IsWorkingPlayer.Value = true;
+            }
+        }
+
 
     }
 }

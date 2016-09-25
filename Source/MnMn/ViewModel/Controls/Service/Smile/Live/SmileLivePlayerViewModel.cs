@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         Mediation Mediation { get; }
 
+        public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
+
         #endregion
 
         #region function
