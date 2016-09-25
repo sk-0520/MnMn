@@ -84,55 +84,46 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.20.1',
-		'isRc': true,
+		'date': '2016/09/25',
+		'version': '0.21.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
-						'subject': '#165: フルスクリーン中に非アクティブになってもフルスクリーンを解除しないようにする'
+						'revision': 'fac7683b1dc9196cad5d3f014c74ac4db4ddd098',
+						'subject': '#165: フルスクリーン中に非アクティブになってもフルスクリーンを解除しないようにする',
+						'comments': [
+							'解除するのが規定値です',
+							'必要なら設定で変更してください'
+						]
 					},
 					{
-						'revision': '',
+						'revision': '016285effb336814501575c3fb8dc47fd415b1b5',
 						'subject': '#128: 検索履歴のタグ・キーワード検索を前回検索と逆のもののみ表示させる',
 						'comments': [
 							'項目クリックで同一検索する現状でタグ検索した項目を再度明示的にタグ検索する馬鹿がどこにいるのかと'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '44c29bdb5d730dcd6e3e9ab2b556aa5a91348bcd',
 						'subject': '#166: プレイヤー内の領域サイズを設定に落す'
 					},
 					{
-						'revision': '',
+						'revision': '8218bd46703fa566d6a14e6b7ae57c82c6e11afd',
 						'subject': '#162: 検索タブのロック機能',
 						'comments': [
 							'タブヘッダ部分のコンテキストメニューで制御できます'
 						]
 					},
 					{
-						'revision': '',
-						'subject': ''
+						'revision': '976db6bb397ecd1c5cc3cf328f7a72c0a2665249',
+						'subject': '#170: マイリストブックマーク名の変更'
+					},
+					{
+						'revision': 'bd542253184b1cba50c6879befae1f31cf57d18b',
+						'subject': '#174: ブックマークのノード名変更を#170に合わせてリアルタイム更新とする'
 					}
 				]
 			},
@@ -140,38 +131,30 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'f8fd493ab08348a7bafc2494762d9b5a30985973',
 						'subject': '#164: マウス操作でフルスクリーンにするとフォーカスがフルスクリーンボタンに当たったままになってる'
 					},
 					{
-						'revision': '',
+						'revision': '48de0206e6857167069d0163c35480eb67bb7fd3',
 						'subject': '#168: 検索処理でページ遷移時に共有される項目とそうでない項目がある',
 						'comments': [
 							'ニコ生の実装インフラ整備してて気づいたから将来的にマージでミスること思うと憂鬱'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '54e16724b34ab3f427a56d3b84a835df7cd46940',
 						'subject': '#169: 動画再生時に再生中プレイヤーで別動画を開くとプレイヤーは前面に出てくるがアクティブにならない'
 					},
 					{
-						'revision': '',
+						'revision': '77f63708f70eaf31c69210edeee8507d8b4fcc23',
 						'subject': '#160: 動画ページ情報がキャッシュされてる状態で再度プレイヤーを開くとそれが反映されない',
 						'comments': [
 							'この事象が伝搬して自動再生とかバグりまくってたと思うんですよ'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '9ac824a75978c4d59d44443fe9ece316c8d95827',
 						'subject': '#171: マイリストのRSSから名称取得がゴミ混ざる'
-					},
-					{
-						'revision': '',
-						'subject': '#170: マイリストブックマーク名の変更'
-					},
-					{
-						'revision': '',
-						'subject': '#174: ブックマークのノード名変更を#170に合わせてリアルタイム更新とする'
 					}
 				]
 			},
@@ -179,19 +162,11 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e804daf9d181e3d76f30c302dc9cd3e780037f4e',
 						'subject': '#149: 取得データをモデルに落とし込む際に生データも対象にする',
 						'comments': [
 							'かなり限定的'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
