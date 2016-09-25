@@ -1167,6 +1167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             PageHtmlLoadState = LoadState.Preparation;
 
+            WatchPageHtmlFile.Refresh();
             if(WatchPageHtmlFile.Exists && Constants.MinimumHtmlFileSize <= WatchPageHtmlFile.Length) {
                 using(var stream = WatchPageHtmlFile.OpenText()) {
                     var html = stream.ReadToEnd();
