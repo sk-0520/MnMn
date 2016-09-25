@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
@@ -40,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         #region property
 
         public Uri ReferrerUri { get; }
-        public TimeSpan WatchToMovieWaitTime {get;set;} = Constants.ServiceSmileVideoWatchToMovieWaitTime;
+        public TimeSpan WatchToMovieWaitTime { get; set; } = Constants.ServiceSmileVideoWatchToMovieWaitTime;
 
         public string PageHtml { get; private set; }
 
@@ -52,9 +53,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
-                var t = UserAgent.GetStringAsync(ReferrerUri);
-                t.Wait();
-                PageHtml = t.Result;
+                //var t = UserAgent.GetStringAsync(ReferrerUri);
+                //t.Wait();
+                //PageHtml = t.Result;
+                var task = SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
+                task.Wait();
+                PageHtml = task.Result;
+
                 cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
                 IfUsingSetRangeHeader();

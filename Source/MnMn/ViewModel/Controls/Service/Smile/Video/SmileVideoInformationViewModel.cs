@@ -1161,7 +1161,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         /// <summary>
-        /// <para>通信はしない！</para>
         /// </summary>
         public Task LoadLocalPageHtmlAsync()
         {
