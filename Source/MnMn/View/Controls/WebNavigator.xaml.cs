@@ -194,6 +194,114 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region SourceLoadedCommand
+
+        #region SourceLoadedCommandProperty
+
+        public static readonly DependencyProperty SourceLoadedCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SourceLoadedCommandProperty)),
+            typeof(ICommand),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSourceLoadedCommandChanged))
+        );
+
+        private static void OnSourceLoadedCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.SourceLoadedCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand SourceLoadedCommand
+        {
+            get { return GetValue(SourceLoadedCommandProperty) as ICommand; }
+            set { SetValue(SourceLoadedCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region SourceLoadedCommandParameterProperty
+
+        public static readonly DependencyProperty SourceLoadedCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SourceLoadedCommandParameterProperty)),
+            typeof(object),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSourceLoadedCommandParameterChanged))
+        );
+
+        private static void OnSourceLoadedCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.SourceLoadedCommandParameter = e.NewValue;
+            }
+        }
+
+        public object SourceLoadedCommandParameter
+        {
+            get { return GetValue(SourceLoadedCommandParameterProperty); }
+            set { SetValue(SourceLoadedCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region DomLoadedCommand
+
+        #region DomLoadedCommandProperty
+
+        public static readonly DependencyProperty DomLoadedCommandProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(DomLoadedCommandProperty)),
+            typeof(ICommand),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDomLoadedCommandChanged))
+        );
+
+        private static void OnDomLoadedCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.DomLoadedCommand = e.NewValue as ICommand;
+            }
+        }
+
+        public ICommand DomLoadedCommand
+        {
+            get { return GetValue(DomLoadedCommandProperty) as ICommand; }
+            set { SetValue(DomLoadedCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region DomLoadedCommandParameterProperty
+
+        public static readonly DependencyProperty DomLoadedCommandParameterProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(DomLoadedCommandParameterProperty)),
+            typeof(object),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDomLoadedCommandParameterChanged))
+        );
+
+        private static void OnDomLoadedCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.DomLoadedCommandParameter = e.NewValue;
+            }
+        }
+
+        public object DomLoadedCommandParameter
+        {
+            get { return GetValue(DomLoadedCommandParameterProperty); }
+            set { SetValue(DomLoadedCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
         #region property
 
         /// <summary>
@@ -428,6 +536,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserDefault.Unloaded += BrowserDefault_Unloaded;
             BrowserDefault.Navigating += BrowserDefault_Navigating;
             BrowserDefault.Navigated += BrowserDefault_Navigated;
+            BrowserDefault.LoadCompleted += BrowserDefault_LoadCompleted;
+            // IE側は LoadCompleted だけ？
+            //BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
 
             this.container.Content = BrowserDefault;
         }
@@ -441,6 +552,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.Navigating += BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated += BrowserGeckoFx_Navigated;
             BrowserGeckoFx.CreateWindow += BrowserGeckoFx_CreateWindow;
+            BrowserGeckoFx.Load += BrowserGeckoFx_Load;
+            BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -505,6 +618,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserDefault.Loaded -= BrowserDefault_Loaded;
             BrowserDefault.Navigating -= BrowserDefault_Navigating;
             BrowserDefault.Navigated -= BrowserDefault_Navigated;
+            BrowserDefault.LoadCompleted -= BrowserDefault_LoadCompleted;
         }
 
         private void BrowserGeckoFx_Disposed(object sender, EventArgs e)
@@ -513,6 +627,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.Navigating -= BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated -= BrowserGeckoFx_Navigated;
             BrowserGeckoFx.CreateWindow -= BrowserGeckoFx_CreateWindow;
+            BrowserGeckoFx.Load -= BrowserGeckoFx_Load;
+            BrowserGeckoFx.DOMContentLoaded -= BrowserGeckoFx_DOMContentLoaded;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -543,6 +659,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 NewWindowCommand.TryExecute(eventData);
             }
         }
+
+        private void BrowserDefault_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            if(SourceLoadedCommand != null) {
+                var eventData = WebNavigatorEventData.Create(WebNavigatorEngine.Default, sender, e, SourceLoadedCommandParameter);
+                SourceLoadedCommand.TryExecute(eventData);
+            }
+        }
+
+        private void BrowserGeckoFx_Load(object sender, DomEventArgs e)
+        {
+            if(SourceLoadedCommand != null) {
+                var eventData = WebNavigatorEventData.Create(WebNavigatorEngine.GeckoFx, sender, e, SourceLoadedCommandParameter);
+                SourceLoadedCommand.TryExecute(eventData);
+            }
+        }
+
+        private void BrowserGeckoFx_DOMContentLoaded(object sender, DomEventArgs e)
+        {
+            if(DomLoadedCommand != null) {
+                var eventData = WebNavigatorEventData.Create(WebNavigatorEngine.GeckoFx, sender, e, DomLoadedCommandParameter);
+                DomLoadedCommand.TryExecute(eventData);
+            }
+        }
+
 
     }
 }
