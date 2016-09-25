@@ -360,6 +360,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ResetPlayerAreaCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        SetAreaLength(
+                            Constants.SettingServiceSmileVideoPlayerPlayerAreaStar,
+                            Constants.SettingServiceSmileVideoPlayerCommentAreaStar,
+                            Constants.SettingServiceSmileVideoPlayerInformationAreaPixel
+                        );
+                    }
+                );
+            }
+        }
+
         public ICommand ChangedFilteringCommand
         {
             get
@@ -504,6 +520,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
+        void SetAreaLength(double playerArea, double commentArea, double informationArea)
+        {
+            PlayerAreaLength.Value = new GridLength(playerArea, GridUnitType.Star);
+            CommentAreaLength.Value = new GridLength(commentArea, GridUnitType.Star);
+            InformationAreaLength.Value = new GridLength(informationArea, GridUnitType.Pixel);
+        }
+
         void ImportSetting()
         {
             Left = Setting.Player.Window.Left;
@@ -511,6 +534,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Width = Setting.Player.Window.Width;
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
+
+            SetAreaLength(Setting.Player.PlayerArea, Setting.Player.CommentArea, Setting.Player.InformationArea);
 
             PlayerShowDetailArea = Setting.Player.ShowDetailArea;
             this._showNormalWindowCommentList = Setting.Player.ShowNormalWindowCommentList;
@@ -535,6 +560,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
             Setting.Player.Window.Topmost = Topmost;
+
+            Setting.Player.PlayerArea = PlayerAreaLength.Value.Value;
+            Setting.Player.CommentArea = CommentAreaLength.Value.Value;
+            Setting.Player.InformationArea = InformationAreaLength.Value.Value;
 
             Setting.Player.ShowDetailArea = PlayerShowDetailArea;
             Setting.Player.ShowNormalWindowCommentList = this._showNormalWindowCommentList;
@@ -1337,6 +1366,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+
+                // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
+                var scope = FocusManager.GetFocusScope(View);
+                FocusManager.SetFocusedElement(scope, null);
+                Keyboard.ClearFocus();
             }
         }
 
@@ -1347,8 +1381,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                     Topmost = true;
                 }), DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
-                    Topmost = false;
                     t.Dispose();
+                    Topmost = false;
+                    View.Activate();
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
@@ -2008,7 +2043,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void View_Deactivated(object sender, EventArgs e)
         {
-            SwitchFullScreen();
+            if(Setting.Player.InactiveIsFullScreenRestore) {
+                SetWindowMode(true);
+            }
         }
 
         private void Seekbar_MouseEnter(object sender, MouseEventArgs e)

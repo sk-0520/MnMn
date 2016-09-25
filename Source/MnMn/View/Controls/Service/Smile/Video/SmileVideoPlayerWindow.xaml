@@ -440,12 +440,14 @@
       <Separator />
 
       <Menu Style="{StaticResource DummyMenu}">
-        <MenuItem Header="プレイヤーサイズ">
-          <MenuItem Header="50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
-          <MenuItem Header="75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
-          <MenuItem Header="100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
-          <MenuItem Header="150%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="150"  />
-          <MenuItem Header="200%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="200" />
+        <MenuItem Header="プレイヤー領域">
+          <MenuItem Header="動画サイズ: 50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
+          <MenuItem Header="動画サイズ: 75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
+          <MenuItem Header="動画サイズ: 100%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="100"  />
+          <MenuItem Header="動画サイズ: 150%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="150"  />
+          <MenuItem Header="動画サイズ: 200%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="200" />
+          <Separator />
+          <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200" />
         </MenuItem>
       </Menu>
 
@@ -585,7 +587,7 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="*"  />
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="120" />
+        <RowDefinition Height="{Binding InformationAreaLength.Value, Mode=TwoWay}" />
       </Grid.RowDefinitions>
 
       <Grid Grid.Row="0" VerticalAlignment="Stretch">

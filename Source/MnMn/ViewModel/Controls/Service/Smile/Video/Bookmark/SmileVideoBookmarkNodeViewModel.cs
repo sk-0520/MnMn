@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         bool _isExpanded = true;
         int _level;
 
-        string _editingName;
+        //string _editingName;
 
         #endregion
 
@@ -76,23 +76,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             set { SetModelValue(value); }
         }
 
-        public string EditingName
-        {
-            get { return this._editingName; }
-            set { SetVariableValue(ref this._editingName, value); }
-        }
+        //public string EditingName
+        //{
+        //    get { return this._editingName; }
+        //    set { SetVariableValue(ref this._editingName, value); }
+        //}
 
         #endregion
 
         #region command
 
-        public ICommand SaveEditCommand
-        {
-            get
-            {
-                return CreateCommand(o => SaveEdit());
-            }
-        }
+        //public ICommand SaveEditCommand
+        //{
+        //    get
+        //    {
+        //        return CreateCommand(o => SaveEdit());
+        //    }
+        //}
 
         #endregion
 
@@ -103,18 +103,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             return new SmileVideoBookmarkNodeViewModel(model);
         }
 
-        void SaveEdit()
-        {
-            Name = EditingName;
-            ResetChangeFlag();
-        }
+        //void SaveEdit()
+        //{
+        //    Name = EditingName;
+        //    ResetChangeFlag();
+        //}
 
-        public void ClearEditingValue()
-        {
-            EditingName = Name;
+        //public void ClearEditingValue()
+        //{
+        //    EditingName = Name;
 
-            ResetChangeFlag();
-        }
+        //    ResetChangeFlag();
+        //}
 
         #endregion
 

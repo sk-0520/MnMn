@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
         }
 
         /// <summary>
-        /// 指定未リストIDからがさーっと取得する。
+        /// 指定マイリストIDからがさーっと取得する。
         /// </summary>
         /// <param name="myListId"></param>
         /// <returns></returns>

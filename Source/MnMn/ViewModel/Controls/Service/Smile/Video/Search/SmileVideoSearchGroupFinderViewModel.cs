@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -60,6 +61,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         };
 
         #endregion
+
         #region variable
 
         DefinedElementModel _selectedMethod;
@@ -151,6 +153,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                     if(this._selectedPage != null && oldSelectedPage != null) {
                         this._selectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
                         this._selectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
+                        // #168
+                        this._selectedPage.ViewModel.IsAscending = oldSelectedPage.ViewModel.IsAscending;
+                        this._selectedPage.ViewModel.IsBlacklist = oldSelectedPage.ViewModel.IsBlacklist;
+                        this._selectedPage.ViewModel.IsEnabledFinderFiltering = oldSelectedPage.ViewModel.IsEnabledFinderFiltering;
+
                         this._selectedPage.ViewModel.FinderItems.Refresh();
                     }
                 }
@@ -184,6 +191,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get { return this._notfound; }
             set { SetVariableValue(ref this._notfound, value); }
+        }
+
+        /// <summary>
+        /// ピン止めされているか。
+        /// </summary>
+        public bool IsPin
+        {
+            get
+            {
+                return SmileVideoSearchUtility.IsPinItem(Setting.Search.SearchPinItems, Query, Type);
+            }
         }
 
         public override SourceLoadState FinderLoadState
@@ -254,6 +272,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand SwitchPinCommand
+        {
+            get { return CreateCommand(o => SwitchPin()); }
+        }
+
         #endregion
 
         #region function
@@ -261,6 +284,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         void CallPageItemOnPropertyChange()
         {
             CallOnPropertyChange(ChangePagePropertyNames);
+        }
+
+        void SwitchPin()
+        {
+            if(IsPin) {
+                RemovePin();
+            } else {
+                AddPin();
+            }
+        }
+
+        void AddPin()
+        {
+            var item = new SmileVideoSearchPinModel() {
+                MethodKey = SelectedMethod.Key,
+                SortKey = SelectedSort.Key,
+                Query = this.Query,
+                SearchType = Type,
+            };
+            Setting.Search.SearchPinItems.Add(item);
+
+            CallOnPropertyChangeDisplayItem();
+        }
+
+        void RemovePin()
+        {
+            var item = SmileVideoSearchUtility.FindPinItem(Setting.Search.SearchPinItems, Query, Type);
+            if(item != null) {
+                Setting.Search.SearchPinItems.Remove(item);
+            }
+
+            CallOnPropertyChangeDisplayItem();
         }
 
         DefinedElementModel GetContextElemetFromChangeElement(IEnumerable<DefinedElementModel> items, DefinedElementModel element)
@@ -458,6 +513,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             get { return GetSearchProperty<SmileVideoSortType>(); }
             set { SetSearchProperty(value); }
+        }
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            base.CallOnPropertyChangeDisplayItem();
+
+            var propertyNames = new[] {
+                nameof(IsPin),
+            };
+
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion

@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -56,6 +57,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileMyListReloadWaitTime => appConfig.Get("service-smile-mylist-reload-wait-time", TimeSpan.Parse);
 
+        /// <summary>
+        /// マイリストのタイトルから除外する文字列。
+        /// <para>先頭。</para>
+        /// </summary>
+        public static string ServiceSmileMyListTitleTrimHead => appConfig.Get("service-smile-mylist-title-trim-head");
+        /// <summary>
+        /// マイリストのタイトルから除外する文字列。
+        /// <para>末尾</para>
+        /// </summary>
+        public static string ServiceSmileMyListTitleTrimTail => appConfig.Get("service-smile-mylist-title-trim-tail");
 
         /// <summary>
         /// 動画データ取得中になんかエラー発生から再開までの待ち時間。
@@ -330,6 +341,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static bool SettingServiceSmileVideoPlayerSeekOperationIsPercent => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-is-percent", bool.Parse);
         public static int SettingServiceSmileVideoPlayerSeekOperationAbsoluteStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-absolute-step", int.Parse);
         public static int SettingServiceSmileVideoPlayerSeekOperationPercentStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-percent-step", int.Parse);
+
+        public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore", bool.Parse);
+
+        public static double SettingServiceSmileVideoPlayerPlayerAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-player-area-star", double.Parse);
+        public static double SettingServiceSmileVideoPlayerCommentAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-comment-area-star", double.Parse);
+        public static double SettingServiceSmileVideoPlayerInformationAreaPixel => appConfig.Get("setting-service-smile-smilevideo-player-information-area-pixel", double.Parse);
 
         /// <summary>
         /// コメントを表示するか。

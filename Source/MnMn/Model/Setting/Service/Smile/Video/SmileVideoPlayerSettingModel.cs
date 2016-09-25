@@ -174,6 +174,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public int SeekOperationPercentStep { get; set; } = Constants.SettingServiceSmileVideoPlayerSeekOperationPercentStep;
 
+        /// <summary>
+        /// 非アクティブフルスクリーンを解除するか。
+        /// </summary>
+        [DataMember]
+        public bool InactiveIsFullScreenRestore { get; set; } = Constants.SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public double PlayerArea { get; set; } = Constants.SettingServiceSmileVideoPlayerPlayerAreaStar;
+        [DataMember]
+        public double CommentArea { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentAreaStar;
+        [DataMember]
+        public double InformationArea { get; set; } = Constants.SettingServiceSmileVideoPlayerInformationAreaPixel;
+
         #endregion
     }
 }

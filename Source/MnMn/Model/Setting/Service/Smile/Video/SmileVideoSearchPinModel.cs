@@ -20,42 +20,36 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoSearchSettingModel: SettingModelBase
+    public class SmileVideoSearchPinModel: SettingModelBase
     {
-        /// <summary>
-        /// 動画検索で一度に取得する数。
-        /// </summary>
-        [DataMember]
-        public int Count { get; set; } = Constants.SettingServiceSmileVideoSearchCount;
-        /// <summary>
-        /// 一覧データから動画情報を取得するか。
-        /// <para>※元データが一覧表示情報を持っていない場合に使用。</para>
-        /// </summary>
-        [DataMember]
-        public bool LoadInformation { get; set; } = Constants.SettingServiceSmileVideoLoadVideoInformation;
-
-        [DataMember]
-        public string DefaultMethodKey { get; set; }
-        [DataMember]
-        public string DefaultSortKey { get; set; }
-        [DataMember]
-        public SearchType DefaultType { get; set; } = SearchType.Tag;
+        #region proeprty
 
         /// <summary>
-        /// 検索履歴。
+        /// 検索クエリ。
         /// </summary>
         [DataMember]
-        public FixedSizeCollectionModel<SmileVideoSearchHistoryModel> SearchHistoryItems { get; set; } = new FixedSizeCollectionModel<SmileVideoSearchHistoryModel>(Constants.ServiceSmileVideoSearchHistoryCount);
+        public string Query { get; set; }
         /// <summary>
-        /// ピン止め。
+        /// 検索方法。
         /// </summary>
         [DataMember]
-        public CollectionModel<SmileVideoSearchPinModel> SearchPinItems { get; set; } = new CollectionModel<SmileVideoSearchPinModel>();
+        public SearchType SearchType { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        [DataMember]
+        public string MethodKey { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        [DataMember]
+        public string SortKey { get; set; }
+
+        #endregion
     }
 }

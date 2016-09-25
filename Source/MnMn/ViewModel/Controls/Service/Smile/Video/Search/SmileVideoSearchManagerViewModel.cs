@@ -134,9 +134,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             set
             {
                 if(SetVariableValue(ref this._selectedSearchGroup, value)) {
-                    if(this._selectedSearchGroup != null) {
-                        //var items = this._selectedSearchGroup.SearchItems;
-                        //this._selectedSearchGroup.SearchItems.InitializeRange(items);
+                    if(SelectedSearchGroup != null) {
+                        if(SelectedSearchGroup.IsPin && SelectedSearchGroup.FinderLoadState == SourceLoadState.None) {
+                            SelectedSearchGroup.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true).ConfigureAwait(false);
+                        }
                     }
                 }
             }
@@ -370,7 +371,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             //var nowType = SelectedType;
             var nowQuery = InputQuery;
 
-            return SearchCoreAsync(nowMethod, nowSort, SelectedSearchType, nowQuery);
+            return SearchCoreAsync(nowMethod, nowSort, SelectedSearchType, nowQuery, true);
         }
 
         public Task LoadSearchFromParameterAsync(SmileVideoSearchParameterModel parameter)
@@ -382,10 +383,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             var nowMethod = SelectedMethod;
             var nowSort = SelectedSort;
 
-            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query);
+            return SearchCoreAsync(nowMethod, nowSort, parameter.SearchType, parameter.Query, true);
         }
 
-        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query)
+        public Task LoadSearchFromPinAsync(SmileVideoSearchPinModel pin)
+        {
+            if(string.IsNullOrWhiteSpace(pin.Query)) {
+                return Task.CompletedTask;
+            }
+
+            var method = MethodItems.FirstOrDefault(i => i.Key == pin.MethodKey) ?? SelectedMethod;
+            var sort = SortItems.FirstOrDefault(i => i.Key == pin.SortKey) ?? SelectedSort;
+
+            return SearchCoreAsync(method, sort, pin.SearchType, pin.Query, false);
+        }
+
+        Task SearchCoreAsync(DefinedElementModel method, DefinedElementModel sort, SearchType type, string query, bool isLoad)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
 
@@ -403,7 +416,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             );
 
-            SelectedSearchGroup = selectViewModel;
+            if(isLoad) {
+                SelectedSearchGroup = selectViewModel;
+            }
 
             var history = new SmileVideoSearchHistoryModel() {
                 Query = query,
@@ -420,7 +435,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             historyViewModel.LastTimestamp = DateTime.Now;
             selectViewModel.History = historyViewModel;
 
-            return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+            if(isLoad) {
+                return selectViewModel.LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan, true);
+            } else {
+                return Task.CompletedTask;
+            }
         }
 
         public Task LoadRecommendTagItemsAsync()
@@ -484,7 +503,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override Task InitializeAsync()
         {
-            return Task.CompletedTask;
+            if(!Setting.Search.SearchPinItems.Any()) {
+                return Task.CompletedTask;
+            }
+
+            var tasks = Setting.Search.SearchPinItems.Select(p => LoadSearchFromPinAsync(p));
+
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                SelectedSearchGroup = SearchGroups.First();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public override void InitializeView(MainWindow view)

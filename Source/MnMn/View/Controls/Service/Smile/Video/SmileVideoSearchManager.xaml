@@ -194,12 +194,40 @@
                 </Button>
               </DockPanel>
               <DockPanel>
-                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding Count, StringFormat=回数: {0:#,#.}}" />
-                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding TotalCount, StringFormat=結果: {0:#,#.}}" />
+                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding Count, StringFormat=回数: {0:N0}}" />
+                <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding TotalCount, StringFormat=結果: {0:N0}}" />
 
                 <StackPanel Orientation="Horizontal" Margin="2,2">
-                  <Button Command="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">タグ検索</Button>
-                  <Button Command="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">キーワード検索</Button>
+                  <Button CommandParameter="{Binding}">
+                    <Button.Style>
+                      <Style TargetType="Button">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                            <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <StackPanel Orientation="Horizontal">
+                                  <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
+                                  <TextBlock VerticalAlignment="Center">タグ検索</TextBlock>
+                                </StackPanel>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                            <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <StackPanel Orientation="Horizontal">
+                                  <Image Source="/Resources/SearchType/Keyword.png" Style="{StaticResource ItemImage}" />
+                                  <TextBlock VerticalAlignment="Center">キーワード検索</TextBlock>
+                                </StackPanel>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Button.Style>
+                  </Button>
                   <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">削除</Button>
                 </StackPanel>
               </DockPanel>
@@ -219,6 +247,12 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
+            <StackPanel.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="ピン止め" IsChecked="{Binding IsPin, Mode=OneWay}" Command="{Binding SwitchPinCommand}" />
+              </ContextMenu>
+            </StackPanel.ContextMenu>
+
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
             <Image>
@@ -243,7 +277,21 @@
               IsEnabled="{Binding CanLoad}"
             />
             <Button Style="{StaticResource TabReloadButton}" />
-            <Button Style="{StaticResource TabCloseButton}" />
+
+            <!-- contentcontrol の datatrigger で適当にやろうと思ったけどコマンドのバインドが null っちゃう -->
+            <Image Source="/Resources/Service/Smile/Video/Search/Pin.png" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ItemImage}" />
+            <Button>
+              <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsPin}" Value="True">
+                      <Setter Property="Visibility" Value="Collapsed" />
+                      <Setter Property="Tag" Value="{x:Null}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Button.Style>
+            </Button>
           </StackPanel>
         </DataTemplate>
       </TabControl.ItemTemplate>
