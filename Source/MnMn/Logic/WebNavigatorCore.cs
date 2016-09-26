@@ -75,6 +75,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
             GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.GeckoFxScanPlugin;
+            GeckoPreferences.Default["security.fileuri.strict_origin_policy"] = false;
+            GeckoPreferences.User["devtools.debugger.remote-enabled"] = true;
 
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {

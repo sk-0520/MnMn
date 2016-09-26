@@ -138,42 +138,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
-            var a = 0; if(a == 0) return;
+            //var browser = (GeckoWebBrowser)eventData.Sender;
+            //var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
+            //if(flvplayerElement == null) {
+            //    return;
+            //}
 
-            var browser = (GeckoWebBrowser)eventData.Sender;
-            var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
-            if(flvplayerElement == null) {
+            //var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
+            //var bodyElement = browser.Document.GetElementsByTagName("body").FirstOrDefault();
+            //var firstElements = bodyElement.ChildNodes
+            //    .OfType<GeckoHtmlElement>()
+            //    .ToArray()
+            //;
+
+            //foreach(var element in firstElements) {
+            //    element.Style.SetPropertyValue("display", "none");
+            //}
+            //var rootElements = new[] {
+            //    htmlElement,
+            //    bodyElement
+            //};
+            //foreach(var element in rootElements) {
+            //    element.Style.SetPropertyValue("height", "100%");
+            //    element.Style.SetPropertyValue("margin", "0");
+            //}
+
+            //var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
+            //flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
+            //flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
+            ////flvplayerElement.RemoveAttribute("width");
+            ////flvplayerElement.RemoveAttribute("height");
+            //flvplayerElement.Style.SetPropertyValue("width", "100%");
+            //flvplayerElement.Style.SetPropertyValue("height", "100%");
+            //flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
+            //bodyElement.AppendChild(flvplayerContainerElement);
+
+            if(NavigatorPlayer.IsEmptyContent) {
                 return;
             }
 
-            var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
-            var bodyElement = browser.Document.GetElementsByTagName("body").FirstOrDefault();
-            var firstElements = bodyElement.ChildNodes
-                .OfType<GeckoHtmlElement>()
-                .ToArray()
-            ;
-
-            foreach(var element in firstElements) {
-                element.Style.SetPropertyValue("display", "none");
-            }
-            var rootElements = new[] {
-                htmlElement,
-                bodyElement
-            };
-            foreach(var element in rootElements) {
-                element.Style.SetPropertyValue("height", "100%");
-                element.Style.SetPropertyValue("margin", "0");
-            }
-
-            var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
-            flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
-            flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
-            //flvplayerElement.RemoveAttribute("width");
-            //flvplayerElement.RemoveAttribute("height");
-            flvplayerElement.Style.SetPropertyValue("width", "100%");
-            flvplayerElement.Style.SetPropertyValue("height", "100%");
-            flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
-            bodyElement.AppendChild(flvplayerContainerElement);
+            var browser = (GeckoWebBrowser)eventData.Sender;
+            //browser.Document.CurrentScript
+            var frameElement = browser.Document.GetElementById("cttn_mnmn_service_smile_live_frame");
+            frameElement.SetAttribute("src", Information.WatchUrl.OriginalString);
         }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
