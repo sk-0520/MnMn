@@ -118,7 +118,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         Task LoadWatchPageAsync()
         {
             WebNavigatorCore.SetSessionEngine(Session, Information.WatchUrl);
-            NavigatorPlayer.Navigate(Information.WatchUrl);
+            //NavigatorPlayer.Navigate(Information.WatchUrl);
+            NavigatorPlayer.Navigate(new Uri(Constants.SmileLivePlayerContainerPath));
 
             return Task.CompletedTask;
         }
@@ -137,6 +138,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
+            var a = 0; if(a == 0) return;
+
             var browser = (GeckoWebBrowser)eventData.Sender;
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
