@@ -342,8 +342,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-mappings.xml");
 
         public static string SmileLiveCategoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "category.xml");
-        public static string SmileLivePlayerDirectoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "player");
-        public static string SmileLivePlayerContainerPath { get; } = Path.Combine(SmileLivePlayerDirectoryPath, "container.html");
+        //public static string SmileLivePlayerDirectoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "player");
+        //public static string SmileLivePlayerContainerPath { get; } = Path.Combine(SmileLivePlayerDirectoryPath, "container.html");
 
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 

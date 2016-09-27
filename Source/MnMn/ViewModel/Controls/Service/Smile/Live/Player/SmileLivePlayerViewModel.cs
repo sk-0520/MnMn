@@ -77,6 +77,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         SmileLivePlayerWindow View { get; set; }
         WebNavigator NavigatorPlayer { get; set; }
 
+        public FewViewModel<bool> ShowWebPlayer { get; } = new FewViewModel<bool>(false);
+        //public FewViewModel<bool> ShowMask { get; } = new FewViewModel<bool>(true);
+
+        public FewViewModel<LoadState> PlayerState { get; } = new FewViewModel<LoadState>(LoadState.None);
+
         /// <summary>
         /// ビューが閉じられたか。
         /// </summary>
@@ -117,6 +122,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         Task LoadWatchPageAsync()
         {
+            ShowWebPlayer.Value = false;
+            //ShowMask.Value = true;
+            PlayerState.Value = LoadState.Preparation;
             WebNavigatorCore.SetSessionEngine(Session, Information.WatchUrl);
             return NavigatorPlayer.Dispatcher.BeginInvoke(new Action(() => {
                 NavigatorPlayer.Navigate(Information.WatchUrl);
@@ -139,13 +147,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
             if(NavigatorPlayer.IsEmptyContent) {
+                PlayerState.Value = LoadState.Loading;
                 return;
             }
+
             var browser = (GeckoWebBrowser)eventData.Sender;
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
                 return;
             }
+
+            PlayerState.Value = LoadState.Loading;
 
             var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
             var bodyElement = browser.Document.Body;
@@ -187,6 +199,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             //var html = $"<html><head>{browser.Document.Head.InnerHtml}</head><body>{bodyElement.OuterHtml}</body></html>";
             //System.IO.File.WriteAllText(@"z:aaa.html", html);
+            ShowWebPlayer.Value = true;
+            //ShowMask.Value = false;
+
+            PlayerState.Value = LoadState.Loaded;
         }
 
 
