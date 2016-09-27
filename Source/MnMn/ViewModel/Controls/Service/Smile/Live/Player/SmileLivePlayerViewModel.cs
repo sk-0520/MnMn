@@ -77,6 +77,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         SmileLivePlayerWindow View { get; set; }
         WebNavigator NavigatorPlayer { get; set; }
 
+        public FewViewModel<bool> ShowWebPlayer { get; } = new FewViewModel<bool>(false);
+        //public FewViewModel<bool> ShowMask { get; } = new FewViewModel<bool>(true);
+
+        public FewViewModel<LoadState> PlayerState { get; } = new FewViewModel<LoadState>(LoadState.None);
+
         /// <summary>
         /// ビューが閉じられたか。
         /// </summary>
@@ -117,10 +122,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         Task LoadWatchPageAsync()
         {
+            ShowWebPlayer.Value = false;
+            //ShowMask.Value = true;
+            PlayerState.Value = LoadState.Preparation;
             WebNavigatorCore.SetSessionEngine(Session, Information.WatchUrl);
-            NavigatorPlayer.Navigate(Information.WatchUrl);
-
-            return Task.CompletedTask;
+            return NavigatorPlayer.Dispatcher.BeginInvoke(new Action(() => {
+                NavigatorPlayer.Navigate(Information.WatchUrl);
+            })).Task;
+            //NavigatorPlayer.Navigate(new Uri(Constants.SmileLivePlayerContainerPath));
         }
 
         internal Task LoadAsync(SmileLiveInformationViewModel information, bool forceEconomy, CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
@@ -137,14 +146,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
+            if(NavigatorPlayer.IsEmptyContent) {
+                PlayerState.Value = LoadState.Loading;
+                return;
+            }
+
             var browser = (GeckoWebBrowser)eventData.Sender;
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
                 return;
             }
 
+            PlayerState.Value = LoadState.Loading;
+
             var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
-            var bodyElement = browser.Document.GetElementsByTagName("body").FirstOrDefault();
+            var bodyElement = browser.Document.Body;
             var firstElements = bodyElement.ChildNodes
                 .OfType<GeckoHtmlElement>()
                 .ToArray()
@@ -155,23 +171,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             }
             var rootElements = new[] {
                 htmlElement,
-                bodyElement
+                bodyElement,
             };
             foreach(var element in rootElements) {
                 element.Style.SetPropertyValue("height", "100%");
                 element.Style.SetPropertyValue("margin", "0");
+                element.Style.SetPropertyValue("padding", "0");
+                element.Style.SetPropertyValue("width", "100%");
+                element.Style.SetPropertyValue("height", "100%");
             }
 
             var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
             flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
             flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
-            //flvplayerElement.RemoveAttribute("width");
-            //flvplayerElement.RemoveAttribute("height");
+            flvplayerElement.RemoveAttribute("width");
+            flvplayerElement.RemoveAttribute("height");
             flvplayerElement.Style.SetPropertyValue("width", "100%");
             flvplayerElement.Style.SetPropertyValue("height", "100%");
-            flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
-            bodyElement.AppendChild(flvplayerContainerElement);
+            //flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
+            //flvplayerContainerElement.Style.SetPropertyValue("position", "absolute");
+            //flvplayerContainerElement.Style.SetPropertyValue("top", "0");
+            //flvplayerContainerElement.Style.SetPropertyValue("right", "0");
+            //flvplayerContainerElement.Style.SetPropertyValue("bottom", "0");
+            //flvplayerContainerElement.Style.SetPropertyValue("left", "0");
+            bodyElement.InsertBefore(flvplayerContainerElement, bodyElement.FirstChild);
+
+
+            //var html = $"<html><head>{browser.Document.Head.InnerHtml}</head><body>{bodyElement.OuterHtml}</body></html>";
+            //System.IO.File.WriteAllText(@"z:aaa.html", html);
+            ShowWebPlayer.Value = true;
+            //ShowMask.Value = false;
+
+            PlayerState.Value = LoadState.Loaded;
         }
+
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
         {

@@ -358,7 +358,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan SettingServiceSmileVideoFilteringIgnoreOverlapTime => appConfig.Get("setting-service-smile-smilevideo-filtering-ignore-overlap-time", TimeSpan.Parse);
 
-
         public static ExecuteOrOpenMode SettingServiceSmileLiveExecuteOpenMode => appConfig.Get("setting-service-smile-smilelive-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
         public static bool SettingServiceSmileLiveExecuteOpenPlayerInNewWindow => appConfig.Get("setting-service-smile-smilelive-execute-open-player-in-new-window", bool.Parse);
         #endregion
