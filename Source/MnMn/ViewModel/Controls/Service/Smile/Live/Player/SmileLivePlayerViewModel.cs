@@ -164,16 +164,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             foreach(var element in rootElements) {
                 element.Style.SetPropertyValue("height", "100%");
                 element.Style.SetPropertyValue("margin", "0");
+                element.Style.SetPropertyValue("padding", "0");
                 element.Style.SetPropertyValue("width", "100%");
                 element.Style.SetPropertyValue("height", "100%");
-                element.Style.SetPropertyValue("position", "absolute");
             }
 
-            //var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
-            //flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
-            //flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
-            //flvplayerElement.RemoveAttribute("width");
-            //flvplayerElement.RemoveAttribute("height");
+            var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
+            flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
+            flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
+            flvplayerElement.RemoveAttribute("width");
+            flvplayerElement.RemoveAttribute("height");
             flvplayerElement.Style.SetPropertyValue("width", "100%");
             flvplayerElement.Style.SetPropertyValue("height", "100%");
             //flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
@@ -182,11 +182,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             //flvplayerContainerElement.Style.SetPropertyValue("right", "0");
             //flvplayerContainerElement.Style.SetPropertyValue("bottom", "0");
             //flvplayerContainerElement.Style.SetPropertyValue("left", "0");
-            bodyElement.InsertBefore(flvplayerElement, bodyElement.FirstChild);
+            bodyElement.InsertBefore(flvplayerContainerElement, bodyElement.FirstChild);
 
 
-            var html = $"<html><head>{browser.Document.Head.InnerHtml}</head><body>{bodyElement.OuterHtml}</body></html>";
-
+            //var html = $"<html><head>{browser.Document.Head.InnerHtml}</head><body>{bodyElement.OuterHtml}</body></html>";
+            //System.IO.File.WriteAllText(@"z:aaa.html", html);
         }
 
 
