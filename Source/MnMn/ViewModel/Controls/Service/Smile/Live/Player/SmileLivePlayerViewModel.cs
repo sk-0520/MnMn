@@ -118,10 +118,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         Task LoadWatchPageAsync()
         {
             WebNavigatorCore.SetSessionEngine(Session, Information.WatchUrl);
-            //NavigatorPlayer.Navigate(Information.WatchUrl);
-            NavigatorPlayer.Navigate(new Uri(Constants.SmileLivePlayerContainerPath));
-
-            return Task.CompletedTask;
+            return NavigatorPlayer.Dispatcher.BeginInvoke(new Action(() => {
+                NavigatorPlayer.Navigate(Information.WatchUrl);
+            })).Task;
+            //NavigatorPlayer.Navigate(new Uri(Constants.SmileLivePlayerContainerPath));
         }
 
         internal Task LoadAsync(SmileLiveInformationViewModel information, bool forceEconomy, CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
@@ -138,56 +138,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
-            //var browser = (GeckoWebBrowser)eventData.Sender;
-            //var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
-            //if(flvplayerElement == null) {
-            //    return;
-            //}
+            if(NavigatorPlayer.IsEmptyContent) {
+                return;
+            }
+            var browser = (GeckoWebBrowser)eventData.Sender;
+            var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
+            if(flvplayerElement == null) {
+                return;
+            }
 
-            //var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
-            //var bodyElement = browser.Document.GetElementsByTagName("body").FirstOrDefault();
-            //var firstElements = bodyElement.ChildNodes
-            //    .OfType<GeckoHtmlElement>()
-            //    .ToArray()
-            //;
+            var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
+            var bodyElement = browser.Document.Body;
+            var firstElements = bodyElement.ChildNodes
+                .OfType<GeckoHtmlElement>()
+                .ToArray()
+            ;
 
-            //foreach(var element in firstElements) {
-            //    element.Style.SetPropertyValue("display", "none");
-            //}
-            //var rootElements = new[] {
-            //    htmlElement,
-            //    bodyElement
-            //};
-            //foreach(var element in rootElements) {
-            //    element.Style.SetPropertyValue("height", "100%");
-            //    element.Style.SetPropertyValue("margin", "0");
-            //}
+            foreach(var element in firstElements) {
+                element.Style.SetPropertyValue("display", "none");
+            }
+            var rootElements = new[] {
+                htmlElement,
+                bodyElement,
+            };
+            foreach(var element in rootElements) {
+                element.Style.SetPropertyValue("height", "100%");
+                element.Style.SetPropertyValue("margin", "0");
+                element.Style.SetPropertyValue("width", "100%");
+                element.Style.SetPropertyValue("height", "100%");
+                element.Style.SetPropertyValue("position", "absolute");
+            }
 
             //var flvplayerContainerElement = flvplayerElement.ParentElement as GeckoHtmlElement;
             //flvplayerContainerElement.Style.SetPropertyValue("width", "100%");
             //flvplayerContainerElement.Style.SetPropertyValue("height", "100%");
-            ////flvplayerElement.RemoveAttribute("width");
-            ////flvplayerElement.RemoveAttribute("height");
-            //flvplayerElement.Style.SetPropertyValue("width", "100%");
-            //flvplayerElement.Style.SetPropertyValue("height", "100%");
+            //flvplayerElement.RemoveAttribute("width");
+            //flvplayerElement.RemoveAttribute("height");
+            flvplayerElement.Style.SetPropertyValue("width", "100%");
+            flvplayerElement.Style.SetPropertyValue("height", "100%");
             //flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
-            //bodyElement.AppendChild(flvplayerContainerElement);
+            //flvplayerContainerElement.Style.SetPropertyValue("position", "absolute");
+            //flvplayerContainerElement.Style.SetPropertyValue("top", "0");
+            //flvplayerContainerElement.Style.SetPropertyValue("right", "0");
+            //flvplayerContainerElement.Style.SetPropertyValue("bottom", "0");
+            //flvplayerContainerElement.Style.SetPropertyValue("left", "0");
+            bodyElement.InsertBefore(flvplayerElement, bodyElement.FirstChild);
 
-            if(NavigatorPlayer.IsEmptyContent) {
-                return;
-            }
 
-            var browser = (GeckoWebBrowser)eventData.Sender;
-            //browser.Document.CurrentScript
-            var frameElement = browser.Document.GetElementById("cttn_mnmn_service_smile_live_frame") as GeckoHtmlElement;
-            browser.AddMessageEventListener("onload", s => LoadedSource(browser, s));
-            frameElement.SetAttribute("src", Information.WatchUrl.OriginalString);
+            var html = $"<html><head>{browser.Document.Head.InnerHtml}</head><body>{bodyElement.OuterHtml}</body></html>";
+
         }
 
-        void LoadedSource(GeckoWebBrowser browser, string s)
-        {
-            browser.RemoveMessageEventListener("onload");
-        }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
         {
