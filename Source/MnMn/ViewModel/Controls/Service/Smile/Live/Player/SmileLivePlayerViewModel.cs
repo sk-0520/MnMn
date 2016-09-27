@@ -179,8 +179,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             var browser = (GeckoWebBrowser)eventData.Sender;
             //browser.Document.CurrentScript
-            var frameElement = browser.Document.GetElementById("cttn_mnmn_service_smile_live_frame");
+            var frameElement = browser.Document.GetElementById("cttn_mnmn_service_smile_live_frame") as GeckoHtmlElement;
+            browser.AddMessageEventListener("onload", s => LoadedSource(browser, s));
             frameElement.SetAttribute("src", Information.WatchUrl.OriginalString);
+        }
+
+        void LoadedSource(GeckoWebBrowser browser, string s)
+        {
+            browser.RemoveMessageEventListener("onload");
         }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)

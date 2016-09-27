@@ -76,11 +76,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
             GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.GeckoFxScanPlugin;
             GeckoPreferences.Default["security.fileuri.strict_origin_policy"] = false;
-            GeckoPreferences.User["devtools.debugger.remote-enabled"] = true;
+            GeckoPreferences.User["security.fileuri.strict_origin_policy"] = false;
+
+            GeckoPreferences.User["browser.cache.disk.enable"] = false;
+            GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
 
             var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
             if(File.Exists(preferencesFilePath)) {
-                GeckoPreferences.Load(preferencesFilePath);
+                //GeckoPreferences.Load(preferencesFilePath);
             } else {
                 // http://pieceofnostalgy.blogspot.jp/2013/10/wpf-geckofx.html
                 GeckoPreferences.User["browser.cache.disk.enable"] = false;
