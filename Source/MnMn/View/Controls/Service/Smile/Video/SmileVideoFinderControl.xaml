@@ -74,7 +74,7 @@
 
     <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
-    <Grid Style="{StaticResource BodyContentVisibility}">
+    <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />

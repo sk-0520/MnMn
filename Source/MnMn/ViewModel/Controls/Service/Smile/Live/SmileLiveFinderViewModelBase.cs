@@ -16,11 +16,15 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live;
@@ -31,15 +35,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 {
     public abstract class SmileLiveFinderViewModelBase: FinderViewModelBase<SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>
     {
+        #region variable
+
+        SmileLiveSortType _selectedSortType;
+
+        #endregion
+
         public SmileLiveFinderViewModelBase(Mediation mediation)
             : base(mediation)
         {
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
+
+            SortTypeItems = new CollectionModel<SmileLiveSortType>(EnumUtility.GetMembers<SmileLiveSortType>());
+
+            FinderItems.Filter = FilterItems;
         }
 
         #region property
 
         protected SmileLiveSettingModel Setting { get; }
+
+        public CollectionModel<SmileLiveSortType> SortTypeItems { get; }
+
+        /// <summary>
+        /// ソート方法。
+        /// </summary>
+        public virtual SmileLiveSortType SelectedSortType
+        {
+            get { return this._selectedSortType; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSortType, value)) {
+                    ChangeSortItems();
+                }
+            }
+        }
 
         #endregion
 
@@ -48,7 +78,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         #region function
 
+        protected virtual bool FilterItems(object obj)
+        {
+            //var isHitFinder = IsShowFilteringItem(obj);
+            //
+            //if(IsEnabledFinderFiltering && !isHitFinder) {
+            //    return false;
+            //}
 
+            var filter = InputTitleFilter;
+            if(string.IsNullOrEmpty(filter)) {
+                return true;
+            }
+
+            var finderItem = (SmileLiveFinderItemViewModel)obj;
+            var viewModel = finderItem.Information;
+            var isHit = viewModel.Title.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1;
+            if(IsBlacklist) {
+                return !isHit;
+            } else {
+                return isHit;
+            }
+        }
 
         #endregion
 
@@ -75,16 +126,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         //    throw new NotImplementedException();
         //}
 
-        internal override void ChangeSortItems()
-        {
-            //throw new NotImplementedException();
-        }
-
         protected override SmileLiveFinderItemViewModel CreateFinderItem(SmileLiveInformationViewModel information, int number)
         {
             return new SmileLiveFinderItemViewModel(information, number);
         }
 
+        internal override void ChangeSortItems()
+        {
+            var map = new[] {
+                new { Type = SmileLiveSortType.Number, Parent = string.Empty, Property = nameof(SmileLiveFinderItemViewModel.Number) },
+            }.ToDictionary(
+                ak => ak.Type,
+                av => $"{av.Parent}.{av.Property}"
+            );
+            var propertyName = map[SelectedSortType];
+            var direction = IsAscending ? ListSortDirection.Ascending : ListSortDirection.Descending;
+            var sort = new SortDescription(propertyName, direction);
+
+            FinderItems.SortDescriptions.Clear();
+            FinderItems.SortDescriptions.Add(sort);
+            FinderItems.Refresh();
+        }
 
         #endregion
     }

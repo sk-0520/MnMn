@@ -202,6 +202,7 @@
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveInformationSource.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveMediationKey.cs" />
+    <Compile Include="Define\Service\Smile\Live\SmileLiveSortType.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoChangeVideoPositionType.cs" />
     <Compile Include="Define\UI\Player\WheelOperation.cs" />
