@@ -17,20 +17,26 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
@@ -98,11 +104,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public FewViewModel<bool> PlayerShowDetailArea { get; } = new FewViewModel<bool>();
 
         public FewViewModel<LoadState> PlayerLoadState { get; } = new FewViewModel<LoadState>();
+        /// <summary>
+        /// 動画紹介文書表示要素。
+        /// </summary>
+        FlowDocumentScrollViewer DocumentDescription { get; set; }
 
         /// <summary>
         /// ビューが閉じられたか。
         /// </summary>
         bool IsViewClosed { get; set; }
+
+        /// <summary>
+        /// 投降者コメントが構築されたか。
+        /// </summary>
+        bool IsMadeDescription { get; set; } = false;
 
         public bool IsNormalWindow
         {
@@ -252,21 +267,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Information = information;
             CallOnPropertyChange(nameof(Information));
 
-            LoadWatchPageAsync();
+            var page = new PageLoader(Mediation, new HttpUserAgentHost(), SmileLiveMediationKey.watchPage, ServiceType.SmileLive);
+            page.ForceUri = Information.WatchUrl;
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
+                var response = t.Result;
 
-            return Task.CompletedTask;
+                page.Dispose();
+
+                if(response.IsSuccess) {
+                    var html = new HtmlAgilityPack.HtmlDocument();
+                    html.LoadHtml(response.Result);
+                    var baseElement = html.GetElementbyId("jsFollowingAdMain");
+                    var images = baseElement.SelectNodes(".//img").ToArray();
+                    foreach(var img in images) {
+                        img.Remove();
+                    }
+
+                    var descriptionHtml = baseElement.InnerHtml;
+                    MakeDescription(descriptionHtml);
+                }
+
+                return LoadWatchPageAsync();
+            });
         }
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
             Mediation.Logger.Debug($"{Information.Id}: {nameof(NavigatorPlayer.IsEmptyContent)} = {NavigatorPlayer.IsEmptyContent}");
 
+            var browser = (GeckoWebBrowser)eventData.Sender;
+
             if(NavigatorPlayer.IsEmptyContent) {
                 ShowWebPlayer.Value = true;
                 return;
             }
 
-            var browser = (GeckoWebBrowser)eventData.Sender;
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
                 Mediation.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null");
@@ -305,11 +340,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             flvplayerElement.Style.SetPropertyValue("height", "100%");
             bodyElement.InsertBefore(flvplayerContainerElement, bodyElement.FirstChild);
 
+
             PlayerLoadState.Value = LoadState.Loaded;
             ShowWebPlayer.Value = true;
             Mediation.Logger.Trace($"{Information.Id}: {PlayerLoadState.Value}");
         }
 
+        void MakeDescription(string htmlSource)
+        {
+            IsMadeDescription = true;
+
+            var description = new SmileDescription(Mediation);
+            var flowDocumentSource = description.ConvertFlowDocumentFromHtml(htmlSource);
+
+            DocumentDescription.Dispatcher.Invoke(() => {
+                var document = DocumentDescription.Document;
+
+                document.Blocks.Clear();
+
+                using(var stringReader = new StringReader(flowDocumentSource))
+                using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
+                    try {
+                        var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
+                        document.Blocks.AddRange(flowDocument.Blocks.ToArray());
+                    } catch(XamlParseException ex) {
+                        Mediation.Logger.Error(ex);
+                        var error = new Paragraph();
+                        error.Inlines.Add(ex.ToString());
+
+                        var raw = new Paragraph();
+                        raw.Inlines.Add(flowDocumentSource);
+
+                        document.Blocks.Add(error);
+                        document.Blocks.Add(raw);
+                    }
+                }
+
+                document.FontSize = DocumentDescription.FontSize;
+                document.FontFamily = DocumentDescription.FontFamily;
+                document.FontStretch = DocumentDescription.FontStretch;
+            });
+
+
+        }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
         {
@@ -348,6 +421,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         {
             View = (SmileLivePlayerWindow)view;
             NavigatorPlayer = View.navigatorPlayer;
+
+            DocumentDescription = View.documentDescription;
 
             //
             View.Closed += View_Closed;

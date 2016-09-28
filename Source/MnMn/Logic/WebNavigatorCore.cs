@@ -190,7 +190,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <param name="uri"></param>
         public static void SetSessionEngine(SessionViewModelBase session, Uri uri)
         {
-            session.ApplyToWebNavigatorEngine(Engine, uri);
+            Application.Current.Dispatcher.Invoke(() => {
+                session.ApplyToWebNavigatorEngine(Engine, uri);
+            });
         }
 
         /// <summary>

@@ -212,6 +212,28 @@
               </TextBlock>
             </StackPanel>
 
+            <Grid Grid.Column="1"  ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+
+              <Grid Grid.Row="1">
+                <FlowDocumentScrollViewer
+                  x:Name="documentDescription"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+                >
+                  <FlowDocument
+                    FontSize="11.5"
+                    PagePadding="10, 2, 10, 0"
+                  />
+                </FlowDocumentScrollViewer>
+              </Grid>
+
+
+            </Grid>
+
           </Grid>
         </TabItem>
       </TabControl>

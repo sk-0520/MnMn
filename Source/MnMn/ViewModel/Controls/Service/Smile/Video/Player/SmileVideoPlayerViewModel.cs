@@ -90,13 +90,15 @@ using OxyPlot;
 using OxyPlot.Wpf;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
     /// <summary>
     /// プレイヤー管理。
     /// </summary>
-    public partial class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileVideoDescription, ICloseView, ICaptionCommand
+    public partial class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileDescription, ICloseView, ICaptionCommand
     {
         #region define
 
@@ -817,7 +819,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             IsMadeDescription = true;
 
-            var flowDocumentSource = SmileVideoDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
+            //var flowDocumentSource = SmileDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
+            var description = new SmileDescription(Mediation);
+            var flowDocumentSource = description.ConvertFlowDocumentFromHtml(Information.DescriptionHtmlSource);
 #if false
 #if DEBUG
             var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
