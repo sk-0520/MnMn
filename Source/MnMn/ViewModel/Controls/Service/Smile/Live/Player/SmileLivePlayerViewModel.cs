@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -52,8 +53,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         #region variable
 
         WindowState _state = WindowState.Normal;
+        double _left;
+        double _top;
+        double _width;
+        double _height;
+        bool _topmost;
         Thickness _resizeBorderThickness = enabledResizeBorderThickness;
         Thickness _windowBorderThickness = normalWindowBorderThickness;
+        bool _isNormalWindow = true;
 
         #endregion
 
@@ -61,7 +68,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         {
             Mediation = mediation;
 
+            Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
+
+            ImportSetting();
         }
 
         #region proeprty
@@ -69,6 +79,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         Mediation Mediation { get; }
 
         public SmileSessionViewModel Session { get; }
+        SmileLiveSettingModel Setting { get; }
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
 
@@ -86,6 +97,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         /// ビューが閉じられたか。
         /// </summary>
         bool IsViewClosed { get; set; }
+
+        public bool IsNormalWindow
+        {
+            get { return this._isNormalWindow; }
+            set { SetVariableValue(ref this._isNormalWindow, value); }
+        }
+
+        #region window
+
+        /// <summary>
+        /// ウィンドウ X 座標。
+        /// </summary>
+        public double Left
+        {
+            get { return this._left; }
+            set
+            {
+                if(IsNormalWindow && State == WindowState.Normal) {
+                    SetVariableValue(ref this._left, value);
+                }
+            }
+        }
+        /// <summary>
+        /// ウィンドウ Y 座標。
+        /// </summary>
+        public double Top
+        {
+            get { return this._top; }
+            set
+            {
+                if(IsNormalWindow && State == WindowState.Normal) {
+                    SetVariableValue(ref this._top, value);
+                }
+            }
+        }
+        /// <summary>
+        /// ウィンドウ横幅。
+        /// </summary>
+        public double Width
+        {
+            get { return this._width; }
+            set
+            {
+                if(IsNormalWindow && State == WindowState.Normal) {
+                    SetVariableValue(ref this._width, value);
+                }
+            }
+        }
+        /// <summary>
+        /// ウィンドウ高さ。
+        /// </summary>
+        public double Height
+        {
+            get { return this._height; }
+            set
+            {
+                if(IsNormalWindow && State == WindowState.Normal) {
+                    SetVariableValue(ref this._height, value);
+                }
+            }
+        }
+        /// <summary>
+        /// 最前面表示状態。
+        /// </summary>
+        public bool Topmost
+        {
+            get { return this._topmost; }
+            set { SetVariableValue(ref _topmost, value); }
+        }
+
+        #endregion
 
         #endregion
 
@@ -119,6 +201,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         #endregion
 
         #region function
+
+        void ImportSetting()
+        {
+            Left = Setting.Player.Window.Left;
+            Top = Setting.Player.Window.Top;
+            Width = Setting.Player.Window.Width;
+            Height = Setting.Player.Window.Height;
+            Topmost = Setting.Player.Window.Topmost;
+        }
+
+        void ExportSetting()
+        {
+            Setting.Player.Window.Left = Left;
+            Setting.Player.Window.Top = Top;
+            Setting.Player.Window.Width = Width;
+            Setting.Player.Window.Height = Height;
+            Setting.Player.Window.Topmost = Topmost;
+        }
 
         Task LoadWatchPageAsync()
         {
@@ -154,6 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             var browser = (GeckoWebBrowser)eventData.Sender;
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
+                PlayerState.Value = LoadState.Loaded;
                 return;
             }
 
@@ -323,6 +424,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void View_Closed(object sender, EventArgs e)
         {
+            ExportSetting();
+
             NavigatorPlayer.NavigateEmpty();
         }
 

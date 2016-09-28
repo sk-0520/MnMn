@@ -278,6 +278,7 @@
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Live\SmileLivePlayerSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />

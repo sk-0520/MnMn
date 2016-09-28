@@ -360,6 +360,28 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static ExecuteOrOpenMode SettingServiceSmileLiveExecuteOpenMode => appConfig.Get("setting-service-smile-smilelive-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
         public static bool SettingServiceSmileLiveExecuteOpenPlayerInNewWindow => appConfig.Get("setting-service-smile-smilelive-execute-open-player-in-new-window", bool.Parse);
+
+        /// <summary>
+        /// プレイヤーウィンドウ: 左。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowLeft => appConfig.Get("setting-service-smile-smilelive-player-window-left", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 上。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowTop => appConfig.Get("setting-service-smile-smilelive-player-window-top", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 幅。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowWidth => appConfig.Get("setting-service-smile-smilelive-player-window-width", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 高さ。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowHeight => appConfig.Get("setting-service-smile-smilelive-player-window-height", double.Parse);
+        /// <summary>
+        /// ウィンドウ最前面状態。
+        /// </summary>
+        public static bool SettingServiceSmileLiveWindowTopmost => appConfig.Get("setting-service-smile-smilelive-player-window-topmost", bool.Parse);
+
         #endregion
 
         #endregion

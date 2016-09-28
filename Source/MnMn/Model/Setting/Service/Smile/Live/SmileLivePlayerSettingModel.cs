@@ -24,18 +24,18 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
 {
     [DataContract]
-    public class SmileLiveSettingModel: SettingModelBase
+    public class SmileLivePlayerSettingModel: SettingModelBase
     {
         #region property
 
         [DataMember]
-        public SmileLiveCategorySettingModel Category { get; set; } = new SmileLiveCategorySettingModel();
-
-        [DataMember]
-        public SmileLiveExecuteSettingModel Execute { get; set; } = new SmileLiveExecuteSettingModel();
-
-        [DataMember]
-        public SmileLivePlayerSettingModel Player { get; set; } = new SmileLivePlayerSettingModel();
+        public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
+            Left = Constants.SettingServiceSmileLiveWindowLeft,
+            Top = Constants.SettingServiceSmileLiveWindowTop,
+            Width = Constants.SettingServiceSmileLiveWindowWidth,
+            Height = Constants.SettingServiceSmileLiveWindowHeight,
+            Topmost = Constants.SettingServiceSmileLiveWindowTopmost,
+        };
 
         #endregion
     }
