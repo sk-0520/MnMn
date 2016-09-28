@@ -71,8 +71,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
+            ShowWebPlayer.PropertyChanged += ShowWebPlayer_PropertyChanged;
+
             ImportSetting();
         }
+
 
         #region proeprty
 
@@ -89,9 +92,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         WebNavigator NavigatorPlayer { get; set; }
 
         public FewViewModel<bool> ShowWebPlayer { get; } = new FewViewModel<bool>(false);
-        //public FewViewModel<bool> ShowMask { get; } = new FewViewModel<bool>(true);
+        public FewViewModel<bool> ShowMask { get; } = new FewViewModel<bool>(true);
 
-        public FewViewModel<LoadState> PlayerState { get; } = new FewViewModel<LoadState>(LoadState.None);
+        public FewViewModel<bool> PlayerShowDetailArea { get; } = new FewViewModel<bool>();
+
+        public FewViewModel<LoadState> PlayerLoadState { get; } = new FewViewModel<LoadState>();
 
         /// <summary>
         /// ビューが閉じられたか。
@@ -209,6 +214,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Width = Setting.Player.Window.Width;
             Height = Setting.Player.Window.Height;
             Topmost = Setting.Player.Window.Topmost;
+
+            PlayerShowDetailArea.Value = Setting.Player.ShowDetailArea;
         }
 
         void ExportSetting()
@@ -218,16 +225,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting.Player.Window.Width = Width;
             Setting.Player.Window.Height = Height;
             Setting.Player.Window.Topmost = Topmost;
+
+            Setting.Player.ShowDetailArea = PlayerShowDetailArea.Value;
         }
 
         Task LoadWatchPageAsync()
         {
             ShowWebPlayer.Value = false;
+            PlayerLoadState.Value = LoadState.Preparation;
+
             //ShowMask.Value = true;
-            PlayerState.Value = LoadState.Preparation;
             WebNavigatorCore.SetSessionEngine(Session, Information.WatchUrl);
             return NavigatorPlayer.Dispatcher.BeginInvoke(new Action(() => {
                 NavigatorPlayer.Navigate(Information.WatchUrl);
+                PlayerLoadState.Value = LoadState.Loading;
             })).Task;
             //NavigatorPlayer.Navigate(new Uri(Constants.SmileLivePlayerContainerPath));
         }
@@ -238,6 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Debug.Assert(View != null);
 
             Information = information;
+            CallOnPropertyChange(nameof(Information));
 
             LoadWatchPageAsync();
 
@@ -246,19 +258,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         void SourceLoadedGeckoFx(WebNavigatorEventData<DomEventArgs> eventData)
         {
+            Mediation.Logger.Debug($"{Information.Id}: {nameof(NavigatorPlayer.IsEmptyContent)} = {NavigatorPlayer.IsEmptyContent}");
+
             if(NavigatorPlayer.IsEmptyContent) {
-                PlayerState.Value = LoadState.Loading;
+                ShowWebPlayer.Value = true;
                 return;
             }
 
             var browser = (GeckoWebBrowser)eventData.Sender;
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
-                PlayerState.Value = LoadState.Loaded;
+                Mediation.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null");
+                ShowWebPlayer.Value = true;
                 return;
             }
-
-            PlayerState.Value = LoadState.Loading;
 
             var htmlElement = browser.Document.GetElementsByTagName("html").FirstOrDefault();
             var bodyElement = browser.Document.Body;
@@ -289,21 +302,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             flvplayerElement.RemoveAttribute("height");
             flvplayerElement.Style.SetPropertyValue("width", "100%");
             flvplayerElement.Style.SetPropertyValue("height", "100%");
-            //flvplayerContainerElement.ParentElement.RemoveChild(flvplayerContainerElement);
-            //flvplayerContainerElement.Style.SetPropertyValue("position", "absolute");
-            //flvplayerContainerElement.Style.SetPropertyValue("top", "0");
-            //flvplayerContainerElement.Style.SetPropertyValue("right", "0");
-            //flvplayerContainerElement.Style.SetPropertyValue("bottom", "0");
-            //flvplayerContainerElement.Style.SetPropertyValue("left", "0");
             bodyElement.InsertBefore(flvplayerContainerElement, bodyElement.FirstChild);
 
 
-            //var html = $"<html><head>{browser.Document.Head.InnerHtml}</head><body>{bodyElement.OuterHtml}</body></html>";
-            //System.IO.File.WriteAllText(@"z:aaa.html", html);
-            ShowWebPlayer.Value = true;
-            //ShowMask.Value = false;
 
-            PlayerState.Value = LoadState.Loaded;
+            PlayerLoadState.Value = LoadState.Loaded;
+            ShowWebPlayer.Value = true;
+            Mediation.Logger.Trace($"{Information.Id}: {PlayerLoadState.Value}");
         }
 
 
@@ -422,11 +427,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(ShowWebPlayer != null) {
+                ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         void View_Closed(object sender, EventArgs e)
         {
             ExportSetting();
 
             NavigatorPlayer.NavigateEmpty();
+
+            ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
+        }
+
+        void ShowWebPlayer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ShowMask.Value = !ShowWebPlayer.Value;
         }
 
 

@@ -22,7 +22,7 @@
   d:DesignHeight="540" d:DesignWidth="780"
 >
   <i:Interaction.Behaviors>
-    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Information.Title, Mode=OneWay}" />
   </i:Interaction.Behaviors>
   <Window.Resources>
     <ResourceDictionary>
@@ -35,6 +35,7 @@
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+      <Style x:Key="DummyMenu" TargetType="Menu"/>
 
     </ResourceDictionary>
   </Window.Resources>
@@ -133,12 +134,7 @@
         <ResizeGrip />
       </StatusBarItem>
 
-      <ToggleButton x:Name="switchInformation">
-        <ToggleButton.Style>
-          <Style TargetType="ToggleButton">
-            <Setter Property="IsChecked" Value="False" />
-          </Style>
-        </ToggleButton.Style>
+      <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea.Value}">
         <!--<Canvas Style="{StaticResource StatePanel}">
           <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
@@ -156,21 +152,31 @@
         <RowDefinition Height="120" />
       </Grid.RowDefinitions>
 
-      <app_view_controls:WebNavigator
-        x:Name="navigatorPlayer"
-        Grid.Row="0"
-        ServiceType="SmileLive"
-        Visibility="{Binding ShowWebPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
-        NewWindowCommand="{Binding NewWindowCommand}"
-        SourceLoadedCommand="{Binding SourceLoadedCommand}"
-        DomLoadedCommand="{Binding DomLoadedCommand}"
-      />
-      <app_view_controls:LoadStateNavigator
-        Grid.Row="0"
-        LoadedToVisibility="Hidden"
-        ShowStateText="True"
-        LoadState="{Binding PlayerState.Value}"
-      />
+      <Grid Grid.Row="0">
+        <Grid.Style>
+          <Style>
+            <Setter Property="Grid.RowSpan" Value="1" />
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsChecked, ElementName=switchInformation}" Value="False">
+                <Setter Property="Grid.RowSpan" Value="3" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Grid.Style>
+
+        <app_view_controls:WebNavigator
+          x:Name="navigatorPlayer"
+          ServiceType="SmileLive"
+          Visibility="{Binding ShowWebPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
+          NewWindowCommand="{Binding NewWindowCommand}"
+          SourceLoadedCommand="{Binding SourceLoadedCommand}"
+          DomLoadedCommand="{Binding DomLoadedCommand}"
+        />
+        <Border Visibility="{Binding ShowMask.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding PlayerLoadState.Value}" />
+        </Border>
+
+      </Grid>
 
       <GridSplitter
         Grid.Row="1"
@@ -179,7 +185,11 @@
         Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
       />
 
-      <TabControl Grid.Row="2" TabStripPlacement="Left">
+      <TabControl
+        Grid.Row="2"
+        TabStripPlacement="Left"
+        Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+      >
         <TabItem Header="info">
         </TabItem>
         <TabItem Header="relation">

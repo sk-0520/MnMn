@@ -382,6 +382,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileLiveWindowTopmost => appConfig.Get("setting-service-smile-smilelive-player-window-topmost", bool.Parse);
 
+        /// <summary>
+        /// 詳細部を表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileLivePlayerShowDetailArea => appConfig.Get("setting-service-smile-smilelive-player-show-detail-area", bool.Parse);
+
         #endregion
 
         #endregion

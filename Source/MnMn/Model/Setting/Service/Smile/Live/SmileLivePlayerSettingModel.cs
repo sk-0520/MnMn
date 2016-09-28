@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live
     {
         #region property
 
+        /// <summary>
+        /// プレイヤーの動画情報欄を表示するか。
+        /// </summary>
+        [DataMember]
+        public bool ShowDetailArea { get; set; } = Constants.SettingServiceSmileLivePlayerShowDetailArea;
+
         [DataMember]
         public WindowStatusModel Window { get; set; } = new WindowStatusModel() {
             Left = Constants.SettingServiceSmileLiveWindowLeft,
