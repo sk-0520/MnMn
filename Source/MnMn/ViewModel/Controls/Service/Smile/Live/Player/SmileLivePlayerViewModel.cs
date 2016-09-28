@@ -217,6 +217,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             get { return CreateCommand(o => DomLoaded((WebNavigatorEventDataBase)o)); }
         }
 
+        public ICommand ForceShowPlayerCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ShowWebPlayer.Value = true,
+                    o => ShowMask.Value
+                );
+            }
+        }
 
 
         #endregion

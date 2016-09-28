@@ -123,7 +123,9 @@
       </StackPanel>
     </Grid>
 
-    <ToolBar DockPanel.Dock="Top"></ToolBar>
+    <ToolBar DockPanel.Dock="Top">
+      <Button Command="{Binding ForceShowPlayerCommand}">メクラ板を外す</Button>
+    </ToolBar>
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
         <!--<StatusBarItem.Style>
