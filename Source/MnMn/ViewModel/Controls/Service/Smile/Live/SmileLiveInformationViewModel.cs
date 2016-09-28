@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
@@ -133,6 +134,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             }
         }
 
+        public Uri ThumbnailUri
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return RawValueUtility.ConvertUri(Feed.Thumbnail.Url);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
         public string UserName
         {
             get
@@ -140,6 +155,48 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 switch(InformationSource) {
                     case SmileLiveInformationSource.Feed:
                         return Feed.OwnerName;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public DateTime ReleaseDate
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return Feed.PubDate;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public int ViewCounter
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return RawValueUtility.ConvertInteger(Feed.View);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public int CommentCounter
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return RawValueUtility.ConvertInteger(Feed.NumRes);
 
                     default:
                         throw new NotImplementedException();
@@ -196,6 +253,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         {
             var cacheBaseDir = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileLive));
             CacheDirectory = Directory.CreateDirectory(Path.Combine(cacheBaseDir.FullName, Id));
+
+            ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(Id, "png")));
         }
 
         public Task OpenVideoDefaultAsync(bool forceEconomy)
@@ -281,8 +340,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            //throw new NotImplementedException();
-            return Task.FromResult(true);
+            ThumbnailLoadState = LoadState.Preparation;
+
+            if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
+                ThumbnailLoadState = LoadState.Loading;
+                var cacheImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
+                SetThumbnaiImage(cacheImage);
+                //ThumbnailLoadState = LoadState.Loaded;
+                return Task.FromResult(true);
+            }
+
+            ThumbnailLoadState = LoadState.Loading;
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+                var image = task.Result;
+                if(image != null) {
+                    //this._thumbnailImage = image;
+                    SetThumbnaiImage(image);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
         }
 
         #endregion

@@ -333,6 +333,7 @@
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
     <Compile Include="View\Resources\TabDictionary.xaml.cs">
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>

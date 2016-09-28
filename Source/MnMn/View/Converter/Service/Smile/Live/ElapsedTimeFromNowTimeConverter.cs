@@ -16,26 +16,29 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.Windows.Data;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live.Raw.Feed
+namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Live
 {
-    [Serializable]
-    public class FeedSmileLiveThumbnailModel: RawModelBase
+    [ValueConversion(typeof(DateTime), typeof(TimeSpan))]
+    public class ElapsedTimeFromNowTimeConverter: IValueConverter
     {
-        #region property
+        #region IValueConverter
 
-        [XmlAttribute("height")]
-        public string Height { get; set; }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var dateTime = (DateTime)value;
+            return DateTime.Now - dateTime;
+        }
 
-        [XmlAttribute("width")]
-        public string Width { get; set; }
-
-        [XmlAttribute("url")]
-        public string Url { get; set; }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
 
         #endregion
     }

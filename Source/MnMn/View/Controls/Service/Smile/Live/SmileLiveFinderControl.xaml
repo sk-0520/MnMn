@@ -11,7 +11,9 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+  xmlns:app_view_converter_service_smile_live="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Live"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -35,6 +37,7 @@
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
+      <app_view_converter_service_smile_live:ElapsedTimeFromNowTimeConverter x:Key="ElapsedTimeFromNowTimeConverter" />
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
 
@@ -166,13 +169,41 @@
               <DockPanel Background="Transparent">
                 <TextBlock DockPanel.Dock="Left" TextAlignment="Center" Text="{Binding Number}" />
 
-                <Grid Width="78" Height="60" DockPanel.Dock="Left" >
+                <Grid Width="64" Height="64" DockPanel.Dock="Left" >
                   <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding Information.ThumbnailLoadState, Mode=OneWay}" />
                   <Image Source="{Binding Information.ThumbnailImage, Mode=OneWay}" />
                 </Grid>
 
                 <Grid>
-                  <TextBlock Text="{Binding Information.Title}"/>
+                  <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="160" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock Grid.Row="0" Grid.ColumnSpan="6" FontWeight="Bold" Text="{Binding Information.Title}"/>
+
+                  <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderColumn}">再生数</TextBlock>
+                  <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource NumberColumn}" Text="{Binding Information.ViewCounter, StringFormat=N0}" />
+
+                  <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource HeaderColumn}">コメント</TextBlock>
+                  <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource NumberColumn}" Text="{Binding Information.CommentCounter, StringFormat=N0}" />
+
+                  <TextBlock Grid.Row="1" Grid.Column="4" Style="{StaticResource HeaderColumn}">公開日(?)</TextBlock>
+                  <TextBlock Grid.Row="1" Grid.Column="5" Style="{StaticResource NumberColumn}" Text="{Binding Information.ReleaseDate, StringFormat=yyyy/MM/dd HH:mm:ss}" />
+
+                  <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderColumn}">時間</TextBlock>
+                  <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource NumberColumn}" Text="{Binding Information.ReleaseDate, Converter={StaticResource ElapsedTimeFromNowTimeConverter}, StringFormat=hh\\:mm\\:ss}" />
+
+
                 </Grid>
               </DockPanel>
             </ContentControl>
