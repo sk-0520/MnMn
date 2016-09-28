@@ -282,6 +282,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                     foreach(var img in images) {
                         img.Remove();
                     }
+                    var removeTargets = new[] {
+                        baseElement.SelectSingleNode(".//*[@id='livetags']"),
+                        baseElement.SelectSingleNode(".//*[@class='chan']"),
+                        baseElement.SelectSingleNode(".//*[@id='tooltip']"),
+                        baseElement.SelectSingleNode(".//*[@class='com']"),
+                        baseElement.SelectSingleNode(".//*[@class='community-info-score']"),
+                    };
+                    foreach(var target in removeTargets.Where(n => n != null)) {
+                        target.Remove();
+                    }
 
                     var descriptionHtml = baseElement.InnerHtml;
                     MakeDescription(descriptionHtml);
@@ -380,8 +390,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                 document.FontFamily = DocumentDescription.FontFamily;
                 document.FontStretch = DocumentDescription.FontStretch;
             });
-
-
         }
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
