@@ -203,7 +203,44 @@
                   <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderColumn}">時間</TextBlock>
                   <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource NumberColumn}" Text="{Binding Information.ReleaseDate, Converter={StaticResource ElapsedTimeFromNowTimeConverter}, StringFormat=hh\\:mm\\:ss}" />
 
+                  <TextBlock Grid.Row="2" Grid.Column="4" Style="{StaticResource HeaderColumn}">その他</TextBlock>
+                  <Grid Grid.Row="2" Grid.Column="5">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
+                    <TextBlock Grid.Column="0">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Information.Type}" Value="Channel">
+                              <Setter Property="Text" Value="チャンネル" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Information.Type}" Value="Community">
+                              <Setter Property="Text" Value="コミュニティ" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Text" Value="不明" />
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+
+                    <TextBlock Grid.Column="1">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Information.MemberOnly}" Value="True">
+                              <Setter Property="Text" Value="メンバー限定" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Information.MemberOnly}" Value="False">
+                              <Setter Property="Text" Value="公開" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+                  </Grid>
                 </Grid>
               </DockPanel>
             </ContentControl>

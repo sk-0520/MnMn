@@ -204,19 +204,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             }
         }
 
-        //public string DescriptionHtmlSource
-        //{
-        //    get
-        //    {
-        //        switch(InformationSource) {
-        //            case SmileLiveInformationSource.Feed:
-        //                return Feed.Description;
+        public SmileLiveType Type
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return SmileLiveFeedUtility.ConvertType(Feed.Type);
 
-        //            default:
-        //                throw new NotImplementedException();
-        //        }
-        //    }
-        //}
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public bool MemberOnly
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return RawValueUtility.ConvertBoolean(Feed.MemberOnly);
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         #endregion
 

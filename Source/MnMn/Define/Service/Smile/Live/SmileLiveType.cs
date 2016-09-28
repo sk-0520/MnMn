@@ -19,29 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
-using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
+namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
 {
-    public static class SmileLiveFeedUtility
+    public enum SmileLiveType
     {
-        #region function
-
-        public static SmileLiveType ConvertType(string s)
-        {
-            switch(s) {
-                case "channel":
-                    return SmileLiveType.Channel;
-
-                case "community":
-                    return SmileLiveType.Community;
-
-                default:
-                    return SmileLiveType.Unknown;
-            }
-        }
-
-        #endregion
+        Unknown,
+        Channel,
+        Community,
     }
 }
