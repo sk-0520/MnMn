@@ -133,6 +133,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             }
         }
 
+        public string UserName
+        {
+            get
+            {
+                switch(InformationSource) {
+                    case SmileLiveInformationSource.Feed:
+                        return Feed.OwnerName;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         #endregion
 

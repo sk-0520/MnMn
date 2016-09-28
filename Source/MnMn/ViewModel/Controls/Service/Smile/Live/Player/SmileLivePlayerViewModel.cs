@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -303,8 +304,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             flvplayerElement.Style.SetPropertyValue("width", "100%");
             flvplayerElement.Style.SetPropertyValue("height", "100%");
             bodyElement.InsertBefore(flvplayerContainerElement, bodyElement.FirstChild);
-
-
 
             PlayerLoadState.Value = LoadState.Loaded;
             ShowWebPlayer.Value = true;

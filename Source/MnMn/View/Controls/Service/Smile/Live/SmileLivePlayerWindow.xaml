@@ -35,6 +35,14 @@
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+      <sys:Double x:Key="ImageWidth">100</sys:Double>
+      <sys:Double x:Key="ImageHeight">80</sys:Double>
+
+      <Style x:Key="ThumbnailImage" TargetType="Image" >
+        <Setter Property="Width" Value="{StaticResource ImageWidth}" />
+        <Setter Property="Height" Value="{StaticResource ImageHeight}" />
+      </Style>
+
       <Style x:Key="DummyMenu" TargetType="Menu"/>
 
     </ResourceDictionary>
@@ -190,11 +198,21 @@
         TabStripPlacement="Left"
         Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
-        <TabItem Header="info">
-        </TabItem>
-        <TabItem Header="relation">
-        </TabItem>
-        <TabItem Header="market">
+        <TabItem Header="情報">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+              <Image Style="{StaticResource ThumbnailImage}" Source="{Binding Information.ThumbnailImage}" />
+              <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
+                <Run Text="{Binding Information.UserName, Mode=OneWay}" />
+              </TextBlock>
+            </StackPanel>
+
+          </Grid>
         </TabItem>
       </TabControl>
 
