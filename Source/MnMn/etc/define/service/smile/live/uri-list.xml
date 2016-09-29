@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <uri>
 	<item key="live-watch-page" uri="" param="none" request-type="plain" />
+	<item key="live-broadcast" uri="http://live.nicovideo.jp/rss" param="none" request-type="plain" />
 	<item key="live-category" uri="http://live.nicovideo.jp/recent/rss" param="query" request-type="plain" />
 
 </uri>

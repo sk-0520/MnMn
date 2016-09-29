@@ -244,22 +244,6 @@
                       <TextBlock.Style>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
                           <Style.Triggers>
-                            <DataTrigger Binding="{Binding Information.Type}" Value="Channel">
-                              <Setter Property="Text" Value="チャンネル" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Information.Type}" Value="Community">
-                              <Setter Property="Text" Value="コミュニティ" />
-                            </DataTrigger>
-                          </Style.Triggers>
-                          <Setter Property="Text" Value="不明" />
-                        </Style>
-                      </TextBlock.Style>
-                    </TextBlock>
-
-                    <TextBlock Grid.Column="1">
-                      <TextBlock.Style>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
-                          <Style.Triggers>
                             <DataTrigger Binding="{Binding Information.MemberOnly}" Value="True">
                               <Setter Property="Text" Value="メンバー限定" />
                             </DataTrigger>
@@ -270,6 +254,22 @@
                         </Style>
                       </TextBlock.Style>
                     </TextBlock>
+
+                    <TextBlock Grid.Column="1">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Information.Type}" Value="Channel">
+                              <Setter Property="Text" Value="チャンネル" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Information.Type}" Value="Community">
+                              <Setter Property="Text" Value="コミュニティ" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+
                   </Grid>
                 </Grid>
               </DockPanel>

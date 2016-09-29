@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
+
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
+{
+    public class Broadcast: ApiBase
+    {
+        public Broadcast(Mediation mediation)
+            : base(mediation)
+        { }
+
+        #region function
+
+        public static FeedSmileLiveModel ConvertFromRssText(string rssText)
+        {
+            using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rssText))) {
+                return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileLiveModel>(stream);
+            }
+        }
+
+        public Task<FeedSmileLiveModel> LoadAsync()
+        {
+            var page = new PageLoader(Mediation, new HttpUserAgentHost(), SmileLiveMediationKey.broadcast, ServiceType.SmileLive);
+
+            return page.GetResponseTextAsync(PageLoaderMethod.Get).ContinueWith(t => {
+                var response = t.Result;
+                t.Dispose();
+                page.Dispose();
+
+                if(!response.IsSuccess) {
+                    return default(FeedSmileLiveModel);
+                } else {
+                    var result = ConvertFromRssText(response.Result);
+                    return result;
+                }
+            });
+        }
+
+        #endregion
+
+    }
+}

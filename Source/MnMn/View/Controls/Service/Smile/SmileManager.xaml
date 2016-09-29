@@ -51,6 +51,9 @@
       <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" >
         <app_view_controls_service_smile_video:SmileVideoHistoryManager />
       </TabItem>
+      <TabItem Header="live:official" DataContext="{Binding LiveManager.OfficialBroadcastManager}">
+        <app_view_controls_service_smile_live:SmileLiveOfficialBroadcastManager />
+      </TabItem>
       <TabItem Header="live:category" DataContext="{Binding LiveManager.CategoryManager}">
         <app_view_controls_service_smile_live:SmileLiveCategoryManager />
       </TabItem>

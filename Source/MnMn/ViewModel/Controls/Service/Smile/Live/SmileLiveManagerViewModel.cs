@@ -24,6 +24,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Official;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
@@ -35,6 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         {
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
+            OfficialBroadcastManager = new SmileLiveOfficialBroadcastManagerViewModel(Mediation);
             CategoryManager = new SmileLiveCategoryManagerViewModel(Mediation);
 
         }
@@ -43,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         public SmileSessionViewModel Session { get; }
 
+        public SmileLiveOfficialBroadcastManagerViewModel OfficialBroadcastManager { get; }
         public SmileLiveCategoryManagerViewModel CategoryManager { get; }
 
 
@@ -79,6 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         protected override IEnumerable<ManagerViewModelBase> GetManagerChildren()
         {
             return new ManagerViewModelBase[] {
+                OfficialBroadcastManager,
                 CategoryManager,
             };
         }

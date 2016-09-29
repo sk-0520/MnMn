@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live
     internal static class SmileLiveMediationKey
     {
         public const string watchPage = "live-watch-page";
+        public const string broadcast = "live-broadcast";
         public const string category = "live-category";
     }
 }
