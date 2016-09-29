@@ -131,7 +131,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#184: ファインダーのフィルタリングON/OFFがデフォルトでOFFになってる'
 					},
 					{
 						'revision': '',
