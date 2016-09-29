@@ -907,20 +907,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void OpenUserId(string userId)
         {
-            var parameter = new SmileOpenUserIdParameterModel() {
-                UserId = userId,
-            };
+            //    var parameter = new SmileOpenUserIdParameterModel() {
+            //        UserId = userId,
+            //    };
 
-            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
+            //    Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
+            SmileDescriptionUtility.OpenUserId(userId, Mediation);
         }
 
         void OpenWebLink(string link)
         {
-            try {
-                Process.Start(link);
-            } catch(Exception ex) {
-                Mediation.Logger.Warning(ex);
-            }
+            //try {
+            //    Process.Start(link);
+            //} catch(Exception ex) {
+            //    Mediation.Logger.Warning(ex);
+            //}
+            SmileDescriptionUtility.OpenWebLink(link, Mediation.Logger);
         }
 
         Task OpenVideoLinkAsync(string videoId)
@@ -935,12 +937,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void OpenMyListLink(string myListId)
         {
-            var parameter = new SmileVideoSearchMyListParameterModel() {
-                Query = myListId,
-                QueryType = SmileVideoSearchMyListQueryType.MyListId,
-            };
+            //var parameter = new SmileVideoSearchMyListParameterModel() {
+            //    Query = myListId,
+            //    QueryType = SmileVideoSearchMyListQueryType.MyListId,
+            //};
 
-            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+            //Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+            SmileDescriptionUtility.OpenMyListId(myListId, Mediation);
         }
 
         void RefreshFilteringComment()

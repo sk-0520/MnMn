@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -432,27 +433,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         }
 
 
-        void OpenWebLink(string o)
+        void OpenWebLink(string link)
         {
-            throw new NotImplementedException();
+            SmileDescriptionUtility.OpenWebLink(link, Mediation.Logger);
         }
 
 
-        Task OpenVideoLinkAsync(string o)
+        Task OpenVideoLinkAsync(string videoId)
         {
-            throw new NotImplementedException();
+            Mediation.Logger.Error($"not impl: {videoId}");
+            return Task.CompletedTask;
         }
 
 
-        void OpenMyListLink(string o)
+        void OpenMyListLink(string myListId)
         {
-            throw new NotImplementedException();
+            SmileDescriptionUtility.OpenMyListId(myListId, Mediation);
         }
 
 
-        void OpenUserLink(string o)
+        void OpenUserLink(string userId)
         {
-            throw new NotImplementedException();
+            SmileDescriptionUtility.OpenUserId(userId, Mediation);
         }
 
         #endregion
