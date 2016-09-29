@@ -320,6 +320,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             var browser = (GeckoWebBrowser)eventData.Sender;
 
             if(NavigatorPlayer.IsEmptyContent) {
+                // TODO: 本来不要
+                PlayerLoadState.Value = LoadState.Loaded;
+
                 ShowWebPlayer.Value = true;
                 return;
             }
@@ -327,6 +330,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             var flvplayerElement = browser.Document.GetElementById("flvplayer") as GeckoHtmlElement;
             if(flvplayerElement == null) {
                 Mediation.Logger.Debug($"{Information.Id}: {nameof(flvplayerElement)} is null");
+                // TODO: 本来不要
+                PlayerLoadState.Value = LoadState.Loaded;
+
                 ShowWebPlayer.Value = true;
                 return;
             }
