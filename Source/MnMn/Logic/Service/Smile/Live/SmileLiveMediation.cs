@@ -52,6 +52,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #region function
 
+        ResponseModel Request_WindowViewModels(RequestModel request)
+        {
+            var windowViewModels = Players.Select(p => (SmileLivePlayerViewModel)p.DataContext).ToList();
+            return new ResponseModel(request, windowViewModels);
+        }
+
         ResponseModel RequestCore(RequestModel request)
         {
             switch(request.RequestKind) {
@@ -63,6 +69,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
                 //case RequestKind.CacheData:
                 //    return Request_CacheData((SmileVideoInformationCacheRequestModel)request);
+
+                case RequestKind.WindowViewModels:
+                    return Request_WindowViewModels(request);
 
                 default:
                     throw new NotImplementedException();
