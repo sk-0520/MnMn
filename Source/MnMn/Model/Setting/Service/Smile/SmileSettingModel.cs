@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
@@ -38,6 +39,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 
         [DataMember]
         public SmileMyListSettingModel MyList { get; set; } = new SmileMyListSettingModel();
+
+        [DataMember]
+        public SmileLiveSettingModel Live { get; set; } = new SmileLiveSettingModel();
 
         #endregion
     }

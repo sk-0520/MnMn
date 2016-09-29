@@ -162,6 +162,9 @@
   <data name="String_App_Define_ServiceType_Smile" xml:space="preserve">
     <value>ニコニコ</value>
   </data>
+  <data name="String_App_Define_ServiceType_SmileLive" xml:space="preserve">
+    <value>ニコニコ生放送</value>
+  </data>
   <data name="String_App_Define_ServiceType_SmileVideo" xml:space="preserve">
     <value>ニコニコ動画</value>
   </data>

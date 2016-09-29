@@ -453,6 +453,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ニコニコ生放送 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_ServiceType_SmileLive {
+            get {
+                return ResourceManager.GetString("String_App_Define_ServiceType_SmileLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ニコニコ動画 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_ServiceType_SmileVideo {

@@ -43,5 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// </summary>
         [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileVideo))]
         SmileVideo,
+        /// <summary>
+        /// ニコニコ生放送。
+        /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileLive))]
+        SmileLive,
     }
 }

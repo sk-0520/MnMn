@@ -19,12 +19,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
 {
     public interface ICaptionCommand: IWindowState
     {
+        /// <summary>
+        /// リサイズ幅。
+        /// </summary>
+        Thickness ResizeBorderThickness { get; set; }
+        /// <summary>
+        /// ウィンドウ枠幅。
+        /// </summary>
+        Thickness WindowBorderThickness { get; set; }
+
+        ICommand ShowSystemMenuCommand { get; }
+
         ICommand CaptionMinimumCommand { get; }
         ICommand CaptionMaximumCommand { get; }
         ICommand CaptionRestoreCommand { get; }

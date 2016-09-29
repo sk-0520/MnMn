@@ -120,10 +120,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static Color ServiceSmileVideoMyListFolderColor => appConfig.Get("service-smile-mylist-folder-color", s => (Color)ColorConverter.ConvertFromString(s));
 
-        /// <summary>
-        /// ファインダーのフィルタリングを使用するか。
-        /// </summary>
-        public static bool ServiceSmileVideoIsEnabledFiltering => appConfig.Get("service-smile-smilevideo-is-enabled-filtering", bool.Parse);
+        ///// <summary>
+        ///// ファインダーのフィルタリングを使用するか。
+        ///// </summary>
+        //public static bool ServiceSmileVideoIsEnabledFiltering => appConfig.Get("service-smile-smilevideo-is-enabled-filtering", bool.Parse);
 
         /// <summary>
         /// あとで見るのチェック時間。
@@ -374,6 +374,35 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 重複判定時間。
         /// </summary>
         public static TimeSpan SettingServiceSmileVideoFilteringIgnoreOverlapTime => appConfig.Get("setting-service-smile-smilevideo-filtering-ignore-overlap-time", TimeSpan.Parse);
+
+        public static ExecuteOrOpenMode SettingServiceSmileLiveExecuteOpenMode => appConfig.Get("setting-service-smile-smilelive-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
+        public static bool SettingServiceSmileLiveExecuteOpenPlayerInNewWindow => appConfig.Get("setting-service-smile-smilelive-execute-open-player-in-new-window", bool.Parse);
+
+        /// <summary>
+        /// プレイヤーウィンドウ: 左。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowLeft => appConfig.Get("setting-service-smile-smilelive-player-window-left", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 上。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowTop => appConfig.Get("setting-service-smile-smilelive-player-window-top", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 幅。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowWidth => appConfig.Get("setting-service-smile-smilelive-player-window-width", double.Parse);
+        /// <summary>
+        /// プレイヤーウィンドウ: 高さ。
+        /// </summary>
+        public static double SettingServiceSmileLiveWindowHeight => appConfig.Get("setting-service-smile-smilelive-player-window-height", double.Parse);
+        /// <summary>
+        /// ウィンドウ最前面状態。
+        /// </summary>
+        public static bool SettingServiceSmileLiveWindowTopmost => appConfig.Get("setting-service-smile-smilelive-player-window-topmost", bool.Parse);
+
+        /// <summary>
+        /// 詳細部を表示するか。
+        /// </summary>
+        public static bool SettingServiceSmileLivePlayerShowDetailArea => appConfig.Get("setting-service-smile-smilelive-player-show-detail-area", bool.Parse);
 
         #endregion
 

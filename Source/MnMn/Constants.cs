@@ -190,6 +190,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static CacheSpan ServiceSmileVideoCheckItLaterCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromDays(7));
         /// <summary>
+        /// ニコニコ生放送: 動画情報キャッシュ時間。
+        /// </summary>
+        public static CacheSpan ServiceSmileLiveInformationCacheSpan => new CacheSpan(DateTime.Now, TimeSpan.FromHours(12));
+        /// <summary>
+        /// ニコニコ生放送: 動画サムネイルキャッシュ時間。
+        /// </summary>
+        public static CacheSpan ServiceSmileLiveImageCacheSpan => CacheSpan.InfinityCache;
+        /// <summary>
         /// sbin/
         /// </summary>
         public static string SbinDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "sbin"); } }
@@ -275,6 +283,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoName { get; } = "video";
         /// <summary>
+        /// サービス名: ニコニコ生放送。
+        /// </summary>
+        public static string ServiceSmileLiveName { get; } = "live";
+        /// <summary>
         ///
         /// </summary>
         public static string BinaryDirectoryPath { get { return Path.Combine(AssemblyRootDirectoryPath, "bin"); } }
@@ -309,6 +321,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
 
         public static string DefineSmileVideoDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
+        public static string DefineSmileLiveDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileLiveName);
 
         public static string SmileVideoUriListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
         public static string SmileVideoUriParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
@@ -322,6 +335,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
+
+        public static string SmileLiveUriListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-list.xml");
+        public static string SmileLiveUriParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-params.xml");
+        public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-params.xml");
+        public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-mappings.xml");
+
+        public static string SmileLiveCategoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "category.xml");
+        //public static string SmileLivePlayerDirectoryPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "player");
+        //public static string SmileLivePlayerContainerPath { get; } = Path.Combine(SmileLivePlayerDirectoryPath, "container.html");
+
         //public static string SmileVideoCacheVideosDirectoryName { get; } = "videos";
 
         ///// <summary>

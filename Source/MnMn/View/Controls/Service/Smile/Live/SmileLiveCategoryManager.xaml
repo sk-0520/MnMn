@@ -1,0 +1,123 @@
+﻿<!--
+  呼び出し元から DataContext を設定して使用。
+-->
+<UserControl
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live.SmileLiveCategoryManager"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+  xmlns:app_view_controls_service_smile_live="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="300" d:DesignWidth="300"
+>
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <app_view_controls_service_smile_live:SmileLiveCategoryContext
+        SelectedSort="{Binding SelectedSort}"
+        SelectedOrder="{Binding SelectedOrder}"
+        SortItemsSource="{Binding SortItems}"
+        OrderItemsSource="{Binding OrderItems}"
+      />
+
+      <ComboBox
+        DisplayMemberPath="DisplayText"
+        SelectedItem="{Binding SelectedCategory}"
+        ItemsSource="{Binding CategoryItems}"
+      />
+
+      <Button Command="{Binding SearchCategoryCommand}">取得</Button>
+    </StackPanel>
+
+    <TabControl
+      Grid.Row="1"
+      ItemsSource="{Binding CategoryGroups}"
+      SelectedItem="{Binding SelectedCategoryGroup}"
+      Style="{StaticResource FinderTab}"
+    >
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Style="{StaticResource TabHeader}">
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
+            <TextBlock Text="{Binding Category.DisplayText}" Style="{StaticResource TabHeaderText}" />
+            <app_view_controls_service_smile_live:SmileLiveCategoryContext
+              SelectedSort="{Binding SelectedSort}"
+              SelectedOrder="{Binding SelectedOrder}"
+              SortItemsSource="{Binding SortItems}"
+              OrderItemsSource="{Binding OrderItems}"
+              IsEnabled="{Binding CanLoad}"
+            />
+            <Button Style="{StaticResource TabReloadButton}" />
+            <!--<Button Style="{StaticResource TabCloseButton}" />-->
+          </StackPanel>
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+      <TabControl.ContentTemplate>
+        <DataTemplate>
+          <app_view_controls_service_smile_live:SmileLiveFinderControl x:Name="finder" DataContext="{Binding}">
+            <app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
+              <TextBlock>試験運用中につきランキングみたいな状態保持は未実装。</TextBlock>
+            </app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
+            <app_view_controls_service_smile_live:SmileLiveFinderControl.FooterContent>
+              <Grid Height="24">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="7*" />
+                  <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding TotalCount, StringFormat=検索件数: {0}}" />
+
+                <!--<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding RelationTagItems}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel VerticalAlignment="Top" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Margin="4,0">
+                          <Hyperlink
+                            Command="{Binding DataContext.SearchTagCommand, ElementName=root }"
+                            CommandParameter="{Binding}"
+                          >
+                            <Run Text="{Binding TagName, Mode=OneTime}" />
+                          </Hyperlink>
+                          </TextBlock>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </ScrollViewer>-->
+
+                <app_view_controls:Pager
+                  Grid.Column="2"
+                  PageItems="{Binding PageItems}"
+                  Command="{Binding DataContext.PageChangeCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_live:SmileLiveFinderControl}}"
+                />
+              </Grid>
+            </app_view_controls_service_smile_live:SmileLiveFinderControl.FooterContent>
+          </app_view_controls_service_smile_live:SmileLiveFinderControl>
+        </DataTemplate>
+      </TabControl.ContentTemplate>
+
+    </TabControl>
+
+  </Grid>
+</UserControl>

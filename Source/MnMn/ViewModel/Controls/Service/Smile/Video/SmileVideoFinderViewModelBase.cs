@@ -44,7 +44,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
-    public abstract class SmileVideoFinderViewModelBase: ViewModelBase
+    public abstract class SmileVideoFinderViewModelBase: FinderViewModelBase<SmileVideoInformationViewModel, SmileVideoFinderItemViewModel>
     {
         #region variable
 
@@ -53,20 +53,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         SmileVideoFinderItemViewModel _selectedFinderItem;
         SourceLoadState _finderLoadState;
 
-        string _inputTitleFilter;
-        bool _isBlacklist;
-        bool _showFilterSetting;
-        bool _isEnabledFinderFiltering;
+        //string _inputTitleFilter;
+        //bool _isBlacklist;
+        //bool _showFilterSetting;
+        //bool _isEnabledFinderFiltering;
 
-        bool _isAscending = true;
+        //bool _isAscending = true;
         SmileVideoSortType _selectedSortType;
         bool _showContinuousPlaybackMenu;
 
         #endregion
 
         public SmileVideoFinderViewModelBase(Mediation mediation)
+            : base(mediation)
         {
-            Mediation = mediation;
+            //Mediation = mediation;
 
             var settingResult = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)settingResult.Result;
@@ -77,41 +78,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var filteringResult = Mediation.GetResultFromRequest<SmileVideoFilteringResultModel>(new SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind.CommentFiltering));
             FinderFilering = filteringResult.Filtering;
 
-            this._isEnabledFinderFiltering = Constants.ServiceSmileVideoIsEnabledFiltering;
+            //this._isEnabledFinderFiltering = Constants.ServiceSmileVideoIsEnabledFiltering;
 
-            FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
+            //FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
         }
 
         #region property
 
-        protected Mediation Mediation { get; set; }
-        protected CancellationTokenSource CancelLoading { get; set; }
+        //protected Mediation Mediation { get; set; }
+        //protected CancellationTokenSource CancelLoading { get; set; }
         protected SmileVideoSettingModel Setting { get; }
 
-        protected CollectionModel<SmileVideoFinderItemViewModel> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItemViewModel>();
-        public virtual IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => FinderItemList;
+        //protected CollectionModel<SmileVideoFinderItemViewModel> FinderItemList { get; } = new CollectionModel<SmileVideoFinderItemViewModel>();
+        //public virtual IReadOnlyList<SmileVideoFinderItemViewModel> FinderItemsViewer => FinderItemList;
         public CollectionModel<SmileVideoSortType> SortTypeItems { get; }
-        public virtual ICollectionView FinderItems { get; }
+        //public virtual ICollectionView FinderItems { get; }
 
         /// <summary>
         /// フィルタリング。
         /// </summary>
         public SmileVideoFilteringViweModel FinderFilering { get; }
 
-        /// <summary>
-        /// 昇順か。
-        /// </summary>
-        public virtual bool IsAscending
-        {
-            get { return this._isAscending; }
-            set
-            {
-                if(SetVariableValue(ref this._isAscending, value)) {
-                    ChangeSortItems();
-                }
-            }
-        }
+        ///// <summary>
+        ///// 昇順か。
+        ///// </summary>
+        //public virtual bool IsAscending
+        //{
+        //    get { return this._isAscending; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._isAscending, value)) {
+        //            ChangeSortItems();
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// ソート方法。
@@ -127,109 +128,109 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        /// <summary>
-        /// 現在読み込み中か。
-        /// </summary>
-        public virtual bool NowLoading
-        {
-            get { return this._nowLoading; }
-            set { SetVariableValue(ref this._nowLoading, value); }
-        }
+        ///// <summary>
+        ///// 現在読み込み中か。
+        ///// </summary>
+        //public virtual bool NowLoading
+        //{
+        //    get { return this._nowLoading; }
+        //    set { SetVariableValue(ref this._nowLoading, value); }
+        //}
 
-        /// <summary>
-        /// 選択中アイテム。
-        /// </summary>
-        public SmileVideoFinderItemViewModel SelectedFinderItem
-        {
-            get { return this._selectedFinderItem; }
-            set { SetVariableValue(ref this._selectedFinderItem, value); }
-        }
+        ///// <summary>
+        ///// 選択中アイテム。
+        ///// </summary>
+        //public SmileVideoFinderItemViewModel SelectedFinderItem
+        //{
+        //    get { return this._selectedFinderItem; }
+        //    set { SetVariableValue(ref this._selectedFinderItem, value); }
+        //}
 
-        /// <summary>
-        /// 読込状態。
-        /// </summary>
-        public virtual SourceLoadState FinderLoadState
-        {
-            get { return this._finderLoadState; }
-            set
-            {
-                if(SetVariableValue(ref this._finderLoadState, value)) {
-                    var propertyNames = new[] {
-                        nameof(CanLoad),
-                        nameof(NowLoading),
-                    };
-                    CallOnPropertyChange(propertyNames);
-                }
-            }
-        }
+        ///// <summary>
+        ///// 読込状態。
+        ///// </summary>
+        //public virtual SourceLoadState FinderLoadState
+        //{
+        //    get { return this._finderLoadState; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._finderLoadState, value)) {
+        //            var propertyNames = new[] {
+        //                nameof(CanLoad),
+        //                nameof(NowLoading),
+        //            };
+        //            CallOnPropertyChange(propertyNames);
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// タイトルフィルター文字列。
-        /// </summary>
-        public virtual string InputTitleFilter
-        {
-            get { return this._inputTitleFilter; }
-            set
-            {
-                if(SetVariableValue(ref this._inputTitleFilter, value)) {
-                    FinderItems.Refresh();
-                }
-            }
-        }
+        ///// <summary>
+        ///// タイトルフィルター文字列。
+        ///// </summary>
+        //public virtual string InputTitleFilter
+        //{
+        //    get { return this._inputTitleFilter; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._inputTitleFilter, value)) {
+        //            FinderItems.Refresh();
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// タイトルフィルタを除外として扱うか。
-        /// </summary>
-        public virtual bool IsBlacklist
-        {
-            get { return this._isBlacklist; }
-            set
-            {
-                if(SetVariableValue(ref this._isBlacklist, value)) {
-                    FinderItems.Refresh();
-                }
-            }
-        }
+        ///// <summary>
+        ///// タイトルフィルタを除外として扱うか。
+        ///// </summary>
+        //public virtual bool IsBlacklist
+        //{
+        //    get { return this._isBlacklist; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._isBlacklist, value)) {
+        //            FinderItems.Refresh();
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// 設定フィルタを使用するか。
-        /// </summary>
-        public virtual bool IsEnabledFinderFiltering
-        {
-            get { return this._isEnabledFinderFiltering; }
-            set
-            {
-                if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
-                    FinderItems.Refresh();
-                }
-            }
-        }
+        ///// <summary>
+        ///// 設定フィルタを使用するか。
+        ///// </summary>
+        //public virtual bool IsEnabledFinderFiltering
+        //{
+        //    get { return this._isEnabledFinderFiltering; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._isEnabledFinderFiltering, value)) {
+        //            FinderItems.Refresh();
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// 設定フィルタ有効無効UI表示。
-        /// </summary>
-        public virtual bool ShowFilterSetting
-        {
-            get { return this._showFilterSetting; }
-            set { SetVariableValue(ref this._showFilterSetting, value); }
-        }
+        ///// <summary>
+        ///// 設定フィルタ有効無効UI表示。
+        ///// </summary>
+        //public virtual bool ShowFilterSetting
+        //{
+        //    get { return this._showFilterSetting; }
+        //    set { SetVariableValue(ref this._showFilterSetting, value); }
+        //}
 
-        /// <summary>
-        /// フィルタリング設定をそもそも使用するか。
-        /// </summary>
-        public virtual bool IsUsingFinderFilter { get; } = true;
+        ///// <summary>
+        ///// フィルタリング設定をそもそも使用するか。
+        ///// </summary>
+        //public virtual bool IsUsingFinderFilter { get; } = true;
 
-        /// <summary>
-        /// 読込可能か。
-        /// </summary>
-        public virtual bool CanLoad
-        {
-            get
-            {
-                var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
-                return !loadSkips.Any(l => l == FinderLoadState);
-            }
-        }
+        ///// <summary>
+        ///// 読込可能か。
+        ///// </summary>
+        //public virtual bool CanLoad
+        //{
+        //    get
+        //    {
+        //        var loadSkips = new[] { SourceLoadState.SourceLoading, SourceLoadState.SourceChecking };
+        //        return !loadSkips.Any(l => l == FinderLoadState);
+        //    }
+        //}
 
         [Obsolete]
         protected virtual bool IsLoadVideoInformation { get { return Setting.Search.LoadInformation; } }
@@ -258,22 +259,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region command
 
-        public virtual ICommand ReloadCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        LoadDefaultCacheAsync().ConfigureAwait(false);
-                    }
-                );
-            }
-        }
+        //public virtual ICommand ReloadCommand
+        //{
+        //    get
+        //    {
+        //        return CreateCommand(
+        //            o => {
+        //                LoadDefaultCacheAsync().ConfigureAwait(false);
+        //            }
+        //        );
+        //    }
+        //}
 
-        public ICommand AllCheckCommand
-        {
-            get { return CreateCommand(o => ToggleAllCheck()); }
-        }
+        //public ICommand AllCheckCommand
+        //{
+        //    get { return CreateCommand(o => ToggleAllCheck()); }
+        //}
 
         public ICommand ContinuousPlaybackCommand
         {
@@ -305,51 +306,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region function
 
-        protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items, CacheSpan thumbCacheSpan)
-        {
-            var prevInformations = FinderItemList
-                .Select(i => i.Information)
-                .ToArray()
-            ;
-            foreach(var item in prevInformations) {
-                item.DecrementReference();
-            }
+        //protected virtual Task SetItemsAsync(IEnumerable<SmileVideoInformationViewModel> items, CacheSpan thumbCacheSpan)
+        //{
+        //    var prevInformations = FinderItemList
+        //        .Select(i => i.Information)
+        //        .ToArray()
+        //    ;
+        //    foreach(var item in prevInformations) {
+        //        item.DecrementReference();
+        //    }
 
-            var finderItems = items
-                .Select((v, i) => new { Information = v, Index = i })
-                .Where(v => v.Information != null)
-                .Select(v => new SmileVideoFinderItemViewModel(v.Information, v.Index + 1))
-                .ToArray()
-            ;
+        //    var finderItems = items
+        //        .Select((v, i) => new { Information = v, Index = i })
+        //        .Where(v => v.Information != null)
+        //        .Select(v => new SmileVideoFinderItemViewModel(v.Information, v.Index + 1))
+        //        .ToArray()
+        //    ;
 
-            var loader = new SmileVideoInformationLoader(finderItems.Select(i => i.Information));
-            return loader.LoadInformationAsync(thumbCacheSpan).ContinueWith(t => {
-                Application.Current.Dispatcher.Invoke(new Action(() => {
-                    FinderItemList.InitializeRange(finderItems);
-                    ChangeSortItems();
-                }));
-            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
-        }
+        //    var loader = new SmileVideoInformationLoader(finderItems.Select(i => i.Information));
+        //    return loader.LoadInformationAsync(thumbCacheSpan).ContinueWith(t => {
+        //        Application.Current.Dispatcher.Invoke(new Action(() => {
+        //            FinderItemList.InitializeRange(finderItems);
+        //            ChangeSortItems();
+        //        }));
+        //    }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        //}
 
-        protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            return Task.Run(() => {
-                FinderLoadState = SourceLoadState.InformationLoading;
-                var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
-                return loader.LoadThumbnaiImageAsync(imageCacheSpan);
-            }, CancelLoading.Token).ContinueWith(t => {
-                FinderLoadState = SourceLoadState.Completed;
-                NowLoading = false;
-            }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
-        }
+        //protected Task LoadFinderAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        //{
+        //    return Task.Run(() => {
+        //        FinderLoadState = SourceLoadState.InformationLoading;
+        //        var loader = new SmileVideoInformationLoader(FinderItemList.Select(i => i.Information));
+        //        return loader.LoadThumbnaiImageAsync(imageCacheSpan);
+        //    }, CancelLoading.Token).ContinueWith(t => {
+        //        FinderLoadState = SourceLoadState.Completed;
+        //        NowLoading = false;
+        //    }, CancelLoading.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
+        //}
 
-        protected void DisposeCancelLoading()
-        {
-            if(CancelLoading != null) {
-                CancelLoading.Dispose();
-                CancelLoading = null;
-            }
-        }
+        //protected void DisposeCancelLoading()
+        //{
+        //    if(CancelLoading != null) {
+        //        CancelLoading.Dispose();
+        //        CancelLoading = null;
+        //    }
+        //}
 
         protected bool IsShowFilteringItem(object obj)
         {
@@ -413,56 +414,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public IEnumerable<SmileVideoFinderItemViewModel> GetCheckedItems()
-        {
-            return FinderItems
-                .Cast<SmileVideoFinderItemViewModel>()
-                .Where(i => i.IsChecked.GetValueOrDefault())
-            ;
-        }
+        //public IEnumerable<SmileVideoFinderItemViewModel> GetCheckedItems()
+        //{
+        //    return FinderItems
+        //        .Cast<SmileVideoFinderItemViewModel>()
+        //        .Where(i => i.IsChecked.GetValueOrDefault())
+        //    ;
+        //}
 
-        protected abstract Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
+        //protected abstract Task LoadCoreAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends);
 
-        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
-        {
-            return LoadAsync(thumbCacheSpan, imageCacheSpan, null);
-        }
+        //public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
+        //{
+        //    return LoadAsync(thumbCacheSpan, imageCacheSpan, null);
+        //}
 
-        public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
-        {
-            if(CanLoad) {
-                if(NowLoading) {
-                    Mediation.Logger.Trace("CANCEL!");
-                    CancelLoading.Cancel(true);
-                }
+        //public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
+        //{
+        //    if(CanLoad) {
+        //        if(NowLoading) {
+        //            Mediation.Logger.Trace("CANCEL!");
+        //            CancelLoading.Cancel(true);
+        //        }
 
-                FinderLoadState = SourceLoadState.SourceLoading;
-                NowLoading = true;
+        //        FinderLoadState = SourceLoadState.SourceLoading;
+        //        NowLoading = true;
 
-                CancelLoading = new CancellationTokenSource();
+        //        CancelLoading = new CancellationTokenSource();
 
-                return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(task => {
-                    return LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
-                }, CancelLoading.Token);
-            } else {
-                return Task.CompletedTask;
-            }
-        }
+        //        return LoadCoreAsync(thumbCacheSpan, imageCacheSpan, extends).ContinueWith(task => {
+        //            return LoadFinderAsync(thumbCacheSpan, imageCacheSpan);
+        //        }, CancelLoading.Token);
+        //    } else {
+        //        return Task.CompletedTask;
+        //    }
+        //}
 
-        public Task LoadDefaultCacheAsync()
-        {
-            return LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-        }
+        //public Task LoadDefaultCacheAsync()
+        //{
+        //    return LoadAsync(Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+        //}
 
-        internal virtual void ToggleAllCheck()
-        {
-            var items = FinderItems.Cast<SmileVideoFinderItemViewModel>().ToArray();
-            var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
+        //internal virtual void ToggleAllCheck()
+        //{
+        //    var items = FinderItems.Cast<SmileVideoFinderItemViewModel>().ToArray();
+        //    var isChecked = items.Any(i => !i.IsChecked.GetValueOrDefault());
 
-            foreach(var item in items) {
-                item.IsChecked = isChecked;
-            }
-        }
+        //    foreach(var item in items) {
+        //        item.IsChecked = isChecked;
+        //    }
+        //}
 
         internal virtual Task ContinuousPlaybackAsync(bool isRandom)
         {
@@ -490,7 +491,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return task;
         }
 
-        internal virtual void ChangeSortItems()
+        void ChangedFiltering()
+        {
+            FinderItems.Refresh();
+        }
+
+        void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        public override CacheSpan DefaultInformationCacheSpan => Constants.ServiceSmileVideoThumbCacheSpan;
+        public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileVideoImageCacheSpan;
+        public override object DefaultExtends { get; } = null;
+
+        internal override void ChangeSortItems()
         {
             var map = new[] {
                 new { Type = SmileVideoSortType.Number, Parent = string.Empty, Property = nameof(SmileVideoFinderItemViewModel.Number) },
@@ -513,28 +533,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             FinderItems.Refresh();
         }
 
-        void ChangedFiltering()
+        protected override SmileVideoFinderItemViewModel CreateFinderItem(SmileVideoInformationViewModel information, int number)
         {
-            FinderItems.Refresh();
+            return new SmileVideoFinderItemViewModel(information, number);
         }
 
-        void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
+        protected override Task LoadInformationAsync(IEnumerable<SmileVideoInformationViewModel> informationItems, CacheSpan informationCacheSpan)
         {
-            var information = finderItem.Information;
-            Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
+            var loader = new SmileVideoInformationLoader(informationItems);
+            return loader.LoadInformationAsync(informationCacheSpan);
         }
 
-        #endregion
-
-        #region ViewModelBase
-
-        protected override void Dispose(bool disposing)
+        protected override Task LoadImageAsync(IEnumerable<SmileVideoInformationViewModel> informationItems, CacheSpan imageCacheSpan)
         {
-            if(!IsDisposed) {
-                DisposeCancelLoading();
-            }
-            base.Dispose(disposing);
+            var loader = new SmileVideoInformationLoader(informationItems);
+            return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if(!IsDisposed) {
+        //        DisposeCancelLoading();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         #endregion
 

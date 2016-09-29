@@ -10,6 +10,7 @@
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_view_controls_service_smile_live="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live"
   xmlns:app_view_controls_service_smile_setting="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Setting"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -49,6 +50,12 @@
       </TabItem>
       <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" >
         <app_view_controls_service_smile_video:SmileVideoHistoryManager />
+      </TabItem>
+      <TabItem Header="live:official" DataContext="{Binding LiveManager.OfficialBroadcastManager}">
+        <app_view_controls_service_smile_live:SmileLiveOfficialBroadcastManager />
+      </TabItem>
+      <TabItem Header="live:category" DataContext="{Binding LiveManager.CategoryManager}">
+        <app_view_controls_service_smile_live:SmileLiveCategoryManager />
       </TabItem>
       <TabItem Header="ユーザー" DataContext="{Binding UsersManager}">
         <app_view_controls_service_smile:SmileUsersManager />

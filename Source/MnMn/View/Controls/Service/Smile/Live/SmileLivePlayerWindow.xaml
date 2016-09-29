@@ -1,0 +1,246 @@
+﻿<Window
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Live.SmileLivePlayerWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
+  xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
+
+  Title="SmileLivePlayerWindow"
+
+  Left="{Binding Left, Mode=TwoWay}"
+  Top="{Binding Top, Mode=TwoWay}"
+  Width="{Binding Width, Mode=TwoWay}"
+  Height="{Binding Height, Mode=TwoWay}"
+  WindowState="{Binding State, Mode=TwoWay}"
+  BorderThickness="{Binding WindowBorderThickness}"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignHeight="540" d:DesignWidth="780"
+>
+  <i:Interaction.Behaviors>
+    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Information.Title, Mode=OneWay}" />
+  </i:Interaction.Behaviors>
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
+        <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+      <sys:Double x:Key="ImageWidth">100</sys:Double>
+      <sys:Double x:Key="ImageHeight">80</sys:Double>
+
+      <Style x:Key="ThumbnailImage" TargetType="Image" >
+        <Setter Property="Width" Value="{StaticResource ImageWidth}" />
+        <Setter Property="Height" Value="{StaticResource ImageHeight}" />
+      </Style>
+
+      <Style x:Key="DummyMenu" TargetType="Menu"/>
+
+    </ResourceDictionary>
+  </Window.Resources>
+  <Window.Style>
+    <Style TargetType="Window">
+      <Setter Property="Topmost" Value="{Binding Topmost}" />
+      <Setter Property="BorderBrush">
+        <Setter.Value>
+          <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Style>
+  <WindowChrome.WindowChrome>
+    <WindowChrome
+      ResizeBorderThickness="{Binding ResizeBorderThickness}"
+      GlassFrameThickness="0"
+      CornerRadius="0"
+      CaptionHeight="{Binding ActualHeight, ElementName=caption}"
+    />
+  </WindowChrome.WindowChrome>
+
+
+  <DockPanel>
+    <!--<Grid
+      x:Name="caption"
+      DockPanel.Dock="Top"
+      Margin="4"
+      Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
+      TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+    >-->
+    <Grid
+      x:Name="caption"
+      DockPanel.Dock="Top"
+      Margin="4"
+      TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+    >
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseRightButtonDown">
+            <i:InvokeCommandAction Command="{Binding ShowSystemMenuCommand}"/>
+          </i:EventTrigger>
+          <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding CaptionCloseCommand}"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Button.Template>
+          <ControlTemplate>
+            <Image Width="16" Height="16" WindowChrome.IsHitTestVisibleInChrome="True" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
+          </ControlTemplate>
+        </Button.Template>
+      </Button>
+      <Grid Grid.Column="1" >
+        <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+      </Grid>
+      <StackPanel Grid.Column="2" Orientation="Horizontal">
+        <Button Style="{StaticResource WindowChromeMinimum}"  />
+        <Button Style="{StaticResource WindowChromeMaximum}" />
+        <Button Style="{StaticResource WindowChromeClose}" />
+      </StackPanel>
+    </Grid>
+
+    <ToolBar DockPanel.Dock="Top">
+      <Button Command="{Binding ForceShowPlayerCommand}">メクラ板を外す</Button>
+    </ToolBar>
+    <StatusBar DockPanel.Dock="Bottom">
+      <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
+        <!--<StatusBarItem.Style>
+          <Style TargetType="StatusBarItem">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding State}" Value="Maximized">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+              -->
+        <!-- フルスクリーンはそもそもステータスバーが消えるので考慮しない -->
+        <!--
+            </Style.Triggers>
+            <Setter Property="Visibility" Value="Visible" />
+          </Style>
+        </StatusBarItem.Style>-->
+        <ResizeGrip />
+      </StatusBarItem>
+
+      <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea.Value}">
+        <!--<Canvas Style="{StaticResource StatePanel}">
+          <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
+          <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
+        </Canvas>-->
+        info
+      </ToggleButton>
+
+
+    </StatusBar>
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="120" />
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0">
+        <Grid.Style>
+          <Style>
+            <Setter Property="Grid.RowSpan" Value="1" />
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsChecked, ElementName=switchInformation}" Value="False">
+                <Setter Property="Grid.RowSpan" Value="3" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Grid.Style>
+
+        <app_view_controls:WebNavigator
+          x:Name="navigatorPlayer"
+          ServiceType="SmileLive"
+          Visibility="{Binding ShowWebPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}"
+          NewWindowCommand="{Binding NewWindowCommand}"
+          SourceLoadedCommand="{Binding SourceLoadedCommand}"
+          DomLoadedCommand="{Binding DomLoadedCommand}"
+        />
+        <Border Visibility="{Binding ShowMask.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding PlayerLoadState.Value}" />
+        </Border>
+
+      </Grid>
+
+      <GridSplitter
+        Grid.Row="1"
+        Height="4"
+        Style="{StaticResource DefaultHorizonGridSplitter}"
+        Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+      />
+
+      <TabControl
+        Grid.Row="2"
+        TabStripPlacement="Left"
+        Visibility="{Binding IsChecked, ElementName=switchInformation, Converter={StaticResource BooleanToVisibilityConverter}}"
+      >
+        <TabItem Header="情報">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+              <Image Style="{StaticResource ThumbnailImage}" Source="{Binding Information.ThumbnailImage}" />
+              <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
+                <Run Text="{Binding Information.UserName, Mode=OneWay}" />
+              </TextBlock>
+            </StackPanel>
+
+            <Grid Grid.Column="1"  ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+
+              <Grid Grid.Row="1">
+                <FlowDocumentScrollViewer
+                  x:Name="documentDescription"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+                >
+                  <FlowDocument
+                    FontSize="11.5"
+                    PagePadding="10, 2, 10, 0"
+                  />
+                </FlowDocumentScrollViewer>
+              </Grid>
+
+
+            </Grid>
+
+          </Grid>
+        </TabItem>
+      </TabControl>
+
+    </Grid>
+
+  </DockPanel>
+</Window>

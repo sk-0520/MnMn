@@ -28,6 +28,7 @@ using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             Setting = setting;
 
             VideoMediation = new SmileVideoMediation(Mediation, Setting.Video);
+            LiveMediation = new SmileLiveMediation(Mediation, Setting.Live);
         }
 
         #region property
@@ -57,6 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         /// ニコニコ動画関係。
         /// </summary>
         internal SmileVideoMediation VideoMediation { get; private set; }
+        SmileLiveMediation LiveMediation { get; }
 
         SmileSessionViewModel Session { get; set; }
 
@@ -153,6 +156,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     VideoMediation.SetManager(serviceType, managerPack);
                     break;
 
+                case ServiceType.SmileLive:
+                    LiveMediation.SetManager(serviceType, managerPack);
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -166,6 +173,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.Request(request);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.Request(request);
 
                 default:
                     ThrowNotSupportRequest(request);
@@ -182,6 +192,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetUri(key, replaceMap, serviceType);
 
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetUri(key, replaceMap, serviceType);
+
                 default:
                     ThrowNotSupportGetUri(key, replaceMap, serviceType);
                     throw new NotImplementedException();
@@ -196,6 +209,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertUri(uri, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertUri(uri, serviceType);
 
                 default:
                     ThrowNotSupportConvertUri(uri, serviceType);
@@ -212,6 +228,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetRequestParameter(key, replaceMap, serviceType);
 
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetRequestParameter(key, replaceMap, serviceType);
+
                 default:
                     ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
                     throw new NotImplementedException();
@@ -226,6 +245,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetRequestMapping(key, replaceMap, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetRequestMapping(key, replaceMap, serviceType);
 
                 default:
                     ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
@@ -242,6 +264,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case ServiceType.SmileVideo:
                     return VideoMediation.CheckResponseHeader(uri, headers, serviceType);
 
+                case ServiceType.SmileLive:
+                    return LiveMediation.CheckResponseHeader(uri, headers, serviceType);
+
                 default:
                     ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
                     throw new NotImplementedException();
@@ -256,6 +281,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertRequestParameter(requestParams, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertRequestParameter(requestParams, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
@@ -272,6 +300,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertRequestMapping(mapping, serviceType);
 
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertRequestMapping(mapping, serviceType);
+
                 default:
                     ThrowNotSupportConvertRequestMapping(mapping, serviceType);
                     throw new NotImplementedException();
@@ -286,6 +317,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertBinary(uri, binary, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertBinary(uri, binary, serviceType);
 
                 default:
                     ThrowNotSupportConvertBinary(uri, binary, serviceType);
@@ -302,6 +336,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetEncoding(uri, binary, serviceType);
 
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetEncoding(uri, binary, serviceType);
+
                 default:
                     ThrowNotSupportGetEncoding(uri, binary, serviceType);
                     throw new NotImplementedException();
@@ -317,6 +354,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertString(uri, text, serviceType);
 
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertString(uri, text, serviceType);
+
                 default:
                     ThrowNotSupportConvertString(uri, text, serviceType);
                     throw new NotImplementedException();
@@ -331,6 +371,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:
                     ThrowNotSupportValueConvert(inputKey, inputValue, inputType, outputType, serviceType);
@@ -363,6 +406,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.RequestShowView(request);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.RequestShowView(request);
 
                 default:
                     throw new NotImplementedException();
