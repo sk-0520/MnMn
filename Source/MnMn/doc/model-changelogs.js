@@ -84,44 +84,24 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.21.1',
-		'isRc': true,
+		'date': '2016/09/29',
+		'version': '0.22.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'フォーラムやメールで意見をもらってる事象についての対応を #85 にて実施したので優先リリース'
 					},
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'features',
-				'logs': [
-					{
-						'revision': '',
-						'subject': '#85: メモリ不足',
+						'subject': 'それだけだと味気ないしこれ以上コミット空くとマージに支障が出るので #161 を試験実装としてリリース',
 						'comments': [
-							'フォーラムでの対応アプリケーション構成ファイルを取込'
+							'あくまで試験実装なので課題は open のままです',
+							'このブランチのマージは色々なクラスの継承関係いじってるからかなり大工事なんだけど気にしないことにした'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -130,15 +110,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '#85: メモリ不足',
+						'comments': [
+							'フォーラムでの対応アプリケーション構成ファイルを取込'
+						]
 					}
 				]
 			},
@@ -147,15 +122,15 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '試験実装: #161: ニコ生の閲覧',
+						'comments': [
+							'live:official, live:category タブが(現実装における)ニコ生用の入口となります',
+							'なんだかんだ試行錯誤してはいるんですが、申し訳ないけどニコ生初めて使ってる段階なので意見等頂けると助かります',
+							'-> 何が正しくて何がユーザーとして満足できるのかさっぱりわかりません!',
+							'Flashや',
+							'ああFlashや',
+							'Flashや',
+						]
 					}
 				]
 			}
