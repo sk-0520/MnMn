@@ -42,7 +42,7 @@
         ItemsSource="{Binding CategoryItems}"
       />
 
-      <Button Command="{Binding SearchCategoryCommand}">search</Button>
+      <Button Command="{Binding SearchCategoryCommand}">取得</Button>
     </StackPanel>
 
     <TabControl
@@ -71,6 +71,9 @@
       <TabControl.ContentTemplate>
         <DataTemplate>
           <app_view_controls_service_smile_live:SmileLiveFinderControl x:Name="finder" DataContext="{Binding}">
+            <app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
+              <TextBlock>試験運用中につきランキングみたいな状態保持は未実装。</TextBlock>
+            </app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
             <app_view_controls_service_smile_live:SmileLiveFinderControl.FooterContent>
               <Grid Height="24">
                 <Grid.ColumnDefinitions>

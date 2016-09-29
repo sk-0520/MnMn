@@ -48,8 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         {
             CategoryModel = categoryDefine;
 
-            Category = category;
             SetContextElements(sort, order);
+            Category = category;
 
             PagerFinderProvider = new PagerFinderProvider<SmileLiveFinderViewModelBase, SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel>(
                 Mediation,

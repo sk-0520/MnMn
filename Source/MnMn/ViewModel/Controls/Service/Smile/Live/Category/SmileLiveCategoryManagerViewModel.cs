@@ -54,7 +54,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             CategoryModel = Mediation.GetResultFromRequest<SmileLiveCategoryModel>(new RequestModel(RequestKind.CategoryDefine, ServiceType.SmileLive));
             SelectedSort = SortItems.First();
             SelectedOrder = OrderItems.First();
-            SelectedCategory = CategoryItems.First();
+            var selectedCategory = CategoryModel.CategoryItems.First();
+            SelectedCategory = selectedCategory;
+            CategoryItems = CategoryModel.CategoryItems;
         }
 
         #region property
@@ -65,24 +67,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         public IList<DefinedElementModel> SortItems { get { return CategoryModel.SortItems; } }
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
-        public IList<DefinedElementModel> CategoryItems { get { return CategoryModel.CategoryItems; } }
+        public IList<DefinedElementModel> CategoryItems { get; }
 
         public DefinedElementModel SelectedSort
         {
             get { return this._selectedSort; }
-            set { SetVariableValue(ref this._selectedSort, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedSort, value)) {
+                    if(this.SelectedSort != null && CategoryItems != null) {
+                        SearchAsync().ConfigureAwait(false);
+                    }
+                }
+            }
         }
 
         public DefinedElementModel SelectedOrder
         {
             get { return this._selectedOrder; }
-            set { SetVariableValue(ref this._selectedOrder, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedOrder, value)) {
+                    if(this.SelectedOrder != null && CategoryItems != null) {
+                        SearchAsync().ConfigureAwait(false);
+                    }
+                }
+            }
         }
 
         public DefinedElementModel SelectedCategory
         {
             get { return this._selectedCategory; }
-            set { SetVariableValue(ref this._selectedCategory, value); }
+            set
+            {
+                if(SetVariableValue(ref this._selectedCategory, value)) {
+                    if(this.SelectedCategory != null && CategoryItems != null) {
+                        SearchAsync().ConfigureAwait(false);
+                    }
+                }
+            }
         }
 
         public SmileLiveCategoryGroupFinderViewModel SelectedCategoryGroup
@@ -179,7 +202,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         { }
 
         protected override void ShowViewCore()
-        { }
+        {
+            if(!CategoryGroups.Any()) {
+                SearchAsync();
+            }
+        }
 
         #endregion
     }
