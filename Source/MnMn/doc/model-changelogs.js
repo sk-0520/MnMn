@@ -110,7 +110,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#85: メモリ不足',
+						'comments': [
+							'フォーラムでの対応アプリケーション構成ファイルを取込'
+						]
 					},
 					{
 						'revision': '',
