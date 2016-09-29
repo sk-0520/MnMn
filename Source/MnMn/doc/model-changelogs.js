@@ -127,7 +127,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#183: 非リリース版でのウィンドウタイトル補正が頭おかしい'
 					},
 					{
 						'revision': '',
