@@ -21,6 +21,10 @@
   </UserControl.Resources>
 
   <Grid>
-    <app_view_controls_service_smile_live:SmileLiveFinderControl x:Name="finder" DataContext="{Binding OfficialFeedFinder}" />
+    <app_view_controls_service_smile_live:SmileLiveFinderControl x:Name="finder" DataContext="{Binding OfficialFeedFinder}">
+      <app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
+        <TextBlock>ここでとるRSSにはコメント情報無いのねー。公開日から逆算した時間も頭おかしいのねー。</TextBlock>
+      </app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
+    </app_view_controls_service_smile_live:SmileLiveFinderControl>
   </Grid>
 </UserControl>

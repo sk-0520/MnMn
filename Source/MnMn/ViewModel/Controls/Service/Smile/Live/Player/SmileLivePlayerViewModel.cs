@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -287,14 +288,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                 page.Dispose();
 
                 if(response.IsSuccess) {
-                    var html = new HtmlAgilityPack.HtmlDocument();
-                    html.LoadHtml(response.Result);
+                    var html = new HtmlAgilityPack.HtmlDocument() {
+                        OptionAutoCloseOnEnd = true,
+                    };
+                    var htmlSource = response.Result;
+                    //TODO: 不勉強故か <img> が死なないので古き良き文字列置き換え
+                    //var images = html.DocumentNode.SelectNodes("//img").ToArray();
+                    //foreach(var img in images) {
+                    //    img.Remove();
+                    //}
+                    htmlSource = Regex.Replace(htmlSource, @"<img(\s.*?)?\s*/?>", string.Empty);
+                    html.LoadHtml(htmlSource);
                     var baseElement = html.GetElementbyId("jsFollowingAdMain");
-                    var images = baseElement.SelectNodes(".//img").ToArray();
-                    foreach(var img in images) {
-                        img.Remove();
-                    }
                     var removeTargets = new[] {
+                        baseElement.SelectSingleNode(".//*[@class='creator_btn_are']"),
                         baseElement.SelectSingleNode(".//*[@id='livetags']"),
                         baseElement.SelectSingleNode(".//*[@class='chan']"),
                         baseElement.SelectSingleNode(".//*[@id='tooltip']"),
