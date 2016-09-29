@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
@@ -47,7 +48,7 @@ using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player
 {
-    public class SmileLivePlayerViewModel: ViewModelBase, ISetView, ICloseView, ICaptionCommand
+    public class SmileLivePlayerViewModel: ViewModelBase, ISetView, ICloseView, ICaptionCommand, ISmileDescription
     {
         #region define
 
@@ -431,6 +432,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         }
 
 
+        void OpenWebLink(string o)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        Task OpenVideoLinkAsync(string o)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        void OpenMyListLink(string o)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        void OpenUserLink(string o)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region ISetView
@@ -516,6 +540,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
         public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
         public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
+
+        #endregion
+
+        #region ISmileDescription
+
+        public ICommand OpenWebLinkCommand { get { return CreateCommand(o => OpenWebLink((string)o)); } }
+        public ICommand OpenVideoLinkCommand { get { return CreateCommand(o => OpenVideoLinkAsync((string)o)); } }
+        public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => OpenMyListLink((string)o)); } }
+        public ICommand OpenUserLinkCommand { get { return CreateCommand(o => OpenUserLink((string)o)); } }
 
         #endregion
 
