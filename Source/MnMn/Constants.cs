@@ -301,11 +301,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string DefineDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, DefineName);
 
         /// <summary>
-        /// etc/define/update-state.html
-        /// </summary>
-        public static string UpdateStateHtmlFilePath { get; } = Path.Combine(DefineDirectoryPath, "update-state.html");
-
-        /// <summary>
         /// etc/define/service
         /// </summary>
         public static string DefineServiceDirectoryPath { get; } = Path.Combine(DefineDirectoryPath, ServiceName);
