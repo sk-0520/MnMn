@@ -89,6 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 {ServiceType.Application, new string[0] },
                 {ServiceType.Smile, new [] { Constants.ServiceName, Constants.ServiceSmileName } },
                 {ServiceType.SmileVideo, new [] { Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName } },
+                {ServiceType.SmileLive, new [] { Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileLiveName } },
             };
 
             // 設定値よりコマンドラインオプションを優先する
@@ -122,6 +123,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 switch(request.ServiceType) {
                     case ServiceType.Smile:
                     case ServiceType.SmileVideo:
+                    case ServiceType.SmileLive:
                         return Smile.RequestShowView(request);
 
                     default:
@@ -153,6 +155,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 switch(request.ServiceType) {
                     case ServiceType.Smile:
                     case ServiceType.SmileVideo:
+                    case ServiceType.SmileLive:
                         ManagerPack.AppManager.SelectedManager = ManagerPack.SmileManager;
                         ManagerPack.SmileManager.SelectedManager = viewModel as ManagerViewModelBase;
                         return new ResponseModel(request, null);
@@ -174,6 +177,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     Smile.SetManager(serviceType, managerPack);
                     break;
 
@@ -299,6 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.Request(request);
 
                 default:
@@ -329,6 +334,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.GetUri(key, replaceMap, serviceType);
 
                 default:
@@ -342,6 +348,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.ConvertUri(uri, serviceType);
 
                 default:
@@ -355,6 +362,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.GetRequestParameter(key, replaceMap, serviceType);
 
                 default:
@@ -368,6 +376,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.GetRequestMapping(key, replaceMap, serviceType);
 
                 default:
@@ -381,6 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.ConvertRequestParameter(requestParams, serviceType);
 
                 default:
@@ -394,6 +404,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.ConvertRequestMapping(mapping, serviceType);
 
                 default:
@@ -407,6 +418,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.CheckResponseHeader(uri, headers, serviceType);
 
                 default:
@@ -420,6 +432,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.ConvertBinary(uri, binary, serviceType);
 
                 default:
@@ -433,6 +446,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.GetEncoding(uri, binary, serviceType);
 
                 default:
@@ -446,6 +460,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.ConvertString(uri, text, serviceType);
 
                 default:
@@ -459,6 +474,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
                     return Smile.ConvertValue(out outputValue, outputType, inputKey, inputValue, inputType, serviceType);
 
                 default:

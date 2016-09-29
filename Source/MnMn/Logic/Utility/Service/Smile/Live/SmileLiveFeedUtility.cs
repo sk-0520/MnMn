@@ -19,15 +19,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Live
 {
-    public interface ISmileVideoDescription
+    public static class SmileLiveFeedUtility
     {
-        ICommand OpenWebLinkCommand { get; }
-        ICommand OpenVideoLinkCommand { get; }
-        ICommand OpenMyListLinkCommand { get; }
-        ICommand OpenUserLinkCommand { get; }
+        #region function
+
+        public static SmileLiveType ConvertType(string s)
+        {
+            switch(s) {
+                case "channel":
+                    return SmileLiveType.Channel;
+
+                case "community":
+                    return SmileLiveType.Community;
+
+                default:
+                    return SmileLiveType.Unknown;
+            }
+        }
+
+        #endregion
     }
 }

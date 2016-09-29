@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
@@ -28,9 +29,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
 {
     public class SmileManagerPackModel: ManagerPackModelBase
     {
-        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileUsersManagerViewModel usersManager, SmileWebSiteManagerViewModel webSiteManager, SmileSettingManagerViewModel settingManager)
+        public SmileManagerPackModel(SmileVideoManagerViewModel videoManager, SmileLiveManagerViewModel liveManager, SmileUsersManagerViewModel usersManager, SmileWebSiteManagerViewModel webSiteManager, SmileSettingManagerViewModel settingManager)
         {
             VideoManager = videoManager;
+            LiveManager = liveManager;
             UsersManager = usersManager;
             WebSiteManager = webSiteManager;
             SettingManager = settingManager;
@@ -39,6 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         #region proeprty
 
         public SmileVideoManagerViewModel VideoManager { get; }
+        public SmileLiveManagerViewModel LiveManager { get; }
         public SmileUsersManagerViewModel UsersManager { get; }
         public SmileWebSiteManagerViewModel WebSiteManager { get; }
         public SmileSettingManagerViewModel SettingManager { get; }

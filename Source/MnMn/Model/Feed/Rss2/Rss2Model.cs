@@ -30,15 +30,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
     /// </summary>
     [Serializable, XmlRoot("rss")]
     public class Rss2ModelBase<TRss2ChannelModel, TRss2ItemModel, TRss2GuidModel>: FeedModelBase
-        where TRss2ChannelModel: Rss2ChannelModelBase<TRss2ItemModel, TRss2GuidModel>, new()
+        where TRss2ChannelModel : Rss2ChannelModelBase<TRss2ItemModel, TRss2GuidModel>, new()
         where TRss2ItemModel : Rss2ItemModelBase<TRss2GuidModel>, new()
         where TRss2GuidModel : Rss2GuidModel, new()
     {
+        #region variable
+
+        XmlSerializerNamespaces _xmlns;
+
+        #endregion
+
+        [XmlNamespaceDeclarations]
+        public XmlSerializerNamespaces Xmlns
+        {
+            get
+            {
+                if(this._xmlns == null) {
+                    this._xmlns = new XmlSerializerNamespaces();
+                    foreach(var pair in GetXmlns()) {
+                        this._xmlns.Add(pair.Key, pair.Value);
+                    }
+                }
+
+                return _xmlns;
+            }
+            set { _xmlns = value; }
+        }
+
         [XmlAttribute("version")]
         public string Version { get; set; }
 
         [XmlElement("channel")]
         public TRss2ChannelModel Channel { get; set; } = new TRss2ChannelModel();
+
+        #region function
+
+        virtual protected IEnumerable<KeyValuePair<string, string>> GetXmlns()
+        {
+            return Enumerable.Empty<KeyValuePair<string, string>>();
+        }
+
+        #endregion
     }
 
     [Serializable, XmlRoot("rss")]

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+	<param key="live-category">
+		<!--<item key="rss" value="2.0" />-->
+		<item key="tab" value="${tab}" />
+		<item key="sort" value="${sort}" />
+		<item key="p" value="${page}" />
+		<item key="order" value="${order}" />
+	</param>
+
+</parameters>

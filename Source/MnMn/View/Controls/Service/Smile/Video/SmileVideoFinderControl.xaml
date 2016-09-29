@@ -74,7 +74,7 @@
 
     <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
 
-    <Grid Style="{StaticResource BodyContentVisibility}">
+    <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -403,7 +403,7 @@
                       </TextBlock.Style>
                     </TextBlock>
 
-                    <TextBlock Grid.Row="1" Grid.Column="2" Text="マイリスト" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="コメント" Style="{StaticResource HeaderColumn}" />
                     <TextBlock Grid.Row="1" Grid.Column="3">
                       <TextBlock.Style>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
@@ -411,7 +411,7 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="---" />
                             </MultiDataTrigger>
@@ -419,23 +419,23 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
+                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
+                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="未処理" />
@@ -444,7 +444,7 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="準備中" />
@@ -452,7 +452,7 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="読込中" />
@@ -462,7 +462,7 @@
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
+                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
@@ -622,7 +622,7 @@
                       </TextBlock.Style>
                     </TextBlock>
 
-                    <TextBlock Grid.Row="2" Grid.Column="2" Text="コメント" Style="{StaticResource HeaderColumn}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="マイリスト" Style="{StaticResource HeaderColumn}" />
                     <TextBlock Grid.Row="2" Grid.Column="3">
                       <TextBlock.Style>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource NumberColumn}">
@@ -630,7 +630,7 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="---" />
                             </MultiDataTrigger>
@@ -638,23 +638,23 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="False" />
-                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
+                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="True" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="True" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
+                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="None" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="未処理" />
@@ -663,7 +663,7 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="Preparation" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="準備中" />
@@ -671,7 +671,7 @@
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
-                                <Condition Binding="{Binding Information.HasCommentCounter}" Value="False" />
+                                <Condition Binding="{Binding Information.HasMylistCounter}" Value="False" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="Loading" />
                               </MultiDataTrigger.Conditions>
                               <Setter Property="Text" Value="読込中" />
@@ -681,7 +681,7 @@
                                 <Condition Binding="{Binding Information.NeedLoadInformationFlag}" Value="True" />
                                 <Condition Binding="{Binding Information.InformationLoadState}" Value="Loaded" />
                               </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding Information.CommentCounter, Mode=OneWay, StringFormat=N0}" />
+                              <Setter Property="Text" Value="{Binding Information.MylistCounter, Mode=OneWay, StringFormat=N0}" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                               <MultiDataTrigger.Conditions>

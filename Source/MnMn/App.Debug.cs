@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
             //mappng();
             //mylist();
+            liverss();
         }
 
         async void login()
@@ -123,9 +125,20 @@ namespace ContentTypeTextNet.MnMn.MnMn
             var session = new SmileSessionViewModel(mediation, model);
 
             var mylist = new MyList(mediation);
-            
+
             var def = await mylist.LoadAccountDefaultAsync();
             var grp = await mylist.LoadAccountGroupAsync();
+        }
+
+        private void liverss()
+        {
+            var rss = new FeedSmileLiveModel();
+            rss.Channel.TotalCount = "aaa";
+            using(var stream = new MemoryStream()) {
+                SerializeUtility.SaveXmlSerializeToStream(stream, rss);
+                var binary = stream.ToArray();
+                var s = Encoding.UTF8.GetString(binary);
+            }
         }
 
     }

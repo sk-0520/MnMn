@@ -28,9 +28,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
     /// <summary>
     /// チャンネル情報。
     /// </summary>
-    public class Rss2ChannelModelBase<TRss2ItemModel,TRss2GuidModel>: ModelBase
-        where TRss2ItemModel: Rss2ItemModelBase<TRss2GuidModel>
-        where TRss2GuidModel: Rss2GuidModel, new()
+    public class Rss2ChannelModelBase<TRss2ItemModel, TRss2GuidModel>: ModelBase
+        where TRss2ItemModel : Rss2ItemModelBase<TRss2GuidModel>
+        where TRss2GuidModel : Rss2GuidModel, new()
     {
         [XmlElement("title")]
         public string Title { get; set; }
@@ -38,6 +38,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Feed.Rss2
         public string Link { get; set; }
         [XmlElement("description")]
         public string Description { get; set; }
+        [XmlElement("language")]
+        public string Language { get; set; }
+        [XmlElement("copyright")]
+        public string Copyright { get; set; }
         [XmlElement("item")]
         public CollectionModel<TRss2ItemModel> Items { get; set; } = new CollectionModel<TRss2ItemModel>();
     }

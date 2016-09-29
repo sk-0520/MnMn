@@ -158,10 +158,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         //}
         IEnumerable<ViewModelBase> GetChildWindowViewModels()
         {
-            var players = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+            var videoPlayers = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
+            var livePlayers = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileLive));
 
             var windows = new[] {
-                players,
+                videoPlayers,
+                livePlayers,
             }.SelectMany(i => i);
 
             return windows;
