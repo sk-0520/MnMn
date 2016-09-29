@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         bool _isBlacklist;
 
         bool _showFilterSetting;
-        bool _isEnabledFinderFiltering;
+        bool _isEnabledFinderFiltering = true;
 
         #endregion
 
