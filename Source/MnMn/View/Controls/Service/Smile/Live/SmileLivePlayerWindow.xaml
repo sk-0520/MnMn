@@ -22,7 +22,7 @@
   d:DesignHeight="540" d:DesignWidth="780"
 >
   <i:Interaction.Behaviors>
-    <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Information.Title, Mode=OneWay}" />
+    <app_view_attachment:WindowTitleBehavior Service="SmileLive" Title="{Binding Information.Title, Mode=OneWay}" />
   </i:Interaction.Behaviors>
   <Window.Resources>
     <ResourceDictionary>
