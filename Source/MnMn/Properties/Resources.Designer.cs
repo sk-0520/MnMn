@@ -61,6 +61,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   &lt;!DOCTYPE html&gt;
+        ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///	&lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///	&lt;title&gt;update&lt;/title&gt;
+        ///	&lt;style&gt;
+        ///		* {
+        ///			font-family: Consolas, &quot;Meiryo UI&quot;, monospace;
+        ///			font-size: 14pt;
+        ///		}
+        ///
+        ///		h1 {
+        ///			text-align: center;
+        ///		}
+        ///
+        ///		#content {
+        ///			display: flex;
+        ///			justify-content: center;
+        ///			align-items: center;
+        ///		}
+        ///
+        ///		#timestamp {
+        ///			text-align: center;
+        ///		}
+        ///	&lt;/style&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///	&lt;h1&gt;${UPDATE-TITLE}&lt;/h1&gt;
+        ///	&lt;div id=&quot;content&quot;&gt;
+        ///		${UPDATE-CONTENT}
+        ///	&lt;/div&gt;
+        ///	&lt;hr /&gt;
+        ///	&lt; [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Html_UpdateState {
+            get {
+                return ResourceManager.GetString("File_Html_UpdateState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   前方一致 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_FilteringType_ForwardMatch {

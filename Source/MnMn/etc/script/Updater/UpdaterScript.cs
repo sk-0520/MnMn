@@ -23,6 +23,7 @@ public class UpdaterScript
         var platformDir = platform + @"\";
         var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\" : @"x86\";
         var targets = new string[] {
+            @"etc\script\define\update-state.html",
         };
         var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
         foreach(var targetPath in tagetPathList) {
