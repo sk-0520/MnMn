@@ -86,6 +86,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static int ServiceSmileVideoReceiveBuffer => appConfig.Get("service-smile-smilevideo-receive-buffer", int.Parse);
         /// <summary>
+        /// ユーザー履歴数。
+        /// </summary>
+        public static int ServiceSmileUserHistoryCount => appConfig.Get("service-smile-user-history-count", int.Parse);
+        /// <summary>
         /// マイリスト履歴数。
         /// </summary>
         public static int ServiceSmileMyListHistoryCount => appConfig.Get("service-smile-mylist-history-count", int.Parse);
