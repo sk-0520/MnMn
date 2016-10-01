@@ -13,6 +13,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
     {
         #region property
 
+        /// <summary>
+        /// ブックマーク。
+        /// </summary>
+        public CollectionModel<SmileUserBookmarkItemModel> Bookmark { get; set; } = new CollectionModel<SmileUserBookmarkItemModel>();
+
+        /// <summary>
+        /// 履歴。
+        /// </summary>
         public FixedSizeCollectionModel<SmileUserItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileUserItemModel>(Constants.ServiceSmileUserHistoryCount, false);
 
         #endregion

@@ -286,6 +286,7 @@
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLivePlayerSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\SmileUserBookmarkItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileUserItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\SmileUserSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
