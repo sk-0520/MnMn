@@ -84,6 +84,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         /// </summary>
         public FileInfo ThumbnaiImageFile { get; private set; }
 
+
+        //public FileInfo WatchPageHtmlFile { get; private set; }
+
+
         #endregion
 
         public bool IsPlaying
@@ -269,6 +273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             CacheDirectory = Directory.CreateDirectory(Path.Combine(cacheBaseDir.FullName, Id));
 
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(Id, "png")));
+            //WatchPageHtmlFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(Id, "html")));
         }
 
         public Task OpenVideoDefaultAsync(bool forceEconomy)
