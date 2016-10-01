@@ -28,7 +28,50 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="20*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="80*" />
+    </Grid.ColumnDefinitions>
+
+    <TabControl Grid.Column="0">
+      <TabItem Header="ブックマーク">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <ToolBar Grid.Row="0">
+            <Button>↑</Button>
+            <Button>↓</Button>
+            <Button>×</Button>
+          </ToolBar>
+
+          <ListBox Grid.Row="1"></ListBox>
+        </Grid>
+      </TabItem>
+      <TabItem Header="history">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <ToolBar Grid.Row="0">
+            <Button>add</Button>
+          </ToolBar>
+
+          <ListBox Grid.Row="1"></ListBox>
+        </Grid>
+
+      </TabItem>
+    </TabControl>
+
+    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+
     <TabControl
+      Grid.Column="2"
       SelectedItem="{Binding SelectedUser}"
       ItemsSource="{Binding UserItems}"
       Style="{StaticResource FinderTab}"
@@ -59,7 +102,7 @@
       <TabControl.ContentTemplate>
         <DataTemplate>
           <Grid>
-            <TabControl TabStripPlacement="Left">
+            <TabControl TabStripPlacement="Top">
               <TabItem Header="ユーザー情報" IsSelected="{Binding IsUserSelected}">
                 <Grid>
                   <Grid.ColumnDefinitions>
