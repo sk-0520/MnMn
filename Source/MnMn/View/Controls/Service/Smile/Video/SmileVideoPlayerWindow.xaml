@@ -447,7 +447,8 @@
           <MenuItem Header="動画サイズ: 150%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="150"  />
           <MenuItem Header="動画サイズ: 200%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="200" />
           <Separator />
-          <MenuItem Header="動画サイズ: 公式サイズ" Command="{Binding ChangePlayerSizeFromOfficialCommand}"/>
+          <MenuItem Header="動画サイズ: 公式サイズ" Command="{Binding ChangePlayerSizeFromOfficial16xpCommand}"/>
+          <MenuItem Header="動画サイズ: 公式サイズ" Command="{Binding ChangePlayerSizeFromOfficial16x9Command}"/>
           <Separator />
           <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200" />
         </MenuItem>

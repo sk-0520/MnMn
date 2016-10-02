@@ -362,9 +362,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand ChangePlayerSizeFromOfficialCommand
+        public ICommand ChangePlayerSizeFromOfficial4x3Command
         {
-            get { return CreateCommand(o => ChangePlayerSizeFromOfficial()); }
+            get { return CreateCommand(o => ChangePlayerSizeFromOfficial4x3()); }
+        }
+        public ICommand ChangePlayerSizeFromOfficial16x9Command
+        {
+            get { return CreateCommand(o => ChangePlayerSizeFromOfficial16x9()); }
         }
 
         public ICommand ResetPlayerAreaCommand
@@ -609,9 +613,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             );
         }
 
-        void ChangePlayerSizeFromOfficial()
+        void ChangePlayerSizeFromOfficial4x3()
         {
+            ChangePlayerSize(
+                Constants.ServiceSmileVideoPlayerOfficial4x3Width,
+                Constants.ServiceSmileVideoPlayerOfficial4x3Width
+            );
+        }
 
+        void ChangePlayerSizeFromOfficial16x9()
+        {
+            ChangePlayerSize(
+                Constants.ServiceSmileVideoPlayerOfficial16x9Width,
+                Constants.ServiceSmileVideoPlayerOfficial16x9Height
+            );
         }
 
         void ChangePlayerSize(double width, double height)
@@ -620,10 +635,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.ActualWidth - Player.ActualWidth,
                 View.ActualHeight - Player.ActualHeight
             );
-            var videoSize = new Size(
-                width,
-                height
-            );
+            var videoSize = new Size(width, height);
 
             Width = leaveSize.Width + videoSize.Width;
             Height = leaveSize.Height + videoSize.Height;
