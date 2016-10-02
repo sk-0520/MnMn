@@ -205,6 +205,7 @@
     <Compile Include="Define\Service\Smile\Live\SmileLiveSortType.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoChangeVideoPositionType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoProcess.cs" />
     <Compile Include="Define\UI\Player\WheelOperation.cs" />
     <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
@@ -276,6 +277,11 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
+    <Compile Include="Model\Request\ProcessRequestModelBase.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessCheckItLaterParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessParameterModelBase.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoProcessRequestModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveItemModel.cs" />

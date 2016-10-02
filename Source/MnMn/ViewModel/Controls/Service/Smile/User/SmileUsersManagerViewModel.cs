@@ -22,17 +22,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
 
@@ -61,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
             UserHistoryCollection = new MVMPairCreateDelegationCollection<SmileUserItemModel, SmileUserHistoryItemViewModel>(Setting.User.History, default(object), CreateHistoryItem);
             UserHistoryItems = CollectionViewSource.GetDefaultView(UserHistoryCollection.ViewModelList);
+
+            CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
         }
 
         #region property
@@ -69,6 +77,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
         public SmileLoginUserInformationViewModel LoginUser { get; private set; }
+
+        DispatcherTimer CheckItLaterCheckTimer = new DispatcherTimer() {
+            Interval = Constants.ServiceSmileUserCheckItLaterCheckTime,
+        };
 
         public SmileUserInformationViewModel SelectedUser
         {
@@ -294,6 +306,79 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             UserHistoryCollection.Insert(0, item, null);
         }
 
+        async Task<IEnumerable<SmileVideoVideoItemModel>> CheckBookmarkPostAsync(string userId)
+        {
+            var nowBookmark = Setting.User.Bookmark.FirstOrDefault(u => u.UserId == userId);
+            if(nowBookmark == null) {
+                return Enumerable.Empty<SmileVideoVideoItemModel>();
+            }
+
+            var user = new Logic.Service.Smile.HalfBakedApi.User(Mediation);
+            var info = await user.LoadUserInformationAsync(userId);
+            if(!info.IsPublicPost) {
+                return Enumerable.Empty<SmileVideoVideoItemModel>();
+            }
+
+            var feed = await user.LoadPostVideoAsync(userId);
+            var channelItems = feed.Channel.Items;
+
+            var newViewModels = channelItems
+                .Select(item => {
+                    var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, Define.Service.Smile.Video.SmileVideoInformationFlags.None));
+                    return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
+                })
+                .ToArray()
+            ;
+
+            var exceptVideoViewModel = newViewModels
+                .Select(i => i.VideoId)
+                .Except(nowBookmark.Videos)
+                .Select(v => newViewModels.First(i => i.VideoId == v))
+                .Select(i => i.ToVideoItemModel())
+                .ToArray()
+            ;
+
+            if(exceptVideoViewModel.Any()) {
+                nowBookmark.Videos.InitializeRange(newViewModels.Select(i => i.VideoId));
+                nowBookmark.UpdateTimestamp = DateTime.Now;
+            }
+
+            return (IEnumerable<SmileVideoVideoItemModel>)exceptVideoViewModel;
+        }
+
+        public Task<IList<SmileVideoVideoItemModel>> CheckUserPostAsync()
+        {
+            var newVideoItems = new List<SmileVideoVideoItemModel>();
+            var tasks = new List<Task>();
+            foreach(var bookmark in UserBookmarkCollection.ModelList) {
+                var task = CheckBookmarkPostAsync(bookmark.UserId).ContinueWith(t => {
+                    if(t.Result != null && t.Result.Any()) {
+                        newVideoItems.AddRange(t.Result);
+                    }
+                });
+                tasks.Add(task);
+            }
+
+            return Task.WhenAll(tasks).ContinueWith(t => {
+                return (IList<SmileVideoVideoItemModel>)newVideoItems;
+            });
+        }
+
+        Task CheckUpdateAsync()
+        {
+            var postTask = CheckUserPostAsync();
+
+            return Task.WhenAll(postTask).ContinueWith(t => {
+                var addItemList = new List<SmileVideoVideoItemModel>();
+
+                var videoItems = postTask.Result;
+
+                foreach(var item in videoItems) {
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
+                }
+            });
+        }
+
         #endregion
 
         #region ManagerViewModelBase
@@ -324,7 +409,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 SelectedUser = null;
             }
 
-            return Task.CompletedTask;
+            return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
+                // 裏で走らせとく
+                CheckUpdateAsync().ContinueWith(t => {
+                    CheckItLaterCheckTimer.Stop();
+                    CheckItLaterCheckTimer.Start();
+                });
+            });
         }
 
         public override void InitializeView(MainWindow view)
@@ -339,5 +430,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         }
 
         #endregion
+
+        async void CheckItLaterCheckTimer_Tick(object sender, EventArgs e)
+        {
+            CheckItLaterCheckTimer.Stop();
+            try {
+                await CheckUpdateAsync();
+            } finally {
+                CheckItLaterCheckTimer.Start();
+            }
+        }
+
     }
 }

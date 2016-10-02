@@ -139,8 +139,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var myListItems = mylistTask.Result;
 
                 foreach(var item in myListItems) {
-                    var addItem = CheckItLaterManager.AddLater(item);
-                    addItemList.Add(addItem);
+                    //var addItem = CheckItLaterManager.AddLater(item);
+                    //addItemList.Add(addItem);
+                    Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item)));
                 }
             });
         }
@@ -243,6 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync())).ContinueWith(_ => {
                 // 裏で走らせとく
                 CheckUpdateAsync().ContinueWith(t => {
+                    CheckItLaterCheckTimer.Stop();
                     CheckItLaterCheckTimer.Start();
                 });
             });
