@@ -19,12 +19,12 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <Style x:Key="ReloadButton" TargetType="Button">

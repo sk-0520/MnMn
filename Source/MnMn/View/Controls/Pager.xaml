@@ -10,9 +10,9 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <Style x:Key="CommandButton" TargetType="Control">
         <Style.Triggers>
           <DataTrigger Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">

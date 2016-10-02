@@ -4,7 +4,7 @@
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 >
-  <Color x:Key="SourceLoadState_None">Gray</Color>
+  <!--<Color x:Key="SourceLoadState_None">Gray</Color>
   <Color x:Key="SourceLoadState_SourceLoading">Orange</Color>
   <Color x:Key="SourceLoadState_SourceChecking">Pink</Color>
   <Color x:Key="SourceLoadState_InformationLoading">Yellow</Color>
@@ -18,6 +18,6 @@
 
   <Style x:Key="TabVideoSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator" BasedOn="{StaticResource TabSourceLoadState}">
     <Setter Property="SourceLoadState" Value="{Binding FinderLoadState}" />
-  </Style>
+  </Style>-->
 
 </ResourceDictionary>

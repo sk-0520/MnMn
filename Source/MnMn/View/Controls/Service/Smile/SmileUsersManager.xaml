@@ -16,12 +16,12 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile:SmileUserHasBookmarkConverter x:Key="SmileUserHasBookmarkConverter" />

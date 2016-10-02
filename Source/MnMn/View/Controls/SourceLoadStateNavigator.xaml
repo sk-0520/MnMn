@@ -11,9 +11,9 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </UserControl.Resources>

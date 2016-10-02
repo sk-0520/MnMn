@@ -12,9 +12,9 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml"/>
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <cttn_sl_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
     </ResourceDictionary>
   </UserControl.Resources>

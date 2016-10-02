@@ -26,12 +26,12 @@
   </i:Interaction.Behaviors>
   <Window.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 

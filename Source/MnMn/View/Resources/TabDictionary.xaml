@@ -10,7 +10,7 @@
     <ResourceDictionary Source="/View/Resources/ButtonDictionary.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <Style x:Key="TabReloadButton" TargetType="Button" BasedOn="{StaticResource ReloadButton}">
+  <!--<Style x:Key="TabReloadButton" TargetType="Button" BasedOn="{StaticResource ReloadButton}">
     <Setter Property="Command" Value="{Binding ReloadCommand}" />
     <Setter Property="IsEnabled" Value="{Binding CanLoad}" />
   </Style>
@@ -33,6 +33,7 @@
     <Setter Property="Command" Value="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     <Setter Property="CommandParameter" Value="{Binding}" />
   </Style>
+  -->
 
   <Style x:Key="FindTabItem" TargetType="TabItem">
     <EventSetter Event="MouseDown" Handler="FindTabItem_MouseDown" />
@@ -48,6 +49,7 @@
       </Setter.Value>
     </Setter>-->
   </Style>
+
 
   <!--
   http://www.kanazawa-net.ne.jp/~pmansato/wpf/wpf_custom_tabcontrol.htm
