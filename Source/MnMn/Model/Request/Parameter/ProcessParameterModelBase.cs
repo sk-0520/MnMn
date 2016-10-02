@@ -19,25 +19,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.IF.Control;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter
 {
-    public class SmileUserBookmarkItemViewModel: SingleModelWrapperViewModelBase<SmileUserBookmarkItemModel>
-    {
-        public SmileUserBookmarkItemViewModel(SmileUserBookmarkItemModel model)
-            : base(model)
-        { }
-
-        #region property
-
-        public string UserName { get { return Model.UserName; } }
-
-        public string UserId { get { return Model.UserId; } }
-
-        #endregion
-    }
+    public abstract class ProcessParameterModelBase: ModelBase
+    { }
 }

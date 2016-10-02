@@ -75,5 +75,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 表示ウィンドウ取得。
         /// </summary>
         WindowViewModels,
+        /// <summary>
+        /// 何かする。
+        /// </summary>
+        Process,
     }
 }

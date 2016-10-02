@@ -205,6 +205,7 @@
     <Compile Include="Define\Service\Smile\Live\SmileLiveSortType.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoChangeVideoPositionType.cs" />
+    <Compile Include="Define\Service\Smile\Video\SmileVideoProcess.cs" />
     <Compile Include="Define\UI\Player\WheelOperation.cs" />
     <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveInformationLoader.cs" />
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
+    <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveFeedUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
@@ -275,6 +277,11 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
+    <Compile Include="Model\Request\ProcessRequestModelBase.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessCheckItLaterParameterModel.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessParameterModelBase.cs" />
+    <Compile Include="Model\Request\Service\Smile\Video\SmileVideoProcessRequestModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveGuidModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveItemModel.cs" />
@@ -286,6 +293,9 @@
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLivePlayerSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\User\SmileUserBookmarkItemModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\User\SmileUserItemModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\User\SmileUserSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
@@ -311,6 +321,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Player\SmileLivePlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
@@ -345,6 +356,7 @@
     </Compile>
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\SmileUserHasBookmarkConverter.cs" />
     <Compile Include="View\Resources\TabDictionary.xaml.cs">
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>
