@@ -160,6 +160,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>縦。</para>
         /// </summary>
         public static double ServiceSmileVideoPlayerCommentHeight => appConfig.Get("service-smile-smilevideo-player-comment-height", double.Parse);
+
+        public static double ServiceSmileVideoPlayerOfficial4x3Width => appConfig.Get("service-smile-smilevideo-player-official-4:3-width", double.Parse);
+        public static double ServiceSmileVideoPlayerOfficial4x3Height => appConfig.Get("service-smile-smilevideo-player-official-4:3-height", double.Parse);
+        public static double ServiceSmileVideoPlayerOfficial16x9Width => appConfig.Get("service-smile-smilevideo-player-official-16:9-width", double.Parse);
+        public static double ServiceSmileVideoPlayerOfficial16x9Height => appConfig.Get("service-smile-smilevideo-player-official-16:9-height", double.Parse);
         /// <summary>
         /// 自動再生タイミング上下限値。
         /// </summary>
