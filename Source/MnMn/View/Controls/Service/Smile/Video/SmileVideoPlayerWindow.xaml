@@ -450,6 +450,8 @@
           <MenuItem Header="動画サイズ: 公式サイズ(16:9)" Command="{Binding ChangePlayerSizeFromOfficial16x9Command}"/>
           <MenuItem Header="動画サイズ: 公式サイズ(4:3)" Command="{Binding ChangePlayerSizeFromOfficial4x3Command}"/>
           <Separator />
+          <MenuItem Header="フルスクリーン" Command="{Binding ChangeFullScreenCommand}" />
+          <Separator />
           <MenuItem Header="プレイヤー領域をリセット" Command="{Binding ResetPlayerAreaCommand}" CommandParameter="200" />
         </MenuItem>
       </Menu>

@@ -371,6 +371,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => ChangePlayerSizeFromOfficial16x9()); }
         }
 
+        public ICommand ChangeFullScreenCommand
+        {
+            get { return CreateCommand(o => SetWindowMode(false)); }
+        }
+
         public ICommand ResetPlayerAreaCommand
         {
             get
