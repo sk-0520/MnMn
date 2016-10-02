@@ -21,64 +21,22 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
-    public class SmileUserBookmarkItemViewModel: ViewModelBase, ITreeNodeItem<SmileUserBookmarkItemViewModel>
+    public class SmileUserBookmarkItemViewModel: SingleModelWrapperViewModelBase<SmileUserBookmarkItemModel>
     {
-        #region ITreeNodeItem
+        public SmileUserBookmarkItemViewModel(SmileUserBookmarkItemModel model)
+            : base(model)
+        { }
 
-        public bool CanMove
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        #region property
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string UserName { get { return Model.UserName; } }
 
-        public IEnumerable<SmileUserBookmarkItemViewModel> Children
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool IsExpanded
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool IsSelected
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string UserId { get { return Model.UserId; } }
 
         #endregion
     }

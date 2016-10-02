@@ -62,7 +62,7 @@
             <Button>add</Button>
           </ToolBar>
 
-          <ListBox Grid.Row="1"></ListBox>
+          <ListBox Grid.Row="1" ItemsSource="{Binding UserHistoryItems}"></ListBox>
         </Grid>
 
       </TabItem>

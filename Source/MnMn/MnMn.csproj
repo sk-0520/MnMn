@@ -286,9 +286,9 @@
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLivePlayerSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveSettingModel.cs" />
-    <Compile Include="Model\Setting\Service\Smile\SmileUserBookmarkItemModel.cs" />
-    <Compile Include="Model\Setting\Service\Smile\SmileUserItemModel.cs" />
-    <Compile Include="Model\Setting\Service\Smile\SmileUserSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\User\SmileUserBookmarkItemModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\User\SmileUserItemModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\User\SmileUserSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
@@ -314,6 +314,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Live\Player\SmileLivePlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Setting\SmileVideoFinderFilteringItemEditViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\SmileWebSiteManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>

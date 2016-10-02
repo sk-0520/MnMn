@@ -17,22 +17,24 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
-    public class SmileUserBookmarkItemModel: SmileUserItemModel
+    public class SmileUserHistoryItemViewModel: SingleModelWrapperViewModelBase<SmileUserItemModel>
     {
+        public SmileUserHistoryItemViewModel(SmileUserItemModel model)
+            : base(model)
+        { }
+
         #region property
 
-        /// <summary>
-        /// 投稿動画。
-        /// </summary>
-        [DataMember]
-        public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
+        public string UserId { get { return Model.UserId; } }
+
+        public string UserName { get { return Model.UserName; } }
 
         #endregion
     }
