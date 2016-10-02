@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileContentsSearchContext => appConfig.Get("service-smile-content_search-context");
 
+        public static TimeSpan ServiceSmileUserCheckItLaterCheckTime => appConfig.Get("service-smile-smileuser-check_it_later-check-time", TimeSpan.Parse);
+
         /// <summary>
         /// マイリスト削除後再読み込みを行う際の待ち時間。
         /// </summary>
@@ -85,6 +87,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>確保するだけで受け取るかどうかはサーバー次第。</para>
         /// </summary>
         public static int ServiceSmileVideoReceiveBuffer => appConfig.Get("service-smile-smilevideo-receive-buffer", int.Parse);
+        /// <summary>
+        /// ユーザー履歴数。
+        /// </summary>
+        public static int ServiceSmileUserHistoryCount => appConfig.Get("service-smile-user-history-count", int.Parse);
         /// <summary>
         /// マイリスト履歴数。
         /// </summary>
@@ -154,6 +160,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <para>縦。</para>
         /// </summary>
         public static double ServiceSmileVideoPlayerCommentHeight => appConfig.Get("service-smile-smilevideo-player-comment-height", double.Parse);
+
+        public static double ServiceSmileVideoPlayerOfficial4x3Width => appConfig.Get("service-smile-smilevideo-player-official-4:3-width", double.Parse);
+        public static double ServiceSmileVideoPlayerOfficial4x3Height => appConfig.Get("service-smile-smilevideo-player-official-4:3-height", double.Parse);
+        public static double ServiceSmileVideoPlayerOfficial16x9Width => appConfig.Get("service-smile-smilevideo-player-official-16:9-width", double.Parse);
+        public static double ServiceSmileVideoPlayerOfficial16x9Height => appConfig.Get("service-smile-smilevideo-player-official-16:9-height", double.Parse);
         /// <summary>
         /// 自動再生タイミング上下限値。
         /// </summary>

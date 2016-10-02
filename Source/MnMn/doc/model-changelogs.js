@@ -84,6 +84,81 @@
 	},
 	*/
 	{
+		'date': '2016/10/02',
+		'version': '0.23.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '次バージョンは「#48: UIを統一する」をさわりたいので致命的な不具合がない限りちょっとだけ機能実装は見送る',
+						'comments': [
+							'UIは機能と分かれるべきなんだけど実装の未熟さもあるから中々分離できないのがあれなとこっすね～'
+						]
+					},
+					{
+						'revision': '',
+						'subject': 'あー、今回はニコ生なんも実装してないよ'
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'f9cb52786a980f4b49338ffb5468093d8ececfc8',
+						'subject': '#101: ユーザー検索やユーザーブックマーク的なやつの実装',
+						'comments': [
+							'ユーザー検索はサービス側がそもそも提供してないので今回分の実装からは外した'
+						]
+					},
+					{
+						'revision': 'a2a102924eb177126a966b5a2dcd23cb651697b9',
+						'subject': '#179: 同性愛者への弾圧',
+						'comments': [
+							'おんなじようなコメント多いっすわぁ'
+						]
+					},
+					{
+						'revision': 'b36756626e868ff8d8c58a7b5ac58eb66fa68794',
+						'subject': '#178: 動画サイズを公式サイズに合わせる'
+					},
+					{
+						'revision': '436b9d53f4fded5fb36edf6ca1a52cf417a02cab',
+						'subject': '#185: メニューからもフルスクリーンにする'
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '1c87fe1bc649646dd2db86ff55f45b7dac50fd89',
+						'subject': '#183: 非リリース版でのウィンドウタイトル補正が頭おかしい'
+					},
+					{
+						'revision': '9aa40befbad86aea393467ebf3f48ced3adde6d7',
+						'subject': '#184: ファインダーのフィルタリングON/OFFがデフォルトでOFFになってる'
+					},
+					{
+						'revision': '6d6a4ad14748dd505740629f000a4d141a455dcf',
+						'subject': '#176: /etc の中にいらない子がいます',
+						'comments': [
+							'既存ファイルはアップデート時に自動削除されます',
+							'MnMn だとアップデート時のC#コンパイル実行は初めてなんよね、ちょっと緊張'
+						]
+					},
+					{
+						'revision': '1c87fe1bc649646dd2db86ff55f45b7dac50fd89',
+						'subject': '#177: 一行表示したコメントの改行とスペースが逆な気がする'
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2016/09/29',
 		'version': '0.22.0',
 		'isRc': false,

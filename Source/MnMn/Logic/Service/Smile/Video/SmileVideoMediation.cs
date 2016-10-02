@@ -127,6 +127,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return new ResponseModel(request, windowViewModels);
         }
 
+        ResponseModel Request_Process(SmileVideoProcessRequestModel request)
+        {
+            switch(request.Parameter.Process) {
+                case SmileVideoProcess.CheckItLater: {
+                        var param = (SmileVideoProcessCheckItLaterParameterModel)request.Parameter;
+                        var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem);
+                        return new ResponseModel(request, result);
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         ResponseModel RequestCore(RequestModel request)
         {
             switch(request.RequestKind) {
@@ -150,6 +164,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
                 case RequestKind.WindowViewModels:
                     return Request_WindowViewModels(request);
+
+                case RequestKind.Process:
+                    return Request_Process((SmileVideoProcessRequestModel)request);
 
                 default:
                     throw new NotImplementedException();

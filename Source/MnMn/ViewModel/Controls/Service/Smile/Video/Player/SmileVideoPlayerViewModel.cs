@@ -362,6 +362,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ChangePlayerSizeFromOfficial4x3Command
+        {
+            get { return CreateCommand(o => ChangePlayerSizeFromOfficial4x3()); }
+        }
+        public ICommand ChangePlayerSizeFromOfficial16x9Command
+        {
+            get { return CreateCommand(o => ChangePlayerSizeFromOfficial16x9()); }
+        }
+
+        public ICommand ChangeFullScreenCommand
+        {
+            get { return CreateCommand(o => SetWindowMode(false)); }
+        }
+
         public ICommand ResetPlayerAreaCommand
         {
             get
@@ -598,14 +612,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             Debug.Assert(!WaitingFirstPlay.Value, "到達不可のはず");
 
+            ChangePlayerSize(
+                VisualVideoSize.Width / 100 * percent,
+                VisualVideoSize.Height / 100 * percent
+            );
+        }
+
+        void ChangePlayerSizeFromOfficial4x3()
+        {
+            ChangePlayerSize(
+                Constants.ServiceSmileVideoPlayerOfficial4x3Width,
+                Constants.ServiceSmileVideoPlayerOfficial4x3Width
+            );
+        }
+
+        void ChangePlayerSizeFromOfficial16x9()
+        {
+            ChangePlayerSize(
+                Constants.ServiceSmileVideoPlayerOfficial16x9Width,
+                Constants.ServiceSmileVideoPlayerOfficial16x9Height
+            );
+        }
+
+        void ChangePlayerSize(double width, double height)
+        {
             var leaveSize = new Size(
                 View.ActualWidth - Player.ActualWidth,
                 View.ActualHeight - Player.ActualHeight
             );
-            var videoSize = new Size(
-                VisualVideoSize.Width / 100 * percent,
-                VisualVideoSize.Height / 100 * percent
-            );
+            var videoSize = new Size(width, height);
+
+            Width = leaveSize.Width + videoSize.Width;
+            Height = leaveSize.Height + videoSize.Height;
 
             if(PlayerShowCommentArea) {
                 // リスト部は比率レイアウトなので補正が必要
@@ -613,16 +651,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // TODO: うーん、ださい
                 var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
 
-                //if(CommentAreaLength.IsChanged) {
-                //    // エリアサイズ変えていれば * から実値になってるけど単位は変わらない
-                //} else {
-                //    leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
-                //}
                 leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
             }
 
             Width = leaveSize.Width + videoSize.Width;
             Height = leaveSize.Height + videoSize.Height;
+
         }
 
         void ChangeBaseSize()

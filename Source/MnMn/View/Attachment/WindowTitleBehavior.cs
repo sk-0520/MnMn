@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
                 if(!isReleaseVersion) {
                     baseTitle += $" <{Constants.ApplicationVersionRevision}>";
                 }
-                AssociatedObject.Title = $"{build}{baseTitle}";
+                AssociatedObject.Title = $"{baseTitle}";
             }
         }
 

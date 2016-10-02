@@ -45,4 +45,13 @@
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
+	<element key="kill-lgbt">
+		<words>
+			<word key="ja-jp" value="同性愛者だ、殺せ" />
+		</words>
+		<extends>
+			<extend key="pattern" value="(ん([\?？]))|((アッー)|(ｱｯｰ))|((今|いま)(なんでも))|(あくしろよ)|(あら＾)|(\w+([\(（].+[\)）]?))|(ファッ！？)|(説$)|(大胆な)" />
+			<extend key="ignore-case" value="true" />
+		</extends>
+	</element>
 </filtering>

@@ -288,31 +288,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                 page.Dispose();
 
                 if(response.IsSuccess) {
-                    var html = new HtmlAgilityPack.HtmlDocument() {
-                        OptionAutoCloseOnEnd = true,
-                    };
                     var htmlSource = response.Result;
-                    //TODO: 不勉強故か <img> が死なないので古き良き文字列置き換え
-                    //var images = html.DocumentNode.SelectNodes("//img").ToArray();
-                    //foreach(var img in images) {
-                    //    img.Remove();
-                    //}
-                    htmlSource = Regex.Replace(htmlSource, @"<img(\s.*?)?\s*/?>", string.Empty);
-                    html.LoadHtml(htmlSource);
-                    var baseElement = html.GetElementbyId("jsFollowingAdMain");
-                    var removeTargets = new[] {
-                        baseElement.SelectSingleNode(".//*[@class='creator_btn_are']"),
-                        baseElement.SelectSingleNode(".//*[@id='livetags']"),
-                        baseElement.SelectSingleNode(".//*[@class='chan']"),
-                        baseElement.SelectSingleNode(".//*[@id='tooltip']"),
-                        baseElement.SelectSingleNode(".//*[@class='com']"),
-                        baseElement.SelectSingleNode(".//*[@class='community-info-score']"),
-                    };
-                    foreach(var target in removeTargets.Where(n => n != null)) {
-                        target.Remove();
-                    }
 
-                    var descriptionHtml = baseElement.InnerHtml;
+                    var descriptionHtml = GetDescription(htmlSource);
                     MakeDescription(descriptionHtml);
                 }
 
@@ -379,6 +357,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             PlayerLoadState.Value = LoadState.Loaded;
             ShowWebPlayer.Value = true;
             Mediation.Logger.Trace($"{Information.Id}: {PlayerLoadState.Value}");
+        }
+
+        string GetDescription(string htmlSource)
+        {
+            var html = new HtmlAgilityPack.HtmlDocument() {
+                OptionAutoCloseOnEnd = true,
+            };
+            //TODO: 不勉強故か <img> が死なないので古き良き文字列置き換え
+            //var images = html.DocumentNode.SelectNodes("//img").ToArray();
+            //foreach(var img in images) {
+            //    img.Remove();
+            //}
+            htmlSource = Regex.Replace(htmlSource, @"<img(\s.*?)?\s*/?>", string.Empty);
+            html.LoadHtml(htmlSource);
+            var baseElement = html.GetElementbyId("jsFollowingAdMain");
+            var removeTargets = new[] {
+                        baseElement.SelectSingleNode(".//*[@class='creator_btn_are']"),
+                        baseElement.SelectSingleNode(".//*[@id='livetags']"),
+                        baseElement.SelectSingleNode(".//*[@class='chan']"),
+                        baseElement.SelectSingleNode(".//*[@id='tooltip']"),
+                        baseElement.SelectSingleNode(".//*[@class='com']"),
+                        baseElement.SelectSingleNode(".//*[@class='community-info-score']"),
+                    };
+            foreach(var target in removeTargets.Where(n => n != null)) {
+                target.Remove();
+            }
+
+            return baseElement.InnerHtml;
         }
 
         void MakeDescription(string htmlSource)
