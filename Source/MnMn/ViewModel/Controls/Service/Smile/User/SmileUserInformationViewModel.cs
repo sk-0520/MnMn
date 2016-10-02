@@ -362,11 +362,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region function
 
-        public void Refresh()
-        {
-            CallOnPropertyChangeDisplayItem();
-        }
-
         public Task LoadAsync(CacheSpan userDataCacheSpan, CacheSpan userImageCacheSpan)
         {
             UserLoadState = SourceLoadState.SourceLoading;
@@ -385,6 +380,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 );
             }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(t => {
                 UserLoadState = SourceLoadState.Completed;
+                CallOnPropertyChangeDisplayItem();
             });
         }
 
