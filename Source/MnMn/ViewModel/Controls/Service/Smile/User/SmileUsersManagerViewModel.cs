@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -45,9 +46,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             : base(mediation)
         {
             BindingOperations.EnableCollectionSynchronization(UserItems, new object());
+
+            Setting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
         }
 
         #region property
+
+        SmileSettingModel Setting { get; }
 
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
         public SmileLoginUserInformationViewModel LoginUser { get; private set; }
@@ -98,6 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 if(LoginUser == null) {
                     LoadLoginUserAsync().ConfigureAwait(false);
                 }
+
                 SelectedUser = user;
                 return user.LoadDefaultAsync();
             }

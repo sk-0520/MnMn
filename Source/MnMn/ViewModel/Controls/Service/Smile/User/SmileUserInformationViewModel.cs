@@ -46,15 +46,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
     /// <summary>
     /// ユーザー情報表示用VM。
     /// </summary>
-    public class SmileUserInformationViewModel: ViewModelBase
+    public class SmileUserInformationViewModel: InformationViewModelBase
     {
         #region variable
 
         SourceLoadState _userLoadState;
-        LoadState _userInformationLoadState;
-        LoadState _userThumbnailLoadState;
+        //LoadState _userInformationLoadState;
+        //LoadState _userThumbnailLoadState;
 
-        BitmapSource _thumbnailImage;
+        //BitmapSource _thumbnailImage;
         SmileVideoFinderViewModelBase _selectedMyListFinder;
 
         bool _isUserSelected;
@@ -75,6 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 CacheDirectory = Directory.CreateDirectory(cachedDirPath);
             }
 
+            ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(UserId, "png")));
         }
 
 
@@ -85,7 +86,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public SmileVideoFinderViewModelBase SelectedMyListFinder
         {
             get { return this._selectedMyListFinder; }
-            set { if(SetVariableValue(ref this._selectedMyListFinder, value)) {
+            set
+            {
+                if(SetVariableValue(ref this._selectedMyListFinder, value)) {
                     if(this._selectedMyListFinder != null) {
                         if(this._selectedMyListFinder.FinderLoadState == SourceLoadState.None) {
                             this._selectedMyListFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
@@ -94,6 +97,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 }
             }
         }
+
+        #region file
+
+        /// <summary>
+        /// サムネイル画像ファイル。
+        /// </summary>
+        public FileInfo ThumbnaiImageFile { get; private set; }
+
+        #endregion
 
         public bool IsUserSelected
         {
@@ -105,73 +117,77 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         public virtual bool IsMyAccount { get; }
 
-        public ImageSource ThumbnailImage
-        {
-            get
-            {
-                switch(UserThumbnailLoadState) {
-                    case LoadState.None:
-                        return null;
+        //public ImageSource ThumbnailImage
+        //{
+        //    get
+        //    {
+        //        switch(UserThumbnailLoadState) {
+        //            case LoadState.None:
+        //                return null;
 
-                    case LoadState.Preparation:
-                        return null;
+        //            case LoadState.Preparation:
+        //                return null;
 
-                    case LoadState.Loading:
-                        return null;
+        //            case LoadState.Loading:
+        //                return null;
 
-                    case LoadState.Loaded:
-                        return this._thumbnailImage;
+        //            case LoadState.Loaded:
+        //                return this._thumbnailImage;
 
-                    case LoadState.Failure:
-                        return null;
+        //            case LoadState.Failure:
+        //                return null;
 
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
+        //            default:
+        //                throw new NotImplementedException();
+        //        }
+        //    }
+        //}
 
-        public LoadState UserInformationLoadState
-        {
-            get { return this._userInformationLoadState; }
-            set { if(SetVariableValue(ref this._userInformationLoadState, value)) {
-                    var propertyNames = new[] {
-                        nameof(UserName),
-                        nameof(IsPublicLocation),
-                        nameof(Location),
-                        nameof(IsPublicGender),
-                        nameof(Gender),
-                        nameof(IsPublicBirthday),
-                        nameof(Birthday),
-                        nameof(ResistedVersion),
-                        nameof(IsPremium),
-                        nameof(Description),
-                        nameof(IsPublicMyList),
-                        nameof(IsPublicPost),
-                        nameof(IsPublicReport),
-                    };
-                    CallOnPropertyChange(propertyNames);
-                }
-            }
-        }
+        //public LoadState UserInformationLoadState
+        //{
+        //    get { return this._userInformationLoadState; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._userInformationLoadState, value)) {
+        //            var propertyNames = new[] {
+        //                nameof(UserName),
+        //                nameof(IsPublicLocation),
+        //                nameof(Location),
+        //                nameof(IsPublicGender),
+        //                nameof(Gender),
+        //                nameof(IsPublicBirthday),
+        //                nameof(Birthday),
+        //                nameof(ResistedVersion),
+        //                nameof(IsPremium),
+        //                nameof(Description),
+        //                nameof(IsPublicMyList),
+        //                nameof(IsPublicPost),
+        //                nameof(IsPublicReport),
+        //            };
+        //            CallOnPropertyChange(propertyNames);
+        //        }
+        //    }
+        //}
 
-        public LoadState UserThumbnailLoadState
-        {
-            get { return this._userThumbnailLoadState; }
-            set
-            {
-                if(SetVariableValue(ref this._userThumbnailLoadState, value)) {
-                    CallOnPropertyChange(nameof(ThumbnailImage));
-                }
-            }
-        }
+        //public LoadState UserThumbnailLoadState
+        //{
+        //    get { return this._userThumbnailLoadState; }
+        //    set
+        //    {
+        //        if(SetVariableValue(ref this._userThumbnailLoadState, value)) {
+        //            CallOnPropertyChange(nameof(ThumbnailImage));
+        //        }
+        //    }
+        //}
 
         public DirectoryInfo CacheDirectory { get; private set; }
 
         public string UserId { get; }
-        public string UserName { get
+        public string UserName
+        {
+            get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.UserName;
                 }
 
@@ -182,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.IsPublicLocation;
                 }
 
@@ -193,7 +209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.Location;
                 }
 
@@ -204,8 +220,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
-                    return UserInformation.IsPublicGender ;
+                if(InformationLoadState == LoadState.Loaded) {
+                    return UserInformation.IsPublicGender;
                 }
 
                 return false;
@@ -215,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.Gender;
                 }
 
@@ -226,7 +242,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.IsPublicBirthday;
                 }
 
@@ -237,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.Birthday;
                 }
 
@@ -248,7 +264,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.ResistedVersion;
                 }
 
@@ -259,7 +275,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.IsPremium;
                 }
 
@@ -270,7 +286,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.Description;
                 }
 
@@ -281,7 +297,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.IsPublicMyList;
                 }
 
@@ -292,7 +308,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.IsPublicPost;
                 }
 
@@ -303,7 +319,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                if(UserInformationLoadState == LoadState.Loaded) {
+                if(InformationLoadState == LoadState.Loaded) {
                     return UserInformation.IsPublicReport;
                 }
 
@@ -343,74 +359,120 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region function
 
-        Task LoadThumbnaiImageAsync(CacheSpan userImageCacheSpan)
-        {
-            UserThumbnailLoadState = LoadState.Preparation;
-            var imagePath = Path.Combine(CacheDirectory.FullName, PathUtility.CreateFileName(UserId, "png"));
-            if(CacheImageUtility.ExistImage(imagePath, userImageCacheSpan)) {
-                UserThumbnailLoadState = LoadState.Loading;
-                this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(imagePath);
-                UserThumbnailLoadState = LoadState.Loaded;
-                return Task.CompletedTask;
-            }
-
-            UserThumbnailLoadState = LoadState.Loading;
-            var client = new HttpClient();
-            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, UserInformation.ThumbnailUri, Mediation.Logger).ContinueWith(task => {
-                client.Dispose();
-                var image = task.Result;
-                if(image != null) {
-                    this._thumbnailImage = image;
-                    UserThumbnailLoadState = LoadState.Loaded;
-                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, imagePath, Mediation.Logger);
-                } else {
-                    UserThumbnailLoadState = LoadState.Failure;
-                }
-            });
-        }
-
         public Task LoadAsync(CacheSpan userDataCacheSpan, CacheSpan userImageCacheSpan)
         {
-            var cancel = new CancellationTokenSource();
-
             UserLoadState = SourceLoadState.SourceLoading;
-            var user = new Logic.Service.Smile.HalfBakedApi.User(Mediation);
-            return user.LoadUserInformationAsync(UserId).ContinueWith(task => {
-                UserLoadState = SourceLoadState.SourceChecking;
-                UserInformation = task.Result;
-                UserInformationLoadState = LoadState.Loaded;
-            }).ContinueWith(task => {
+
+            return LoadInformationDefaultAsync(userDataCacheSpan).ContinueWith(t => {
                 UserLoadState = SourceLoadState.InformationLoading;
-                LoadThumbnaiImageAsync(userImageCacheSpan);
-            }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current).ContinueWith(_ => {
-                var mylistTask = Task.CompletedTask;
-                if(UserInformation.IsPublicMyList) {
-                    user.LoadUserMyListAsync(UserId).ContinueWith(task => {
-                        var userMyList = task.Result;
-                        if(userMyList != null && userMyList.Groups.Any()) {
-                            var items = userMyList.Groups.Select(g => new SmileMyListFinderViewModel(Mediation, g));
-                            MyListItems.InitializeRange(items);
-                        }
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
-                }
+            }).ContinueWith(t => {
+                var taskImage = LoadThumbnaiImageDefaultAsync(userImageCacheSpan);
+                var taskPost = UserInformation.IsPublicPost ? LoadPostAsync() : Task.CompletedTask;
+                var taskMyList = UserInformation.IsPublicMyList ? LoadMyListAsync() : Task.CompletedTask;
 
-                var postTask = Task.CompletedTask;
-                if(UserInformation.IsPublicPost) {
-                    PostFinder = new SmileUserPostFinderViewModel(Mediation, UserId);
-                    CallOnPropertyChange(nameof(PostFinder));
-
-                    postTask = PostFinder.LoadDefaultCacheAsync();
-                }
-
-                return Task.WhenAll(mylistTask, postTask).ContinueWith(__ => {
-                    UserLoadState = SourceLoadState.Completed;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+                return Task.WhenAll(
+                    taskImage,
+                    taskPost,
+                    taskMyList
+                );
+            }, TaskScheduler.FromCurrentSynchronizationContext()).ContinueWith(t => {
+                UserLoadState = SourceLoadState.Completed;
+            });
         }
 
         public Task LoadDefaultAsync()
         {
             return LoadAsync(Constants.ServiceSmileUserDataCacheSpan, Constants.ServiceSmileUserImageCacheSpan);
+        }
+
+        Task LoadMyListAsync()
+        {
+            if(!UserInformation.IsPublicMyList) {
+                throw new InvalidOperationException(nameof(UserInformation.IsPublicMyList));
+            }
+
+            var user = new Logic.Service.Smile.HalfBakedApi.User(Mediation);
+            return user.LoadUserMyListAsync(UserId).ContinueWith(task => {
+                var userMyList = task.Result;
+                if(userMyList != null && userMyList.Groups.Any()) {
+                    var items = userMyList.Groups.Select(g => new SmileMyListFinderViewModel(Mediation, g));
+                    MyListItems.InitializeRange(items);
+                }
+            });
+        }
+
+        Task LoadPostAsync()
+        {
+            if(!UserInformation.IsPublicPost) {
+                throw new InvalidOperationException(nameof(UserInformation.IsPublicPost));
+            }
+
+            PostFinder = new SmileUserPostFinderViewModel(Mediation, UserId);
+            CallOnPropertyChange(nameof(PostFinder));
+
+            return PostFinder.LoadDefaultCacheAsync();
+        }
+
+        #endregion
+
+        #region InformationViewModelBase
+
+        protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            var user = new Logic.Service.Smile.HalfBakedApi.User(Mediation);
+            return user.LoadUserInformationAsync(UserId).ContinueWith(task => {
+                UserInformation = task.Result;
+                CallOnPropertyChangeDisplayItem();
+                return true;
+            });
+        }
+
+        protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
+        {
+            ThumbnailLoadState = LoadState.Preparation;
+
+            if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
+                ThumbnailLoadState = LoadState.Loading;
+                var cacheImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
+                SetThumbnaiImage(cacheImage);
+                //ThumbnailLoadState = LoadState.Loaded;
+                return Task.FromResult(true);
+            }
+
+            ThumbnailLoadState = LoadState.Loading;
+            return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, UserInformation.ThumbnailUri, Mediation.Logger).ContinueWith(task => {
+                var image = task.Result;
+                if(image != null) {
+                    //this._thumbnailImage = image;
+                    SetThumbnaiImage(image);
+                    CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
+
+        protected override void CallOnPropertyChangeDisplayItem()
+        {
+            base.CallOnPropertyChangeDisplayItem();
+
+            var propertyNames = new[] {
+                nameof(UserName),
+                nameof(IsPublicLocation),
+                nameof(Location),
+                nameof(IsPublicGender),
+                nameof(Gender),
+                nameof(IsPublicBirthday),
+                nameof(Birthday),
+                nameof(ResistedVersion),
+                nameof(IsPremium),
+                nameof(Description),
+                nameof(IsPublicMyList),
+                nameof(IsPublicPost),
+                nameof(IsPublicReport),
+            };
+            CallOnPropertyChange(propertyNames);
         }
 
         #endregion

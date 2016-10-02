@@ -112,7 +112,7 @@
 
                   <Grid Grid.Column="0" Width="150" VerticalAlignment="Top" Height="150">
                     <Image Source="{Binding ThumbnailImage}" Style="{StaticResource DefaultImage}" />
-                    <app_view_controls:LoadStateNavigator LoadState="{Binding UserThumbnailLoadState}" />
+                    <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
                   </Grid>
 
                   <FlowDocumentScrollViewer Grid.Column="1" VerticalAlignment="Stretch">
