@@ -241,7 +241,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
 
             return UpdateBrowser.Dispatcher.BeginInvoke(new Action(() => {
-                var rawHtmlSource = File.ReadAllText(Constants.UpdateStateHtmlFilePath);
+                var rawHtmlSource = Properties.Resources.File_Html_UpdateState;
                 var map = new Dictionary<string, string>() {
                     {"UPDATE-TITLE", Properties.Resources.String_App_Update_Title },
                     {"UPDATE-CONTENT",  DisplayTextUtility.GetDisplayText(UpdateCheckState) },

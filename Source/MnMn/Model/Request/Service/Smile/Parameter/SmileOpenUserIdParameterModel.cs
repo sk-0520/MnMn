@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter
 
         public string UserId { get; set; }
         public bool IsLoginUser { get; set; }
+        public bool AddHistory { get; set; } = true;
 
         #endregion
     }

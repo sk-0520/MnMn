@@ -19,24 +19,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.IF.Control;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter
 {
-    public class SmileUserBookmarkItemViewModel: SingleModelWrapperViewModelBase<SmileUserBookmarkItemModel>
+    public class SmileVideoProcessCheckItLaterParameterModel: SmileVideoProcessParameterModelBase
     {
-        public SmileUserBookmarkItemViewModel(SmileUserBookmarkItemModel model)
-            : base(model)
-        { }
+        public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem)
+            : base(SmileVideoProcess.CheckItLater)
+        {
+            VideoItem = videoItem;
+        }
 
         #region property
 
-        public string UserName { get { return Model.UserName; } }
-
-        public string UserId { get { return Model.UserId; } }
+        public SmileVideoVideoItemModel VideoItem { get; }
 
         #endregion
     }

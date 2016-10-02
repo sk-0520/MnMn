@@ -20,23 +20,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.MnMn.MnMn.IF.Control;
-using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 {
-    public class SmileUserBookmarkItemViewModel: SingleModelWrapperViewModelBase<SmileUserBookmarkItemModel>
+    public class SmileUserHistoryItemViewModel: SingleModelWrapperViewModelBase<SmileUserItemModel>
     {
-        public SmileUserBookmarkItemViewModel(SmileUserBookmarkItemModel model)
+        public SmileUserHistoryItemViewModel(SmileUserItemModel model)
             : base(model)
         { }
 
         #region property
 
-        public string UserName { get { return Model.UserName; } }
-
         public string UserId { get { return Model.UserId; } }
+
+        public string UserName { get { return Model.UserName; } }
 
         #endregion
     }
