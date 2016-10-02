@@ -362,6 +362,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ChangePlayerSizeFromOfficialCommand
+        {
+            get { return CreateCommand(o => ChangePlayerSizeFromOfficial()); }
+        }
+
         public ICommand ResetPlayerAreaCommand
         {
             get
@@ -624,6 +629,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Width = leaveSize.Width + videoSize.Width;
             Height = leaveSize.Height + videoSize.Height;
         }
+
+        void ChangePlayerSizeFromOfficial()
+        { }
 
         void ChangeBaseSize()
         {
