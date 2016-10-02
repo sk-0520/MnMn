@@ -43,6 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         SmileUserInformationViewModel _selectedUser;
 
+        SmileUserHistoryItemViewModel _selectedUserHistory;
+
         #endregion
 
         public SmileUsersManagerViewModel(Mediation mediation)
@@ -84,6 +86,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         MVMPairCreateDelegationCollection<SmileUserItemModel, SmileUserHistoryItemViewModel> UserHistoryCollection { get; }
         public ICollectionView UserHistoryItems { get; }
+
+        public SmileUserHistoryItemViewModel SelectedUserHistory
+        {
+            get { return this._selectedUserHistory; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedUserHistory, value)) {
+                    if(SelectedUserHistory != null) {
+                        LoadAsync(SelectedUserHistory.UserId, false).ConfigureAwait(false);
+                    }
+                }
+            }
+        }
 
         #endregion
 

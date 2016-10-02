@@ -51,7 +51,7 @@
           <ListBox Grid.Row="1"></ListBox>
         </Grid>
       </TabItem>
-      <TabItem Header="history">
+      <TabItem Header="履歴">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -62,7 +62,13 @@
             <Button>add</Button>
           </ToolBar>
 
-          <ListBox Grid.Row="1" ItemsSource="{Binding UserHistoryItems}"></ListBox>
+          <ListBox Grid.Row="1" ItemsSource="{Binding UserHistoryItems}" SelectedItem="{Binding SelectedUserHistory}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding UserName}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
         </Grid>
 
       </TabItem>
