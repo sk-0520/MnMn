@@ -47,8 +47,12 @@
           </Grid.RowDefinitions>
 
           <ToolBar Grid.Row="0">
-            <Button Command="{Binding MoveUpBookmarkSelectedItemCommand}">↑</Button>
-            <Button Command="{Binding MoveDownBookmarkSelectedItemCommand}">↓</Button>
+            <Button Command="{Binding MoveUpBookmarkSelectedItemCommand}">
+              <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+            </Button>
+            <Button Command="{Binding MoveDownBookmarkSelectedItemCommand}">
+              <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+            </Button>
           </ToolBar>
 
           <ListBox Grid.Row="1" ItemsSource="{Binding UserBookmarkItems}" SelectedItem="{Binding SelectedUserBookmark}">
