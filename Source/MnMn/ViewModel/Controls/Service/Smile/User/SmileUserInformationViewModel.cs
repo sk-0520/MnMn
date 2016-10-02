@@ -116,6 +116,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public SmileVideoFinderViewModelBase PostFinder { get; private set; }
 
         public virtual bool IsMyAccount { get; }
+        public bool IsNotMyAccount { get { return !IsMyAccount; } }
+
 
         //public ImageSource ThumbnailImage
         //{
@@ -315,6 +317,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 return false;
             }
         }
+
         public bool IsPublicReport
         {
             get
@@ -359,6 +362,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         #region function
 
+        public void Refresh()
+        {
+            CallOnPropertyChangeDisplayItem();
+        }
+
         public Task LoadAsync(CacheSpan userDataCacheSpan, CacheSpan userImageCacheSpan)
         {
             UserLoadState = SourceLoadState.SourceLoading;
@@ -401,7 +409,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             });
         }
 
-        Task LoadPostAsync()
+        public Task LoadPostAsync()
         {
             if(!UserInformation.IsPublicPost) {
                 throw new InvalidOperationException(nameof(UserInformation.IsPublicPost));

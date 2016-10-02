@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         SmileUserInformationViewModel _selectedUser;
 
         SmileUserHistoryItemViewModel _selectedUserHistory;
+        SmileUserBookmarkItemViewModel _selectedUserBookmark;
 
         #endregion
 
@@ -94,7 +95,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             {
                 if(SetVariableValue(ref this._selectedUserHistory, value)) {
                     if(SelectedUserHistory != null) {
-                        LoadAsync(SelectedUserHistory.UserId, false).ConfigureAwait(false);
+                        LoadAsync(SelectedUserHistory.UserId, false, false).ConfigureAwait(false);
+                    }
+                }
+            }
+        }
+
+        public SmileUserBookmarkItemViewModel SelectedUserBookmark
+        {
+            get { return this._selectedUserBookmark; }
+            set
+            {
+                if(SetVariableValue(ref this._selectedUserBookmark, value)) {
+                    if(SelectedUserBookmark != null) {
+                        LoadAsync(SelectedUserBookmark.UserId, false, true).ConfigureAwait(false);
                     }
                 }
             }
@@ -112,16 +126,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
         }
 
+        public ICommand AddBookmarkCommand
+        {
+            get { return CreateCommand(o => AddBookmark((SmileUserInformationViewModel)o)); }
+        }
+
+        public ICommand RemoveBookmarkCommand
+        {
+            get { return CreateCommand(o => RemoveBookmark((SmileUserInformationViewModel)o)); }
+        }
+
         #endregion
 
         #region function
 
         public Task LoadFromParameterAsync(SmileOpenUserIdParameterModel parameter)
         {
-            return LoadAsync(parameter.UserId, parameter.IsLoginUser);
+            return LoadAsync(parameter.UserId, parameter.IsLoginUser, parameter.AddHistory);
         }
 
-        public Task LoadAsync(string userId, bool isLoginUser)
+        public Task LoadAsync(string userId, bool isLoginUser, bool addHistory)
         {
             var existUser = UserItems.FirstOrDefault(i => i.UserId == userId);
             if(existUser != null) {
@@ -136,7 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
                 SelectedUser = user;
                 return user.LoadDefaultAsync().ContinueWith(t => {
-                    if(!isLoginUser) {
+                    if(!isLoginUser && addHistory) {
                         AddHistory(user);
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -173,6 +197,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             var result = new SmileUserHistoryItemViewModel(model);
 
             return result;
+        }
+
+        void AddBookmarkVideos(SmileUserBookmarkItemModel bookmark, SmileUserInformationViewModel information)
+        {
+            var videoIds = information.PostFinder.FinderItemsViewer.Select(i => i.Information.VideoId);
+            bookmark.Videos.InitializeRange(videoIds);
+        }
+
+        void AddBookmark(SmileUserInformationViewModel information)
+        {
+            var item = new SmileUserBookmarkItemModel() {
+                UserId = information.UserId,
+                UserName = information.UserName,
+                UpdateTimestamp = DateTime.Now,
+            };
+            var existItem = UserBookmarkCollection.ModelList.FirstOrDefault(i => i.UserId == item.UserId);
+            if(existItem != null) {
+                return;
+            }
+            UserBookmarkCollection.Insert(0, item, null);
+            RefreshUser();
+
+            if(information.IsPublicPost) {
+                if(information.PostFinder.FinderLoadState == SourceLoadState.None) {
+                    information.PostFinder.LoadDefaultCacheAsync().Wait();
+                    AddBookmarkVideos(item, information);
+                } else {
+                    PropertyChangedEventHandler propertyChanged = null;
+                    propertyChanged = (object sender, PropertyChangedEventArgs e) => {
+                        if(e.PropertyName == nameof(information.PostFinder.FinderLoadState)) {
+                            if(information.PostFinder.FinderLoadState == SourceLoadState.InformationLoading || information.PostFinder.FinderLoadState == SourceLoadState.Completed) {
+                                information.PostFinder.PropertyChanged -= propertyChanged;
+                                AddBookmarkVideos(item, information);
+                            }
+                        }
+                    };
+                    information.PostFinder.PropertyChanged += propertyChanged;
+                }
+            }
+        }
+
+        void RemoveBookmark(SmileUserInformationViewModel information)
+        {
+            var viewModel = UserBookmarkCollection.ViewModelList.FirstOrDefault(i => i.UserId == information.UserId);
+            if(viewModel != null) {
+                UserBookmarkCollection.Remove(viewModel);
+                RefreshUser();
+            }
+        }
+
+        void RefreshUser()
+        {
+            var selectedUser = SelectedUser;
+            SelectedUser = null;
+            SelectedUser = selectedUser;
         }
 
         void AddHistory(SmileUserInformationViewModel information)
