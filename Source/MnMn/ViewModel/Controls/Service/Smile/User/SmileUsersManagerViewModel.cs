@@ -27,6 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
@@ -136,6 +137,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             get { return CreateCommand(o => RemoveBookmark((SmileUserInformationViewModel)o)); }
         }
 
+        public ICommand MoveUpBookmarkSelectedItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ItemsControlUtility.MoveItem(UserBookmarkCollection, SelectedUserBookmark, true),
+                    o => SelectedUserBookmark != null && ItemsControlUtility.CanMoveNext(UserBookmarkCollection, SelectedUserBookmark, true)
+                );
+            }
+        }
+
+        public ICommand MoveDownBookmarkSelectedItemCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ItemsControlUtility.MoveItem(UserBookmarkCollection, SelectedUserBookmark, false),
+                    o => SelectedUserBookmark != null && ItemsControlUtility.CanMoveNext(UserBookmarkCollection, SelectedUserBookmark, false)
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -222,6 +245,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             if(information.IsPublicPost) {
                 if(information.PostFinder.FinderLoadState == SourceLoadState.None) {
                     information.PostFinder.LoadDefaultCacheAsync().Wait();
+                    AddBookmarkVideos(item, information);
+                } else if(information.PostFinder.FinderLoadState == SourceLoadState.InformationLoading || information.PostFinder.FinderLoadState == SourceLoadState.Completed) {
                     AddBookmarkVideos(item, information);
                 } else {
                     PropertyChangedEventHandler propertyChanged = null;
