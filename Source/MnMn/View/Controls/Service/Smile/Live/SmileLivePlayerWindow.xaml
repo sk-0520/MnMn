@@ -48,7 +48,7 @@
     </ResourceDictionary>
   </Window.Resources>
   <Window.Style>
-    <Style TargetType="Window">
+    <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
       <Setter Property="Topmost" Value="{Binding Topmost}" />
       <Setter Property="BorderBrush">
         <Setter.Value>
@@ -75,13 +75,18 @@
       Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
       TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
     >-->
-    <Grid
+    <ContentControl
       x:Name="caption"
       DockPanel.Dock="Top"
-      Margin="4"
-      TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+      Style="{StaticResource WindowChromeCaption}"
+    />
+    <!--<Grid
+      x:Name="caption"
+      DockPanel.Dock="Top"
+      Style="{StaticResource WindowChromeCaption}"
     >
-      <Grid.Style>
+      -->
+    <!--<Grid.Style>
         <Style TargetType="Grid">
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
@@ -92,7 +97,8 @@
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </Grid.Style>
+      </Grid.Style>-->
+    <!--
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
@@ -121,7 +127,7 @@
         <Button Style="{StaticResource WindowChromeMaximum}" />
         <Button Style="{StaticResource WindowChromeClose}" />
       </StackPanel>
-    </Grid>
+    </Grid>-->
 
     <ToolBar DockPanel.Dock="Top">
       <Button Command="{Binding ForceShowPlayerCommand}">メクラ板を外す</Button>

@@ -249,7 +249,7 @@
     </KeyBinding>
   </Window.InputBindings>
   <Window.Style>
-    <Style TargetType="Window">
+    <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
       <Style.Triggers>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
@@ -286,14 +286,20 @@
   </WindowChrome.WindowChrome>
 
   <DockPanel>
-    <Grid
+    <ContentControl
       x:Name="caption"
       DockPanel.Dock="Top"
-      Margin="4"
       Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
-      TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+      Style="{StaticResource WindowChromeCaption}"
+    />
+    <!--<Grid
+      x:Name="caption"
+      DockPanel.Dock="Top"
+      Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
+      Style="{StaticResource WindowChromeCaption}"
     >
-      <Grid.Style>
+      -->
+    <!--<Grid.Style>
         <Style TargetType="Grid">
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
@@ -304,7 +310,8 @@
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </Grid.Style>
+      </Grid.Style>-->
+    <!--
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
@@ -333,7 +340,7 @@
         <Button Style="{StaticResource WindowChromeMaximum}" />
         <Button Style="{StaticResource WindowChromeClose}" />
       </StackPanel>
-    </Grid>
+    </Grid>-->
 
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
