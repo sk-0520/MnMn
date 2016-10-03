@@ -51,7 +51,7 @@
         <Button Grid.Column="0" ToolTip="ホームへ" Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">🏠</Button>
         <Button Grid.Column="1" ToolTip="戻る" Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">⇐</Button>
         <Button Grid.Column="2" ToolTip="進む" Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">⇒</Button>
-        <TextBox x:Name="location" Grid.Column="3" Style="{StaticResource DefaultTextBox}" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <TextBox x:Name="location" Grid.Column="3" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         <Button Grid.Column="4" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">➲</Button>
       </Grid>
     </ToolBar>

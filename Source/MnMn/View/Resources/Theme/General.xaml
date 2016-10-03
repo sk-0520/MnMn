@@ -7,18 +7,18 @@
     xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 
 >
-  <!-- 規定値 -->
-  <!-- GridSplitterDictionary -->
-  <sys:Double x:Key="DefaultGridSplitterLength">4</sys:Double>
+  <!-- ============== 規定値 ============== -->
 
-  <!--LoadStateDictionary-->
+  <sys:Double x:Key="GridSplitterLength">4</sys:Double>
+
+  <!-- LoadState -->
   <Color x:Key="LoadState_None">Gray</Color>
   <Color x:Key="LoadState_Preparation">Orange</Color>
   <Color x:Key="LoadState_Loading">Yellow</Color>
   <Color x:Key="LoadState_Loaded">Lime</Color>
   <Color x:Key="LoadState_Failure">Red</Color>
 
-  <!--SourceLoadStateDictionary-->
+  <!-- SourceLoadState -->
   <Color x:Key="SourceLoadState_None">Gray</Color>
   <Color x:Key="SourceLoadState_SourceLoading">Orange</Color>
   <Color x:Key="SourceLoadState_SourceChecking">Pink</Color>
@@ -26,10 +26,10 @@
   <Color x:Key="SourceLoadState_Completed">Lime</Color>
   <Color x:Key="SourceLoadState_Failure">Red</Color>
 
-  <!--TextBoxDictionary-->
+  <!-- TextBox -->
   <Thickness x:Key="TextBoxPadding" >2</Thickness>
 
-  <!-- スタイル -->
+  <!-- ============== スタイル ==============  -->
   <!--ButtonDictionary-->
   <Style x:Key="ReloadButton" TargetType="Button">
     <Setter Property="FontFamily" Value="Webdings" />
@@ -40,13 +40,13 @@
   <Style x:Key="DefaultVericalGridSplitter" TargetType="GridSplitter">
     <Setter Property="HorizontalAlignment" Value="Center" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="Width" Value="{StaticResource DefaultGridSplitterLength}" />
+    <Setter Property="Width" Value="{StaticResource GridSplitterLength}" />
   </Style>
 
   <Style x:Key="DefaultHorizonGridSplitter" TargetType="GridSplitter">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="Height" Value="{StaticResource DefaultGridSplitterLength}" />
+    <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
   </Style>
 
   <!--ImageDictionary-->
@@ -124,14 +124,14 @@
   </Style>
 
   <!--TextBoxDictionary-->
-  <Style x:Key="DefaultTextBox" TargetType="TextBox">
-    <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
+  <Style TargetType="TextBox">
     <Style.Triggers>
       <Trigger Property="IsReadOnly" Value="True">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
       </Trigger>
     </Style.Triggers>
+    <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
   </Style>
 
   <!--WindowChromeDictionary-->

@@ -63,7 +63,7 @@
             <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="{x:Static app:Constants.BuildType}" />
           </Grid>
 
-          <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" Style="{StaticResource DefaultTextBox}" />
+          <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" />
 
           <StackPanel Margin="{StaticResource ContentMargin}">
             <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
