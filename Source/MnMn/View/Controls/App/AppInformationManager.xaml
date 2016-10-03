@@ -140,7 +140,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
           <UniformGrid Rows="1" Columns="6">
             <UniformGrid.Resources>
-              <Style TargetType="Button">
+              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Margin" Value="4,0" />
               </Style>
             </UniformGrid.Resources>

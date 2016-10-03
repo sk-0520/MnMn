@@ -126,6 +126,30 @@
     <Setter Property="BorderThickness" Value="{Binding WindowBorderThickness}" />
   </Style>
 
+  <Style TargetType="Button">
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="BorderBrush" Value="Red" />
+    <Setter Property="Background" Value="Blue" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border
+            BorderThickness="1"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            Background="{TemplateBinding Background}"
+            Padding="{TemplateBinding Padding}"
+            Margin="{TemplateBinding Margin}"
+          >
+            <ContentPresenter />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <!--ButtonDictionary-->
   <Style x:Key="ReloadButton" TargetType="Button">
     <Setter Property="FontFamily" Value="Webdings" />
