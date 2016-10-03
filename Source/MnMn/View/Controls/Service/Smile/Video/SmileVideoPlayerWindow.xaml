@@ -1,4 +1,4 @@
-﻿<Window
+﻿<mamc:MetroWindow 
   x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,8 +6,8 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-
   xmlns:oxy="http://oxyplot.org/wpf"
 
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
@@ -263,7 +263,7 @@
       </Setter>-->
     </Style>
   </Window.Style>
-  <WindowChrome.WindowChrome>
+  <!--<WindowChrome.WindowChrome>
     <WindowChrome
       ResizeBorderThickness="{Binding ResizeBorderThickness}"
       GlassFrameThickness="0"
@@ -281,15 +281,15 @@
         </MultiBinding>
       </WindowChrome.CaptionHeight>
     </WindowChrome>
-  </WindowChrome.WindowChrome>
+  </WindowChrome.WindowChrome>-->
 
   <DockPanel>
-    <ContentControl
+    <!--<ContentControl
       x:Name="caption"
       DockPanel.Dock="Top"
       Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
       Style="{StaticResource WindowChromeCaption}"
-    />
+    />-->
     <!--<Grid
       x:Name="caption"
       DockPanel.Dock="Top"
@@ -1447,4 +1447,4 @@
       </TabControl>
     </Grid>
   </DockPanel>
-</Window>
+</mamc:MetroWindow>
