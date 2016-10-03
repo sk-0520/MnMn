@@ -37,15 +37,14 @@
   </Style>
 
   <!-- GridSplitterDictionary -->
-  <Style x:Key="DefaultVericalGridSplitter" TargetType="GridSplitter">
-    <Setter Property="HorizontalAlignment" Value="Center" />
+  <Style TargetType="GridSplitter">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
+  </Style>
+  <Style x:Key="DefaultVericalGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
     <Setter Property="Width" Value="{StaticResource GridSplitterLength}" />
   </Style>
-
-  <Style x:Key="DefaultHorizonGridSplitter" TargetType="GridSplitter">
-    <Setter Property="HorizontalAlignment" Value="Stretch" />
-    <Setter Property="VerticalAlignment" Value="Center" />
+  <Style x:Key="DefaultHorizonGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
     <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
   </Style>
 
