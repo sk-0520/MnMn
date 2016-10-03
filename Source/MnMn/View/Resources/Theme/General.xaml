@@ -35,7 +35,7 @@
 
   <!-- ============== スタイル ==============  -->
   <!-- ウィンドウ -->
-  <Style TargetType="Window">
+  <Style x:Shared="false" TargetType="Window">
     <Setter Property="Background" Value="BurlyWood"/>
   </Style>
 
@@ -50,7 +50,7 @@
     <Setter Property="Content" Value="0" />
     <Setter Property="Command" Value="{Binding CaptionMinimumCommand}" />
   </Style>
-  <Style x:Key="WindowChromeMaximum" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
+  <Style x:Key="WindowChromeMaximum" x:Shared="false" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
     <Style.Triggers>
       <DataTrigger Binding="{Binding State}" Value="Normal">
         <Setter Property="Content" Value="1" />
@@ -66,7 +66,7 @@
     <Setter Property="Content" Value="r" />
     <Setter Property="Command" Value="{Binding CaptionCloseCommand}" />
   </Style>
-  <Style x:Key="WindowChromeCaption" TargetType="ContentControl">
+  <Style x:Key="WindowChromeCaption" x:Shared="false" TargetType="ContentControl">
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
     <Setter Property="Margin" Value="4" />
     <Setter Property="Padding" Value="1" />
@@ -116,6 +116,14 @@
         </Grid>
       </Setter.Value>
     </Setter>
+  </Style>
+  <Style x:Key="WindowChromeWindow" x:Shared="false" TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+    <Setter Property="BorderBrush">
+      <Setter.Value>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BorderThickness" Value="{Binding WindowBorderThickness}" />
   </Style>
 
   <!--ButtonDictionary-->

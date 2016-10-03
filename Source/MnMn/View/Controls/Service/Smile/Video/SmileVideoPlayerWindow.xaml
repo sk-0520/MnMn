@@ -31,8 +31,6 @@
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
 
-  BorderThickness="{Binding WindowBorderThickness}"
-
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
   d:DesignHeight="540" d:DesignWidth="780"
@@ -249,7 +247,7 @@
     </KeyBinding>
   </Window.InputBindings>
   <Window.Style>
-    <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+    <Style TargetType="Window" BasedOn="{StaticResource WindowChromeWindow}">
       <Style.Triggers>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
@@ -258,11 +256,11 @@
           <Setter Property="Topmost" Value="True" />
         </DataTrigger>
       </Style.Triggers>
-      <Setter Property="BorderBrush">
+      <!--<Setter Property="BorderBrush">
         <Setter.Value>
           <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
         </Setter.Value>
-      </Setter>
+      </Setter>-->
     </Style>
   </Window.Style>
   <WindowChrome.WindowChrome>
@@ -1037,6 +1035,7 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
+                    VirtualizingPanel.ScrollUnit="Item"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     HorizontalContentAlignment="Stretch"
                     SelectedItem="{Binding SelectedComment}"

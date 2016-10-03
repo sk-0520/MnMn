@@ -15,7 +15,6 @@
   Width="{Binding Width, Mode=TwoWay}"
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
-  BorderThickness="{Binding WindowBorderThickness}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -48,13 +47,13 @@
     </ResourceDictionary>
   </Window.Resources>
   <Window.Style>
-    <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+    <Style TargetType="Window" BasedOn="{StaticResource WindowChromeWindow}">
       <Setter Property="Topmost" Value="{Binding Topmost}" />
-      <Setter Property="BorderBrush">
+      <!--<Setter Property="BorderBrush">
         <Setter.Value>
           <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
         </Setter.Value>
-      </Setter>
+      </Setter>-->
     </Style>
   </Window.Style>
   <WindowChrome.WindowChrome>
