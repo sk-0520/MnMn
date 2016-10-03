@@ -123,12 +123,12 @@
         </xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <StackPanel>
-            <MenuItem Header="タグ" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" Style="{StaticResource DefaultMenuItem}">
+            <MenuItem Header="タグ" Command="{Binding SearchFromTypeCommand}" CommandParameter="Tag" Style="{StaticResource {x:Type MenuItem}}">
               <MenuItem.Icon>
                 <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="キーワード" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" Style="{StaticResource DefaultMenuItem}">
+            <MenuItem Header="キーワード" Command="{Binding SearchFromTypeCommand}" CommandParameter="Keyword" Style="{StaticResource {x:Type MenuItem}}">
               <MenuItem.Icon>
                 <Image Source="/Resources/SearchType/Keyword.png" Style="{StaticResource ItemImage}" />
               </MenuItem.Icon>

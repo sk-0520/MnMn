@@ -105,7 +105,7 @@
         <Setter Property="IsEnabled" Value="False" />
         <Setter Property="Visibility" Value="Collapsed" />
       </Style>
-      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
             <Setter Property="IsEnabled" Value="True" />
@@ -347,7 +347,7 @@
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
           <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -371,7 +371,7 @@
         </Menu.Style>
         <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}">
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -420,7 +420,7 @@
             </CompositeCollection>
           </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />

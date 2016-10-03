@@ -114,7 +114,6 @@
         Grid.RowSpan="2"
         Grid.Column="0"
         Grid.ColumnSpan="2"
-        Style="{StaticResource ContentListBox}"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
       >

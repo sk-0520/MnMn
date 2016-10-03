@@ -39,7 +39,7 @@
         <Setter Property="Stretch" Value="Fill" />
       </Style>
 
-      <Style x:Key="MyListBox" TargetType="ListBox" BasedOn="{StaticResource ContentListBox}">
+      <Style x:Key="MyListBox" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
         <Setter Property="SelectedItem" Value="{Binding DataContext.SelectedFinder, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         <Setter Property="ItemsPanel">
           <Setter.Value>

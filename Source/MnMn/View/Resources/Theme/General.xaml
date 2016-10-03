@@ -75,15 +75,15 @@
   </Style>
 
   <!--ListBoxDictionary-->
-  <Style x:Key="ContentListBox" TargetType="ListBox">
+  <Style TargetType="ListBox">
     <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
   </Style>
 
   <!--MenuDictionary-->
-  <Style x:Key="DefaultMenuItem" TargetType="MenuItem">
+  <Style TargetType="MenuItem">
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="HorizontalAlignment" Value="Left"/>
+    <Setter Property="HorizontalAlignment" Value="Stretch"/>
     <Setter Property="VerticalAlignment" Value="Center"/>
   </Style>
 

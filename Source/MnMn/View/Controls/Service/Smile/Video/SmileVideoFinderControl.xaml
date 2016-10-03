@@ -92,7 +92,7 @@
       <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
         <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
-          <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" Style="{StaticResource DefaultMenuItem}" />
+          <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>
 
@@ -161,7 +161,6 @@
         Grid.RowSpan="2"
         Grid.Column="0"
         Grid.ColumnSpan="2"
-        Style="{StaticResource ContentListBox}"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
       >
