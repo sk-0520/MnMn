@@ -405,12 +405,12 @@
             <CompositeCollection>
               <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
                 <MenuItem.Icon>
-                  <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource DefaultImage}" />
+                  <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeMenuItem}">
                 <MenuItem.Icon>
-                  <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource DefaultImage}" />
+                  <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
@@ -1357,7 +1357,7 @@
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <!--<TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>-->
-                        <Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultImage}" />
+                        <Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <TextBlock>
                           <Hyperlink
                             Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
@@ -1369,7 +1369,7 @@
                         <Button Cursor="Hand" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Button.Template>
                             <ControlTemplate>
-                              <Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" Style="{StaticResource DefaultImage}" />
+                              <Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />
                             </ControlTemplate>
                           </Button.Template>
                         </Button>

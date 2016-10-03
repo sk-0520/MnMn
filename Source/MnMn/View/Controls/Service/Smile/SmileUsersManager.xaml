@@ -125,7 +125,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Grid Grid.Column="0" Width="150" VerticalAlignment="Top" Height="150">
-                    <Image Source="{Binding ThumbnailImage}" Style="{StaticResource DefaultImage}" />
+                    <Image Source="{Binding ThumbnailImage}" />
                     <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
                   </Grid>
 
