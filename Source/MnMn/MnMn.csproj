@@ -308,6 +308,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchPinModel.cs" />
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
+    <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
@@ -402,6 +403,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\live\request-params.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\theme.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\File\Html\UpdateState.html" />

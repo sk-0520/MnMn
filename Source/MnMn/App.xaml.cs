@@ -163,7 +163,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 return;
             }
 
-            base.OnStartup(e);
 
 #if DEBUG
             DoDebug();
@@ -205,6 +204,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             WebNavigatorCore.Initialize(Mediation);
 
+            AppUtility.SetTheme(setting.Theme);
+
             SplashWindow.Show();
 
             await AppManager.InitializeAsync();
@@ -216,6 +217,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             MainWindow.Show();
             SplashWindow.Close();
+
+            base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)
