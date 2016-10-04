@@ -19,6 +19,7 @@
   <!-- ============== 規定値 ============== -->
 
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
+  <Thickness x:Key="ItemMargin">1,1,2,1</Thickness>
 
   <!-- LoadState -->
   <Color x:Key="LoadState_None">Gray</Color>
@@ -42,89 +43,7 @@
   <sys:Double x:Key="SmallIconHeight">16</sys:Double>
 
   <!-- ============== スタイル ==============  -->
-  <!-- ウィンドウ -->
-  <Style x:Shared="false" TargetType="Window">
-    <Setter Property="Background" Value="BurlyWood"/>
-  </Style>
-
   <!-- 独自ウィンドウ -->
-  <!--<Style x:Key="WindowChromeButton" TargetType="Button">
-    <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" />
-    <Setter Property="FontFamily" Value="Marlett" />
-    <Setter Property="IsTabStop" Value="False" />
-  </Style>
-  <Style x:Key="WindowChromeMinimum" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
-    <Setter Property="Content" Value="0" />
-    <Setter Property="Command" Value="{Binding CaptionMinimumCommand}" />
-  </Style>
-  <Style x:Key="WindowChromeMaximum" x:Shared="false" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
-    <Style.Triggers>
-      <DataTrigger Binding="{Binding State}" Value="Normal">
-        <Setter Property="Content" Value="1" />
-        <Setter Property="Command" Value="{Binding CaptionMaximumCommand}" />
-      </DataTrigger>
-      <DataTrigger Binding="{Binding State}" Value="Maximized">
-        <Setter Property="Content" Value="2" />
-        <Setter Property="Command" Value="{Binding CaptionRestoreCommand}" />
-      </DataTrigger>
-    </Style.Triggers>
-  </Style>
-  <Style x:Key="WindowChromeClose" TargetType="Button" BasedOn="{StaticResource WindowChromeButton}">
-    <Setter Property="Content" Value="r" />
-    <Setter Property="Command" Value="{Binding CaptionCloseCommand}" />
-  </Style>
-  <Style x:Key="WindowChromeCaption" x:Shared="false" TargetType="ContentControl">
-    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
-    <Setter Property="Margin" Value="4" />
-    <Setter Property="Padding" Value="1" />
-    <Setter Property="Content">
-      <Setter.Value>
-        <Grid>
-          <Grid.Style>
-            <Style TargetType="Grid">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                  <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                  <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
-                </DataTrigger>
-              </Style.Triggers>
-            </Style>
-          </Grid.Style>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <Button Grid.Column="0">
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="MouseRightButtonDown">
-                <i:InvokeCommandAction Command="{Binding ShowSystemMenuCommand}"/>
-              </i:EventTrigger>
-              <i:EventTrigger EventName="MouseDoubleClick">
-                <i:InvokeCommandAction Command="{Binding CaptionCloseCommand}"/>
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <Button.Template>
-              <ControlTemplate>
-                <Image Width="16" Height="16" WindowChrome.IsHitTestVisibleInChrome="True" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
-              </ControlTemplate>
-            </Button.Template>
-          </Button>
-          <Grid Grid.Column="1" >
-            <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
-          </Grid>
-          <StackPanel Grid.Column="2" Orientation="Horizontal">
-            <Button Style="{StaticResource WindowChromeMinimum}"  />
-            <Button Style="{StaticResource WindowChromeMaximum}" />
-            <Button Style="{StaticResource WindowChromeClose}" />
-          </StackPanel>
-        </Grid>
-      </Setter.Value>
-    </Setter>
-  </Style>-->
   <Style TargetType="mamc:MetroWindow" >
     <Setter Property="WindowStyle" Value="None" />
     <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
@@ -133,13 +52,13 @@
     <Setter Property="BorderThickness" Value="1" />
   </Style>
 
-  <!--ButtonDictionary-->
+  <!--Button -->
   <Style x:Key="ReloadButton" TargetType="Button">
     <Setter Property="FontFamily" Value="Webdings" />
     <Setter Property="Content" Value="q" />
   </Style>
 
-  <!-- GridSplitterDictionary -->
+  <!-- GridSplitter -->
   <Style TargetType="GridSplitter">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -151,7 +70,7 @@
     <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
   </Style>
 
-  <!--ImageDictionary-->
+  <!--Image -->
   <Style TargetType="Image">
     <Style.Triggers>
       <Trigger Property="IsEnabled" Value="False">
@@ -165,7 +84,7 @@
   </Style>
 
   <Style x:Key="ItemImage" TargetType="Image" BasedOn="{StaticResource {x:Type Image}}">
-    <Setter Property="Margin" Value="1,1,2,1" />
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
   <Style x:Key="SmallIconImage" TargetType="Image" BasedOn="{StaticResource {x:Type Image}}">
@@ -177,12 +96,12 @@
     <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
   </Style>
 
-  <!--ListBoxDictionary-->
+  <!--ListBox -->
   <Style TargetType="ListBox">
     <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
   </Style>
 
-  <!--MenuDictionary-->
+  <!--Menu -->
   <Style TargetType="MenuItem">
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -190,14 +109,11 @@
     <Setter Property="VerticalAlignment" Value="Center"/>
   </Style>
 
-  <!--SourceLoadStateDictionary-->
-  <Style x:Key="TabSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator">
+  <!--SourceLoadState -->
+  <Style x:Key="SmallItemSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator">
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
     <Setter Property="Width" Value="8" />
     <Setter Property="Height" Value="8" />
-  </Style>
-
-  <Style x:Key="TabVideoSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator" BasedOn="{StaticResource TabSourceLoadState}">
-    <Setter Property="SourceLoadState" Value="{Binding FinderLoadState}" />
   </Style>
 
   <!--TabDictionary-->
@@ -225,7 +141,7 @@
     <Setter Property="CommandParameter" Value="{Binding}" />
   </Style>
 
-  <!--TextBoxDictionary-->
+  <!--TextBox -->
   <Style TargetType="TextBox">
     <Style.Triggers>
       <Trigger Property="IsReadOnly" Value="True">

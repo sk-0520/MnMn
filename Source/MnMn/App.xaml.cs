@@ -163,6 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 return;
             }
 
+            base.OnStartup(e);
 
 #if DEBUG
             DoDebug();
@@ -218,7 +219,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow.Show();
             SplashWindow.Close();
 
-            base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)

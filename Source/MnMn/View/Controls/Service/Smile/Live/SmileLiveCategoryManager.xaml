@@ -54,7 +54,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Category.DisplayText}" Style="{StaticResource TabHeaderText}" />
             <app_view_controls_service_smile_live:SmileLiveCategoryContext
               SelectedSort="{Binding SelectedSort}"

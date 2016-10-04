@@ -253,7 +253,7 @@
               </ContextMenu>
             </StackPanel.ContextMenu>
 
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
             <Image>
               <Image.Style>
