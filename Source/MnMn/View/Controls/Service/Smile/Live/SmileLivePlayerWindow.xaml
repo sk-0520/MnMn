@@ -5,6 +5,8 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 

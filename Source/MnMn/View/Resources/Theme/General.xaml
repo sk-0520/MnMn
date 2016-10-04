@@ -4,10 +4,18 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
 
 >
+  <!--<ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+  </ResourceDictionary.MergedDictionaries>-->
+
   <!-- ============== 規定値 ============== -->
 
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
@@ -117,12 +125,11 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style x:Key="WindowChromeWindow" x:Shared="false" TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
-    <Setter Property="BorderBrush">
-      <Setter.Value>
-        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
-      </Setter.Value>
-    </Setter>
+  <Style x:Key="WindowChromeWindow" x:Shared="false" TargetType="mamc:MetroWindow" >
+    <Setter Property="WindowStyle" Value="None" />
+    <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+    <Setter Property="AllowsTransparency" Value="True" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     <Setter Property="BorderThickness" Value="{Binding WindowBorderThickness}" />
   </Style>
 
