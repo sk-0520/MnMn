@@ -7,6 +7,8 @@
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:oxy="http://oxyplot.org/wpf"
 
@@ -31,12 +33,15 @@
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
 
+  ShowTitleBar="{Binding IsNormalWindow}"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
   d:DesignHeight="540" d:DesignWidth="780"
 >
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+    <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
@@ -247,7 +252,7 @@
     </KeyBinding>
   </mamc:MetroWindow.InputBindings>
   <mamc:MetroWindow.Style>
-    <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource WindowChromeWindow}">
+    <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />

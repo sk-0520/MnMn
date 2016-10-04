@@ -16,13 +16,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.View.Window;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using MahApps.Metro.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow: UserClosableWindowWindowBase
+    public partial class MainWindow: MetroWindow
     {
         public MainWindow()
         {

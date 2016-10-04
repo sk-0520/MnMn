@@ -1,9 +1,12 @@
-﻿<cttn_sl_view_window:UserClosableWindowWindowBase
+﻿<mamc:MetroWindow
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
+    xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 
   xmlns:cttn_sl_view_window="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Window;assembly=ContentTypeTextNet.SharedLibrary"
 
@@ -17,7 +20,6 @@
 
   Icon="/Resources/MnMn.ico"
   FontWeight="Normal"
-  ResizeMode="CanResizeWithGrip"
 
   Left="{Binding Left, Mode=TwoWay}"
   Top="{Binding Top, Mode=TwoWay}"
@@ -28,7 +30,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <cttn_sl_view_window:UserClosableWindowWindowBase.Resources>
+  <mamc:MetroWindow.Resources>
     <ResourceDictionary>
       <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
@@ -37,9 +39,10 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
-  </cttn_sl_view_window:UserClosableWindowWindowBase.Resources>
+  </mamc:MetroWindow.Resources>
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="Application" Title="メインウィンドウ" />
+    <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
@@ -116,4 +119,4 @@
       </TabItem>
     </TabControl>
   </DockPanel>
-</cttn_sl_view_window:UserClosableWindowWindowBase>
+</mamc:MetroWindow>

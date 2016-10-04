@@ -24,6 +24,7 @@ using System.Windows.Input;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
 {
+    [Obsolete]
     public interface ICaptionCommand: IWindowState
     {
         /// <summary>

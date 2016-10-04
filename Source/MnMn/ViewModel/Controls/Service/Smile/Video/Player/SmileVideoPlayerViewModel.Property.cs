@@ -1013,22 +1013,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-        /// <summary>
-        /// リサイズ幅。
-        /// </summary>
-        public Thickness ResizeBorderThickness
-        {
-            get { return this._resizeBorderThickness; }
-            set { SetVariableValue(ref this._resizeBorderThickness, value); }
-        }
-        /// <summary>
-        /// ウィンドウ枠幅。
-        /// </summary>
-        public Thickness WindowBorderThickness
-        {
-            get { return this._windowBorderThickness; }
-            set { SetVariableValue(ref this._windowBorderThickness, value); }
-        }
+        ///// <summary>
+        ///// リサイズ幅。
+        ///// </summary>
+        //public Thickness ResizeBorderThickness
+        //{
+        //    get { return this._resizeBorderThickness; }
+        //    set { SetVariableValue(ref this._resizeBorderThickness, value); }
+        //}
+        ///// <summary>
+        ///// ウィンドウ枠幅。
+        ///// </summary>
+        //public Thickness WindowBorderThickness
+        //{
+        //    get { return this._windowBorderThickness; }
+        //    set { SetVariableValue(ref this._windowBorderThickness, value); }
+        //}
         /// <summary>
         /// コメントグラフ表示状態。
         /// </summary>
