@@ -71,7 +71,7 @@
       <TabItem DataContext="{Binding AppUpdateManager}"  Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
           <StackPanel>
-            <TextBlock Text="アップデート" Style="{StaticResource TabItemLikeText}" />
+            <TextBlock Text="アップデート" Style="{StaticResource ParentItemLikeText}" />
             <Border CornerRadius="4" BorderThickness="2" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Border.Style>
                 <Style TargetType="Border">
