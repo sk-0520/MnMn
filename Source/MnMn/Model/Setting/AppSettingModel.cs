@@ -69,6 +69,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public WebNavigatorSettingModel WebNavigator { get; set; } = new WebNavigatorSettingModel();
 
+        [DataMember]
+        public ThemeSettingModel Theme { get; set; } = new ThemeSettingModel();
+
         #region service
 
         [DataMember]
