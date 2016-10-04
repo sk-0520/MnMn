@@ -14,7 +14,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
 
-        <ResourceDictionary Source="/View/Resources/Theme/General.xaml" />
+        <ResourceDictionary Source="/View/Resources/Theme/Generic.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
