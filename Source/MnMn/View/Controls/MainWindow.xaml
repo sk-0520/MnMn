@@ -5,8 +5,8 @@
 
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 
-    xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 
   xmlns:cttn_sl_view_window="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Window;assembly=ContentTypeTextNet.SharedLibrary"
 
@@ -32,10 +32,6 @@ xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 >
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
@@ -65,18 +61,18 @@ xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
       <TextBlock Text="{Binding SmileSession.LastLoginTime, Mode=OneWay}" />
     </StatusBar>
 
-    <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-      <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}">
+    <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+      <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
-      <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}">
+      <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
-      <TabItem DataContext="{Binding AppUpdateManager}">
+      <TabItem DataContext="{Binding AppUpdateManager}"  Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
           <StackPanel>
-            <TextBlock Text="アップデート" />
-            <Border CornerRadius="4" BorderThickness="2" BorderBrush="Red" Background="Transparent" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="アップデート" Style="{StaticResource TabItemLikeText}" />
+            <Border CornerRadius="4" BorderThickness="2" Background="Transparent" BorderBrush="{StaticResource AccentBaseColorBrush}" Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibilityConverter}}">
               <Border.Style>
                 <Style TargetType="Border">
                   <Style.Triggers>
@@ -89,7 +85,7 @@ xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
                               RepeatBehavior="Forever"
                               Storyboard.TargetProperty="Background.Color"
                               Duration="00:00:01.5"
-                              To="Red"
+                              To="{StaticResource HighlightColor}"
                             />
                             <ColorAnimation
                               AutoReverse="True"
