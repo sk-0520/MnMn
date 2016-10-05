@@ -44,7 +44,7 @@
   <Color x:Key="SourceLoadState_Failure">Red</Color>
 
   <!-- TextBox -->
-  <Thickness x:Key="TextBoxPadding" >2</Thickness>
+  <Thickness x:Key="TextBoxPadding">2</Thickness>
 
   <sys:Double x:Key="MinimumIconWidth">16</sys:Double>
   <sys:Double x:Key="MinimumIconHeight">16</sys:Double>
@@ -298,27 +298,26 @@
   </Style>
 
   <!-- ViewBox -->
-  <Style x:Key="MinimumIconBox" TargetType="Viewbox">
+  <Style x:Key="IconConvas" TargetType="Viewbox">
     <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Stretch" Value="UniformToFill" />
+  </Style>
+
+  <Style x:Key="MinimumIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
     <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
     <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
   </Style>
 
-  <Style x:Key="SmallIconBox" TargetType="Viewbox">
-    <Setter Property="SnapsToDevicePixels" Value="True" />
+  <Style x:Key="SmallIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
     <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
     <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
   </Style>
 
-  <!-- CanvasBox -->
-  <Style x:Key="MinimumIconCanvas" TargetType="Canvas">
-    <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
-    <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
-  </Style>
-
-  <Style x:Key="SmallIconCanvas" TargetType="Canvas">
-    <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
-    <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
+  <!-- Canvas -->
+  <!-- 元データが 24 x 24 の描画領域 -->
+  <Style x:Key="IconCanvas-24x24" TargetType="Canvas">
+    <Setter Property="Width" Value="24" />
+    <Setter Property="Height" Value="24" />
   </Style>
 
   <!-- Path -->
