@@ -72,6 +72,11 @@
     <Setter Property="Content" Value="q" />
   </Style>
 
+  <!-- RepeatButton -->
+  <Style x:Key="ScrollButton" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
+    <Setter Property="Focusable" Value="False" />
+  </Style>
+
   <!-- GridSplitter -->
   <Style TargetType="GridSplitter">
     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -292,6 +297,19 @@
     <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />
   </Style>
 
+  <!-- ViewBox -->
+  <Style x:Key="MinimumIconBox" TargetType="Viewbox">
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
+  </Style>
+
+  <Style x:Key="SmallIconBox" TargetType="Viewbox">
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
+  </Style>
+
   <!-- Path -->
   <Style x:Key="IconPath" TargetType="Path">
     <Style.Triggers>
@@ -311,17 +329,5 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
-  <!-- ViewBox -->
-  <Style x:Key="MinimumIconBox" TargetType="Viewbox">
-    <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
-    <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
-  </Style>
-
-  <Style x:Key="SmallIconBox" TargetType="Viewbox">
-    <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
-    <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
-  </Style>
 
 </ResourceDictionary>
