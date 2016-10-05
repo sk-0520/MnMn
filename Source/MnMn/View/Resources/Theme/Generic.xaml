@@ -310,6 +310,17 @@
     <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
   </Style>
 
+  <!-- CanvasBox -->
+  <Style x:Key="MinimumIconCanvas" TargetType="Canvas">
+    <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
+  </Style>
+
+  <Style x:Key="SmallIconCanvas" TargetType="Canvas">
+    <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
+  </Style>
+
   <!-- Path -->
   <Style x:Key="IconPath" TargetType="Path">
     <Style.Triggers>
@@ -319,15 +330,28 @@
     </Style.Triggers>
   </Style>
 
-  <Style x:Key="MinimumIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+  <Style x:Key="MinimumDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
-  <Style x:Key="SmallIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+  <Style x:Key="SmallDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+
+  <!-- ================ Common Icon ================ -->
+  <!--  https://materialdesignicons.com/icon/arrow-left-drop-circle-outline -->
+  <Geometry x:Key="Image_ScrollLeft">M22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12M14,7L9,12L14,17V7Z</Geometry>
+  <!--  https://materialdesignicons.com/icon/arrow-right-drop-circle-outline -->
+  <Geometry x:Key="Image_ScrollRight">M2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12M4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12M10,17L15,12L10,7V17Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle-outline  -->
+  <Geometry x:Key="Image_NavigationNext">M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z</Geometry>
+  <!--  https://materialdesignicons.com/icon/arrow-left-bold-circle-outline -->
+  <Geometry x:Key="Image_NavigationPrev">M7,12L12,7V10H16V14H12V17L7,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle  -->
+  <Geometry x:Key="Image_NavigationGo">M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M17,12L12,7V10H8V14H12V17L17,12Z</Geometry>
 
 </ResourceDictionary>

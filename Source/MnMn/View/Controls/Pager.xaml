@@ -10,10 +10,22 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
+      <!--<DataTrigger x:Key="ButtonTrigger" Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">
+        <Setter Property="Visibility" Value="Collapsed"/>
+      </DataTrigger>-->
       <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
-      <Style x:Key="CommandButton" TargetType="Control">
+      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Focusable" Value="False" />
+          </DataTrigger>
+        </Style.Triggers>
+      </Style>
+
+      <Style x:Key="ScrollButton" TargetType="RepeatButton" BasedOn="{StaticResource ScrollButton}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">
             <Setter Property="Visibility" Value="Collapsed"/>
@@ -23,31 +35,46 @@
 
     </ResourceDictionary>
   </UserControl.Resources>
-  <DockPanel>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+
     <RepeatButton
-      DockPanel.Dock="Left"
+      Grid.Column="0"
       CommandTarget="{Binding ElementName=PART_ScrollViewer}"
       Command="ScrollBar.LineLeftCommand"
-      Style="{StaticResource CommandButton}"
+      Style="{StaticResource ScrollButton}"
     >
-      <Image Source="/Resources/Common/View/Left.png" Style="{StaticResource SmallIconImage}" />
+      <Viewbox Style="{StaticResource SmallIconBox}">
+        <Canvas Style="{StaticResource SmallIconCanvas}">
+          <Path Data="{StaticResource Image_ScrollLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+        </Canvas>
+      </Viewbox>
     </RepeatButton>
-    <Button DockPanel.Dock="Left" Click="PrevButton_Click" Style="{StaticResource CommandButton}">
-      <Image Source="/Resources/Pager/Prev.png" Style="{StaticResource SmallIconImage}" />
+
+    <Button Grid.Column="1" Click="PrevButton_Click">
+      <Viewbox Style="{StaticResource SmallIconBox}">
+        <Canvas Style="{StaticResource SmallIconCanvas}">
+          <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+        </Canvas>
+      </Viewbox>
     </Button>
-    <Button DockPanel.Dock="Left" Click="NextButton_Click" Style="{StaticResource CommandButton}">
-      <Image Source="/Resources/Pager/Next.png" Style="{StaticResource SmallIconImage}" />
+    <Button Grid.Column="2" Click="NextButton_Click">
+      <Viewbox Style="{StaticResource SmallIconBox}">
+        <Canvas Style="{StaticResource SmallIconCanvas}">
+          <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+        </Canvas>
+      </Viewbox>
     </Button>
-    <RepeatButton
-      DockPanel.Dock="Right"
-      CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-      Command="ScrollBar.LineRightCommand"
-      Style="{StaticResource CommandButton}"
-    >
-      <Image Source="/Resources/Common/View/Right.png" Style="{StaticResource SmallIconImage}" />
-    </RepeatButton>
+
     <ScrollViewer
       x:Name="PART_ScrollViewer"
+      Grid.Column="3"
       HorizontalScrollBarVisibility="Hidden"
       VerticalScrollBarVisibility="Disabled"
     >
@@ -70,5 +97,18 @@
         </ItemsControl.ItemTemplate>
       </ItemsControl>
     </ScrollViewer>
-  </DockPanel>
+
+    <RepeatButton
+      Grid.Column="4"
+      CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+      Command="ScrollBar.LineRightCommand"
+      Style="{StaticResource ScrollButton}"
+    >
+      <Viewbox Style="{StaticResource SmallIconBox}">
+        <Canvas Style="{StaticResource SmallIconCanvas}">
+          <Path Data="{StaticResource Image_ScrollRight}" Style="{StaticResource SmallDefaultIconPath}" />
+        </Canvas>
+      </Viewbox>
+    </RepeatButton>
+  </Grid>
 </UserControl>
