@@ -24,6 +24,10 @@
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
   <Thickness x:Key="ItemMargin">1,1,2,1</Thickness>
 
+  <sys:Double x:Key="FontBaseSize">12</sys:Double>
+  <sys:Double x:Key="FontBigSize">14</sys:Double>
+  <sys:Double x:Key="FontLargeSize">16</sys:Double>
+
   <!-- LoadState -->
   <Color x:Key="LoadState_None">Gray</Color>
   <Color x:Key="LoadState_Preparation">Orange</Color>
@@ -53,6 +57,7 @@
     <Setter Property="AllowsTransparency" Value="False" />
     <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />
   </Style>
 
   <!--Button -->
@@ -158,30 +163,122 @@
   <!-- TabControl -->
   <Style x:Key="SectionTabControl" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
     <Setter Property="TabStripPlacement" Value="Left" />
+    <Setter Property="Padding" Value="0" />
   </Style>
 
   <!-- TabItem -->
   <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-    <Setter Property="mamc:ControlsHelper.HeaderFontSize" Value="16" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TabItem">
+          <Border x:Name="Border"
+            HorizontalAlignment="Stretch"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+          >
+            <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+              <DockPanel.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+              </DockPanel.Resources>
+              <Rectangle x:Name="Underline"
+                Height="2"
+                Margin="0 1 0 0"
+                HorizontalAlignment="Stretch"
+                DockPanel.Dock="Bottom"
+                Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(mamc:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}"
+              />
+              <mamc:ContentControlEx x:Name="ContentSite"
+                Padding="{TemplateBinding Padding}"
+                Foreground="{TemplateBinding Foreground}"
+                FontSize="{TemplateBinding mamc:ControlsHelper.HeaderFontSize}"
+                FontWeight="{TemplateBinding mamc:ControlsHelper.HeaderFontWeight}"
+                FontStretch="{TemplateBinding mamc:ControlsHelper.HeaderFontStretch}"
+                Content="{TemplateBinding Header}"
+                ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mamc:ControlsHelper.ContentCharacterCasing)}"
+                ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                RecognizesAccessKey="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+              />
+            </DockPanel>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="TabStripPlacement" Value="Left">
+              <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Left" />
+              <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Right" />
+              <Setter TargetName="Underline" Property="Height" Value="Auto" />
+              <Setter TargetName="Underline" Property="Margin" Value="1 0 0 0" />
+              <Setter TargetName="Underline" Property="Width" Value="2" />
+              <Setter TargetName="Border" Property="BorderThickness" Value="0,1,3,1" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Top">
+              <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Top" />
+              <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Bottom" />
+              <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Right" />
+              <Setter TargetName="Underline" Property="Height" Value="2" />
+              <Setter TargetName="Underline" Property="Margin" Value="0 1 0 0" />
+              <Setter TargetName="Underline" Property="Width" Value="Auto" />
+              <Setter TargetName="Border" Property="BorderThickness" Value="1,0,1,3" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+              <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Right" />
+              <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Left" />
+              <Setter TargetName="Underline" Property="Height" Value="Auto" />
+              <Setter TargetName="Underline" Property="Margin" Value="0 0 1 0" />
+              <Setter TargetName="Underline" Property="Width" Value="2" />
+              <Setter TargetName="Border" Property="BorderThickness" Value="3,1,0,1" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+              <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Bottom" />
+              <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Top" />
+              <Setter TargetName="Underline" Property="Height" Value="2" />
+              <Setter TargetName="Underline" Property="Margin" Value="0 0 0 1" />
+              <Setter TargetName="Underline" Property="Width" Value="Auto" />
+              <Setter TargetName="Border" Property="BorderThickness" Value="1,3,1,0" />
+            </Trigger>
+
+            <Trigger Property="IsSelected" Value="true">
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+              <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <!--<Trigger Property="IsSelected" Value="false">
+              <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayNormalBrush}" />
+              <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayNormalBrush}" />
+            </Trigger>-->
+            <Trigger SourceName="ContentSite" Property="IsMouseOver" Value="True">
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+              <!--<Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayHoverBrush}" />-->
+              <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayHoverBrush}" />
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition SourceName="ContentSite" Property="IsMouseOver" Value="True" />
+                <Condition Property="IsSelected" Value="True" />
+              </MultiTrigger.Conditions>
+              <!--<Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource HighlightBrush}" />-->
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+              <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource HighlightBrush}" />
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Border" Property="Background" Value="Transparent" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
+              <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayNormalBrush}" />
+              <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayHoverBrush}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+    <Setter Property="mamc:ControlsHelper.HeaderFontSize" Value="{StaticResource FontBaseSize}" />
   </Style>
 
   <Style x:Key="SectionTabItem" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-    <!--vsmだりぃ-->
-    <Style.Triggers>
-      <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
-      </Trigger>
-      <Trigger Property="IsSelected" Value="True">
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-      </Trigger>
-    </Style.Triggers>
-
-    <Setter Property="mamc:ControlsHelper.HeaderFontSize" Value="18" />
-    <Setter Property="BorderThickness" Value="0,0,3,1" />
-    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
-    <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="HorizontalAlignment" Value="Stretch" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    <Setter Property="mamc:ControlsHelper.HeaderFontSize" Value="{StaticResource FontLargeSize}" />
   </Style>
 
   <Style x:Key="ParentItemLikeText" TargetType="TextBlock">
