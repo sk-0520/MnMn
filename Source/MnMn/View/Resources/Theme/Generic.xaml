@@ -54,7 +54,7 @@
   <Style TargetType="mamc:MetroWindow" >
     <Setter Property="WindowStyle" Value="None" />
     <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
-    <Setter Property="AllowsTransparency" Value="False" />
+    <!--<Setter Property="AllowsTransparency" Value="False" />-->
     <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />

@@ -40,6 +40,10 @@
     <app_view_attachment:WindowTitleBehavior Service="Application" Title="メインウィンドウ" />
     <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
+  <mamc:MetroWindow.Style>
+    <!-- 大元のスタイルが適用されない対応 -->
+    <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}" />
+  </mamc:MetroWindow.Style>
   <DockPanel>
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
