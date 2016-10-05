@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
     /// <summary>
     /// プレイヤー管理。
     /// </summary>
-    public partial class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileDescription, ICloseView, ICaptionCommand
+    public partial class SmileVideoPlayerViewModel: SmileVideoDownloadViewModel, ISetView, ISmileDescription, ICloseView
     {
         #region define
 
@@ -107,9 +107,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         const float initPrevStateChangedPosition = -1;
 
-        static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-        static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
-        static readonly Thickness normalWindowBorderThickness = new Thickness(1);
+        //static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        //static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        //static readonly Thickness normalWindowBorderThickness = new Thickness(1);
 
         #endregion
 
@@ -649,7 +649,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // リスト部は比率レイアウトなので補正が必要
 
                 // TODO: うーん、ださい
-                var defaultGridSplitterLength = (double)View.Resources["DefaultGridSplitterLength"];
+                var defaultGridSplitterLength = (double)Application.Current.Resources["GridSplitterLength"];
 
                 leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
             }
@@ -1384,14 +1384,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(toNormalWindow) {
-                ResizeBorderThickness = enabledResizeBorderThickness;
-                //重複
-                if(State == WindowState.Maximized) {
-                    WindowBorderThickness = maximumWindowBorderThickness;
-                    State = WindowState.Normal;
-                } else {
-                    WindowBorderThickness = normalWindowBorderThickness;
-                }
+                //ResizeBorderThickness = enabledResizeBorderThickness;
+                ////重複
+                //if(State == WindowState.Maximized) {
+                //    WindowBorderThickness = maximumWindowBorderThickness;
+                //    State = WindowState.Normal;
+                //} else {
+                //    WindowBorderThickness = normalWindowBorderThickness;
+                //}
 
                 View.Deactivated -= View_Deactivated;
 
@@ -1402,8 +1402,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             } else {
                 View.Deactivated += View_Deactivated;
 
-                ResizeBorderThickness = new Thickness(0);
-                WindowBorderThickness = new Thickness(0);
+                //ResizeBorderThickness = new Thickness(0);
+                //WindowBorderThickness = new Thickness(0);
 
                 var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
                 NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
@@ -1761,25 +1761,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public WindowState State
         {
             get { return this._state; }
-            set
-            {
-                if(SetVariableValue(ref this._state, value)) {
-                    if(State == WindowState.Maximized) {
-                        WindowBorderThickness = maximumWindowBorderThickness;
-                    } else {
-                        //if(!IsNormalWindow) {
-                        //    SetWindowMode(false);
-                        //}
-                        WindowBorderThickness = normalWindowBorderThickness;
-                    }
-                }
-            }
+            //set
+            //{
+            //    if(SetVariableValue(ref this._state, value)) {
+            //        if(State == WindowState.Maximized) {
+            //            WindowBorderThickness = maximumWindowBorderThickness;
+            //        } else {
+            //            //if(!IsNormalWindow) {
+            //            //    SetWindowMode(false);
+            //            //}
+            //            WindowBorderThickness = normalWindowBorderThickness;
+            //        }
+            //    }
+            //}
+            set { SetVariableValue(ref this._state, value); }
         }
 
-        public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
-        public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
-        public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
-        public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
+        //public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
+        //public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
+        //public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
+        //public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
 
         #endregion
 

@@ -19,28 +19,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    [Obsolete]
-    public interface ICaptionCommand: IWindowState
+    public class ThemeSettingModel: SettingModelBase
     {
-        /// <summary>
-        /// リサイズ幅。
-        /// </summary>
-        Thickness ResizeBorderThickness { get; set; }
-        /// <summary>
-        /// ウィンドウ枠幅。
-        /// </summary>
-        Thickness WindowBorderThickness { get; set; }
+        #region property
 
-        ICommand ShowSystemMenuCommand { get; }
+        public bool IsRandom { get; set; } = Constants.SettingApplicationThemeIsRandom;
 
-        ICommand CaptionMinimumCommand { get; }
-        ICommand CaptionMaximumCommand { get; }
-        ICommand CaptionRestoreCommand { get; }
-        ICommand CaptionCloseCommand { get; }
+        public string BaseTheme { get; set; } = Constants.SettingApplicationThemeBaseTheme;
+
+        public string Accent { get; set; } = Constants.SettingApplicationThemeAccent;
+
+        #endregion
     }
 }

@@ -1,4 +1,4 @@
-﻿<Window
+﻿<mamc:MetroWindow
   x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,8 +6,10 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
-  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:oxy="http://oxyplot.org/wpf"
 
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
@@ -31,14 +33,17 @@
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
 
+  ShowTitleBar="{Binding IsNormalWindow}"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
   d:DesignHeight="540" d:DesignWidth="780"
 >
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+    <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
-  <Window.Resources>
+  <mamc:MetroWindow.Resources>
     <ResourceDictionary>
       <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
@@ -158,8 +163,8 @@
 
 
     </ResourceDictionary>
-  </Window.Resources>
-  <Window.InputBindings>
+  </mamc:MetroWindow.Resources>
+  <mamc:MetroWindow.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
@@ -245,9 +250,9 @@
         <sys:Boolean>False</sys:Boolean>
       </KeyBinding.CommandParameter>
     </KeyBinding>
-  </Window.InputBindings>
-  <Window.Style>
-    <Style TargetType="Window" BasedOn="{StaticResource WindowChromeWindow}">
+  </mamc:MetroWindow.InputBindings>
+  <mamc:MetroWindow.Style>
+    <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
@@ -262,8 +267,8 @@
         </Setter.Value>
       </Setter>-->
     </Style>
-  </Window.Style>
-  <WindowChrome.WindowChrome>
+  </mamc:MetroWindow.Style>
+  <!--<WindowChrome.WindowChrome>
     <WindowChrome
       ResizeBorderThickness="{Binding ResizeBorderThickness}"
       GlassFrameThickness="0"
@@ -281,15 +286,15 @@
         </MultiBinding>
       </WindowChrome.CaptionHeight>
     </WindowChrome>
-  </WindowChrome.WindowChrome>
+  </WindowChrome.WindowChrome>-->
 
   <DockPanel>
-    <ContentControl
+    <!--<ContentControl
       x:Name="caption"
       DockPanel.Dock="Top"
       Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
       Style="{StaticResource WindowChromeCaption}"
-    />
+    />-->
     <!--<Grid
       x:Name="caption"
       DockPanel.Dock="Top"
@@ -478,7 +483,9 @@
               <DataTrigger Binding="{Binding State}" Value="Maximized">
                 <Setter Property="Visibility" Value="Collapsed" />
               </DataTrigger>
+
               <!-- フルスクリーンはそもそもステータスバーが消えるので考慮しない -->
+
             </Style.Triggers>
             <Setter Property="Visibility" Value="Visible" />
           </Style>
@@ -1447,4 +1454,4 @@
       </TabControl>
     </Grid>
   </DockPanel>
-</Window>
+</mamc:MetroWindow>

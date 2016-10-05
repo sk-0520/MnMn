@@ -19,28 +19,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [Obsolete]
-    public interface ICaptionCommand: IWindowState
+    [Serializable, XmlRoot("theme")]
+    public class ThemeDefineModel: RawModelBase
     {
-        /// <summary>
-        /// リサイズ幅。
-        /// </summary>
-        Thickness ResizeBorderThickness { get; set; }
-        /// <summary>
-        /// ウィンドウ枠幅。
-        /// </summary>
-        Thickness WindowBorderThickness { get; set; }
+        #region property
 
-        ICommand ShowSystemMenuCommand { get; }
+        [XmlArray("base"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> BaseItems { get; set; } = new CollectionModel<DefinedElementModel>();
 
-        ICommand CaptionMinimumCommand { get; }
-        ICommand CaptionMaximumCommand { get; }
-        ICommand CaptionRestoreCommand { get; }
-        ICommand CaptionCloseCommand { get; }
+        [XmlArray("accent"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> AccentItems { get; set; } = new CollectionModel<DefinedElementModel>();
+
+        #endregion
     }
 }

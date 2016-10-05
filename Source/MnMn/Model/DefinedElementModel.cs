@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
                     return resultValue;
                 }
 
-                var firstValue = Words.Values.First();
+                var firstValue = Words.Values.FirstOrDefault();
                 return string.IsNullOrEmpty(firstValue) ? Key : firstValue;
             }
         }

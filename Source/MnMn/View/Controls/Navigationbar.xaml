@@ -41,8 +41,6 @@
       <Image>
         <Image.Style>
           <Style TargetType="Image" BasedOn="{StaticResource SmallIconImage}">
-            <!--<Setter Property="Source" Value="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />-->
-
             <Style.Triggers>
               <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Playing">
                 <Setter Property="Source" Value="/Resources/Navigationbar/Pause.png" />

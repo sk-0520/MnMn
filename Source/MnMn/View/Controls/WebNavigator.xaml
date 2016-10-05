@@ -48,11 +48,35 @@
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" ToolTip="ホームへ" Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">🏠</Button>
-        <Button Grid.Column="1" ToolTip="戻る" Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">⇐</Button>
-        <Button Grid.Column="2" ToolTip="進む" Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">⇒</Button>
+        <Button Grid.Column="0" ToolTip="ホームへ" Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Width="24" Height="24">
+              <Path Data="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z" Style="{StaticResource SmallIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </Button>
+        <Button Grid.Column="1" ToolTip="戻る" Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Width="24" Height="24">
+              <Path Data="M7,12L12,7V10H16V14H12V17L7,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12Z" Style="{StaticResource SmallIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </Button>
+        <Button Grid.Column="2" ToolTip="進む" Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Width="24" Height="24">
+              <Path Data="M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z" Style="{StaticResource SmallIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </Button>
         <TextBox x:Name="location" Grid.Column="3" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        <Button Grid.Column="4" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">➲</Button>
+        <Button Grid.Column="4" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Width="24" Height="24">
+              <Path Data="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M10,17L15,12L10,7V17Z" Style="{StaticResource SmallIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </Button>
       </Grid>
     </ToolBar>
 

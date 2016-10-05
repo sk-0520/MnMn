@@ -24,10 +24,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
@@ -41,14 +44,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             : base(mediation)
         {
             AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, Define.ServiceType.Application));
+            ThemeDefine = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);
+            SelectedAccent = AppSetting.Theme.Accent;
+            SelectedBaseTheme = AppSetting.Theme.BaseTheme;
         }
 
         #region property
 
         AppSettingModel AppSetting { get; }
+        ThemeDefineModel ThemeDefine { get; }
 
         public FewViewModel<bool> WebNavigatorGeckoFxOwnResponsibility { get; } = new FewViewModel<bool>(false);
         public FewViewModel<bool> RebuildingWebNavigatorGeckoFxPlugin { get; } = new FewViewModel<bool>(false);
+
+        public bool IsRandomTheme
+        {
+            get { return AppSetting.Theme.IsRandom; }
+            set
+            {
+                if(SetPropertyValue(AppSetting.Theme, value, nameof(AppSetting.Theme.IsRandom))) {
+                    AppUtility.SetTheme(AppSetting.Theme);
+                }
+            }
+        }
+        public string SelectedBaseTheme
+        {
+            get { return AppSetting.Theme.BaseTheme; }
+            set
+            {
+                if(SetPropertyValue(AppSetting.Theme, value, nameof(AppSetting.Theme.BaseTheme))) {
+                    if(!IsRandomTheme) {
+                        AppUtility.SetTheme(AppSetting.Theme);
+                    }
+                }
+            }
+        }
+        public string SelectedAccent
+        {
+            get { return AppSetting.Theme.Accent; }
+            set
+            {
+                if(SetPropertyValue(AppSetting.Theme, value, nameof(AppSetting.Theme.Accent))) {
+                    if(!IsRandomTheme) {
+                        AppUtility.SetTheme(AppSetting.Theme);
+                    }
+                }
+            }
+        }
+        public CollectionModel<DefinedElementModel> BaseThemeItems
+        {
+            get { return ThemeDefine.BaseItems; }
+        }
+        public CollectionModel<DefinedElementModel> AccentItems
+        {
+            get { return ThemeDefine.AccentItems; }
+        }
 
         public string CacheDirectoryPath
         {

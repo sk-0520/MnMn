@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register(
             DependencyPropertyUtility.GetName(nameof(PasswordProperty)),
-            typeof(string), 
-            typeof(PasswordBoxPasswordBehavior), 
+            typeof(string),
+            typeof(PasswordBoxPasswordBehavior),
             new UIPropertyMetadata(null)
         );
 
@@ -55,16 +55,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         {
             base.OnAttached();
 
-            this.AssociatedObject.Password = (string)GetValue(PasswordProperty);
+            AssociatedObject.Password = (string)GetValue(PasswordProperty);
 
-            this.AssociatedObject.PasswordChanged -= PasswordChanged;
-            this.AssociatedObject.PasswordChanged += PasswordChanged;
+            AssociatedObject.PasswordChanged -= PasswordChanged;
+            AssociatedObject.PasswordChanged += PasswordChanged;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.AssociatedObject.PasswordChanged -= PasswordChanged;
+            if(AssociatedObject != null) {
+                AssociatedObject.PasswordChanged -= PasswordChanged;
+            }
         }
 
         #endregion

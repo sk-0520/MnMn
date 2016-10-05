@@ -29,8 +29,8 @@
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
-  <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-    <TabItem Header="情報" DataContext="{Binding AppAboutManager}">
+  <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+    <TabItem Header="情報" DataContext="{Binding AppAboutManager}" Style="{StaticResource SectionTabItem}">
       <TabItem.Resources>
         <Thickness x:Key="ContentMargin">8</Thickness>
       </TabItem.Resources>
@@ -152,7 +152,7 @@
       </Grid>
     </TabItem>
 
-    <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}">
+    <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}" Style="{StaticResource SectionTabItem}">
       <DockPanel>
         <ToolBar DockPanel.Dock="Top">
           <Button Command="{Binding SaveAllLogCommand}">全件保存</Button>
@@ -259,15 +259,15 @@
       </DockPanel>
     </TabItem>
 
-    <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}">
+    <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
-    <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}">
+    <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="flashPlayerBrowser" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
-    <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
+    <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}" Style="{StaticResource SectionTabItem}">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
@@ -304,7 +304,7 @@
       </Grid>
     </TabItem>
 
-    <TabItem Header="設定" DataContext="{Binding AppSettingManager}">
+    <TabItem Header="設定" DataContext="{Binding AppSettingManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls_app:AppSettingManager />
     </TabItem>
 
