@@ -39,7 +39,7 @@
       Command="{Binding PlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding PlayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
-      <Viewbox Style="{StaticResource MinimumIconBox}">
+      <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path>
             <Path.Resources>
@@ -81,7 +81,7 @@
       Command="{Binding StopCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
       CommandParameter="{Binding StopCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
-      <Viewbox Style="{StaticResource MinimumIconBox}">
+      <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <!-- https://materialdesignicons.com/icon/stop -->
           <Path Data="M18,18H6V6H18V18Z" Style="{StaticResource MinimumDefaultIconPath}" />
@@ -170,7 +170,7 @@
         Command="{Binding ReplayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
         CommandParameter="{Binding ReplayCommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
       >
-        <Viewbox Style="{StaticResource MinimumIconBox}">
+        <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path>
               <Path.Resources>
@@ -196,7 +196,7 @@
         Grid.Column="1"
         IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
       >
-        <Viewbox Style="{StaticResource MinimumIconBox}">
+        <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path>
               <Path.Resources>

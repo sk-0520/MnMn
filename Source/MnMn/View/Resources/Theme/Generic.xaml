@@ -46,14 +46,20 @@
   <!-- TextBox -->
   <Thickness x:Key="TextBoxPadding">2</Thickness>
 
-  <sys:Double x:Key="MinimumIconWidth">16</sys:Double>
-  <sys:Double x:Key="MinimumIconHeight">16</sys:Double>
+  <sys:Double x:Key="MinimumIconWidth">8</sys:Double>
+  <sys:Double x:Key="MinimumIconHeight">8</sys:Double>
 
-  <sys:Double x:Key="SmallIconWidth">24</sys:Double>
-  <sys:Double x:Key="SmallIconHeight">24</sys:Double>
+  <sys:Double x:Key="SmallIconWidth">16</sys:Double>
+  <sys:Double x:Key="SmallIconHeight">16</sys:Double>
 
-  <sys:Double x:Key="NormalIconWidth">32</sys:Double>
-  <sys:Double x:Key="NormalIconHeight">32</sys:Double>
+  <sys:Double x:Key="NormalIconWidth">24</sys:Double>
+  <sys:Double x:Key="NormalIconHeight">24</sys:Double>
+
+  <sys:Double x:Key="BigIconWidth">32</sys:Double>
+  <sys:Double x:Key="BigIconHeight">32</sys:Double>
+
+  <sys:Double x:Key="LargeIconWidth">48</sys:Double>
+  <sys:Double x:Key="LargeIconHeight">48</sys:Double>
 
   <!-- ============== スタイル ==============  -->
   <!-- 独自ウィンドウ -->
@@ -313,6 +319,21 @@
     <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
   </Style>
 
+  <Style x:Key="NormalIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+    <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
+  </Style>
+
+  <Style x:Key="BigIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+    <Setter Property="Width" Value="{StaticResource BigIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource BigIconHeight}" />
+  </Style>
+
+  <Style x:Key="LargeIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+    <Setter Property="Width" Value="{StaticResource LargeIconWidth}" />
+    <Setter Property="Height" Value="{StaticResource LargeIconHeight}" />
+  </Style>
+
   <!-- Canvas -->
   <!-- 元データが 24 x 24 の描画領域 -->
   <Style x:Key="IconCanvas-24x24" TargetType="Canvas">
@@ -334,8 +355,18 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="MinimumAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColor}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
   <Style x:Key="SmallDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
+  <Style x:Key="SmallAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColor}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
