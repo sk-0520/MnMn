@@ -143,6 +143,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public IEnumerable<SearchType> SearchTypeItems
+        {
+            get
+            {
+                return new[] { SearchType.Tag, SearchType.Keyword };
+            }
+        }
+
         public SearchType SelectedSearchType
         {
             get { return this._selectedSearchType; }

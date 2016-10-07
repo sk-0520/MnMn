@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
@@ -28,7 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
     /// </summary>
     public enum SearchType
     {
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_SearchType_Keyword))]
         Keyword,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_SearchType_Tag))]
         Tag,
     }
 }

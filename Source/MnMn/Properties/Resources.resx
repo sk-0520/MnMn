@@ -163,6 +163,12 @@
   <data name="String_App_Define_LoginState_None" xml:space="preserve">
     <value>未ログイン</value>
   </data>
+  <data name="String_App_Define_SearchType_Keyword" xml:space="preserve">
+    <value>キーワード</value>
+  </data>
+  <data name="String_App_Define_SearchType_Tag" xml:space="preserve">
+    <value>タグ</value>
+  </data>
   <data name="String_App_Define_ServiceType_Smile" xml:space="preserve">
     <value>ニコニコ</value>
   </data>

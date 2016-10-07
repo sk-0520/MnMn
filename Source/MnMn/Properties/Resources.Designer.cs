@@ -228,6 +228,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   キーワード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SearchType_Keyword {
+            get {
+                return ResourceManager.GetString("String_App_Define_SearchType_Keyword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SearchType_Tag {
+            get {
+                return ResourceManager.GetString("String_App_Define_SearchType_Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   PostKey取得がダメダメ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Service_Smile_Video_Comment_PostKeyError {

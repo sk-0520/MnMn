@@ -72,25 +72,40 @@
     <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
     <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
   </Style>
+  <Style x:Key="MinimumItemBox" TargetType="Viewbox" BasedOn="{StaticResource MinimumIconBox}">
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
+  </Style>
 
   <Style x:Key="SmallIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
     <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
     <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
+  </Style>
+  <Style x:Key="SmallItemBox" TargetType="Viewbox" BasedOn="{StaticResource SmallIconBox}">
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
   <Style x:Key="NormalIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
     <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
     <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
   </Style>
+  <Style x:Key="NormalItemBox" TargetType="Viewbox" BasedOn="{StaticResource NormalIconBox}">
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
+  </Style>
 
   <Style x:Key="BigIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
     <Setter Property="Width" Value="{StaticResource BigIconWidth}" />
     <Setter Property="Height" Value="{StaticResource BigIconHeight}" />
   </Style>
+  <Style x:Key="BigItemBox" TargetType="Viewbox" BasedOn="{StaticResource BigIconBox}">
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
+  </Style>
 
   <Style x:Key="LargeIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
     <Setter Property="Width" Value="{StaticResource LargeIconWidth}" />
     <Setter Property="Height" Value="{StaticResource LargeIconHeight}" />
+  </Style>
+  <Style x:Key="LargeItemBox" TargetType="Viewbox" BasedOn="{StaticResource LargeItemBox}">
+    <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
   <!-- Canvas -->
@@ -151,6 +166,10 @@
   <!-- https://materialdesignicons.com/icon/sort-descending -->
   <Geometry x:Key="Image_OrderDescending">M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V4H6V17Z</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/tag-text-outline -->
+  <Geometry x:Key="Image_Tag">M5.5,7A1.5,1.5 0 0,0 7,5.5A1.5,1.5 0 0,0 5.5,4A1.5,1.5 0 0,0 4,5.5A1.5,1.5 0 0,0 5.5,7M21.41,11.58C21.77,11.94 22,12.44 22,13C22,13.55 21.78,14.05 21.41,14.41L14.41,21.41C14.05,21.77 13.55,22 13,22C12.45,22 11.95,21.77 11.58,21.41L2.59,12.41C2.22,12.05 2,11.55 2,11V4C2,2.89 2.89,2 4,2H11C11.55,2 12.05,2.22 12.41,2.58L21.41,11.58M13,20L20,13L11.5,4.5L4.5,11.5L13,20M10.09,8.91L11.5,7.5L17,13L15.59,14.41L10.09,8.91M7.59,11.41L9,10L13,14L11.59,15.41L7.59,11.41Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/alphabetical -->
+  <Geometry x:Key="Image_Keyword">M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z</Geometry>
 
   <!-- ================ Controls ================ -->
   <!-- 独自ウィンドウ -->
