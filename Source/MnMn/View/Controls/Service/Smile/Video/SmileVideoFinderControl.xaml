@@ -9,7 +9,7 @@
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-  
+
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -89,7 +89,12 @@
       </Grid.ColumnDefinitions>
 
       <Button Grid.Column="0" Command="{Binding AllCheckCommand}">
-        <Image Source="/Resources/Service/Smile/Video/Finder/Check.png" Width="16" Height="16" Style="{StaticResource SmallIconImage}" />
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/checkbox-marked-outline -->
+            <Path Data="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </Button>
       <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
         <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
@@ -104,7 +109,24 @@
       <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
       <Label Grid.Column="4" Margin="10,0,0,0" >並べ替え</Label>
       <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
-        <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Style="{StaticResource SmallIconImage}" />
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path>
+              <Path.Resources>
+                <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsAscending}" Value="True">
+                      <Setter Property="Data" Value="{StaticResource Image_OrderAscending}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsAscending}" Value="False">
+                      <Setter Property="Data" Value="{StaticResource Image_OrderDescending}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Path.Resources>
+            </Path>
+          </Canvas>
+        </Viewbox>
       </ToggleButton>
       <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
         <ComboBox.ItemTemplate>

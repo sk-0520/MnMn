@@ -146,6 +146,12 @@
   <!-- https://materialdesignicons.com/icon/magnify -->
   <Geometry x:Key="Image_Search">M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/sort-ascending -->
+  <Geometry x:Key="Image_OrderAscending">M10,11V13H18V11H10M10,5V7H14V5H10M10,17V19H22V17H10M6,7H8.5L5,3.5L1.5,7H4V20H6V7Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/sort-descending -->
+  <Geometry x:Key="Image_OrderDescending">M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V4H6V17Z</Geometry>
+
+
   <!-- ================ Controls ================ -->
   <!-- 独自ウィンドウ -->
   <Style TargetType="mamc:MetroWindow" >
@@ -207,7 +213,7 @@
   </Style>
 
   <!--ListBox -->
-  <Style TargetType="ListBox">
+  <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
     <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
   </Style>
 
@@ -407,6 +413,12 @@
     <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />
   </Style>
 
+  <!-- Label -->
+  <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}" />
+    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
 
 
 </ResourceDictionary>
