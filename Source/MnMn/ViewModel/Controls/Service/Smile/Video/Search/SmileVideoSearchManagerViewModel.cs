@@ -276,6 +276,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
         }
 
+        public ICommand ShowTagAreaCommand { get { return CreateCommand(o => ShowTagArea = true); } }
+
         public ICommand SearchHistoryFromHistoryCommand
         {
             get

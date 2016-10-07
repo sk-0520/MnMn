@@ -246,7 +246,8 @@
           </DataTemplate>
         </mamc:SplitButton.ItemTemplate>
       </mamc:SplitButton>
-      <xctk:DropDownButton Grid.Column="3" IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
+
+      <!--<xctk:DropDownButton Grid.Column="3" IsOpen="{Binding ShowTagArea, Mode=TwoWay}" Content="タグ">
         <xctk:DropDownButton.DropDownContent>
           <Border>
             <StackPanel Orientation="Horizontal">
@@ -274,8 +275,9 @@
             </StackPanel>
           </Border>
         </xctk:DropDownButton.DropDownContent>
-      </xctk:DropDownButton>
+      </xctk:DropDownButton>-->
 
+      <Button x:Name="tagList" Grid.Column="3" Margin="{StaticResource LeftMargin}" Content="タグ一覧" Command="{Binding ShowTagAreaCommand}" />
 
     </Grid>
 
@@ -384,6 +386,32 @@
       </TabControl.ContentTemplate>
 
     </TabControl>
+
+    <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Theme="Inverse" Position="Right" IsAutoCloseEnabled="True" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
+      <StackPanel Orientation="Horizontal">
+        <GroupBox Visibility="{Binding Session.IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <GroupBox.Header>
+            <StackPanel Orientation="Horizontal">
+              <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
+              <TextBlock Text="おすすめ" />
+              <Button Command="{Binding LoadRecommendTagCommand}" Style="{StaticResource ReloadButton}" />
+            </StackPanel>
+          </GroupBox.Header>
+          <ItemsControl Template="{StaticResource TagsItemsTemplate}" ItemsSource="{Binding RecommendTagItems}" />
+        </GroupBox>
+
+        <GroupBox>
+          <GroupBox.Header>
+            <StackPanel Orientation="Horizontal">
+              <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding TrendTagLoadState}" />
+              <TextBlock Text="トレンド" />
+              <Button Command="{Binding LoadTrendTagCommand}" Style="{StaticResource ReloadButton}" />
+            </StackPanel>
+          </GroupBox.Header>
+          <ItemsControl Template="{StaticResource TagsItemsTemplate}" ItemsSource="{Binding TrendTagItems}" />
+        </GroupBox>
+      </StackPanel>
+    </mamc:Flyout>
 
   </Grid>
 </UserControl>
