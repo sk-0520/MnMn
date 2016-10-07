@@ -91,8 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             var random = new Random();
 
-            var baseThemeIndex = random.Next(0, theme.BaseItems.Count - 1);
-            var accentIndex = random.Next(0, theme.AccentItems.Count - 1);
+            var baseThemeIndex = random.Next(0, theme.BaseItems.Count);
+            var accentIndex = random.Next(0, theme.AccentItems.Count);
 
             var baseTheme = theme.BaseItems[baseThemeIndex];
             var accent = theme.AccentItems[accentIndex];
