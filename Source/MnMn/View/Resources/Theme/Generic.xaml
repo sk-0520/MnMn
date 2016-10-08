@@ -4,8 +4,9 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
 
   xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
-
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
@@ -70,12 +71,12 @@
 
   <!-- ============== スタイル ==============  -->
   <!-- ViewBox -->
-  <Style x:Key="IconConvas" TargetType="Viewbox">
+  <Style x:Key="IconBox" TargetType="Viewbox">
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Stretch" Value="UniformToFill" />
   </Style>
 
-  <Style x:Key="MinimumIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+  <Style x:Key="MinimumIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconBox}">
     <Setter Property="Width" Value="{StaticResource MinimumIconWidth}" />
     <Setter Property="Height" Value="{StaticResource MinimumIconHeight}" />
   </Style>
@@ -83,15 +84,26 @@
     <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
-  <Style x:Key="SmallIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+  <Style x:Key="SmallIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconBox}">
     <Setter Property="Width" Value="{StaticResource SmallIconWidth}" />
     <Setter Property="Height" Value="{StaticResource SmallIconHeight}" />
+  </Style>
+  <Style x:Key="SmallAppendIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconBox}">
+    <Setter Property="Canvas.Left" Value="4" />
+    <Setter Property="Canvas.Top" Value="4" />
+    <Setter Property="Width" Value="20" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="Effect">
+      <Setter.Value>
+        <DropShadowEffect BlurRadius="0" Direction="315" ShadowDepth="2" Color="{DynamicResource WhiteColor}" />
+      </Setter.Value>
+    </Setter>
   </Style>
   <Style x:Key="SmallItemBox" TargetType="Viewbox" BasedOn="{StaticResource SmallIconBox}">
     <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
-  <Style x:Key="NormalIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+  <Style x:Key="NormalIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconBox}">
     <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
     <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
   </Style>
@@ -99,7 +111,7 @@
     <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
-  <Style x:Key="BigIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+  <Style x:Key="BigIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconBox}">
     <Setter Property="Width" Value="{StaticResource BigIconWidth}" />
     <Setter Property="Height" Value="{StaticResource BigIconHeight}" />
   </Style>
@@ -107,7 +119,7 @@
     <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
   </Style>
 
-  <Style x:Key="LargeIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconConvas}">
+  <Style x:Key="LargeIconBox" TargetType="Viewbox" BasedOn="{StaticResource IconBox}">
     <Setter Property="Width" Value="{StaticResource LargeIconWidth}" />
     <Setter Property="Height" Value="{StaticResource LargeIconHeight}" />
   </Style>
@@ -118,6 +130,7 @@
   <!-- Canvas -->
   <!-- 元データが 24 x 24 の描画領域 -->
   <Style x:Key="IconCanvas-24x24" TargetType="Canvas">
+    <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Width" Value="24" />
     <Setter Property="Height" Value="24" />
   </Style>
@@ -129,6 +142,7 @@
         <Setter Property="Opacity" Value="0.5" />
       </Trigger>
     </Style.Triggers>
+    <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
 
   <Style x:Key="MinimumDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
@@ -137,7 +151,7 @@
   </Style>
 
   <Style x:Key="MinimumAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
-    <Setter Property="Fill" Value="{DynamicResource AccentBaseColor}" />
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
@@ -147,16 +161,38 @@
   </Style>
 
   <Style x:Key="SmallAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
-    <Setter Property="Fill" Value="{DynamicResource AccentBaseColor}" />
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
 
   <!-- ================ Common Icon ================ -->
-  <!--  https://materialdesignicons.com/icon/arrow-left-drop-circle-outline -->
-  <Geometry x:Key="Image_ScrollLeft">M22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12M14,7L9,12L14,17V7Z</Geometry>
-  <!--  https://materialdesignicons.com/icon/arrow-right-drop-circle-outline -->
-  <Geometry x:Key="Image_ScrollRight">M2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12M4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12M10,17L15,12L10,7V17Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/plus -->
+  <Geometry x:Key="Image_Add">M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-right-bold -->
+  <Geometry x:Key="Image_Insert">M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/close -->
+  <Geometry x:Key="Image_Remove">M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-left-bold -->
+  <Geometry x:Key="Image_Back">M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/arrow-left-drop-circle-outline -->
+  <Geometry x:Key="Image_ItemLeft">M22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12M14,7L9,12L14,17V7Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-right-drop-circle-outline -->
+  <Geometry x:Key="Image_ItemRight">M2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12M4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12M10,17L15,12L10,7V17Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-up-drop-circle-outline -->
+  <Geometry x:Key="Image_ItemUp">M12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M17,14L12,9L7,14H17Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/arrow-down-drop-circle-outline -->
+  <Geometry x:Key="Image_ItemDown">M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M7,10L12,15L17,10H7Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/chevron-left -->
+  <Geometry x:Key="Image_ScrollLeft">M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z</Geometry>
+  <!--  https://materialdesignicons.com/icon/chevron-right -->
+  <Geometry x:Key="Image_ScrollRight">M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/chevron-up -->
+  <Geometry x:Key="Image_ScrollUp">M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/chevron-down -->
+  <Geometry x:Key="Image_ScrollDown">M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z</Geometry>
 
   <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle-outline  -->
   <Geometry x:Key="Image_NavigationNext">M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z</Geometry>
@@ -177,6 +213,39 @@
   <Geometry x:Key="Image_Tag">M5.5,7A1.5,1.5 0 0,0 7,5.5A1.5,1.5 0 0,0 5.5,4A1.5,1.5 0 0,0 4,5.5A1.5,1.5 0 0,0 5.5,7M21.41,11.58C21.77,11.94 22,12.44 22,13C22,13.55 21.78,14.05 21.41,14.41L14.41,21.41C14.05,21.77 13.55,22 13,22C12.45,22 11.95,21.77 11.58,21.41L2.59,12.41C2.22,12.05 2,11.55 2,11V4C2,2.89 2.89,2 4,2H11C11.55,2 12.05,2.22 12.41,2.58L21.41,11.58M13,20L20,13L11.5,4.5L4.5,11.5L13,20M10.09,8.91L11.5,7.5L17,13L15.59,14.41L10.09,8.91M7.59,11.41L9,10L13,14L11.59,15.41L7.59,11.41Z</Geometry>
   <!-- https://materialdesignicons.com/icon/alphabetical -->
   <Geometry x:Key="Image_Keyword">M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/bookmark -->
+  <Geometry x:Key="Image_Bookmark">M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/bookmark-plus -->
+  <Geometry x:Key="Image_Bookmark-Add">M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M11,7V9H9V11H11V13H13V11H15V9H13V7H11Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/bookmark-plus-outline -->
+  <Geometry x:Key="Image_Bookmark-Insert">M17,18V5H7V18L12,15.82L17,18M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M11,7H13V9H15V11H13V13H11V11H9V9H11V7Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/bookmark-remove -->
+  <Geometry x:Key="Image_Bookmark-Remove">M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z</Geometry>
+
+
+  <!-- ============ 完結させられる図形 ============= -->
+  <!-- ぼやけるーん
+  <Style x:Key="Icon_AddBookmark" TargetType="ContentControl">
+    <Style.Resources>
+      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
+    </Style.Resources>
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Content">
+      <Setter.Value>
+        <Canvas Style="{StaticResource IconCanvas-24x24}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_Bookmark}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+          <Viewbox Style="{StaticResource SmallAppendIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Add}" Style="{StaticResource IconPath}" Fill="{DynamicResource AccentBaseColorBrush}"  />
+            </Canvas>
+          </Viewbox>
+        </Canvas>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
 
   <!-- ================ Controls ================ -->
   <!-- 独自ウィンドウ -->

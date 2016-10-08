@@ -30,23 +30,53 @@
     <DockPanel Grid.Column="0">
       <ToolBar DockPanel.Dock="Top">
         <Button Command="{Binding AddNodeCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Bookmark/AddBookmark.png" Style="{StaticResource SmallIconImage}" />
+          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/AddBookmark.png" Style="{StaticResource SmallIconImage}" />-->
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </Button>
         <Button Command="{Binding InsertNodeCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Bookmark/InsertBookmark.png" Style="{StaticResource SmallIconImage}" />
+          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/InsertBookmark.png" Style="{StaticResource SmallIconImage}" />-->
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Bookmark-Insert}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </Button>
         <Button Command="{Binding RemoveNodeCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Bookmark/RemoveBookmark.png" Style="{StaticResource SmallIconImage}" />
+          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/RemoveBookmark.png" Style="{StaticResource SmallIconImage}" />-->
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Bookmark-Remove}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </Button>
         <Separator />
         <Button Command="{Binding UpNodeCommand}">
-          <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+          <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </Button>
         <Button Command="{Binding DownNodeCommand}">
-          <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+          <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </Button>
         <Button Command="{Binding UpParentNodeCommand}">
-          <Image Source="/Resources/Service/Smile/Video/Bookmark/MoveParentBookmark.png" Style="{StaticResource SmallIconImage}" />
+          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/MoveParentBookmark.png" Style="{StaticResource SmallIconImage}" />-->
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_ItemLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
         </Button>
       </ToolBar>
       <Grid DockPanel.Dock="Bottom">
@@ -86,10 +116,20 @@
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <RepeatButton Grid.Column="0" Command="{Binding UpSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
-            <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+            <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
           </RepeatButton>
           <RepeatButton Grid.Column="1" Command="{Binding DownSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
-            <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+            <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
           </RepeatButton>
           <Button Grid.Column="2" Margin="20,0,0,0" Command="{Binding RemoveCheckedVideosCommand}">チェック項目を削除</Button>
         </Grid>
