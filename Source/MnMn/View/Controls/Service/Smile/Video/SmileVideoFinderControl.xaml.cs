@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
         public SmileVideoFinderControl()
         {
             InitializeComponent();
+
+            //popupFilter.Visibility = Visibility.Visible;
         }
 
         #region HeaderContentProperty

@@ -2,6 +2,7 @@
   呼び出し元から DataContext を設定して使用。
 -->
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoFinderControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -82,7 +83,7 @@
 
     <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="100" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
@@ -100,18 +101,26 @@
           </Canvas>
         </Viewbox>
       </Button>
-      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
+      <!--<xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
         <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
         </xctk:SplitButton.DropDownContent>
-      </xctk:SplitButton>
+      </xctk:SplitButton>-->
+      <mamc:SplitButton SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
+        <mamc:SplitButton.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+          </DataTemplate>
+        </mamc:SplitButton.ItemTemplate>
+      </mamc:SplitButton>
 
       <!--<xctk:WatermarkTextBox Grid.Column="2" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" />-->
-      <TextBox Grid.Column="2" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" />
+      <TextBox Grid.Column="2" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
-      <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
-      <Label Grid.Column="4" Margin="10,0,0,0" >並べ替え</Label>
+      <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}" Margin="{StaticResource RightMargin}">除外</ToggleButton>
+
+      <Label Grid.Column="4" >並べ替え</Label>
       <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -814,24 +823,22 @@
 
     <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" Grid.ColumnSpan="2" />
 
-    <mamc:Flyout Grid.Row="0" Grid.RowSpan="3" Header="フィルタリング設定" Style="{StaticResource FinderFlyout}" IsOpen="{Binding ShowFilterSetting}" Grid.ColumnSpan="2" >
-      <Border BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
+    <mamc:Flyout x:Name="popupFilter" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Visibility="Hidden" Header="フィルタリング設定" IsOpen="{Binding ShowFilterSetting}" Style="{StaticResource FinderFlyout}" >
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-          <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
-          <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="FilteringChanged">
-                <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
-          </app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering>
-        </Grid>
-      </Border>
+        <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
+        <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
+          <i:Interaction.Triggers>
+            <i:EventTrigger EventName="FilteringChanged">
+              <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+            </i:EventTrigger>
+          </i:Interaction.Triggers>
+        </app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering>
+      </Grid>
     </mamc:Flyout>
 
   </Grid>

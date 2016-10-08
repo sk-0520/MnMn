@@ -102,6 +102,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_CheckedProcessType_RandomPlay {
+            get {
+                return ResourceManager.GetString("String_App_Define_CheckedProcessType_RandomPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   連続再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_CheckedProcessType_SequencePlay {
+            get {
+                return ResourceManager.GetString("String_App_Define_CheckedProcessType_SequencePlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   前方一致 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_FilteringType_ForwardMatch {

@@ -148,6 +148,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             FinderItems.Refresh();
         }
 
+        protected override Task CheckedProcessAsync(CheckedProcessType checkedProcessType)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
