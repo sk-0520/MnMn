@@ -515,5 +515,15 @@
     <Setter Property="VerticalAlignment" Value="Center" />
   </Style>
 
+  <!--CheckBox-->
+  <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="FinderFlyout" TargetType="mamc:Flyout">
+    <Setter Property="Theme" Value="Inverse" />
+    <Setter Property="Position" Value="Right" />
+    <Setter Property="IsAutoCloseEnabled" Value="True" />
+  </Style>
 
 </ResourceDictionary>

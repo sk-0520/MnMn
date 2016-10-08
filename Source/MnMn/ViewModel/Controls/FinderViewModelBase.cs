@@ -208,6 +208,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public ICommand SwitchShowFilterCommand
+        {
+            get { return CreateCommand(o => SwitchShowFilter()); }
+        }
 
         #endregion
 
@@ -269,6 +273,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             foreach(var item in items) {
                 item.IsChecked = isChecked;
             }
+        }
+
+        protected virtual void SwitchShowFilter()
+        {
+            ShowFilterSetting = !ShowFilterSetting;
         }
 
         public IEnumerable<TFinderItemViewModel> GetCheckedItems()

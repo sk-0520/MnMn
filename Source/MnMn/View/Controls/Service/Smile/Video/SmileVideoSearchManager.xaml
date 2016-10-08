@@ -387,7 +387,7 @@
 
     </TabControl>
 
-    <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Theme="Inverse" Position="Right" IsAutoCloseEnabled="True" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
+    <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource FinderFlyout}" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
       <StackPanel Orientation="Horizontal">
         <GroupBox Visibility="{Binding Session.IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
           <GroupBox.Header>

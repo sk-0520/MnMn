@@ -67,6 +67,10 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="17*"/>
+      <ColumnDefinition Width="33*"/>
+    </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -74,9 +78,9 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
+    <ContentControl x:Name="PART_Header" Grid.Row="0" Content="{Binding HeaderContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" Grid.ColumnSpan="2" Margin="0,0,0,28" Grid.RowSpan="2" />
 
-    <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}">
+    <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -135,7 +139,7 @@
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>
-      <ToggleButton Grid.Column="7" IsChecked="{Binding ShowFilterSetting}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <!--<ToggleButton Grid.Column="7" IsChecked="{Binding ShowFilterSetting}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
         <StackPanel Orientation="Horizontal">
           <TextBlock>フィルタ</TextBlock>
           <ContentControl VerticalContentAlignment="Stretch">
@@ -167,25 +171,52 @@
             </ContentControl.Style>
           </ContentControl>
         </StackPanel>
-      </ToggleButton>
+      </ToggleButton>-->
+      <Button Grid.Column="7" Command="{Binding SwitchShowFilterCommand}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource ParentItemLikeText}">フィルタ</TextBlock>
+          <ContentControl VerticalContentAlignment="Stretch">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="True">
+                    <Setter Property="Content">
+                      <Setter.Value>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock>(</TextBlock>
+                          <TextBlock Text="{Binding FinderItems.Count}" />
+                          <TextBlock>/</TextBlock>
+                          <TextBlock Text="{Binding FinderItemsViewer.Count}" />
+                          <TextBlock>)</TextBlock>
+                        </StackPanel>
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="False">
+                    <Setter Property="Content">
+                      <Setter.Value>
+                        <TextBlock>(無効)</TextBlock>
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </ContentControl.Style>
+          </ContentControl>
+        </StackPanel>
+      </Button>
     </Grid>
 
-    <Grid Grid.Row="2" Style="{StaticResource BodyContentVisibility}">
+    <Grid Grid.Row="2" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
       <Grid.RowDefinitions>
         <RowDefinition Height="6*" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
 
       <ListBox
         x:Name="PART_List"
         Grid.Row="0"
         Grid.RowSpan="2"
-        Grid.Column="0"
-        Grid.ColumnSpan="2"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
       >
@@ -779,29 +810,29 @@
         </ListBox.ItemTemplate>
       </ListBox>
 
-      <Grid Grid.Column="1" Visibility="{Binding ShowFilterSetting, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <Border BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
-            <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
-              <i:Interaction.Triggers>
-                <i:EventTrigger EventName="FilteringChanged">
-                  <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
-                </i:EventTrigger>
-              </i:Interaction.Triggers>
-            </app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering>
-          </Grid>
-        </Border>
-      </Grid>
-
     </Grid>
 
-    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" />
+    <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" Grid.ColumnSpan="2" />
+
+    <mamc:Flyout Grid.Row="0" Grid.RowSpan="3" Header="フィルタリング設定" Style="{StaticResource FinderFlyout}" IsOpen="{Binding ShowFilterSetting}" Grid.ColumnSpan="2" >
+      <Border BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <CheckBox Grid.Row="0" Margin="5" IsChecked="{Binding IsEnabledFinderFiltering}">ファインダーフィルタ使用する</CheckBox>
+          <app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering Grid.Row="1" Filtering="{Binding FinderFilering}">
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="FilteringChanged">
+                <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
+          </app_view_controls_service_smile_video_setting:SmileVideoFinderFiltering>
+        </Grid>
+      </Border>
+    </mamc:Flyout>
 
   </Grid>
 </UserControl>
