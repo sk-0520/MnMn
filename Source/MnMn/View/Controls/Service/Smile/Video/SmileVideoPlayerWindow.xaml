@@ -815,7 +815,7 @@
                           </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>
-                          <Style TargetType="ListBoxItem">
+                          <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <Setter Property="Template">
                               <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -1049,7 +1049,7 @@
                     ItemsSource="{Binding CommentItems}"
                   >
                     <ListBox.ItemContainerStyle>
-                      <Style TargetType="ListBoxItem">
+                      <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                         <Style.Triggers>
                           <DataTrigger Binding="{Binding NowShowing}" Value="True">
                             <DataTrigger.EnterActions>
