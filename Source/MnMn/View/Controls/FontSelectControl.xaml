@@ -2,8 +2,10 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.FontSelectControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -36,12 +38,19 @@
       </ComboBox.ItemTemplate>
     </ComboBox>
 
-    <DockPanel Grid.Row="1">
-      <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}">太字</CheckBox>
-      <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}">斜体</CheckBox>
-      <ContentControl DockPanel.Dock="Left" Content="{Binding AdditionalContent, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-      <xctk:DoubleUpDown DockPanel.Dock="Right" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </DockPanel>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <CheckBox Grid.Column="0" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}">太字</CheckBox>
+      <CheckBox Grid.Column="1" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}">斜体</CheckBox>
+      <ContentControl Grid.Column="2" Content="{Binding AdditionalContent, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+      <!--<xctk:DoubleUpDown Grid.Column="3" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+      <mamc:NumericUpDown Grid.Column="3" HasDecimals="True" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </Grid>
 
   </Grid>
 </UserControl>
