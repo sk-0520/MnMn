@@ -87,7 +87,7 @@
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <RadioButton
-              VerticalAlignment="Center"
+              VerticalContentAlignment="Center"
               Style="{StaticResource {x:Type ToggleButton}}"
               Content="{Binding PageNumber}"
               Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
