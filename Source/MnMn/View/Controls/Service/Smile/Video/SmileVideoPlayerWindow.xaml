@@ -156,11 +156,11 @@
         <Setter Property="LoadedToVisibility" Value="Visible" />
       </Style>
 
-      <Style x:Key="UserSelect" TargetType="RadioButton">
+      <Style x:Key="UserSelect" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
         <Setter Property="Margin" Value="4,0,0,0" />
       </Style>
 
-      <Style x:Key="DummyMenu" TargetType="Menu"/>
+      <Style x:Key="DummyMenu" TargetType="Menu" BasedOn="{StaticResource {x:Type Menu}}" />
 
 
     </ResourceDictionary>
@@ -1025,44 +1025,42 @@
                   </ComboBox.ItemTemplate>
                 </ComboBox>
               </DockPanel>
-              <DockPanel DockPanel.Dock="Bottom">
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*" />
-                    <ColumnDefinition Width="6*" />
-                  </Grid.ColumnDefinitions>
-                  <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+              <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="4*" />
+                  <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+                  <TextBlock>
+                    <TextBlock>表示制限</TextBlock>
+                    <TextBlock>(</TextBlock>
+                    <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
                     <TextBlock>
-                      <TextBlock>表示制限</TextBlock>
-                      <TextBlock>(</TextBlock>
-                      <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
-                      <TextBlock>
-                        <TextBlock.Style>
-                          <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                              <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
-                                <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
-                              </DataTrigger>
-                            </Style.Triggers>
-                          </Style>
-                        </TextBlock.Style>
-                      </TextBlock>
-                      <TextBlock>)</TextBlock>
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
+                              <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
                     </TextBlock>
-                  </CheckBox>
-                  <DockPanel Grid.Column="1">
-                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
-                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
-                    <Slider
-                      Minimum="1"
-                      Maximum="50"
-                      LargeChange="5"
-                      Value="{Binding DisplayCommentLimitCount}"
-                      IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
-                    />
-                  </DockPanel>
-                </Grid>
-              </DockPanel>
+                    <TextBlock>)</TextBlock>
+                  </TextBlock>
+                </CheckBox>
+                <DockPanel Grid.Column="1">
+                  <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
+                  <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
+                  <Slider
+                    Minimum="1"
+                    Maximum="50"
+                    LargeChange="5"
+                    Value="{Binding DisplayCommentLimitCount}"
+                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
+                  />
+                </DockPanel>
+              </Grid>
 
               <Grid>
                 <Grid.RowDefinitions>
@@ -1070,30 +1068,42 @@
                   <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <DockPanel Grid.Row="0" >
-                  <DockPanel.Resources>
+                <Grid Grid.Row="0" >
+                  <Grid.Resources>
                     <Style TargetType="Border">
-                      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-                      <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                      <Setter Property="Background" Value="{DynamicResource GrayBrush3}" />
+                      <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
+                      <Setter Property="TextElement.Foreground" Value="{DynamicResource WhiteBrush}" />
                       <Setter Property="BorderThickness" Value="1" />
                       <Setter Property="Padding" Value="1" />
                     </Style>
                     <Style TargetType="TextBlock">
                       <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
-                  </DockPanel.Resources>
-                  <Border DockPanel.Dock="Left" MinWidth="{StaticResource CommentShowTimestampMinWidth}">
+                  </Grid.Resources>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Border Grid.Column="0" MinWidth="{StaticResource CommentShowTimestampMinWidth}">
                     <TextBlock>時間</TextBlock>
                   </Border>
-                  <Border>
-                    <DockPanel>
-                      <CheckBox DockPanel.Dock="Right" IsChecked="{Binding PlayerShowPostTimestamp}" Content="投稿時間の表示" />
-                      <TextBlock>コメント</TextBlock>
-                    </DockPanel>
+                  <Border Grid.Column="1">
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
+
+                      <TextBlock Grid.Column="0">コメント</TextBlock>
+                      <CheckBox Grid.Column="1" Content="投稿時間の表示" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
+                    </Grid>
                   </Border>
-                </DockPanel>
+                </Grid>
 
                 <Grid Grid.Row="1">
+                  <!--
                   <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -1102,13 +1112,10 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="8*" />
                   </Grid.ColumnDefinitions>
+                  -->
 
                   <ListBox
                     x:Name="commentView"
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
                     VirtualizingPanel.ScrollUnit="Item"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     HorizontalContentAlignment="Stretch"
@@ -1189,90 +1196,93 @@
                     </ListBox.ItemTemplate>
                   </ListBox>
 
-                  <Border
-                    x:Name="detailComment"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Padding="4"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                    Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                    Visibility="{Binding IsSelectedComment, Converter={StaticResource BooleanToVisibilityConverter}}"
+                </Grid>
+
+                <mamc:Flyout
+                  x:Name="detailComment"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Header="コメント詳細"
+                  Visibility="Hidden"
+                  Padding="4"
+                  BorderThickness="1"
+                  Position="Right"
+                  BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                  Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                  IsOpen="{Binding IsSelectedComment}"
                   >
-                    <DockPanel>
-                      <TextBlock DockPanel.Dock="Top" TextAlignment="Center">
+                  <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" TextAlignment="Center">
                         <Hyperlink Command="{Binding ClearSelectedCommentCommand}">コメント詳細<Run FontSize="10">(クリックで閉じます)</Run></Hyperlink>
-                      </TextBlock>
-                      <ListBox
+                    </TextBlock>
+                    <ListBox
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         BorderBrush="Transparent"
                         Background="Transparent"
                       >
-                        <ListBox.Resources>
-                          <Style TargetType="TextBlock">
-                            <Setter Property="DockPanel.Dock" Value="Left" />
-                            <Setter Property="Width" Value="80" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                          </Style>
-                          <Style TargetType="TextBox">
-                            <Setter Property="IsReadOnly" Value="True" />
-                            <Setter Property="IsReadOnlyCaretVisible" Value="True" />
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderBrush" Value="Transparent" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                          </Style>
-                        </ListBox.Resources>
-                        <ListBox.ItemContainerStyle>
-                          <Style TargetType="ListBoxItem">
-                            <Setter Property="Focusable" Value="False"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                          </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>表示時間</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>投稿時間</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>スコア</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>ユーザー種別</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.UserKind, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>ユーザーID</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>コマンド</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <Separator/>
-                        <ListBoxItem>
-                          <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
-                        </ListBoxItem>
-                      </ListBox>
-                    </DockPanel>
-                  </Border>
-
-                </Grid>
+                      <ListBox.Resources>
+                        <Style TargetType="TextBlock">
+                          <Setter Property="DockPanel.Dock" Value="Left" />
+                          <Setter Property="Width" Value="80" />
+                          <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="TextBox">
+                          <Setter Property="IsReadOnly" Value="True" />
+                          <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+                          <Setter Property="Background" Value="Transparent" />
+                          <Setter Property="BorderBrush" Value="Transparent" />
+                          <Setter Property="VerticalContentAlignment" Value="Center" />
+                        </Style>
+                      </ListBox.Resources>
+                      <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                          <Setter Property="Focusable" Value="False"/>
+                          <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                      </ListBox.ItemContainerStyle>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>表示時間</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>投稿時間</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>スコア</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>ユーザー種別</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.UserKind, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>ユーザーID</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>コマンド</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <Separator/>
+                      <ListBoxItem>
+                        <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
+                      </ListBoxItem>
+                    </ListBox>
+                  </DockPanel>
+                </mamc:Flyout>
               </Grid>
             </DockPanel>
           </TabItem>

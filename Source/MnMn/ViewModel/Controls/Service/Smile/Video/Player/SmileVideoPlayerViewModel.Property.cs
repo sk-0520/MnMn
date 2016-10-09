@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
+using MahApps.Metro.Controls;
 using Meta.Vlc.Wpf;
 using OxyPlot;
 
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメント詳細部分要素。
         /// <para>使ってないんよねぇ。</para>
         /// </summary>
-        Border DetailComment { get; set; }
+        Flyout DetailComment { get; set; }
         /// <summary>
         /// 動画紹介文書表示要素。
         /// </summary>
