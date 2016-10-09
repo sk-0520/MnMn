@@ -5,6 +5,8 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.App.AppInformationManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:cttn_pe_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=Package"
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -165,9 +167,9 @@
           <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
         </ToolBar>
 
-        <ListView x:Name="listLog" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
+        <ListView x:Name="listLog" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
           <ListView.Resources>
-            <Style TargetType="ListViewItem">
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding LogKind}" Value="None">
                 </DataTrigger>
@@ -240,8 +242,8 @@
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                      <TextBox BorderThickness="0" Background="Transparent" IsReadOnly="True" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" Text="{Binding CallerMember, Mode=OneTime}" />
-                      <TextBlock Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
+                      <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" BorderThickness="0" Background="Transparent" IsReadOnly="True" Foreground="{DynamicResource TextBrush}" Text="{Binding CallerMember, Mode=OneTime}" />
+                      <TextBlock VerticalAlignment="Center" Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
                     </StackPanel>
                   </DataTemplate>
                 </GridViewColumn.CellTemplate>

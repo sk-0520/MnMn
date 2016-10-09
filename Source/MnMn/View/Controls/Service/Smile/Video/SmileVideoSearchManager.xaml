@@ -9,7 +9,6 @@
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
@@ -32,10 +31,10 @@
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
 
-      <Style x:Key="ReloadButton" TargetType="Button">
+      <!--<Style x:Key="ReloadButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="FontFamily" Value="Webdings" />
         <Setter Property="Content" Value="q" />
-      </Style>
+      </Style>-->
 
       <ControlTemplate x:Key="TagsItemsTemplate" TargetType="ItemsControl">
         <ItemsControl ItemsSource="{TemplateBinding ItemsSource}">
@@ -85,6 +84,7 @@
       />
 
       <ComboBox
+        x:Name="listSearch"
         Grid.Column="1"
         IsEditable="True"
         Text="{Binding InputQuery}"
@@ -93,7 +93,7 @@
         IsDropDownOpen="{Binding ShowHistoryArea}"
       >
         <ComboBox.Resources>
-          <Style TargetType="ComboBoxItem">
+          <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
           </Style>
@@ -103,22 +103,26 @@
         </ComboBox.InputBindings>
         <ComboBox.ItemTemplate>
           <DataTemplate>
-            <StackPanel>
+            <StackPanel Width="{Binding ElementName=listSearch, Path=ActualWidth}">
               <DockPanel>
-                <Image DockPanel.Dock="Left">
-                  <Image.Style>
-                    <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
-                          <Setter Property="Source" Value="/Resources/SearchType/Keyword.png" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SearchType}" Value="Tag">
-                          <Setter Property="Source" Value="/Resources/SearchType/Tag.png" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </Image.Style>
-                </Image>
+                <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                    <Path>
+                      <Path.Resources>
+                        <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SearchType}" Value="Tag">
+                              <Setter Property="Data" Value="{StaticResource Image_Tag}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
+                              <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </Path.Resources>
+                    </Path>
+                  </Canvas>
+                </Viewbox>
 
                 <TextBlock DockPanel.Dock="Right" Margin="2,0" Text="{Binding LastTimestamp, Mode=OneWay, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
 
@@ -141,6 +145,7 @@
                   </Button.Template>
                 </Button>
               </DockPanel>
+
               <DockPanel>
                 <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding Count, StringFormat=回数: {0:N0}}" />
                 <TextBlock DockPanel.Dock="Right" Margin="2" Text="{Binding TotalCount, StringFormat=結果: {0:N0}}" />
@@ -148,14 +153,18 @@
                 <StackPanel Orientation="Horizontal" Margin="2,2">
                   <Button CommandParameter="{Binding}">
                     <Button.Style>
-                      <Style TargetType="Button">
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
                           <DataTrigger Binding="{Binding SearchType}" Value="Keyword">
                             <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                             <Setter Property="Content">
                               <Setter.Value>
                                 <StackPanel Orientation="Horizontal">
-                                  <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
+                                  <Viewbox Style="{StaticResource SmallItemBox}">
+                                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                      <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+                                    </Canvas>
+                                  </Viewbox>
                                   <TextBlock VerticalAlignment="Center">タグ検索</TextBlock>
                                 </StackPanel>
                               </Setter.Value>
@@ -166,7 +175,11 @@
                             <Setter Property="Content">
                               <Setter.Value>
                                 <StackPanel Orientation="Horizontal">
-                                  <Image Source="/Resources/SearchType/Keyword.png" Style="{StaticResource ItemImage}" />
+                                  <Viewbox Style="{StaticResource SmallItemBox}">
+                                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                      <Path Data="{StaticResource Image_Keyword}" Style="{StaticResource SmallDefaultIconPath}" />
+                                    </Canvas>
+                                  </Viewbox>
                                   <TextBlock VerticalAlignment="Center">キーワード検索</TextBlock>
                                 </StackPanel>
                               </Setter.Value>
@@ -298,7 +311,7 @@
 
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
-            <Image>
+            <!--<Image>
               <Image.Style>
                 <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
                   <Style.Triggers>
@@ -311,7 +324,26 @@
                   </Style.Triggers>
                 </Style>
               </Image.Style>
-            </Image>
+            </Image>-->
+            <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                <Path>
+                  <Path.Resources>
+                    <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding Type}" Value="Tag">
+                          <Setter Property="Data" Value="{StaticResource Image_Tag}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="Keyword">
+                          <Setter Property="Data" Value="{StaticResource Image_Keyword}" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Path.Resources>
+                </Path>
+              </Canvas>
+            </Viewbox>
+
             <app_view_controls_service_smile_video:SmileVideoSearchContext
               SelectedMethod="{Binding SelectedMethod}"
               SelectedSort="{Binding SelectedSort}"
@@ -342,7 +374,7 @@
         <DataTemplate>
           <app_view_controls_service_smile_video:SmileVideoFinderControl x:Name="finder" DataContext="{Binding}">
             <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
-              <Grid Height="24">
+              <Grid Height="32">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="7*" />
@@ -387,13 +419,13 @@
 
     </TabControl>
 
-    <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource FinderFlyout}" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
+    <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Visibility="Hidden" Style="{StaticResource FinderFlyout}" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
       <StackPanel Orientation="Horizontal">
         <GroupBox Visibility="{Binding Session.IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}">
           <GroupBox.Header>
             <StackPanel Orientation="Horizontal">
-              <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
-              <TextBlock Text="おすすめ" />
+              <app_view_controls:LoadStateNavigator Width="16" Height="16" LoadedToVisibility="Visible" LoadState="{Binding RecommendTagLoadState}" />
+              <TextBlock VerticalAlignment="Center" Text="おすすめ" />
               <Button Command="{Binding LoadRecommendTagCommand}" Style="{StaticResource ReloadButton}" />
             </StackPanel>
           </GroupBox.Header>
@@ -403,8 +435,8 @@
         <GroupBox>
           <GroupBox.Header>
             <StackPanel Orientation="Horizontal">
-              <app_view_controls:LoadStateNavigator Width="16"  LoadedToVisibility="Visible" LoadState="{Binding TrendTagLoadState}" />
-              <TextBlock Text="トレンド" />
+              <app_view_controls:LoadStateNavigator Width="16" Height="16" LoadedToVisibility="Visible" LoadState="{Binding TrendTagLoadState}" />
+              <TextBlock VerticalAlignment="Center" Text="トレンド" />
               <Button Command="{Binding LoadTrendTagCommand}" Style="{StaticResource ReloadButton}" />
             </StackPanel>
           </GroupBox.Header>

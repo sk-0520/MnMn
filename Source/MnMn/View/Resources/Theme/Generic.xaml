@@ -269,6 +269,8 @@
   <!--Button -->
   <Style x:Key="ReloadButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
     <Setter Property="Content" Value="↻" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
     <!--なんできえるかねー-->
     <!--
     <Setter Property="Content">
@@ -562,7 +564,7 @@
   <Style x:Key="FinderFlyout" TargetType="mamc:Flyout">
     <Setter Property="Theme" Value="Inverse" />
     <Setter Property="Position" Value="Right" />
-    <Setter Property="IsAutoCloseEnabled" Value="True" />
+    <!--<Setter Property="IsAutoCloseEnabled" Value="True" />-->
   </Style>
 
   <!-- DropDownButton -->
