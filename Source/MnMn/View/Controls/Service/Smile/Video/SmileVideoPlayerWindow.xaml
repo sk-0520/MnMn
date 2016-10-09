@@ -880,7 +880,7 @@
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
-                <StackPanel>
+                <StackPanel Background="{DynamicResource WindowBackgroundBrush}">
                   <StackPanel Orientation="Horizontal">
                     <Label>サイズ</Label>
                     <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Small}}">少</RadioButton>
@@ -1394,7 +1394,6 @@
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="4" />
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -1434,9 +1433,7 @@
 
             </StackPanel>
 
-            <GridSplitter Grid.Column="1" />
-
-            <Grid Grid.Row="1"  Grid.Column="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid Grid.Row="1"  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />

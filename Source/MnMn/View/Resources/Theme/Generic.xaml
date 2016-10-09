@@ -6,9 +6,10 @@
   xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
-  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
-
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
@@ -562,5 +563,67 @@
     <Setter Property="Position" Value="Right" />
     <Setter Property="IsAutoCloseEnabled" Value="True" />
   </Style>
+
+  <!-- DropDownButton -->
+  <Style TargetType="xctk:DropDownButton">
+    <!--<Setter Property="IsOpen" Value="{Binding IsMenuOpen, Mode=TwoWay}" />-->
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
+          <ControlTemplate.Resources>
+            <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
+          </ControlTemplate.Resources>
+          <Grid x:Name="MainGrid" SnapsToDevicePixels="True" ShowGridLines="True">
+            <ToggleButton
+              x:Name="PART_DropDownButton"
+              VerticalAlignment="Stretch"
+              VerticalContentAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Stretch"
+              IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+              Margin="0"
+              Padding="0"
+            >
+              <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ContentPresenter
+                  Name="ActionButtonContent"
+                  Grid.Column="0"
+                  Margin="{TemplateBinding Padding}"
+                  Content="{TemplateBinding Content}"
+                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  RecognizesAccessKey="true"
+                />
+                <Path
+                  x:Name="BtnArrow"
+                  Grid.Column="1"
+                  Margin="4,3,4,3"
+                  Width="8"
+                  Height="8"
+                  HorizontalAlignment="Center"
+                  Fill="{DynamicResource GrayBrush1}"
+                  Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                  IsHitTestVisible="false"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                  Stretch="Uniform"
+                />
+              </Grid>
+            </ToggleButton>
+            <!-- MENU -->
+            <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsOpen}">
+              <ContentPresenter Content="{TemplateBinding DropDownContent}" />
+            </Popup>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
 
 </ResourceDictionary>
