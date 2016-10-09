@@ -29,6 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region property
 
+        [XmlArray("application"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> ApplicationItems { get; set; } = new CollectionModel<DefinedElementModel>();
+
         [XmlArray("base"), XmlArrayItem("element")]
         public CollectionModel<DefinedElementModel> BaseItems { get; set; } = new CollectionModel<DefinedElementModel>();
 

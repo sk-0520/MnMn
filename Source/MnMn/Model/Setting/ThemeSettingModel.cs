@@ -28,6 +28,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 
         public bool IsRandom { get; set; } = Constants.SettingApplicationThemeIsRandom;
 
+        public string ApplicationTheme { get; set; } = Constants.SettingApplicationThemeApplicationTheme;
+
         public string BaseTheme { get; set; } = Constants.SettingApplicationThemeBaseTheme;
 
         public string Accent { get; set; } = Constants.SettingApplicationThemeAccent;

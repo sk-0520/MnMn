@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, Define.ServiceType.Application));
             ThemeDefine = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);
+            SelectedApplicationTheme = AppSetting.Theme.ApplicationTheme;
             SelectedAccent = AppSetting.Theme.Accent;
             SelectedBaseTheme = AppSetting.Theme.BaseTheme;
         }
@@ -64,6 +65,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 if(SetPropertyValue(AppSetting.Theme, value, nameof(AppSetting.Theme.IsRandom))) {
                     AppUtility.SetTheme(AppSetting.Theme);
+                }
+            }
+        }
+        public string SelectedApplicationTheme
+        {
+            get { return AppSetting.Theme.ApplicationTheme; }
+            set
+            {
+                if(SetPropertyValue(AppSetting.Theme, value, nameof(AppSetting.Theme.ApplicationTheme))) {
+                    if(!IsRandomTheme) {
+                        AppUtility.SetTheme(AppSetting.Theme);
+                    }
                 }
             }
         }
@@ -90,6 +103,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     }
                 }
             }
+        }
+        public CollectionModel<DefinedElementModel> ApplicationThemeItems
+        {
+            get { return ThemeDefine.ApplicationItems; }
         }
         public CollectionModel<DefinedElementModel> BaseThemeItems
         {

@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return CultureInfo.CurrentCulture.Name;
         }
 
-        public static void SetThemeDefine(string baseTheme, string accent)
+        static void SetThemeDefine(string applicationTheme, string baseTheme, string accent)
         {
             Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
 
@@ -91,13 +91,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
             var random = new Random();
 
+            var applicationThemeIndex = random.Next(0, theme.ApplicationItems.Count);
             var baseThemeIndex = random.Next(0, theme.BaseItems.Count);
             var accentIndex = random.Next(0, theme.AccentItems.Count);
 
+            var applicationTheme = theme.ApplicationItems[applicationThemeIndex];
             var baseTheme = theme.BaseItems[baseThemeIndex];
             var accent = theme.AccentItems[accentIndex];
 
-            SetThemeDefine(baseTheme.Key, accent.Key);
+            SetThemeDefine(applicationTheme.Key, baseTheme.Key, accent.Key);
         }
 
         public static void SetTheme(ThemeSettingModel theme)
@@ -105,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             if(theme.IsRandom) {
                 SetRandomTheme();
             } else {
-                SetThemeDefine(theme.BaseTheme, theme.Accent);
+                SetThemeDefine(theme.ApplicationTheme, theme.BaseTheme, theme.Accent);
             }
         }
 

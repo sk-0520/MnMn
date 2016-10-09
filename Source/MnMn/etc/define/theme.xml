@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <theme>
+	<application>
+		<element key="Generic">
+			<words>
+				<word key="ja-jp" value="基本" />
+			</words>
+		</element>
+	</application>
 	<base>
 		<element key="BaseLight">
 			<words>
-				<word key="ja-jp" value="BaseLight" />
+				<word key="ja-jp" value="" />
 			</words>
 		</element>
 		<element key="BaseDark">
 			<words>
-				<word key="ja-jp" value="BaseDark" />
+				<word key="ja-jp" value="" />
 			</words>
 		</element>
 	</base>

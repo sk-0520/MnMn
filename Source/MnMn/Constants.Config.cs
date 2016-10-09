@@ -127,6 +127,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// テーマ: ランダム。
         /// </summary>
         public static bool SettingApplicationThemeIsRandom => appConfig.Get("setting-application-theme-is-random", bool.Parse);
+        public static string SettingApplicationThemeApplicationTheme => appConfig.Get("setting-application-theme-application-theme");
         public static string SettingApplicationThemeBaseTheme => appConfig.Get("setting-application-theme-base-theme");
         public static string SettingApplicationThemeAccent => appConfig.Get("setting-application-theme-accent");
 
