@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         bool _showFilterSetting;
         bool _isEnabledFinderFiltering = true;
+        CheckedProcessType _selectedCheckedProcess;
 
         #endregion
 
@@ -187,6 +188,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             set { SetVariableValue(ref this._showFilterSetting, value); }
         }
 
+        public virtual CollectionModel<CheckedProcessType> CheckedProcessItems { get; protected set; } = new CollectionModel<CheckedProcessType>(new[] { CheckedProcessType.SequencePlay, CheckedProcessType.RandomPlay });
+
+        public virtual CheckedProcessType SelectedCheckedProcess
+        {
+            get { return this._selectedCheckedProcess; }
+            set { SetVariableValue(ref this._selectedCheckedProcess, value); }
+        }
+
         #endregion
 
         #region command
@@ -208,6 +217,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             }
         }
 
+        public ICommand SwitchShowFilterCommand
+        {
+            get { return CreateCommand(o => SwitchShowFilter()); }
+        }
+
+        public ICommand CheckedProcessCommand
+        {
+            get { return CreateCommand(o => CheckedProcessAsync((CheckedProcessType)o)); }
+        }
 
         #endregion
 
@@ -270,6 +288,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 item.IsChecked = isChecked;
             }
         }
+
+        protected virtual void SwitchShowFilter()
+        {
+            ShowFilterSetting = !ShowFilterSetting;
+        }
+
+        protected abstract Task CheckedProcessAsync(CheckedProcessType checkedProcessType);
 
         public IEnumerable<TFinderItemViewModel> GetCheckedItems()
         {

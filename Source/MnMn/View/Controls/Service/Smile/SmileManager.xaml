@@ -5,6 +5,9 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.SmileManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
@@ -15,58 +18,63 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300" d:DesignWidth="300"
+  d:DesignHeight="420" d:DesignWidth="500"
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top">
-      <xctk:WatermarkTextBox VerticalAlignment="Center" Width="140" Watermark="動画ID: smXXXXXX" Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}">
-        <xctk:WatermarkTextBox.InputBindings>
+      <TextBox
+        mamc:TextBoxHelper.Watermark="動画ID: smXXXXXX"
+        mamc:TextBoxHelper.ButtonCommand="{Binding OpenVideoPlayerCommand}"
+        Width="140"
+        Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}"
+        Style="{StaticResource SearchTextBox}"
+      >
+        <TextBox.InputBindings>
           <KeyBinding Key="Enter" Command="{Binding OpenVideoPlayerCommand}" />
-        </xctk:WatermarkTextBox.InputBindings>
-      </xctk:WatermarkTextBox>
-      <Button Command="{Binding OpenVideoPlayerCommand}">開く</Button>
+        </TextBox.InputBindings>
+      </TextBox>
     </ToolBar>
-    <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-      <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}">
+    <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+      <TabItem Header="検索" DataContext="{Binding VideoManager.SearchManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoSearchManager />
       </TabItem>
-      <TabItem Header="ランキング" DataContext="{Binding VideoManager.RankingManager}">
+      <TabItem Header="ランキング" DataContext="{Binding VideoManager.RankingManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoRankingManager />
       </TabItem>
-      <TabItem Header="新着とか" DataContext="{Binding VideoManager.NewArrivalsManager}" >
+      <TabItem Header="新着とか" DataContext="{Binding VideoManager.NewArrivalsManager}"  Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoNewArrivalsManager />
       </TabItem>
-      <TabItem Header="マイリスト" DataContext="{Binding VideoManager.MyListManager}">
+      <TabItem Header="マイリスト" DataContext="{Binding VideoManager.MyListManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoMyListManager />
       </TabItem>
-      <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" >
+      <TabItem Header="履歴" DataContext="{Binding VideoManager.HistoryManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoHistoryManager />
       </TabItem>
-      <TabItem Header="live:official" DataContext="{Binding LiveManager.OfficialBroadcastManager}">
+      <TabItem Header="live:official" DataContext="{Binding LiveManager.OfficialBroadcastManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_live:SmileLiveOfficialBroadcastManager />
       </TabItem>
-      <TabItem Header="live:category" DataContext="{Binding LiveManager.CategoryManager}">
+      <TabItem Header="live:category" DataContext="{Binding LiveManager.CategoryManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_live:SmileLiveCategoryManager />
       </TabItem>
-      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}">
+      <TabItem Header="ユーザー" DataContext="{Binding UsersManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileUsersManager />
       </TabItem>
-      <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}">
+      <TabItem Header="ブックマーク" DataContext="{Binding VideoManager.BookmarkManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_video:SmileVideoBookmarkManager x:Name="bookmark" />
       </TabItem>
-      <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}">
+      <TabItem DataContext="{Binding VideoManager.CheckItLaterManager}" Style="{StaticResource SectionTabItem}">
         <TabItem.Header>
           <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">あとで見る</TextBlock>
+            <TextBlock Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
             <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="Red" Background="Red" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TextBlock FontSize="9" Text="{Binding ItemCount}" />
             </Border>
@@ -74,10 +82,10 @@
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />
       </TabItem>
-      <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}">
+      <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
       </TabItem>
-      <TabItem Header="設定" DataContext="{Binding SettingManager}" >
+      <TabItem Header="設定" DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_setting:SmileSettingManager />
       </TabItem>
     </TabControl>

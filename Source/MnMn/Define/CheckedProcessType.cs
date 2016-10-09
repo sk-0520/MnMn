@@ -23,15 +23,11 @@ using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    /// <summary>
-    /// 検索方法。
-    /// <para>サービスが扱えるかどうかまでは面倒見ない。</para>
-    /// </summary>
-    public enum SearchType
+    public enum CheckedProcessType
     {
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_SearchType_Keyword))]
-        Keyword,
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_SearchType_Tag))]
-        Tag,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_CheckedProcessType_SequencePlay))]
+        SequencePlay,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_CheckedProcessType_RandomPlay))]
+        RandomPlay,
     }
 }

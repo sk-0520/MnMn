@@ -15,10 +15,10 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -30,7 +30,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Title}" Style="{StaticResource TabHeaderText}" />
             <Button Style="{StaticResource TabReloadButton}" />
           </StackPanel>

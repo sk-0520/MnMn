@@ -18,13 +18,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using ContentTypeTextNet.MnMn.MnMn.Logic.View;
+using MahApps.Metro.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video
 {
     /// <summary>
     /// SmileVideoPlayerWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmileVideoPlayerWindow: System.Windows.Window
+    public partial class SmileVideoPlayerWindow: MetroWindow
     {
         #region property
 

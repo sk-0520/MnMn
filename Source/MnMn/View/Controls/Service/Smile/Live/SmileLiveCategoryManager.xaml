@@ -15,11 +15,11 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -54,7 +54,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabVideoSourceLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Category.DisplayText}" Style="{StaticResource TabHeaderText}" />
             <app_view_controls_service_smile_live:SmileLiveCategoryContext
               SelectedSort="{Binding SelectedSort}"
@@ -75,7 +75,7 @@
               <TextBlock>試験運用中につきランキングみたいな状態保持は未実装。</TextBlock>
             </app_view_controls_service_smile_live:SmileLiveFinderControl.HeaderContent>
             <app_view_controls_service_smile_live:SmileLiveFinderControl.FooterContent>
-              <Grid Height="24">
+              <Grid Height="32">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="7*" />

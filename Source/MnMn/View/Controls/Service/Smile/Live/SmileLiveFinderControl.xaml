@@ -23,12 +23,12 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -82,13 +82,14 @@
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
-      <xctk:WatermarkTextBox Grid.Column="2" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+      <xctk:WatermarkTextBox Grid.Column="2" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" />
 
       <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
       <Label Grid.Column="4" Margin="10,0,0,0" >並べ替え</Label>
-      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
-        <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Width="16" Height="16" Style="{StaticResource DefaultImage}" />
-      </ToggleButton>
+      <!--<ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
+        <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Style="{StaticResource SmallIconImage}" />
+      </ToggleButton>-->
+      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}" Style="{StaticResource OrderAscendingButton}" />
       <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
         <ComboBox.ItemTemplate>
           <DataTemplate>
@@ -114,7 +115,6 @@
         Grid.RowSpan="2"
         Grid.Column="0"
         Grid.ColumnSpan="2"
-        Style="{StaticResource ContentListBox}"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
       >
@@ -124,7 +124,7 @@
           <KeyBinding Modifiers="Ctrl" Key="A" Command="{Binding AllCheckCommand}" />-->
         </ListBox.InputBindings>
         <ListBox.ItemContainerStyle>
-          <Style TargetType="{x:Type ListBoxItem}">
+          <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
           </Style>

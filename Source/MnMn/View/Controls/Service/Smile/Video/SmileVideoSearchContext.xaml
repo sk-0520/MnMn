@@ -15,7 +15,7 @@
       SelectedItem="{Binding SelectedMethod, RelativeSource={RelativeSource AncestorType=UserControl}}"
     />
     <ComboBox
-      Width="50"
+      Width="80"
       DisplayMemberPath="DisplayText"
       ItemsSource="{Binding SortItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
       SelectedItem="{Binding SelectedSort, RelativeSource={RelativeSource AncestorType=UserControl}}"

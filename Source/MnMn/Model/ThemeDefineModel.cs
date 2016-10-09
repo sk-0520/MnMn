@@ -16,30 +16,27 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Data;
-using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [ValueConversion(typeof(long), typeof(string))]
-    public class HumanLikeByteConverter: IValueConverter
+    [Serializable, XmlRoot("theme")]
+    public class ThemeDefineModel: RawModelBase
     {
-        #region IValueConverter
+        #region property
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var size = System.Convert.ToInt64(value);
-            return RawValueUtility.ConvertHumanLikeByte(size);
-        }
+        [XmlArray("application"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> ApplicationItems { get; set; } = new CollectionModel<DefinedElementModel>();
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        [XmlArray("base"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> BaseItems { get; set; } = new CollectionModel<DefinedElementModel>();
+
+        [XmlArray("accent"), XmlArrayItem("element")]
+        public CollectionModel<DefinedElementModel> AccentItems { get; set; } = new CollectionModel<DefinedElementModel>();
 
         #endregion
     }

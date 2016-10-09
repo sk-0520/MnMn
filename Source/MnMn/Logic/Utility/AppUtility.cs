@@ -21,11 +21,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
+using MahApps.Metro;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
@@ -68,6 +72,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static string GetCultureName()
         {
             return CultureInfo.CurrentCulture.Name;
+        }
+
+        static void SetThemeDefine(string applicationTheme, string baseTheme, string accent)
+        {
+            Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
+
+            ThemeManager.ChangeAppStyle(
+                Application.Current,
+                ThemeManager.GetAccent(accent),
+                ThemeManager.GetAppTheme(baseTheme)
+            );
+        }
+
+        public static void SetRandomTheme()
+        {
+            var theme = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);
+
+            var random = new Random();
+
+            var applicationThemeIndex = random.Next(0, theme.ApplicationItems.Count);
+            var baseThemeIndex = random.Next(0, theme.BaseItems.Count);
+            var accentIndex = random.Next(0, theme.AccentItems.Count);
+
+            var applicationTheme = theme.ApplicationItems[applicationThemeIndex];
+            var baseTheme = theme.BaseItems[baseThemeIndex];
+            var accent = theme.AccentItems[accentIndex];
+
+            SetThemeDefine(applicationTheme.Key, baseTheme.Key, accent.Key);
+        }
+
+        public static void SetTheme(ThemeSettingModel theme)
+        {
+            if(theme.IsRandom) {
+                SetRandomTheme();
+            } else {
+                SetThemeDefine(theme.ApplicationTheme, theme.BaseTheme, theme.Accent);
+            }
         }
 
         #endregion

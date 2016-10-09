@@ -5,6 +5,8 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.App.AppInformationManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:cttn_pe_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=Package"
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
@@ -20,17 +22,17 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ButtonDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
-  <TabControl TabStripPlacement="Left" SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}">
-    <TabItem Header="情報" DataContext="{Binding AppAboutManager}">
+  <TabControl SelectedValuePath="DataContext" SelectedValue="{Binding SelectedManager}" Style="{StaticResource SectionTabControl}">
+    <TabItem Header="情報" DataContext="{Binding AppAboutManager}" Style="{StaticResource SectionTabItem}">
       <TabItem.Resources>
         <Thickness x:Key="ContentMargin">8</Thickness>
       </TabItem.Resources>
@@ -63,7 +65,7 @@
             <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="{x:Static app:Constants.BuildType}" />
           </Grid>
 
-          <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" Style="{StaticResource DefaultTextBox}" />
+          <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" />
 
           <StackPanel Margin="{StaticResource ContentMargin}">
             <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
@@ -140,7 +142,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
           <UniformGrid Rows="1" Columns="6">
             <UniformGrid.Resources>
-              <Style TargetType="Button">
+              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Margin" Value="4,0" />
               </Style>
             </UniformGrid.Resources>
@@ -152,7 +154,7 @@
       </Grid>
     </TabItem>
 
-    <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}">
+    <TabItem Header="ログ" DataContext="{Binding AppLoggingManager}" Style="{StaticResource SectionTabItem}">
       <DockPanel>
         <ToolBar DockPanel.Dock="Top">
           <Button Command="{Binding SaveAllLogCommand}">全件保存</Button>
@@ -165,9 +167,9 @@
           <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
         </ToolBar>
 
-        <ListView x:Name="listLog" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
+        <ListView x:Name="listLog" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
           <ListView.Resources>
-            <Style TargetType="ListViewItem">
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding LogKind}" Value="None">
                 </DataTrigger>
@@ -240,8 +242,8 @@
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                      <TextBox BorderThickness="0" Background="Transparent" IsReadOnly="True" Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" Text="{Binding CallerMember, Mode=OneTime}" />
-                      <TextBlock Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
+                      <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" BorderThickness="0" Background="Transparent" IsReadOnly="True" Foreground="{DynamicResource TextBrush}" Text="{Binding CallerMember, Mode=OneTime}" />
+                      <TextBlock VerticalAlignment="Center" Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
                     </StackPanel>
                   </DataTemplate>
                 </GridViewColumn.CellTemplate>
@@ -259,15 +261,15 @@
       </DockPanel>
     </TabItem>
 
-    <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}">
+    <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
-    <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}">
+    <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="flashPlayerBrowser" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
-    <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}">
+    <TabItem Header="ヘルプ" DataContext="{Binding AppHelpManager}" Style="{StaticResource SectionTabItem}">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
@@ -304,7 +306,7 @@
       </Grid>
     </TabItem>
 
-    <TabItem Header="設定" DataContext="{Binding AppSettingManager}">
+    <TabItem Header="設定" DataContext="{Binding AppSettingManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls_app:AppSettingManager />
     </TabItem>
 

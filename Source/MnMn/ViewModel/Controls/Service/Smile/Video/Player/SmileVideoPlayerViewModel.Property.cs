@@ -37,6 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
+using MahApps.Metro.Controls;
 using Meta.Vlc.Wpf;
 using OxyPlot;
 
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメント詳細部分要素。
         /// <para>使ってないんよねぇ。</para>
         /// </summary>
-        Border DetailComment { get; set; }
+        Flyout DetailComment { get; set; }
         /// <summary>
         /// 動画紹介文書表示要素。
         /// </summary>
@@ -1013,22 +1014,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-        /// <summary>
-        /// リサイズ幅。
-        /// </summary>
-        public Thickness ResizeBorderThickness
-        {
-            get { return this._resizeBorderThickness; }
-            set { SetVariableValue(ref this._resizeBorderThickness, value); }
-        }
-        /// <summary>
-        /// ウィンドウ枠幅。
-        /// </summary>
-        public Thickness WindowBorderThickness
-        {
-            get { return this._windowBorderThickness; }
-            set { SetVariableValue(ref this._windowBorderThickness, value); }
-        }
+        ///// <summary>
+        ///// リサイズ幅。
+        ///// </summary>
+        //public Thickness ResizeBorderThickness
+        //{
+        //    get { return this._resizeBorderThickness; }
+        //    set { SetVariableValue(ref this._resizeBorderThickness, value); }
+        //}
+        ///// <summary>
+        ///// ウィンドウ枠幅。
+        ///// </summary>
+        //public Thickness WindowBorderThickness
+        //{
+        //    get { return this._windowBorderThickness; }
+        //    set { SetVariableValue(ref this._windowBorderThickness, value); }
+        //}
         /// <summary>
         /// コメントグラフ表示状態。
         /// </summary>

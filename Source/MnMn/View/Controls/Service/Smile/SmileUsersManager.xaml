@@ -16,12 +16,12 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter_service_smile:SmileUserHasBookmarkConverter x:Key="SmileUserHasBookmarkConverter" />
@@ -48,10 +48,20 @@
 
           <ToolBar Grid.Row="0">
             <Button Command="{Binding MoveUpBookmarkSelectedItemCommand}">
-              <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+              <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
             </Button>
             <Button Command="{Binding MoveDownBookmarkSelectedItemCommand}">
-              <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+              <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
             </Button>
           </ToolBar>
 
@@ -93,7 +103,7 @@
       <TabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
-            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource TabSourceLoadState}" SourceLoadState="{Binding UserLoadState}" />
+            <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding UserLoadState}" />
             <TextBlock Text="{Binding UserName}" Style="{StaticResource TabHeaderText}" />
             <ContentControl>
               <ContentControl.Style>
@@ -125,7 +135,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Grid Grid.Column="0" Width="150" VerticalAlignment="Top" Height="150">
-                    <Image Source="{Binding ThumbnailImage}" Style="{StaticResource DefaultImage}" />
+                    <Image Source="{Binding ThumbnailImage}" />
                     <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
                   </Grid>
 
@@ -135,7 +145,7 @@
                         <Paragraph>
                           <Button Visibility="{Binding IsNotMyAccount, Converter={StaticResource BooleanToVisibilityConverter}}" CommandParameter="{Binding}">
                             <Button.Style>
-                              <Style TargetType="Button">
+                              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
                                   <DataTrigger Value="True">
                                     <DataTrigger.Binding>

@@ -1,4 +1,4 @@
-﻿<Window
+﻿<mamc:MetroWindow
   x:Name="root"
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoPlayerWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,8 +6,10 @@
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
-  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:mamb="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
 
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:oxy="http://oxyplot.org/wpf"
 
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
@@ -31,7 +33,7 @@
   Height="{Binding Height, Mode=TwoWay}"
   WindowState="{Binding State, Mode=TwoWay}"
 
-  BorderThickness="{Binding WindowBorderThickness}"
+  ShowTitleBar="{Binding IsNormalWindow}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -39,10 +41,11 @@
 >
   <i:Interaction.Behaviors>
     <app_view_attachment:WindowTitleBehavior Service="SmileVideo" Title="{Binding Title}" />
+    <mamb:BorderlessWindowBehavior EnableDWMDropShadow="True" />
   </i:Interaction.Behaviors>
-  <Window.Resources>
+  <mamc:MetroWindow.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
+      <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
@@ -50,8 +53,9 @@
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Double x:Key="ImageWidth">100</sys:Double>
@@ -65,6 +69,7 @@
 
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
+      <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
@@ -95,7 +100,7 @@
         <Setter Property="Menu.Visibility" Value="Collapsed" />
         <Setter Property="Separator.Visibility" Value="Collapsed" />
       </Style>
-      <Style x:Key="PlayListChangeButton" TargetType="Button">
+      <Style x:Key="PlayListChangeButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
             <Setter Property="IsEnabled" Value="True" />
@@ -105,7 +110,7 @@
         <Setter Property="IsEnabled" Value="False" />
         <Setter Property="Visibility" Value="Collapsed" />
       </Style>
-      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
             <Setter Property="IsEnabled" Value="True" />
@@ -152,16 +157,13 @@
         <Setter Property="LoadedToVisibility" Value="Visible" />
       </Style>
 
-      <Style x:Key="UserSelect" TargetType="RadioButton">
+      <Style x:Key="UserSelect" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
         <Setter Property="Margin" Value="4,0,0,0" />
       </Style>
 
-      <Style x:Key="DummyMenu" TargetType="Menu"/>
-
-
     </ResourceDictionary>
-  </Window.Resources>
-  <Window.InputBindings>
+  </mamc:MetroWindow.Resources>
+  <mamc:MetroWindow.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
@@ -247,9 +249,9 @@
         <sys:Boolean>False</sys:Boolean>
       </KeyBinding.CommandParameter>
     </KeyBinding>
-  </Window.InputBindings>
-  <Window.Style>
-    <Style TargetType="Window">
+  </mamc:MetroWindow.InputBindings>
+  <mamc:MetroWindow.Style>
+    <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Style.Triggers>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
           <Setter Property="Topmost" Value="{Binding Topmost}" />
@@ -258,14 +260,14 @@
           <Setter Property="Topmost" Value="True" />
         </DataTrigger>
       </Style.Triggers>
-      <Setter Property="BorderBrush">
+      <!--<Setter Property="BorderBrush">
         <Setter.Value>
           <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
         </Setter.Value>
-      </Setter>
+      </Setter>-->
     </Style>
-  </Window.Style>
-  <WindowChrome.WindowChrome>
+  </mamc:MetroWindow.Style>
+  <!--<WindowChrome.WindowChrome>
     <WindowChrome
       ResizeBorderThickness="{Binding ResizeBorderThickness}"
       GlassFrameThickness="0"
@@ -283,17 +285,23 @@
         </MultiBinding>
       </WindowChrome.CaptionHeight>
     </WindowChrome>
-  </WindowChrome.WindowChrome>
+  </WindowChrome.WindowChrome>-->
 
   <DockPanel>
-    <Grid
+    <!--<ContentControl
       x:Name="caption"
       DockPanel.Dock="Top"
-      Margin="4"
       Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
-      TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+      Style="{StaticResource WindowChromeCaption}"
+    />-->
+    <!--<Grid
+      x:Name="caption"
+      DockPanel.Dock="Top"
+      Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
+      Style="{StaticResource WindowChromeCaption}"
     >
-      <Grid.Style>
+      -->
+    <!--<Grid.Style>
         <Style TargetType="Grid">
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
@@ -304,7 +312,8 @@
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </Grid.Style>
+      </Grid.Style>-->
+    <!--
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
@@ -333,21 +342,26 @@
         <Button Style="{StaticResource WindowChromeMaximum}" />
         <Button Style="{StaticResource WindowChromeClose}" />
       </StackPanel>
-    </Grid>
+    </Grid>-->
 
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />
+          <!--<Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />-->
+          <Viewbox Style="{StaticResource SmallItemBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
           <TextBlock Text="キャッシュ:" />
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
       </Button>
-      <Menu Style="{StaticResource DummyMenu}">
-        <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
+      <Menu Style="{StaticResource ToolbarMenu}">
+        <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
           <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -361,7 +375,7 @@
       </Menu>
       <Menu>
         <Menu.Style>
-          <Style TargetType="Menu" BasedOn="{StaticResource DummyMenu}">
+          <Style TargetType="Menu" BasedOn="{StaticResource ToolbarMenu}">
             <Style.Triggers>
               <DataTrigger Binding="{Binding BookmarkItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
                 <Setter Property="Visibility" Value="Collapsed" />
@@ -369,9 +383,9 @@
             </Style.Triggers>
           </Style>
         </Menu.Style>
-        <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}">
+        <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -395,22 +409,37 @@
         </MenuItem>
       </Menu>
 
-      <Separator Style="{StaticResource PlayListVisible}" />
+      <Separator Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" />
       <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeButton}">
-        <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </Button>
-      <Menu Style="{StaticResource PlayListVisible}">
-        <MenuItem Header="プレイリスト">
+      <Menu Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ToolbarMenu}">
+        <MenuItem Header="プレイリスト" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.ItemsSource>
             <CompositeCollection>
               <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
                 <MenuItem.Icon>
-                  <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource DefaultImage}" />
+                  <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeMenuItem}">
                 <MenuItem.Icon>
-                  <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource DefaultImage}" />
+                  <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
@@ -420,7 +449,7 @@
             </CompositeCollection>
           </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItem}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
@@ -434,12 +463,20 @@
         </MenuItem>
       </Menu>
       <Button Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">
-        <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </Button>
 
       <Separator />
 
-      <Menu Style="{StaticResource DummyMenu}">
+      <Menu Style="{StaticResource ToolbarMenu}">
+        <Menu.Resources>
+          <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}" />
+        </Menu.Resources>
         <MenuItem Header="プレイヤー領域">
           <MenuItem Header="動画サイズ: 50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
           <MenuItem Header="動画サイズ: 75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
@@ -473,7 +510,9 @@
               <DataTrigger Binding="{Binding State}" Value="Maximized">
                 <Setter Property="Visibility" Value="Collapsed" />
               </DataTrigger>
+
               <!-- フルスクリーンはそもそもステータスバーが消えるので考慮しない -->
+
             </Style.Triggers>
             <Setter Property="Visibility" Value="Visible" />
           </Style>
@@ -482,7 +521,7 @@
       </StatusBarItem>
       <ToggleButton x:Name="switchInformation">
         <ToggleButton.Style>
-          <Style TargetType="ToggleButton">
+          <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
             <Style.Triggers>
               <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
                 <Setter Property="IsChecked" Value="{Binding PlayerShowDetailArea}" />
@@ -494,7 +533,12 @@
           </Style>
         </ToggleButton.Style>
         <Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <!-- https://materialdesignicons.com/icon/information-outline -->
+              <Path Data="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
         </Canvas>
       </ToggleButton>
@@ -503,21 +547,41 @@
         <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
         <TextBlock>]</TextBlock>
       </TextBlock>
-      <TextBlock VerticalAlignment="Center" Text="🌸" Foreground="Pink" ToolTip="酷使するプレイヤーウィンドウ！" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <TextBlock.Effect>
-          <DropShadowEffect Color="#88000000" ShadowDepth="1.5" BlurRadius="2" />
-        </TextBlock.Effect>
-      </TextBlock>
+      <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Viewbox.Effect>
+          <DropShadowEffect Color="{DynamicResource WindowColor}" ShadowDepth="0" BlurRadius="2" />
+        </Viewbox.Effect>
+        <Canvas Style="{StaticResource IconCanvas-24x24}">
+          <Path Data="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" Style="{StaticResource SmallAccentIconPath}" />
+        </Canvas>
+      </Viewbox>
       <Canvas Style="{StaticResource StatePanel}">
-        <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/image -->
+            <Path Data="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <Canvas Style="{StaticResource StatePanel}">
-        <Image Source="/Resources/Service/Smile/Video/Player/CommentState.png" Style="{StaticResource ButtonImage}" />
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/comment-outline -->
+            <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <Canvas Style="{StaticResource StatePanel}">
-        <Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/video -->
+            <Path Data="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <TextBlock ToolTip="動画サイズ">
@@ -736,10 +800,34 @@
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="フルスクリーン" IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path>
+                          <Path.Resources>
+                            <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
+                                  <Setter Property="Data" Value="{StaticResource Image_FullScreen}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
+                                  <Setter Property="Data" Value="{StaticResource Image_FullScreen-Exit}" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                            </Style>
+                          </Path.Resources>
+                        </Path>
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                   <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <!-- https://materialdesignicons.com/icon/comment-multiple-outline -->
+                        <Path Data="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7C5,5.89 5.9,5 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.9 12.75,23 12.5,23V23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15Z" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                   <Slider
                     ToolTip="コメント有効領域"
@@ -751,10 +839,22 @@
                     Value="{Binding CommentEnabledPercent}"
                   />
                   <ToggleButton ToolTip="投稿者コメントもコメント有効領域の制限対象にする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <!-- https://materialdesignicons.com/icon/comment-account-outline -->
+                        <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M16,14H8V13C8,11.67 10.67,11 12,11C13.33,11 16,11.67 16,13V14M12,6A2,2 0 0,1 14,8A2,2 0 0,1 12,10A2,2 0 0,1 10,8A2,2 0 0,1 12,6Z" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <!-- https://materialdesignicons.com/icon/comment-text-outline -->
+                        <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>
@@ -767,7 +867,7 @@
                         <oxy:LinearAxis IsAxisVisible="False" Position="Bottom"/>
                       </oxy:Plot.Axes>
                       <oxy:Plot.Series>
-                        <oxy:LineSeries Color="#660000ee" ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
+                        <oxy:LineSeries Color="{DynamicResource Gray5}" ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
                       </oxy:Plot.Series>
                     </oxy:Plot>
                   </Viewbox>
@@ -777,7 +877,7 @@
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
-                <StackPanel>
+                <StackPanel Background="{DynamicResource WindowBackgroundBrush}">
                   <StackPanel Orientation="Horizontal">
                     <Label>サイズ</Label>
                     <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Small}}">少</RadioButton>
@@ -803,7 +903,7 @@
                           </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>
-                          <Style TargetType="ListBoxItem">
+                          <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <Setter Property="Template">
                               <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -865,7 +965,8 @@
                 </Style>
               </DockPanel.Style>
               <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
-              <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True" Style="{StaticResource DefaultTextBox}" Text="{Binding CommentInformation}" />
+              <!--<xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True"  Text="{Binding CommentInformation}" />-->
+              <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" IsReadOnly="True" Text="{Binding CommentInformation, Mode=OneWay}" />
             </DockPanel>
 
           </Grid>
@@ -886,7 +987,7 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
                   <TextBlock DockPanel.Dock="Right">高</TextBlock>
-                  <Slider Minimum="-3000" Maximum="-1" LargeChange="100" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
+                  <Slider Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
@@ -946,44 +1047,42 @@
                   </ComboBox.ItemTemplate>
                 </ComboBox>
               </DockPanel>
-              <DockPanel DockPanel.Dock="Bottom">
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*" />
-                    <ColumnDefinition Width="6*" />
-                  </Grid.ColumnDefinitions>
-                  <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+              <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="4*" />
+                  <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+                  <TextBlock>
+                    <TextBlock>表示制限</TextBlock>
+                    <TextBlock>(</TextBlock>
+                    <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
                     <TextBlock>
-                      <TextBlock>表示制限</TextBlock>
-                      <TextBlock>(</TextBlock>
-                      <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
-                      <TextBlock>
-                        <TextBlock.Style>
-                          <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                              <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
-                                <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
-                              </DataTrigger>
-                            </Style.Triggers>
-                          </Style>
-                        </TextBlock.Style>
-                      </TextBlock>
-                      <TextBlock>)</TextBlock>
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
+                              <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
                     </TextBlock>
-                  </CheckBox>
-                  <DockPanel Grid.Column="1">
-                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
-                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
-                    <Slider
-                      Minimum="1"
-                      Maximum="50"
-                      LargeChange="5"
-                      Value="{Binding DisplayCommentLimitCount}"
-                      IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
-                    />
-                  </DockPanel>
-                </Grid>
-              </DockPanel>
+                    <TextBlock>)</TextBlock>
+                  </TextBlock>
+                </CheckBox>
+                <DockPanel Grid.Column="1">
+                  <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
+                  <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
+                  <Slider
+                    Minimum="1"
+                    Maximum="50"
+                    LargeChange="5"
+                    Value="{Binding DisplayCommentLimitCount}"
+                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
+                  />
+                </DockPanel>
+              </Grid>
 
               <Grid>
                 <Grid.RowDefinitions>
@@ -991,30 +1090,42 @@
                   <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <DockPanel Grid.Row="0" >
-                  <DockPanel.Resources>
+                <Grid Grid.Row="0" >
+                  <Grid.Resources>
                     <Style TargetType="Border">
-                      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-                      <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                      <Setter Property="Background" Value="{DynamicResource GrayBrush3}" />
+                      <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
+                      <Setter Property="TextElement.Foreground" Value="{DynamicResource WhiteBrush}" />
                       <Setter Property="BorderThickness" Value="1" />
                       <Setter Property="Padding" Value="1" />
                     </Style>
                     <Style TargetType="TextBlock">
                       <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
-                  </DockPanel.Resources>
-                  <Border DockPanel.Dock="Left" MinWidth="{StaticResource CommentShowTimestampMinWidth}">
+                  </Grid.Resources>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Border Grid.Column="0" MinWidth="{StaticResource CommentShowTimestampMinWidth}">
                     <TextBlock>時間</TextBlock>
                   </Border>
-                  <Border>
-                    <DockPanel>
-                      <CheckBox DockPanel.Dock="Right" IsChecked="{Binding PlayerShowPostTimestamp}" Content="投稿時間の表示" />
-                      <TextBlock>コメント</TextBlock>
-                    </DockPanel>
+                  <Border Grid.Column="1">
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
+
+                      <TextBlock Grid.Column="0">コメント</TextBlock>
+                      <CheckBox Grid.Column="1" Content="投稿時間の表示" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
+                    </Grid>
                   </Border>
-                </DockPanel>
+                </Grid>
 
                 <Grid Grid.Row="1">
+                  <!--
                   <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -1023,33 +1134,32 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="8*" />
                   </Grid.ColumnDefinitions>
+                  -->
 
                   <ListBox
                     x:Name="commentView"
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
+                    VirtualizingPanel.ScrollUnit="Item"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     HorizontalContentAlignment="Stretch"
                     SelectedItem="{Binding SelectedComment}"
                     ItemsSource="{Binding CommentItems}"
                   >
                     <ListBox.ItemContainerStyle>
-                      <Style TargetType="ListBoxItem">
+                      <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                         <Style.Triggers>
                           <DataTrigger Binding="{Binding NowShowing}" Value="True">
                             <DataTrigger.EnterActions>
                               <BeginStoryboard>
                                 <Storyboard>
+                                  <!-- テーマの随時適用はすぐには無理っすね -->
                                   <ColorAnimation
-                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                  From="Transparent"
-                                  To="#80ffaaaa"
-                                  Duration="00:00:00.2"
-                                  AutoReverse="False"
-                                  FillBehavior="HoldEnd"
-                                />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    From="Transparent"
+                                    To="{StaticResource AccentColor}"
+                                    Duration="00:00:00.2"
+                                    AutoReverse="False"
+                                    FillBehavior="HoldEnd"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.EnterActions>
@@ -1109,90 +1219,93 @@
                     </ListBox.ItemTemplate>
                   </ListBox>
 
-                  <Border
-                    x:Name="detailComment"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Padding="4"
-                    BorderThickness="1"
-                    BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                    Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                    Visibility="{Binding IsSelectedComment, Converter={StaticResource BooleanToVisibilityConverter}}"
+                </Grid>
+
+                <mamc:Flyout
+                  x:Name="detailComment"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Header="コメント詳細"
+                  Visibility="Hidden"
+                  Padding="4"
+                  BorderThickness="1"
+                  Position="Right"
+                  BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                  Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                  IsOpen="{Binding IsSelectedComment}"
                   >
-                    <DockPanel>
-                      <TextBlock DockPanel.Dock="Top" TextAlignment="Center">
+                  <DockPanel>
+                    <!--<TextBlock DockPanel.Dock="Top" TextAlignment="Center">
                         <Hyperlink Command="{Binding ClearSelectedCommentCommand}">コメント詳細<Run FontSize="10">(クリックで閉じます)</Run></Hyperlink>
-                      </TextBlock>
-                      <ListBox
+                    </TextBlock>-->
+                    <ListBox
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         BorderBrush="Transparent"
                         Background="Transparent"
                       >
-                        <ListBox.Resources>
-                          <Style TargetType="TextBlock">
-                            <Setter Property="DockPanel.Dock" Value="Left" />
-                            <Setter Property="Width" Value="80" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                          </Style>
-                          <Style TargetType="TextBox">
-                            <Setter Property="IsReadOnly" Value="True" />
-                            <Setter Property="IsReadOnlyCaretVisible" Value="True" />
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderBrush" Value="Transparent" />
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                          </Style>
-                        </ListBox.Resources>
-                        <ListBox.ItemContainerStyle>
-                          <Style TargetType="ListBoxItem">
-                            <Setter Property="Focusable" Value="False"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                          </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>表示時間</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>投稿時間</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>スコア</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>ユーザー種別</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.UserKind, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>ユーザーID</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                          <DockPanel>
-                            <TextBlock>コマンド</TextBlock>
-                            <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
-                          </DockPanel>
-                        </ListBoxItem>
-                        <Separator/>
-                        <ListBoxItem>
-                          <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
-                        </ListBoxItem>
-                      </ListBox>
-                    </DockPanel>
-                  </Border>
-
-                </Grid>
+                      <ListBox.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                          <Setter Property="DockPanel.Dock" Value="Left" />
+                          <Setter Property="Width" Value="80" />
+                          <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                          <Setter Property="IsReadOnly" Value="True" />
+                          <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+                          <Setter Property="Background" Value="Transparent" />
+                          <Setter Property="BorderBrush" Value="Transparent" />
+                          <Setter Property="VerticalContentAlignment" Value="Center" />
+                        </Style>
+                      </ListBox.Resources>
+                      <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                          <Setter Property="Focusable" Value="False"/>
+                          <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                      </ListBox.ItemContainerStyle>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>表示時間</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>投稿時間</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>スコア</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>ユーザー種別</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.UserKind, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>ユーザーID</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <ListBoxItem>
+                        <DockPanel>
+                          <TextBlock>コマンド</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
+                        </DockPanel>
+                      </ListBoxItem>
+                      <Separator/>
+                      <ListBoxItem>
+                        <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
+                      </ListBoxItem>
+                    </ListBox>
+                  </DockPanel>
+                </mamc:Flyout>
               </Grid>
             </DockPanel>
           </TabItem>
@@ -1280,7 +1393,6 @@
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="4" />
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -1320,9 +1432,7 @@
 
             </StackPanel>
 
-            <GridSplitter Grid.Column="1" />
-
-            <Grid Grid.Row="1"  Grid.Column="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid Grid.Row="1"  Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -1333,20 +1443,28 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                  <Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />
+                  <!--<Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />-->
+                  <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                      <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                   <TextBlock Text="登録タグ" Margin="2,0,8,0" VerticalAlignment="Center" />
                 </StackPanel>
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding TagItems}">
                   <ItemsControl.Resources>
-                    <Style TargetType="TextBlock">
-                      <Setter Property="FontSize" Value="10" />
-                      <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                      <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />
+                      <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
-                    <Style TargetType="Image">
+                    <Style TargetType="Viewbox" BasedOn="{StaticResource MinimumIconBox}">
+                      <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <!--<Style TargetType="Image">
                       <Setter Property="VerticalAlignment" Value="Center" />
                       <Setter Property="Width" Value="12" />
                       <Setter Property="Height" Value="12" />
-                    </Style>
+                    </Style>-->
                   </ItemsControl.Resources>
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -1357,8 +1475,13 @@
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <!--<TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>-->
-                        <Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource DefaultImage}" />
-                        <TextBlock>
+                        <!--<Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
+                        <Viewbox Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource {x:Type Viewbox}}">
+                          <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                            <Path Data="{StaticResource Image_Lock}" Style="{StaticResource MinimumDefaultIconPath}" />
+                          </Canvas>
+                        </Viewbox>
+                        <TextBlock Style="{StaticResource {x:Type TextBlock}}">
                           <Hyperlink
                             Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                             CommandParameter="{Binding}"
@@ -1369,7 +1492,12 @@
                         <Button Cursor="Hand" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Button.Template>
                             <ControlTemplate>
-                              <Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" Style="{StaticResource DefaultImage}" />
+                              <!--<Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />-->
+                              <Viewbox Style="{StaticResource {x:Type Viewbox}}">
+                                <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumDefaultIconPath}" />
+                                </Canvas>
+                              </Viewbox>
                             </ControlTemplate>
                           </Button.Template>
                         </Button>
@@ -1441,4 +1569,4 @@
       </TabControl>
     </Grid>
   </DockPanel>
-</Window>
+</mamc:MetroWindow>

@@ -121,6 +121,12 @@
   <data name="File_Html_UpdateState" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\html\updatestate.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String_App_Define_CheckedProcessType_RandomPlay" xml:space="preserve">
+    <value>ランダム再生</value>
+  </data>
+  <data name="String_App_Define_CheckedProcessType_SequencePlay" xml:space="preserve">
+    <value>連続再生</value>
+  </data>
   <data name="String_App_Define_FilteringType_ForwardMatch" xml:space="preserve">
     <value>前方一致</value>
   </data>
@@ -162,6 +168,12 @@
   </data>
   <data name="String_App_Define_LoginState_None" xml:space="preserve">
     <value>未ログイン</value>
+  </data>
+  <data name="String_App_Define_SearchType_Keyword" xml:space="preserve">
+    <value>キーワード</value>
+  </data>
+  <data name="String_App_Define_SearchType_Tag" xml:space="preserve">
+    <value>タグ</value>
   </data>
   <data name="String_App_Define_ServiceType_Smile" xml:space="preserve">
     <value>ニコニコ</value>

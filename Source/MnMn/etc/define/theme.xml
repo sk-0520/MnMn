@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<theme>
+	<application>
+		<element key="Generic">
+			<words>
+				<word key="ja-jp" value="基本" />
+			</words>
+		</element>
+	</application>
+	<base>
+		<element key="BaseLight">
+			<words>
+				<word key="ja-jp" value="" />
+			</words>
+		</element>
+		<element key="BaseDark">
+			<words>
+				<word key="ja-jp" value="" />
+			</words>
+		</element>
+	</base>
+	<accent>
+		<element key="Red">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Green">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Blue">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Purple">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Orange">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Lime">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Emerald">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Teal">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Cyan">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Cobalt">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Indigo">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Violet">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Pink">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Magenta">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Crimson">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Amber">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Yellow">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Brown">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Olive">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Steel">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Mauve">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Taupe">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+		<element key="Sienna">
+			<word>
+				<word key="ja-jp" value="" />
+			</word>
+		</element>
+	</accent>
+</theme>

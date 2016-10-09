@@ -19,19 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
 {
-    /// <summary>
-    /// 検索方法。
-    /// <para>サービスが扱えるかどうかまでは面倒見ない。</para>
-    /// </summary>
-    public enum SearchType
+    public class ThemeSettingModel: SettingModelBase
     {
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_SearchType_Keyword))]
-        Keyword,
-        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_SearchType_Tag))]
-        Tag,
+        #region property
+
+        public bool IsRandom { get; set; } = Constants.SettingApplicationThemeIsRandom;
+
+        public string ApplicationTheme { get; set; } = Constants.SettingApplicationThemeApplicationTheme;
+
+        public string BaseTheme { get; set; } = Constants.SettingApplicationThemeBaseTheme;
+
+        public string Accent { get; set; } = Constants.SettingApplicationThemeAccent;
+
+        #endregion
     }
 }
