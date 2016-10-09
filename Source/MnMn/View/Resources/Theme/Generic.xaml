@@ -354,13 +354,26 @@
     <Setter Property="VerticalAlignment" Value="Center" />
   </Style>
 
-  <Style x:Key="TabCloseButton" TargetType="Button">
+  <Style x:Key="TabCloseButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Style.Resources>
+      <sys:Double x:Key="length">18</sys:Double>
+    </Style.Resources>
     <Setter Property="Tag" Value="{x:Static app:Constants.TagTabCloseButton}" />
     <Setter Property="VerticalAlignment" Value="Top" />
-    <Setter Property="Margin" Value="2,0,-2,0" />
+    <Setter Property="Margin" Value="2,0,0,0" />
+    <Setter Property="Padding" Value="1" />
+    <!--
     <Setter Property="FontFamily" Value="Webdings" />
     <Setter Property="FontSize" Value="10" />
     <Setter Property="Content" Value="r" />
+    -->
+    <Setter Property="FontSize" Value="7" />
+    <Setter Property="Content" Value="❌"/>
+    <Setter Property="Width" Value="{StaticResource length}"/>
+    <Setter Property="Height" Value="{StaticResource length}"/>
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
+
     <Setter Property="Command" Value="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     <Setter Property="CommandParameter" Value="{Binding}" />
   </Style>
