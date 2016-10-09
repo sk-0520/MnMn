@@ -394,7 +394,7 @@
                       <DataTemplate>
                         <TextBlock Margin="4,0">
                           <Hyperlink
-                            Command="{Binding DataContext.SearchTagCommand, ElementName=root }"
+                            Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoSearchManager} }"
                             CommandParameter="{Binding}"
                           >
                             <Run Text="{Binding TagName, Mode=OneTime}" />
