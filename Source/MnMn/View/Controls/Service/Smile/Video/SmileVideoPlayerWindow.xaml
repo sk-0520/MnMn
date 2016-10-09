@@ -55,6 +55,7 @@
         <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Double x:Key="ImageWidth">100</sys:Double>
@@ -499,7 +500,7 @@
       </StatusBarItem>
       <ToggleButton x:Name="switchInformation">
         <ToggleButton.Style>
-          <Style TargetType="ToggleButton">
+          <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
             <Style.Triggers>
               <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
                 <Setter Property="IsChecked" Value="{Binding PlayerShowDetailArea}" />
@@ -511,7 +512,12 @@
           </Style>
         </ToggleButton.Style>
         <Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <!-- https://materialdesignicons.com/icon/information-outline -->
+              <Path Data="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
           <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
         </Canvas>
       </ToggleButton>
@@ -520,21 +526,41 @@
         <TextBlock Text="{Binding PlayerState, Mode=OneWay}"/>
         <TextBlock>]</TextBlock>
       </TextBlock>
-      <TextBlock VerticalAlignment="Center" Text="🌸" Foreground="Pink" ToolTip="酷使するプレイヤーウィンドウ！" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <TextBlock.Effect>
-          <DropShadowEffect Color="#88000000" ShadowDepth="1.5" BlurRadius="2" />
-        </TextBlock.Effect>
-      </TextBlock>
+      <Viewbox ToolTip="酷使するプレイヤーウィンドウ！" Style="{StaticResource SmallIconBox}" Visibility="{Binding IsWorkingPlayer.Value, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Viewbox.Effect>
+          <DropShadowEffect Color="{DynamicResource WindowColor}" ShadowDepth="0" BlurRadius="2" />
+        </Viewbox.Effect>
+        <Canvas Style="{StaticResource IconCanvas-24x24}">
+          <Path Data="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" Style="{StaticResource SmallAccentIconPath}" />
+        </Canvas>
+      </Viewbox>
       <Canvas Style="{StaticResource StatePanel}">
-        <Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/image -->
+            <Path Data="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <Canvas Style="{StaticResource StatePanel}">
-        <Image Source="/Resources/Service/Smile/Video/Player/CommentState.png" Style="{StaticResource ButtonImage}" />
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/comment-outline -->
+            <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <Canvas Style="{StaticResource StatePanel}">
-        <Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <!-- https://materialdesignicons.com/icon/video -->
+            <Path Data="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <TextBlock ToolTip="動画サイズ">
