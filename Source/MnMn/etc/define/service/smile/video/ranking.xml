@@ -196,6 +196,11 @@
 				<word key="ja-jp" value="ゲーム" />
 			</words>
 		</element>
+		<element key="jikkyo">
+			<words>
+				<word key="ja-jp" value="実況プレイ動画" />
+			</words>
+		</element>
 		<element key="toho">
 			<words>
 				<word key="ja-jp" value="東方" />
