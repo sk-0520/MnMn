@@ -965,7 +965,8 @@
                 </Style>
               </DockPanel.Style>
               <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
-              <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True"  Text="{Binding CommentInformation}" />
+              <!--<xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True"  Text="{Binding CommentInformation}" />-->
+              <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" IsReadOnly="True" Text="{Binding CommentInformation, Mode=OneWay}" />
             </DockPanel>
 
           </Grid>
@@ -1150,14 +1151,15 @@
                             <DataTrigger.EnterActions>
                               <BeginStoryboard>
                                 <Storyboard>
+                                  <!-- テーマの随時適用はすぐには無理っすね -->
                                   <ColorAnimation
-                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                  From="Transparent"
-                                  To="#80ffaaaa"
-                                  Duration="00:00:00.2"
-                                  AutoReverse="False"
-                                  FillBehavior="HoldEnd"
-                                />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    From="Transparent"
+                                    To="{StaticResource AccentColor}"
+                                    Duration="00:00:00.2"
+                                    AutoReverse="False"
+                                    FillBehavior="HoldEnd"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.EnterActions>
@@ -1233,21 +1235,21 @@
                   IsOpen="{Binding IsSelectedComment}"
                   >
                   <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" TextAlignment="Center">
+                    <!--<TextBlock DockPanel.Dock="Top" TextAlignment="Center">
                         <Hyperlink Command="{Binding ClearSelectedCommentCommand}">コメント詳細<Run FontSize="10">(クリックで閉じます)</Run></Hyperlink>
-                    </TextBlock>
+                    </TextBlock>-->
                     <ListBox
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         BorderBrush="Transparent"
                         Background="Transparent"
                       >
                       <ListBox.Resources>
-                        <Style TargetType="TextBlock">
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                           <Setter Property="DockPanel.Dock" Value="Left" />
                           <Setter Property="Width" Value="80" />
                           <Setter Property="VerticalAlignment" Value="Center" />
                         </Style>
-                        <Style TargetType="TextBox">
+                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                           <Setter Property="IsReadOnly" Value="True" />
                           <Setter Property="IsReadOnlyCaretVisible" Value="True" />
                           <Setter Property="Background" Value="Transparent" />
@@ -1256,7 +1258,7 @@
                         </Style>
                       </ListBox.Resources>
                       <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                           <Setter Property="Focusable" Value="False"/>
                           <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                         </Style>
