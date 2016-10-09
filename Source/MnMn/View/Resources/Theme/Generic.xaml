@@ -333,12 +333,16 @@
   </Style>
 
   <!--Menu -->
-  <Style TargetType="MenuItem">
+  <Style x:Key="ToolbarMenu" TargetType="Menu" BasedOn="{StaticResource {x:Type Menu}}" />
+
+  <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="HorizontalAlignment" Value="Stretch"/>
     <Setter Property="VerticalAlignment" Value="Center"/>
   </Style>
+
+  <Style x:Key="ToolbarMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" />
 
   <!--SourceLoadState -->
   <Style x:Key="SmallItemSourceLoadState" TargetType="app_view_controls:SourceLoadStateNavigator">

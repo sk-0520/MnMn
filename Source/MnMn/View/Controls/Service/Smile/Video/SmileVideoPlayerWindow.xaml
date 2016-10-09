@@ -69,6 +69,7 @@
 
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
+      <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
       <cttn_sl_view_converter:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
@@ -99,7 +100,7 @@
         <Setter Property="Menu.Visibility" Value="Collapsed" />
         <Setter Property="Separator.Visibility" Value="Collapsed" />
       </Style>
-      <Style x:Key="PlayListChangeButton" TargetType="Button">
+      <Style x:Key="PlayListChangeButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
             <Setter Property="IsEnabled" Value="True" />
@@ -359,11 +360,11 @@
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
       </Button>
-      <Menu Style="{StaticResource DummyMenu}">
-        <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}">
+      <Menu Style="{StaticResource ToolbarMenu}">
+        <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
           <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -377,7 +378,7 @@
       </Menu>
       <Menu>
         <Menu.Style>
-          <Style TargetType="Menu" BasedOn="{StaticResource DummyMenu}">
+          <Style TargetType="Menu" BasedOn="{StaticResource ToolbarMenu}">
             <Style.Triggers>
               <DataTrigger Binding="{Binding BookmarkItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
                 <Setter Property="Visibility" Value="Collapsed" />
@@ -385,9 +386,9 @@
             </Style.Triggers>
           </Style>
         </Menu.Style>
-        <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}">
+        <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
             </Style>
@@ -411,22 +412,37 @@
         </MenuItem>
       </Menu>
 
-      <Separator Style="{StaticResource PlayListVisible}" />
+      <Separator Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" />
       <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeButton}">
-        <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </Button>
-      <Menu Style="{StaticResource PlayListVisible}">
-        <MenuItem Header="プレイリスト">
+      <Menu Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ToolbarMenu}">
+        <MenuItem Header="プレイリスト" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.ItemsSource>
             <CompositeCollection>
               <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
                 <MenuItem.Icon>
-                  <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />
+                  <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeMenuItem}">
                 <MenuItem.Icon>
-                  <Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />
+                  <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
@@ -436,7 +452,7 @@
             </CompositeCollection>
           </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
@@ -450,12 +466,20 @@
         </MenuItem>
       </Menu>
       <Button Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">
-        <Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />
+        <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />-->
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
       </Button>
 
       <Separator />
 
-      <Menu Style="{StaticResource DummyMenu}">
+      <Menu Style="{StaticResource ToolbarMenu}">
+        <Menu.Resources>
+          <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}" />
+        </Menu.Resources>
         <MenuItem Header="プレイヤー領域">
           <MenuItem Header="動画サイズ: 50%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="50"  />
           <MenuItem Header="動画サイズ: 75%" Command="{Binding ChangePlayerSizeFromPercentCommand}" CommandParameter="75"  />
