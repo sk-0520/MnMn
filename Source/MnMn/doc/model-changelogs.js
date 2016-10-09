@@ -184,7 +184,8 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#194: GeckoFXのバージョンアップ'
 					},
 					{
 						'revision': '',
