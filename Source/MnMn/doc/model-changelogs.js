@@ -84,24 +84,20 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.23.1',
-		'isRc': true,
+		'date': '2016/10/10',
+		'version': '0.24.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '今回リリースで頑張る予定だった UI の実装は超頑張った結果、中途半端実装になった',
+						'comments': [
+							'Visual Studio が XAML 開くとあっぷあっぷして正直しんどい',
+							'継続課題の #193 で引き続き頑張る'
+						]
 					}
 				]
 			},
@@ -109,7 +105,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'aa8bd18e5afa33cab4b0e2ad0d6ed391fd5f572e',
 						'subject': '#48: UIを統一する',
 						'comments': [
 							'テーマは mahapps.metro(http://mahapps.com/) のものをそのまま使用しているだけ',
@@ -133,16 +129,12 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '5cc1198f3cf673d95ab3fa9b8f899e4d030ba046',
 						'subject': '#186: 新カテゴリ「実況プレイ動画」追加',
 						'comments': [
 							'忘れないように課題に書いてたんだけど完全に忘れてた',
 							'ranking.xml に項目追加するだけのお仕事'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -151,27 +143,26 @@
 				'logs': [
 					{
 						'revision': '09d43886767f1af0c61e13913fc4664c02de2cfc',
-						'subject': '#192: プレーヤー領域の公式サイズ(4:3)が動いてない'
+						'subject': '#192: プレーヤー領域の公式サイズ(4:3)が動いてない',
+						'comments': [
+							'App.configは修正した、他は知しらね'
+						]
 					},
 					{
-						'revision': '',
+						'revision': 'ca712ef5e80689ba069177cd6c04be1e5236c12c',
 						'subject': '#191: 内部ブラウザの履歴破棄時に例外発生'
 					},
 					{
-						'revision': '',
+						'revision': 'f8a7e0a229318b2bb2d6fe224d8c3b7b42f69d55',
 						'subject': '#189: リリース情報のDOM狂ってんぜぇ'
 					},
 					{
-						'revision': '',
+						'revision': '2339d4e96716be9dc73fbda57ec22692186a44e4',
 						'subject': '#23: コマンドプレビューのコマンド内容が適当過ぎ'
 					},
 					{
-						'revision': '',
+						'revision': '176e9729f1372ca95fb68ae27244c15a0e14f27e',
 						'subject': '#180: フルスクリーン時にキーボードショートカット効いてない'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -183,17 +174,14 @@
 						'subject': '#68: UnicodeやWebdingsで置き換えられる画像は置き換える',
 						'comments': [
 							'#48 対応時にめっちゃ修正した',
-							'本体アイコンとニコニコのアイコン以外はラスターからベクター(or 文字)に置き換えられたと思う'
+							'本体アイコンとニコニコのアイコン以外はラスターからベクター(or 文字)に置き換えられたと思う',
+							'大丈夫だと思うけど今回リリースに関しては内部リソースを残しておいた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '3c76d490f4cb36e5075ebb7d216241de4f1bc4c3',
 						'class': 'nuget',
 						'subject': '#194: GeckoFXのバージョンアップ'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
