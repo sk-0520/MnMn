@@ -205,6 +205,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             WebNavigatorCore.Initialize(Mediation);
 
+            AppUtility.SetTheme(setting.Theme);
+
             SplashWindow.Show();
 
             await AppManager.InitializeAsync();
@@ -216,6 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             MainWindow.Show();
             SplashWindow.Close();
+
         }
 
         protected override void OnExit(ExitEventArgs e)

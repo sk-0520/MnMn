@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 BackgroundGarbageCollectionTimer.Start();
             }
 
-            View.UserClosing += View_UserClosing;
+            //View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
             View.Closed += View_Closed;
 
@@ -242,19 +242,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            var viewModels = GetChildWindowViewModels();
+        //private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    var viewModels = GetChildWindowViewModels();
 
-            if(viewModels.Any()) {
-                // TODO: 将来何かに使いましょうさ
-                //e.Cancel = true;
-            }
+        //    if(viewModels.Any()) {
+        //        // TODO: 将来何かに使いましょうさ
+        //        //e.Cancel = true;
+        //    }
 
-            if(!e.Cancel) {
-                Mediation.Order(new AppSaveOrderModel(true));
-            }
-        }
+        //    if(!e.Cancel) {
+        //        Mediation.Order(new AppSaveOrderModel(true));
+        //    }
+        //}
 
         private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -263,6 +263,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             foreach(var closeItem in closeItems) {
                 closeItem.Close();
             }
+
+            Mediation.Order(new AppSaveOrderModel(true));
         }
 
 
@@ -274,7 +276,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             BackgroundGarbageCollectionTimer.Stop();
             BackgroundGarbageCollectionTimer.Tick -= BackgroundGarbageCollectionTimer_Tick;
 
-            View.UserClosing -= View_UserClosing;
+            //View.UserClosing -= View_UserClosing;
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
         }

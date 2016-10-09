@@ -494,7 +494,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             Navigate(uri);
             DoAction(
                 b => { },
-                b => b.History.Clear()
+                b => Dispatcher.Invoke(() => b.History.Clear())
             );
             IsEmptyContent = true;
         }
@@ -507,7 +507,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             DoAction(
                 b => b.NavigateToString(htmlSource),
-                b => b.LoadHtml(htmlSource)
+                b => b.LoadHtml(htmlSource, null)
             );
             IsEmptyContent = false;
         }

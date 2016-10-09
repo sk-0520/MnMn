@@ -300,6 +300,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string DefineDirectoryPath { get; } = Path.Combine(EtcDirectoryPath, DefineName);
 
+        public static string ApplicationThemeDefinePath { get; } = Path.Combine(DefineDirectoryPath, "theme.xml");
+
         /// <summary>
         /// etc/define/service
         /// </summary>

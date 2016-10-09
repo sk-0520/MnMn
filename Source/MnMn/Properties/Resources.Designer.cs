@@ -102,6 +102,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_CheckedProcessType_RandomPlay {
+            get {
+                return ResourceManager.GetString("String_App_Define_CheckedProcessType_RandomPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   連続再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_CheckedProcessType_SequencePlay {
+            get {
+                return ResourceManager.GetString("String_App_Define_CheckedProcessType_SequencePlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   前方一致 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_FilteringType_ForwardMatch {
@@ -224,6 +242,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Define_LoginState_None {
             get {
                 return ResourceManager.GetString("String_App_Define_LoginState_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キーワード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SearchType_Keyword {
+            get {
+                return ResourceManager.GetString("String_App_Define_SearchType_Keyword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_SearchType_Tag {
+            get {
+                return ResourceManager.GetString("String_App_Define_SearchType_Tag", resourceCulture);
             }
         }
         

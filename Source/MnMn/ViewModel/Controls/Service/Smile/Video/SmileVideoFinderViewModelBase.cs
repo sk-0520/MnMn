@@ -26,6 +26,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -276,11 +277,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    get { return CreateCommand(o => ToggleAllCheck()); }
         //}
 
+        [Obsolete]
         public ICommand ContinuousPlaybackCommand
         {
             get { return CreateCommand(o => ContinuousPlaybackAsync(false)); }
         }
 
+        [Obsolete]
         public ICommand RandomContinuousPlaybackCommand
         {
             get { return CreateCommand(o => ContinuousPlaybackAsync(true)); }
@@ -510,6 +513,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public override CacheSpan DefaultImageCacheSpan => Constants.ServiceSmileVideoImageCacheSpan;
         public override object DefaultExtends { get; } = null;
 
+        public override CheckedProcessType SelectedCheckedProcess
+        {
+            get { return base.SelectedCheckedProcess; }
+            set
+            {
+                if(base.SelectedCheckedProcess != value) {
+                    base.SelectedCheckedProcess = value;
+                    CheckedProcessCommand.TryExecute(SelectedCheckedProcess);
+                }
+            }
+        }
+
         internal override void ChangeSortItems()
         {
             var map = new[] {
@@ -548,6 +563,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             var loader = new SmileVideoInformationLoader(informationItems);
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
+        }
+
+        protected override Task CheckedProcessAsync(CheckedProcessType checkedProcessType)
+        {
+            switch(checkedProcessType) {
+                case CheckedProcessType.SequencePlay:
+                    return ContinuousPlaybackAsync(false);
+
+                case CheckedProcessType.RandomPlay:
+                    return ContinuousPlaybackAsync(true);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         //protected override void Dispose(bool disposing)

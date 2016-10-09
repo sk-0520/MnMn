@@ -84,6 +84,109 @@
 	},
 	*/
 	{
+		'date': '2016/10/10',
+		'version': '0.24.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '今回リリースで頑張る予定だった UI の実装は超頑張った結果、中途半端実装になった',
+						'comments': [
+							'Visual Studio が XAML 開くとあっぷあっぷして正直しんどい',
+							'継続課題の #193 で引き続き頑張る'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'aa8bd18e5afa33cab4b0e2ad0d6ed391fd5f572e',
+						'subject': '#48: UIを統一する',
+						'comments': [
+							'テーマは mahapps.metro(http://mahapps.com/) のものをそのまま使用しているだけ',
+							'内容に UX も含めたかったけど作業量が多くなるから #193 で継続的に対応していく',
+							'何がデフォルトでいいのか分からなかったので初期値はランダム、MnMn -> 設定 -> テーマ で適当に変えてちょ'
+						]
+					},
+					{
+						'revision': '74044ee5fd541cddf17749da6ef848891f97d9b0',
+						'subject': '#18: 動画ブックマークのノード選択を容易にする',
+						'comments': [
+							'#48 対応時にスタイルが用意されてたのでそのまま適用'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '#133: テキストボックスに今風な機能を持たせる',
+						'comments': [
+							'#48 対応時にあれこれ付け足してみた',
+							'機能的に問題なさそうなので今後追加するだろうけど本件はこれで閉じる'
+						]
+					},
+					{
+						'revision': '5cc1198f3cf673d95ab3fa9b8f899e4d030ba046',
+						'subject': '#186: 新カテゴリ「実況プレイ動画」追加',
+						'comments': [
+							'忘れないように課題に書いてたんだけど完全に忘れてた',
+							'ranking.xml に項目追加するだけのお仕事'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '09d43886767f1af0c61e13913fc4664c02de2cfc',
+						'subject': '#192: プレーヤー領域の公式サイズ(4:3)が動いてない',
+						'comments': [
+							'App.configは修正した、他は知しらね'
+						]
+					},
+					{
+						'revision': 'ca712ef5e80689ba069177cd6c04be1e5236c12c',
+						'subject': '#191: 内部ブラウザの履歴破棄時に例外発生'
+					},
+					{
+						'revision': 'f8a7e0a229318b2bb2d6fe224d8c3b7b42f69d55',
+						'subject': '#189: リリース情報のDOM狂ってんぜぇ'
+					},
+					{
+						'revision': '2339d4e96716be9dc73fbda57ec22692186a44e4',
+						'subject': '#23: コマンドプレビューのコマンド内容が適当過ぎ'
+					},
+					{
+						'revision': '176e9729f1372ca95fb68ae27244c15a0e14f27e',
+						'subject': '#180: フルスクリーン時にキーボードショートカット効いてない'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': '#68: UnicodeやWebdingsで置き換えられる画像は置き換える',
+						'comments': [
+							'#48 対応時にめっちゃ修正した',
+							'本体アイコンとニコニコのアイコン以外はラスターからベクター(or 文字)に置き換えられたと思う',
+							'大丈夫だと思うけど今回リリースに関しては内部リソースを残しておいた'
+						]
+					},
+					{
+						'revision': '3c76d490f4cb36e5075ebb7d216241de4f1bc4c3',
+						'class': 'nuget',
+						'subject': '#194: GeckoFXのバージョンアップ'
+					}
+				]
+			}
+		]
+	}, {
 		'date': '2016/10/02',
 		'version': '0.23.0',
 		'isRc': false,

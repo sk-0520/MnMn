@@ -498,6 +498,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             DoSearchAction(nameof(ToggleAllCheck));
         }
 
+        protected override void SwitchShowFilter()
+        {
+            DoSearchAction(nameof(SwitchShowFilter));
+        }
+
         internal override Task ContinuousPlaybackAsync(bool isRandom)
         {
             return DoSearchFunction<Task>(nameof(ContinuousPlaybackAsync), isRandom);
@@ -525,6 +530,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
             CallOnPropertyChange(propertyNames);
         }
+
 
         #endregion
 

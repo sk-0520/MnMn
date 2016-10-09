@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             OnFilteringChanged();
         }
 
-        private void inputIgnoreOverlapTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void inputIgnoreOverlapTime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
             if(Filtering == null) {
                 return;

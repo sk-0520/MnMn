@@ -50,13 +50,13 @@ using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Player
 {
-    public class SmileLivePlayerViewModel: ViewModelBase, ISetView, ICloseView, ICaptionCommand, ISmileDescription
+    public class SmileLivePlayerViewModel: ViewModelBase, ISetView, ICloseView, ISmileDescription
     {
         #region define
 
-        static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-        static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
-        static readonly Thickness normalWindowBorderThickness = new Thickness(1);
+        //static readonly Thickness enabledResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        //static readonly Thickness maximumWindowBorderThickness = SystemParameters.WindowResizeBorderThickness;
+        //static readonly Thickness normalWindowBorderThickness = new Thickness(1);
 
         #endregion
 
@@ -68,8 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         double _width;
         double _height;
         bool _topmost;
-        Thickness _resizeBorderThickness = enabledResizeBorderThickness;
-        Thickness _windowBorderThickness = normalWindowBorderThickness;
+        //Thickness _resizeBorderThickness = enabledResizeBorderThickness;
+        //Thickness _windowBorderThickness = normalWindowBorderThickness;
         bool _isNormalWindow = true;
 
         #endregion
@@ -504,65 +504,66 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
-        #region ICaptionCommand
+        //#region ICaptionCommand
 
-        /// <summary>
-        /// リサイズ幅。
-        /// </summary>
-        public Thickness ResizeBorderThickness
-        {
-            get { return this._resizeBorderThickness; }
-            set { SetVariableValue(ref this._resizeBorderThickness, value); }
-        }
-        /// <summary>
-        /// ウィンドウ枠幅。
-        /// </summary>
-        public Thickness WindowBorderThickness
-        {
-            get { return this._windowBorderThickness; }
-            set { SetVariableValue(ref this._windowBorderThickness, value); }
-        }
+        ///// <summary>
+        ///// リサイズ幅。
+        ///// </summary>
+        //public Thickness ResizeBorderThickness
+        //{
+        //    get { return this._resizeBorderThickness; }
+        //    set { SetVariableValue(ref this._resizeBorderThickness, value); }
+        //}
+        ///// <summary>
+        ///// ウィンドウ枠幅。
+        ///// </summary>
+        //public Thickness WindowBorderThickness
+        //{
+        //    get { return this._windowBorderThickness; }
+        //    set { SetVariableValue(ref this._windowBorderThickness, value); }
+        //}
 
         public WindowState State
         {
             get { return this._state; }
-            set
-            {
-                if(SetVariableValue(ref this._state, value)) {
-                    if(State == WindowState.Maximized) {
-                        WindowBorderThickness = maximumWindowBorderThickness;
-                    } else {
-                        //if(!IsNormalWindow) {
-                        //    SetWindowMode(false);
-                        //}
-                        WindowBorderThickness = normalWindowBorderThickness;
-                    }
-                }
-            }
+            //set
+            //{
+            //    if(SetVariableValue(ref this._state, value)) {
+            //        if(State == WindowState.Maximized) {
+            //            WindowBorderThickness = maximumWindowBorderThickness;
+            //        } else {
+            //            //if(!IsNormalWindow) {
+            //            //    SetWindowMode(false);
+            //            //}
+            //            WindowBorderThickness = normalWindowBorderThickness;
+            //        }
+            //    }
+            //}
+            set { SetVariableValue(ref this._state, value); }
         }
 
-        //TODO: Videoと重複
-        public ICommand ShowSystemMenuCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    var hWnd = HandleUtility.GetWindowHandle(View);
-                    var _WM_SYSTEM_MENU = 0x313;
-                    var devicePoint = MouseUtility.GetDevicePosition();
-                    var desktopPoint = PodStructUtility.Convert(devicePoint);
-                    var lParam = new IntPtr(desktopPoint.X | desktopPoint.Y << 16);
-                    NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
-                });
-            }
-        }
+        ////TODO: Videoと重複
+        //public ICommand ShowSystemMenuCommand
+        //{
+        //    get
+        //    {
+        //        return CreateCommand(o => {
+        //            var hWnd = HandleUtility.GetWindowHandle(View);
+        //            var _WM_SYSTEM_MENU = 0x313;
+        //            var devicePoint = MouseUtility.GetDevicePosition();
+        //            var desktopPoint = PodStructUtility.Convert(devicePoint);
+        //            var lParam = new IntPtr(desktopPoint.X | desktopPoint.Y << 16);
+        //            NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
+        //        });
+        //    }
+        //}
 
-        public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
-        public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
-        public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
-        public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
+        //public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
+        //public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
+        //public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
+        //public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
 
-        #endregion
+        //#endregion
 
         #region ISmileDescription
 

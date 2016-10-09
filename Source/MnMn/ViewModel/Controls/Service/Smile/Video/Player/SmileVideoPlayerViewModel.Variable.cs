@@ -119,8 +119,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _commentInformation;
 
         bool _isNormalWindow = true;
-        Thickness _resizeBorderThickness = enabledResizeBorderThickness;
-        Thickness _windowBorderThickness = normalWindowBorderThickness;
+        //Thickness _resizeBorderThickness = enabledResizeBorderThickness;
+        //Thickness _windowBorderThickness = normalWindowBorderThickness;
 
         bool _showCommentChart;
 
