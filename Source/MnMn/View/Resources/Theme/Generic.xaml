@@ -33,6 +33,7 @@
   <Thickness x:Key="BottomMargin" Left="0" Top="0" Right="0" Bottom="{StaticResource BaseMargin}" />
   <Thickness x:Key="VericalMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="{StaticResource BaseMargin}" />
   <Thickness x:Key="HorizonMargin" Left="{StaticResource BaseMargin}" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
+  <Thickness x:Key="BasePadding" Left="4" Top="4" Right="4" Bottom="4" />
 
   <sys:Double x:Key="FontSmallSize">10</sys:Double>
   <sys:Double x:Key="FontBaseSize">12</sys:Double>
@@ -568,8 +569,7 @@
 
   <!-- Label -->
   <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}" />
-    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />
+    <!--<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />-->
     <Setter Property="VerticalAlignment" Value="Center" />
   </Style>
 
@@ -578,6 +578,27 @@
     <Setter Property="VerticalAlignment" Value="Center" />
   </Style>
 
+  <Style x:Key="VerticalCheckBox" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+    <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
+  </Style>
+  <Style x:Key="HorizontalCheckBox" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+    <Setter Property="Margin" Value="{StaticResource RightMargin}" />
+  </Style>
+
+  <!-- RadioButton -->
+  <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="VerticalRadioButton" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+    <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
+  </Style>
+  <Style x:Key="HorizontalRadioButton" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+    <Setter Property="Margin" Value="{StaticResource RightMargin}" />
+  </Style>
+
+
+  <!-- Flyout -->
   <Style x:Key="FinderFlyout" TargetType="mamc:Flyout">
     <Setter Property="Theme" Value="Inverse" />
     <Setter Property="Position" Value="Right" />
@@ -592,6 +613,7 @@
         <ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
           <ControlTemplate.Resources>
             <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
           </ControlTemplate.Resources>
           <Grid x:Name="MainGrid" SnapsToDevicePixels="True" ShowGridLines="True">
             <ToggleButton
@@ -603,6 +625,7 @@
               IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
               Margin="0"
               Padding="0"
+              IsHitTestVisible="{Binding IsChecked, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalNotConverter}}"
             >
               <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -636,7 +659,7 @@
               </Grid>
             </ToggleButton>
             <!-- MENU -->
-            <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsOpen}">
+            <Popup x:Name="PART_Popup" StaysOpen="False" IsOpen="{TemplateBinding IsOpen}">
               <ContentPresenter Content="{TemplateBinding DropDownContent}" />
             </Popup>
           </Grid>

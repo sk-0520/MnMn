@@ -877,76 +877,109 @@
 
             <xctk:DropDownButton Grid.Row="1" Grid.Column="0">
               <xctk:DropDownButton.DropDownContent>
-                <StackPanel Background="{DynamicResource WindowBackgroundBrush}">
-                  <StackPanel Orientation="Horizontal">
-                    <Label>サイズ</Label>
-                    <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Small}}">少</RadioButton>
-                    <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Medium}}">中</RadioButton>
-                    <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Big}}">大</RadioButton>
-                  </StackPanel>
+                <Border Padding="{StaticResource BasePadding}" Background="{DynamicResource WindowBackgroundBrush}">
+                  <Border.Resources>
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource HorizontalRadioButton}" />
+                  </Border.Resources>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                  <StackPanel Orientation="Horizontal">
-                    <Label>位置</Label>
-                    <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Top}}">上</RadioButton>
-                    <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Normal}}">中</RadioButton>
-                    <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Bottom}}">下</RadioButton>
-                  </StackPanel>
-
-                  <StackPanel Orientation="Horizontal">
-                    <Label>色</Label>
-                    <StackPanel>
-                      <!-- 通常用 -->
-                      <ListBox Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding CommandColorItems}" SelectedItem="{Binding PostCommandColor}" >
-                        <ListBox.ItemsPanel>
-                          <ItemsPanelTemplate>
-                            <UniformGrid Rows="2" Columns="10" />
-                          </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemContainerStyle>
-                          <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                            <Setter Property="Template">
-                              <Setter.Value>
-                                <ControlTemplate TargetType="ListBoxItem">
-                                  <RadioButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}">
-                                    <Rectangle Width="16" Height="16">
-                                      <Rectangle.Fill>
-                                        <SolidColorBrush Color="{Binding}" />
-                                      </Rectangle.Fill>
-                                    </Rectangle>
-                                  </RadioButton>
-                                </ControlTemplate>
-                              </Setter.Value>
-                            </Setter>
-                          </Style>
-                        </ListBox.ItemContainerStyle>
-                      </ListBox>
+                    <Label Grid.Row="0" Grid.Column="0">サイズ</Label>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                      <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Small}}">少</RadioButton>
+                      <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Medium}}">中</RadioButton>
+                      <RadioButton IsChecked="{Binding PostCommandSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentSize.Big}}">大</RadioButton>
                     </StackPanel>
-                  </StackPanel>
-                  <CheckBox IsEnabled="{Binding IsEnabledPostAnonymous, Converter={StaticResource LogicalNotConverter}}" IsChecked="{Binding IsPostAnonymous}">184投稿</CheckBox>
-                  <Separator />
-                  <StackPanel Orientation="Horizontal">
-                    <Label>先頭追加</Label>
-                    <TextBox Text="{Binding PostBeforeCommand}"></TextBox>
-                    <Label>後続追加</Label>
-                    <TextBox Text="{Binding PostAfterCommand}"></TextBox>
-                  </StackPanel>
-                  <Separator />
-                  <StackPanel Orientation="Horizontal">
-                    <Label>COMMAND:</Label>
-                    <ItemsControl ItemsSource="{Binding PostCommandItems}">
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                          <TextBlock Text="{Binding}" />
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
+
+                    <Label Grid.Row="1" Grid.Column="0">位置</Label>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                      <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Top}}">上</RadioButton>
+                      <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Normal}}">中</RadioButton>
+                      <RadioButton IsChecked="{Binding PostCommandVertical, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoCommentVertical.Bottom}}">下</RadioButton>
+                    </StackPanel>
+
+                    <Label Grid.Row="2" Grid.Column="0">色</Label>
+                    <ListBox Grid.Row="2" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding CommandColorItems}" SelectedItem="{Binding PostCommandColor}" >
+                      <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <UniformGrid Columns="10">
+                            <UniformGrid.Style>
+                              <Style TargetType="UniformGrid">
+                                <Style.Triggers>
+                                  <DataTrigger Binding="{Binding Session.IsPremium}" Value="True">
+                                    <Setter Property="Rows" Value="2" />
+                                  </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="Rows" Value="1" />
+                              </Style>
+                            </UniformGrid.Style>
+                          </UniformGrid>
+                        </ItemsPanelTemplate>
+                      </ListBox.ItemsPanel>
+                      <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                          <Setter Property="Template">
+                            <Setter.Value>
+                              <ControlTemplate TargetType="ListBoxItem">
+                                <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}">
+                                  <Rectangle Width="16" Height="16">
+                                    <Rectangle.Fill>
+                                      <SolidColorBrush Color="{Binding}" />
+                                    </Rectangle.Fill>
+                                  </Rectangle>
+                                </ToggleButton>
+                              </ControlTemplate>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+
+                    <Label Grid.Row="3" Grid.Column="0">コマンド</Label>
+                    <CheckBox Grid.Row="3" Grid.Column="1" IsEnabled="{Binding IsEnabledPostAnonymous, Converter={StaticResource LogicalNotConverter}}" IsChecked="{Binding IsPostAnonymous}">184投稿</CheckBox>
+                    <TextBox Grid.Row="4" Grid.Column="1" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.UseFloatingWatermark="True" mamc:TextBoxHelper.Watermark="先頭追加" Text="{Binding PostBeforeCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Row="5" Grid.Column="1" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.UseFloatingWatermark="True" mamc:TextBoxHelper.Watermark="終端追加" Text="{Binding PostAfterCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Separator Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" />
+
+                    <Label Grid.Row="7" Grid.Column="0" >生成コマンド</Label>
+                    <ItemsControl Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PostCommandItems}">
                       <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                          <StackPanel Orientation="Horizontal" />
+                          <StackPanel Orientation="Horizontal" VerticalAlignment="Center" />
                         </ItemsPanelTemplate>
                       </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                            <Border x:Name="separator" Width="4" />
+                            <TextBlock Text="{Binding}" />
+                          </StackPanel>
+
+                          <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                              <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                            </DataTrigger>
+                          </DataTemplate.Triggers>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                  </StackPanel>
-                </StackPanel>
+                  </Grid>
+                </Border>
               </xctk:DropDownButton.DropDownContent>
               コマンド
             </xctk:DropDownButton>
