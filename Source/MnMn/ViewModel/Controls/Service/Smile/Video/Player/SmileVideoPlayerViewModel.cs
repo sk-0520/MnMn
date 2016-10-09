@@ -1412,6 +1412,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 var scope = FocusManager.GetFocusScope(View);
                 FocusManager.SetFocusedElement(scope, null);
                 Keyboard.ClearFocus();
+                Keyboard.Focus(View);
             }
         }
 
