@@ -10,6 +10,6 @@
   Title="SplashScreen" Height="300" Width="300"
 >
   <Grid>
-    <TextBlock>俗にいうスプラッシュスクリーン</TextBlock>
+    <Label>俗にいうスプラッシュスクリーン</Label>
   </Grid>
 </Window>
