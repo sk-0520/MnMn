@@ -145,7 +145,7 @@
                   <ComboBox Grid.Column="1" ItemsSource="{Binding FolderIdColors}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListFolderIdElement}" >
                     <ComboBox.ItemTemplate>
                       <DataTemplate>
-                        <Image Visibility="{Binding HasMyListFolder, Converter={StaticResource BooleanToVisibilityConverter}}" Source="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}, ConverterParameter=/Resources/Service/Smile/MyList/Folder.png}" Style="{StaticResource FolderImage}" />
+                        <Image Source="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}, ConverterParameter=/Resources/Service/Smile/MyList/Folder.png}" Style="{StaticResource FolderImage}" />
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>
