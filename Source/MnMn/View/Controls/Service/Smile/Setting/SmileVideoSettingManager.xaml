@@ -196,7 +196,7 @@
                 <CheckBox Grid.Column="0" IsChecked="{Binding SeekOperationIsPercent}">比率</CheckBox>
                 <Slider x:Name="sliderSeek" Grid.Column="1" LargeChange="2" SmallChange="1">
                   <Slider.Style>
-                    <Style TargetType="Slider">
+                    <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding SeekOperationIsPercent}" Value="True">
                           <Setter Property="Value" Value="{Binding SeekOperationPercentStep}" />
