@@ -27,10 +27,12 @@
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <app_view_converter:ColoringConverter x:Key="ColoringConverter" />
 
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
+      <cttn_sl_view_converter:AutoColorConverter x:Key="AutoColorConverter" />
 
+      <app_view_converter:ColoringConverter x:Key="ColoringConverter" />
       <app_view_converter:SourceLoadStateIsNotCompletedConverter x:Key="SourceLoadStateIsNotCompletedConverter" />
       <app_view_converter_service_smile_video:MyListFolderIdToColorConverter x:Key="MyLIstFolderIdToColorConverter" />
       <app_view_converter_service_smile_video:MyListCanRemoveToVisibilityConverter x:Key="MyListCanRemoveToVisibilityConverter" />
@@ -54,7 +56,19 @@
               <StackPanel>
                 <StackPanel Orientation="Horizontal">
                   <app_view_controls:SourceLoadStateNavigator Width="8" Height="8" SourceLoadState="{Binding FinderLoadState}" />
-                  <Image Visibility="{Binding HasMyListFolder, Converter={StaticResource BooleanToVisibilityConverter}}" Source="{Binding MyListFolderColor, Converter={StaticResource ColoringConverter}, ConverterParameter=/Resources/Service/Smile/MyList/Folder.png}" Style="{StaticResource FolderImage}" />
+                  <!--<Image Visibility="{Binding HasMyListFolder, Converter={StaticResource BooleanToVisibilityConverter}}" Source="{Binding MyListFolderColor, Converter={StaticResource ColoringConverter}, ConverterParameter=/Resources/Service/Smile/MyList/Folder.png}" Style="{StaticResource FolderImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding HasMyListFolder, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Folder}" Style="{StaticResource IconPath}">
+                        <Path.Fill>
+                          <SolidColorBrush Color="{Binding MyListFolderColor}" />
+                        </Path.Fill>
+                        <Path.Stroke>
+                          <SolidColorBrush Color="{Binding Fill.Color, Converter={StaticResource AutoColorConverter}, RelativeSource={RelativeSource AncestorType=Path}}"></SolidColorBrush>
+                        </Path.Stroke>
+                      </Path>
+                    </Canvas>
+                  </Viewbox>
                   <TextBlock Text="{Binding MyListName}" />
                 </StackPanel>
                 <TextBlock>
@@ -145,7 +159,19 @@
                   <ComboBox Grid.Column="1" ItemsSource="{Binding FolderIdColors}" SelectedValue="{Binding SelectedAccountFinder.EditingMyListFolderIdElement}" >
                     <ComboBox.ItemTemplate>
                       <DataTemplate>
-                        <Image Source="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}, ConverterParameter=/Resources/Service/Smile/MyList/Folder.png}" Style="{StaticResource FolderImage}" />
+                        <!--<Image Source="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}, ConverterParameter=/Resources/Service/Smile/MyList/Folder.png}" Style="{StaticResource FolderImage}" />-->
+                        <Viewbox Style="{StaticResource SmallIconBox}">
+                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                            <Path Data="{StaticResource Image_Folder}" Style="{StaticResource IconPath}">
+                              <Path.Fill>
+                                <SolidColorBrush Color="{Binding Converter={StaticResource MyLIstFolderIdToColorConverter}}" />
+                              </Path.Fill>
+                              <Path.Stroke>
+                                <SolidColorBrush Color="{Binding Fill.Color, Converter={StaticResource AutoColorConverter}, RelativeSource={RelativeSource AncestorType=Path}}"></SolidColorBrush>
+                              </Path.Stroke>
+                            </Path>
+                          </Canvas>
+                        </Viewbox>
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>
@@ -188,10 +214,20 @@
 
                 <ListBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MyListBox}" ItemsSource="{Binding AccountSortMyListItems}" SelectedItem="{Binding SelectedAccountSortFinder}" />
                 <RepeatButton Grid.Row="1" Grid.Column="0" Command="{Binding UpAccountSortMyListCommand}">
-                  <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+                  <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </RepeatButton>
                 <RepeatButton Grid.Row="1" Grid.Column="1" Command="{Binding DownAccountSortMyListCommand}">
-                  <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+                  <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
                 </RepeatButton>
                 <Button Grid.Row="1" Grid.Column="2" Command="{Binding SaveAccountSortMyListCommand}">保存</Button>
               </Grid>
@@ -250,10 +286,20 @@
               <Button Command="{Binding RemoveSelectedBookmarkUserMyListCommand}">削除</Button>
               <Separator />
               <Button Grid.Column="0" Command="{Binding PositionUpBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">
-                <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+                <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
               </Button>
               <Button Grid.Column="1" Command="{Binding PositionDownBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedBookmarkFinder}">
-                <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+                <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
               </Button>
             </ToolBar>
             <Expander DockPanel.Dock="Bottom" Header="編集">
