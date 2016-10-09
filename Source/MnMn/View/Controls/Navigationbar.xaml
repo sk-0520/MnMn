@@ -43,7 +43,7 @@
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path>
             <Path.Resources>
-              <Style TargetType="Path" BasedOn="{StaticResource MinimumDefaultIconPath}">
+              <Style TargetType="Path" BasedOn="{StaticResource SmallAccentIconPath}">
                 <Style.Triggers>
                   <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Playing">
                     <!-- https://materialdesignicons.com/icon/pause -->
@@ -84,7 +84,7 @@
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <!-- https://materialdesignicons.com/icon/stop -->
-          <Path Data="M18,18H6V6H18V18Z" Style="{StaticResource MinimumDefaultIconPath}" />
+          <Path Data="M18,18H6V6H18V18Z" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </Button>
@@ -174,7 +174,7 @@
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path>
               <Path.Resources>
-                <Style TargetType="Path" BasedOn="{StaticResource MinimumDefaultIconPath}">
+                <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
                   <Style.Triggers>
                     <DataTrigger Binding="{Binding IsReplayChecked, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
                       <!-- https://materialdesignicons.com/icon/repeat -->
@@ -200,7 +200,7 @@
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path>
               <Path.Resources>
-                <Style TargetType="Path" BasedOn="{StaticResource MinimumDefaultIconPath}">
+                <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
                   <Style.Triggers>
                     <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
                       <!-- https://materialdesignicons.com/icon/volume-off -->

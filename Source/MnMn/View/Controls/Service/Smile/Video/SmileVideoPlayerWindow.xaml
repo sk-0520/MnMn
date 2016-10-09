@@ -161,9 +161,6 @@
         <Setter Property="Margin" Value="4,0,0,0" />
       </Style>
 
-      <Style x:Key="DummyMenu" TargetType="Menu" BasedOn="{StaticResource {x:Type Menu}}" />
-
-
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
   <mamc:MetroWindow.InputBindings>
