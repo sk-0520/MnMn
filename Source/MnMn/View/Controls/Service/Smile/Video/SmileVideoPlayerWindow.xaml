@@ -348,7 +348,12 @@
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />
+          <!--<Image Source="/Resources/Common/Action/FolderOpen.png" Style="{StaticResource SmallItemImage}" />-->
+          <Viewbox Style="{StaticResource SmallItemBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
           <TextBlock Text="キャッシュ:" />
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
@@ -748,10 +753,34 @@
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="フルスクリーン" IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path>
+                          <Path.Resources>
+                            <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsNormalWindow}" Value="True">
+                                  <Setter Property="Data" Value="{StaticResource Image_FullScreen}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
+                                  <Setter Property="Data" Value="{StaticResource Image_FullScreen-Exit}" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                            </Style>
+                          </Path.Resources>
+                        </Path>
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                   <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <!-- https://materialdesignicons.com/icon/comment-multiple-outline -->
+                        <Path Data="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7C5,5.89 5.9,5 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.9 12.75,23 12.5,23V23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15Z" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                   <Slider
                     ToolTip="コメント有効領域"
@@ -763,10 +792,22 @@
                     Value="{Binding CommentEnabledPercent}"
                   />
                   <ToggleButton ToolTip="投稿者コメントもコメント有効領域の制限対象にする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <!-- https://materialdesignicons.com/icon/comment-account-outline -->
+                        <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M16,14H8V13C8,11.67 10.67,11 12,11C13.33,11 16,11.67 16,13V14M12,6A2,2 0 0,1 14,8A2,2 0 0,1 12,10A2,2 0 0,1 10,8A2,2 0 0,1 12,6Z" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
-                    <Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />
+                    <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />-->
+                    <Viewbox Style="{StaticResource SmallIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <!-- https://materialdesignicons.com/icon/comment-text-outline -->
+                        <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
                   </ToggleButton>
                 </StackPanel>
               </app_view_controls:Navigationbar.ExstendsContent>

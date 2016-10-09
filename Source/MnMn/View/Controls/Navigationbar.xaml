@@ -222,6 +222,7 @@
         Orientation="Horizontal"
         Width="40"
         Focusable="False"
+        VerticalAlignment="Center"
         Minimum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMinimum}}"
         Maximum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMaximum}}"
         Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"

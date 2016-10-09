@@ -225,7 +225,12 @@
 
   <!-- https://materialdesignicons.com/icon/folder -->
   <Geometry x:Key="Image_Folder">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
-  
+
+  <!-- https://materialdesignicons.com/icon/fullscreen -->
+  <Geometry x:Key="Image_FullScreen">M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/fullscreen-exit -->
+  <Geometry x:Key="Image_FullScreen-Exit">M14,14H19V16H16V19H14V14M5,14H10V19H8V16H5V14M8,5H10V10H5V8H8V5M19,8V10H14V5H16V8H19Z</Geometry>
+
   <!-- ============ 完結させられる図形 ============= -->
   <!-- ぼやけるーん
   <Style x:Key="Icon_AddBookmark" TargetType="ContentControl">
