@@ -507,7 +507,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             DoAction(
                 b => b.NavigateToString(htmlSource),
-                b => b.LoadHtml(htmlSource, string.Empty)
+                b => b.LoadHtml(htmlSource, null)
             );
             IsEmptyContent = false;
         }

@@ -274,6 +274,7 @@
     <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="FontSize" Value="{StaticResource FontBaseSize}" />
+    <Setter Property="TitleCharacterCasing" Value="Normal" />
   </Style>
 
   <!--Button -->
