@@ -316,7 +316,7 @@
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalAlignment" Value="Center" />
-    <Setter Property="Stretch" Value="None" />
+    <Setter Property="Stretch" Value="UniformToFill" />
   </Style>
 
   <Style x:Key="ItemImage" TargetType="Image" BasedOn="{StaticResource {x:Type Image}}">
@@ -637,5 +637,30 @@
     </Setter>
   </Style>
 
+  <!-- ToggleButton -->
+  <Style x:Key="OrderAscendingButton" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+    <Style.Triggers>
+      <Trigger Property="IsChecked" Value="False">
+        <Setter Property="Content">
+          <Setter.Value>
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_OrderDescending}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+          </Setter.Value>
+        </Setter>
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="Content">
+      <Setter.Value>
+        <Viewbox Style="{StaticResource SmallIconBox}">
+          <Canvas Style="{StaticResource IconCanvas-24x24}">
+            <Path Data="{StaticResource Image_OrderAscending}" Style="{StaticResource SmallDefaultIconPath}" />
+          </Canvas>
+        </Viewbox>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
 </ResourceDictionary>

@@ -86,9 +86,10 @@
 
       <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}">除外</ToggleButton>
       <Label Grid.Column="4" Margin="10,0,0,0" >並べ替え</Label>
-      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
+      <!--<ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}">
         <Image Source="/Resources/Service/Smile/Video/Finder/SortAscending.png" Style="{StaticResource SmallIconImage}" />
-      </ToggleButton>
+      </ToggleButton>-->
+      <ToggleButton Grid.Column="5" IsChecked="{Binding IsAscending}" Style="{StaticResource OrderAscendingButton}" />
       <ComboBox Grid.Column="6" MinWidth="100" VerticalContentAlignment="Center" ItemsSource="{Binding SortTypeItems}" SelectedItem="{Binding SelectedSortType}">
         <ComboBox.ItemTemplate>
           <DataTemplate>
