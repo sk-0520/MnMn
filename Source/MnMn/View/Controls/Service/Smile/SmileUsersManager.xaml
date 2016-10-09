@@ -48,10 +48,20 @@
 
           <ToolBar Grid.Row="0">
             <Button Command="{Binding MoveUpBookmarkSelectedItemCommand}">
-              <Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />
+              <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
             </Button>
             <Button Command="{Binding MoveDownBookmarkSelectedItemCommand}">
-              <Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />
+              <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
+              <Viewbox Style="{StaticResource SmallIconBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
             </Button>
           </ToolBar>
 
@@ -135,7 +145,7 @@
                         <Paragraph>
                           <Button Visibility="{Binding IsNotMyAccount, Converter={StaticResource BooleanToVisibilityConverter}}" CommandParameter="{Binding}">
                             <Button.Style>
-                              <Style TargetType="Button">
+                              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
                                   <DataTrigger Value="True">
                                     <DataTrigger.Binding>
