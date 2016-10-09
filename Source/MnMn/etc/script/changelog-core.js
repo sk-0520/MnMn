@@ -111,7 +111,8 @@ function makeChangeLogContent(content) {
 
 	if (content['logs']) {
 		var hasBody = false;
-		var body = new Element('ul');
+		var body = new Element('dd');
+		var parent = new Element('ul');
 		for (var i = 0; i < content['logs'].length; i++) {
 			var log = content['logs'][i];
 			if (log['subject']) {
@@ -147,11 +148,12 @@ function makeChangeLogContent(content) {
 						subject.append(comments);
 					}
 				}
-				body.append(subject);
+				parent.append(subject);
 				hasBody = true;
 			}
 		}
 		if (hasBody) {
+			body.append(parent);
 			result.body = body;
 		}
 	}

@@ -151,6 +151,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#189: リリース情報のDOM狂ってんぜぇ'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
