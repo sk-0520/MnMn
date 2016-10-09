@@ -147,7 +147,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#191: 内部ブラウザの履歴破棄時に例外発生'
 					},
 					{
 						'revision': '',

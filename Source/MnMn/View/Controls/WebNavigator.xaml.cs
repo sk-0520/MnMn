@@ -494,7 +494,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             Navigate(uri);
             DoAction(
                 b => { },
-                b => b.History.Clear()
+                b => Dispatcher.Invoke(() => b.History.Clear())
             );
             IsEmptyContent = true;
         }
