@@ -664,11 +664,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 ThrowHasNotGetflv();
-
-                if(UsingDmc && RawValueUtility.ConvertBoolean(Getflv.IsDmc)) {
-                    var json = JObject.Parse(Getflv.DmcInfo);
-                }
-
                 return new Uri(Getflv.MovieServerUrl);
             }
         }
@@ -1125,6 +1120,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
                 }
             });
+        }
+
+        public Task LoadDmcInformationAsync()
+        {
+            return Task.CompletedTask;
         }
 
         public Task<IEnumerable<SmileVideoInformationViewModel>> LoadRelationVideosAsync(CacheSpan cacheSpan)

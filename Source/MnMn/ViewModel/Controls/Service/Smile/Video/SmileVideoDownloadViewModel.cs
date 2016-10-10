@@ -273,6 +273,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoTotalSize = Information.VideoSize;
             VideoFile = donwloadFile;
 
+            await Information.LoadDmcInformationAsync();
+
             using(var downloader = new SmileVideoDownloader(Information.MovieServerUrl, Session, Information.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
