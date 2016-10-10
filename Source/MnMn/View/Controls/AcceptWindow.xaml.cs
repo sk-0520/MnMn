@@ -57,12 +57,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         void InitializedOriginLicense()
         {
             var path = System.IO.Path.Combine(Constants.ApplicationDocDirectoryPath, "License", "MnMn-GPLv3.html");
-            this.docOriginalLicense.Navigate(new Uri(path));
+            this.docOriginalLicense.HomeSource = new Uri(path);
+            this.docOriginalLicense.Navigate(this.docOriginalLicense.HomeSource);
+        }
+
+        void InitializedCultureLicense()
+        {
+            // TODO: カルチャと銘打ったものの日本語おんりー
+            var path = System.IO.Path.Combine(Constants.ApplicationDocDirectoryPath, "License", "MnMn-GPLv3.ja-jp.html");
+            this.docCultureLicense.HomeSource = new Uri(path);
+            this.docCultureLicense.Navigate(this.docCultureLicense.HomeSource);
         }
 
         void Initialize()
         {
             InitializedOriginLicense();
+            InitializedCultureLicense();
         }
 
         #endregion

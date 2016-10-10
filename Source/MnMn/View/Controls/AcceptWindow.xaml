@@ -13,6 +13,11 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
+  <Window.Resources>
+    <Style TargetType="app_view_controls:WebNavigator">
+      <Setter Property="IsEnabledUserChangeSource" Value="False" />
+    </Style>
+  </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -46,7 +51,8 @@
           </FlowDocument>
         </FlowDocumentScrollViewer>
       </TabItem>
-      <TabItem Header="GPLv3(日本語)">
+      <TabItem Header="GPLv3(日本語訳)">
+        <app_view_controls:WebNavigator x:Name="docCultureLicense" ServiceType="Application" />
       </TabItem>
       <TabItem Header="GPLv3(原文)">
         <app_view_controls:WebNavigator x:Name="docOriginalLicense" ServiceType="Application" />
