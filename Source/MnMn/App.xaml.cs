@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppUtility.SetTheme(setting.Theme);
 
             if(!CheckAccept(setting.RunningInformation, logger)) {
-                var accept = new AcceptWindow();
+                var accept = new AcceptWindow(Mediation);
                 var acceptResult = accept.ShowDialog();
                 if(!acceptResult.GetValueOrDefault()) {
                     Shutdown();
