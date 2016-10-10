@@ -103,7 +103,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Resources
                 //var selectedIndex = tabItems.FindIndex(i => i == selectedItem);
                 var selectedIndex = tabControl.SelectedIndex;
 
+                var currentIndex = selectedIndex;
                 var nextIndex = GetNextIndex(tabItems, selectedIndex, 0 < e.Delta);
+                while(!tabItems[nextIndex].IsEnabled) {
+                    nextIndex = GetNextIndex(tabItems, nextIndex, 0 < e.Delta);
+                }
+
                 //Debug.WriteLine($"{tabItems.Count}: {selectedIndex} -> {nextIndex}");
 
                 tabControl.SelectedIndex = nextIndex;
