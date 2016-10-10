@@ -7,7 +7,7 @@
 
   Title="AcceptWindow"
   Width="640"
-  Height="480"
+  Height="520"
   WindowStartupLocation="CenterScreen"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,25 +27,46 @@
     <TabControl>
       <TabItem Header="使用許諾分">
         <FlowDocumentScrollViewer>
-          <FlowDocument>
-            <Paragraph>
+          <FlowDocument FontSize="14">
+            <Paragraph FontWeight="Bold" FontSize="18">
               ソフトウェア使用許諾
             </Paragraph>
 
             <Paragraph>
-              本ソフトウェア(以下 MnMn)は
-              <Hyperlink>GPLv3</Hyperlink>
-              でライセンスされています。
+              本ソフトウェア(以下 MnMn)は GPLv3 でライセンスされています。
               <LineBreak />
               付属するサードパーティ製のソフトウェア等に関してはそれぞれの適用しているライセンスとなります。
             </Paragraph>
-
             <Paragraph>
-              <TextBlock FontWeight="Bold">**注意**</TextBlock>
+              ライセンスは原文が正で日本語訳は理解を補佐するものです。
               <LineBreak />
+              GPLv3 に則り MnMn を利用するあなたは以下の4つの必須の自由を有します。
+            </Paragraph>
+            <Section Padding="4" BorderBrush="{DynamicResource AccentBaseColorBrush}" BorderThickness="1">
+              <List>
+                <ListItem>
+                  <Paragraph>どんな目的に対しても、プログラムを望むままに実行する自由 (第零の自由)。</Paragraph>
+                </ListItem>
+                <ListItem>
+                  <Paragraph>プログラムがどのように動作しているか研究し、必要に応じて改造する自由 (第一の自由)。ソースコードへのアクセスは、この前提条件となります。</Paragraph>
+                </ListItem>
+                <ListItem>
+                  <Paragraph>身近な人を助けられるよう、コピーを再配布する自由 (第二の自由)。</Paragraph>
+                </ListItem>
+                <ListItem>
+                  <Paragraph>改変した版を他に配布する自由 (第三の自由)。これにより、変更がコミュニティ全体にとって利益となる機会を提供できます。ソースコードへのアクセスは、この前提条件となります。</Paragraph>
+                </ListItem>
+              </List>
+            </Section>
+            <Paragraph FontWeight="Bold">
+              ライセンスの定める範囲で好きできますが、その責任は全てあなたが有します。
+            </Paragraph>
+
+            <Paragraph FontSize="16" FontWeight="Bold">
+              注意
+            </Paragraph>
+            <Paragraph>
               開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
-              <LineBreak />
-              あと UI の見栄えについてなんかは二の次です。
             </Paragraph>
 
           </FlowDocument>
