@@ -181,8 +181,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //logger.Information("IE version: " + ieVersion);
             //SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
 
+            AppManager = new AppManagerViewModel(Mediation, logger);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            WebNavigatorCore.Initialize(Mediation);
+            AppUtility.SetTheme(setting.Theme);
+
             if(!CheckAccept(setting.RunningInformation, logger)) {
-                var accept = new AcceptWindow();
+                var accept = new AcceptWindow(Mediation);
                 var acceptResult = accept.ShowDialog();
                 if(!acceptResult.GetValueOrDefault()) {
                     Shutdown();
@@ -198,14 +203,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             }
             setting.RunningInformation.LastExecuteVersion = Constants.ApplicationVersionNumber;
             setting.RunningInformation.ExecuteCount = RangeUtility.Increment(setting.RunningInformation.ExecuteCount);
-
-            AppManager = new AppManagerViewModel(Mediation, logger);
-
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
-            WebNavigatorCore.Initialize(Mediation);
-
-            AppUtility.SetTheme(setting.Theme);
 
             SplashWindow.Show();
 
