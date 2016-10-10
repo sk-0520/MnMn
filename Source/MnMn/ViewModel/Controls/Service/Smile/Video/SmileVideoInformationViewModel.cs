@@ -58,6 +58,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -148,6 +149,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 本動画に対する個別設定。
         /// </summary>
         SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
+
+        bool UsingDmc => true;
 
         #region service
 
@@ -661,6 +664,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get
             {
                 ThrowHasNotGetflv();
+
+                if(UsingDmc && RawValueUtility.ConvertBoolean(Getflv.IsDmc)) {
+                    var json = JObject.Parse(Getflv.DmcInfo);
+                }
+
                 return new Uri(Getflv.MovieServerUrl);
             }
         }
@@ -1063,7 +1071,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var getflv = new Getflv(Mediation);
 
-            return getflv.LoadAsync(VideoId, WatchUrl, MovieType).ContinueWith(t => {
+            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, UsingDmc).ContinueWith(t => {
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
