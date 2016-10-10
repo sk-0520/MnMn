@@ -18,6 +18,7 @@
 	<Component Kind="WebPage" Name="Iconfinder" Uri="https://www.iconfinder.com/" License="" />
 	<Component Kind="WebPage" Name="Unicode® character table" Uri="http://unicode-table.com/" License="" />
 	<Component Kind="WebPage" Name="Material Design Icons" Uri="https://materialdesignicons.com/" License="" />
+	<Component Kind="WebPage" Name="GNUプロジェクト: ライセンス" Uri="https://www.gnu.org/licenses/" License="" />
 	<Component Kind="WebPage" Name="IPA 独立行政法人 情報処理推進機構: GNU GPL v3 解説書" Uri="https://www.ipa.go.jp/osc/license1.html" License="" />
 
 </Components>

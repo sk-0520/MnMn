@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 前回バージョンがこれ未満なら使用許諾を表示
         /// </summary>
-        public static Version AcceptVersion { get; } = new Version(0, 2, 0, 0);
+        public static Version AcceptVersion { get; } = new Version(0, 24, 1, 0);
 
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
