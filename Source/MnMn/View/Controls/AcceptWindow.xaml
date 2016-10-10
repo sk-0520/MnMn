@@ -3,16 +3,54 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  mc:Ignorable="d"
-
   Title="AcceptWindow"
   Width="640"
   Height="480"
   WindowStartupLocation="CenterScreen"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
 >
-  <DockPanel>
-    <Grid DockPanel.Dock="Bottom">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <TabControl>
+      <TabItem Header="使用許諾分">
+        <FlowDocumentScrollViewer>
+          <FlowDocument>
+            <Paragraph>
+              ソフトウェア使用許諾
+            </Paragraph>
+
+            <Paragraph>
+              本ソフトウェア(以下 MnMn)は
+              <Hyperlink>GPLv3</Hyperlink>
+              でライセンスされています。
+              <LineBreak />
+              付属するサードパーティ製のソフトウェア等に関してはそれぞれの適用しているライセンスとなります。
+            </Paragraph>
+
+            <Paragraph>
+              <TextBlock FontWeight="Bold">**注意**</TextBlock>
+              <LineBreak />
+              開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
+              <LineBreak />
+              あと UI の見栄えについてなんかは二の次です。
+            </Paragraph>
+
+          </FlowDocument>
+        </FlowDocumentScrollViewer>
+      </TabItem>
+      <TabItem Header="GPLv3(日本語)">
+      </TabItem>
+      <TabItem Header="GPLv3(原文)">
+      </TabItem>
+    </TabControl>
+
+    <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />
@@ -21,30 +59,5 @@
       <Button Grid.Column="0" IsDefault="True" Click="Button_Click">使用する</Button>
       <Button Grid.Column="1" IsCancel="True">使用しない</Button>
     </Grid>
-
-    <FlowDocumentScrollViewer>
-      <FlowDocument>
-        <Paragraph>
-          ソフトウェア使用許諾
-        </Paragraph>
-
-        <Paragraph>
-          本ソフトウェア(以下 MnMn)は
-          <Hyperlink>GPLv3</Hyperlink>
-          でライセンスされています。
-          <LineBreak />
-          付属するサードパーティ製のソフトウェア等に関してはそれぞれの適用しているライセンスとなります。
-        </Paragraph>
-
-        <Paragraph>
-          <TextBlock FontWeight="Bold">**注意**</TextBlock>
-          <LineBreak />
-          開発中のため設定ファイルのデータ構造、UIが割と頻繁に変わります。
-          <LineBreak />
-          あと UI の見栄えについてなんかは二の次です。
-        </Paragraph>
-
-      </FlowDocument>
-    </FlowDocumentScrollViewer>
-  </DockPanel>
+  </Grid>
 </Window>
