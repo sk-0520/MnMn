@@ -110,7 +110,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#197: App.config に対するユーザファイルの上書き',
+						'comments': [
+							'MnMn.exe.config と同じディレクトリに MnMn.exe.user.config を配置すると既存の App.config 内容を上書き(マージ)します', ,
+							'詳細は https://msdn.microsoft.com/ja-jp/library/aa903313 を参照してください',
+							'(.NET アプリで一番使われてそうな構成セクションなのにメンテナンスされてないってすげーなMS)'
+						]
 					},
 					{
 						'revision': '',

@@ -996,6 +996,9 @@
     <None Include="bat\beta.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="MnMn.exe.user.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
     <Resource Include="Resources\Common\Action\FolderOpen.png" />
     <Content Include="Resources\Common\View\Down.png" />
