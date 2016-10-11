@@ -16,13 +16,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using MahApps.Metro.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     /// <summary>
     /// AcceptWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class AcceptWindow: Window
+    public partial class AcceptWindow: MetroWindow
     {
         public AcceptWindow(Mediation mediation)
         {
