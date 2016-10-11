@@ -18,7 +18,7 @@ function makeAutoLink() {
 	var itemList = document.getElementsByTagName('li');
 	for (var i = 0; i < itemList.length; i++) {
 		var li = itemList[i];
-		li.innerHTML = li.innerHTML.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" href="' + targetName + '">$1</a>'); //'"
+		li.innerHTML = li.innerHTML.replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="' + targetName + '">$1</a>'); //'"
 	}
 }
 
