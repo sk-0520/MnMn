@@ -395,7 +395,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             UsingDmc.Value = true;
 
-            await LoadVideoAsync(downloadUri, downloadFile, 17523205);
+            await LoadVideoAsync(downloadUri, downloadFile, 0);
             return true;
         }
 
