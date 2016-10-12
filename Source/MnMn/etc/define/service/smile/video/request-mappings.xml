@@ -152,7 +152,7 @@
 		<item key="timing-constraint" value="unlimited" />
 		<item key="max-content-count" value="10" />
 		<item key="protocol-method" value="GET" />
-		<item key="file-extension" value="flv" />
+		<item key="file-extension" value="${file-extension}" />
 
 
 		<content trim="none" oneline="false">

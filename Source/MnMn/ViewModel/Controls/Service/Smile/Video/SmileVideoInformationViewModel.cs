@@ -1023,11 +1023,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
         }
 
+
         public string GetDmcVideoFileName(string video, string audio, string ext)
         {
             ThrowNotGetthumbinfoSource();
 
-            var roll = $"dmc.[{video}][{audio}]";
+            var roll = $"video.{SmileVideoInformationUtility.GetDmcRollKey(video, audio)}.dmc";
 
             return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
         }

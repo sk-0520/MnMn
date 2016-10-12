@@ -75,6 +75,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             page.ReplaceRequestParameters["player-id"] = param.Data.Session.ClientInformation.PlayerId;
             page.ReplaceRequestParameters["priority"] = param.Data.Session.Priority;
 
+            page.ReplaceRequestParameters["file-extension"] = Constants.ServiceSmileVideoDownloadDmcExtension;
+
+
             return page.GetResponseTextAsync(PageLoaderMethod.Post).ContinueWith(t => {
                 var res = t.Result;
 

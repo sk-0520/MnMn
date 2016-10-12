@@ -82,6 +82,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int ServiceSmileVideoDownloadDmcWeightRangeMaximum => ServiceSmileVideoDownloadDmcWeightRange.Tail;
         public static Regex ServiceSmileVideoDownloadDmcWeightVideoSort => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-video-sort", s => new Regex(s, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Singleline));
         public static Regex ServiceSmileVideoDownloadDmcWeightAudioSort => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-audio-sort", s => new Regex(s, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Singleline));
+        /// <summary>
+        /// ダウンロード拡張子。
+        /// </summary>
+        public static string ServiceSmileVideoDownloadDmcExtension => appConfig.Get("service-smile-smilevideo-donwload-dmc-extension");
 
         /// <summary>
         /// 動画データ取得中になんかエラー発生から再開のリトライ数。
