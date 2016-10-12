@@ -98,6 +98,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public bool Cancled { get; protected set; }
         public bool Completed { get; protected set; }
 
+        public HttpResponseHeaders ResponseHeaders { get; set; }
+
         #endregion
 
         #region function
@@ -164,7 +166,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             cancel = false;
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
             IfUsingSetRangeHeader();
-            return UserAgent.GetStreamAsync(DownloadUri);
+            var response = UserAgent.GetAsync(DownloadUri).Result;
+
+            ResponseHeaders = response.Headers;
+            return response.Content.ReadAsStreamAsync();
+            //return UserAgent.GetStreamAsync();
         }
 
         public virtual Task StartAsync()

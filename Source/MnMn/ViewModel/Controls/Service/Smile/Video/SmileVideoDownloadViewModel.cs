@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public SmileVideoInformationViewModel Information { get; set; }
 
-        //protected DirectoryInfo DownloadDirectory { get; set; }
+        public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
 
         protected FileInfo VideoFile { get; set; }
 
@@ -255,7 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //    var path = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
             //    SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
             //}
-            var result = await Information.LoadGetflvAsync(true);
+            var result = await Information.LoadGetflvAsync(true, Setting.Download.UsingDmc);
 
             OnLoadGetflvEnd();
         }
@@ -270,10 +270,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
-            VideoTotalSize = Information.VideoSize;
             VideoFile = donwloadFile;
-
-            await Information.LoadDmcInformationAsync();
 
             using(var downloader = new SmileVideoDownloader(Information.MovieServerUrl, Session, Information.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
@@ -320,6 +317,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 新形式でダウンロードする。
+        /// </summary>
+        /// <returns>真: 新形式で処理できた(ダウンロードが成功したかどうかではない)、偽: 新形式では処理できない。</returns>
+        protected async Task<bool> LoadDmcVideoAsync()
+        {
+            if(!Information.IsDmc) {
+                return false;
+            }
+
+
+
+            VideoLoadState = LoadState.Preparation;
+
+
+            await Task.CompletedTask;
+            return true;
         }
 
         protected virtual void OnLoadMsgStart()
@@ -462,6 +478,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return;
             }
 
+            if(Setting.Download.UsingDmc) {
+                if(await LoadDmcVideoAsync()) {
+                    // 新形式で何かしら処理できた
+                    return;
+                }
+            }
+
             var normalVideoFile = new FileInfo(Path.Combine(Information.CacheDirectory.FullName, Information.GetVideoFileName(false)));
             var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, Information.SizeHigh);
             if(normalHeadPosition == isDonwloaded) {
@@ -490,6 +513,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 headPosition = normalHeadPosition;
                 donwloadFile = normalVideoFile;
             }
+
+            VideoTotalSize = Information.VideoSize;
 
             await LoadVideoAsync(donwloadFile, headPosition);
         }

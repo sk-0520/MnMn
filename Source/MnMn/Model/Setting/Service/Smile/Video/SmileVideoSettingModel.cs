@@ -43,6 +43,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public SmileVideoSearchSettingModel Search { get; set; } = new SmileVideoSearchSettingModel();
 
         /// <summary>
+        /// ダウンロード設定。
+        /// </summary>
+        //[DataMember]
+        public SmileVideoDownloadSetting Download { get; set; } = new SmileVideoDownloadSetting();
+
+        /// <summary>
         /// プレイヤー設定。
         /// </summary>
         [DataMember]

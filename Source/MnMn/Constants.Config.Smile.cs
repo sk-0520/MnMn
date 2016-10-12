@@ -75,6 +75,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan ServiceSmileVideoDownloadingErrorWaitTime => appConfig.Get("service-smile-smilevideo-downloading_error-wait-time", TimeSpan.Parse);
         /// <summary>
+        /// 新形式ダウンロードタイプの重み
+        /// </summary>
+        public static IReadOnlyRange<int> ServiceSmileVideoDownloadDmcWeightRange => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-range", RangeModel.Parse<int>);
+        public static int ServiceSmileVideoDownloadDmcWeightRangeMinimum => ServiceSmileVideoDownloadDmcWeightRange.Head;
+        public static int ServiceSmileVideoDownloadDmcWeightRangeMaximum => ServiceSmileVideoDownloadDmcWeightRange.Tail;
+        public static Regex ServiceSmileVideoDownloadDmcWeightVideoSort => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-video-sort", s => new Regex(s, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Singleline));
+        public static Regex ServiceSmileVideoDownloadDmcWeightAudioSort => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-audio-sort", s => new Regex(s, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Singleline));
+
+        /// <summary>
         /// 動画データ取得中になんかエラー発生から再開のリトライ数。
         /// </summary>
         public static int ServiceSmileVideoDownloadingErrorRetryCount => appConfig.Get("service-smile-smilevideo-downloading_error-retry-count", int.Parse);

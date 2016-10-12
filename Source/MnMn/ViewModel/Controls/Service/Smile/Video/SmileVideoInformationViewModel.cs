@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         bool _isPlaying = false;
         bool _isDownloading = false;
 
+        JObject _dmcInfo;
+
         //int _referenceCount;
 
         #endregion
@@ -149,8 +151,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 本動画に対する個別設定。
         /// </summary>
         SmileVideoIndividualVideoSettingModel IndividualVideoSetting { get; set; } = new SmileVideoIndividualVideoSettingModel();
-
-        bool UsingDmc => true;
 
         #region service
 
@@ -713,6 +713,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        #region dmc
+
+        public bool IsDmc
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return RawValueUtility.ConvertBoolean(Getflv.IsDmc);
+            }
+        }
+
+        public JObject DmcInfo
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                if(this._dmcInfo == null) {
+                    this._dmcInfo = JObject.Parse(Getflv.DmcInfo);
+                }
+
+                return this._dmcInfo;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #endregion
@@ -1058,7 +1084,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    });
         //}
 
-        public Task<CheckModel> LoadGetflvAsync(bool isSave)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="isSave"></param>
+        /// <param name="usingDmc">ダウンロードに新形式を使用するか</param>
+        /// <returns></returns>
+        public Task<CheckModel> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
             if(InformationLoadState == LoadState.Failure) {
                 return Task.FromResult(CheckModel.Failure());
@@ -1066,7 +1098,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var getflv = new Getflv(Mediation);
 
-            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, UsingDmc).ContinueWith(t => {
+            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
@@ -1120,11 +1152,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     File.WriteAllText(WatchPageHtmlFile.FullName, WatchPageHtmlSource);
                 }
             });
-        }
-
-        public Task LoadDmcInformationAsync()
-        {
-            return Task.CompletedTask;
         }
 
         public Task<IEnumerable<SmileVideoInformationViewModel>> LoadRelationVideosAsync(CacheSpan cacheSpan)
