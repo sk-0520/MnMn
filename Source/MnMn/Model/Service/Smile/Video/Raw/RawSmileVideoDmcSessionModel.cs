@@ -55,6 +55,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [XmlElement("play_speed")]
         public string PlaySpeed { get; set; }
 
+        [XmlElement("content_uri")]
+        public string ContentUri { get; set; }
+
         [XmlElement("session_operation_auth")]
         public RawSmileVideoDmcSessionOperationAuthModel OperationAuth { get; set; } = new RawSmileVideoDmcSessionOperationAuthModel();
 
@@ -73,8 +76,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [XmlElement("modified_time")]
         public string ModifiedTime { get; set; }
 
+        [XmlElement("priority")]
+        public string Priority { get; set; }
+
         [XmlElement("content_route")]
         public string ContentRoute { get; set; }
+
+        [XmlElement("version")]
+        public string Version { get; set; }
 
         #endregion
     }
