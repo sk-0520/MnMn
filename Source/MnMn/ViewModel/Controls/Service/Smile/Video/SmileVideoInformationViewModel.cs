@@ -194,6 +194,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public FileInfo MsgFile { get; private set; }
 
+        /// <summary>
+        /// 新形式受信ファイル。
+        /// </summary>
+        public FileInfo DmcFile { get; private set; }
+
         #endregion
 
         /// <summary>
@@ -984,6 +989,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
             MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
@@ -1015,6 +1021,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThrowNotGetthumbinfoSource();
 
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
+        }
+
+        public string GetDmcVideoFileName(string video, string audio, string ext)
+        {
+            ThrowNotGetthumbinfoSource();
+
+            var roll = $"dmc.[{video}][{audio}]";
+
+            return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
         }
 
         //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)

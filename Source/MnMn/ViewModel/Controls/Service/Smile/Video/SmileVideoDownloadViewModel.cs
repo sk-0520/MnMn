@@ -101,6 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoInformationViewModel Information { get; set; }
 
         public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
+        protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
 
         protected FileInfo VideoFile { get; set; }
 
@@ -265,19 +266,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadVideoEnd()
         { }
 
-        protected async Task LoadVideoAsync(FileInfo donwloadFile, long headPosition)
+        protected async Task LoadVideoAsync(Uri downloadUri, FileInfo donwloadFile, long headPosition)
         {
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
             VideoFile = donwloadFile;
 
-            using(var downloader = new SmileVideoDownloader(Information.MovieServerUrl, Session, Information.WatchUrl) {
+            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
-                Mediation.Logger.Information($"{VideoId}: download start: uri: {Information.MovieServerUrl}, head: {headPosition}, size: {VideoTotalSize}");
+                Mediation.Logger.Information($"{VideoId}: download start: uri: {downloadUri}, head: {headPosition}, size: {VideoTotalSize}");
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
@@ -319,6 +320,48 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        protected Tuple<string, RawSmileVideoDmcObjectModel> GetDmcObject()
+        {
+            var info = Information.DmcInfo;
+
+            var model = new RawSmileVideoDmcObjectModel();
+            {
+                var with = model.Data.Session;
+                var session = info.SelectToken("session_api");
+
+                var uri = session["api_urls"].First().Value<string>();
+
+                with.RecipeId = session["recipe_id"].Value<string>();
+                with.ContentId = session["content_id"].Value<string>();
+                with.Protocol.Name = session["protocols"].First().Value<string>();
+                with.Priority = session["priority"].Value<string>();
+
+                var mux = new RawSmileVideoDmcSrcIdToMultiplexerModel();
+                mux.VideoSrcIds.InitializeRange(session["videos"].Values<string>());
+                mux.AudioSrcIds.InitializeRange(session["audios"].Values<string>());
+                var idSet = new RawSmileVideoDmcContentSrcIdSetModel();
+                idSet.SrcIdToMultiplexers.Add(mux);
+                with.ContentSrcIdSets.Add(idSet);
+
+                with.OperationAuth.BySignature.Token = session["token"].Value<string>();
+                with.OperationAuth.BySignature.Signature = session["signature"].Value<string>();
+                with.KeepMethod.HeartBeat.LifeTime = session["heartbeat_lifetime"].Value<string>();
+                IDictionary<string, JToken> authTypes = (JObject)session["auth_types"];
+                JToken authType;
+                if(authTypes.TryGetValue(with.Protocol.Name, out authType)) {
+                    with.ContentAuth.AuthType = authType.Value<string>();
+                } else {
+                    with.ContentAuth.AuthType = authType.Value<string>();
+                }
+                //with.ContentAuth.ServiceId = session["service_id"].Value<string>();
+                with.ContentAuth.ServiceUserId = session["service_user_id"].Value<string>();
+                with.ContentAuth.ContentKeyTimeout = session["content_key_timeout"].Value<string>();
+                with.ClientInformation.PlayerId = session["player_id"].Value<string>();
+
+                return Tuple.Create(uri, model);
+            }
+        }
+
         /// <summary>
         /// 新形式でダウンロードする。
         /// </summary>
@@ -329,12 +372,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return false;
             }
 
-
-
             VideoLoadState = LoadState.Preparation;
 
+            var dmc = new Dmc(Mediation);
+            var tuple = GetDmcObject();
+            var uri = new Uri(tuple.Item1);
+            var model = tuple.Item2;
 
-            await Task.CompletedTask;
+            var result = await dmc.LoadAsync(uri, null, model);
+
+            SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
+            //if(result)
+
+            DmcObject = result;
+
+            var downloadUri = new Uri(result.Data.Session.ContentUri);
+
+            var mux = result.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First();
+            var ext = result.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension;
+            var downloadPath = Information.GetDmcVideoFileName(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), ext);
+            var downloadFile = new FileInfo(downloadPath);
+
+            UsingDmc.Value = true;
+
+            await LoadVideoAsync(downloadUri, downloadFile, 0);
             return true;
         }
 
@@ -516,7 +577,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             VideoTotalSize = Information.VideoSize;
 
-            await LoadVideoAsync(donwloadFile, headPosition);
+            await LoadVideoAsync(Information.MovieServerUrl, donwloadFile, headPosition);
         }
 
         protected virtual void OnLoadStart()

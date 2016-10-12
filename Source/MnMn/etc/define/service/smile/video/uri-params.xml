@@ -53,4 +53,10 @@
 		<item key="version_sub" value="2" />
 		<item key="yugi" value="" />
 	</param>
+
+	<param key="video-dmc">
+		<item key="_format" value="xml" />
+		<item key="suppress_response_codes" value="true" />
+	</param>
+
 </parameters>
