@@ -44,6 +44,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public bool ConvertedSwf { get; set; } = false;
 
+        [DataMember]
+        public Dictionary<string, bool> LoadedDmc { get; set; } = new Dictionary<string, bool>();
+
         /// <summary>
         /// 最終視聴日時。
         /// </summary>
@@ -62,5 +65,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool IsEnabledGlobalCommentFilering { get; set; } = Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled;
+
     }
 }

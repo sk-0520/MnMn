@@ -794,6 +794,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
 
+        public IDictionary<string, bool> LoadedDmc { get { return IndividualVideoSetting.LoadedDmc; } }
+
         public bool IsEnabledGlobalCommentFilering
         {
             get { return IndividualVideoSetting.IsEnabledGlobalCommentFilering; }

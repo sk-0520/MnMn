@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,26 +50,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region SmileVideoDownloader
 
-        protected override Task<Stream> GetStreamAsync(out bool cancel)
+        protected override async Task<Stream> GetStreamAsync()
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
                 //var t = UserAgent.GetStringAsync(ReferrerUri);
                 //t.Wait();
                 //PageHtml = t.Result;
-                var task = SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
-                task.Wait();
-                PageHtml = task.Result;
+                // 新形式は不要だと思うけど他との互換性のため残しとく
+                var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
+                //task.Wait();
+                PageHtml = task;
 
-                cancel = false;
+                //cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
                 IfUsingSetRangeHeader();
-                UserAgent.GetStringAsync(ReferrerUri);
-                return UserAgent.GetStreamAsync(DownloadUri);
+                //UserAgent.GetStringAsync(ReferrerUri);
+                //return UserAgent.GetStreamAsync(DownloadUri);
+                var getTask = await UserAgent.GetAsync(DownloadUri, HttpCompletionOption.ResponseHeadersRead);
+                //getTask.Wait();
+                var response = getTask;
+
+                ResponseHeaders = response.Content.Headers;
+                return await response.Content.ReadAsStreamAsync();
             } catch(Exception ex) {
                 Debug.WriteLine(ex);
-                cancel = true;
-                return new Task<Stream>(() => null);
+                //cancel = true;
+                //return new Task<Stream>(() => null);
+                return null;
             }
         }
 

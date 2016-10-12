@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public bool Cancled { get; protected set; }
         public bool Completed { get; protected set; }
 
-        public HttpResponseHeaders ResponseHeaders { get; set; }
+        public HttpContentHeaders ResponseHeaders { get; protected set; }
 
         #endregion
 
@@ -161,23 +161,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected virtual Task<Stream> GetStreamAsync(out bool cancel)
+        protected virtual Task<Stream> GetStreamAsync()
         {
-            cancel = false;
+            //cancel = false;
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
             IfUsingSetRangeHeader();
             var response = UserAgent.GetAsync(DownloadUri).Result;
 
-            ResponseHeaders = response.Headers;
+            ResponseHeaders = response.Content.Headers;
             return response.Content.ReadAsStreamAsync();
             //return UserAgent.GetStreamAsync();
         }
 
+        protected virtual bool CheckHeader()
+        {
+            return true;
+        }
+
         public virtual Task StartAsync()
         {
-            bool isCancel;
-            return GetStreamAsync(out isCancel).ContinueWith(task => {
-                if(isCancel) {
+            //bool isCancel;
+            return GetStreamAsync().ContinueWith(task => {
+                //if(isCancel) {
+                //    Cancled = true;
+                //    return;
+                //}
+                if(task.Result == null) {
+                    Cancled = true;
+                    return;
+                }
+                if(!CheckHeader()) {
                     Cancled = true;
                     return;
                 }
