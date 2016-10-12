@@ -48,12 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public Task<RawSmileVideoDmcObjectModel> LoadAsync(Uri uri, string method, RawSmileVideoDmcObjectModel param)
+        Task<RawSmileVideoDmcObjectModel> LoadCoreAsync(string key, Uri uri, string method, RawSmileVideoDmcObjectModel param)
         {
-            var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.dmc, ServiceType.SmileVideo);
+            var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo);
 
             page.ReplaceUriParameters["api-uri"] = uri.OriginalString;
-            page.ReplaceUriParameters["api-uri"] = uri.OriginalString;
+            page.ReplaceUriParameters["method"] = method;
 
             page.ReplaceRequestParameters["recipe-id"] = param.Data.Session.RecipeId;
             page.ReplaceRequestParameters["content-id"] = param.Data.Session.ContentId;
@@ -77,12 +77,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
             page.ReplaceRequestParameters["file-extension"] = Constants.ServiceSmileVideoDownloadDmcExtension;
 
+            page.ReplaceRequestParameters["id"] = param.Data.Session.Id;
+            page.ReplaceRequestParameters["created-time"] = param.Data.Session.CreatedTime;
+            page.ReplaceRequestParameters["modified-time"] = param.Data.Session.ModifiedTime;
+            page.ReplaceRequestParameters["content-route"] = param.Data.Session.ContentRoute;
+            page.ReplaceRequestParameters["expire-time"] = param.Data.Session.OperationAuth.BySignature.ExpireTime;
+            page.ReplaceRequestParameters["content-uri"] = param.Data.Session.ContentUri;
+            page.ReplaceRequestParameters["auto-info-method"] = param.Data.Session.ContentAuth.Information.Method;
+            page.ReplaceRequestParameters["auto-info-name"] = param.Data.Session.ContentAuth.Information.Name;
+            page.ReplaceRequestParameters["auto-info-value"] = param.Data.Session.ContentAuth.Information.Value;
 
             return page.GetResponseTextAsync(PageLoaderMethod.Post).ContinueWith(t => {
                 var res = t.Result;
 
                 return ConvertFromRawData(res.Result);
             });
+        }
+
+        public Task<RawSmileVideoDmcObjectModel> LoadAsync(Uri uri, RawSmileVideoDmcObjectModel param)
+        {
+            return LoadCoreAsync(SmileVideoMediationKey.dmc, uri, null, param);
+        }
+
+        public Task<RawSmileVideoDmcObjectModel> ReloadAsync(Uri uri, string method, RawSmileVideoDmcObjectModel param)
+        {
+            return LoadCoreAsync(SmileVideoMediationKey.dmcReload, uri, method, param);
         }
 
         #endregion

@@ -54,6 +54,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
         public const string inputEconomyMode = "getflv-economy-mode";
 
         public const string dmc = "video-dmc";
-
+        public const string dmcReload = "video-dmc-reload";
     }
 }
