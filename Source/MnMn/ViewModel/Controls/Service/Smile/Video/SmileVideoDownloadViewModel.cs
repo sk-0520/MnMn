@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected RawSmileVideoDmcSrcIdToMultiplexerModel DmcMultiplexer { get { return DmcObject.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
         protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
         Task DmcPollingTask { get; set; }
+        AutoResetEvent DmcPollingWait { get; set; }
         CancellationTokenSource DmcPollingCancel { get; set; }
 
         protected Uri DownloadUri { get; private set; }
@@ -644,6 +645,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             DmcObject = null;
             DmcApiUri = null;
             DmcPollingTask = null;
+            DmcPollingWait = null;
             DmcPollingCancel = null;
             DownloadUri = null;
         }
@@ -729,11 +731,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(UsingDmc.Value) {
                 if(DmcApiUri != null && Information != null && Information.IsDownloading) {
+                    if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
+                        DmcPollingWait.Set();
+                    }
+
                     var dmc = new Dmc(Mediation);
-                    dmc.ReloadAsync(DmcApiUri, "DELETE", DmcObject);
+                    dmc.CloseAsync(DmcApiUri, DmcObject);
+
+                    DmcPollingWait.Dispose();
+                    DmcPollingCancel.Cancel();
+                    //DmcPollingTask.Dispose();
                 }
             }
         }
+
+        Task PollingDmcDownloadAsync(string videoId, AutoResetEvent resetEvent, CancellationToken cancelToken)
+        {
+            return Task.Run(async () => {
+                var pollingCount = 1;
+                while(true) {
+                    Mediation.Logger.Information($"{videoId}: polling wait... {pollingCount++}");
+                    var isReset = resetEvent.WaitOne(TimeSpan.FromSeconds(10));
+                    if(isReset) {
+                        // 強制中止
+                        Mediation.Logger.Information($"{videoId}: polling stop event is set!");
+                        return;
+                    }
+
+                    DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
+
+                    var dmc = new Dmc(Mediation);
+                    await dmc.ReloadAsync(DmcApiUri, DmcObject).ContinueWith(t => {
+                        var model = t.Result;
+                        DmcObject = model;
+                    }, cancelToken);
+                }
+            });
+        }
+
         #endregion
 
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
@@ -751,17 +786,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     VideoTotalSize = VideoFile.Length + downloader.ResponseHeaders.ContentLength.Value;
                 }
 
+                DmcPollingWait = new AutoResetEvent(false);
                 DmcPollingCancel = new CancellationTokenSource();
-                DmcPollingTask = Task.Run(() => {
-                    Thread.Sleep(TimeSpan.FromSeconds(10));
-                    var dmc = new Dmc(Mediation);
-
-                    DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
-                    return dmc.ReloadAsync(DmcApiUri, "PUT", DmcObject).ContinueWith(t => {
-                        var model = t.Result;
-                        DmcObject = model;
-                    }, DmcPollingCancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);
-                });
+                DmcPollingTask = PollingDmcDownloadAsync(VideoId, DmcPollingWait, DmcPollingCancel.Token);
             }
 
             OnDownloadStart(sender, e);
