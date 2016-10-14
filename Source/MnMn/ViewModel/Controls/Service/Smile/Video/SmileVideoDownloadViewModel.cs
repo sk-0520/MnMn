@@ -107,6 +107,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         Task DmcPollingTask { get; set; }
         CancellationTokenSource DmcPollingCancel { get; set; }
 
+        protected Uri DownloadUri { get; private set; }
+
         protected FileInfo VideoFile { get; set; }
 
         protected Stream VideoStream { get; private set; }
@@ -276,6 +278,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             VideoLoadState = LoadState.Preparation;
             VideoFile = donwloadFile;
+            DownloadUri = downloadUri;
 
             using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
@@ -636,6 +639,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnailLoadState = LoadState.None;
             CommentLoadState = LoadState.None;
             IsProcessCancel = false;
+            UsingDmc.Value = false;
+            DmcObject = null;
+            DmcPollingTask = null;
+            DmcPollingCancel = null;
+            DownloadUri = null;
         }
 
         protected virtual Task StopPrevProcessAsync()
@@ -715,6 +723,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
         { }
 
+        protected void StopDownload()
+        {
+            if(UsingDmc.Value) {
+                if(DownloadUri != null && Information != null && Information.IsDownloading) {
+                    var dmc = new Dmc(Mediation);
+                    dmc.ReloadAsync(DownloadUri, "DELETE", DmcObject);
+                }
+            }
+        }
         #endregion
 
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
@@ -737,7 +754,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     Thread.Sleep(TimeSpan.FromSeconds(10));
                     var dmc = new Dmc(Mediation);
 
-                    //DmcObject.Data.Session.ModifiedTime =
+                    DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
                     return dmc.ReloadAsync(uri, "PUT", DmcObject).ContinueWith(t => {
                         var model = t.Result;
                         DmcObject = model;
@@ -765,13 +782,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         private void Downloader_Downloaded(object sender, DownloaderEventArgs e)
         {
+            StopDownload();
             Information.IsDownloading = false;
-
-            if(UsingDmc.Value) {
-                var downloader = (Downloader)sender;
-                var dmc = new Dmc(Mediation);
-                dmc.ReloadAsync(downloader.DownloadUri, "DELETE", DmcObject);
-            }
 
             OnDownloaded(sender, e);
         }
@@ -785,6 +797,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;
+                StopDownload();
                 Information.IsDownloading = false;
             } else {
                 var time = Constants.ServiceSmileVideoDownloadingErrorWaitTime;

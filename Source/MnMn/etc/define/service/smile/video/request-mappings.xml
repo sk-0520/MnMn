@@ -248,7 +248,8 @@
 		<item key="created-time" value="${created-time}" />
 		<item key="modified-time" value="${modified-time}" />
 		<item key="content-route" value="${content-route}" />
-		<item key="expire-time" value="${expire-time}" />
+		<item key="op-expire-time" value="${op-expire-time}" />
+		<item key="op-created-time" value="${op-created-time}" />
 		<item key="content-uri" value="${content-uri}" />
 		<item key="auto-info-method" value="${auto-info-method}" />
 		<item key="auto-info-name" value="${auto-info-name}" />
@@ -257,7 +258,7 @@
 		<item key="play-seek-time" value="0" />
 		<item key="play-speed" value="1.0" />
 
-		<content trim="none" oneline="false">
+		<content trim="content" oneline="true">
 			<![CDATA[
 
 <session>
@@ -305,8 +306,8 @@
 	<content_uri>${content-uri}</content_uri>
 	<session_operation_auth>
 		<session_operation_auth_by_signature>
-			<created_time>${created-time}</created_time>
-			<expire_time>${expire-time}</expire_time>
+			<created_time>${op-created-time}</created_time>
+			<expire_time>${op-expire-time}</expire_time>
 			<token>${token-minus-signature}</token>
 			<signature>${token-only-signature}</signature>
 		</session_operation_auth_by_signature>

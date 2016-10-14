@@ -30,5 +30,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var success = new[] { "200", "201" };
             return success.Any(s => string.Equals(rawModel.Meta.Status.Trim(), s, StringComparison.OrdinalIgnoreCase));
         }
+
+        public static DateTime ConvertSessionTIme(string time)
+        {
+            return RawValueUtility.ConvertUnixTimeWithMilliseconds(time, 3);
+        }
+        public static string ConvertRawSessionTIme(DateTime time)
+        {
+            return RawValueUtility.ConvertRawUnixTimeWithMilliseconds(time, 3);
+        }
     }
 }

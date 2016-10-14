@@ -81,7 +81,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             page.ReplaceRequestParameters["created-time"] = param.Data.Session.CreatedTime;
             page.ReplaceRequestParameters["modified-time"] = param.Data.Session.ModifiedTime;
             page.ReplaceRequestParameters["content-route"] = param.Data.Session.ContentRoute;
-            page.ReplaceRequestParameters["expire-time"] = param.Data.Session.OperationAuth.BySignature.ExpireTime;
+            page.ReplaceRequestParameters["op-created-time"] = param.Data.Session.OperationAuth.BySignature.CreatedTime;
+            page.ReplaceRequestParameters["op-expire-time"] = param.Data.Session.OperationAuth.BySignature.ExpireTime;
             page.ReplaceRequestParameters["content-uri"] = param.Data.Session.ContentUri;
             page.ReplaceRequestParameters["auto-info-method"] = param.Data.Session.ContentAuth.Information.Method;
             page.ReplaceRequestParameters["auto-info-name"] = param.Data.Session.ContentAuth.Information.Name;
