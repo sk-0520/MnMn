@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// HttpClient用ハンドラ。
         /// </summary>
-        protected HttpClientHandler ClientHandler { get; private set; } = new HttpClientHandler();
+        protected HttpClientHandler ClientHandler { get; private set; } = new HttpClientHandler() {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        };
 
         #endregion
 

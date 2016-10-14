@@ -296,7 +296,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected IDictionary<string, string> GetRequestHeaderCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
-            var usingMap = new Dictionary<string, string>();
+            var usingMap = new Dictionary<string, string>() {
+                ["Connection"] = "keep-alive",
+                ["User-Agent"] = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0",
+                ["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                ["Accept-Encoding"] = "gzip, deflate",
+            };
 
             var targetHeader = RequestHeaderList.Parameters
                 .FirstOrDefault(up => up.Key == key)

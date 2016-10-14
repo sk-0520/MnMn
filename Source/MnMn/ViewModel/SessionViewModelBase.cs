@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,7 +64,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         /// <summary>
         /// HttpClient用ハンドラ。
         /// </summary>
-        protected HttpClientHandler ClientHandler { get; } = new HttpClientHandler();
+        protected HttpClientHandler ClientHandler { get; } = new HttpClientHandler() {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        };
 
         /// <summary>
         /// ログイン状態。
