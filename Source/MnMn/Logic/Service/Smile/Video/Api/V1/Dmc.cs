@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo);
 
-            page.ReplaceRequestHeaders["Referer"] = "http://res.nimg.jp/swf/player/nicoplayer.swf?ts=ec1c8439e4654d504a8da7c98f4dec24";
+            //page.ReplaceRequestHeaders["Referer"] = "http://res.nimg.jp/swf/player/nicoplayer.swf?ts=ec1c8439e4654d504a8da7c98f4dec24";
 
             page.ReplaceUriParameters["api-uri"] = uri.OriginalString;
             page.ReplaceUriParameters["method"] = method;
