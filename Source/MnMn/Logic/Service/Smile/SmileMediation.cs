@@ -219,6 +219,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
+        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                    return GetRequestHeaderCore(key, replaceMap, serviceType);
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.GetRequestHeader(key, replaceMap, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.GetRequestHeader(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                    return (IDictionary<string, string>)requestHeaders;
+
+                case ServiceType.SmileVideo:
+                    return VideoMediation.ConvertRequestHeader(requestHeaders, serviceType);
+
+                case ServiceType.SmileLive:
+                    return LiveMediation.ConvertRequestHeader(requestHeaders, serviceType);
+
+                default:
+                    ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {

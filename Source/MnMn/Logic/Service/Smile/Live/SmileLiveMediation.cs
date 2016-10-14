@@ -144,6 +144,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return uri;
         }
 
+        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileLive) {
+                ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
+            }
+
+            return GetRequestHeaderCore(key, replaceMap, serviceType);
+        }
+
+        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileLive) {
+                ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+            }
+
+            return (IDictionary<string, string>)requestHeaders;
+        }
+
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {

@@ -152,6 +152,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
 
+        protected void ThrowNotSupportConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestHeaders)}: {requestHeaders}, {nameof(serviceType)}: {serviceType}");
+        }
+
         protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
@@ -291,20 +296,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected IDictionary<string, string> GetRequestHeaderCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
+            var usingMap = new Dictionary<string, string>();
+
             var targetHeader = RequestHeaderList.Parameters
                 .FirstOrDefault(up => up.Key == key)
             ;
             if(targetHeader == null) {
-                return (IDictionary<string, string>)EmptyMap;
+                return usingMap;
             }
 
-            return targetHeader.Items
+            var headerMap = targetHeader.Items
                 .Where(p => p.HasKey)
                 .ToDictionary(
                     p => p.Key,
                     p => ReplaceString(p.Value, replaceMap)
                 )
             ;
+            foreach(var pair in headerMap) {
+                usingMap[pair.Key] = pair.Value;
+            }
+
+            return usingMap;
         }
 
         protected IDictionary<string, string> GetRequestParameterCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -461,6 +473,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region IRequestCompatibility
+
+        public virtual IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
