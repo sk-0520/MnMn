@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public abstract class MediationBase:
         DisposeFinalizeBase,
         IGetUri,
+        IGetRequestHeader,
         IGetRequestParameter,
         ICommunication,
         IUriCompatibility,
@@ -45,10 +46,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IConvertCompatibility
     {
         public MediationBase()
-            : this(null, null, null, null)
+            : this(null, null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestParametersPath, string requestMappingsPath)
+        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath)
         {
             if(uriListPath != null) {
                 UriList = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(uriListPath);
@@ -60,6 +61,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(uriParametersPath);
             } else {
                 UriParameterList = new ParametersModel();
+            }
+
+            if(requestHeaderPath != null) {
+                RequestHeaderList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestHeaderPath);
+            } else {
+                RequestHeaderList = new ParametersModel();
             }
 
             if(requestParametersPath != null) {
@@ -82,6 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected UrisModel UriList { get; private set; }
 
         protected ParametersModel UriParameterList { get; private set; }
+
+        protected ParametersModel RequestHeaderList { get; private set; }
 
         protected ParametersModel RequestParameterList { get; private set; }
 
@@ -121,6 +130,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportGetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportGetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetRequestHeader)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportGetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -275,6 +289,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        protected IDictionary<string, string> GetRequestHeaderCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            var targetHeader = RequestHeaderList.Parameters
+                .FirstOrDefault(up => up.Key == key)
+            ;
+            if(targetHeader == null) {
+                return (IDictionary<string, string>)EmptyMap;
+            }
+
+            return targetHeader.Items
+                .Where(p => p.HasKey)
+                .ToDictionary(
+                    p => p.Key,
+                    p => ReplaceString(p.Value, replaceMap)
+                )
+            ;
+        }
+
         protected IDictionary<string, string> GetRequestParameterCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var targetParameter = RequestParameterList.Parameters
@@ -399,6 +431,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region IUriCompatibility
 
         public virtual string ConvertUri(string uri, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IGetRequestHeader
+
+        public virtual IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

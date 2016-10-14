@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
     public class SmileMediation: MediationCustomBase
     {
         public SmileMediation(Mediation mediation, SmileSettingModel setting)
-            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath)
+            : base(mediation, Constants.SmileUriListPath, Constants.SmileUriParametersListPath, Constants.SmileRequestHeadersListPath, Constants.SmileRequestParametersListPath, Constants.SmileRequestMappingsListPath)
         {
             Setting = setting;
 
