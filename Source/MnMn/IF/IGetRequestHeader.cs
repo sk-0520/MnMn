@@ -19,13 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
-    public class MappingResultModel: ModelBase
+    public interface IGetRequestHeader
     {
-        public string ContentType { get; set; }
-        public string Result { get; set; }
+        IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

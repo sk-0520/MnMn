@@ -258,6 +258,7 @@
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
+    <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
