@@ -736,6 +736,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 DmcPollingTask = Task.Run(() => {
                     Thread.Sleep(TimeSpan.FromSeconds(10));
                     var dmc = new Dmc(Mediation);
+
+                    //DmcObject.Data.Session.ModifiedTime =
                     return dmc.ReloadAsync(uri, "PUT", DmcObject).ContinueWith(t => {
                         var model = t.Result;
                         DmcObject = model;
