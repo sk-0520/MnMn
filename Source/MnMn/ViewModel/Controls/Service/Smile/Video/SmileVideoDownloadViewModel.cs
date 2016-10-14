@@ -102,6 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
         protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
+        protected Uri DmcApiUri { get; private set; }
         protected RawSmileVideoDmcSrcIdToMultiplexerModel DmcMultiplexer { get { return DmcObject.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
         protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
         Task DmcPollingTask { get; set; }
@@ -389,10 +390,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var dmc = new Dmc(Mediation);
             var tuple = GetDmcObject();
-            var uri = new Uri(tuple.Item1);
+            DmcApiUri = new Uri(tuple.Item1);
             var model = tuple.Item2;
 
-            var result = await dmc.LoadAsync(uri, model);
+            var result = await dmc.LoadAsync(DmcApiUri, model);
 
             SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
             if(!SmileVideoDmcObjectUtility.IsSuccessResponse(result)) {
@@ -641,6 +642,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             IsProcessCancel = false;
             UsingDmc.Value = false;
             DmcObject = null;
+            DmcApiUri = null;
             DmcPollingTask = null;
             DmcPollingCancel = null;
             DownloadUri = null;
@@ -726,9 +728,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected void StopDownload()
         {
             if(UsingDmc.Value) {
-                if(DownloadUri != null && Information != null && Information.IsDownloading) {
+                if(DmcApiUri != null && Information != null && Information.IsDownloading) {
                     var dmc = new Dmc(Mediation);
-                    dmc.ReloadAsync(DownloadUri, "DELETE", DmcObject);
+                    dmc.ReloadAsync(DmcApiUri, "DELETE", DmcObject);
                 }
             }
         }
@@ -748,14 +750,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     VideoFile.Refresh();
                     VideoTotalSize = VideoFile.Length + downloader.ResponseHeaders.ContentLength.Value;
                 }
-                var uri = downloader.DownloadUri;
+
                 DmcPollingCancel = new CancellationTokenSource();
                 DmcPollingTask = Task.Run(() => {
                     Thread.Sleep(TimeSpan.FromSeconds(10));
                     var dmc = new Dmc(Mediation);
 
                     DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
-                    return dmc.ReloadAsync(uri, "PUT", DmcObject).ContinueWith(t => {
+                    return dmc.ReloadAsync(DmcApiUri, "PUT", DmcObject).ContinueWith(t => {
                         var model = t.Result;
                         DmcObject = model;
                     }, DmcPollingCancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.Current);

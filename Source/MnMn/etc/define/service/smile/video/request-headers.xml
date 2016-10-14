@@ -1,2 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<parameters />
+<parameters>
+	<param key="video-dmc-reload">
+		<item key="_format" value="xml" />
+		<item key="_method" value="${method}" />
+		<item key="suppress_response_codes" value="true" />
+	</param>
+</parameters>

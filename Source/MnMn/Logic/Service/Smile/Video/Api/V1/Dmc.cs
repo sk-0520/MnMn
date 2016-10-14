@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             var page = new PageLoader(Mediation, Session, key, ServiceType.SmileVideo);
 
+            page.ReplaceRequestHeaders["Referer"] = "http://res.nimg.jp/swf/player/nicoplayer.swf?ts=ec1c8439e4654d504a8da7c98f4dec24";
+
             page.ReplaceUriParameters["api-uri"] = uri.OriginalString;
             page.ReplaceUriParameters["method"] = method;
 
@@ -102,7 +104,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public Task<RawSmileVideoDmcObjectModel> ReloadAsync(Uri uri, string method, RawSmileVideoDmcObjectModel param)
         {
-            return LoadCoreAsync(SmileVideoMediationKey.dmcReload, uri, method, param);
+            // なんかダサいね！
+            var targetUri = new Uri(uri.OriginalString + "/" + param.Data.Session.Id);
+            return LoadCoreAsync(SmileVideoMediationKey.dmcReload, targetUri, method, param);
         }
 
         #endregion
