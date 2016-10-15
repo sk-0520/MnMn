@@ -127,7 +127,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#208: ファインダーのチェックボタン消えた！',
+						'comments': [
+							'ファインダーの Grid 要素の 0 column が上書きされてたよ！'
+						]
 					},
 					{
 						'revision': '',

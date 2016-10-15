@@ -83,10 +83,10 @@
 
     <Grid Grid.Row="1" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
       <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="100" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -107,7 +107,7 @@
           <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
         </xctk:SplitButton.DropDownContent>
       </xctk:SplitButton>-->
-      <mamc:SplitButton SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
+      <mamc:SplitButton Grid.Column="1" SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
         <mamc:SplitButton.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
