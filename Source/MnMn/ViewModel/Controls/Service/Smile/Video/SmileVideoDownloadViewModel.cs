@@ -806,13 +806,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var video = mux.VideoSrcIds.First();
                     var audio = mux.AudioSrcIds.First();
 
-                    if(Information.LoadedDmc[SmileVideoInformationUtility.GetDmcRoleKey(video, audio)]) {
-                        // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
-                        if(VideoTotalSize - 1 <= VideoFile.Length) {
-                            VideoLoadedSize = VideoFile.Length;
-                            e.Cancel = true;
-                            e.Completed = true;
-                            return;
+                    bool isDmcLoaded;
+                    if(Information.LoadedDmc.TryGetValue(SmileVideoInformationUtility.GetDmcRoleKey(video, audio), out isDmcLoaded)) {
+                        if(isDmcLoaded) {
+                            // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
+                            if(VideoTotalSize - 1 <= VideoFile.Length) {
+                                VideoLoadedSize = VideoFile.Length;
+                                e.Cancel = true;
+                                e.Completed = true;
+                                return;
+                            }
                         }
                     }
                 }
