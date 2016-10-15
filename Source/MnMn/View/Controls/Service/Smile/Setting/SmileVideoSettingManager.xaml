@@ -93,7 +93,7 @@
             <RadioButton IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}">
               <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource ParentItemLikeText}">プレイヤーで開く</TextBlock>
-                <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding UsingDmc}">(実験)新形式を優先</CheckBox>
+                <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding UsingDmc}">(実験)新形式を使用</CheckBox>
               </StackPanel>
             </RadioButton>
             <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" />

@@ -758,6 +758,7 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveCategoryContext.xaml">
