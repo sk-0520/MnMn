@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Event
         //     イベントを取り消す場合は true。それ以外の場合は false。
         public bool Cancel { get; set; }
 
+        public bool Completed { get; set; }
+
         #endregion
     }
 }

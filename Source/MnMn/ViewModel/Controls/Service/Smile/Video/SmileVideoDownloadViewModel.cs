@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             SerializeUtility.SaveXmlSerializeToFile(Information.DmcFile.FullName, result);
             if(!SmileVideoDmcObjectUtility.IsSuccessResponse(result)) {
-                Mediation.Logger.Warning(result.ToString());
+                Mediation.Logger.Warning($"{VideoId}: {result.Meta.Status}, {result.Meta.Message}");
                 return false;
             }
 
@@ -408,12 +408,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var mux = DmcMultiplexer;
             var ext = DmcFileExtension;
-            var downloadPath = Information.GetDmcVideoFileName(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), ext);
+            var video = mux.VideoSrcIds.First();
+            var audio = mux.AudioSrcIds.First();
+            var downloadPath = Information.GetDmcVideoFileName(video, audio, ext);
             var downloadFile = new FileInfo(downloadPath);
+            downloadFile.Refresh();
+            var headPosition = 0L;
+            if(downloadFile.Exists) {
+                headPosition = downloadFile.Length;
+            }
 
             UsingDmc.Value = true;
 
-            await LoadVideoAsync(downloadUri, downloadFile, 0);
+            await LoadVideoAsync(downloadUri, downloadFile, headPosition);
             return true;
         }
 
@@ -731,16 +738,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(UsingDmc.Value) {
                 if(DmcApiUri != null && Information != null && Information.IsDownloading) {
-                    if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
-                        DmcPollingWait.Set();
+                    if(DmcPollingWait != null) {
+                        if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
+                            DmcPollingWait.Set();
+                            DmcPollingWait.Dispose();
+                        }
                     }
 
                     var dmc = new Dmc(Mediation);
                     dmc.CloseAsync(DmcApiUri, DmcObject);
 
-                    DmcPollingWait.Dispose();
-                    DmcPollingCancel.Cancel();
-                    //DmcPollingTask.Dispose();
+                    if(DmcPollingCancel != null) {
+                        DmcPollingCancel.Cancel();
+                    }
                 }
             }
         }
@@ -774,6 +784,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
         {
             VideoLoadState = LoadState.Loading;
+
             if(e.DownloadStartType == DownloadStartType.Range) {
                 DonwloadStartPosition = e.RangeHeadPosition;
             }
@@ -782,8 +793,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(UsingDmc.Value) {
                 if(downloader.ResponseHeaders.ContentLength.HasValue) {
+                    Information.IsDownloading = true;
+
                     VideoFile.Refresh();
+
                     VideoTotalSize = VideoFile.Length + downloader.ResponseHeaders.ContentLength.Value;
+
+                    Mediation.Logger.Information($"file:{VideoFile.Length}, response:{downloader.ResponseHeaders.ContentLength.Value}, total:{VideoTotalSize}");
+
+                    var mux = DmcMultiplexer;
+                    var ext = DmcFileExtension;
+                    var video = mux.VideoSrcIds.First();
+                    var audio = mux.AudioSrcIds.First();
+
+                    if(Information.LoadedDmc[SmileVideoInformationUtility.GetDmcRollKey(video, audio)]) {
+                        // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
+                        if(VideoTotalSize - 1 <= VideoFile.Length) {
+                            VideoLoadedSize = VideoFile.Length;
+                            e.Cancel = true;
+                            e.Completed = true;
+                            return;
+                        }
+                    }
                 }
 
                 DmcPollingWait = new AutoResetEvent(false);

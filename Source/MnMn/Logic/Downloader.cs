@@ -104,16 +104,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        protected bool OnDownloadStart(DownloadStartType downloadStart, long rangeHeadPosition, long rangeTailPosition)
+        protected DownloadStartEventArgs OnDownloadStart(DownloadStartType downloadStart, long rangeHeadPosition, long rangeTailPosition)
         {
-            if(DownloadStart == null) {
-                return false;
+            var e = new DownloadStartEventArgs(downloadStart, rangeHeadPosition, rangeTailPosition);
+            if(DownloadStart != null) {
+                DownloadStart(this, e);
             }
 
-            var e = new DownloadStartEventArgs(downloadStart, rangeHeadPosition, rangeTailPosition);
-            DownloadStart(this, e);
-
-            return e.Cancel;
+            return e;
         }
 
         protected bool OnDonwloading(ArraySegment<byte> data, int counter, long secondsDownlodingSize)
@@ -196,8 +194,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
                 using(var reader = new BinaryReader(task.Result)) {
                     var downloadStartType = UsingRangeDonwload ? DownloadStartType.Range : DownloadStartType.Begin;
-                    if(OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision)) {
+                    var downloadStartArgs = OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision);
+                    if(downloadStartArgs.Cancel) {
                         Cancled = true;
+                        Completed = downloadStartArgs.Completed;
+                        if(Completed) {
+                            OnDownloaded();
+                        }
                         return;
                     }
 

@@ -258,7 +258,7 @@
 		<item key="play-seek-time" value="0" />
 		<item key="play-speed" value="1.0" />
 
-		<content trim="content" oneline="true">
+		<content trim="none" oneline="false">
 			<![CDATA[
 
 <session>
