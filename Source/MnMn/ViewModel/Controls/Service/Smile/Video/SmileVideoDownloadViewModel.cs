@@ -304,7 +304,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             VideoLoadState = LoadState.Loaded;
                             if(UsingDmc.Value) {
                                 var mux = DmcMultiplexer;
-                                var roll = SmileVideoInformationUtility.GetDmcRollKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
+                                var roll = SmileVideoInformationUtility.GetDmcRoleKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
                                 Information.LoadedDmc[roll] = true;
                             } else {
                                 if(Information.IsEconomyMode) {
@@ -806,7 +806,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     var video = mux.VideoSrcIds.First();
                     var audio = mux.AudioSrcIds.First();
 
-                    if(Information.LoadedDmc[SmileVideoInformationUtility.GetDmcRollKey(video, audio)]) {
+                    if(Information.LoadedDmc[SmileVideoInformationUtility.GetDmcRoleKey(video, audio)]) {
                         // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
                         if(VideoTotalSize - 1 <= VideoFile.Length) {
                             VideoLoadedSize = VideoFile.Length;

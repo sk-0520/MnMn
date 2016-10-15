@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -924,15 +925,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return result;
         }
 
-        static string GetCacheFileName(string videoId, string roll, string extension)
+        static string GetCacheFileName(string videoId, string role, string extension)
         {
-            return PathUtility.CreateFileName(videoId, roll, extension);
+            return PathUtility.CreateFileName(videoId, role, extension);
         }
 
-        string GetCacheFileName(string roll, string extension)
+        string GetCacheFileName(string role, string extension)
         {
-            CheckUtility.EnforceNotNullAndNotEmpty(roll);
-            return PathUtility.CreateFileName(VideoId, roll, extension);
+            CheckUtility.EnforceNotNullAndNotEmpty(role);
+            return PathUtility.CreateFileName(VideoId, role, extension);
         }
         string GetCacheFileName(string extension)
         {
@@ -1030,7 +1031,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             ThrowNotGetthumbinfoSource();
 
-            var roll = $"video.{SmileVideoInformationUtility.GetDmcRollKey(video, audio)}.dmc";
+            var roll = $"video.{SmileVideoInformationUtility.GetDmcRoleKey(video, audio)}.dmc";
 
             return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
         }
@@ -1412,12 +1413,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 needSave = true;
             }
 
+
+            var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToArray();
+            var dmcCheckes = new List<CheckResultModel<long>>();
+            foreach(var dmcFile in dmcFiles) {
+                var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
+                if(check.IsSuccess) {
+                    var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
+                    IndividualVideoSetting.LoadedDmc[role] = false;
+                    needSave = true;
+                }
+                dmcCheckes.Add(check);
+            }
+
             var checks = new[] {
                 normalCheck,
                 economyCheck,
                 normalFlashCheck,
                 economyFlashCheck,
-            };
+            }.Concat(dmcCheckes);
 
             if(needSave) {
                 SaveSetting(true);
