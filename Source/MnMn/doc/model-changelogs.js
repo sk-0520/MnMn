@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#209: App.configのユーザファイルをひな形として準備しておく'
 					},
 					{
 						'revision': '',
