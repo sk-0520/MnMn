@@ -144,7 +144,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'open',
+						'subject': '#147: 1.5GBの投稿動画',
+						'comments': [
+							'既存実装から外れるのでややこい'
+						]
 					},
 					{
 						'revision': '',
