@@ -63,6 +63,7 @@
     </StackPanel>
 
     <TabControl
+      x:Name="finderTab"
       Grid.Row="1"
       ItemsSource="{Binding RankingCategoryGroupItems}"
       SelectedItem="{Binding SelectedRankingCategory}"
