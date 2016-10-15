@@ -357,6 +357,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
+                    return Smile.GetRequestHeader(key, replaceMap, serviceType);
+
+                default:
+                    ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            switch(serviceType) {
+                case ServiceType.Smile:
+                case ServiceType.SmileVideo:
+                case ServiceType.SmileLive:
+                    return Smile.ConvertRequestHeader(requestHeaders, serviceType);
+
+                default:
+                    ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                    throw new NotImplementedException();
+            }
+        }
+
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {

@@ -19,13 +19,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+using System.Xml.Serialization;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class MappingResultModel: ModelBase
+    [Serializable, XmlRoot("object")]
+    public class RawSmileVideoDmcObjectModel: RawModelBase
     {
-        public string ContentType { get; set; }
-        public string Result { get; set; }
+        #region property
+
+        [XmlElement("meta")]
+        public RawSmileVideoDmcMetaModel Meta { get; set; } = new RawSmileVideoDmcMetaModel();
+
+        [XmlElement("data")]
+        public RawSmileVideoDmcDataModel Data { get; set; } = new RawSmileVideoDmcDataModel();
+
+        #endregion
     }
 }

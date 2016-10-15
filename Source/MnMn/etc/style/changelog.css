@@ -78,6 +78,11 @@ p.uri {
 	color: #aa0;
 }
 
+*.changelog *.open:before {
+	content: "[継続中]";
+	color: #0aa;
+}
+
 *.changelog *.comment {
 	font-size: 90%;
 }

@@ -145,6 +145,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return LoadWatchPageHtmlSource(userAgent, watchPageUri);
         }
 
+        public static string GetDmcRollKey(string video, string audio)
+        {
+            return $"[{video}]-[{audio}]";
+        }
+
         #endregion
     }
 }

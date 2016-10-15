@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         #region function
 
-        public static RawSmileVideoGetflvModel ConvertFromRawData(string rawWwwFormData)
+        static RawSmileVideoGetflvModel ConvertFromRawData(string rawWwwFormData)
         {
             var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoGetflvModel>(rawWwwFormData);
             result.Raw = rawWwwFormData;
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             return result;
         }
 
-        async Task<RawSmileVideoGetflvModel> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType)
+        async Task<RawSmileVideoGetflvModel> LoadScrapingAsync(Uri uri, SmileVideoMovieType movieType, bool usingDmc)
         {
             //var re = await GetNormalAsync(uri);
             // WEBから取得してみる
@@ -82,8 +82,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var flashvars = json.SelectToken("flashvars");
                 var flvInfo = flashvars.SelectToken("flvInfo");
                 var rawFlvText = flvInfo.ToString();
+
                 var convertedFlvText = HttpUtility.UrlDecode(rawFlvText);
                 var result = ConvertFromRawData(convertedFlvText);
+
+                if(usingDmc) {
+                    result.IsDmc = flashvars.SelectToken("isDmc")?.ToString();
+                    if(result.IsDmc != null && RawValueUtility.ConvertBoolean(result.IsDmc)) {
+                        var dmcInfo = flashvars.SelectToken("dmcInfo");
+                        var dmcInfoText = dmcInfo.ToString();
+                        var convertedDmcInfo = HttpUtility.UrlDecode(dmcInfoText);
+                        result.DmcInfo = convertedDmcInfo;
+                    }
+                }
 
                 return result;
             }
@@ -115,21 +126,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
             }
         }
 
-        public async Task<RawSmileVideoGetflvModel> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType)
+        public async Task<RawSmileVideoGetflvModel> LoadAsync(string videoId, Uri watchUri, SmileVideoMovieType movieType, bool usingDmc)
         {
             await LoginIfNotLoginAsync();
 
-            if(IsScrapingPattern(videoId)) {
-                return await LoadScrapingAsync(watchUri, movieType);
-            } else {
-                var map = new StringsModel() {
-                    { "video-id", videoId },
-                };
-                var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
-                var convertedUri = Mediation.ConvertUri(srcUri.Uri, Define.ServiceType.SmileVideo);
-                var uri = new Uri(convertedUri);
-                return await LoadNormalAsync(uri, movieType);
-            }
+            //if(IsScrapingPattern(videoId)) {
+            //    return await LoadScrapingAsync(watchUri, movieType);
+            //} else {
+            //    var map = new StringsModel() {
+            //        { "video-id", videoId },
+            //    };
+            //    var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
+            //    var convertedUri = Mediation.ConvertUri(srcUri.Uri, Define.ServiceType.SmileVideo);
+            //    var uri = new Uri(convertedUri);
+            //    return await LoadNormalAsync(uri, movieType);
+            //}
+            var usingUri = movieType == SmileVideoMovieType.Swf
+                ? new Uri(watchUri.OriginalString + "?as3=1")
+                : watchUri
+            ;
+            return await LoadScrapingAsync(usingUri, movieType, usingDmc);
         }
 
 

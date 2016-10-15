@@ -15,17 +15,28 @@ You should have received a copy of the GNU General Public License
 along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
 {
-    public class MappingResultModel: ModelBase
+    [Serializable]
+    public class RawSmileVideoDmcSessionOperationAuthBySignatureModel: ModelBase
     {
-        public string ContentType { get; set; }
-        public string Result { get; set; }
+        #region property
+
+        [XmlElement("created_time")]
+        public string CreatedTime { get; set; }
+
+        [XmlElement("expire_time")]
+        public string ExpireTime { get; set; }
+
+        [XmlElement("token")]
+        public string Token { get; set; }
+
+        [XmlElement("signature")]
+        public string Signature { get; set; }
+
+        #endregion
     }
 }

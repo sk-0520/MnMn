@@ -77,18 +77,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public ServiceType ServiceType { get; private set; }
 
         public Dictionary<string, string> ReplaceUriParameters { get; } = new Dictionary<string, string>();
-
+        public Dictionary<string, string> ReplaceRequestHeaders { get; } = new Dictionary<string, string>();
         public Dictionary<string, string> ReplaceRequestParameters { get; } = new Dictionary<string, string>();
 
         public Uri Uri { get; private set; }
 
-        public FormUrlEncodedContent PlainContent { get; private set; }
-        public StringContent MappingContent { get; private set; }
+        protected IDictionary<string, string> Headers { get; private set; }
+
+        protected FormUrlEncodedContent PlainContent { get; private set; }
+        protected StringContent MappingContent { get; private set; }
 
         /// <summary>
         /// リクエストパラメータに使用する形式。
         /// </summary>
-        public ParameterType ParameterType { get; private set; }
+        protected ParameterType ParameterType { get; private set; }
 
         /// <summary>
         /// URI構築処理を用いず指定URIの使用を強制する。
@@ -164,6 +166,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Uri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
         }
 
+        protected void MakeRequestHeader()
+        {
+            var rawHeader = Mediation.GetRequestHeader(Key, ReplaceRequestHeaders, ServiceType);
+            var convertedHeader = Mediation.ConvertRequestHeader((IReadOnlyDictionary<string, string>)rawHeader, ServiceType);
+            Headers = (Dictionary<string, string>)convertedHeader;
+
+            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
+        }
+
         protected void MakeRequestParameter()
         {
             switch(ParameterType) {
@@ -212,6 +223,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected Func<Task<HttpResponseMessage>> GetExecutor(Define.PageLoaderMethod httpMethod)
         {
+            HttpUserAgent.DefaultRequestHeaders.Clear();
+            foreach(var pair in Headers) {
+                HttpUserAgent.DefaultRequestHeaders.Add(pair.Key, pair.Value);
+            }
+
             var method = new Dictionary<Define.PageLoaderMethod, Func<Task<HttpResponseMessage>>>() {
                 { Define.PageLoaderMethod.Get, () => {
                     if(HeaderCheckOnly) {
@@ -250,6 +266,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             try {
                 MakeUri();
+                MakeRequestHeader();
                 MakeRequestParameter();
 
                 var executor = GetExecutor(httpMethod);

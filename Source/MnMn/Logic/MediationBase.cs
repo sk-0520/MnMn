@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public abstract class MediationBase:
         DisposeFinalizeBase,
         IGetUri,
+        IGetRequestHeader,
         IGetRequestParameter,
         ICommunication,
         IUriCompatibility,
@@ -45,10 +46,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IConvertCompatibility
     {
         public MediationBase()
-            : this(null, null, null, null)
+            : this(null, null, null, null, null)
         { }
 
-        protected MediationBase(string uriListPath, string uriParametersPath, string requestParametersPath, string requestMappingsPath)
+        protected MediationBase(string uriListPath, string uriParametersPath, string requestHeaderPath, string requestParametersPath, string requestMappingsPath)
         {
             if(uriListPath != null) {
                 UriList = SerializeUtility.LoadXmlSerializeFromFile<UrisModel>(uriListPath);
@@ -60,6 +61,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 UriParameterList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(uriParametersPath);
             } else {
                 UriParameterList = new ParametersModel();
+            }
+
+            if(requestHeaderPath != null) {
+                RequestHeaderList = SerializeUtility.LoadXmlSerializeFromFile<ParametersModel>(requestHeaderPath);
+            } else {
+                RequestHeaderList = new ParametersModel();
             }
 
             if(requestParametersPath != null) {
@@ -82,6 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected UrisModel UriList { get; private set; }
 
         protected ParametersModel UriParameterList { get; private set; }
+
+        protected ParametersModel RequestHeaderList { get; private set; }
 
         protected ParametersModel RequestParameterList { get; private set; }
 
@@ -123,6 +132,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
+        protected void ThrowNotSupportGetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IGetRequestHeader)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
+        }
+
         protected void ThrowNotSupportGetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
@@ -136,6 +150,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ThrowNotSupportConvertUri(string uri, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
+        }
+
+        protected void ThrowNotSupportConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestHeaders)}: {requestHeaders}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
@@ -275,6 +294,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        protected IDictionary<string, string> GetRequestHeaderCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            var usingMap = new Dictionary<string, string>() {
+                //["User-Agent"] = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/48.1",
+                //["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                //["Accept-Encoding"] = "gzip, deflate",
+            };
+
+            var targetHeader = RequestHeaderList.Parameters
+                .FirstOrDefault(up => up.Key == key)
+            ;
+            if(targetHeader == null) {
+                return usingMap;
+            }
+
+            var headerMap = targetHeader.Items
+                .Where(p => p.HasKey)
+                .ToDictionary(
+                    p => p.Key,
+                    p => ReplaceString(p.Value, replaceMap)
+                )
+            ;
+            foreach(var pair in headerMap) {
+                usingMap[pair.Key] = pair.Value;
+            }
+
+            return usingMap;
+        }
+
         protected IDictionary<string, string> GetRequestParameterCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var targetParameter = RequestParameterList.Parameters
@@ -405,6 +453,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
+        #region IGetRequestHeader
+
+        public virtual IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region IGetRequestParameter
 
         public virtual IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
@@ -420,6 +477,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region IRequestCompatibility
+
+        public virtual IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {

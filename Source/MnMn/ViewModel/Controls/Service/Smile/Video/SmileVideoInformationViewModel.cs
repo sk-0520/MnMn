@@ -58,6 +58,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -81,6 +82,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _isPlaying = false;
         bool _isDownloading = false;
+
+        JObject _dmcInfo;
 
         //int _referenceCount;
 
@@ -190,6 +193,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// コメントファイル。
         /// </summary>
         public FileInfo MsgFile { get; private set; }
+
+        /// <summary>
+        /// 新形式受信ファイル。
+        /// </summary>
+        public FileInfo DmcFile { get; private set; }
 
         #endregion
 
@@ -710,6 +718,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        #region dmc
+
+        public bool IsDmc
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return RawValueUtility.ConvertBoolean(Getflv.IsDmc);
+            }
+        }
+
+        public JObject DmcInfo
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                if(this._dmcInfo == null) {
+                    this._dmcInfo = JObject.Parse(Getflv.DmcInfo);
+                }
+
+                return this._dmcInfo;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #endregion
@@ -759,6 +793,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return IndividualVideoSetting.ConvertedSwf; }
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
+
+        public IDictionary<string, bool> LoadedDmc { get { return IndividualVideoSetting.LoadedDmc; } }
 
         public bool IsEnabledGlobalCommentFilering
         {
@@ -955,6 +991,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
             MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
@@ -986,6 +1023,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThrowNotGetthumbinfoSource();
 
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
+        }
+
+
+        public string GetDmcVideoFileName(string video, string audio, string ext)
+        {
+            ThrowNotGetthumbinfoSource();
+
+            var roll = $"video.{SmileVideoInformationUtility.GetDmcRollKey(video, audio)}.dmc";
+
+            return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
         }
 
         //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
@@ -1055,7 +1102,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    });
         //}
 
-        public Task<CheckModel> LoadGetflvAsync(bool isSave)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="isSave"></param>
+        /// <param name="usingDmc">ダウンロードに新形式を使用するか</param>
+        /// <returns></returns>
+        public Task<CheckModel> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
             if(InformationLoadState == LoadState.Failure) {
                 return Task.FromResult(CheckModel.Failure());
@@ -1063,7 +1116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var getflv = new Getflv(Mediation);
 
-            return getflv.LoadAsync(VideoId, WatchUrl, MovieType).ContinueWith(t => {
+            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {

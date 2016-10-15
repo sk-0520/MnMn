@@ -258,6 +258,7 @@
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
+    <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
@@ -267,10 +268,12 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveInformationLoader.cs" />
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveFeedUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
@@ -297,6 +300,23 @@
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveThumbnailModel.cs" />
     <Compile Include="Model\Service\Smile\Live\SmileLiveCategoryModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentSrcIdSetModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcDataModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcHeartBeatModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcKeepMethodModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcMetaModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcObjectModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcProtocolModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcProtocolOutputDownloadParameterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcProtocolParameterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcRuntimeInformationModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
@@ -306,6 +326,7 @@
     <Compile Include="Model\Setting\Service\Smile\User\SmileUserItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\User\SmileUserSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDownloadSetting.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
@@ -401,6 +422,10 @@
     <Content Include="etc\define\service\smile\live\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\define\service\smile\live\request-headers.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\service\smile\live\uri-list.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -413,6 +438,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\live\request-params.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\request-headers.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\request-headers.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\theme.xml">
@@ -709,6 +742,7 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveCategoryContext.xaml">

@@ -30,6 +30,8 @@
 	<item key="video-recommendation-page" uri="http://www.nicovideo.jp/recommendations" param="query" />
 	<item key="video-recommendation-api"  uri="http://www.nicovideo.jp/api/recommendations" param="query" />
 
+	<item key="video-dmc" uri="${api-uri}" param="query" request-type="mapping" />
+	<item key="video-dmc-reload" uri="${api-uri}" param="query" request-type="mapping" />
 
 </uri>
 
