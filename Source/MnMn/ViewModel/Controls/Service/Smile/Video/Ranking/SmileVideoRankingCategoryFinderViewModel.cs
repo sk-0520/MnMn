@@ -34,6 +34,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -45,13 +46,14 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking
 {
-    public class SmileVideoRankingCategoryFinderViewModel: SmileVideoFeedFinderViewModelBase
+    public class SmileVideoRankingCategoryFinderViewModel: SmileVideoFeedFinderViewModelBase, ISelected
     {
         #region variable
 
         DefinedElementModel _selectedPeriod;
         DefinedElementModel _selectedTarget;
 
+        bool _isSelected;
 
         #endregion
 
@@ -134,6 +136,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
         {
             var ranking = new Logic.Service.Smile.Video.Api.V1.Ranking(Mediation);
             return ranking.LoadAsync(SelectedTarget.Key, SelectedPeriod.Key, Category.Key);
+        }
+
+        #endregion
+
+        #region ISelected
+
+        public bool IsSelected
+        {
+            get { return this._isSelected; }
+            set { SetVariableValue(ref this._isSelected, value); }
         }
 
         #endregion

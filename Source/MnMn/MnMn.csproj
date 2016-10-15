@@ -256,6 +256,7 @@
     <Compile Include="Define\TextShowType.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
     <Compile Include="IF\Control\IPagerFinder.cs" />
+    <Compile Include="IF\Control\ISelected.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />

@@ -193,7 +193,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
                 },
                 () => {
                     var viewModel = new SmileVideoRankingCategoryFinderViewModel(Mediation, RankingModel, period, target, category);
-                    RankingCategoryGroupItems.Insert(0, viewModel);
+                    RankingCategoryGroupItems.Add(viewModel);
+                    viewModel.IsSelected = true;
+
                     return viewModel;
                 }
             );
