@@ -354,7 +354,12 @@
             <Button Style="{StaticResource TabReloadButton}" />
 
             <!-- contentcontrol の datatrigger で適当にやろうと思ったけどコマンドのバインドが null っちゃう -->
-            <Image Source="/Resources/Service/Smile/Video/Search/Pin.png" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ItemImage}" />
+            <!--<Image Source="/Resources/Service/Smile/Video/Search/Pin.png" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ItemImage}" />-->
+            <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Pin}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
             <Button>
               <Button.Style>
                 <Style TargetType="Button" BasedOn="{StaticResource TabCloseButton}">

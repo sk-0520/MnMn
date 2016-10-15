@@ -132,4 +132,218 @@
 			]]>
 		</content>
 	</mapping>
+
+	<mapping key="video-dmc">
+		<item key="recipe-id" value="${recipe-id}" />
+		<item key="content-id" value="${content-id}" />
+		<item key="protocol-name" value="${protocol-name}" />
+		<item key="videos" value="${videos}" />
+		<item key="audios" value="${audios}" />
+		<item key="heartbeat-lifetime" value="${heartbeat-lifetime}" />
+		<item key="token-minus-signature" value="${token-minus-signature}" />
+		<item key="token-only-signature" value="${token-only-signature}" />
+		<item key="auth-type" value="${auth-type}" />
+		<item key="user-id" value="${user-id}" />
+		<item key="content-key-timeout" value="${content-key-timeout}" />
+		<item key="player-id" value="${player-id}" />
+		<item key="priority" value="${priority}" />
+
+		<item key="created-time" value="${created-time}" />
+		<item key="modified-time" value="${modified-time}" />
+		<item key="content-route" value="${content-route}" />
+
+		<item key="service-id" value="nicovideo" />
+		<item key="timing-constraint" value="unlimited" />
+		<item key="max-content-count" value="10" />
+		<item key="protocol-method" value="GET" />
+		<item key="file-extension" value="${file-extension}" />
+
+		<content trim="none" oneline="false">
+			<![CDATA[
+
+	<session>
+		<recipe_id>${recipe-id}</recipe_id>
+		<content_id>${content-id}</content_id>
+		<content_type>movie</content_type>
+		<protocol>
+			<name>${protocol-name}</name>
+			<parameters>
+				<http_parameters>
+					<method>${protocol-method}</method>
+					<parameters>
+						<http_output_download_parameters>
+							<file_extension>${file-extension}</file_extension>
+						</http_output_download_parameters>
+					</parameters>
+				</http_parameters>
+			</parameters>
+		</protocol>
+		<priority>${priority}</priority>
+		<content_src_id_sets>
+			<content_src_id_set>
+				<content_src_ids>
+					<src_id_to_mux>
+						<video_src_ids>
+							${videos}
+						</video_src_ids>
+						<audio_src_ids>
+							${audios}
+						</audio_src_ids>
+					</src_id_to_mux>
+				</content_src_ids>
+			</content_src_id_set>
+		</content_src_id_sets>
+		<keep_method>
+			<heartbeat>
+				<lifetime>${heartbeat-lifetime}</lifetime>
+			</heartbeat>
+		</keep_method>
+		<timing_constraint>${timing-constraint}</timing_constraint>
+		<session_operation_auth>
+			<session_operation_auth_by_signature>
+				<token>${token-minus-signature}</token>
+				<signature>${token-only-signature}</signature>
+			</session_operation_auth_by_signature>
+		</session_operation_auth>
+		<content_auth>
+			<auth_type>${auth-type}</auth_type>
+			<service_id>${service-id}</service_id>
+			<service_user_id>${user-id}</service_user_id>
+			<max_content_count>${max-content-count}</max_content_count>
+			<content_key_timeout>${content-key-timeout}</content_key_timeout>
+		</content_auth>
+		<client_info>
+			<player_id>${player-id}</player_id>
+		</client_info>
+	</session>
+
+
+			]]>
+		</content>
+
+	</mapping>
+
+	<mapping key="video-dmc-reload">
+		<item key="recipe-id" value="${recipe-id}" />
+		<item key="content-id" value="${content-id}" />
+		<item key="protocol-name" value="${protocol-name}" />
+		<item key="videos" value="${videos}" />
+		<item key="audios" value="${audios}" />
+		<item key="heartbeat-lifetime" value="${heartbeat-lifetime}" />
+		<item key="token-minus-signature" value="${token-minus-signature}" />
+		<item key="token-only-signature" value="${token-only-signature}" />
+		<item key="auth-type" value="${auth-type}" />
+		<item key="user-id" value="${user-id}" />
+		<item key="content-key-timeout" value="${content-key-timeout}" />
+		<item key="player-id" value="${player-id}" />
+		<item key="priority" value="${priority}" />
+
+		<item key="service-id" value="nicovideo" />
+		<item key="timing-constraint" value="unlimited" />
+		<item key="max-content-count" value="10" />
+		<item key="protocol-method" value="GET" />
+		<item key="file-extension" value="${file-extension}" />
+
+		<item key="id" value="${id}" />
+		<item key="created-time" value="${created-time}" />
+		<item key="modified-time" value="${modified-time}" />
+		<item key="content-route" value="${content-route}" />
+		<item key="op-expire-time" value="${op-expire-time}" />
+		<item key="op-created-time" value="${op-created-time}" />
+		<item key="content-uri" value="${content-uri}" />
+		<item key="auto-info-method" value="${auto-info-method}" />
+		<item key="auto-info-name" value="${auto-info-name}" />
+		<item key="auto-info-value" value="${auto-info-value}" />
+
+		<item key="play-seek-time" value="0" />
+		<item key="play-speed" value="1.0" />
+
+		<content trim="none" oneline="false">
+			<![CDATA[
+
+<session>
+	<id>${id}</id>
+	<recipe_id>${recipe-id}</recipe_id>
+	<content_id>${content-id}</content_id>
+	<content_src_id_sets>
+		<content_src_id_set>
+			<content_src_ids>
+				<src_id_to_mux>
+					<video_src_ids>
+						${videos}
+					</video_src_ids>
+					<audio_src_ids>
+						${audios}
+					</audio_src_ids>
+				</src_id_to_mux>
+			</content_src_ids>
+		</content_src_id_set>
+	</content_src_id_sets>
+	<content_type>movie</content_type>
+	<timing_constraint>${timing-constraint}</timing_constraint>
+	<keep_method>
+		<heartbeat>
+			<lifetime>${heartbeat-lifetime}</lifetime>
+			<onetime_token/>
+		</heartbeat>
+	</keep_method>
+	<protocol>
+		<name>http</name>
+		<parameters>
+			<http_parameters>
+				<method>${protocol-method}</method>
+				<parameters>
+					<http_output_download_parameters>
+						<file_extension>${file-extension}</file_extension>
+						<transfer_preset/>
+					</http_output_download_parameters>
+				</parameters>
+			</http_parameters>
+		</parameters>
+	</protocol>
+	<play_seek_time>${play-seek-time}</play_seek_time>
+	<play_speed>${play-speed}</play_speed>
+	<content_uri>${content-uri}</content_uri>
+	<session_operation_auth>
+		<session_operation_auth_by_signature>
+			<created_time>${op-created-time}</created_time>
+			<expire_time>${op-expire-time}</expire_time>
+			<token>${token-minus-signature}</token>
+			<signature>${token-only-signature}</signature>
+		</session_operation_auth_by_signature>
+	</session_operation_auth>
+	<content_auth>
+		<auth_type>${auth-type}</auth_type>
+		<max_content_count>${max-content-count}</max_content_count>
+		<content_key_timeout>${content-key-timeout}</content_key_timeout>
+		<service_id>${service-id}</service_id>
+		<service_user_id>${user-id}</service_user_id>
+		<content_auth_info>
+			<method>${auto-info-method}</method>
+			<name>${auto-info-name}</name>
+			<value>${auto-info-value}</value>
+		</content_auth_info>
+	</content_auth>
+	<runtime_info>
+		<node_id/>
+		<execution_history/>
+	</runtime_info>
+	<client_info>
+		<player_id>${player-id}</player_id>
+		<remote_ip/>
+		<tracking_info/>
+	</client_info>
+	<created_time>${created-time}</created_time>
+	<modified_time>${modified-time}</modified_time>
+	<priority>${priority}</priority>
+	<content_route>${content-route}</content_route>
+	<version/>
+</session>
+
+			]]>
+		</content>
+
+	</mapping>
+
+
 </mappings>

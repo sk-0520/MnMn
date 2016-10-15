@@ -258,6 +258,7 @@
         </DataTrigger>
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
           <Setter Property="Topmost" Value="True" />
+          <Setter Property="BorderThickness" Value="0" />
         </DataTrigger>
       </Style.Triggers>
       <!--<Setter Property="BorderBrush">
@@ -602,22 +603,46 @@
         <TextBlock>x</TextBlock>
         <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
         </TextBlock>
-      <Image>
-        <Image.Style>
-          <Style TargetType="Image" BasedOn="{StaticResource ButtonImage}">
+      <ContentControl>
+        <ContentControl.Style>
+          <Style TargetType="ContentControl">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding IsEconomyMode}" Value="True">
-                <Setter Property="Source" Value="/Resources/Service/Smile/Video/Player/EconomyMode.png" />
-                <Setter Property="ToolTip" Value="エコノミーモード" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding IsEconomyMode}" Value="False">
-                <Setter Property="Source" Value="/Resources/Service/Smile/Video/Player/NormalMode.png" />
-                <Setter Property="ToolTip" Value="通常画質" />
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding UsingDmc.Value}" Value="False" />
+                  <Condition Binding="{Binding IsEconomyMode}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="ToolTip" Value="旧型式: エコノミー" />
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Image Source="/Resources/Service/Smile/Video/Player/EconomyMode.png" Style="{StaticResource SmallIconImage}" />
+                  </Setter.Value>
+                </Setter>
+              </MultiDataTrigger>
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding UsingDmc.Value}" Value="False" />
+                  <Condition Binding="{Binding IsEconomyMode}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="ToolTip" Value="旧型式: 通常画質" />
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Image Source="/Resources/Service/Smile/Video/Player/NormalMode.png" Style="{StaticResource SmallIconImage}" />
+                  </Setter.Value>
+                </Setter>
+              </MultiDataTrigger>
+              <DataTrigger Binding="{Binding UsingDmc.Value}" Value="True">
+                <Setter Property="ToolTip" Value="新形式" />
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Image Source="/Resources/Service/Smile/Video/Player/DmcMode.png" Style="{StaticResource SmallIconImage}" />
+                  </Setter.Value>
+                </Setter>
               </DataTrigger>
             </Style.Triggers>
           </Style>
-        </Image.Style>
-      </Image>
+        </ContentControl.Style>
+      </ContentControl>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">

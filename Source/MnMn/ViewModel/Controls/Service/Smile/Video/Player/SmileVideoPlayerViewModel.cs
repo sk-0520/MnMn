@@ -1877,6 +1877,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
                 StopMovie(true);
+                StopDownload();
             }
 
             try {

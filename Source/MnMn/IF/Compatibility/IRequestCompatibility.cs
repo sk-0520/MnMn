@@ -28,6 +28,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
     /// </summary>
     public interface IRequestCompatibility
     {
+        IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType);
+
         /// <summary>
         /// 処理前に実行されるリクエスト変更処理。
         /// </summary>

@@ -32,6 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
@@ -51,7 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //var a = GetthumbinfoUtility.ConvertTimeSpan("121:11");
             //mappng();
             //mylist();
-            liverss();
+            //liverss();
+            //dmc();
         }
 
         async void login()
@@ -139,6 +141,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 var binary = stream.ToArray();
                 var s = Encoding.UTF8.GetString(binary);
             }
+        }
+
+        void dmc()
+        {
+            var path1 = @"Z:\dmc-recv1.xml";
+            var path2 = @"Z:\dmc-recv2.xml";
+
+            var model = SerializeUtility.LoadXmlSerializeFromFile<RawSmileVideoDmcObjectModel>(path1);
+            SerializeUtility.SaveXmlSerializeToFile(path2, model);
         }
 
     }

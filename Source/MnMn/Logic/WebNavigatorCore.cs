@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// <summary>
     /// <see cref="MnMn.View.Controls.WebNavigator"/> で動作するブラウザ挙動の担当。
     /// </summary>
-    public static class WebNavigatorCore
+    public static partial class WebNavigatorCore
     {
         #region property
 
@@ -46,8 +46,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         //public static WebNavigatorEngine Engine { get; } = WebNavigatorEngine.Default;
         public static WebNavigatorEngine Engine { get; } = Constants.WebNavigatorEngine;
-
-        static ISet<ServiceGeckoWebBrowser> CreatedGeckoBrowsers { get; } = new HashSet<ServiceGeckoWebBrowser>();
 
         static bool IsInitialized { get; set; } = false;
         static bool IsUninitialized { get; set; } = false;
@@ -61,54 +59,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
             Mediation.Logger.Information("IE version: " + ieVersion);
             SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
-        }
-
-        static void InitializeGecko()
-        {
-            var setting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
-
-            var settingDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
-            var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.WebNavigatorGeckoFxProfileDirectoryName);
-            var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
-            Xpcom.ProfileDirectory = profileDirectory.FullName;
-            Xpcom.Initialize(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
-
-            GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
-            GeckoPreferences.Default["plugin.scan.plid.all"] = setting.WebNavigator.GeckoFxScanPlugin;
-            GeckoPreferences.Default["security.fileuri.strict_origin_policy"] = false;
-            GeckoPreferences.User["security.fileuri.strict_origin_policy"] = false;
-
-            GeckoPreferences.User["browser.cache.disk.enable"] = false;
-            GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
-
-            var preferencesFilePath = Path.Combine(profileDirectory.FullName, Constants.WebNavigatorGeckoFxPreferencesFileName);
-            if(File.Exists(preferencesFilePath)) {
-                //GeckoPreferences.Load(preferencesFilePath);
-            } else {
-                // http://pieceofnostalgy.blogspot.jp/2013/10/wpf-geckofx.html
-                GeckoPreferences.User["browser.cache.disk.enable"] = false;
-                GeckoPreferences.User["browser.cache.disk.capacity"] = 0;
-                //GeckoPreferences.Default["plugins.load_appdir_plugins"] = true;
-
-                GeckoPreferences.Save(preferencesFilePath);
-            }
-            var langs = new[] {
-                AppUtility.GetCultureLanguage(),
-                AppUtility.GetCultureName(),
-                "en-US",
-                "en"
-            };
-            GeckoPreferences.User["intl.accept_languages"] = string.Join(",", langs);
-            GeckoPreferences.User["font.language.group"] = AppUtility.GetCultureLanguage();
-
-            var historyMan = Xpcom.GetService<nsIBrowserHistory>(Gecko.Contracts.NavHistoryService);
-            historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
-            historyMan.RemoveAllPages();
-
-            //CacheService.Clear(new CacheStoragePolicy());
-            ImageCache.ClearCache(true);
-            ImageCache.ClearCache(false);
-            CookieManager.RemoveAll();
         }
 
         /// <summary>
@@ -142,18 +92,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         static void UninitializeDefault()
         {
             SystemEnvironmentUtility.ResetUsingBrowserVersionForExecutingAssembly();
-        }
-
-        static void UninitializeGecko()
-        {
-            foreach(var browser in CreatedGeckoBrowsers) {
-                browser.Disposed -= GeckoBrowser_Disposed;
-                browser.Dispose();
-            }
-            Xpcom.Shutdown();
-
-            IsUninitialized = true;
-            IsInitialized = false;
         }
 
         /// <summary>
@@ -193,35 +131,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Application.Current.Dispatcher.Invoke(() => {
                 session.ApplyToWebNavigatorEngine(Engine, uri);
             });
-        }
-
-        /// <summary>
-        /// GeckFxのブラウザ生成。
-        /// <para><see cref="Engine"/>には影響されない。</para>
-        /// <para>あくまで呼び出し側で<see cref="WebNavigatorEngine.GeckoFx"/>を保証すること</para>
-        /// </summary>
-        /// <returns></returns>
-        public static ServiceGeckoWebBrowser CreateBrowser()
-        {
-            ServiceGeckoWebBrowser browser = null;
-
-            Application.Current.Dispatcher.Invoke(() => {
-                browser = new ServiceGeckoWebBrowser() {
-                    Dock = System.Windows.Forms.DockStyle.Fill,
-                };
-                browser.Disposed += GeckoBrowser_Disposed;
-                CreatedGeckoBrowsers.Add(browser);
-            });
-
-            return browser;
-        }
-
-        private static void GeckoBrowser_Disposed(object sender, EventArgs e)
-        {
-            var browser = (ServiceGeckoWebBrowser)sender;
-
-            browser.Disposed -= GeckoBrowser_Disposed;
-            CreatedGeckoBrowsers.Remove(browser);
         }
 
         #endregion

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,6 +59,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 {
@@ -81,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _isPlaying = false;
         bool _isDownloading = false;
+
+        JObject _dmcInfo;
 
         //int _referenceCount;
 
@@ -190,6 +194,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// コメントファイル。
         /// </summary>
         public FileInfo MsgFile { get; private set; }
+
+        /// <summary>
+        /// 新形式受信ファイル。
+        /// </summary>
+        public FileInfo DmcFile { get; private set; }
 
         #endregion
 
@@ -710,6 +719,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        #region dmc
+
+        public bool IsDmc
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                return RawValueUtility.ConvertBoolean(Getflv.IsDmc);
+            }
+        }
+
+        public JObject DmcInfo
+        {
+            get
+            {
+                ThrowHasNotGetflv();
+                if(this._dmcInfo == null) {
+                    this._dmcInfo = JObject.Parse(Getflv.DmcInfo);
+                }
+
+                return this._dmcInfo;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #endregion
@@ -759,6 +794,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return IndividualVideoSetting.ConvertedSwf; }
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
+
+        public IDictionary<string, bool> LoadedDmc { get { return IndividualVideoSetting.LoadedDmc; } }
 
         public bool IsEnabledGlobalCommentFilering
         {
@@ -888,15 +925,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return result;
         }
 
-        static string GetCacheFileName(string videoId, string roll, string extension)
+        static string GetCacheFileName(string videoId, string role, string extension)
         {
-            return PathUtility.CreateFileName(videoId, roll, extension);
+            return PathUtility.CreateFileName(videoId, role, extension);
         }
 
-        string GetCacheFileName(string roll, string extension)
+        string GetCacheFileName(string role, string extension)
         {
-            CheckUtility.EnforceNotNullAndNotEmpty(roll);
-            return PathUtility.CreateFileName(VideoId, roll, extension);
+            CheckUtility.EnforceNotNullAndNotEmpty(role);
+            return PathUtility.CreateFileName(VideoId, role, extension);
         }
         string GetCacheFileName(string extension)
         {
@@ -955,6 +992,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThumbnaiImageFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("png")));
             GetflvFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName("getflv", "xml")));
             MsgFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "msg", "xml")));
+            DmcFile = new FileInfo(Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, "dmc", "xml")));
 
             var resSetting = Mediation.Request(new RequestModel(RequestKind.Setting, ServiceType.SmileVideo));
             Setting = (SmileVideoSettingModel)resSetting.Result;
@@ -986,6 +1024,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThrowNotGetthumbinfoSource();
 
             return SmileVideoGetthumbinfoUtility.GetFileName(VideoId, MovieType, isEconomyMode);
+        }
+
+
+        public string GetDmcVideoFileName(string video, string audio, string ext)
+        {
+            ThrowNotGetthumbinfoSource();
+
+            var roll = $"video.{SmileVideoInformationUtility.GetDmcRoleKey(video, audio)}.dmc";
+
+            return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
         }
 
         //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
@@ -1055,7 +1103,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    });
         //}
 
-        public Task<CheckModel> LoadGetflvAsync(bool isSave)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="isSave"></param>
+        /// <param name="usingDmc">ダウンロードに新形式を使用するか</param>
+        /// <returns></returns>
+        public Task<CheckModel> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
             if(InformationLoadState == LoadState.Failure) {
                 return Task.FromResult(CheckModel.Failure());
@@ -1063,7 +1117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var getflv = new Getflv(Mediation);
 
-            return getflv.LoadAsync(VideoId, WatchUrl, MovieType).ContinueWith(t => {
+            return getflv.LoadAsync(VideoId, WatchUrl, MovieType, usingDmc).ContinueWith(t => {
                 var rawVideoGetflvModel = t.Result;
 
                 if(rawVideoGetflvModel != null) {
@@ -1359,12 +1413,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 needSave = true;
             }
 
+
+            var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToArray();
+            var dmcCheckes = new List<CheckResultModel<long>>();
+            foreach(var dmcFile in dmcFiles) {
+                var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
+                if(check.IsSuccess) {
+                    var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
+                    IndividualVideoSetting.LoadedDmc[role] = false;
+                    needSave = true;
+                }
+                dmcCheckes.Add(check);
+            }
+
             var checks = new[] {
                 normalCheck,
                 economyCheck,
                 normalFlashCheck,
                 economyFlashCheck,
-            };
+            }.Concat(dmcCheckes);
 
             if(needSave) {
                 SaveSetting(true);

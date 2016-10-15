@@ -258,6 +258,7 @@
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
+    <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
     <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\DescriptionBase.cs" />
@@ -267,16 +268,21 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveInformationLoader.cs" />
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
+    <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
     <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveFeedUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
+    <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoBookmarkUtility.cs" />
     <Compile Include="Logic\View\CursorHider.cs" />
+    <Compile Include="Logic\WebNavigatorCore.GeckoFx.cs">
+      <DependentUpon>WebNavigatorCore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
@@ -294,6 +300,23 @@
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveThumbnailModel.cs" />
     <Compile Include="Model\Service\Smile\Live\SmileLiveCategoryModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentSrcIdSetModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcDataModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcHeartBeatModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcKeepMethodModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcMetaModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcObjectModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcProtocolModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcProtocolOutputDownloadParameterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcProtocolParameterModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcRuntimeInformationModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
+    <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
@@ -303,6 +326,7 @@
     <Compile Include="Model\Setting\Service\Smile\User\SmileUserItemModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\User\SmileUserSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommentStyleSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDownloadSetting.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoExecuteSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
@@ -368,6 +392,9 @@
     <Compile Include="View\Resources\TabDictionary.xaml.cs">
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>
+    <Content Include="doc\License\MnMn-GPLv3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="doc\help\html\others-beta.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -389,7 +416,14 @@
     <Content Include="doc\help\image\help-security.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="doc\License\MnMn-GPLv3.ja-jp.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\service\smile\live\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\live\request-headers.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="etc\define\service\smile\live\uri-list.xml">
@@ -406,31 +440,17 @@
     <Content Include="etc\define\service\smile\live\request-params.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\define\service\smile\request-headers.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\define\service\smile\video\request-headers.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\define\theme.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Firefox\AccessibleMarshal.dll" />
-    <Content Include="Firefox\breakpadinjector.dll" />
-    <Content Include="Firefox\D3DCompiler_43.dll" />
-    <Content Include="Firefox\d3dcompiler_47.dll" />
-    <Content Include="Firefox\freebl3.dll" />
-    <Content Include="Firefox\icudt56.dll" />
-    <Content Include="Firefox\icuin56.dll" />
-    <Content Include="Firefox\icuuc56.dll" />
-    <Content Include="Firefox\lgpllibs.dll" />
-    <Content Include="Firefox\libEGL.dll" />
-    <Content Include="Firefox\libGLESv2.dll" />
-    <Content Include="Firefox\mozglue.dll" />
-    <Content Include="Firefox\msvcp120.dll" />
-    <Content Include="Firefox\msvcr120.dll" />
-    <Content Include="Firefox\nss3.dll" />
-    <Content Include="Firefox\nssckbi.dll" />
-    <Content Include="Firefox\nssdbm3.dll" />
-    <Content Include="Firefox\plugin-container.exe" />
-    <Content Include="Firefox\plugin-hang-ui.exe" />
-    <Content Include="Firefox\sandboxbroker.dll" />
-    <Content Include="Firefox\softokn3.dll" />
-    <Content Include="Firefox\xul.dll" />
     <Content Include="Resources\File\Html\UpdateState.html" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -722,6 +742,7 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyLIstFolderIdToIdConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
+    <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveCategoryContext.xaml">
@@ -1009,7 +1030,9 @@
     <None Include="bat\beta.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Firefox\omni.ja" />
+    <None Include="MnMn.exe.user.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
     <Resource Include="Resources\Common\Action\FolderOpen.png" />
     <Content Include="Resources\Common\View\Down.png" />

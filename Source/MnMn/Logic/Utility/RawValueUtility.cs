@@ -149,20 +149,69 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return result;
         }
 
+        /// <summary>
+        /// Unix時間(数値)を<see cref="DateTime"/>に変換。
+        /// </summary>
+        /// <param name="unixTime"></param>
+        /// <returns></returns>
         public static DateTime ConvertUnixTime(long unixTime)
         {
             return unixTimeBase.AddSeconds(unixTime).ToLocalTime();
         }
-        public static DateTime ConvertUnixTime(string s)
+        /// <summary>
+        /// Unix時間(文字列)を<see cref="DateTime"/>に変換。
+        /// </summary>
+        /// <param name="unixTime"></param>
+        /// <returns></returns>
+        public static DateTime ConvertUnixTime(string unixTime)
         {
-            return ConvertUnixTime(ConvertLong(s));
+            return ConvertUnixTime(ConvertLong(unixTime));
+        }
+        /// <summary>
+        /// ミリ秒付Unix時間を<see cref="DateTime"/>に変換。
+        /// </summary>
+        /// <param name="unixTime">[Unix時間][ミリ秒]形式。</param>
+        /// <param name="width">[ミリ秒]の文字列長。</param>
+        /// <returns></returns>
+        public static DateTime ConvertUnixTimeWithMilliseconds(string unixTime, int width)
+        {
+            if(width == 0) {
+                return ConvertUnixTime(unixTime);
+            }
+            var s = unixTime.Substring(0, unixTime.Length - width);
+            var ms = unixTime.Substring(s.Length);
+            var time = ConvertUnixTime(ConvertLong(s));
+
+            return time.AddMilliseconds(ConvertInteger(ms));
         }
 
+        /// <summary>
+        /// <see cref="DateTime"/>からUnix時間(数値)に変換。
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static long ConvertRawUnixTime(DateTime time)
         {
             TimeSpan elapsedTime = time.ToUniversalTime() - unixTimeBase.ToUniversalTime();
 
             return (long)elapsedTime.TotalSeconds;
+        }
+
+        /// <summary>
+        /// <see cref="DateTime"/>からミリ秒付Unix時間(文字列)に変換。
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="width">ミリ秒の幅。超過した分は切り落とされる</param>
+        /// <returns></returns>
+        public static string ConvertRawUnixTimeWithMilliseconds(DateTime time, int width)
+        {
+            var unixSec = ConvertRawUnixTime(time);
+            var ms = time.Millisecond.ToString().PadRight(width, '0');
+            if(width < ms.Length) {
+                ms = ms.Substring(0, width);
+            }
+
+            return unixSec + ms;
         }
 
         public static string ConvertHumanLikeByte(long byteSize, string[] terms)

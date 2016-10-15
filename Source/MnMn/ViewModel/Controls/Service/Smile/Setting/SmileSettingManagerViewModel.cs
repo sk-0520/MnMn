@@ -184,6 +184,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public bool UsingDmc
+        {
+            get { return Setting.Video.Download.UsingDmc; }
+            set { SetPropertyValue(Setting.Video.Download, value); }
+        }
+
         #endregion
 
         #region command

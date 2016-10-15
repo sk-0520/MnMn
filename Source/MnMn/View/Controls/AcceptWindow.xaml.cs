@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,21 +10,73 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using MahApps.Metro.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     /// <summary>
     /// AcceptWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class AcceptWindow: Window
+    public partial class AcceptWindow: MetroWindow
     {
-        public AcceptWindow()
+        public AcceptWindow(Mediation mediation)
         {
             InitializeComponent();
+            Mediation = mediation;
+            Initialize();
         }
+
+        #region property
+
+        Mediation Mediation { get; }
+
+        #endregion
+
+        #region command
+
+        public ICommand OpenWebLinkCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => { }
+                );
+            }
+        }
+
+
+        #endregion
+
+        #region function
+
+        void InitializedOriginLicense()
+        {
+            var path = System.IO.Path.Combine(Constants.ApplicationDocDirectoryPath, "License", "MnMn-GPLv3.html");
+            this.docOriginalLicense.HomeSource = new Uri(path);
+            this.docOriginalLicense.Navigate(this.docOriginalLicense.HomeSource);
+        }
+
+        void InitializedCultureLicense()
+        {
+            // TODO: カルチャと銘打ったものの日本語おんりー
+            var path = System.IO.Path.Combine(Constants.ApplicationDocDirectoryPath, "License", "MnMn-GPLv3.ja-jp.html");
+            this.docCultureLicense.HomeSource = new Uri(path);
+            this.docCultureLicense.Navigate(this.docCultureLicense.HomeSource);
+        }
+
+        void Initialize()
+        {
+            InitializedOriginLicense();
+            InitializedCultureLicense();
+        }
+
+        #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

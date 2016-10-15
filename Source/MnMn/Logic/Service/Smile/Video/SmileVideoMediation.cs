@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
     public class SmileVideoMediation: MediationCustomBase
     {
         public SmileVideoMediation(Mediation mediation, SmileVideoSettingModel setting)
-            : base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
+            : base(mediation, Constants.SmileVideoUriListPath, Constants.SmileVideoUriParametersListPath, Constants.SmileVideoRequestHeadersListPath, Constants.SmileVideoRequestParametersListPath, Constants.SmileVideoRequestMappingsListPath)
         {
             Setting = setting;
 
@@ -222,6 +222,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             }
 
             return uri;
+        }
+
+        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileVideo) {
+                ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
+            }
+
+            return GetRequestHeaderCore(key, replaceMap, serviceType);
+        }
+
+        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            if(serviceType != ServiceType.SmileVideo) {
+                ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+            }
+
+            return (IDictionary<string, string>)requestHeaders;
+
         }
 
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)

@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// 前回バージョンがこれ未満なら使用許諾を表示
         /// </summary>
-        public static Version AcceptVersion { get; } = new Version(0, 2, 0, 0);
+        public static Version AcceptVersion { get; } = new Version(0, 24, 1, 0);
 
         public static string FormatTimestampFileName { get; } = "yyyy-MM-dd_HH-mm-ss";
 
@@ -228,6 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string WebNavigatorGeckoFxLibraryDirectoryPath { get; } = Path.Combine(LibraryDirectoryPath, WebNavigatorGeckoFxLibraryDirectoryName);
         public static string WebNavigatorGeckoFxPluginsDirectoryPath { get; } = Path.Combine(WebNavigatorGeckoFxLibraryDirectoryPath, WebNavigatorGeckoFxPluginsDirectoryName);
+        public static string WebNavigatorGeckoFxExtensionsDirectoryPath { get; } = Path.Combine(WebNavigatorGeckoFxLibraryDirectoryPath, WebNavigatorGeckoFxExtensionsDirectoryName);
 
         /// <summary>
         /// 外部ライブラリファイルパス。
@@ -314,6 +315,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileUriListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
         public static string SmileUriParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
+        public static string SmileRequestHeadersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-headers.xml");
         public static string SmileRequestParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
         public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
 
@@ -322,6 +324,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileVideoUriListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-list.xml");
         public static string SmileVideoUriParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "uri-params.xml");
+        public static string SmileVideoRequestHeadersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-headers.xml");
         public static string SmileVideoRequestParametersListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-params.xml");
         public static string SmileVideoRequestMappingsListPath { get; } = Path.Combine(DefineSmileVideoDirectoryPath, "request-mappings.xml");
 
@@ -335,6 +338,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static string SmileLiveUriListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-list.xml");
         public static string SmileLiveUriParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-params.xml");
+        public static string SmileLiveRequestHeadersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-headers.xml");
         public static string SmileLiveRequestParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-params.xml");
         public static string SmileLiveRequestMappingsListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-mappings.xml");
 
