@@ -47,6 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public Dictionary<string, bool> LoadedDmc { get; set; } = new Dictionary<string, bool>();
 
+        [DataMember]
+        public Dictionary<string, SmileVideoDcmItem> DmcItems { get; set; } = new Dictionary<string, SmileVideoDcmItem>();
+
         /// <summary>
         /// 最終視聴日時。
         /// </summary>
