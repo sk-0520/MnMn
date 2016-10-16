@@ -688,12 +688,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     // #207: sm29825902
                     widthScale = RealVideoWidth / CommentArea.Width;
                 } else {
-                    widthScale = RealVideoHeight / CommentArea.Height;
-                    widthScale = RealVideoWidth / CommentArea.Width;
-                    widthScale = BaseHeight / BaseWidth;
-                    widthScale = BaseHeight / BaseWidth + RealVideoWidth / CommentArea.Width;
-                    //widthScale = BaseWidth / BaseHeight;
-                    //widthScale = BaseWidth / scale.X;
+                    // #207: sm29681139
+                    widthScale = (BaseHeight / BaseWidth) + (RealVideoWidth / CommentArea.Width);
                 }
 
                 BaseWidth *= widthScale;
