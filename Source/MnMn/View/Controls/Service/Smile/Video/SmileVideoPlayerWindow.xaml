@@ -259,6 +259,8 @@
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
           <Setter Property="Topmost" Value="True" />
           <Setter Property="BorderThickness" Value="0" />
+          <Setter Property="ResizeMode" Value="NoResize" />
+          <Setter Property="ShowCloseButton" Value="False" />
         </DataTrigger>
       </Style.Triggers>
       <!--<Setter Property="BorderBrush">
