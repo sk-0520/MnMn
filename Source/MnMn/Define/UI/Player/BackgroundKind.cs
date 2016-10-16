@@ -28,12 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
     public enum BackgroundKind
     {
         /// <summary>
-        /// (たぶん選択した)色。
-        /// </summary>
-        SimpleColor,
-        /// <summary>
         /// 自動算出色。
         /// </summary>
         AutoColor,
+        /// <summary>
+        /// (たぶん選択した)色。
+        /// </summary>
+        SimpleColor,
     }
 }

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -188,6 +189,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         {
             get { return Setting.Video.Download.UsingDmc; }
             set { SetPropertyValue(Setting.Video.Download, value); }
+        }
+
+        public BackgroundKind BackgroundKind
+        {
+            get { return Setting.Video.Player.BackgroundKind; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+        public Color BackgroundColor
+        {
+            get { return Setting.Video.Player.BackgroundColor; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public IEnumerable<Color> BackgroundColors
+        {
+            get
+            {
+                return new[] {
+                    Colors.Transparent,
+                    Colors.White,
+                    Colors.Gray,
+                    Colors.Black,
+                    Colors.Red,
+                    Colors.Blue,
+                    Colors.Lime,
+                    Colors.Yellow,
+                };
+            }
         }
 
         #endregion
