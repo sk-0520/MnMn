@@ -602,6 +602,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   自動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UI_Player_BackgroundKind_AutoColor {
+            get {
+                return ResourceManager.GetString("String_App_Define_UI_Player_BackgroundKind_AutoColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   固定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_UI_Player_BackgroundKind_SimpleColor {
+            get {
+                return ResourceManager.GetString("String_App_Define_UI_Player_BackgroundKind_SimpleColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   何もしない に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_UI_Player_WheelOperation_None {

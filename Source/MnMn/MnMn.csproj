@@ -76,7 +76,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.86\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.87\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -212,6 +212,7 @@
     <Compile Include="Define\Service\Smile\Live\SmileLiveType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoChangeVideoPositionType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoProcess.cs" />
+    <Compile Include="Define\UI\Player\BackgroundKind.cs" />
     <Compile Include="Define\UI\Player\WheelOperation.cs" />
     <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
