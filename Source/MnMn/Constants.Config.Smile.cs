@@ -372,6 +372,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static double SettingServiceSmileVideoPlayerCommentAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-comment-area-star", double.Parse);
         public static double SettingServiceSmileVideoPlayerInformationAreaPixel => appConfig.Get("setting-service-smile-smilevideo-player-information-area-pixel", double.Parse);
 
+        public static BackgroundKind SettingServiceSmileVideoPlayerBackgroundKind => appConfig.Get("setting-service-smile-smilevideo-player-background-kind", s => EnumUtility.Parse<BackgroundKind>(s, false));
+        public static Color SettingServiceSmileVideoPlayerBackgroundColor => appConfig.Get("setting-service-smile-smilevideo-player-background-color", s => (Color)ColorConverter.ConvertFromString(s));
+
         /// <summary>
         /// コメントを表示するか。
         /// </summary>
