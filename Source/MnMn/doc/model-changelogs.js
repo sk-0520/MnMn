@@ -121,6 +121,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#146: 動画の背景色変更'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
