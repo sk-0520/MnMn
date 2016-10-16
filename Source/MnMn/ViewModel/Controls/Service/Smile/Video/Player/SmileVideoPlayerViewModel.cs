@@ -683,7 +683,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
 
             if(BaseWidth < BaseHeight) {
-                var realScale = RealVideoHeight / CommentArea.Height;
+                double realScale;
+                if(CommentArea.Height < RealVideoHeight && CommentArea.Width < RealVideoWidth) {
+                    // #207: sm29825902
+                    realScale = RealVideoWidth / CommentArea.Width;
+                } else {
+                    realScale = RealVideoHeight / CommentArea.Height;
+                }
+
                 BaseWidth *= realScale;
             }
 
