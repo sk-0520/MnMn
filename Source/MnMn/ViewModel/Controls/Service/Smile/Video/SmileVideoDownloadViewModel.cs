@@ -301,12 +301,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                         await downloader.StartAsync();
                         if(downloader.Completed) {
-                            VideoLoadState = LoadState.Loaded;
                             if(UsingDmc.Value) {
                                 var mux = DmcMultiplexer;
-                                var roll = SmileVideoInformationUtility.GetDmcRoleKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
-                                Information.LoadedDmc[roll] = true;
+                                var role = SmileVideoInformationUtility.GetDmcRoleKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
+                                //if(!Information.DmcItems.ContainsKey(role)) {
+                                //    var dmcItem = new SmileVideoDmcItemModel() {
+                                //        Video = mux.VideoSrcIds.First(),
+                                //        Audio = mux.AudioSrcIds.First(),
+                                //    };
+                                //    Information.DmcItems[role] = dmcItem;
+                                //}
+                                VideoFile.Refresh();
+                                Information.DmcItems[role].IsLoaded = VideoFile.Length == Information.DmcItems[role].Length;
+                                if(Information.DmcItems[role].IsLoaded) {
+                                    VideoLoadState = LoadState.Loaded;
+                                } else {
+                                    VideoLoadState = LoadState.Failure;
+                                }
                             } else {
+                                VideoLoadState = LoadState.Loaded;
                                 if(Information.IsEconomyMode) {
                                     Information.LoadedEconomyVideo = true;
                                 } else {
@@ -419,6 +432,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
 
             UsingDmc.Value = true;
+
+            var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
+            SmileVideoDmcItemModel dmcItem;
+            if(Information.DmcItems.TryGetValue(role, out dmcItem)) {
+                if(dmcItem.IsLoaded && downloadFile.Exists) {
+                    if(dmcItem.Length == downloadFile.Length) {
+                        LoadVideoFromCache(downloadFile);
+                        var task = dmc.CloseAsync(DmcApiUri, DmcObject);
+                        return true;
+                    }
+                }
+            }
 
             await LoadVideoAsync(downloadUri, downloadFile, headPosition);
             return true;
@@ -745,12 +770,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         }
                     }
 
-                    var dmc = new Dmc(Mediation);
-                    dmc.CloseAsync(DmcApiUri, DmcObject);
-
                     if(DmcPollingCancel != null) {
                         DmcPollingCancel.Cancel();
                     }
+
+                    var dmc = new Dmc(Mediation);
+                    dmc.CloseAsync(DmcApiUri, DmcObject);
                 }
             }
         }
@@ -802,22 +827,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     Mediation.Logger.Information($"file:{VideoFile.Length}, response:{downloader.ResponseHeaders.ContentLength.Value}, total:{VideoTotalSize}");
 
                     var mux = DmcMultiplexer;
-                    var ext = DmcFileExtension;
+                    //var ext = DmcFileExtension;
                     var video = mux.VideoSrcIds.First();
                     var audio = mux.AudioSrcIds.First();
-
-                    bool isDmcLoaded;
-                    if(Information.LoadedDmc.TryGetValue(SmileVideoInformationUtility.GetDmcRoleKey(video, audio), out isDmcLoaded)) {
-                        if(isDmcLoaded) {
-                            // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
-                            if(VideoTotalSize - 1 <= VideoFile.Length) {
-                                VideoLoadedSize = VideoFile.Length;
-                                e.Cancel = true;
-                                e.Completed = true;
-                                return;
-                            }
-                        }
+                    var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
+                    if(e.DownloadStartType == DownloadStartType.Begin) {
+                        var dmcItem = new SmileVideoDmcItemModel() {
+                            Video = video,
+                            Audio = audio,
+                            Length = downloader.ResponseHeaders.ContentLength.Value,
+                        };
+                        Information.DmcItems[role] = dmcItem;
                     }
+                    //bool isDmcLoaded;
+                    //if(Information.DmcItems.TryGetValue(SmileVideoInformationUtility.GetDmcRoleKey(video, audio), out isDmcLoaded)) {
+                    //    if(isDmcLoaded) {
+                    //        // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
+                    //        if(VideoTotalSize - 1 <= VideoFile.Length) {
+                    //            VideoLoadedSize = VideoFile.Length;
+                    //            e.Cancel = true;
+                    //            e.Completed = true;
+                    //            return;
+                    //        }
+                    //    }
+                    //}
                 }
 
                 DmcPollingWait = new AutoResetEvent(false);

@@ -1551,7 +1551,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
+                StopDownload();
                 StopMovie(true);
+
                 Information.IsDownloading = false;
             }
             SecondsDownloadingSize = e.SecondsDownlodingSize;
@@ -1859,7 +1861,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void View_Closing(object sender, CancelEventArgs e)
         {
             //TODO: closingはまずくね…?
-            ExportSetting();
 
             View.Loaded -= View_Loaded;
             View.Closing -= View_Closing;
@@ -1878,15 +1879,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             IsViewClosed = true;
 
-            Information.IsPlaying = false;
-
-            Information.SaveSetting(true);
-
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
-                StopMovie(true);
                 StopDownload();
+                StopMovie(true);
             }
+
+            ExportSetting();
+            Information.SaveSetting(true);
+
+            Information.IsPlaying = false;
 
             try {
                 Player.Dispose();

@@ -795,7 +795,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
 
-        public IDictionary<string, bool> LoadedDmc { get { return IndividualVideoSetting.LoadedDmc; } }
+        public IDictionary<string, SmileVideoDmcItemModel> DmcItems { get { return IndividualVideoSetting.DmcItems; } }
 
         public bool IsEnabledGlobalCommentFilering
         {
@@ -1420,7 +1420,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
                 if(check.IsSuccess) {
                     var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
-                    IndividualVideoSetting.LoadedDmc[role] = false;
+                    SmileVideoDmcItemModel item;
+                    if(IndividualVideoSetting.DmcItems.TryGetValue(role, out item)) {
+                        item.IsLoaded = false;
+                    }
                     needSave = true;
                 }
                 dmcCheckes.Add(check);

@@ -25,10 +25,17 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoDcmItem: ModelBase
+    public class SmileVideoDmcItemModel: ModelBase
     {
         /// <summary>
+        /// 読み込み完了済みか。
+        /// <para>たぶん使うことはないと思う。</para>
+        /// </summary>
+        [DataMember]
+        public bool IsLoaded { get; set; }
+        /// <summary>
         /// 動画サイズ。
+        /// <para>HTTPという性善説に基づいていてニコニコというデータ提供先を信じ切るという世は信頼で成り立つ素晴らしい情報！</para>
         /// </summary>
         [DataMember]
         public long Length { get; set; }
