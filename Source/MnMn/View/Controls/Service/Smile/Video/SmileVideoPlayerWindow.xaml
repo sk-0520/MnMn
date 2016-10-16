@@ -1573,12 +1573,13 @@
                               <!--<Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />-->
                               <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                                 <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumDefaultIconPath}" />
+                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
                                 </Canvas>
                               </Viewbox>
                             </ControlTemplate>
                           </Button.Template>
                         </Button>
+
                         <!-- TODO: ださい -->
                         <Border Width="8" />
                       </StackPanel>

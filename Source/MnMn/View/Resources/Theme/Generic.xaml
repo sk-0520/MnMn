@@ -26,6 +26,7 @@
 
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
   <Thickness x:Key="ItemMargin">1,1,2,1</Thickness>
+  <Thickness x:Key="IndependentMargin">2</Thickness>
   <sys:Double x:Key="BaseMargin">8</sys:Double>
   <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMargin}" Top="0" Right="0" Bottom="0" />
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="0" />
@@ -162,6 +163,7 @@
 
   <Style x:Key="MinimumLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Margin" Value="{StaticResource IndependentMargin}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
@@ -583,7 +585,11 @@
   <Style TargetType="Hyperlink" BasedOn="{StaticResource {x:Type Hyperlink}}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Foreground" Value="{DynamicResource HighlightColorBrush}" />
+        <Setter Property="Foreground">
+          <Setter.Value>
+            <SolidColorBrush Color="{StaticResource HighlightColor}" />
+          </Setter.Value>
+        </Setter>
       </Trigger>
     </Style.Triggers>
     <Setter Property="FontWeight" Value="Bold" />
