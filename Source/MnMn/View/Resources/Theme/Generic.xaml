@@ -160,6 +160,11 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="MinimumLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
   <Style x:Key="SmallDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
@@ -170,6 +175,10 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="SmallLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
 
   <!-- ================ Common Icon ================ -->
   <!-- https://materialdesignicons.com/icon/plus -->
