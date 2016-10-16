@@ -720,6 +720,9 @@
           </Grid.RowDefinitions>
 
           <Grid x:Name="viewMedia" Grid.Row="0">
+            <Grid.Background>
+              <SolidColorBrush Color="{Binding VideoBackgroundColor.Value}" />
+            </Grid.Background>
             <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonUp" >

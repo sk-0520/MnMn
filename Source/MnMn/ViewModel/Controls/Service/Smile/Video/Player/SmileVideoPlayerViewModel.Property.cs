@@ -1043,6 +1043,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public CollectionModel<DataPoint> CommentChartList { get; } = new CollectionModel<DataPoint>();
 
+        public FewViewModel<Color> VideoBackgroundColor { get; } = new FewViewModel<Color>();
+
         #endregion
     }
 }
