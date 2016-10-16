@@ -421,7 +421,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 },
                 () => {
                     var finder = new SmileVideoSearchGroupFinderViewModel(Mediation, SearchModel, method, sort, type, query);
-                    SearchGroups.Insert(0, finder);
+                    SearchGroups.Add(finder);
                     return finder;
                 }
             );

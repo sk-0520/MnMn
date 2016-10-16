@@ -114,7 +114,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#206: 新規タブの位置を標準的なUXにする',
+						'comments': [
+							'新規タブは右側に追加されます'
+						]
 					},
 					{
 						'revision': '',

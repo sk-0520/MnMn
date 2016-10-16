@@ -94,13 +94,13 @@
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
-    <TabControl
+    <app_view_controls:FocusedTabControl
       Grid.Column="2"
       SelectedItem="{Binding SelectedUser}"
       ItemsSource="{Binding UserItems}"
       Style="{StaticResource FinderTab}"
     >
-      <TabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding UserLoadState}" />
@@ -122,8 +122,8 @@
             </ContentControl>
           </StackPanel>
         </DataTemplate>
-      </TabControl.ItemTemplate>
-      <TabControl.ContentTemplate>
+      </app_view_controls:FocusedTabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ContentTemplate>
         <DataTemplate>
           <Grid>
             <TabControl TabStripPlacement="Top">
@@ -306,8 +306,8 @@
             </TabControl>
           </Grid>
         </DataTemplate>
-      </TabControl.ContentTemplate>
+      </app_view_controls:FocusedTabControl.ContentTemplate>
 
-    </TabControl>
+    </app_view_controls:FocusedTabControl>
   </Grid>
 </UserControl>

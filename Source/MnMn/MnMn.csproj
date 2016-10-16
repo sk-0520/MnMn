@@ -362,6 +362,7 @@
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\FocusedTabControl.cs" />
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>

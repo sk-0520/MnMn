@@ -62,13 +62,14 @@
       />
     </StackPanel>
 
-    <TabControl
+    <app_view_controls:FocusedTabControl
+      x:Name="finderTab"
       Grid.Row="1"
       ItemsSource="{Binding RankingCategoryGroupItems}"
       SelectedItem="{Binding SelectedRankingCategory}"
       Style="{StaticResource FinderTab}"
     >
-      <TabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
@@ -84,12 +85,12 @@
             <Button Style="{StaticResource TabCloseButton}" />
           </StackPanel>
         </DataTemplate>
-      </TabControl.ItemTemplate>
-      <TabControl.ContentTemplate>
+      </app_view_controls:FocusedTabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ContentTemplate>
         <DataTemplate>
           <app_view_controls_service_smile_video:SmileVideoFinderControl DataContext="{Binding}" />
         </DataTemplate>
-      </TabControl.ContentTemplate>
-    </TabControl>
+      </app_view_controls:FocusedTabControl.ContentTemplate>
+    </app_view_controls:FocusedTabControl>
   </Grid>
 </UserControl>
