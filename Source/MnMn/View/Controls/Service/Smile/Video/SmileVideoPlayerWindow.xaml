@@ -1552,6 +1552,8 @@
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border x:Name="separator" Width="{StaticResource SeparatorWidth}" />
+
                         <!--<TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>-->
                         <!--<Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
                         <Viewbox Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource {x:Type Viewbox}}">
@@ -1567,21 +1569,24 @@
                             <Run Text="{Binding TagName, Mode=OneTime}" />
                           </Hyperlink>
                         </TextBlock>
-                        <Button Cursor="Hand" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button Cursor="Hand" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Button.Template>
                             <ControlTemplate>
                               <!--<Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />-->
                               <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                                 <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumDefaultIconPath}" />
+                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
                                 </Canvas>
                               </Viewbox>
                             </ControlTemplate>
                           </Button.Template>
                         </Button>
-                        <!-- TODO: ださい -->
-                        <Border Width="8" />
                       </StackPanel>
+                      <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                          <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                        </DataTrigger>
+                      </DataTemplate.Triggers>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>

@@ -26,7 +26,12 @@
 
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
   <Thickness x:Key="ItemMargin">1,1,2,1</Thickness>
+  <Thickness x:Key="IndependentMargin">2</Thickness>
+  <Thickness x:Key="IndependentHorizonMargin">2,0</Thickness>
+  <Thickness x:Key="IndependentVericalMargin">0,2</Thickness>
   <sys:Double x:Key="BaseMargin">8</sys:Double>
+  <sys:Double x:Key="SeparatorWidth">4</sys:Double>
+  <sys:Double x:Key="SeparatorHeight">4</sys:Double>
   <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMargin}" Top="0" Right="0" Bottom="0" />
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="0" />
   <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
@@ -160,6 +165,12 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="MinimumLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Margin" Value="{StaticResource IndependentMargin}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
   <Style x:Key="SmallDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
@@ -170,6 +181,10 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="SmallLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
 
   <!-- ================ Common Icon ================ -->
   <!-- https://materialdesignicons.com/icon/plus -->
@@ -569,6 +584,21 @@
   <Style x:Key="ParentItemLikeText" TargetType="TextBlock">
     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}" />
     <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />
+  </Style>
+
+  <Style TargetType="Hyperlink" BasedOn="{StaticResource {x:Type Hyperlink}}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground">
+          <Setter.Value>
+            <SolidColorBrush Color="{StaticResource HighlightColor}" />
+          </Setter.Value>
+        </Setter>
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+    <Setter Property="TextDecorations" Value="Underline" />
   </Style>
 
   <!-- Label -->
