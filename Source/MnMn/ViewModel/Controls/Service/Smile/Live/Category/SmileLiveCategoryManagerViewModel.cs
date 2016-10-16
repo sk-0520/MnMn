@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 },
                 () => {
                     var finder = new SmileLiveCategoryGroupFinderViewModel(Mediation, CategoryModel, sort, order, category);
-                    CategoryGroups.Insert(0, finder);
+                    CategoryGroups.Add(finder);
                     return finder;
                 }
             );
