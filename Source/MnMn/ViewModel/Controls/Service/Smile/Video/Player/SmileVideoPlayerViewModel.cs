@@ -683,15 +683,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseHeight = VisualVideoSize.Height * baseScale;
 
             if(BaseWidth < BaseHeight) {
-                double realScale;
-                if(CommentArea.Height < RealVideoHeight && CommentArea.Width < RealVideoWidth) {
+                double widthScale;
+                if(CommentArea.Height <= RealVideoHeight && CommentArea.Width <= RealVideoWidth) {
                     // #207: sm29825902
-                    realScale = RealVideoWidth / CommentArea.Width;
+                    widthScale = RealVideoWidth / CommentArea.Width;
                 } else {
-                    realScale = RealVideoHeight / CommentArea.Height;
+                    widthScale = RealVideoHeight / CommentArea.Height;
+                    widthScale = RealVideoWidth / CommentArea.Width;
+                    widthScale = BaseHeight / BaseWidth;
+                    widthScale = BaseHeight / BaseWidth + RealVideoWidth / CommentArea.Width;
+                    //widthScale = BaseWidth / BaseHeight;
+                    //widthScale = BaseWidth / scale.X;
                 }
 
-                BaseWidth *= realScale;
+                BaseWidth *= widthScale;
             }
 
             ChangedEnabledCommentPercent();
