@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
 {
@@ -30,10 +31,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
         /// <summary>
         /// 自動算出色。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_BackgroundKind_AutoColor))]
         AutoColor,
         /// <summary>
         /// (たぶん選択した)色。
         /// </summary>
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_BackgroundKind_SimpleColor))]
         SimpleColor,
     }
 }
