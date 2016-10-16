@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 var item = e.AddedItems[0];
                 tabControl.ScrollToCenterOfView(item, true, true);
             }
+
             base.OnSelectionChanged(e);
         }
 
