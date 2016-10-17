@@ -720,6 +720,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Mediation.Logger.Trace($"{VideoId}: Cancel!");
                 DownloadCancel.Cancel();
             }
+
+            if(UsingDmc.Value) {
+                return StopDmcDownloadAsync().ContinueWith(t => {
+                    InitializeStatus();
+                });
+            }
+
             InitializeStatus();
 
             //if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
@@ -784,24 +791,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
         { }
 
-        protected Task StopDownloadAsync()
+        protected Task StopDmcDownloadAsync()
         {
-            if(UsingDmc.Value) {
-                if(DmcApiUri != null && Information != null && Information.IsDownloading) {
-                    if(DmcPollingWait != null) {
-                        if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
-                            DmcPollingWait.Set();
-                            DmcPollingWait.Dispose();
-                        }
+            Debug.Assert(UsingDmc.Value);
+            if(DmcApiUri != null && Information != null && Information.IsDownloading) {
+                if(DmcPollingWait != null) {
+                    if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
+                        DmcPollingWait.Set();
+                        DmcPollingWait.Dispose();
                     }
-
-                    if(DmcPollingCancel != null) {
-                        DmcPollingCancel.Cancel();
-                    }
-
-                    var dmc = new Dmc(Mediation);
-                    return dmc.CloseAsync(DmcApiUri, DmcObject);
                 }
+
+                if(DmcPollingCancel != null) {
+                    DmcPollingCancel.Cancel();
+                }
+
+                var dmc = new Dmc(Mediation);
+                return dmc.CloseAsync(DmcApiUri, DmcObject);
             }
 
             return Task.CompletedTask;
@@ -819,7 +825,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Mediation.Logger.Information($"{videoId}: polling stop event is set!");
                         return;
                     }
-
+                    if(DmcObject == null) {
+                        Mediation.Logger.Debug($"{videoId}: {nameof(DmcObject)} is null!!");
+                        return;
+                    }
                     DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
 
                     var dmc = new Dmc(Mediation);
@@ -895,7 +904,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
-            if(downloader.Canceled) {
+            if(e.Cancel || downloader.Canceled) {
                 return;
             }
             //Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}, {e.SecondsDownlodingSize}");
@@ -910,7 +919,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         private void Downloader_Downloaded(object sender, DownloaderEventArgs e)
         {
-            StopDownloadAsync();
+            if(UsingDmc.Value) {
+                StopDmcDownloadAsync();
+            }
             Information.IsDownloading = false;
 
             OnDownloaded(sender, e);
@@ -925,7 +936,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;
-                StopDownloadAsync();
+                if(UsingDmc.Value) {
+                    StopDmcDownloadAsync();
+                }
                 Information.IsDownloading = false;
             } else {
                 var time = Constants.ServiceSmileVideoDownloadingErrorWaitTime;

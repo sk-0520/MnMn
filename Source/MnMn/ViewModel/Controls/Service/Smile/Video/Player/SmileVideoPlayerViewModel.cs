@@ -185,10 +185,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                             case PlayerState.Pause:
                                 if(IsBufferingStop) {
                                     Mediation.Logger.Debug("restart");
-                                    SetMedia();
-                                    PlayMovie().Task.ContinueWith(task => {
-                                        Player.Position = VideoPosition;
-                                    });
+                                    //SetMedia();
+                                    //PlayMovie().Task.ContinueWith(task => {
+                                    //    Player.Position = VideoPosition;
+                                    //});
+                                    PlayMovie();
+                                    Player.Position = VideoPosition;
                                 } else {
                                     Mediation.Logger.Debug("resume");
                                     View.Dispatcher.BeginInvoke(new Action(() => {
@@ -711,10 +713,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetMedia()
         {
             if(!IsSettedMedia && !IsViewClosed) {
-                Player.Dispatcher.Invoke(() => {
-                    Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
-                    Player.LoadMedia(PlayFile.FullName);
-                });
+                //Player.Dispatcher.Invoke(() => {
+                Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
+                Player.LoadMedia(PlayFile.FullName);
+                //});
                 IsSettedMedia = true;
             }
         }
@@ -727,18 +729,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        DispatcherOperation PlayMovie()
+        void PlayMovie()
         {
             Player.IsMute = IsMute;
             Player.Volume = Volume;
 
-            return View.Dispatcher.BeginInvoke(new Action(() => {
-                ClearComment();
-                if(!IsViewClosed) {
-                    Player.Play();
-                    CanVideoPlay = true;
-                }
-            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            //return View.Dispatcher.BeginInvoke(new Action(() => {
+            ClearComment();
+            if(!IsViewClosed) {
+                Player.Play();
+                CanVideoPlay = true;
+            }
+            //}), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
         void StopMovie(bool isStopComment)
@@ -1555,7 +1557,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             e.Cancel |= IsViewClosed || (DownloadCancel != null && DownloadCancel.IsCancellationRequested);
             if(e.Cancel) {
-                StopDownloadAsync();
+                //if(UsingDmc.Value) {
+                //    StopDmcDownloadAsync();
+                //}
                 StopMovie(true);
 
                 Information.IsDownloading = false;
@@ -1715,12 +1719,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     //playerTask = Task.Run(() => {
                     //var sleepTime = TimeSpan.FromMilliseconds(500);
                     //Thread.Sleep(sleepTime);
-                    playerTask = Player.Dispatcher.BeginInvoke(new Action(() => {
-                        Player.Stop();
-                    })).Task;
+                    StopMovie(true);
                     //InitializeStatus();
                     //});
                 }
+                Mediation.Logger.Debug($"{nameof(Player.RebuildPlayer)}");
+                Player.RebuildPlayer();
             }
 
             return Task.WhenAll(processTask, playerTask);
@@ -1891,7 +1895,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
-                StopDownloadAsync();
+                if(UsingDmc.Value) {
+                    StopDmcDownloadAsync();
+                }
                 StopMovie(true);
             }
 
