@@ -1134,6 +1134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 if(rawVideoGetflvModel != null) {
                     Getflv = rawVideoGetflvModel;
+                    this._dmcInfo = null;
                     if(isSave) {
                         SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
                     }
