@@ -16,9 +16,12 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
@@ -39,5 +42,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         {
             return RawValueUtility.ConvertRawUnixTimeWithMilliseconds(time, 3);
         }
+
+        static string GetWeight(IEnumerable<string> weights, int threshold)
+        {
+            Debug.Assert((Constants.ServiceSmileVideoDownloadDmcWeightRange.Head <= threshold) && (threshold <= Constants.ServiceSmileVideoDownloadDmcWeightRange.Tail));
+
+            var count = weights.Count();
+            var range = Constants.ServiceSmileVideoDownloadDmcWeightRange.Tail - Constants.ServiceSmileVideoDownloadDmcWeightRange.Head;
+            var index = threshold / (range / count);
+
+            if(count <= index) {
+                index = count - 1;
+            }
+
+            return weights.ElementAt(index);
+        }
+
+        public static string GetVideoWeight(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
+        {
+            var items = mux.VideoSrcIds
+                .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s) })
+                .Where(b => b.Match.Success)
+                .Select(b => new { Source = b.Source, Kbs = b.Match.Groups["KBS"].Value, Scan = b.Match.Groups["SCAN"].Value })
+                .OrderBy(b => b.Kbs, new NaturalStringComparer())
+                .ThenBy(b => b.Scan, new NaturalStringComparer())
+                .Select(b => b.Source)
+            ;
+
+            return GetWeight(items, threshold);
+        }
+
     }
 }
