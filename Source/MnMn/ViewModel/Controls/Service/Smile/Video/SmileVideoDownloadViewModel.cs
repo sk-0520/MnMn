@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         bool _isEconomyMode;
 
-        bool _isProcessCancel;
+        //bool _isProcessCancel;
 
         #endregion
 
@@ -196,11 +196,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._isEconomyMode, value); }
         }
 
-        public bool IsProcessCancel
-        {
-            get { return this._isProcessCancel; }
-            set { SetVariableValue(ref this._isProcessCancel, value); }
-        }
+        //public bool IsProcessCancel
+        //{
+        //    get { return this._isProcessCancel; }
+        //    set { SetVariableValue(ref this._isProcessCancel, value); }
+        //}
+
+        protected CancellationTokenSource DownloadCancel { get; set; }
 
         protected FileInfo PlayFile
         {
@@ -284,12 +286,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoFile = donwloadFile;
             DownloadUri = downloadUri;
 
-            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl) {
+            DownloadCancel = new CancellationTokenSource();
+            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl, DownloadCancel.Token) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
                 Mediation.Logger.Information($"{VideoId}: download start: uri: {downloadUri}, head: {headPosition}, size: {VideoTotalSize}");
+
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
@@ -333,7 +337,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         } else {
                             VideoLoadState = LoadState.Failure;
                         }
-                        OnLoadVideoEnd();
+                        if(!downloader.Canceled) {
+                            OnLoadVideoEnd();
+                        }
                     } catch(Exception ex) {
                         Mediation.Logger.Error(ex);
                         VideoLoadState = LoadState.Failure;
@@ -682,7 +688,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             InformationLoadState = LoadState.None;
             ThumbnailLoadState = LoadState.None;
             CommentLoadState = LoadState.None;
-            IsProcessCancel = false;
+            //IsProcessCancel = false;
             UsingDmc.Value = false;
             DmcObject = null;
             DmcApiUri = null;
@@ -690,37 +696,53 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             DmcPollingWait = null;
             DmcPollingCancel = null;
             DownloadUri = null;
+            DownloadCancel = null;
         }
 
         protected virtual Task StopPrevProcessAsync()
         {
-            // ぐっちゃぐちゃ
-            var wait = new EventWaitHandle(false, EventResetMode.AutoReset);
-            PropertyChangedEventHandler changedEvent = null;
+            //// ぐっちゃぐちゃ
+            //var wait = new EventWaitHandle(false, EventResetMode.AutoReset);
+            //PropertyChangedEventHandler changedEvent = null;
 
-            changedEvent = (sender, e) => {
-                if(e.PropertyName == nameof(VideoLoadState) && VideoLoadState == LoadState.None) {
-                    PropertyChanged -= changedEvent;
-                    wait.Set();
-                }
-            };
-            PropertyChanged += changedEvent;
+            //changedEvent = (sender, e) => {
+            //    if(e.PropertyName == nameof(VideoLoadState) && VideoLoadState == LoadState.None) {
+            //        PropertyChanged -= changedEvent;
+            //        wait.Set();
+            //    }
+            //};
+            //PropertyChanged += changedEvent;
 
-            var prevState = VideoLoadState;
-            IsProcessCancel = true;
-            if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
-                return Task.Run(() => {
-                    wait.WaitOne();
-                    wait.Dispose();
-                    PropertyChanged -= changedEvent;
+            //var prevState = VideoLoadState;
+            //IsProcessCancel = true;
+
+            if(DownloadCancel != null) {
+                Mediation.Logger.Trace($"{VideoId}: Cancel!");
+                DownloadCancel.Cancel();
+            }
+
+            if(UsingDmc.Value) {
+                return StopDmcDownloadAsync().ContinueWith(t => {
                     InitializeStatus();
                 });
-            } else {
-                wait.Dispose();
-                PropertyChanged -= changedEvent;
-                InitializeStatus();
-                return Task.CompletedTask;
             }
+
+            InitializeStatus();
+
+            //if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
+            //    return Task.Run(() => {
+            //        wait.WaitOne();
+            //        wait.Dispose();
+            //        PropertyChanged -= changedEvent;
+            //        InitializeStatus();
+            //    });
+            //} else {
+            //    wait.Dispose();
+            //    PropertyChanged -= changedEvent;
+            //    InitializeStatus();
+            //    return Task.CompletedTask;
+            //}
+            return Task.CompletedTask;
         }
 
 
@@ -769,24 +791,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
         { }
 
-        protected Task StopDownloadAsync()
+        protected Task StopDmcDownloadAsync()
         {
-            if(UsingDmc.Value) {
-                if(DmcApiUri != null && Information != null && Information.IsDownloading) {
-                    if(DmcPollingWait != null) {
-                        if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
-                            DmcPollingWait.Set();
-                            DmcPollingWait.Dispose();
-                        }
+            Debug.Assert(UsingDmc.Value);
+            if(DmcApiUri != null && Information != null && Information.IsDownloading) {
+                if(DmcPollingWait != null) {
+                    if(!DmcPollingWait.SafeWaitHandle.IsClosed) {
+                        DmcPollingWait.Set();
+                        DmcPollingWait.Dispose();
                     }
-
-                    if(DmcPollingCancel != null) {
-                        DmcPollingCancel.Cancel();
-                    }
-
-                    var dmc = new Dmc(Mediation);
-                    return dmc.CloseAsync(DmcApiUri, DmcObject);
                 }
+
+                if(DmcPollingCancel != null) {
+                    DmcPollingCancel.Cancel();
+                }
+
+                var dmc = new Dmc(Mediation);
+                return dmc.CloseAsync(DmcApiUri, DmcObject);
             }
 
             return Task.CompletedTask;
@@ -804,7 +825,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Mediation.Logger.Information($"{videoId}: polling stop event is set!");
                         return;
                     }
-
+                    if(DmcObject == null) {
+                        Mediation.Logger.Debug($"{videoId}: {nameof(DmcObject)} is null!!");
+                        return;
+                    }
                     DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
 
                     var dmc = new Dmc(Mediation);
@@ -880,17 +904,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
             VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
 
+            if(e.Cancel || downloader.Canceled) {
+                return;
+            }
             //Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}, {e.SecondsDownlodingSize}");
 
             Information.IsDownloading = true;
 
             OnDownloading(sender, e);
-            e.Cancel |= IsProcessCancel;
+            if(!e.Cancel && DownloadCancel != null) {
+                e.Cancel = DownloadCancel.IsCancellationRequested;
+            }
         }
 
         private void Downloader_Downloaded(object sender, DownloaderEventArgs e)
         {
-            StopDownloadAsync();
+            if(UsingDmc.Value) {
+                StopDmcDownloadAsync();
+            }
             Information.IsDownloading = false;
 
             OnDownloaded(sender, e);
@@ -905,7 +936,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;
-                StopDownloadAsync();
+                if(UsingDmc.Value) {
+                    StopDmcDownloadAsync();
+                }
                 Information.IsDownloading = false;
             } else {
                 var time = Constants.ServiceSmileVideoDownloadingErrorWaitTime;

@@ -37,6 +37,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             ReferrerUri = referrerUri;
         }
+        public SmileVideoDownloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, Uri referrerUri, CancellationToken cancelToken)
+            : base(downloadUri, userAgentCreator, cancelToken)
+        {
+            ReferrerUri = referrerUri;
+        }
 
 
         #region property
