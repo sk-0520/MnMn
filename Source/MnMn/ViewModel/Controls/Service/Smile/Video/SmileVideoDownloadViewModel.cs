@@ -202,6 +202,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._isProcessCancel, value); }
         }
 
+        protected CancellationTokenSource DownloadCancel { get; set; }
+
         protected FileInfo PlayFile
         {
             get
@@ -284,12 +286,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoFile = donwloadFile;
             DownloadUri = downloadUri;
 
-            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl) {
+            DownloadCancel = new CancellationTokenSource();
+            using(var downloader = new SmileVideoDownloader(downloadUri, Session, Information.WatchUrl, DownloadCancel.Token) {
                 ReceiveBufferSize = Constants.ServiceSmileVideoReceiveBuffer,
                 DownloadTotalSize = VideoTotalSize,
                 RangeHeadPotision = headPosition,
             }) {
                 Mediation.Logger.Information($"{VideoId}: download start: uri: {downloadUri}, head: {headPosition}, size: {VideoTotalSize}");
+
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
@@ -708,6 +712,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var prevState = VideoLoadState;
             IsProcessCancel = true;
+            if(DownloadCancel != null) {
+                DownloadCancel.Cancel();
+            }
+
             if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
                 return Task.Run(() => {
                     wait.WaitOne();
@@ -771,6 +779,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected Task StopDownloadAsync()
         {
+            DownloadCancel.Cancel();
+
             if(UsingDmc.Value) {
                 if(DmcApiUri != null && Information != null && Information.IsDownloading) {
                     if(DmcPollingWait != null) {

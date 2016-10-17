@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
@@ -68,8 +69,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             DownloadUri = downloadUri;
             UserAgentCreator = userAgentCreator;
         }
+        public Downloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, CancellationToken cancelToken)
+            : this(downloadUri, userAgentCreator)
+        {
+            CancelToken = cancelToken;
+        }
 
         #region property
+
+        public CancellationToken? CancelToken { get; }
 
         public Uri DownloadUri { get; protected set; }
         protected ICreateHttpUserAgent UserAgentCreator { get; set; }
@@ -164,7 +172,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             //cancel = false;
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
             IfUsingSetRangeHeader();
-            var response = UserAgent.GetAsync(DownloadUri).Result;
+
+            var response = CancelToken.HasValue
+                ? UserAgent.GetAsync(DownloadUri, CancelToken.Value).Result
+                : UserAgent.GetAsync(DownloadUri).Result
+            ;
 
             ResponseHeaders = response.Content.Headers;
             return response.Content.ReadAsStreamAsync();
@@ -222,6 +234,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         int errorCounter = 1;
                         while(true) {
                             try {
+                                if(CancelToken.HasValue && CancelToken.Value.IsCancellationRequested) {
+                                    Cancled = true;
+                                    return;
+                                }
                                 currentReadSize = reader.Read(buffer, 0, buffer.Length);
                                 secondsReadSize += currentReadSize;
                                 break;
