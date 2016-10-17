@@ -593,24 +593,6 @@
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
-      <TextBlock ToolTip="動画サイズ">
-        <TextBlock>
-          <TextBlock.Style>
-            <Style TargetType="TextBlock">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
-                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
-                  <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-              </Style.Triggers>
-              <Setter Property="Visibility" Value="Collapsed"/>
-            </Style>
-          </TextBlock.Style>
-        </TextBlock>
-        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
-        <TextBlock>x</TextBlock>
-        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
-        </TextBlock>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
@@ -665,6 +647,24 @@
           </Style>
         </ContentControl.Style>
       </ContentControl>
+      <TextBlock ToolTip="動画サイズ">
+        <TextBlock>
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
+                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
+        <TextBlock>x</TextBlock>
+        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
+        </TextBlock>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
