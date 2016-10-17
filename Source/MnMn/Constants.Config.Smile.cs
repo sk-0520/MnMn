@@ -83,6 +83,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Regex ServiceSmileVideoDownloadDmcWeightVideoSort => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-video-sort", s => new Regex(s, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Singleline));
         public static Regex ServiceSmileVideoDownloadDmcWeightAudioSort => appConfig.Get("service-smile-smilevideo-donwload-dmc-weight-audio-sort", s => new Regex(s, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Singleline));
         /// <summary>
+        /// 新形式動画のポーリング待ち時間
+        /// </summary>
+        public static TimeSpan ServiceSmileVideoDownloadDmcPollingWaitTime => appConfig.Get("service-smile-smilevideo-donwload-dmc-polling-wait-time", TimeSpan.Parse);
+
+        /// <summary>
         /// ダウンロード拡張子。
         /// </summary>
         public static string ServiceSmileVideoDownloadDmcExtension => appConfig.Get("service-smile-smilevideo-donwload-dmc-extension");
@@ -211,6 +216,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         #endregion
 
         #region setting
+
+        #region video
 
         /// <summary>
         /// コメントのフォントサイズ。
@@ -402,6 +409,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static TimeSpan SettingServiceSmileVideoFilteringIgnoreOverlapTime => appConfig.Get("setting-service-smile-smilevideo-filtering-ignore-overlap-time", TimeSpan.Parse);
 
+        public static bool SettingServiceSmileVideoDownloadUsingDmc => appConfig.Get("setting-service-smile-smilevideo-download-dmc-using", bool.Parse);
+        public static int SettingServiceSmileVideoDownloadDmcVideoWeight => appConfig.Get("setting-service-smile-smilevideo-download-dmc-video-weight", int.Parse);
+        public static int SettingServiceSmileVideoDownloadDmcAudioWeight => appConfig.Get("setting-service-smile-smilevideo-download-dmc-audio-weight", int.Parse);
+
+
+        #endregion
+
+        #region live
+
         public static ExecuteOrOpenMode SettingServiceSmileLiveExecuteOpenMode => appConfig.Get("setting-service-smile-smilelive-execute-open-mode", s => (ExecuteOrOpenMode)Enum.Parse(typeof(ExecuteOrOpenMode), s));
         public static bool SettingServiceSmileLiveExecuteOpenPlayerInNewWindow => appConfig.Get("setting-service-smile-smilelive-execute-open-player-in-new-window", bool.Parse);
 
@@ -430,6 +446,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// 詳細部を表示するか。
         /// </summary>
         public static bool SettingServiceSmileLivePlayerShowDetailArea => appConfig.Get("setting-service-smile-smilelive-player-show-detail-area", bool.Parse);
+
+        #endregion
 
         #endregion
 

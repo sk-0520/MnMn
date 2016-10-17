@@ -71,12 +71,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.22\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.23\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.87\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.89\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -318,6 +318,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />

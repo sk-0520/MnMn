@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
@@ -68,8 +69,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             DownloadUri = downloadUri;
             UserAgentCreator = userAgentCreator;
         }
+        public Downloader(Uri downloadUri, ICreateHttpUserAgent userAgentCreator, CancellationToken cancelToken)
+            : this(downloadUri, userAgentCreator)
+        {
+            CancelToken = cancelToken;
+        }
 
         #region property
+
+        public CancellationToken? CancelToken { get; }
 
         public Uri DownloadUri { get; protected set; }
         protected ICreateHttpUserAgent UserAgentCreator { get; set; }
@@ -95,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public long DownloadedSize { get; protected set; } = UnknownDonwloadSize;
 
-        public bool Cancled { get; protected set; }
+        public bool Canceled { get; protected set; }
         public bool Completed { get; protected set; }
 
         public HttpContentHeaders ResponseHeaders { get; protected set; }
@@ -120,7 +128,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 return false;
             }
 
+
             var e = new DownloadingEventArgs(data, counter, secondsDownlodingSize);
+            if(CancelToken.HasValue && CancelToken.Value.IsCancellationRequested) {
+                e.Cancel = true;
+            }
             Downloading(this, e);
 
             return e.Cancel;
@@ -164,7 +176,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             //cancel = false;
             UserAgent = UserAgentCreator.CreateHttpUserAgent();
             IfUsingSetRangeHeader();
-            var response = UserAgent.GetAsync(DownloadUri).Result;
+
+            var response = CancelToken.HasValue
+                ? UserAgent.GetAsync(DownloadUri, CancelToken.Value).Result
+                : UserAgent.GetAsync(DownloadUri).Result
+            ;
 
             ResponseHeaders = response.Content.Headers;
             return response.Content.ReadAsStreamAsync();
@@ -185,18 +201,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 //    return;
                 //}
                 if(task.Result == null) {
-                    Cancled = true;
+                    Canceled = true;
                     return;
                 }
                 if(!CheckHeader()) {
-                    Cancled = true;
+                    Canceled = true;
                     return;
                 }
                 using(var reader = new BinaryReader(task.Result)) {
                     var downloadStartType = UsingRangeDonwload ? DownloadStartType.Range : DownloadStartType.Begin;
                     var downloadStartArgs = OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision);
                     if(downloadStartArgs.Cancel) {
-                        Cancled = true;
+                        Canceled = true;
                         Completed = downloadStartArgs.Completed;
                         if(Completed) {
                             OnDownloaded();
@@ -222,13 +238,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         int errorCounter = 1;
                         while(true) {
                             try {
+                                if(CancelToken.HasValue && CancelToken.Value.IsCancellationRequested) {
+                                    Canceled = true;
+                                    return;
+                                }
                                 currentReadSize = reader.Read(buffer, 0, buffer.Length);
                                 secondsReadSize += currentReadSize;
                                 break;
                             } catch(IOException ex) {
                                 var cancel = OnDownloadingError(errorCounter++, ex);
                                 if(cancel) {
-                                    Cancled = true;
+                                    Canceled = true;
                                     return;
                                 }
                             }
@@ -251,7 +271,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         DownloadedSize += currentReadSize;
                         var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);
                         if(OnDonwloading(slice, counter++, secondsDownlodingSize)) {
-                            Cancled = true;
+                            Canceled = true;
                             return;
                         }
                     }

@@ -29,6 +29,7 @@
   <Thickness x:Key="IndependentMargin">2</Thickness>
   <Thickness x:Key="IndependentHorizonMargin">2,0</Thickness>
   <Thickness x:Key="IndependentVericalMargin">0,2</Thickness>
+  <sys:Double x:Key="HalfMargin">4</sys:Double>
   <sys:Double x:Key="BaseMargin">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
   <sys:Double x:Key="SeparatorHeight">4</sys:Double>
@@ -431,6 +432,22 @@
       </Trigger>
     </Style.Triggers>-->
     <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="VerticalTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="0" Top="{StaticResource HalfMargin}" Right="0" Bottom="{StaticResource HalfMargin}" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="HorizontalTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="{StaticResource HalfMargin}" Top="0" Right="{StaticResource HalfMargin}" Bottom="0" />
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <!-- 検索 -->
@@ -448,6 +465,27 @@
             </Canvas>
           </Viewbox>
         </DataTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- PasswordBox -->
+  <Style TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
+    <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="VerticalPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="0" Top="{StaticResource HalfMargin}" Right="0" Bottom="{StaticResource HalfMargin}" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="HorizontalPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="{StaticResource HalfMargin}" Top="0" Right="{StaticResource HalfMargin}" Bottom="0" />
       </Setter.Value>
     </Setter>
   </Style>

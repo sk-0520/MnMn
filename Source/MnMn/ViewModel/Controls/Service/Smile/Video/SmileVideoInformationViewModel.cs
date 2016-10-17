@@ -795,7 +795,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetPropertyValue(IndividualVideoSetting, value, nameof(IndividualVideoSetting.ConvertedSwf)); }
         }
 
-        public IDictionary<string, bool> LoadedDmc { get { return IndividualVideoSetting.LoadedDmc; } }
+        public IDictionary<string, SmileVideoDmcItemModel> DmcItems { get { return IndividualVideoSetting.DmcItems; } }
+
+        public bool LoadedDmcVideos => DmcItems.Any(i => i.Value.IsLoaded);
+
 
         public bool IsEnabledGlobalCommentFilering
         {
@@ -910,6 +913,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             } catch(Exception ex) {
                 Mediation.Logger.Warning(ex);
             }
+        }
+
+        public void SetDmcLoaded(string video, string audio, bool isLoaded)
+        {
+            var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
+
+            DmcItems[role].IsLoaded = isLoaded;
+
+            CallOnPropertyChange(nameof(LoadedDmcVideos));
         }
 
         public SmileVideoVideoItemModel ToVideoItemModel()
@@ -1122,6 +1134,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
                 if(rawVideoGetflvModel != null) {
                     Getflv = rawVideoGetflvModel;
+                    this._dmcInfo = null;
                     if(isSave) {
                         SerializeUtility.SaveXmlSerializeToFile(GetflvFile.FullName, rawVideoGetflvModel);
                     }
@@ -1420,11 +1433,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
                 if(check.IsSuccess) {
                     var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
-                    IndividualVideoSetting.LoadedDmc[role] = false;
+                    SmileVideoDmcItemModel item;
+                    if(IndividualVideoSetting.DmcItems.TryGetValue(role, out item)) {
+                        item.IsLoaded = false;
+                    }
                     needSave = true;
                 }
                 dmcCheckes.Add(check);
             }
+            CallOnPropertyChange(nameof(LoadedDmcVideos));
 
             var checks = new[] {
                 normalCheck,

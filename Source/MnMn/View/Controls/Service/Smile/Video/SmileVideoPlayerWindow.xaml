@@ -593,24 +593,6 @@
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
-      <TextBlock ToolTip="動画サイズ">
-        <TextBlock>
-          <TextBlock.Style>
-            <Style TargetType="TextBlock">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
-                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
-                  <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-              </Style.Triggers>
-              <Setter Property="Visibility" Value="Collapsed"/>
-            </Style>
-          </TextBlock.Style>
-        </TextBlock>
-        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
-        <TextBlock>x</TextBlock>
-        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
-        </TextBlock>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
@@ -640,7 +622,21 @@
                 </Setter>
               </MultiDataTrigger>
               <DataTrigger Binding="{Binding UsingDmc.Value}" Value="True">
-                <Setter Property="ToolTip" Value="新形式" />
+                <Setter Property="ToolTip">
+                  <Setter.Value>
+                    <StackPanel>
+                      <TextBlock FontWeight="Bold">新形式</TextBlock>
+                      <TextBlock Margin="{StaticResource LeftMargin}">
+                        <Run>画質:</Run>
+                        <Run Text="{Binding DmcVideoSrc, Mode=OneWay}" />
+                      </TextBlock>
+                      <TextBlock Margin="{StaticResource LeftMargin}">
+                        <Run>音声:</Run>
+                        <Run Text="{Binding DmcAudioSrc, Mode=OneWay}" />
+                      </TextBlock>
+                    </StackPanel>
+                  </Setter.Value>
+                </Setter>
                 <Setter Property="Content">
                   <Setter.Value>
                     <Image Source="/Resources/Service/Smile/Video/Player/DmcMode.png" Style="{StaticResource SmallIconImage}" />
@@ -651,6 +647,24 @@
           </Style>
         </ContentControl.Style>
       </ContentControl>
+      <TextBlock ToolTip="動画サイズ">
+        <TextBlock>
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
+                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
+        <TextBlock>x</TextBlock>
+        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
+        </TextBlock>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
