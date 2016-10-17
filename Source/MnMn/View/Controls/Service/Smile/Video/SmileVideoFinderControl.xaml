@@ -772,6 +772,7 @@
                                     <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
                                       <Binding Path="Information.LoadedNormalVideo" />
                                       <Binding Path="Information.LoadedEconomyVideo" />
+                                      <Binding Path="Information.LoadedDmcVideos" />
                                     </MultiBinding>
                                   </DataTrigger.Binding>
                                   <Setter Property="Text" Value="有" />
@@ -781,6 +782,7 @@
                                     <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
                                       <Binding Path="Information.LoadedNormalVideo" />
                                       <Binding Path="Information.LoadedEconomyVideo" />
+                                      <Binding Path="Information.LoadedDmcVideos" />
                                     </MultiBinding>
                                   </DataTrigger.Binding>
                                   <Setter Property="Text" Value="無" />

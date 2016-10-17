@@ -797,6 +797,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public IDictionary<string, SmileVideoDmcItemModel> DmcItems { get { return IndividualVideoSetting.DmcItems; } }
 
+        public bool LoadedDmcVideos => DmcItems.Any(i => i.Value.IsLoaded);
+
+
         public bool IsEnabledGlobalCommentFilering
         {
             get { return IndividualVideoSetting.IsEnabledGlobalCommentFilering; }
@@ -910,6 +913,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             } catch(Exception ex) {
                 Mediation.Logger.Warning(ex);
             }
+        }
+
+        public void SetDmcLoaded(string video, string audio, bool isLoaded)
+        {
+            var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
+
+            DmcItems[role].IsLoaded = isLoaded;
+
+            CallOnPropertyChange(nameof(LoadedDmcVideos));
         }
 
         public SmileVideoVideoItemModel ToVideoItemModel()
@@ -1428,6 +1440,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
                 dmcCheckes.Add(check);
             }
+            CallOnPropertyChange(nameof(LoadedDmcVideos));
 
             var checks = new[] {
                 normalCheck,
