@@ -33,7 +33,9 @@ namespace MnMnTest.Logic.Utility.Service.Smile.Video
                 new { num = 0, result = "archive_h264_300kbps_360p" },
             };
             foreach(var test in tests) {
+#pragma warning disable CS0612 // 型またはメンバーが古い形式です
                 var src = SmileVideoDmcObjectUtility.GetVideoWeight(mux, test.num);
+#pragma warning restore CS0612 // 型またはメンバーが古い形式です
                 Assert.IsTrue(src == test.result, $"result:{src}, test:{test.num} - {test.result}");
             }
         }
@@ -58,7 +60,9 @@ namespace MnMnTest.Logic.Utility.Service.Smile.Video
                 new { num = 0, result = "archive_h264_600kbps_360p" },
             };
             foreach(var test in tests) {
+#pragma warning disable CS0612 // 型またはメンバーが古い形式です
                 var src = SmileVideoDmcObjectUtility.GetVideoWeight(mux, test.num);
+#pragma warning restore CS0612 // 型またはメンバーが古い形式です
                 Assert.IsTrue(src == test.result, $"result:{src}, test:{test.num} - {test.result}");
             }
         }
@@ -94,7 +98,9 @@ namespace MnMnTest.Logic.Utility.Service.Smile.Video
                 new { num = 0, result = "archive_h264_1kbps_0p" },
             };
             foreach(var test in tests) {
+#pragma warning disable CS0612 // 型またはメンバーが古い形式です
                 var src = SmileVideoDmcObjectUtility.GetVideoWeight(mux, test.num);
+#pragma warning restore CS0612 // 型またはメンバーが古い形式です
                 Assert.IsTrue(src == test.result, $"result:{src}, test:{test.num} - {test.result}");
             }
         }
