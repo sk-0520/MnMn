@@ -103,7 +103,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public FewViewModel<bool> UsingDmc { get; } = new FewViewModel<bool>();
         protected RawSmileVideoDmcObjectModel DmcObject { get; private set; }
         protected Uri DmcApiUri { get; private set; }
-        protected RawSmileVideoDmcSrcIdToMultiplexerModel DmcMultiplexer { get { return DmcObject.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
+        protected RawSmileVideoDmcSrcIdToMultiplexerModel DmcMultiplexer { get { return DmcObject?.Data.Session.ContentSrcIdSets.First().SrcIdToMultiplexers.First(); } }
+        public string DmcVideoSrc { get { return DmcMultiplexer?.VideoSrcIds.First(); } }
+        public string DmcAudioSrc { get { return DmcMultiplexer?.AudioSrcIds.First(); } }
         protected string DmcFileExtension { get { return DmcObject.Data.Session.Protocol.HttpParameters.First().Parameters.First().FileExtension; } }
         Task DmcPollingTask { get; set; }
         AutoResetEvent DmcPollingWait { get; set; }
@@ -793,7 +795,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var pollingCount = 1;
                 while(true) {
                     Mediation.Logger.Information($"{videoId}: polling wait... {pollingCount++}");
-                    var isReset = resetEvent.WaitOne(TimeSpan.FromSeconds(10));
+                    var isReset = resetEvent.WaitOne(Constants.ServiceSmileVideoDownloadDmcPollingWaitTime);
                     if(isReset) {
                         // 強制中止
                         Mediation.Logger.Information($"{videoId}: polling stop event is set!");

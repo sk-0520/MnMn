@@ -640,7 +640,21 @@
                 </Setter>
               </MultiDataTrigger>
               <DataTrigger Binding="{Binding UsingDmc.Value}" Value="True">
-                <Setter Property="ToolTip" Value="新形式" />
+                <Setter Property="ToolTip">
+                  <Setter.Value>
+                    <StackPanel>
+                      <TextBlock FontWeight="Bold">新形式</TextBlock>
+                      <TextBlock Margin="{StaticResource LeftMargin}">
+                        <Run>画質:</Run>
+                        <Run Text="{Binding DmcVideoSrc, Mode=OneWay}" />
+                      </TextBlock>
+                      <TextBlock Margin="{StaticResource LeftMargin}">
+                        <Run>音声:</Run>
+                        <Run Text="{Binding DmcAudioSrc, Mode=OneWay}" />
+                      </TextBlock>
+                    </StackPanel>
+                  </Setter.Value>
+                </Setter>
                 <Setter Property="Content">
                   <Setter.Value>
                     <Image Source="/Resources/Service/Smile/Video/Player/DmcMode.png" Style="{StaticResource SmallIconImage}" />
