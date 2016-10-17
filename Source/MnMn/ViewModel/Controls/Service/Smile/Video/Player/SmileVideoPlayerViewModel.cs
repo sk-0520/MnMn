@@ -711,7 +711,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetMedia()
         {
             if(!IsSettedMedia && !IsViewClosed) {
-                Player.LoadMedia(PlayFile.FullName);
+                Player.Dispatcher.Invoke(() => {
+                    Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
+                    Player.LoadMedia(PlayFile.FullName);
+                });
                 IsSettedMedia = true;
             }
         }
@@ -1549,7 +1552,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     }
                 }
             }
-            e.Cancel = IsViewClosed || IsProcessCancel;
+
+            e.Cancel |= IsViewClosed || (DownloadCancel != null && DownloadCancel.IsCancellationRequested);
             if(e.Cancel) {
                 StopDownloadAsync();
                 StopMovie(true);
@@ -1569,7 +1573,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnLoadVideoEnd()
         {
-            if(!IsProcessCancel) {
+            if(IsViewClosed) {
+                return;
+            }
+
+            if(DownloadCancel == null || !DownloadCancel.IsCancellationRequested) {
                 if(Information.PageHtmlLoadState == LoadState.Loaded) {
                     if(!IsMadeDescription) {
                         MakeDescription();
@@ -1704,12 +1712,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var playerTask = Task.CompletedTask;
             if(Player != null) {
                 if(Player.State != Meta.Vlc.Interop.Media.MediaState.Stopped) {
-                    playerTask = Task.Run(() => {
-                        var sleepTime = TimeSpan.FromMilliseconds(500);
-                        Thread.Sleep(sleepTime);
+                    //playerTask = Task.Run(() => {
+                    //var sleepTime = TimeSpan.FromMilliseconds(500);
+                    //Thread.Sleep(sleepTime);
+                    playerTask = Player.Dispatcher.BeginInvoke(new Action(() => {
                         Player.Stop();
-                        InitializeStatus();
-                    });
+                    })).Task;
+                    //InitializeStatus();
+                    //});
                 }
             }
 
