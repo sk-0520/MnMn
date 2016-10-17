@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             var weights = items
                 .Where(s => s != targetWeight)
-                .IfRevese(index < items.Count / 2)
+                .IfRevese(items.Count / 2 < index)
             ;
             foreach(var weight in weights) {
                 yield return weight;
