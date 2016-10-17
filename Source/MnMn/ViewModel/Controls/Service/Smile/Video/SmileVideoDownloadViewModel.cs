@@ -769,7 +769,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnDownloadingError(object sender, DownloadingErrorEventArgs e)
         { }
 
-        protected void StopDownload()
+        protected Task StopDownloadAsync()
         {
             if(UsingDmc.Value) {
                 if(DmcApiUri != null && Information != null && Information.IsDownloading) {
@@ -785,9 +785,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     }
 
                     var dmc = new Dmc(Mediation);
-                    dmc.CloseAsync(DmcApiUri, DmcObject);
+                    return dmc.CloseAsync(DmcApiUri, DmcObject);
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         Task PollingDmcDownloadAsync(string videoId, AutoResetEvent resetEvent, CancellationToken cancelToken)
@@ -888,7 +890,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         private void Downloader_Downloaded(object sender, DownloaderEventArgs e)
         {
-            StopDownload();
+            StopDownloadAsync();
             Information.IsDownloading = false;
 
             OnDownloaded(sender, e);
@@ -903,7 +905,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(e.Cancel) {
                 VideoLoadState = LoadState.Failure;
-                StopDownload();
+                StopDownloadAsync();
                 Information.IsDownloading = false;
             } else {
                 var time = Constants.ServiceSmileVideoDownloadingErrorWaitTime;

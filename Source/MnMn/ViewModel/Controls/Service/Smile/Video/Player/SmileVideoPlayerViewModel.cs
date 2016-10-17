@@ -1551,7 +1551,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
             e.Cancel = IsViewClosed || IsProcessCancel;
             if(e.Cancel) {
-                StopDownload();
+                StopDownloadAsync();
                 StopMovie(true);
 
                 Information.IsDownloading = false;
@@ -1881,7 +1881,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
                 //Player.BeginStop();
-                StopDownload();
+                StopDownloadAsync();
                 StopMovie(true);
             }
 
