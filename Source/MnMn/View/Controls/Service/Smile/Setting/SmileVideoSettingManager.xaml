@@ -125,6 +125,36 @@
         <GroupBox Header="ダウンロード">
           <StackPanel>
             <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding UsingDmc}">(実験)新形式を使用</CheckBox>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0">動画ソース</Label>
+              <Slider
+                Grid.Row="0"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMinimum}}"
+                Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMaximum}}"
+                Value="{Binding DmcVideoWeight}"
+              />
+
+              <Label Grid.Row="1" Grid.Column="0">音声ソース</Label>
+              <Slider
+                Grid.Row="1"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMinimum}}"
+                Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMaximum}}"
+                Value="{Binding DmcAudioWeight}"
+              />
+            </Grid>
           </StackPanel>
         </GroupBox>
 

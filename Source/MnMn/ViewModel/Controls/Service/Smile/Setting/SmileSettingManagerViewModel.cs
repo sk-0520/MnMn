@@ -188,7 +188,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         public bool UsingDmc
         {
             get { return Setting.Video.Download.UsingDmc; }
-            set { SetPropertyValue(Setting.Video.Download, value); }
+            set { SetPropertyValue(Setting.Video.Download, value, nameof(Setting.Video.Download.UsingDmc)); }
+        }
+
+        public int DmcVideoWeight
+        {
+            get { return Setting.Video.Download.VideoWeight; }
+            set { SetPropertyValue(Setting.Video.Download, value, nameof(Setting.Video.Download.VideoWeight)); }
+        }
+
+        public int DmcAudioWeight
+        {
+            get { return Setting.Video.Download.AudioWeight; }
+            set { SetPropertyValue(Setting.Video.Download, value, nameof(Setting.Video.Download.AudioWeight)); }
         }
 
         public BackgroundKind BackgroundKind
