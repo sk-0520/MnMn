@@ -314,7 +314,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 //    Information.DmcItems[role] = dmcItem;
                                 //}
                                 VideoFile.Refresh();
-                                Information.DmcItems[role].IsLoaded = VideoFile.Length == Information.DmcItems[role].Length;
+                                //Information.DmcItems[role].IsLoaded = VideoFile.Length == Information.DmcItems[role].Length;
+                                Information.SetDmcLoaded(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), VideoFile.Length == Information.DmcItems[role].Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
                                 } else {
