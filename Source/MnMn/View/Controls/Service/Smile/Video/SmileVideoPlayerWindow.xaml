@@ -57,7 +57,6 @@
         <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Double x:Key="ImageWidth">100</sys:Double>
@@ -76,18 +75,18 @@
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
       <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
-      <cttn_sl_view_converter:PredominantColorConverter x:Key="PredominantColorConverter" />
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
+      <app_view_converter_service_smile_video:ThumbnailPredominantColorConverter x:Key="ThumbnailPredominantColorConverter" />
 
       <CollectionViewSource x:Key="PlayListItems" Source="{Binding PlayListItems}" />
 
       <SolidColorBrush x:Key="SimpleBackgound" Color="{Binding BackgroundColor}" po:Freeze="True" />
-      <SolidColorBrush x:Key="AutoBackground" Color="{Binding ThumbnailImage, Converter={StaticResource PredominantColorConverter}, ConverterParameter=ffff00}" />
+      <SolidColorBrush x:Key="AutoBackground" Color="{Binding ThumbnailImage, Converter={StaticResource ThumbnailPredominantColorConverter}, ConverterParameter=ffff00}" />
 
       <Style x:Key="ThumbnailImage" TargetType="Image" >
         <Setter Property="Width" Value="{StaticResource ImageWidth}" />
