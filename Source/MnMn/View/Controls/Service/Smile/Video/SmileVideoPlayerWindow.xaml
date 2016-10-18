@@ -766,14 +766,26 @@
               <Grid Width="{Binding CommentArea.Width, Mode=OneTime}" Height="{Binding CommentArea.Height, Mode=OneTime}" >
                 <Canvas x:Name="normalCommentArea" />
                 <Canvas x:Name="originalPosterCommentArea" />
-                <Rectangle
+                <Border
                   VerticalAlignment="Top"
-                  HorizontalAlignment="Stretch"
-                  Fill="#80ffffff"
+                  Background="#80ffffff"
+                  BorderBrush="{DynamicResource AccentBaseColorBrush}"
+                  BorderThickness="4"
                   Width="{Binding CommentArea.Width, Mode=OneTime}"
                   Height="{Binding CommentEnabledHeight}"
                   Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
-                />
+                >
+                  <TextBlock VerticalAlignment="Top" TextAlignment="Center" FontSize="40" Foreground="Black" Margin="{StaticResource TopMargin}">
+                    <TextBlock.Effect>
+                      <DropShadowEffect
+                        BlurRadius="4"
+                        Color="SteelBlue"
+                        Direction="325"
+                      />
+                    </TextBlock.Effect>
+                    コメント有効領域
+                  </TextBlock>
+                </Border>
               </Grid>
             </Viewbox>
 
