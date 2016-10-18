@@ -17,28 +17,26 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.Define.UI.Player
 {
-    public class SmileVideoCheckItLaterModel: SmileVideoVideoItemModel
+    /// <summary>
+    /// プレイヤーの背景描画。
+    /// </summary>
+    public enum BackgroundKind
     {
-        #region property
-
         /// <summary>
-        /// 列挙された日時。
+        /// 自動算出色。
         /// </summary>
-        [DataMember]
-        public DateTime CheckTimestamp { get; set; }
-
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_BackgroundKind_AutoColor))]
+        AutoColor,
         /// <summary>
-        /// すでにチェック済みか。
+        /// (たぶん選択した)色。
         /// </summary>
-        [DataMember]
-        public bool IsChecked { get; set; }
-
-        #endregion
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_UI_Player_BackgroundKind_SimpleColor))]
+        SimpleColor,
     }
 }

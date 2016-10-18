@@ -294,13 +294,13 @@
 
     </Grid>
 
-    <TabControl
+    <app_view_controls:FocusedTabControl
       Grid.Row="1"
       ItemsSource="{Binding SearchGroups}"
       SelectedItem="{Binding SelectedSearchGroup}"
       Style="{StaticResource FinderTab}"
     >
-      <TabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ItemTemplate>
         <DataTemplate>
           <StackPanel Style="{StaticResource TabHeader}">
             <StackPanel.ContextMenu>
@@ -374,8 +374,8 @@
             </Button>
           </StackPanel>
         </DataTemplate>
-      </TabControl.ItemTemplate>
-      <TabControl.ContentTemplate>
+      </app_view_controls:FocusedTabControl.ItemTemplate>
+      <app_view_controls:FocusedTabControl.ContentTemplate>
         <DataTemplate>
           <app_view_controls_service_smile_video:SmileVideoFinderControl x:Name="finder" DataContext="{Binding}">
             <app_view_controls_service_smile_video:SmileVideoFinderControl.FooterContent>
@@ -420,9 +420,9 @@
           </app_view_controls_service_smile_video:SmileVideoFinderControl>
 
         </DataTemplate>
-      </TabControl.ContentTemplate>
+      </app_view_controls:FocusedTabControl.ContentTemplate>
 
-    </TabControl>
+    </app_view_controls:FocusedTabControl>
 
     <mamc:Flyout Grid.Row="0" Grid.RowSpan="2" Visibility="Hidden" Style="{StaticResource FinderFlyout}" Header="{Binding Content, ElementName=tagList}" IsOpen="{Binding ShowTagArea}">
       <StackPanel Orientation="Horizontal">

@@ -4,6 +4,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+
   xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -55,7 +57,6 @@
         <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
       <sys:Double x:Key="ImageWidth">100</sys:Double>
@@ -80,8 +81,12 @@
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
+      <app_view_converter_service_smile_video:ThumbnailPredominantColorConverter x:Key="ThumbnailPredominantColorConverter" />
 
       <CollectionViewSource x:Key="PlayListItems" Source="{Binding PlayListItems}" />
+
+      <SolidColorBrush x:Key="SimpleBackgound" Color="{Binding BackgroundColor}" po:Freeze="True" />
+      <SolidColorBrush x:Key="AutoBackground" Color="{Binding ThumbnailImage, Converter={StaticResource ThumbnailPredominantColorConverter}, ConverterParameter=ffff00}" />
 
       <Style x:Key="ThumbnailImage" TargetType="Image" >
         <Setter Property="Width" Value="{StaticResource ImageWidth}" />
@@ -259,6 +264,8 @@
         <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
           <Setter Property="Topmost" Value="True" />
           <Setter Property="BorderThickness" Value="0" />
+          <Setter Property="ResizeMode" Value="NoResize" />
+          <Setter Property="ShowCloseButton" Value="False" />
         </DataTrigger>
       </Style.Triggers>
       <!--<Setter Property="BorderBrush">
@@ -585,24 +592,6 @@
         </Viewbox>
         <app_view_controls:LoadStateNavigator LoadState="{Binding VideoLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
-      <TextBlock ToolTip="動画サイズ">
-        <TextBlock>
-          <TextBlock.Style>
-            <Style TargetType="TextBlock">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
-                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
-                  <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-              </Style.Triggers>
-              <Setter Property="Visibility" Value="Collapsed"/>
-            </Style>
-          </TextBlock.Style>
-        </TextBlock>
-        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
-        <TextBlock>x</TextBlock>
-        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
-        </TextBlock>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
@@ -632,7 +621,21 @@
                 </Setter>
               </MultiDataTrigger>
               <DataTrigger Binding="{Binding UsingDmc.Value}" Value="True">
-                <Setter Property="ToolTip" Value="新形式" />
+                <Setter Property="ToolTip">
+                  <Setter.Value>
+                    <StackPanel>
+                      <TextBlock FontWeight="Bold">新形式</TextBlock>
+                      <TextBlock Margin="{StaticResource LeftMargin}">
+                        <Run>画質:</Run>
+                        <Run Text="{Binding DmcVideoSrc, Mode=OneWay}" />
+                      </TextBlock>
+                      <TextBlock Margin="{StaticResource LeftMargin}">
+                        <Run>音声:</Run>
+                        <Run Text="{Binding DmcAudioSrc, Mode=OneWay}" />
+                      </TextBlock>
+                    </StackPanel>
+                  </Setter.Value>
+                </Setter>
                 <Setter Property="Content">
                   <Setter.Value>
                     <Image Source="/Resources/Service/Smile/Video/Player/DmcMode.png" Style="{StaticResource SmallIconImage}" />
@@ -643,6 +646,24 @@
           </Style>
         </ContentControl.Style>
       </ContentControl>
+      <TextBlock ToolTip="動画サイズ">
+        <TextBlock>
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding VideoLoadState}" Value="Loading">
+                  <Setter Property="Text" Value="{Binding SecondsDownloadingSize, Converter={StaticResource HumanLikeByteConverter}, StringFormat=秒間DL: {0}}" />
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Text="{Binding RealVideoWidth, Mode=OneWay}" />
+        <TextBlock>x</TextBlock>
+        <TextBlock Text="{Binding RealVideoHeight, Mode=OneWay}" />
+        </TextBlock>
       <ContentControl>
         <ContentControl.Style>
           <Style TargetType="ContentControl">
@@ -718,6 +739,18 @@
           </Grid.RowDefinitions>
 
           <Grid x:Name="viewMedia" Grid.Row="0">
+            <Grid.Style>
+              <Style TargetType="Grid">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding BackgroundKind}" Value="SimpleColor">
+                    <Setter Property="Background" Value="{StaticResource SimpleBackgound}" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding BackgroundKind}" Value="AutoColor">
+                    <Setter Property="Background" Value="{StaticResource AutoBackground}" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Grid.Style>
             <vlc_wpf:VlcPlayer x:Name="player" EndBehavior="Nothing">
               <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonUp" >
@@ -733,14 +766,26 @@
               <Grid Width="{Binding CommentArea.Width, Mode=OneTime}" Height="{Binding CommentArea.Height, Mode=OneTime}" >
                 <Canvas x:Name="normalCommentArea" />
                 <Canvas x:Name="originalPosterCommentArea" />
-                <Rectangle
+                <Border
                   VerticalAlignment="Top"
-                  HorizontalAlignment="Stretch"
-                  Fill="#80ffffff"
+                  Background="#80ffffff"
+                  BorderBrush="{DynamicResource AccentBaseColorBrush}"
+                  BorderThickness="4"
                   Width="{Binding CommentArea.Width, Mode=OneTime}"
                   Height="{Binding CommentEnabledHeight}"
                   Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
-                />
+                >
+                  <TextBlock VerticalAlignment="Top" TextAlignment="Center" FontSize="40" Foreground="Black" Margin="{StaticResource TopMargin}">
+                    <TextBlock.Effect>
+                      <DropShadowEffect
+                        BlurRadius="4"
+                        Color="SteelBlue"
+                        Direction="325"
+                      />
+                    </TextBlock.Effect>
+                    コメント有効領域
+                  </TextBlock>
+                </Border>
               </Grid>
             </Viewbox>
 
@@ -1532,6 +1577,8 @@
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border x:Name="separator" Width="{StaticResource SeparatorWidth}" />
+
                         <!--<TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>-->
                         <!--<Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
                         <Viewbox Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource {x:Type Viewbox}}">
@@ -1547,21 +1594,24 @@
                             <Run Text="{Binding TagName, Mode=OneTime}" />
                           </Hyperlink>
                         </TextBlock>
-                        <Button Cursor="Hand" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button Cursor="Hand" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
                           <Button.Template>
                             <ControlTemplate>
                               <!--<Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />-->
                               <Viewbox Style="{StaticResource {x:Type Viewbox}}">
                                 <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumDefaultIconPath}" />
+                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
                                 </Canvas>
                               </Viewbox>
                             </ControlTemplate>
                           </Button.Template>
                         </Button>
-                        <!-- TODO: ださい -->
-                        <Border Width="8" />
                       </StackPanel>
+                      <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                          <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                        </DataTrigger>
+                      </DataTemplate.Triggers>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>

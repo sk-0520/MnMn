@@ -288,6 +288,12 @@
   <data name="String_App_Define_SourceLoadState_SourceLoading" xml:space="preserve">
     <value>ソース読込</value>
   </data>
+  <data name="String_App_Define_UI_Player_BackgroundKind_AutoColor" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="String_App_Define_UI_Player_BackgroundKind_SimpleColor" xml:space="preserve">
+    <value>固定</value>
+  </data>
   <data name="String_App_Define_UI_Player_WheelOperation_None" xml:space="preserve">
     <value>何もしない</value>
   </data>

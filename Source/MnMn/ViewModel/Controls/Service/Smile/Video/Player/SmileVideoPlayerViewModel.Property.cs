@@ -28,6 +28,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
@@ -1042,6 +1043,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// コメントグラフデータ。
         /// </summary>
         public CollectionModel<DataPoint> CommentChartList { get; } = new CollectionModel<DataPoint>();
+
+        public FewViewModel<Color> VideoBackgroundColor { get; } = new FewViewModel<Color>();
+
+        public BackgroundKind BackgroundKind
+        {
+            get { return Setting.Player.BackgroundKind; }
+        }
+
+        public Color BackgroundColor
+        {
+            get { return Setting.Player.BackgroundColor; }
+        }
 
         #endregion
     }

@@ -71,12 +71,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
-      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.22\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.23\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.86\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.89\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -212,6 +212,7 @@
     <Compile Include="Define\Service\Smile\Live\SmileLiveType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoChangeVideoPositionType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoProcess.cs" />
+    <Compile Include="Define\UI\Player\BackgroundKind.cs" />
     <Compile Include="Define\UI\Player\WheelOperation.cs" />
     <Compile Include="Define\WebNavigatorEngine.cs" />
     <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoGetthumbinfoFailureException.cs" />
@@ -317,6 +318,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveExecuteSettingModel.cs" />
@@ -362,6 +364,7 @@
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\FocusedTabControl.cs" />
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -389,6 +392,7 @@
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\SmileUserHasBookmarkConverter.cs" />
+    <Compile Include="View\Converter\Service\Smile\Video\ThumbnailPredominantColorConverter.cs" />
     <Compile Include="View\Resources\TabDictionary.xaml.cs">
       <DependentUpon>TabDictionary.xaml</DependentUpon>
     </Compile>
@@ -1027,6 +1031,9 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="%40MnMn.exe.user.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="bat\beta.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

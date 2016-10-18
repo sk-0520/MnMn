@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 return Task.CompletedTask;
             } else {
                 var user = new SmileUserInformationViewModel(Mediation, userId, isLoginUser);
-                UserItems.Insert(0, user);
+                UserItems.Add(user);
                 if(LoginUser == null) {
                     LoadLoginUserAsync().ConfigureAwait(false);
                 }
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             if(session.LoginState == LoginState.LoggedIn) {
                 LoginUser = new SmileLoginUserInformationViewModel(Mediation, session.UserId);
                 return LoginUser.LoadDefaultAsync().ContinueWith(_ => {
-                    UserItems.Add(LoginUser);
+                    UserItems.Insert(0, LoginUser);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }
 
@@ -401,7 +401,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public override Task InitializeAsync()
         {
             if(LoginUser != null) {
-                var user = UserItems.LastOrDefault();
+                var user = UserItems.FirstOrDefault();
                 if(user != null) {
                     UserItems.Remove(user);
                 }

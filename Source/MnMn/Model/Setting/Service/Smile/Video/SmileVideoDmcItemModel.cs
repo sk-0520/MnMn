@@ -20,25 +20,34 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
-    public class SmileVideoCheckItLaterModel: SmileVideoVideoItemModel
+    [DataContract]
+    public class SmileVideoDmcItemModel: ModelBase
     {
-        #region property
-
         /// <summary>
-        /// 列挙された日時。
+        /// 読み込み完了済みか。
+        /// <para>たぶん使うことはないと思う。</para>
         /// </summary>
         [DataMember]
-        public DateTime CheckTimestamp { get; set; }
-
+        public bool IsLoaded { get; set; }
         /// <summary>
-        /// すでにチェック済みか。
+        /// 動画サイズ。
+        /// <para>HTTPという性善説に基づいていてニコニコというデータ提供先を信じ切るという世は信頼で成り立つ素晴らしい情報！</para>
         /// </summary>
         [DataMember]
-        public bool IsChecked { get; set; }
-
-        #endregion
+        public long Length { get; set; }
+        /// <summary>
+        /// キーに依存しない動画の品質。
+        /// </summary>
+        [DataMember]
+        public string Video { get; set; }
+        /// <summary>
+        /// キーに依存しない音声の品質。
+        /// </summary>
+        [DataMember]
+        public string Audio { get; set; }
     }
 }

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 
@@ -181,7 +182,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public bool InactiveIsFullScreenRestore { get; set; } = Constants.SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [DataMember]
         public double PlayerArea { get; set; } = Constants.SettingServiceSmileVideoPlayerPlayerAreaStar;
@@ -189,6 +190,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public double CommentArea { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentAreaStar;
         [DataMember]
         public double InformationArea { get; set; } = Constants.SettingServiceSmileVideoPlayerInformationAreaPixel;
+
+        [DataMember]
+        public BackgroundKind BackgroundKind { get; set; } = Constants.SettingServiceSmileVideoPlayerBackgroundKind;
+        [DataMember]
+        public Color BackgroundColor { get; set; } = Constants.SettingServiceSmileVideoPlayerBackgroundColor;
 
         #endregion
     }

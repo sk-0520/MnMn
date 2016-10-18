@@ -49,6 +49,8 @@
           <CheckBox IsChecked="{Binding IsRandomTheme}">random</CheckBox>
           <ComboBox DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}"></ComboBox>
           <ComboBox DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}"></ComboBox>
+
+          <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
         </StackPanel>
       </GroupBox>
       <GroupBox Header="browser">

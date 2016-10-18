@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// <summary>
         /// ダウンロード設定。
         /// </summary>
-        //[DataMember]
+        [DataMember]
         public SmileVideoDownloadSetting Download { get; set; } = new SmileVideoDownloadSetting();
 
         /// <summary>

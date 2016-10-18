@@ -21,7 +21,7 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="350"
+  d:DesignHeight="900"
   d:DesignWidth="600"
 >
   <UserControl.Resources>
@@ -35,69 +35,64 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <StackPanel>
-      <GroupBox Header="アカウント設定">
-        <StackPanel>
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition />
-              <RowDefinition />
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+      <StackPanel>
+        <GroupBox Header="アカウント設定">
+          <StackPanel>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0">メールアドレスまたは電話番号</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EditingAccountName}" />
+              <Label Grid.Row="0" Grid.Column="0">メールアドレスまたは電話番号</Label>
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EditingAccountName}" Style="{StaticResource VerticalTextBox}" />
 
-            <Label Grid.Row="1" Grid.Column="0">パスワード</Label>
-            <PasswordBox Grid.Row="1" Grid.Column="1">
-              <i:Interaction.Behaviors>
-                <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding EditingAccountPassword, Mode=TwoWay}" />
-              </i:Interaction.Behaviors>
-            </PasswordBox>
+              <Label Grid.Row="1" Grid.Column="0">パスワード</Label>
+              <PasswordBox Grid.Row="1" Grid.Column="1"  Style="{StaticResource VerticalPasswordBox}" >
+                <i:Interaction.Behaviors>
+                  <app_view_attachment:PasswordBoxPasswordBehavior Password="{Binding EditingAccountPassword, Mode=TwoWay}" />
+                </i:Interaction.Behaviors>
+              </PasswordBox>
 
-            <StackPanel Grid.Row="2">
-              <TextBlock Grid.Column="0" TextAlignment="Center">
-                <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountRegister}">会員登録</Hyperlink>
-              </TextBlock>
+              <StackPanel Grid.Row="2">
+                <TextBlock Grid.Column="0" TextAlignment="Center">
+                  <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountRegister}">会員登録</Hyperlink>
+                </TextBlock>
 
-              <TextBlock Grid.Column="1" TextAlignment="Center">
-                <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountReset}">パスワード再発行</Hyperlink>
-              </TextBlock>
-            </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
-              <Button VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding LoginCommand}">
-                <StackPanel Orientation="Horizontal">
-                  <TextBlock>ログインチェック:</TextBlock>
-                  <TextBlock Text="{Binding Session.LoginState, Converter={StaticResource EnumDisplayConverter}}" />
-                </StackPanel>
-              </Button>
-              <Border Width="8" />
-              <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis">ログインチェックするまでアカウント情報は有効になりません。</TextBlock>
-            </StackPanel>
-          </Grid>
-        </StackPanel>
-      </GroupBox>
-
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="1" TextAlignment="Center">
+                  <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountReset}">パスワード再発行</Hyperlink>
+                </TextBlock>
+              </StackPanel>
+              <Grid Grid.Row="2" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding LoginCommand}">
+                  <StackPanel Orientation="Horizontal">
+                    <TextBlock>ログインチェック:</TextBlock>
+                    <TextBlock Text="{Binding Session.LoginState, Converter={StaticResource EnumDisplayConverter}}" />
+                  </StackPanel>
+                </Button>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Margin="{StaticResource LeftMargin}">
+                  ログインチェックするまでアカウント情報は有効になりません。
+                </TextBlock>
+              </Grid>
+            </Grid>
+          </StackPanel>
+        </GroupBox>
 
         <GroupBox Grid.Column="0" Header="動画再生方法">
           <StackPanel>
-            <RadioButton IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}">
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource ParentItemLikeText}">プレイヤーで開く</TextBlock>
-                <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding UsingDmc}">(実験)新形式を使用</CheckBox>
-              </StackPanel>
-            </RadioButton>
-            <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" />
-            <RadioButton Content="外部プログラムで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}, Converter={StaticResource EnumToBooleanConverter}}" />
+            <RadioButton Content="プレイヤーで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
+            <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
+            <RadioButton Content="外部プログラムで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
 
             <GroupBox Header="外部プログラム設定">
               <Grid>
@@ -113,11 +108,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="プログラム"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Content="開く"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Content="開く" />
 
                 <Label Grid.Row="1" Grid.Column="0" Content="パラメータ"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />
 
@@ -127,35 +122,65 @@
           </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Column="1" Header="プレイヤー">
+        <GroupBox Header="ダウンロード">
           <StackPanel>
-            <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}">新しいウィンドウで動画再生を行う</CheckBox>
-            <CheckBox IsChecked="{Binding IsAutoPlay}">動画を自動的に再生する</CheckBox>
-            <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}">フルスクリーン時に非アクティブで通常ウィンドウに戻す</CheckBox>
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="7*" />
-                <ColumnDefinition Width="3*" />
-              </Grid.ColumnDefinitions>
-
-              <Label Grid.Column="0">自動再生判定</Label>
-              <Slider
-                x:Name="sliderBuffer"
-                Grid.Column="1"
-                Value="{Binding AutoPlayLowestSize}"
-                Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum}}"
-                Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum}}"
-              />
-              <TextBlock
-                Grid.Column="2"
-                Text="{Binding Value, ElementName=sliderBuffer, Converter={StaticResource HumanLikeByteConverter}}"
-              />
-            </Grid>
-            <CheckBox IsChecked="{Binding KeySpaceToPause}">スペースキーで一時停止</CheckBox>
-            <CheckBox IsChecked="{Binding MoseClickToPause}">クリックで一時停止</CheckBox>
+            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding UsingDmc}">新形式を使用</CheckBox>
             <Grid>
               <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0">動画ソース</Label>
+              <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="7*" />
+                  <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Slider
+                  Grid.Column="0"
+                  VerticalAlignment="Center"
+                  Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMinimum}}"
+                  Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMaximum}}"
+                  Value="{Binding DmcVideoWeight}"
+                />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}" Text="{Binding DmcVideoWeight}" />
+              </Grid>
+
+              <Label Grid.Row="1" Grid.Column="0">音声ソース</Label>
+              <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="7*" />
+                  <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Slider
+                  Grid.Column="0"
+                  VerticalAlignment="Center"
+                  Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMinimum}}"
+                  Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoDownloadDmcWeightRangeMaximum}}"
+                  Value="{Binding DmcAudioWeight}"
+                />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}" Text="{Binding DmcAudioWeight}" />
+              </Grid>
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="プレイヤー">
+          <StackPanel>
+            <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}" Style="{StaticResource VerticalCheckBox}">新しいウィンドウで動画再生を行う</CheckBox>
+            <CheckBox IsChecked="{Binding IsAutoPlay}" Style="{StaticResource VerticalCheckBox}">動画を自動的に再生する</CheckBox>
+            <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時に非アクティブで通常ウィンドウに戻す</CheckBox>
+            <CheckBox IsChecked="{Binding KeySpaceToPause}" Style="{StaticResource VerticalCheckBox}">スペースキーで一時停止</CheckBox>
+            <CheckBox IsChecked="{Binding MoseClickToPause}" Style="{StaticResource VerticalCheckBox}">クリックで一時停止</CheckBox>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
@@ -165,15 +190,38 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <TextBlock Grid.Row="0" Grid.Column="0">ホイール操作:</TextBlock>
-              <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.None}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.None}, Converter={StaticResource EnumDisplayConverter}}" />
-                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Volume}}" Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Volume}, Converter={StaticResource EnumDisplayConverter}}" />
-                <RadioButton IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Seek}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Seek}, Converter={StaticResource EnumDisplayConverter}}"/>
+              <Label Grid.Row="0" Grid.Column="0">自動再生判定</Label>
+              <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="7*" />
+                  <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Slider
+                  x:Name="sliderBuffer"
+                  Grid.Column="0"
+                  VerticalAlignment="Center"
+                  Value="{Binding AutoPlayLowestSize}"
+                  Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMinimum}}"
+                  Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerAutoPlayLowestSizeRangeMaximum}}"
+                />
+                <TextBlock
+                  Grid.Column="2"
+                  Text="{Binding Value, ElementName=sliderBuffer, Converter={StaticResource HumanLikeByteConverter}}"
+                  VerticalAlignment="Center"
+                  Margin="{StaticResource LeftMargin}"
+                />
+
+              </Grid>
+
+              <Label Grid.Row="1" Grid.Column="0">ホイール操作</Label>
+              <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.None}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.None}, Converter={StaticResource EnumDisplayConverter}}" />
+                <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Volume}}" Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Volume}, Converter={StaticResource EnumDisplayConverter}}" />
+                <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding WheelOperation, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:WheelOperation.Seek}}"  Content="{Binding Source={x:Static app_define_ui_player:WheelOperation.Seek}, Converter={StaticResource EnumDisplayConverter}}"/>
               </WrapPanel>
 
-              <TextBlock Grid.Row="1" Grid.Column="0">音量増減値</TextBlock>
-              <Grid Grid.Row="1" Grid.Column="1">
+              <Label Grid.Row="2" Grid.Column="0">音量増減値</Label>
+              <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="7*" />
                   <ColumnDefinition Width="3*" />
@@ -181,25 +229,26 @@
                 <Slider
                   x:Name="sliderVolume"
                   Grid.Column="0"
+                  VerticalAlignment="Center"
                   LargeChange="2"
                   SmallChange="1"
                   Minimum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepVolumeRangeMinimum}}"
                   Maximum="{Binding Source={x:Static app:Constants.ServiceSmileVideoPlayerStepVolumeRangeMaximum}}"
                   Value="{Binding VolumeOperationStep}"
                 />
-                <TextBlock Grid.Column="1" Text="{Binding Value, ElementName=sliderVolume}" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}" Text="{Binding Value, ElementName=sliderVolume}" />
               </Grid>
 
-              <TextBlock Grid.Row="2" Grid.Column="0">シーク増減値</TextBlock>
-              <Grid Grid.Row="2" Grid.Column="1">
+              <Label Grid.Row="3" Grid.Column="0">シーク増減値</Label>
+              <Grid Grid.Row="3" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="8*" />
                   <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Grid.Column="0" IsChecked="{Binding SeekOperationIsPercent}">比率</CheckBox>
-                <Slider x:Name="sliderSeek" Grid.Column="1" LargeChange="2" SmallChange="1">
+                <CheckBox Grid.Column="0" IsChecked="{Binding SeekOperationIsPercent}" Style="{StaticResource HorizontalCheckBox}">比率</CheckBox>
+                <Slider x:Name="sliderSeek" Grid.Column="1" LargeChange="2" VerticalAlignment="Center" SmallChange="1">
                   <Slider.Style>
                     <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
                       <Style.Triggers>
@@ -217,7 +266,7 @@
                     </Style>
                   </Slider.Style>
                 </Slider>
-                <TextBlock Grid.Column="2">
+                <TextBlock Grid.Column="4" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">
                   <Run Text="{Binding Value, ElementName=sliderSeek, Mode=OneWay}" />
                   <Run>
                     <Run.Style>
@@ -235,11 +284,18 @@
                   </Run>
                 </TextBlock>
               </Grid>
+
+              <Label Grid.Row="4" Grid.Column="0">動画背景</Label>
+              <WrapPanel Grid.Row="4" Grid.Column="1">
+                <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding BackgroundKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:BackgroundKind.AutoColor}}"   Content="{Binding Source={x:Static app_define_ui_player:BackgroundKind.AutoColor}, Converter={StaticResource EnumDisplayConverter}}" />
+                <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding BackgroundKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_ui_player:BackgroundKind.SimpleColor}}" Content="{Binding Source={x:Static app_define_ui_player:BackgroundKind.SimpleColor}, Converter={StaticResource EnumDisplayConverter}}" />
+                <ComboBox ItemsSource="{Binding BackgroundColors}" SelectedItem="{Binding BackgroundColor}" />
+              </WrapPanel>
             </Grid>
           </StackPanel>
         </GroupBox>
 
-      </Grid>
-    </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
   </Grid>
 </UserControl>
