@@ -803,6 +803,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
 
                 if(DmcPollingCancel != null) {
+                    Mediation.Logger.Debug($"{nameof(DmcPollingCancel)}: cancel!");
                     DmcPollingCancel.Cancel();
                 }
 
@@ -825,6 +826,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Mediation.Logger.Information($"{videoId}: polling stop event is set!");
                         return;
                     }
+                    if(cancelToken.IsCancellationRequested) {
+                        Mediation.Logger.Information($"{videoId}: polling cancel!");
+                        return;
+                    }
+
                     if(DmcObject == null) {
                         Mediation.Logger.Debug($"{videoId}: {nameof(DmcObject)} is null!!");
                         return;
@@ -832,12 +838,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
 
                     var dmc = new Dmc(Mediation);
-                    await dmc.ReloadAsync(DmcApiUri, DmcObject).ContinueWith(t => {
-                        var model = t.Result;
-                        DmcObject = model;
-                    }, cancelToken);
+                    var model = await dmc.ReloadAsync(DmcApiUri, DmcObject);
+
+                    if(cancelToken.IsCancellationRequested) {
+                        Mediation.Logger.Information($"{videoId}: polling cancel reload");
+                        return;
+                    }
+
+                    DmcObject = model;
                 }
-            });
+            }, cancelToken);
         }
 
         #endregion
