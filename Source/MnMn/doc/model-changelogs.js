@@ -127,7 +127,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#219: typoとかコメント整備'
 					},
 					{
 						'revision': '',
