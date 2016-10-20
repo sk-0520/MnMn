@@ -29,6 +29,7 @@
   <Thickness x:Key="IndependentMargin">2</Thickness>
   <Thickness x:Key="IndependentHorizonMargin">2,0</Thickness>
   <Thickness x:Key="IndependentVericalMargin">0,2</Thickness>
+  <sys:Double x:Key="BitMargin">1</sys:Double>
   <sys:Double x:Key="HalfMargin">4</sys:Double>
   <sys:Double x:Key="BaseMargin">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
@@ -490,6 +491,33 @@
     </Setter>
   </Style>
 
+  <!-- NumericUpDown -->
+  <Style TargetType="mamc:NumericUpDown" BasedOn="{StaticResource {x:Type mamc:NumericUpDown}}">
+    <!--<Style.Triggers>
+      <Trigger Property="IsReadOnly" Value="True">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+      </Trigger>
+    </Style.Triggers>-->
+    <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="VerticalNumericUpDown" TargetType="mamc:NumericUpDown" BasedOn="{StaticResource {x:Type mamc:NumericUpDown}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="0" Top="{StaticResource HalfMargin}" Right="0" Bottom="{StaticResource HalfMargin}" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="HorizontalNumericUpDown" TargetType="mamc:NumericUpDown" BasedOn="{StaticResource {x:Type mamc:NumericUpDown}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="{StaticResource HalfMargin}" Top="0" Right="{StaticResource HalfMargin}" Bottom="0" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <!-- TabControl -->
   <Style TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
     <Setter Property="Padding" Value="0" />
@@ -643,6 +671,22 @@
   <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
     <!--<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}" />-->
     <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!-- button -->
+  <Style x:Key="VerticalButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="{StaticResource BitMargin}" Top="{StaticResource HalfMargin}" Right="{StaticResource BitMargin}" Bottom="{StaticResource HalfMargin}" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="HorizontalButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Margin">
+      <Setter.Value>
+        <Thickness Left="{StaticResource HalfMargin}" Top="{StaticResource BitMargin}" Right="{StaticResource HalfMargin}" Bottom="{StaticResource BitMargin}" />
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <!--CheckBox-->

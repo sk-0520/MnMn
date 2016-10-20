@@ -13,7 +13,7 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300" d:DesignWidth="500"
+  d:DesignHeight="600" d:DesignWidth="500"
 >
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -22,7 +22,7 @@
   <Grid>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
       <StackPanel>
-        <GroupBox Header="cache">
+        <GroupBox Header="キャッシュ">
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
@@ -35,16 +35,17 @@
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0">path</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CacheDirectoryPath}"/>
-            <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectCacheDirectoryCommand}">directory</Button>
-            <Button Grid.Row="0" Grid.Column="3" Command="{Binding SetDefaultCacheDirectoryCommand}" >default</Button>
+            <Label Grid.Row="0" Grid.Column="0">ディレクトリ</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource VerticalTextBox}" Text="{Binding CacheDirectoryPath}"/>
+            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource VerticalButton}" Command="{Binding SelectCacheDirectoryCommand}">選択</Button>
+            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource VerticalButton}" Command="{Binding SetDefaultCacheDirectoryCommand}" >規定値に戻す</Button>
 
-            <Label Grid.Row="1" Grid.Column="0">time</Label>
-            <mamc:NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
-            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center">hour</TextBlock>
+            <Label Grid.Row="1" Grid.Column="0">期限</Label>
+            <mamc:NumericUpDown Grid.Row="1" Grid.Column="1" Style="{StaticResource VerticalNumericUpDown}" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
+            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">時間</TextBlock>
           </Grid>
         </GroupBox>
+        
         <GroupBox Header="テーマ">
           <StackPanel>
             <CheckBox IsChecked="{Binding IsRandomTheme}">random</CheckBox>
