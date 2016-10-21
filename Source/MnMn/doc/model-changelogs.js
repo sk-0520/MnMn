@@ -134,7 +134,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#223: アップデート情報のHTML生成プログラムがPeからパクってきたまま'
 					},
 					{
 						'revision': '',
