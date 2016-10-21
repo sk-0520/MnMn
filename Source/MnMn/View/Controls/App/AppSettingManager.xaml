@@ -27,25 +27,45 @@
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
               <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0">ディレクトリ</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource VerticalTextBox}" Text="{Binding CacheDirectoryPath}"/>
-            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource VerticalButton}" Command="{Binding SelectCacheDirectoryCommand}">選択</Button>
-            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource VerticalButton}" Command="{Binding SetDefaultCacheDirectoryCommand}" >規定値に戻す</Button>
+            <Grid Grid.Row="0" Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding CacheDirectoryPath}"/>
+              <Button Grid.Column="1" Style="{StaticResource VerticalButton}" Command="{Binding SelectCacheDirectoryCommand}">選択</Button>
+              <Button Grid.Column="2" Style="{StaticResource VerticalButton}" Command="{Binding SetDefaultCacheDirectoryCommand}" >規定値に戻す</Button>
+              <Button Grid.Column="3" Style="{StaticResource VerticalButton}" Command="{Binding OpenCacheDirectoryCommand}" >開く</Button>
+            </Grid>
 
             <Label Grid.Row="1" Grid.Column="0">期限</Label>
-            <mamc:NumericUpDown Grid.Row="1" Grid.Column="1" Style="{StaticResource VerticalNumericUpDown}" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
-            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">時間</TextBlock>
+            <Grid Grid.Row="1" Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <mamc:NumericUpDown Grid.Column="0" Style="{StaticResource VerticalNumericUpDown}" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
+              <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">時間</TextBlock>
+            </Grid>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="{StaticResource IndependentMargin}" >
+              *設定変更した場合、既存のキャッシュディレクトリと内在するファイル群は自動移動しませんのでご注意を*
+            </TextBlock>
           </Grid>
         </GroupBox>
-        
+
         <GroupBox Header="テーマ">
           <StackPanel>
             <CheckBox IsChecked="{Binding IsRandomTheme}">random</CheckBox>
