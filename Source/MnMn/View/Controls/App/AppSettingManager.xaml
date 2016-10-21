@@ -13,7 +13,7 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="600" d:DesignWidth="500"
+  d:DesignHeight="600" d:DesignWidth="600"
 >
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -90,7 +90,7 @@
         <GroupBox Header="ブラウザ">
           <StackPanel>
             <TextBlock Margin="{StaticResource BottomMargin}">*通常使用でさわんなくていいです*</TextBlock>
-            <Expander Header="GeckoFx">
+            <Expander Header="GeckoFx" mamc:ControlsHelper.ContentCharacterCasing="Normal">
               <StackPanel>
                 <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
 
@@ -103,16 +103,16 @@
 
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
                       <CheckBox VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}" Margin="{StaticResource BottomMargin}">自分が何をしようとしているか理解している</CheckBox>
-                      <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}" Margin="{StaticResource TopMargin}">プラグインディレクトリを開発用に構築する</Button>
+                      <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}" Margin="{StaticResource TopMargin}" Style="{StaticResource AccentedSquareButtonStyle}">プラグインディレクトリを開発用に構築する</Button>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8" >
+                    <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource AllMargin}" >
                       <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                           <Setter Property="TextWrapping" Value="Wrap" />
                         </Style>
                       </StackPanel.Resources>
-                      <TextBlock FontWeight="Bold">開発者が開発用環境を同一にするために使う機能です！！</TextBlock>
+                      <TextBlock FontWeight="Bold">**開発者が開発用環境を同一にするために使う機能です**</TextBlock>
                       <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
                       <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
                       <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
@@ -151,7 +151,7 @@
             BlurRadius="20"
           />
         </Border.Effect>
-        <TextBlock FontWeight="Bold" FontSize="18" VerticalAlignment="Center" TextAlignment="Center">
+        <TextBlock Foreground="Black" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" TextAlignment="Center">
           プラグインディレクトリ構築中<LineBreak />
           排他制御してないので安静にすること
         </TextBlock>

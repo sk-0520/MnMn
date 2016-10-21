@@ -38,6 +38,7 @@
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="0" />
   <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
   <Thickness x:Key="BottomMargin" Left="0" Top="0" Right="0" Bottom="{StaticResource BaseMargin}" />
+  <Thickness x:Key="AllMargin" Left="{StaticResource BaseMargin}" Top="{StaticResource BaseMargin}" Right="{StaticResource BaseMargin}" Bottom="{StaticResource BaseMargin}" />
   <Thickness x:Key="VericalMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="{StaticResource BaseMargin}" />
   <Thickness x:Key="HorizonMargin" Left="{StaticResource BaseMargin}" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
   <Thickness x:Key="BasePadding" Left="4" Top="4" Right="4" Bottom="4" />
