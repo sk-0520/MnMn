@@ -68,10 +68,21 @@
 
         <GroupBox Header="テーマ">
           <StackPanel>
-            <CheckBox IsChecked="{Binding IsRandomTheme}">random</CheckBox>
-            <ComboBox DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}"></ComboBox>
-            <ComboBox DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}"></ComboBox>
+            <CheckBox Grid.Column="0" IsChecked="{Binding IsRandomTheme}" Style="{StaticResource VerticalCheckBox}">ランダム</CheckBox>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
 
+              <Label Grid.Column="0">基本テーマ</Label>
+              <ComboBox Grid.Column="1" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
+
+              <Label Grid.Column="2" Margin="{StaticResource LeftMargin}">アクセント</Label>
+              <ComboBox Grid.Column="3" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
+            </Grid>
             <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
           </StackPanel>
         </GroupBox>
