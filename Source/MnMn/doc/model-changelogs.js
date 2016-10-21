@@ -110,7 +110,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#74: 本体設定をそろそろちゃんとする',
+						'comments': [
+							'そもそも本体設定がほとんどなかった'
+						]
 					},
 					{
 						'revision': '',
