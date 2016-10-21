@@ -86,39 +86,47 @@
             <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
           </StackPanel>
         </GroupBox>
-        <GroupBox Header="browser">
-          <GroupBox Header="gecko">
-            <StackPanel>
-              <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
 
-              <Label FontWeight="Bold" HorizontalContentAlignment="Center" Background="#33ff0000" Margin="0,10">☠ danger zone ☠</Label>
+        <GroupBox Header="ブラウザ">
+          <StackPanel>
+            <TextBlock Margin="{StaticResource BottomMargin}">*通常使用でさわんなくていいです*</TextBlock>
+            <Expander Header="GeckoFx">
+              <StackPanel>
+                <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
 
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition Height="*" />
-                  <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                <GroupBox Margin="{StaticResource TopMargin}" Header="☠ danger zone ☠">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}">自分が何をしようとしているか理解している</CheckBox>
-                <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}">プラグインディレクトリを開発用に構築する</Button>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <CheckBox VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}" Margin="{StaticResource BottomMargin}">自分が何をしようとしているか理解している</CheckBox>
+                      <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}" Margin="{StaticResource TopMargin}">プラグインディレクトリを開発用に構築する</Button>
+                    </StackPanel>
 
-                <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8" >
-                  <TextBlock FontWeight="Bold">開発者が開発用環境を同一にするために使う機能です！！</TextBlock>
-                  <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
-                  <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
-                  <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
-                  <TextBlock>
-                  構築するプラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
-                  動作しない場合に問い合わせをいただいても何もできません。
-                  </TextBlock>
-                </StackPanel>
-              </Grid>
-            </StackPanel>
-          </GroupBox>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8" >
+                      <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                          <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                      </StackPanel.Resources>
+                      <TextBlock FontWeight="Bold">開発者が開発用環境を同一にするために使う機能です！！</TextBlock>
+                      <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
+                      <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
+                      <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
+                      <TextBlock>
+                        構築するプラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
+                        動作しない場合に問い合わせをいただいても何もできません。
+                      </TextBlock>
+                    </StackPanel>
+                  </Grid>
+                </GroupBox>
+              </StackPanel>
+
+            </Expander>
+          </StackPanel>
         </GroupBox>
       </StackPanel>
     </ScrollViewer>
