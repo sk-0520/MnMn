@@ -319,6 +319,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                                 //}
                                 VideoFile.Refresh();
                                 //Information.DmcItems[role].IsLoaded = VideoFile.Length == Information.DmcItems[role].Length;
+                                // 理屈で言えばここは絶対に存在する
                                 Information.SetDmcLoaded(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), VideoFile.Length == Information.DmcItems[role].Length);
                                 if(Information.DmcItems[role].IsLoaded) {
                                     VideoLoadState = LoadState.Loaded;
@@ -460,6 +461,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     }
                 }
             }
+
 
             await LoadVideoAsync(downloadUri, downloadFile, headPosition);
             return true;
@@ -884,6 +886,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             Length = downloader.ResponseHeaders.ContentLength.Value,
                         };
                         Information.DmcItems[role] = dmcItem;
+                    } else {
+                        Debug.Assert(e.DownloadStartType == DownloadStartType.Range);
+                        if(!Information.DmcItems.ContainsKey(role)) {
+                            // キャッシュは存在するのにデータがないのはこれいかに
+                            var dmcItem = new SmileVideoDmcItemModel() {
+                                Video = video,
+                                Audio = audio,
+                                Length = VideoFile.Length + downloader.ResponseHeaders.ContentLength.Value,
+                            };
+                            Information.DmcItems[role] = dmcItem;
+                        }
                     }
                     //bool isDmcLoaded;
                     //if(Information.DmcItems.TryGetValue(SmileVideoInformationUtility.GetDmcRoleKey(video, audio), out isDmcLoaded)) {
