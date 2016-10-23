@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,15 +28,24 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class PlayListModel<TModel>: CollectionModel<TModel>
+        where TModel : class
     {
         #region variable
         #endregion
 
         public PlayListModel()
-            : base()
+            : this(Environment.TickCount)
         { }
 
+        public PlayListModel(int seed)
+            : base()
+        {
+            Seed = seed;
+        }
+
         #region property
+
+        public int Seed { get; }
 
         /// <summary>
         /// 現在アイテム。
@@ -52,15 +62,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public bool IsRandom { get; set; }
 
-        /// <summary>
-        /// プレイリストはループするか。
-        /// </summary>
-        public bool IsLoop { get; set; }
+        ///// <summary>
+        ///// プレイリストはループするか。
+        ///// </summary>
+        //public bool IsLoop { get; set; }
 
         /// <summary>
         /// プレイリストは変更可能か。
         /// </summary>
         public bool CanItemChange { get { return Count > 1; } }
+
+        protected Dictionary<int, TModel> PlayedItems { get; } = new Dictionary<int, TModel>();
 
         #endregion
 
@@ -68,14 +80,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public TModel GetFirstItem()
         {
+            var index = 0;
             if(IsRandom) {
-                var random = new Random();
-                var index = random.Next(0, Count);
-
-                return ChangeItem(index);
-            } else {
-                return ChangeItem(0);
+                var random = new Random(Seed);
+                index = random.Next(0, Count);
             }
+
+            if(CurrenItem != null && !PlayedItems.ContainsKey(index)) {
+                PlayedItems.Add(index, CurrenItem);
+            }
+
+            return ChangeItem(index);
         }
 
         static int ChangeSequentialNextIndex(int currentIndex, IReadOnlyCollection<TModel> items)
@@ -92,12 +107,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return index;
         }
 
-        static int ChangeRandomNextIndex(int currenIndex, PlayListModel<TModel> items)
+        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, int seed, IReadOnlyDictionary<int, TModel> playedItems)
         {
-            var random = new Random();
-            var index = random.Next(0, items.Count);
-            while(index == currenIndex) {
-                index = random.Next(0, items.Count);
+            var baseItems = items.ToList();
+            var itemsCount = baseItems.Count;
+            if(itemsCount == 1) {
+                return 0;
+            }
+
+            var random = new Random(seed);
+            int index = random.Next(0, itemsCount);
+            // indexが癌になってる
+            while(index == currenIndex || playedItems.ContainsKey(index)) {
+                index = random.Next(0, itemsCount);
             }
 
             return index;
@@ -109,9 +131,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             int index;
             if(IsRandom) {
-                index = ChangeRandomNextIndex(CurrenIndex, this);
+                if(Count == PlayedItems.Count) {
+                    // 初期化！
+                    PlayedItems.Clear();
+                }
+                index = ChangeRandomNextIndex(CurrenIndex, this, Seed, PlayedItems);
             } else {
                 index = ChangeSequentialNextIndex(CurrenIndex, this);
+            }
+
+            if(CurrenItem != null && !PlayedItems.ContainsKey(index)) {
+                PlayedItems.Add(index, CurrenItem);
             }
 
             return ChangeItem(index);

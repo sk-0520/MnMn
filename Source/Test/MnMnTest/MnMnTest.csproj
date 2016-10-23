@@ -74,6 +74,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ConstantsTest.cs" />
+    <Compile Include="Logic\PlayListModelTest.cs" />
     <Compile Include="Logic\Utility\RawValueUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDescriptionUtilityTest.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtilityTest.cs" />
