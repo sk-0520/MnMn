@@ -1141,7 +1141,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            var comments = true ? CommentList : NormalCommentList;
+            var comments = IsEnabledOriginalPosterFilering ? CommentList : NormalCommentList;
 
             ApprovalCommentSet(CommentList, true);
 
