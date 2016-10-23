@@ -92,6 +92,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoCommentFilteringSettingModel Filtering { get; set; } = new SmileVideoCommentFilteringSettingModel();
 
+        /// <summary>
+        /// 投稿者コメントもフィルタリング対象にするか。
+        /// </summary>
+        [DataMember]
+        public bool IsEnabledOriginalPosterFilering { get; set; } = Constants.SettingServiceSmileVideoCommentIsEnabledOriginalPosterFilering;
+
         #endregion
     }
 }

@@ -1056,6 +1056,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return Setting.Player.BackgroundColor; }
         }
 
+        public bool IsEnabledOriginalPosterFilering
+        {
+            get { return this._isEnabledOriginalPosterFilering; }
+            set
+            {
+                if(SetVariableValue(ref this._isEnabledOriginalPosterFilering, value)) {
+                    ApprovalComment();
+                }
+            }
+        }
+
         #endregion
     }
 }

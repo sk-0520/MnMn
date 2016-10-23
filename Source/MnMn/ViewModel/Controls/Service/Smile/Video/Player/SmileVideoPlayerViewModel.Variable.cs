@@ -124,6 +124,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _showCommentChart;
 
+        bool _isEnabledOriginalPosterFilering;
+
         #endregion
     }
 }
