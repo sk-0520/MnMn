@@ -35,11 +35,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return success.Any(s => string.Equals(rawModel.Meta.Status.Trim(), s, StringComparison.OrdinalIgnoreCase));
         }
 
-        public static DateTime ConvertSessionTIme(string time)
+        public static DateTime ConvertSessionTime(string time)
         {
             return RawValueUtility.ConvertUnixTimeWithMilliseconds(time, 3);
         }
-        public static string ConvertRawSessionTIme(DateTime time)
+        public static string ConvertRawSessionTime(DateTime time)
         {
             return RawValueUtility.ConvertRawUnixTimeWithMilliseconds(time, 3);
         }

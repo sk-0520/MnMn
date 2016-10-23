@@ -837,7 +837,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         Mediation.Logger.Debug($"{videoId}: {nameof(DmcObject)} is null!!");
                         return;
                     }
-                    DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTIme(DateTime.Now);
+                    DmcObject.Data.Session.ModifiedTime = SmileVideoDmcObjectUtility.ConvertRawSessionTime(DateTime.Now);
 
                     var dmc = new Dmc(Mediation);
                     var model = await dmc.ReloadAsync(DmcApiUri, DmcObject);
