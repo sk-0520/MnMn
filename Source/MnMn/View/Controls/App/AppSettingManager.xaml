@@ -13,81 +13,123 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="300" d:DesignWidth="500"
+  d:DesignHeight="600" d:DesignWidth="600"
 >
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <cttn_sl_view_converter:TimeSpanToHourConverter x:Key="TimeSpanToHourConverter" />
   </UserControl.Resources>
   <Grid>
-    <StackPanel>
-      <GroupBox Header="cache">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+      <StackPanel>
+        <GroupBox Header="キャッシュ">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-          <Label Grid.Row="0" Grid.Column="0">path</Label>
-          <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CacheDirectoryPath}"/>
-          <Button Grid.Row="0" Grid.Column="2" Command="{Binding SelectCacheDirectoryCommand}">directory</Button>
-          <Button Grid.Row="0" Grid.Column="3" Command="{Binding SetDefaultCacheDirectoryCommand}" >default</Button>
-
-          <Label Grid.Row="1" Grid.Column="0">time</Label>
-          <mamc:NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
-          <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center">hour</TextBlock>
-        </Grid>
-      </GroupBox>
-      <GroupBox Header="テーマ">
-        <StackPanel>
-          <CheckBox IsChecked="{Binding IsRandomTheme}">random</CheckBox>
-          <ComboBox DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}"></ComboBox>
-          <ComboBox DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}"></ComboBox>
-
-          <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
-        </StackPanel>
-      </GroupBox>
-      <GroupBox Header="browser">
-        <GroupBox Header="gecko">
-          <StackPanel>
-            <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
-
-            <Label FontWeight="Bold" HorizontalContentAlignment="Center" Background="#33ff0000" Margin="0,10">☠ danger zone ☠</Label>
-
-            <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0">ディレクトリ</Label>
+            <Grid Grid.Row="0" Grid.Column="1">
               <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}">自分が何をしようとしているか理解している</CheckBox>
-              <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}">プラグインディレクトリを開発用に構築する</Button>
-
-              <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8" >
-                <TextBlock FontWeight="Bold">開発者が開発用環境を同一にするために使う機能です！！</TextBlock>
-                <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
-                <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
-                <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
-                <TextBlock>
-                  構築するプラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
-                  動作しない場合に問い合わせをいただいても何もできません。
-                </TextBlock>
-              </StackPanel>
+              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding CacheDirectoryPath}"/>
+              <Button Grid.Column="1" Style="{StaticResource VerticalButton}" Command="{Binding SelectCacheDirectoryCommand}">選択</Button>
+              <Button Grid.Column="2" Style="{StaticResource VerticalButton}" Command="{Binding SetDefaultCacheDirectoryCommand}" >規定値に戻す</Button>
+              <Button Grid.Column="3" Style="{StaticResource VerticalButton}" Command="{Binding OpenCacheDirectoryCommand}" >開く</Button>
             </Grid>
+
+            <Label Grid.Row="1" Grid.Column="0">期限</Label>
+            <Grid Grid.Row="1" Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <mamc:NumericUpDown Grid.Column="0" Style="{StaticResource VerticalNumericUpDown}" Value="{Binding CacheLifeTime, Converter={StaticResource TimeSpanToHourConverter}}" />
+              <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">時間</TextBlock>
+            </Grid>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="{StaticResource IndependentMargin}" >
+              *設定変更した場合、既存のキャッシュディレクトリと内在するファイル群は自動移動しませんのでご注意を*
+            </TextBlock>
+          </Grid>
+        </GroupBox>
+
+        <GroupBox Header="テーマ">
+          <StackPanel>
+            <CheckBox Grid.Column="0" IsChecked="{Binding IsRandomTheme}" Style="{StaticResource VerticalCheckBox}">ランダム</CheckBox>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="0">基本テーマ</Label>
+              <ComboBox Grid.Column="1" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
+
+              <Label Grid.Column="2" Margin="{StaticResource LeftMargin}">アクセント</Label>
+              <ComboBox Grid.Column="3" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
+            </Grid>
+            <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
           </StackPanel>
         </GroupBox>
-      </GroupBox>
-    </StackPanel>
+
+        <GroupBox Header="ブラウザ">
+          <StackPanel>
+            <TextBlock Margin="{StaticResource BottomMargin}">*通常使用でさわんなくていいです*</TextBlock>
+            <Expander Header="GeckoFx" mamc:ControlsHelper.ContentCharacterCasing="Normal">
+              <StackPanel>
+                <CheckBox IsChecked="{Binding WebNavigatorGeckoFxScanPlugin}">[about:config] plugin.scan.plid.all (要再起動)</CheckBox>
+
+                <GroupBox Margin="{StaticResource TopMargin}" Header="☠ danger zone ☠">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                      <CheckBox VerticalAlignment="Bottom" IsChecked="{Binding WebNavigatorGeckoFxOwnResponsibility.Value}" Margin="{StaticResource BottomMargin}">自分が何をしようとしているか理解している</CheckBox>
+                      <Button Command="{Binding RebuildWebNavigatorGeckoFxPluginCommand}" Margin="{StaticResource TopMargin}" Style="{StaticResource AccentedSquareButtonStyle}">プラグインディレクトリを開発用に構築する</Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource AllMargin}" >
+                      <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                          <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                      </StackPanel.Resources>
+                      <TextBlock FontWeight="Bold">**開発者が開発用環境を同一にするために使う機能です**</TextBlock>
+                      <TextBlock>処理の成否に関係なく再起動します。</TextBlock>
+                      <TextBlock>既存のプラグインは全て破棄されます。</TextBlock>
+                      <TextBlock>プラグインを使用した処理に対する安全な終了は提供しません。</TextBlock>
+                      <TextBlock>
+                        構築するプラグインはあなたの端末で動作しない可能性があり、<LineBreak/>
+                        動作しない場合に問い合わせをいただいても何もできません。
+                      </TextBlock>
+                    </StackPanel>
+                  </Grid>
+                </GroupBox>
+              </StackPanel>
+
+            </Expander>
+          </StackPanel>
+        </GroupBox>
+      </StackPanel>
+    </ScrollViewer>
     <!-- タブ移動出来るけど今はいいや -->
     <Border Background="#88ffffff">
       <Border.Style>
@@ -109,7 +151,7 @@
             BlurRadius="20"
           />
         </Border.Effect>
-        <TextBlock FontWeight="Bold" FontSize="18" VerticalAlignment="Center" TextAlignment="Center">
+        <TextBlock Foreground="Black" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" TextAlignment="Center">
           プラグインディレクトリ構築中<LineBreak />
           排他制御してないので安静にすること
         </TextBlock>

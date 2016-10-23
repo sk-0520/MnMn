@@ -328,11 +328,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => {
-                        if(PlayListItems.CanItemChange) {
-                            LoadPrevPlayListItemAsync().ConfigureAwait(false);
-                        }
-                    }
+                    o => LoadPrevPlayListItemAsync().ConfigureAwait(false),
+                    o => !IsRandomPlay && PlayListItems.CanItemChange
                 );
             }
         }
@@ -341,11 +338,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => {
-                        if(PlayListItems.CanItemChange) {
-                            LoadNextPlayListItemAsync().ConfigureAwait(false);
-                        }
-                    }
+                    o => LoadNextPlayListItemAsync().ConfigureAwait(false),
+                    o => PlayListItems.CanItemChange
                 );
             }
         }
@@ -624,7 +618,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             ChangePlayerSize(
                 Constants.ServiceSmileVideoPlayerOfficial4x3Width,
-                Constants.ServiceSmileVideoPlayerOfficial4x3Width
+                Constants.ServiceSmileVideoPlayerOfficial4x3Height
             );
         }
 
