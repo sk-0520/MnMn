@@ -165,7 +165,10 @@
 
   <Style x:Key="MinimumAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
-    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Stroke" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
   </Style>
 
   <Style x:Key="MinimumLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
@@ -181,7 +184,9 @@
 
   <Style x:Key="SmallAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
     <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
-    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+    <Setter Property="Stroke" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
   </Style>
 
   <Style x:Key="SmallLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
