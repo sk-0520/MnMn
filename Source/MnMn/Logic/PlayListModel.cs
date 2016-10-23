@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
     public class PlayListModel<TModel>: CollectionModel<TModel>
+        where TModel : class
     {
         #region variable
         #endregion
@@ -62,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public bool CanItemChange { get { return Count > 1; } }
 
+        protected List<TModel> PlayedItems { get; } = new List<TModel>();
+
         #endregion
 
         #region function
@@ -92,12 +96,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return index;
         }
 
-        static int ChangeRandomNextIndex(int currenIndex, PlayListModel<TModel> items)
+        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items)
         {
             var random = new Random();
-            var index = random.Next(0, items.Count);
+            var index = random.Next(0, items.Count());
             while(index == currenIndex) {
-                index = random.Next(0, items.Count);
+                index = random.Next(0, items.Count());
             }
 
             return index;
@@ -112,6 +116,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 index = ChangeRandomNextIndex(CurrenIndex, this);
             } else {
                 index = ChangeSequentialNextIndex(CurrenIndex, this);
+            }
+
+            if(CurrenItem != null && !PlayedItems.Any(i => i == CurrenItem)) {
+                PlayedItems.Add(CurrenItem);
             }
 
             return ChangeItem(index);
