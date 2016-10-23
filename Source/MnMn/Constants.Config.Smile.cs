@@ -262,6 +262,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileVideoCommentPostAnonymous => appConfig.Get("setting-service-smile-smilevideo-comment-post-anonymous", bool.Parse);
         /// <summary>
+        /// 投稿者コメントもフィルタリング対象とするか。
+        /// </summary>
+        public static bool SettingServiceSmileVideoCommentIsEnabledOriginalPosterFilering => appConfig.Get("setting-service-smile-smilevideo-comment-is-enabled-op-filering", bool.Parse);
+        /// <summary>
         /// 検索で一度に取得する数。
         /// </summary>
         public static int SettingServiceSmileVideoSearchCount => appConfig.Get("setting-service-smile-smilevideo-search-count", int.Parse);

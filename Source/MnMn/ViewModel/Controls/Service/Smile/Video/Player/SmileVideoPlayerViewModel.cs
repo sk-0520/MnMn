@@ -563,6 +563,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
             CommentStyleSetting = (SmileVideoCommentStyleSettingModel)Setting.Comment.StyleSetting.DeepClone();
+            IsEnabledOriginalPosterFilering = Setting.Comment.IsEnabledOriginalPosterFilering;
         }
 
         void ExportSetting()
@@ -591,6 +592,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
             Setting.Comment.StyleSetting = (SmileVideoCommentStyleSettingModel)CommentStyleSetting.DeepClone();
+            Setting.Comment.IsEnabledOriginalPosterFilering = IsEnabledOriginalPosterFilering;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -1060,22 +1062,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void ApprovalCommentSharedNoGood()
+        void ApprovalCommentSharedNoGood(IEnumerable<SmileVideoCommentViewModel> comments)
         {
             // 共有NG
             if(IsEnabledSharedNoGood) {
-                var targetComments = NormalCommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
+                var targetComments = comments.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
                 ApprovalCommentSet(targetComments, false);
             }
         }
 
-        void ApprovalCommentCustomOverlap(bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
+        void ApprovalCommentCustomOverlap(IEnumerable<SmileVideoCommentViewModel> comments, bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
         {
             if(!ignoreOverlapWord) {
                 return;
             }
 
-            var groupingComments = NormalCommentList
+            var groupingComments = comments
                 .Where(c => c.Approval)
                 .OrderBy(c => c.ElapsedTime)
                 .GroupBy(c => c.Content.Trim())
@@ -1092,7 +1094,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void ApprovalCommentCustomDefineKeys(IReadOnlyList<string> defineKeys)
+        void ApprovalCommentCustomDefineKeys(IEnumerable<SmileVideoCommentViewModel> comments, IReadOnlyList<string> defineKeys)
         {
             if(!defineKeys.Any()) {
                 return;
@@ -1109,10 +1111,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .ToList()
             ;
 
-            ApprovalCommentCustomFilterItems(filterList);
+            ApprovalCommentCustomFilterItems(comments, filterList);
         }
 
-        void ApprovalCommentCustomFilterItems(IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
+        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
         {
             if(!filterList.Any()) {
                 return;
@@ -1120,28 +1122,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
-                foreach(var item in NormalCommentList.AsParallel().Where(c => c.Approval)) {
+                foreach(var item in comments.AsParallel().Where(c => c.Approval)) {
                     item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
                 }
             }
         }
 
-        private void ApprovalCommentCustom(SmileVideoFilteringViweModel filter)
+        private void ApprovalCommentCustom(IEnumerable<SmileVideoCommentViewModel> comments, SmileVideoFilteringViweModel filter)
         {
-            ApprovalCommentCustomOverlap(filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
-            ApprovalCommentCustomDefineKeys(filter.DefineKeys);
-            ApprovalCommentCustomFilterItems(filter.CommentFilterList.ModelList);
+            ApprovalCommentCustomOverlap(comments, filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
+            ApprovalCommentCustomDefineKeys(comments, filter.DefineKeys);
+            ApprovalCommentCustomFilterItems(comments, filter.CommentFilterList.ModelList);
         }
 
         void ApprovalComment()
         {
+            if(!CommentList.Any()) {
+                return;
+            }
+
+            var comments = true ? CommentList : NormalCommentList;
+
             ApprovalCommentSet(CommentList, true);
 
-            ApprovalCommentSharedNoGood();
+            ApprovalCommentSharedNoGood(comments);
 
-            ApprovalCommentCustom(LocalCommentFilering);
+            ApprovalCommentCustom(comments, LocalCommentFilering);
             if(IsEnabledGlobalCommentFilering) {
-                ApprovalCommentCustom(GlobalCommentFilering);
+                ApprovalCommentCustom(comments, GlobalCommentFilering);
             }
         }
 
