@@ -105,44 +105,6 @@
         <Setter Property="Menu.Visibility" Value="Collapsed" />
         <Setter Property="Separator.Visibility" Value="Collapsed" />
       </Style>
-      <Style x:Key="PlayListChangeButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-        <Style.Triggers>
-          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
-            <Setter Property="IsEnabled" Value="True" />
-            <Setter Property="Visibility" Value="Visible" />
-          </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="IsEnabled" Value="False" />
-        <Setter Property="Visibility" Value="Collapsed" />
-      </Style>
-      <Style x:Key="PlayListChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-        <Style.Triggers>
-          <DataTrigger Binding="{Binding PlayListItems.CanItemChange}" Value="True">
-            <Setter Property="IsEnabled" Value="True" />
-            <Setter Property="Visibility" Value="Visible" />
-          </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="IsEnabled" Value="False" />
-        <Setter Property="Visibility" Value="Collapsed" />
-      </Style>
-      <Style x:Key="PlayListPrevChangeButton" TargetType="Button" BasedOn="{StaticResource PlayListChangeButton}">
-        <Style.Triggers>
-          <DataTrigger Binding="{Binding IsRandomPlay}" Value="True">
-            <Setter Property="IsEnabled" Value="False" />
-            <Setter Property="Visibility" Value="Visible" />
-          </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="IsEnabled" Value="True" />
-      </Style>
-      <Style x:Key="PlayListPrevChangeMenuItem" TargetType="MenuItem" BasedOn="{StaticResource PlayListChangeMenuItem}">
-        <Style.Triggers>
-          <DataTrigger Binding="{Binding IsRandomPlay}" Value="True">
-            <Setter Property="IsEnabled" Value="False" />
-            <Setter Property="Visibility" Value="Visible" />
-          </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="IsEnabled" Value="True" />
-      </Style>
 
       <Style x:Key="ButtonImage" TargetType="Image" BasedOn="{StaticResource ThumbnailImage}">
         <Setter Property="Width" Value="16" />
@@ -172,6 +134,7 @@
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
+
     <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
       <KeyBinding.CommandParameter>
         <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
@@ -418,7 +381,7 @@
       </Menu>
 
       <Separator Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" />
-      <Button Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeButton}">
+      <Button Command="{Binding LoadPrevPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -430,7 +393,7 @@
         <MenuItem Header="プレイリスト" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.ItemsSource>
             <CompositeCollection>
-              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeMenuItem}">
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" >
                 <MenuItem.Icon>
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
@@ -440,7 +403,7 @@
                   </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" Style="{StaticResource PlayListPrevChangeMenuItem}">
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}">
                 <MenuItem.Icon>
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
@@ -450,8 +413,8 @@
                   </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource PlayListChangeMenuItem}" />
-              <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource PlayListChangeMenuItem}" />
+              <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource {x:Type MenuItem}}" />
+              <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource {x:Type MenuItem}}" />
               <Separator />
               <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
@@ -470,7 +433,7 @@
           </MenuItem.ItemTemplate>
         </MenuItem>
       </Menu>
-      <Button Command="{Binding LoadNextPlayListItemCommand}" Style="{StaticResource PlayListChangeButton}">
+      <Button Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
