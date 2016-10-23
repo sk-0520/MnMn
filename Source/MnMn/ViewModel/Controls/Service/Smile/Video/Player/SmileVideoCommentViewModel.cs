@@ -105,11 +105,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool IsMyPost { get; set; }
 
+        /// <summary>
+        /// 表示許可。
+        /// </summary>
         public bool Approval
         {
             get { return this._approval; }
             set { SetVariableValue(ref this._approval, value); }
         }
+
+        /// <summary>
+        /// 表示不許可の概要。
+        /// </summary>
+        public FewViewModel<string> NoApprovalRemark { get; } = new FewViewModel<string>();
+        /// <summary>
+        /// 表示不許可の詳細。
+        /// </summary>
+        public FewViewModel<string> NoApprovalDetail { get; } = new FewViewModel<string>();
 
         /// <summary>
         /// 選択されているか。

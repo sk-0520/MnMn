@@ -1055,10 +1055,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems.Refresh();
         }
 
-        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value)
+        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value, string noApprovalRemark, string noApprovalDetail)
         {
             foreach(var item in list) {
                 item.Approval = value;
+                if(item.Approval) {
+                    item.NoApprovalRemark.Value = null;
+                    item.NoApprovalDetail.Value = null;
+                } else {
+                    item.NoApprovalRemark.Value = noApprovalRemark;
+                    item.NoApprovalDetail.Value = noApprovalDetail;
+                }
             }
         }
 
@@ -1066,12 +1073,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // 共有NG
             if(IsEnabledSharedNoGood) {
-                var targetComments = comments.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
-                ApprovalCommentSet(targetComments, false);
+                var targetComments = comments.Where(c => c.Score <= SharedNoGoodScore);
+                ApprovalCommentSet(targetComments, false, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood, $"score < {SharedNoGoodScore}");
             }
         }
 
-        void ApprovalCommentCustomOverlap(IEnumerable<SmileVideoCommentViewModel> comments, bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
+        void ApprovalCommentCustomOverlap(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
         {
             if(!ignoreOverlapWord) {
                 return;
@@ -1089,12 +1096,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var nowItem = groupingComment.ElementAt(i);
                     if(nowItem.ElapsedTime - prevItem.ElapsedTime <= ignoreOverlapTime) {
                         nowItem.Approval = false;
+                        if(!nowItem.Approval) {
+                            nowItem.NoApprovalRemark.Value = isGlobalFilter
+                                ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter
+                                : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter
+                            ;
+                        }
                     }
                 }
             }
         }
 
-        void ApprovalCommentCustomDefineKeys(IEnumerable<SmileVideoCommentViewModel> comments, IReadOnlyList<string> defineKeys)
+        void ApprovalCommentCustomDefineKeys(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<string> defineKeys)
         {
             if(!defineKeys.Any()) {
                 return;
@@ -1111,10 +1124,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 .ToList()
             ;
 
-            ApprovalCommentCustomFilterItems(comments, filterList);
+            ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filterList);
         }
 
-        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
+        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
         {
             if(!filterList.Any()) {
                 return;
@@ -1124,15 +1137,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             foreach(var filter in filters.AsParallel()) {
                 foreach(var item in comments.AsParallel().Where(c => c.Approval)) {
                     item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
+                    if(!item.Approval) {
+                        item.NoApprovalRemark.Value = isGlobalFilter
+                            ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter
+                            : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter
+                        ;
+                    }
                 }
             }
         }
 
-        private void ApprovalCommentCustom(IEnumerable<SmileVideoCommentViewModel> comments, SmileVideoFilteringViweModel filter)
+        private void ApprovalCommentCustom(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, SmileVideoFilteringViweModel filter)
         {
-            ApprovalCommentCustomOverlap(comments, filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
-            ApprovalCommentCustomDefineKeys(comments, filter.DefineKeys);
-            ApprovalCommentCustomFilterItems(comments, filter.CommentFilterList.ModelList);
+            ApprovalCommentCustomOverlap(comments, isGlobalFilter, filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
+            ApprovalCommentCustomDefineKeys(comments, isGlobalFilter, filter.DefineKeys);
+            ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filter.CommentFilterList.ModelList);
         }
 
         void ApprovalComment()
@@ -1143,13 +1162,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var comments = IsEnabledOriginalPosterFilering ? CommentList : NormalCommentList;
 
-            ApprovalCommentSet(CommentList, true);
+            ApprovalCommentSet(CommentList, true, string.Empty, string.Empty);
 
             ApprovalCommentSharedNoGood(comments);
 
-            ApprovalCommentCustom(comments, LocalCommentFilering);
+            ApprovalCommentCustom(comments, false, LocalCommentFilering);
             if(IsEnabledGlobalCommentFilering) {
-                ApprovalCommentCustom(comments, GlobalCommentFilering);
+                ApprovalCommentCustom(comments, true, GlobalCommentFilering);
             }
         }
 

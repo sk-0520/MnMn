@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region property
 
-        SmileVideoCommentFilteringItemSettingModel SubSetting { get; }
+        public SmileVideoCommentFilteringItemSettingModel SubSetting { get; }
 
         #endregion
 

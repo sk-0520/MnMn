@@ -738,6 +738,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   全ての動画のフィルタ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   この動画のフィルタ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   共有NG に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アカウント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_History_AccountHistory_Title {
