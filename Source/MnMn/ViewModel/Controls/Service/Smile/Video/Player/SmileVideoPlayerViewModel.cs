@@ -1059,6 +1059,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             foreach(var item in list) {
                 item.Approval = value;
+                if(item.Approval) {
+                    item.NoApprovalRemark.Value = null;
+                }
             }
         }
 

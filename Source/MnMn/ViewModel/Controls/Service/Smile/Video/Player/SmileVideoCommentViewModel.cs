@@ -111,6 +111,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._approval, value); }
         }
 
+        public FewViewModel<string> NoApprovalRemark { get; } = new FewViewModel<string>();
+
         /// <summary>
         /// 選択されているか。
         /// </summary>
