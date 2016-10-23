@@ -618,7 +618,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             ChangePlayerSize(
                 Constants.ServiceSmileVideoPlayerOfficial4x3Width,
-                Constants.ServiceSmileVideoPlayerOfficial4x3Width
+                Constants.ServiceSmileVideoPlayerOfficial4x3Height
             );
         }
 
