@@ -135,6 +135,9 @@
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
 
+    <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
+    <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />
+
     <KeyBinding Key="Right" Command="{Binding ChangeSeekVideoPositionCommand}">
       <KeyBinding.CommandParameter>
         <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoChangeVideoPositionCommandParameterModel">
@@ -393,7 +396,8 @@
         <MenuItem Header="プレイリスト" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.ItemsSource>
             <CompositeCollection>
-              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" >
+              <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F">
                 <MenuItem.Icon>
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
@@ -403,7 +407,7 @@
                   </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}">
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B">
                 <MenuItem.Icon>
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
