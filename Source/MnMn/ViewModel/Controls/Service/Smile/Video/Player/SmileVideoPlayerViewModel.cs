@@ -1619,7 +1619,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, CommentStyleSetting);
             CommentList.InitializeRange(comments);
             CommentListCount = CommentList.Count;
-            ApprovalComment();
 
             var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
             CommentChartList.InitializeRange(chartItems);
@@ -1629,6 +1628,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             FilteringUserList.InitializeRange(userSequence);
             OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
             OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
+
+            ApprovalComment();
 
             if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
                 RefreshFilteringComment();
