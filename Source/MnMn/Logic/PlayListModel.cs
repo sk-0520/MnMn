@@ -34,10 +34,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         public PlayListModel()
-            : base()
+            : this(Environment.TickCount)
         { }
 
+        public PlayListModel(int seed)
+            : base()
+        {
+            Seed = seed;
+        }
+
         #region property
+
+        public int Seed { get; }
 
         /// <summary>
         /// 現在アイテム。
@@ -54,10 +62,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public bool IsRandom { get; set; }
 
-        /// <summary>
-        /// プレイリストはループするか。
-        /// </summary>
-        public bool IsLoop { get; set; }
+        ///// <summary>
+        ///// プレイリストはループするか。
+        ///// </summary>
+        //public bool IsLoop { get; set; }
 
         /// <summary>
         /// プレイリストは変更可能か。
@@ -74,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             var index = 0;
             if(IsRandom) {
-                var random = new Random();
+                var random = new Random(Seed);
                 index = random.Next(0, Count);
             }
 
@@ -99,7 +107,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return index;
         }
 
-        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, IReadOnlyDictionary<int, TModel> playedItems)
+        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, int seed, IReadOnlyDictionary<int, TModel> playedItems)
         {
             var baseItems = items.ToList();
             var itemsCount = baseItems.Count;
@@ -107,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 return 0;
             }
 
-            var random = new Random();
+            var random = new Random(seed);
             int index = random.Next(0, itemsCount);
             // indexが癌になってる
             while(index == currenIndex || playedItems.ContainsKey(index)) {
@@ -127,7 +135,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     // 初期化！
                     PlayedItems.Clear();
                 }
-                index = ChangeRandomNextIndex(CurrenIndex, this, PlayedItems);
+                index = ChangeRandomNextIndex(CurrenIndex, this, Seed, PlayedItems);
             } else {
                 index = ChangeSequentialNextIndex(CurrenIndex, this);
             }
