@@ -84,24 +84,19 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.26.1',
-		'isRc': true,
+		'date': '2016/10/23',
+		'version': '0.27.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '新形式動画のキャッシュに意地悪するとキャッシュ出来てるけどキャッシュ出来ていない状態になってそれでも再読み込み時にはキャッシュが使われるけどキャッシュされなくてキャッシュされている不具合の修正が主です',
+						'comments': [
+							'考えるな、感じろ'
+						]
 					}
 				]
 			},
@@ -109,19 +104,15 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '0d0ede080dd0e7c1af8d3d89d4b95e80629ac31b',
 						'subject': '#74: 本体設定をそろそろちゃんとする',
 						'comments': [
 							'そもそも本体設定がほとんどなかった'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a099398c9c8a14274eabc6be8dcc1644bec89cba',
 						'subject': '#71: ランダム再生をきちんとランダム再生する'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -129,44 +120,27 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'fda727368b2975be7c5e8750b398b77fd6fbd85e',
 						'subject': '#219: typoとかコメント整備'
 					},
 					{
-						'revision': '',
+						'revision': '98f1717c4e2d62674a5f26a3c14537390e72a592',
 						'subject': '#223: アップデート情報のHTML生成プログラムがPeからパクってきたまま'
 					},
 					{
-						'revision': '',
+						'revision': '9db6efd6d1748273e11838a26756eba3bdd0c34c',
 						'subject': '#220: 新形式ダウンロードにおける動画情報が設定に保持されないことがある',
 						'comments': [
 							'実運用に支障はないけどプログラムの内部的にエラーになるため修正'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0a57bd2d8d55978f1bf4f81e67646bff856a60ed',
 						'subject': 'プレイヤー領域の 4:3 が  4:4 になっていた'
 					},
 					{
-						'revision': '',
+						'revision': 'c12eda8ac338628ad4a43ddde39a8d40c21ce858',
 						'subject': '#199: アクセントカラーに対する Path の描画スタイルが汎用的でない'
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
