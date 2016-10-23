@@ -72,14 +72,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public TModel GetFirstItem()
         {
+            var index = 0;
             if(IsRandom) {
                 var random = new Random();
-                var index = random.Next(0, Count);
-
-                return ChangeItem(index);
-            } else {
-                return ChangeItem(0);
+                index = random.Next(0, Count);
             }
+
+            if(CurrenItem != null && !PlayedItems.Any(i => i == CurrenItem)) {
+                PlayedItems.Add(CurrenItem);
+            }
+
+            return ChangeItem(index);
         }
 
         static int ChangeSequentialNextIndex(int currentIndex, IReadOnlyCollection<TModel> items)
@@ -96,12 +99,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return index;
         }
 
-        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items)
+        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, IReadOnlyList<TModel> playedItems)
         {
+            var baseItems = items.ToList();
+            var itemsCount = baseItems.Count;
+            if(itemsCount == 1) {
+                return 0;
+            }
+
             var random = new Random();
-            var index = random.Next(0, items.Count());
-            while(index == currenIndex) {
-                index = random.Next(0, items.Count());
+            int index = random.Next(0, itemsCount);
+            // indexが癌になってる
+            while(playedItems.Any(i => i == baseItems[index])) {
+                while(index == currenIndex) {
+                    index = random.Next(0, itemsCount);
+                }
             }
 
             return index;
@@ -113,7 +125,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             int index;
             if(IsRandom) {
-                index = ChangeRandomNextIndex(CurrenIndex, this);
+                if(PlayedItems.Count < Count) {
+                    index = ChangeRandomNextIndex(CurrenIndex, this, PlayedItems);
+                } else {
+                    index = ChangeSequentialNextIndex(CurrenIndex, PlayedItems);
+                }
             } else {
                 index = ChangeSequentialNextIndex(CurrenIndex, this);
             }

@@ -70,5 +70,48 @@ namespace MnMnTest.Logic
                 Assert.IsTrue(prev.Number == i);
             }
         }
+
+        [TestMethod]
+        public void RandomNextTest()
+        {
+            foreach(var _ in Enumerable.Range(1, 10)) {
+                var list = new PlayListModel<Item>() {
+                    IsRandom = true,
+                };
+
+                list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
+
+                var item1 = list.GetFirstItem();
+                var item2 = list.ChangeNextItem();
+                var item3 = list.ChangeNextItem();
+
+                Assert.IsTrue(item1 != item2);
+                Assert.IsTrue(item1 != item3);
+                Assert.IsTrue(item2 != item3);
+
+                var next1 = list.ChangeNextItem();
+                var next2 = list.ChangeNextItem();
+                var next3 = list.ChangeNextItem();
+
+                Assert.IsTrue(next1 == item1);
+                Assert.IsTrue(next2 == item2);
+                Assert.IsTrue(next3 == item3);
+            }
+        }
+        //[TestMethod]
+        //public void RandomPrevTest()
+        //{
+        //    var list = new PlayListModel<Item>() {
+        //        IsRandom = true,
+        //    };
+
+        //    list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
+
+        //    var item1 = list.GetFirstItem();
+        //    var item2 = list.ChangeNextItem();
+        //    var item3 = list.ChangeNextItem();
+
+
+        //}
     }
 }
