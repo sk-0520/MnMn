@@ -1371,7 +1371,7 @@
                       </ListBoxItem>
                       <ListBoxItem>
                         <ListBoxItem.Style>
-                          <Style TargetType="ListBoxItem">
+                          <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <Style.Triggers>
                               <DataTrigger Binding="{Binding SelectedComment.Approval}" Value="False">
                                 <Setter Property="Visibility" Value="Visible" />
