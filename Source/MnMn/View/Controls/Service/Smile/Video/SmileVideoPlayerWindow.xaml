@@ -1369,6 +1369,22 @@
                           <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
                         </DockPanel>
                       </ListBoxItem>
+                      <ListBoxItem>
+                        <ListBoxItem.Style>
+                          <Style TargetType="ListBoxItem">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding SelectedComment.Approval}" Value="False">
+                                <Setter Property="Visibility" Value="Visible" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </Style>
+                        </ListBoxItem.Style>
+                        <DockPanel>
+                          <TextBlock>表示許可</TextBlock>
+                          <TextBlock Text="{Binding SelectedComment.NoApprovalRemark.Value}" />
+                        </DockPanel>
+                      </ListBoxItem>
                       <Separator/>
                       <ListBoxItem>
                         <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>

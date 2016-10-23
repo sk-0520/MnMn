@@ -738,6 +738,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   共有NG に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アカウント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_History_AccountHistory_Title {

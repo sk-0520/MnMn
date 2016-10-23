@@ -1055,12 +1055,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems.Refresh();
         }
 
-        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value)
+        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value, string noApprovalRemark)
         {
             foreach(var item in list) {
                 item.Approval = value;
                 if(item.Approval) {
                     item.NoApprovalRemark.Value = null;
+                } else {
+                    item.NoApprovalRemark.Value = noApprovalRemark;
                 }
             }
         }
@@ -1069,8 +1071,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // 共有NG
             if(IsEnabledSharedNoGood) {
-                var targetComments = comments.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
-                ApprovalCommentSet(targetComments, false);
+                var targetComments = comments.Where(c => c.Score <= SharedNoGoodScore);
+                ApprovalCommentSet(targetComments, false, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood);
             }
         }
 
@@ -1146,7 +1148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var comments = IsEnabledOriginalPosterFilering ? CommentList : NormalCommentList;
 
-            ApprovalCommentSet(CommentList, true);
+            ApprovalCommentSet(CommentList, true, string.Empty);
 
             ApprovalCommentSharedNoGood(comments);
 
