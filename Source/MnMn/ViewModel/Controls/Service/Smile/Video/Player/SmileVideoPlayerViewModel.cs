@@ -1064,7 +1064,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // 共有NG
             if(IsEnabledSharedNoGood) {
-                var targetComments = CommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
+                var targetComments = NormalCommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
                 ApprovalCommentSet(targetComments, false);
             }
         }
@@ -1075,7 +1075,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return;
             }
 
-            var groupingComments = CommentList
+            var groupingComments = NormalCommentList
                 .Where(c => c.Approval)
                 .OrderBy(c => c.ElapsedTime)
                 .GroupBy(c => c.Content.Trim())
@@ -1120,7 +1120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
-                foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
+                foreach(var item in NormalCommentList.AsParallel().Where(c => c.Approval)) {
                     item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
                 }
             }
