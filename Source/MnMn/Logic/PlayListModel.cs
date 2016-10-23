@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public bool CanItemChange { get { return Count > 1; } }
 
-        protected List<TModel> PlayedItems { get; } = new List<TModel>();
+        protected Dictionary<int, TModel> PlayedItems { get; } = new Dictionary<int, TModel>();
 
         #endregion
 
@@ -78,8 +78,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 index = random.Next(0, Count);
             }
 
-            if(CurrenItem != null && !PlayedItems.Any(i => i == CurrenItem)) {
-                PlayedItems.Add(CurrenItem);
+            if(CurrenItem != null && !PlayedItems.ContainsKey(index)) {
+                PlayedItems.Add(index, CurrenItem);
             }
 
             return ChangeItem(index);
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return index;
         }
 
-        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, IReadOnlyList<TModel> playedItems)
+        static int ChangeRandomNextIndex(int currenIndex, IEnumerable<TModel> items, IReadOnlyDictionary<int, TModel> playedItems)
         {
             var baseItems = items.ToList();
             var itemsCount = baseItems.Count;
@@ -110,10 +110,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var random = new Random();
             int index = random.Next(0, itemsCount);
             // indexが癌になってる
-            while(playedItems.Any(i => i == baseItems[index])) {
-                while(index == currenIndex) {
-                    index = random.Next(0, itemsCount);
-                }
+            while(index == currenIndex || playedItems.ContainsKey(index)) {
+                index = random.Next(0, itemsCount);
             }
 
             return index;
@@ -125,17 +123,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             int index;
             if(IsRandom) {
-                if(PlayedItems.Count < Count) {
-                    index = ChangeRandomNextIndex(CurrenIndex, this, PlayedItems);
-                } else {
-                    index = ChangeSequentialNextIndex(CurrenIndex, PlayedItems);
+                if(Count == PlayedItems.Count) {
+                    // 初期化！
+                    PlayedItems.Clear();
                 }
+                index = ChangeRandomNextIndex(CurrenIndex, this, PlayedItems);
             } else {
                 index = ChangeSequentialNextIndex(CurrenIndex, this);
             }
 
-            if(CurrenItem != null && !PlayedItems.Any(i => i == CurrenItem)) {
-                PlayedItems.Add(CurrenItem);
+            if(CurrenItem != null && !PlayedItems.ContainsKey(index)) {
+                PlayedItems.Add(index, CurrenItem);
             }
 
             return ChangeItem(index);

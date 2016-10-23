@@ -34,6 +34,11 @@ namespace MnMnTest.Logic
                 Number = number;
             }
             public int Number { get; }
+
+            public override string ToString()
+            {
+                return Number.ToString();
+            }
         }
 
         [TestMethod]
@@ -74,7 +79,7 @@ namespace MnMnTest.Logic
         [TestMethod]
         public void RandomNextTest()
         {
-            foreach(var _ in Enumerable.Range(1, 10)) {
+            foreach(var _ in Enumerable.Range(1, 100)) {
                 var list = new PlayListModel<Item>() {
                     IsRandom = true,
                 };
@@ -89,13 +94,15 @@ namespace MnMnTest.Logic
                 Assert.IsTrue(item1 != item3);
                 Assert.IsTrue(item2 != item3);
 
-                var next1 = list.ChangeNextItem();
-                var next2 = list.ChangeNextItem();
-                var next3 = list.ChangeNextItem();
+                foreach(var __ in Enumerable.Range(1, 100)) {
+                    var next1 = list.ChangeNextItem();
+                    var next2 = list.ChangeNextItem();
+                    var next3 = list.ChangeNextItem();
 
-                Assert.IsTrue(next1 == item1);
-                Assert.IsTrue(next2 == item2);
-                Assert.IsTrue(next3 == item3);
+                    Assert.IsTrue(next1 != next2);
+                    Assert.IsTrue(next1 != next3);
+                    Assert.IsTrue(next2 != next3);
+                }
             }
         }
         //[TestMethod]
@@ -108,9 +115,8 @@ namespace MnMnTest.Logic
         //    list.AddRange(Enumerable.Range(1, 3).Select(i => new Item(i)));
 
         //    var item1 = list.GetFirstItem();
-        //    var item2 = list.ChangeNextItem();
-        //    var item3 = list.ChangeNextItem();
-
+        //    var prev1 = list.ChangePrevItem();
+        //    Assert.IsTrue(item1 == prev1);
 
         //}
     }
