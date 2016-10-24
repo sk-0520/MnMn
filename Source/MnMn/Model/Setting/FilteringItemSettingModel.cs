@@ -29,6 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     {
         #region property
 
+        /// <summary>
+        /// 有効無効。
+        /// </summary>
         [DataMember]
         public bool IsEnabled { get; set; } = true;
 
