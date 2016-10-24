@@ -47,6 +47,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         [DataMember]
         public string Source { get; set; }
 
+        /// <summary>
+        /// フィルタ名。
+        /// </summary>
+        [DataMember]
+        public string Name { get; set; }
+
         #endregion
     }
 }

@@ -738,29 +738,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   重複コメントフィルタ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   全ての動画のフィルタ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter {
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter {
             get {
-                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   この動画のフィルタ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter {
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter {
             get {
-                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   共有NG に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood {
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood {
             get {
-                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood", resourceCulture);
             }
         }
         

@@ -1237,14 +1237,17 @@
                               <BeginStoryboard>
                                 <Storyboard>
                                   <ColorAnimation
-                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                  To="Transparent"
-                                  Duration="00:00:01"
-                                  AutoReverse="False"
-                                />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    To="Transparent"
+                                    Duration="00:00:01"
+                                    AutoReverse="False"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.ExitActions>
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Approval}" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
                           </DataTrigger>
                         </Style.Triggers>
                       </Style>
@@ -1266,20 +1269,23 @@
 
                           <TextBlock DockPanel.Dock="Right" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" Visibility="{Binding DataContext.PlayerShowPostTimestamp, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
 
-                          <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding ContentSingleLine}">
+                          <TextBlock TextTrimming="CharacterEllipsis">
                             <TextBlock.Style>
                               <Style TargetType="TextBlock">
                                 <Style.Triggers>
                                   <DataTrigger Binding="{Binding Approval}" Value="False">
-                                    <Setter Property="TextDecorations">
+                                    <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;{0}としてマークされました&gt;}" />
+                                    <!--<Setter Property="TextDecorations">
                                       <Setter.Value>
                                         <TextDecorationCollection>
                                           <TextDecoration Location="Strikethrough" />
                                         </TextDecorationCollection>
                                       </Setter.Value>
-                                    </Setter>
+                                    </Setter>-->
                                   </DataTrigger>
                                 </Style.Triggers>
+
+                                <Setter Property="Text" Value="{Binding ContentSingleLine}" />
                               </Style>
                             </TextBlock.Style>
                           </TextBlock>
@@ -1381,8 +1387,8 @@
                           </Style>
                         </ListBoxItem.Style>
                         <DockPanel>
-                          <TextBlock>表示許可</TextBlock>
-                          <TextBlock Text="{Binding SelectedComment.NoApprovalRemark.Value}" />
+                          <TextBlock>表示不許可</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
                         </DockPanel>
                       </ListBoxItem>
                       <Separator/>

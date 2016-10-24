@@ -334,13 +334,16 @@
   <data name="String_Service_Smile_SmileVideo_Bookmark_NewName" xml:space="preserve">
     <value>新規ブックマーク</value>
   </data>
-  <data name="String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter" xml:space="preserve">
+  <data name="String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap" xml:space="preserve">
+    <value>重複コメントフィルタ</value>
+  </data>
+  <data name="String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter" xml:space="preserve">
     <value>全ての動画のフィルタ</value>
   </data>
-  <data name="String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter" xml:space="preserve">
+  <data name="String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter" xml:space="preserve">
     <value>この動画のフィルタ</value>
   </data>
-  <data name="String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood" xml:space="preserve">
+  <data name="String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood" xml:space="preserve">
     <value>共有NG</value>
   </data>
   <data name="String_Service_Smile_SmileVideo_History_AccountHistory_Title" xml:space="preserve">

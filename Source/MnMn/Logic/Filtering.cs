@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         Regex RegexChecker { get; set; } = null;
         bool IsInvalidRegex { get; set; } = false;
 
+        public string Name { get { return Setting.Name ?? Setting.Source; } }
+
         #endregion
 
         #region function
