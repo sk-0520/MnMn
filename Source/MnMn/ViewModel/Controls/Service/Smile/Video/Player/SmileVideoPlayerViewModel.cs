@@ -1121,6 +1121,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
                     Type = FilteringType.Regex,
                     Source = e.Extends["pattern"],
+                    Name = e.DisplayText,
                 })
                 .ToList()
             ;
