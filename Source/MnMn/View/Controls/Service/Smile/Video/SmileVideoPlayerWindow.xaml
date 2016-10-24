@@ -1387,8 +1387,8 @@
                           </Style>
                         </ListBoxItem.Style>
                         <DockPanel>
-                          <TextBlock>表示許可</TextBlock>
-                          <TextBlock Text="{Binding SelectedComment.NoApprovalRemark.Value}" />
+                          <TextBlock>表示不許可</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
                         </DockPanel>
                       </ListBoxItem>
                       <Separator/>
