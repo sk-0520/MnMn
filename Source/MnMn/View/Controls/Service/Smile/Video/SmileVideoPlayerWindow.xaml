@@ -1266,20 +1266,23 @@
 
                           <TextBlock DockPanel.Dock="Right" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" Visibility="{Binding DataContext.PlayerShowPostTimestamp, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
 
-                          <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding ContentSingleLine}">
+                          <TextBlock TextTrimming="CharacterEllipsis">
                             <TextBlock.Style>
                               <Style TargetType="TextBlock">
                                 <Style.Triggers>
                                   <DataTrigger Binding="{Binding Approval}" Value="False">
-                                    <Setter Property="TextDecorations">
+                                    <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;&lt;{0}としてマークされました&gt;&gt;}" />
+                                    <!--<Setter Property="TextDecorations">
                                       <Setter.Value>
                                         <TextDecorationCollection>
                                           <TextDecoration Location="Strikethrough" />
                                         </TextDecorationCollection>
                                       </Setter.Value>
-                                    </Setter>
+                                    </Setter>-->
                                   </DataTrigger>
                                 </Style.Triggers>
+
+                                <Setter Property="Text" Value="{Binding ContentSingleLine}" />
                               </Style>
                             </TextBlock.Style>
                           </TextBlock>
