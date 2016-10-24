@@ -1237,14 +1237,17 @@
                               <BeginStoryboard>
                                 <Storyboard>
                                   <ColorAnimation
-                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                  To="Transparent"
-                                  Duration="00:00:01"
-                                  AutoReverse="False"
-                                />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    To="Transparent"
+                                    Duration="00:00:01"
+                                    AutoReverse="False"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.ExitActions>
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Approval}" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
                           </DataTrigger>
                         </Style.Triggers>
                       </Style>
