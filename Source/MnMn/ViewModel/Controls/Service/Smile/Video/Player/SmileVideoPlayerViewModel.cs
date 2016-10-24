@@ -1074,7 +1074,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // 共有NG
             if(IsEnabledSharedNoGood) {
                 var targetComments = comments.Where(c => c.Score <= SharedNoGoodScore);
-                ApprovalCommentSet(targetComments, false, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_SharedNoGood, $"score < {SharedNoGoodScore}");
+                ApprovalCommentSet(targetComments, false, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood, $"score < {SharedNoGoodScore}");
             }
         }
 
@@ -1098,9 +1098,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         nowItem.Approval = false;
                         if(!nowItem.Approval) {
                             nowItem.NoApprovalRemark.Value = isGlobalFilter
-                                ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter
-                                : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter
+                                ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter
+                                : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter
                             ;
+                            nowItem.NoApprovalDetail.Value = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap;
                         }
                     }
                 }
@@ -1139,9 +1140,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
                     if(!item.Approval) {
                         item.NoApprovalRemark.Value = isGlobalFilter
-                            ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_GlobalFilter
-                            : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_Approval_LocalFilter
+                            ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter
+                            : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter
                         ;
+
+                        item.NoApprovalDetail.Value = filter.Name;
                     }
                 }
             }

@@ -1274,7 +1274,7 @@
                               <Style TargetType="TextBlock">
                                 <Style.Triggers>
                                   <DataTrigger Binding="{Binding Approval}" Value="False">
-                                    <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;&lt;{0}としてマークされました&gt;&gt;}" />
+                                    <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;{0}としてマークされました&gt;}" />
                                     <!--<Setter Property="TextDecorations">
                                       <Setter.Value>
                                         <TextDecorationCollection>
