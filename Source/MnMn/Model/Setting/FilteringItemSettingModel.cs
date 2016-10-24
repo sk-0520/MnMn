@@ -29,6 +29,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
     {
         #region property
 
+        [DataMember]
+        public bool IsEnabled { get; set; } = true;
+
         /// <summary>
         /// フィルタリング方法。
         /// </summary>

@@ -48,6 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #region property
 
+        public bool IsEnabled
+        {
+            get { return Model.IsEnabled; }
+            set { SetModelValue(value); }
+        }
+
         public FilteringType Type
         {
             get { return Model.Type; }
