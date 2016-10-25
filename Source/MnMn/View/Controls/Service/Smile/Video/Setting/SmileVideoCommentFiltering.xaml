@@ -82,50 +82,52 @@
       </ListBox.ItemTemplate>
     </ListBox>
 
-    <StackPanel Grid.Row="3">
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-          <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <ComboBox x:Name="selectType" Grid.Column="0" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-          <ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ComboBox x:Name="selectTarget" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-          <ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <CheckBox x:Name="selectIgnoreCase" Grid.Column="2" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">大文字小文字を無視</CheckBox>
-      </Grid>
-      <TextBox x:Name="inputSource" Text="{Binding SelectedFilteringEditItem.EditingSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Click="UpdateButton_Click">
-          <Button.IsEnabled>
-            <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
-              <Binding Path="SelectedFilteringEditItem" Converter="{StaticResource LogicalIsNotNullConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-              <Binding Path="SelectedFilteringEditItem.EditingSource" Converter="{StaticResource HasTextLengthConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-            </MultiBinding>
-          </Button.IsEnabled>
-          更新
-        </Button>
-        <Button Grid.Column="1" Click="CreateButton_Click" IsEnabled="{Binding Text, Converter={StaticResource HasTextLengthConverter}, ElementName=inputSource}" >挿入</Button>
-        <Button Grid.Column="2" Click="RemoveButton_Click" IsEnabled="{Binding SelectedFilteringEditItem, Converter={StaticResource LogicalIsNotNullConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">削除</Button>
-        <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
-      </Grid>
-    </StackPanel>
+    <Grid Grid.Row="3">
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <ComboBox x:Name="selectType" Grid.Column="0" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+          <ComboBox x:Name="selectTarget" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+          <CheckBox x:Name="selectIgnoreCase" Grid.Column="2" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">大文字小文字を無視</CheckBox>
+        </Grid>
+        <TextBox x:Name="inputSource" Text="{Binding SelectedFilteringEditItem.EditingSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Button Grid.Column="0" Click="UpdateButton_Click">
+            <Button.IsEnabled>
+              <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
+                <Binding Path="SelectedFilteringEditItem" Converter="{StaticResource LogicalIsNotNullConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                <Binding Path="SelectedFilteringEditItem.EditingSource" Converter="{StaticResource HasTextLengthConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+              </MultiBinding>
+            </Button.IsEnabled>
+            更新
+          </Button>
+          <Button Grid.Column="1" Click="CreateButton_Click" IsEnabled="{Binding Text, Converter={StaticResource HasTextLengthConverter}, ElementName=inputSource}" >挿入</Button>
+          <Button Grid.Column="2" Click="RemoveButton_Click" IsEnabled="{Binding SelectedFilteringEditItem, Converter={StaticResource LogicalIsNotNullConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">削除</Button>
+          <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
+        </Grid>
+      </StackPanel>
+    </Grid>
 
 
   </Grid>
