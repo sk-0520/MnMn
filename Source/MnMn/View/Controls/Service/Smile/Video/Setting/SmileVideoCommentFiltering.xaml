@@ -17,6 +17,8 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
     <cttn_sl_view_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -67,6 +69,16 @@
     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
       <StackPanel>
         <ItemsControl ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <!--<ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+              <Style.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                  <Setter Property="IsSelected" Value="True"/>
+                </Trigger>
+              </Style.Triggers>
+              <Setter Property="IsSelected" Value="{Binding Path=DataContext.IsSelected, RelativeSource={RelativeSource Mode=Self}}"/>
+            </Style>
+          </ListBox.ItemContainerStyle>-->
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <Grid>
@@ -91,11 +103,12 @@
 
                   <Grid Grid.Row="0" Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="*" />
-                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="3*" />
+                      <ColumnDefinition Width="7*" />
+                      <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Row="0" Grid.Column="0" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ComboBox Grid.Column="0" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
                       <ComboBox.ItemTemplate>
                         <DataTemplate>
                           <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -103,10 +116,14 @@
                       </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Source}" />
+                    <TextBox Grid.Column="1" Text="{Binding Source}" />
+
+                    <ToggleButton x:Name="ShowDetail" Grid.Column="2" >
+                      @
+                    </ToggleButton>
                   </Grid>
 
-                  <Grid Grid.Row="1" Grid.Column="1">
+                  <Grid Grid.Row="1" Grid.Column="1" Visibility="{Binding IsChecked, ElementName=ShowDetail, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <StackPanel>
                       <CheckBox IsChecked="{Binding IgnoreCase}">大文字小文字を無視</CheckBox>
                       <ListBox

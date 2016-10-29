@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
@@ -34,6 +35,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         SmileVideoCommentFilteringTarget _editingTarget;
         string _editingSource;
         bool _editingIgnoreCase;
+
+        //bool _isSelected;
 
         #endregion
 
@@ -98,7 +101,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #endregion
 
-        #region property
+        #region function
 
         internal void Update()
         {
@@ -120,5 +123,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
         }
 
         #endregion
+
+        //#region ISelectable
+
+        //public bool IsSelected
+        //{
+        //    get { return this._isSelected; }
+        //    set { SetVariableValue(ref this._isSelected, value); }
+        //}
+
+        //#endregion
     }
 }
