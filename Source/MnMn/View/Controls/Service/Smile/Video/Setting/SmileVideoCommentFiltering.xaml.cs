@@ -191,61 +191,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         #endregion
 
-        private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(e.AddedItems.Count != 1) {
-                this.selectType.SelectedIndex = 0;
-                this.selectTarget.SelectedIndex = 0;
-                this.selectIgnoreCase.IsChecked = false;
-                return;
-            }
-            var selectedItem = e.AddedItems[0];
-            if(selectedItem == null) {
-                return;
-            }
+        //private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if(e.AddedItems.Count != 1) {
+        //        this.selectType.SelectedIndex = 0;
+        //        this.selectTarget.SelectedIndex = 0;
+        //        this.selectIgnoreCase.IsChecked = false;
+        //        return;
+        //    }
+        //    var selectedItem = e.AddedItems[0];
+        //    if(selectedItem == null) {
+        //        return;
+        //    }
 
-            var filterItem = (SmileVideoCommentFilteringItemEditViewModel)selectedItem;
-            SelectedFilteringEditItem = filterItem;
-        }
+        //    var filterItem = (SmileVideoCommentFilteringItemEditViewModel)selectedItem;
+        //    SelectedFilteringEditItem = filterItem;
+        //}
 
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedFilteringEditItem == null) {
-                return;
-            }
-            SelectedFilteringEditItem.Update();
-            OnFilteringChanged();
-        }
+        //private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if(SelectedFilteringEditItem == null) {
+        //        return;
+        //    }
+        //    SelectedFilteringEditItem.Update();
+        //    OnFilteringChanged();
+        //}
 
-        private void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            var model = new SmileVideoCommentFilteringItemSettingModel();
-            if(SelectedFilteringEditItem != null) {
-                var src = SelectedFilteringEditItem;
-                model.Type = src.EditingType;
-                model.Target = src.EditingTarget;
-                model.Source = src.EditingSource;
-                model.IgnoreCase = src.EditingIgnoreCase;
-            } else {
-                model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
-                model.Target = selectTarget.SelectedItem != null ? (SmileVideoCommentFilteringTarget)selectTarget.SelectedItem : default(SmileVideoCommentFilteringTarget);
-                model.Source = inputSource.Text;
-                model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
-            }
-            var pair = Filtering.CommentFilterList.Add(model, null);
-            SelectedFilteringEditItem = pair.ViewModel;
-            OnFilteringChanged();
-        }
+        //private void CreateButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var model = new SmileVideoCommentFilteringItemSettingModel();
+        //    if(SelectedFilteringEditItem != null) {
+        //        var src = SelectedFilteringEditItem;
+        //        model.Type = src.EditingType;
+        //        model.Target = src.EditingTarget;
+        //        model.Source = src.EditingSource;
+        //        model.IgnoreCase = src.EditingIgnoreCase;
+        //    } else {
+        //        model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
+        //        model.Target = selectTarget.SelectedItem != null ? (SmileVideoCommentFilteringTarget)selectTarget.SelectedItem : default(SmileVideoCommentFilteringTarget);
+        //        model.Source = inputSource.Text;
+        //        model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
+        //    }
+        //    var pair = Filtering.CommentFilterList.Add(model, null);
+        //    SelectedFilteringEditItem = pair.ViewModel;
+        //    OnFilteringChanged();
+        //}
 
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedFilteringEditItem == null) {
-                return;
-            }
-            var a = Filtering.CommentFilterList.Remove(SelectedFilteringEditItem);
-            SelectedFilteringEditItem = null;
-            OnFilteringChanged();
-        }
+        //private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if(SelectedFilteringEditItem == null) {
+        //        return;
+        //    }
+        //    var a = Filtering.CommentFilterList.Remove(SelectedFilteringEditItem);
+        //    SelectedFilteringEditItem = null;
+        //    OnFilteringChanged();
+        //}
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
