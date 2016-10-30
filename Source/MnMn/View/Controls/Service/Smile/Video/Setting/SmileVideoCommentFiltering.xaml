@@ -66,7 +66,7 @@
 
     <!--<Separator Grid.Row="1" />-->
 
-    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="{StaticResource TopMargin}">
       <StackPanel>
         <ItemsControl ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <!--<ListBox.ItemContainerStyle>
@@ -89,7 +89,61 @@
 
                 <Separator x:Name="separator" Grid.Row="0" />
 
-                <Grid Grid.Row="1">
+                <Expander Grid.Row="1">
+                  <Expander.Header>
+                    <Grid >
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="7*" />
+                      </Grid.ColumnDefinitions>
+
+                      <ComboBox Grid.Column="0" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <ComboBox.ItemTemplate>
+                          <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+                          </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                      </ComboBox>
+
+                      <TextBox Grid.Column="1" Text="{Binding Source}" />
+                    </Grid>
+                  </Expander.Header>
+                  <StackPanel>
+                    <CheckBox Checked="CheckBox_Checked_UnChecked" Unchecked="CheckBox_Checked_UnChecked" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding IgnoreCase}">大文字小文字を無視</CheckBox>
+                    <ListBox
+                      ScrollViewer.CanContentScroll="False"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                      SelectionChanged="ListBoxCheckBox_SelectionChanged"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                      SelectedItem="{Binding Type}"
+                    >
+                      <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                      </ListBox.ItemsPanel>
+                      <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                          <Setter Property="Template">
+                            <Setter.Value>
+                              <ControlTemplate TargetType="ListBoxItem">
+                                <RadioButton
+                                  Content="{Binding Converter={StaticResource EnumDisplayConverter}}"
+                                  IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}"
+                                  IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}"
+                                  Style="{StaticResource VerticalRadioButton}"
+                                />
+                              </ControlTemplate>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </ListBox.ItemContainerStyle>
+                    </ListBox>
+                  </StackPanel>
+                </Expander>
+                <!--<Grid Grid.Row="1">
                   <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -108,7 +162,7 @@
                       <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Column="0" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ComboBox Grid.Column="0" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
                       <ComboBox.ItemTemplate>
                         <DataTemplate>
                           <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -123,10 +177,13 @@
                     </ToggleButton>
                   </Grid>
 
-                  <Grid Grid.Row="1" Grid.Column="1" Visibility="{Binding IsChecked, ElementName=ShowDetail, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <GroupBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="詳細" Visibility="{Binding IsChecked, ElementName=ShowDetail, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="{StaticResource TopMargin}">
                     <StackPanel>
-                      <CheckBox IsChecked="{Binding IgnoreCase}">大文字小文字を無視</CheckBox>
+                      <CheckBox Checked="CheckBox_Checked_UnChecked" Unchecked="CheckBox_Checked_UnChecked" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding IgnoreCase}">大文字小文字を無視</CheckBox>
                       <ListBox
+                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        SelectionChanged="ListBoxCheckBox_SelectionChanged"
                         Background="Transparent"
                         BorderBrush="Transparent"
                         ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -143,10 +200,11 @@
                               <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
                                   <RadioButton
-                                      Content="{Binding Converter={StaticResource EnumDisplayConverter}}"
-                                      IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}"
-                                      IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}"
-                                    />
+                                    Content="{Binding Converter={StaticResource EnumDisplayConverter}}"
+                                    IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}"
+                                    IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}"
+                                    Style="{StaticResource VerticalRadioButton}"
+                                  />
                                 </ControlTemplate>
                               </Setter.Value>
                             </Setter>
@@ -154,9 +212,9 @@
                         </ListBox.ItemContainerStyle>
                       </ListBox>
                     </StackPanel>
-                  </Grid>
+                  </GroupBox>
 
-                </Grid>
+                </Grid>-->
               </Grid>
 
               <DataTemplate.Triggers>
@@ -204,6 +262,8 @@
         </GridView>
       </ListView.View>-->
         </ItemsControl>
+
+        <Button>新規フィルタの追加</Button>
       </StackPanel>
     </ScrollViewer>
 

@@ -132,39 +132,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         #endregion
 
-        #region SelectedFilteringEditItemProperty
+        //#region SelectedFilteringEditItemProperty
 
-        public static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SelectedFilteringEditItemProperty)),
-            typeof(SmileVideoCommentFilteringItemEditViewModel),
-            typeof(SmileVideoCommentFiltering),
-            new FrameworkPropertyMetadata(default(SmileVideoCommentFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
-        );
+        //public static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(SelectedFilteringEditItemProperty)),
+        //    typeof(SmileVideoCommentFilteringItemEditViewModel),
+        //    typeof(SmileVideoCommentFiltering),
+        //    new FrameworkPropertyMetadata(default(SmileVideoCommentFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
+        //);
 
-        static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as SmileVideoCommentFiltering;
-            if(control != null) {
-                var oldItem = control.SelectedFilteringEditItem;
-                control.SelectedFilteringEditItem = e.NewValue as SmileVideoCommentFilteringItemEditViewModel;
-                if(oldItem != null) {
-                    oldItem.Reset();
-                }
-                //if(control.SelectedFilteringEditItem == null) {
-                //    control.selectType.SelectedIndex = 0;
-                //    control.selectTarget.SelectedIndex = 0;
-                //    control.selectIgnoreCase.IsChecked = true;
-                //}
-            }
-        }
+        //static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var control = d as SmileVideoCommentFiltering;
+        //    if(control != null) {
+        //        var oldItem = control.SelectedFilteringEditItem;
+        //        control.SelectedFilteringEditItem = e.NewValue as SmileVideoCommentFilteringItemEditViewModel;
+        //        if(oldItem != null) {
+        //            oldItem.Reset();
+        //        }
+        //        //if(control.SelectedFilteringEditItem == null) {
+        //        //    control.selectType.SelectedIndex = 0;
+        //        //    control.selectTarget.SelectedIndex = 0;
+        //        //    control.selectIgnoreCase.IsChecked = true;
+        //        //}
+        //    }
+        //}
 
-        public SmileVideoCommentFilteringItemEditViewModel SelectedFilteringEditItem
-        {
-            get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoCommentFilteringItemEditViewModel; }
-            set { SetValue(SelectedFilteringEditItemProperty, value); }
-        }
+        //public SmileVideoCommentFilteringItemEditViewModel SelectedFilteringEditItem
+        //{
+        //    get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoCommentFilteringItemEditViewModel; }
+        //    set { SetValue(SelectedFilteringEditItemProperty, value); }
+        //}
 
-        #endregion
+        //#endregion
 
         #region RemoveCommandProperty
 
@@ -188,6 +188,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             get { return GetValue(RemoveCommandProperty) as ICommand; }
             set { SetValue(RemoveCommandProperty, value); }
         }
+
+        #endregion
+
+        #region function
+
+        void SelectionChangedCore(object sender, SelectionChangedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            e.Handled = true;
+            OnFilteringChanged();
+        }
+
+        private void CheckBoxChangedCore(object sender, RoutedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            e.Handled = true;
+            OnFilteringChanged();
+        }
+
 
         #endregion
 
@@ -310,6 +335,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
             e.Handled = true;
             OnFilteringChanged();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectionChangedCore(sender, e);
+        }
+
+        private void ListBoxCheckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectionChangedCore(sender, e);
+        }
+
+        private void CheckBox_Checked_UnChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBoxChangedCore(sender, e);
         }
 
     }
