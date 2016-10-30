@@ -80,14 +80,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             DependencyPropertyUtility.GetName(nameof(FilteringProperty)),
             typeof(SmileVideoFilteringViweModel),
             typeof(SmileVideoCommentFiltering),
-            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringChanged))
+            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringChanged))
         );
 
         private static void OnFilteringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CastUtility.AsAction<SmileVideoCommentFiltering>(d, control => {
                 control.Filtering = e.NewValue as SmileVideoFilteringViweModel;
-                control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
+                //control.FilteringViewModelItemsSource = control.Filtering.CommentFilterList.ViewModelList;
                 control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
                 control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
                 var defineItems = control.Filtering.CommentDefineItems.Select(de => new SmileVideoCommentFilteringElementViewModel(de)).ToArray();
@@ -107,30 +107,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         #endregion
 
-        #region FilteringViewModelItemsSourceProperty
+        //#region FilteringViewModelItemsSourceProperty
 
-        static readonly DependencyProperty FilteringViewModelItemsSourceProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(FilteringViewModelItemsSourceProperty)),
-            typeof(ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>),
-            typeof(SmileVideoCommentFiltering),
-            new FrameworkPropertyMetadata(default(ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringViewModelItemsSourceChanged))
-        );
+        //static readonly DependencyProperty FilteringViewModelItemsSourceProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(FilteringViewModelItemsSourceProperty)),
+        //    typeof(ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>),
+        //    typeof(SmileVideoCommentFiltering),
+        //    new FrameworkPropertyMetadata(default(ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringViewModelItemsSourceChanged))
+        //);
 
-        private static void OnFilteringViewModelItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            CastUtility.AsAction<SmileVideoCommentFiltering>(d, control => {
-                control.FilteringViewModelItemsSource = e.NewValue as ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>;
-            });
-        }
+        //private static void OnFilteringViewModelItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    CastUtility.AsAction<SmileVideoCommentFiltering>(d, control => {
+        //        control.FilteringViewModelItemsSource = e.NewValue as ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>;
+        //    });
+        //}
 
 
-        ObservableCollection<SmileVideoCommentFilteringItemEditViewModel> FilteringViewModelItemsSource
-        {
-            get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>; }
-            set { SetValue(FilteringViewModelItemsSourceProperty, value); }
-        }
+        //ObservableCollection<SmileVideoCommentFilteringItemEditViewModel> FilteringViewModelItemsSource
+        //{
+        //    get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoCommentFilteringItemEditViewModel>; }
+        //    set { SetValue(FilteringViewModelItemsSourceProperty, value); }
+        //}
 
-        #endregion
+        //#endregion
 
         //#region SelectedFilteringEditItemProperty
 
@@ -166,30 +166,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         //#endregion
 
-        #region RemoveCommandProperty
+        //#region RemoveCommandProperty
 
-        static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(RemoveCommandProperty)),
-            typeof(ICommand),
-            typeof(SmileVideoCommentFiltering),
-            new FrameworkPropertyMetadata(default(SmileVideoCommentFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnRemoveCommandChanged))
-        );
+        //static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(RemoveCommandProperty)),
+        //    typeof(ICommand),
+        //    typeof(SmileVideoCommentFiltering),
+        //    new FrameworkPropertyMetadata(default(SmileVideoCommentFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnRemoveCommandChanged))
+        //);
 
-        static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as SmileVideoCommentFiltering;
-            if(control != null) {
-                control.RemoveCommand = e.NewValue as ICommand;
-            }
-        }
+        //static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var control = d as SmileVideoCommentFiltering;
+        //    if(control != null) {
+        //        control.RemoveCommand = e.NewValue as ICommand;
+        //    }
+        //}
 
-        public ICommand RemoveCommand
-        {
-            get { return GetValue(RemoveCommandProperty) as ICommand; }
-            set { SetValue(RemoveCommandProperty, value); }
-        }
+        //public ICommand RemoveCommand
+        //{
+        //    get { return GetValue(RemoveCommandProperty) as ICommand; }
+        //    set { SetValue(RemoveCommandProperty, value); }
+        //}
 
-        #endregion
+        //#endregion
 
         #region function
 

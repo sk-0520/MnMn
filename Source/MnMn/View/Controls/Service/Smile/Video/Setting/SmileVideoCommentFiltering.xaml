@@ -68,7 +68,7 @@
 
     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="{StaticResource TopMargin}">
       <StackPanel>
-        <ItemsControl ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <ItemsControl ItemsSource="{Binding Filtering.CommentFilterItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <!--<ListBox.ItemContainerStyle>
             <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
               <Style.Triggers>
@@ -93,11 +93,14 @@
                   <Expander.Header>
                     <Grid >
                       <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="7*" />
                       </Grid.ColumnDefinitions>
 
-                      <ComboBox Grid.Column="0" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                      <CheckBox IsChecked="{Binding IsEnabled}" />
+
+                      <ComboBox Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
                         <ComboBox.ItemTemplate>
                           <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -105,7 +108,7 @@
                         </ComboBox.ItemTemplate>
                       </ComboBox>
 
-                      <TextBox Grid.Column="1" Text="{Binding Source}" />
+                      <TextBox Grid.Column="2" Text="{Binding Source}" />
                     </Grid>
                   </Expander.Header>
                   <StackPanel>
@@ -141,6 +144,7 @@
                         </Style>
                       </ListBox.ItemContainerStyle>
                     </ListBox>
+                    <Button Command="{Binding Filtering.RemoveCommentFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">このフィルタを破棄</Button>
                   </StackPanel>
                 </Expander>
                 <!--<Grid Grid.Row="1">
@@ -263,7 +267,7 @@
       </ListView.View>-->
         </ItemsControl>
 
-        <Button>新規フィルタの追加</Button>
+        <Button Command="{Binding Filtering.AddCommentFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
       </StackPanel>
     </ScrollViewer>
 

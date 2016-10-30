@@ -25,7 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileVideoCommentFilteringItemSettingModel: FilteringItemSettingModel
+    public class SmileVideoCommentFilteringItemEditViewMode: FilteringItemSettingModel
     {
         #region property
 

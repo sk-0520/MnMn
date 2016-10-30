@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// フィルタリングデータ。
         /// </summary>
         [DataMember]
-        public CollectionModel<SmileVideoCommentFilteringItemSettingModel> Items { get; set; } = new CollectionModel<SmileVideoCommentFilteringItemSettingModel>();
+        public CollectionModel<SmileVideoCommentFilteringItemEditViewMode> Items { get; set; } = new CollectionModel<SmileVideoCommentFilteringItemEditViewMode>();
 
         /// <summary>
         /// 重複したコメントを無視するか。
