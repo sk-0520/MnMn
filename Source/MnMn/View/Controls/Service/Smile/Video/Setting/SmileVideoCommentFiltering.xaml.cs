@@ -351,6 +351,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         {
             CheckBoxChangedCore(sender, e);
         }
-
     }
 }

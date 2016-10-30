@@ -116,10 +116,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-              o => {
-                  var model = new SmileVideoCommentFilteringItemEditViewMode();
-                  AddCommentFilter(model);
-              });
+                    o => {
+                        var model = new SmileVideoCommentFilteringItemEditViewMode();
+                        AddCommentFilter(model);
+                    }
+                );
             }
         }
 
