@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             OnFilteringChanged();
         }
 
-        private void CheckBoxChangedCore(object sender, RoutedEventArgs e)
+        void CheckBoxChangedCore(object sender, RoutedEventArgs e)
         {
             if(Filtering == null) {
                 return;
@@ -213,6 +213,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             OnFilteringChanged();
         }
 
+        void TextBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            var textBox = (TextBox)sender;
+
+            var editItem = textBox.DataContext as SmileVideoCommentFilteringItemEditViewModel;
+            editItem.Source = textBox.Text;
+
+            e.Handled = true;
+            OnFilteringChanged();
+        }
 
         #endregion
 
@@ -351,5 +365,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         {
             CheckBoxChangedCore(sender, e);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBoxTextChanged(sender, e);
+        }
+
     }
 }
