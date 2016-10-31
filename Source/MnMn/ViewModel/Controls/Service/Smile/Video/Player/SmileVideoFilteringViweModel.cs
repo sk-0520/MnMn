@@ -106,10 +106,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region comment
 
-        public ICommand RemoveCommentFilterCommand
-        {
-            get { return CreateCommand(o => RemoveCommentFilter((SmileVideoCommentFilteringItemEditViewModel)o)); }
-        }
+        //public ICommand RemoveCommentFilterCommand
+        //{
+        //    get { return CreateCommand(o => RemoveCommentFilter((SmileVideoCommentFilteringItemEditViewModel)o)); }
+        //}
 
         public ICommand AddCommentFilterCommand
         {
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region function
 
-        void RemoveCommentFilter(SmileVideoCommentFilteringItemEditViewModel target)
+        public void RemoveCommentFilter(SmileVideoCommentFilteringItemEditViewModel target)
         {
             CommentFilterList.Remove(target);
         }

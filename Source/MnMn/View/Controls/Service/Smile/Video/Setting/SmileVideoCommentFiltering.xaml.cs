@@ -15,11 +15,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility.UI;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
@@ -228,6 +230,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             OnFilteringChanged();
         }
 
+        void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            var button = (Button)sender;
+            Filtering.RemoveCommentFilter((SmileVideoCommentFilteringItemEditViewModel)button.DataContext);
+
+            e.Handled = true;
+            OnFilteringChanged();
+        }
+
         #endregion
 
         //private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -371,5 +386,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             TextBoxTextChanged(sender, e);
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonClick(sender, e);
+        }
     }
 }

@@ -144,7 +144,7 @@
                         </Style>
                       </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <Button Command="{Binding Filtering.RemoveCommentFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">このフィルタを破棄</Button>
+                    <Button Click="Button_Click">このフィルタを破棄</Button>
                   </StackPanel>
                 </Expander>
                 <!--<Grid Grid.Row="1">
