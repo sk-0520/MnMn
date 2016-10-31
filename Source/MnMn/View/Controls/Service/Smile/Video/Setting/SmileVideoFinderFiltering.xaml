@@ -26,14 +26,13 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
+      <!--<RowDefinition Height="Auto" />-->
     </Grid.RowDefinitions>
 
     <ListBox
       x:Name="filterItems"
       Grid.Row="0"
-      ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
-      SelectionChanged="filterItems_SelectionChanged"
+      ItemsSource="{Binding Filtering.FinderFilterItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
     >
       <ListBox.ItemTemplate>
         <DataTemplate>
@@ -46,7 +45,7 @@
       </ListBox.ItemTemplate>
     </ListBox>
 
-    <StackPanel Grid.Row="1">
+    <!--<StackPanel Grid.Row="1">
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
@@ -87,9 +86,11 @@
         </Button>
         <Button Grid.Column="1" Click="CreateButton_Click" IsEnabled="{Binding Text, Converter={StaticResource HasTextLengthConverter}, ElementName=inputSource}" >挿入</Button>
         <Button Grid.Column="2" Click="RemoveButton_Click" IsEnabled="{Binding SelectedFilteringEditItem, Converter={StaticResource LogicalIsNotNullConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">削除</Button>
-        <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
+        -->
+    <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
+    <!--
       </Grid>
-    </StackPanel>
+    </StackPanel>-->
 
   </Grid>
 </UserControl>

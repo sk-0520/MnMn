@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
             if(FinderSetting != null) {
                 FinderFilterList = new MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel>(FinderSetting.Items, default(object), (m, o) => new SmileVideoFinderFilteringItemEditViewModel(m));
+                FinderFilterItems = CollectionViewSource.GetDefaultView(FinderFilterList.ViewModelList);
             }
             CommentFilterItems = CollectionViewSource.GetDefaultView(CommentFilterList.ViewModelList);
 
@@ -91,6 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         SmileVideoFinderFilteringSettingModel FinderSetting { get; }
 
         public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
+        public ICollectionView FinderFilterItems { get; }
 
         //public bool IsEnabledFinderFiltering
         //{
