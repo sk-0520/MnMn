@@ -1138,7 +1138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
                 foreach(var item in comments.AsParallel().Where(c => c.Approval)) {
-                    item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
+                    item.Approval = !filter.IsHit(item.Content, item.UserId, item.Commands);
                     if(!item.Approval) {
                         item.NoApprovalRemark.Value = isGlobalFilter
                             ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter
