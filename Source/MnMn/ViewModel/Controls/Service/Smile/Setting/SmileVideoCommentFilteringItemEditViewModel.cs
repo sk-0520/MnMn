@@ -22,28 +22,31 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoCommentFilteringItemEditViewModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringItemSettingModel>
+    public class SmileVideoCommentFilteringItemEditViewModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringItemEditViewMode>
     {
         #region variable
 
-        FilteringType _editingType;
-        SmileVideoCommentFilteringTarget _editingTarget;
-        string _editingSource;
-        bool _editingIgnoreCase;
+        //FilteringType _editingType;
+        //SmileVideoCommentFilteringTarget _editingTarget;
+        //string _editingSource;
+        //bool _editingIgnoreCase;
+
+        //bool _isSelected;
 
         #endregion
 
-        public SmileVideoCommentFilteringItemEditViewModel(SmileVideoCommentFilteringItemSettingModel model)
+        public SmileVideoCommentFilteringItemEditViewModel(SmileVideoCommentFilteringItemEditViewMode model)
             : base(model)
         {
-            EditingType = model.Type;
-            EditingTarget = model.Target;
-            EditingSource = model.Source;
-            EditingIgnoreCase = model.IgnoreCase;
+            //EditingType = model.Type;
+            //EditingTarget = model.Target;
+            //EditingSource = model.Source;
+            //EditingIgnoreCase = model.IgnoreCase;
         }
 
         #region property
@@ -75,50 +78,60 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetModelValue(value); }
         }
 
-        public FilteringType EditingType
-        {
-            get { return this._editingType; }
-            set { SetVariableValue(ref this._editingType, value); }
-        }
-        public SmileVideoCommentFilteringTarget EditingTarget
-        {
-            get { return this._editingTarget; }
-            set { SetVariableValue(ref this._editingTarget, value); }
-        }
-        public string EditingSource
-        {
-            get { return this._editingSource; }
-            set { SetVariableValue(ref this._editingSource, value); }
-        }
-        public bool EditingIgnoreCase
-        {
-            get { return this._editingIgnoreCase; }
-            set { SetVariableValue(ref this._editingIgnoreCase, value); }
-        }
+        //public FilteringType EditingType
+        //{
+        //    get { return this._editingType; }
+        //    set { SetVariableValue(ref this._editingType, value); }
+        //}
+        //public SmileVideoCommentFilteringTarget EditingTarget
+        //{
+        //    get { return this._editingTarget; }
+        //    set { SetVariableValue(ref this._editingTarget, value); }
+        //}
+        //public string EditingSource
+        //{
+        //    get { return this._editingSource; }
+        //    set { SetVariableValue(ref this._editingSource, value); }
+        //}
+        //public bool EditingIgnoreCase
+        //{
+        //    get { return this._editingIgnoreCase; }
+        //    set { SetVariableValue(ref this._editingIgnoreCase, value); }
+        //}
 
         #endregion
 
-        #region property
+        #region function
 
-        internal void Update()
-        {
-            Type = EditingType;
-            Target = EditingTarget;
-            Source = EditingSource;
-            IgnoreCase = EditingIgnoreCase;
+        //internal void Update()
+        //{
+        //    Type = EditingType;
+        //    Target = EditingTarget;
+        //    Source = EditingSource;
+        //    IgnoreCase = EditingIgnoreCase;
 
-            ResetChangeFlag();
-        }
+        //    ResetChangeFlag();
+        //}
 
-        internal void Reset()
-        {
-            EditingIgnoreCase = IgnoreCase;
-            EditingSource = Source;
-            EditingTarget = Target;
-            Type = Type;
-            ResetChangeFlag();
-        }
+        //internal void Reset()
+        //{
+        //    EditingIgnoreCase = IgnoreCase;
+        //    EditingSource = Source;
+        //    EditingTarget = Target;
+        //    Type = Type;
+        //    ResetChangeFlag();
+        //}
 
         #endregion
+
+        //#region ISelectable
+
+        //public bool IsSelected
+        //{
+        //    get { return this._isSelected; }
+        //    set { SetVariableValue(ref this._isSelected, value); }
+        //}
+
+        //#endregion
     }
 }

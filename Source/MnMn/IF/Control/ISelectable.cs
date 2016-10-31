@@ -17,24 +17,13 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
+namespace ContentTypeTextNet.MnMn.MnMn.IF.Control
 {
-    [DataContract]
-    public class SmileVideoCommentFilteringItemEditViewMode: FilteringItemSettingModel
+    public interface ISelectable
     {
-        #region property
-
-        /// <summary>
-        /// 対象。
-        /// </summary>
-        [DataMember]
-        public SmileVideoCommentFilteringTarget Target { get; set; }
-
-        #endregion
+        bool IsSelected { get; set; }
     }
 }

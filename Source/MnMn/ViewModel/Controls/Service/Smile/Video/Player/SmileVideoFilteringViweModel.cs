@@ -16,9 +16,12 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -42,10 +45,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             FilteringDefine = filteringDefine;
 
-            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
             if(FinderSetting != null) {
                 FinderFilterList = new MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel>(FinderSetting.Items, default(object), (m, o) => new SmileVideoFinderFilteringItemEditViewModel(m));
             }
+            CommentFilterItems = CollectionViewSource.GetDefaultView(CommentFilterList.ViewModelList);
 
             CommentDefineItems = filteringDefine.Elements;
         }
@@ -60,7 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         SmileVideoCommentFilteringSettingModel CommentSetting { get; }
 
-        public MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
+        internal MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
+        public ICollectionView CommentFilterItems { get; }
 
         public bool IgnoreOverlapWord
         {
@@ -94,6 +99,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //}
 
         #endregion
+
+        #endregion
+
+        #region command
+
+        #region comment
+
+        //public ICommand RemoveCommentFilterCommand
+        //{
+        //    get { return CreateCommand(o => RemoveCommentFilter((SmileVideoCommentFilteringItemEditViewModel)o)); }
+        //}
+
+        public ICommand AddCommentFilterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var model = new SmileVideoCommentFilteringItemEditViewMode();
+                        AddCommentFilter(model);
+                    }
+                );
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region function
+
+        public void RemoveCommentFilter(SmileVideoCommentFilteringItemEditViewModel target)
+        {
+            CommentFilterList.Remove(target);
+        }
+
+        private void AddCommentFilter(SmileVideoCommentFilteringItemEditViewMode model)
+        {
+            CommentFilterList.Add(model, null);
+        }
+
 
         #endregion
     }
