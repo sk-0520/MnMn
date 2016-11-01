@@ -294,6 +294,22 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
+            <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <MenuItem Header="動画ID" />
+              <MenuItem Header="タイトル" />
+              <MenuItem Header="ユーザーID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" />
+              <MenuItem Header="ユーザー名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" />
+              <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" />
+              <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" />
+              <MenuItem Header="コメント" />
+              <MenuItem Header="タグ" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
+                <MenuItem.ItemTemplate>
+                  <DataTemplate>
+                    <Label Content="{Binding TagName}" />
+                  </DataTemplate>
+                </MenuItem.ItemTemplate>
+              </MenuItem>
+            </MenuItem>
             <Separator />
             <MenuItem Header="キャッシュ破棄" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
           </ContextMenu>
