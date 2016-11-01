@@ -128,9 +128,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
+        #region finder
+
+        public ICommand AddFinderFilterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var model = new SmileVideoFinderFilteringItemSettingModel();
+                        AddFinderFilter(model);
+                    }
+                );
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region function
+
+        #region comment
 
         public void RemoveCommentFilter(SmileVideoCommentFilteringItemEditViewModel target)
         {
@@ -142,6 +161,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentFilterList.Add(model, null);
         }
 
+        #endregion
+
+        #region finder
+
+        public void RemoveFinderFilter(SmileVideoFinderFilteringItemEditViewModel target)
+        {
+            FinderFilterList.Remove(target);
+        }
+
+        private void AddFinderFilter(SmileVideoFinderFilteringItemSettingModel model)
+        {
+            FinderFilterList.Add(model, null);
+        }
+
+        #endregion
 
         #endregion
     }

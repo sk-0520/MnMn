@@ -68,10 +68,10 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <Grid.ColumnDefinitions>
+    <!--<Grid.ColumnDefinitions>
       <ColumnDefinition Width="17*"/>
       <ColumnDefinition Width="33*"/>
-    </Grid.ColumnDefinitions>
+    </Grid.ColumnDefinitions>-->
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -824,7 +824,8 @@
 
     <ContentControl x:Name="PART_Footer" Grid.Row="3" Content="{Binding FooterContent, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HeadFootContent}" Grid.ColumnSpan="2" />
 
-    <mamc:Flyout x:Name="popupFilter" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Visibility="Hidden" Header="フィルタリング設定" IsOpen="{Binding ShowFilterSetting}" Style="{StaticResource FinderFlyout}" >
+    <!-- サイズ固定しないと変になる -->
+    <mamc:Flyout x:Name="popupFilter" Grid.Row="2" Width="350" Visibility="Hidden" Header="フィルタリング設定" IsOpen="{Binding ShowFilterSetting}" Style="{StaticResource FinderFlyout}" >
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
