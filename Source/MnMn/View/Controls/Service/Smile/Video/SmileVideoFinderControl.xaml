@@ -182,7 +182,7 @@
           </ContentControl>
         </StackPanel>
       </ToggleButton>-->
-      <Button Grid.Column="7" Command="{Binding SwitchShowFilterCommand}">
+      <Button Grid.Column="7" Command="{Binding SwitchShowFilterCommand}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource ParentItemLikeText}">フィルタ</TextBlock>
           <ContentControl VerticalContentAlignment="Stretch">
