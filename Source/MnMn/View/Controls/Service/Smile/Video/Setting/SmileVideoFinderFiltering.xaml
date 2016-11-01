@@ -29,7 +29,7 @@
       <!--<RowDefinition Height="Auto" />-->
     </Grid.RowDefinitions>
 
-    <ScrollViewer Grid.Row="0">
+    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
       <StackPanel>
         <ItemsControl
           x:Name="filterItems"
@@ -65,14 +65,17 @@
                   <StackPanel>
                     <CheckBox Checked="CheckBox_Checked_UnChecked" Unchecked="CheckBox_Checked_UnChecked" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding IgnoreCase}">大文字小文字を無視</CheckBox>
                     <ListBox
-                      ScrollViewer.CanContentScroll="False"
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                       SelectionChanged="ListBoxCheckBox_SelectionChanged"
                       Background="Transparent"
                       BorderBrush="Transparent"
                       ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
                       SelectedItem="{Binding Type}"
                     >
+                      <ListBox.Template>
+                        <ControlTemplate>
+                          <ItemsPresenter />
+                        </ControlTemplate>
+                      </ListBox.Template>
                       <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                           <StackPanel Orientation="Vertical"/>
@@ -95,7 +98,7 @@
                         </Style>
                       </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <Button Click="Button_Click">このフィルタを破棄</Button>
+                    <Button Margin="{StaticResource AllMargin}" Click="Button_Click">このフィルタを破棄</Button>
                   </StackPanel>
 
                 </Expander>
@@ -108,7 +111,7 @@
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button Command="{Binding Filtering.AddFinderFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
+        <Button Margin="{StaticResource AllMargin}" Command="{Binding Filtering.AddFinderFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
       </StackPanel>
 
     </ScrollViewer>
