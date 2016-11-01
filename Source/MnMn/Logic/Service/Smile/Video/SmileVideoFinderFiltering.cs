@@ -47,28 +47,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             switch(SubSetting.Target) {
                 case SmileVideoFinderFilteringTarget.VideoId:
-                    return Check(parameter.VideoId);
+                    return IsHit(parameter.VideoId);
 
                 case SmileVideoFinderFilteringTarget.Title:
-                    return Check(parameter.Title);
+                    return IsHit(parameter.Title);
 
                 case SmileVideoFinderFilteringTarget.UserId:
-                    return Check(parameter.UserId);
+                    return IsHit(parameter.UserId);
 
                 case SmileVideoFinderFilteringTarget.UserName:
-                    return Check(parameter.UserName);
+                    return IsHit(parameter.UserName);
 
                 case SmileVideoFinderFilteringTarget.ChannelId:
-                    return Check(parameter.ChannelId);
+                    return IsHit(parameter.ChannelId);
 
                 case SmileVideoFinderFilteringTarget.ChannelName:
-                    return Check(parameter.ChannelName);
+                    return IsHit(parameter.ChannelName);
 
                 case SmileVideoFinderFilteringTarget.Description:
-                    return Check(parameter.Description);
+                    return IsHit(parameter.Description);
 
                 case SmileVideoFinderFilteringTarget.Tag:
-                    return parameter.Tags.Any(c => Check(c.TagName));
+                    return parameter.Tags.Any(c => IsHit(c.TagName));
 
                 default:
                     throw new NotImplementedException();

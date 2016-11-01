@@ -1116,7 +1116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
-                .Select(e => new SmileVideoCommentFilteringItemSettingModel() {
+                .Select(e => new SmileVideoCommentFilteringItemEditViewMode() {
                     Target = SmileVideoCommentFilteringTarget.Comment,
                     IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
                     Type = FilteringType.Regex,
@@ -1129,7 +1129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filterList);
         }
 
-        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
+        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<SmileVideoCommentFilteringItemEditViewMode> filterList)
         {
             if(!filterList.Any()) {
                 return;
@@ -1138,7 +1138,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
                 foreach(var item in comments.AsParallel().Where(c => c.Approval)) {
-                    item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
+                    item.Approval = !filter.IsHit(item.Content, item.UserId, item.Commands);
                     if(!item.Approval) {
                         item.NoApprovalRemark.Value = isGlobalFilter
                             ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter

@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoCommentFiltering: Filtering
     {
-        public SmileVideoCommentFiltering(SmileVideoCommentFilteringItemSettingModel setting)
+        public SmileVideoCommentFiltering(SmileVideoCommentFilteringItemEditViewMode setting)
             : base(setting)
         {
             SubSetting = setting;
@@ -35,23 +35,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region property
 
-        public SmileVideoCommentFilteringItemSettingModel SubSetting { get; }
+        public SmileVideoCommentFilteringItemEditViewMode SubSetting { get; }
 
         #endregion
 
         #region function
 
-        public bool Check(string comment, string userId, IEnumerable<string> command)
+        public bool IsHit(string comment, string userId, IEnumerable<string> command)
         {
             switch(SubSetting.Target) {
                 case SmileVideoCommentFilteringTarget.Comment:
-                    return Check(comment);
+                    return IsHit(comment);
 
                 case SmileVideoCommentFilteringTarget.UserId:
-                    return Check(userId);
+                    return IsHit(userId);
 
                 case SmileVideoCommentFilteringTarget.Command:
-                    return command.Any(c => Check(c));
+                    return command.Any(c => IsHit(c));
 
                 default:
                     throw new NotImplementedException();
