@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
             if(FinderSetting != null) {
                 FinderFilterList = new MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel>(FinderSetting.Items, default(object), (m, o) => new SmileVideoFinderFilteringItemEditViewModel(m));
+                FinderFilterItems = CollectionViewSource.GetDefaultView(FinderFilterList.ViewModelList);
             }
             CommentFilterItems = CollectionViewSource.GetDefaultView(CommentFilterList.ViewModelList);
 
@@ -91,6 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         SmileVideoFinderFilteringSettingModel FinderSetting { get; }
 
         public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
+        public ICollectionView FinderFilterItems { get; }
 
         //public bool IsEnabledFinderFiltering
         //{
@@ -126,9 +128,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
+        #region finder
+
+        public ICommand AddFinderFilterCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var model = new SmileVideoFinderFilteringItemSettingModel();
+                        AddFinderFilter(model);
+                    }
+                );
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region function
+
+        #region comment
 
         public void RemoveCommentFilter(SmileVideoCommentFilteringItemEditViewModel target)
         {
@@ -140,6 +161,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentFilterList.Add(model, null);
         }
 
+        #endregion
+
+        #region finder
+
+        public void RemoveFinderFilter(SmileVideoFinderFilteringItemEditViewModel target)
+        {
+            FinderFilterList.Remove(target);
+        }
+
+        private void AddFinderFilter(SmileVideoFinderFilteringItemSettingModel model)
+        {
+            FinderFilterList.Add(model, null);
+        }
+
+        #endregion
 
         #endregion
     }

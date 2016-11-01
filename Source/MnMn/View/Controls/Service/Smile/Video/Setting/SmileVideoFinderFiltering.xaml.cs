@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
         {
             CastUtility.AsAction<SmileVideoFinderFiltering>(d, control => {
                 control.Filtering = e.NewValue as SmileVideoFilteringViweModel;
-                control.FilteringViewModelItemsSource = control.Filtering.FinderFilterList.ViewModelList;
+                //control.FilteringViewModelItemsSource = control.Filtering.FinderFilterList.ViewModelList;
                 //control.selectIgnoreOverlapWord.IsChecked = control.Filtering.IgnoreOverlapWord;
                 //control.inputIgnoreOverlapTime.Value = (int)control.Filtering.IgnoreOverlapTime.TotalSeconds;
                 //var defineItems = control.Filtering.CommentDefineItems.Select(de => new SmileVideoFinderFilteringElementViewModel(de)).ToArray();
@@ -97,146 +97,224 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
 
         #endregion
 
-        #region FilteringViewModelItemsSourceProperty
+        //#region FilteringViewModelItemsSourceProperty
 
-        static readonly DependencyProperty FilteringViewModelItemsSourceProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(FilteringViewModelItemsSourceProperty)),
-            typeof(ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>),
-            typeof(SmileVideoFinderFiltering),
-            new FrameworkPropertyMetadata(default(ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringViewModelItemsSourceChanged))
-        );
+        //static readonly DependencyProperty FilteringViewModelItemsSourceProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(FilteringViewModelItemsSourceProperty)),
+        //    typeof(ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>),
+        //    typeof(SmileVideoFinderFiltering),
+        //    new FrameworkPropertyMetadata(default(ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringViewModelItemsSourceChanged))
+        //);
 
-        private static void OnFilteringViewModelItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //private static void OnFilteringViewModelItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    CastUtility.AsAction<SmileVideoFinderFiltering>(d, control => {
+        //        control.FilteringViewModelItemsSource = e.NewValue as ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>;
+        //    });
+        //}
+
+
+        //ObservableCollection<SmileVideoFinderFilteringItemEditViewModel> FilteringViewModelItemsSource
+        //{
+        //    get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>; }
+        //    set { SetValue(FilteringViewModelItemsSourceProperty, value); }
+        //}
+
+        //#endregion
+
+        //#region SelectedFilteringEditItemProperty
+
+        //public static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(SelectedFilteringEditItemProperty)),
+        //    typeof(SmileVideoFinderFilteringItemEditViewModel),
+        //    typeof(SmileVideoFinderFiltering),
+        //    new FrameworkPropertyMetadata(default(SmileVideoFinderFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
+        //);
+
+        //static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var control = d as SmileVideoFinderFiltering;
+        //    if(control != null) {
+        //        var oldItem = control.SelectedFilteringEditItem;
+        //        control.SelectedFilteringEditItem = e.NewValue as SmileVideoFinderFilteringItemEditViewModel;
+        //        if(oldItem != null) {
+        //            oldItem.Reset();
+        //        }
+        //        //if(control.SelectedFilteringEditItem == null) {
+        //        //    control.selectType.SelectedIndex = 0;
+        //        //    control.selectTarget.SelectedIndex = 0;
+        //        //    control.selectIgnoreCase.IsChecked = true;
+        //        //}
+        //    }
+        //}
+
+        //public SmileVideoFinderFilteringItemEditViewModel SelectedFilteringEditItem
+        //{
+        //    get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoFinderFilteringItemEditViewModel; }
+        //    set { SetValue(SelectedFilteringEditItemProperty, value); }
+        //}
+
+        //#endregion
+
+        //#region RemoveCommandProperty
+
+        //static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(RemoveCommandProperty)),
+        //    typeof(ICommand),
+        //    typeof(SmileVideoFinderFiltering),
+        //    new FrameworkPropertyMetadata(default(SmileVideoFinderFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnRemoveCommandChanged))
+        //);
+
+        //static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var control = d as SmileVideoFinderFiltering;
+        //    if(control != null) {
+        //        control.RemoveCommand = e.NewValue as ICommand;
+        //    }
+        //}
+
+        //public ICommand RemoveCommand
+        //{
+        //    get { return GetValue(RemoveCommandProperty) as ICommand; }
+        //    set { SetValue(RemoveCommandProperty, value); }
+        //}
+
+        //#endregion
+
+
+        //private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if(e.AddedItems.Count != 1) {
+        //        this.selectType.SelectedIndex = 0;
+        //        this.selectTarget.SelectedIndex = 0;
+        //        this.selectIgnoreCase.IsChecked = false;
+        //        return;
+        //    }
+        //    var selectedItem = e.AddedItems[0];
+        //    if(selectedItem == null) {
+        //        return;
+        //    }
+
+        //    var filterItem = (SmileVideoFinderFilteringItemEditViewModel)selectedItem;
+        //    SelectedFilteringEditItem = filterItem;
+        //}
+
+        //private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if(SelectedFilteringEditItem == null) {
+        //        return;
+        //    }
+        //    SelectedFilteringEditItem.Update();
+        //    OnFilteringChanged();
+        //}
+
+        //private void CreateButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var model = new SmileVideoFinderFilteringItemSettingModel();
+        //    if(SelectedFilteringEditItem != null) {
+        //        var src = SelectedFilteringEditItem;
+        //        model.Type = src.EditingType;
+        //        model.Target = src.EditingTarget;
+        //        model.Source = src.EditingSource;
+        //        model.IgnoreCase = src.EditingIgnoreCase;
+        //    } else {
+        //        model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
+        //        model.Target = selectTarget.SelectedItem != null ? (SmileVideoFinderFilteringTarget)selectTarget.SelectedItem : default(SmileVideoFinderFilteringTarget);
+        //        model.Source = inputSource.Text;
+        //        model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
+        //    }
+        //    var pair = Filtering.FinderFilterList.Add(model, null);
+        //    SelectedFilteringEditItem = pair.ViewModel;
+        //    OnFilteringChanged();
+        //}
+
+        //private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if(SelectedFilteringEditItem == null) {
+        //        return;
+        //    }
+        //    var a = Filtering.FinderFilterList.Remove(SelectedFilteringEditItem);
+        //    SelectedFilteringEditItem = null;
+        //    OnFilteringChanged();
+        //}
+
+        #region function
+
+
+        void SelectionChangedCore(object sender, SelectionChangedEventArgs e)
         {
-            CastUtility.AsAction<SmileVideoFinderFiltering>(d, control => {
-                control.FilteringViewModelItemsSource = e.NewValue as ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>;
-            });
-        }
-
-
-        ObservableCollection<SmileVideoFinderFilteringItemEditViewModel> FilteringViewModelItemsSource
-        {
-            get { return GetValue(FilteringViewModelItemsSourceProperty) as ObservableCollection<SmileVideoFinderFilteringItemEditViewModel>; }
-            set { SetValue(FilteringViewModelItemsSourceProperty, value); }
-        }
-
-        #endregion
-
-        #region SelectedFilteringEditItemProperty
-
-        public static readonly DependencyProperty SelectedFilteringEditItemProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SelectedFilteringEditItemProperty)),
-            typeof(SmileVideoFinderFilteringItemEditViewModel),
-            typeof(SmileVideoFinderFiltering),
-            new FrameworkPropertyMetadata(default(SmileVideoFinderFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedFilteringEditItemChanged))
-        );
-
-        static void OnSelectedFilteringEditItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as SmileVideoFinderFiltering;
-            if(control != null) {
-                var oldItem = control.SelectedFilteringEditItem;
-                control.SelectedFilteringEditItem = e.NewValue as SmileVideoFinderFilteringItemEditViewModel;
-                if(oldItem != null) {
-                    oldItem.Reset();
-                }
-                //if(control.SelectedFilteringEditItem == null) {
-                //    control.selectType.SelectedIndex = 0;
-                //    control.selectTarget.SelectedIndex = 0;
-                //    control.selectIgnoreCase.IsChecked = true;
-                //}
-            }
-        }
-
-        public SmileVideoFinderFilteringItemEditViewModel SelectedFilteringEditItem
-        {
-            get { return GetValue(SelectedFilteringEditItemProperty) as SmileVideoFinderFilteringItemEditViewModel; }
-            set { SetValue(SelectedFilteringEditItemProperty, value); }
-        }
-
-        #endregion
-
-        #region RemoveCommandProperty
-
-        static readonly DependencyProperty RemoveCommandProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(RemoveCommandProperty)),
-            typeof(ICommand),
-            typeof(SmileVideoFinderFiltering),
-            new FrameworkPropertyMetadata(default(SmileVideoFinderFilteringItemEditViewModel), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnRemoveCommandChanged))
-        );
-
-        static void OnRemoveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as SmileVideoFinderFiltering;
-            if(control != null) {
-                control.RemoveCommand = e.NewValue as ICommand;
-            }
-        }
-
-        public ICommand RemoveCommand
-        {
-            get { return GetValue(RemoveCommandProperty) as ICommand; }
-            set { SetValue(RemoveCommandProperty, value); }
-        }
-
-        #endregion
-
-        private void filterItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(e.AddedItems.Count != 1) {
-                this.selectType.SelectedIndex = 0;
-                this.selectTarget.SelectedIndex = 0;
-                this.selectIgnoreCase.IsChecked = false;
+            if(Filtering == null) {
                 return;
             }
-            var selectedItem = e.AddedItems[0];
-            if(selectedItem == null) {
-                return;
-            }
 
-            var filterItem = (SmileVideoFinderFilteringItemEditViewModel)selectedItem;
-            SelectedFilteringEditItem = filterItem;
-        }
-
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedFilteringEditItem == null) {
-                return;
-            }
-            SelectedFilteringEditItem.Update();
+            e.Handled = true;
             OnFilteringChanged();
         }
 
-        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        void CheckBoxChangedCore(object sender, RoutedEventArgs e)
         {
-            var model = new SmileVideoFinderFilteringItemSettingModel();
-            if(SelectedFilteringEditItem != null) {
-                var src = SelectedFilteringEditItem;
-                model.Type = src.EditingType;
-                model.Target = src.EditingTarget;
-                model.Source = src.EditingSource;
-                model.IgnoreCase = src.EditingIgnoreCase;
-            } else {
-                model.Type = selectType.SelectedItem != null ? (FilteringType)selectType.SelectedItem : default(FilteringType);
-                model.Target = selectTarget.SelectedItem != null ? (SmileVideoFinderFilteringTarget)selectTarget.SelectedItem : default(SmileVideoFinderFilteringTarget);
-                model.Source = inputSource.Text;
-                model.IgnoreCase = selectIgnoreCase.IsChecked.GetValueOrDefault();
-            }
-            var pair = Filtering.FinderFilterList.Add(model, null);
-            SelectedFilteringEditItem = pair.ViewModel;
-            OnFilteringChanged();
-        }
-
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedFilteringEditItem == null) {
+            if(Filtering == null) {
                 return;
             }
-            var a = Filtering.FinderFilterList.Remove(SelectedFilteringEditItem);
-            SelectedFilteringEditItem = null;
+
+            e.Handled = true;
+            OnFilteringChanged();
+        }
+
+        void TextBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            var textBox = (TextBox)sender;
+
+            var editItem = textBox.DataContext as SmileVideoFinderFilteringItemEditViewModel;
+            editItem.Source = textBox.Text;
+
+            e.Handled = true;
+            OnFilteringChanged();
+        }
+
+        void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(Filtering == null) {
+                return;
+            }
+
+            var button = (Button)sender;
+            Filtering.RemoveFinderFilter((SmileVideoFinderFilteringItemEditViewModel)button.DataContext);
+
+            e.Handled = true;
             OnFilteringChanged();
         }
 
 
+        #endregion
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectionChangedCore(sender, e);
+        }
+
+        private void ListBoxCheckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectionChangedCore(sender, e);
+        }
+
+        private void CheckBox_Checked_UnChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBoxChangedCore(sender, e);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBoxTextChanged(sender, e);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonClick(sender, e);
+        }
     }
 }
