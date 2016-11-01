@@ -94,12 +94,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel> FinderFilterList { get; }
         public ICollectionView FinderFilterItems { get; }
 
-        //public bool IsEnabledFinderFiltering
-        //{
-        //    get { return FinderSetting.IsEnabledFinderFiltering; }
-        //    set { SetPropertyValue(FinderSetting, value); }
-        //}
-
         #endregion
 
         #endregion
@@ -107,11 +101,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #region command
 
         #region comment
-
-        //public ICommand RemoveCommentFilterCommand
-        //{
-        //    get { return CreateCommand(o => RemoveCommentFilter((SmileVideoCommentFilteringItemEditViewModel)o)); }
-        //}
 
         public ICommand AddCommentFilterCommand
         {
