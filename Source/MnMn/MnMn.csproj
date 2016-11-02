@@ -288,6 +288,7 @@
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
+    <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
