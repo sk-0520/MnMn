@@ -159,9 +159,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             FinderFilterList.Remove(target);
         }
 
-        private void AddFinderFilter(SmileVideoFinderFilteringItemSettingModel model)
+        public SmileVideoFinderFilteringItemEditViewModel AddFinderFilter(SmileVideoFinderFilteringItemSettingModel model)
         {
-            FinderFilterList.Add(model, null);
+            var pair = FinderFilterList.Add(model, null);
+            return pair.ViewModel;
         }
 
         #endregion

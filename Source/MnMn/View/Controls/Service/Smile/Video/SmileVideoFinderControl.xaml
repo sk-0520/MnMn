@@ -295,7 +295,7 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
-            <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter}">
               <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}">
                 <MenuItem.CommandParameter>
                   <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
@@ -357,7 +357,8 @@
               -->
               <MenuItem Header="タグ" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
                 <MenuItem.ItemContainerStyle>
-                  <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Style TargetType="MenuItem">
+                    <Setter Property="Header" Value="{Binding TagName}"/>
                     <Setter Property="Command" Value="{Binding DataContext.AddFinderFilteringCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     <Setter Property="CommandParameter">
                       <Setter.Value>
@@ -369,11 +370,6 @@
                     </Setter>
                   </Style>
                 </MenuItem.ItemContainerStyle>
-                <MenuItem.ItemTemplate>
-                  <DataTemplate>
-                    <Label Content="{Binding TagName}" />
-                  </DataTemplate>
-                </MenuItem.ItemTemplate>
               </MenuItem>
             </MenuItem>
             <Separator />

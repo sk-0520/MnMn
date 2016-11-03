@@ -303,7 +303,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     o => {
                         var commandParameter = (SmileVideoFinderFilterCommandParameterModel)o;
                         AddFinderFiltering(commandParameter.FilteringTarget, commandParameter.Source);
-                    }
+                    },
+                    o => SelectedFinderItem != null
                 );
             }
         }
@@ -516,6 +517,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void AddFinderFiltering(SmileVideoFinderFilteringTarget filteringTarget, string source)
         {
             Mediation.Logger.Debug($"{filteringTarget}: {source}");
+
+            // 同一っぽいデータがある場合は無視する
+            if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == filteringTarget && i.Model.Source == source)) {
+                return;
+            }
+
+            var model = new SmileVideoFinderFilteringItemSettingModel() {
+                Source = source,
+                Target = filteringTarget,
+                Type = FilteringType.PerfectMatch,
+                IgnoreCase = true,
+                IsEnabled = true,
+            };
+            FinderFilering.AddFinderFilter(model);
         }
 
         void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
