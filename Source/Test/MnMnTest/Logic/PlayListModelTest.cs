@@ -44,7 +44,7 @@ namespace MnMnTest.Logic
         [TestMethod]
         public void SequenceNextTest()
         {
-            var list = new PlayListModel<Item>() {
+            var list = new PlayListManager<Item>() {
                 IsRandom = false,
             };
 
@@ -61,7 +61,7 @@ namespace MnMnTest.Logic
         [TestMethod]
         public void SequencePrevTest()
         {
-            var list = new PlayListModel<Item>() {
+            var list = new PlayListManager<Item>() {
                 IsRandom = false,
             };
 
@@ -80,7 +80,7 @@ namespace MnMnTest.Logic
         public void RandomNextTest()
         {
             foreach(var _ in Enumerable.Range(1, 100)) {
-                var list = new PlayListModel<Item>() {
+                var list = new PlayListManager<Item>() {
                     IsRandom = true,
                 };
 

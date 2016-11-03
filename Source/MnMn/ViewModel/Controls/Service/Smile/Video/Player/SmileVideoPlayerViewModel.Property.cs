@@ -439,7 +439,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// プレイリスト。
         /// </summary>
-        public PlayListModel<SmileVideoInformationViewModel> PlayListItems { get; } = new PlayListModel<SmileVideoInformationViewModel>();
+        public PlayListManager<SmileVideoInformationViewModel> PlayListItems { get; } = new PlayListManager<SmileVideoInformationViewModel>();
         /// <summary>
         /// 関連動画読込状態。
         /// </summary>

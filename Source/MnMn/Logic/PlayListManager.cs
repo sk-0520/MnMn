@@ -27,17 +27,17 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class PlayListModel<TModel>: CollectionModel<TModel>
+    public class PlayListManager<TModel>: CollectionModel<TModel>
         where TModel : class
     {
         #region variable
         #endregion
 
-        public PlayListModel()
+        public PlayListManager()
             : this(Environment.TickCount)
         { }
 
-        public PlayListModel(int seed)
+        public PlayListManager(int seed)
             : base()
         {
             Seed = seed;
