@@ -129,12 +129,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             CheckUtility.Enforce(CanItemChange);
 
+            if(Count == PlayedItems.Count) {
+                // 初期化！
+                PlayedItems.Clear();
+            }
             int index;
             if(IsRandom) {
-                if(Count == PlayedItems.Count) {
-                    // 初期化！
-                    PlayedItems.Clear();
-                }
                 index = ChangeRandomNextIndex(CurrenIndex, this, Seed, PlayedItems);
             } else {
                 index = ChangeSequentialNextIndex(CurrenIndex, this);
