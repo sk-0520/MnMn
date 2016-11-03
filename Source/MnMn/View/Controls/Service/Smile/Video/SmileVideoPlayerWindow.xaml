@@ -1428,8 +1428,10 @@
                             </Viewbox>
                           </DataTemplate>
 
+                          <sys:String x:Key="GlobalFilter">全ての動画でフィルタ設定するには Shiftキー を同時押ししてください</sys:String>
+
                           <Style x:Key="FilteringDropDownButton" BasedOn="{StaticResource {x:Type mamc:DropDownButton}}" TargetType="mamc:DropDownButton">
-                            <Setter Property="ToolTip" Value="全ての動画でフィルタ設定するには Shiftキー を同時押ししてください" />
+                            <Setter Property="ToolTip" Value="{StaticResource GlobalFilter}" />
                             <Setter Property="ArrowVisibility" Value="Collapsed" />
                             <Setter Property="BorderThickness" Value="0" />
                             <Setter Property="ButtonStyle" Value="{DynamicResource MetroCircleButtonStyle}" />
@@ -1438,7 +1440,7 @@
                             <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
                           </Style>
                           <Style x:Key="FilteringButton" TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
-                            <Setter Property="ToolTip" Value="全ての動画でフィルタ設定するには Shiftキー を同時押ししてください" />
+                            <Setter Property="ToolTip" Value="{StaticResource GlobalFilter}" />
                             <Setter Property="FocusVisualStyle" Value="{DynamicResource MetroCircleFocusVisual}" />
                             <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
                             <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
@@ -1480,12 +1482,19 @@
                         <Grid Grid.Row="4" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コマンド</TextBlock>
                           <mamc:DropDownButton Grid.Column="1" ArrowVisibility="Collapsed" Style="{StaticResource FilteringDropDownButton}" ItemsSource="{Binding SelectedComment.Commands}" >
-                            <mamc:DropDownButton.ItemContainerStyle>
+                            <mamc:DropDownButton.Resources>
+                              <!-- ItemContainerStyle でやると バインドエラー4 で死ぬ-->
                               <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                 <Setter Property="Command" Value="{Binding DataContext.SetFilteringCommandCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
                                 <Setter Property="CommandParameter" Value="{Binding}" />
                               </Style>
-                            </mamc:DropDownButton.ItemContainerStyle>
+                            </mamc:DropDownButton.Resources>
+                            <!--<mamc:DropDownButton.ItemContainerStyle>
+                              <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
+                                <Setter Property="Command" Value="{Binding }" />
+                                <Setter Property="CommandParameter" Value="{Binding}" />
+                              </Style>
+                            </mamc:DropDownButton.ItemContainerStyle>-->
                             <mamc:DropDownButton.Content>
                               <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                             </mamc:DropDownButton.Content>
