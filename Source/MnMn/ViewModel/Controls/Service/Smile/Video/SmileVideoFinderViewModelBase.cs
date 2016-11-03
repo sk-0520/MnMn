@@ -514,18 +514,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             FinderItems.Refresh();
         }
 
-        void AddFinderFiltering(SmileVideoFinderFilteringTarget filteringTarget, string source)
+        void AddFinderFiltering(SmileVideoFinderFilteringTarget target, string source)
         {
-            Mediation.Logger.Debug($"{filteringTarget}: {source}");
+            Mediation.Logger.Debug($"{target}: {source}");
 
             // 同一っぽいデータがある場合は無視する
-            if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == filteringTarget && i.Model.Source == source)) {
+            if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
                 return;
             }
 
             var model = new SmileVideoFinderFilteringItemSettingModel() {
                 Source = source,
-                Target = filteringTarget,
+                Target = target,
                 Type = FilteringType.PerfectMatch,
                 IgnoreCase = true,
                 IsEnabled = true,

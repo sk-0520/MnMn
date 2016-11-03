@@ -1429,6 +1429,7 @@
                           </DataTemplate>
 
                           <Style x:Key="FilteringDropDownButton" BasedOn="{StaticResource {x:Type mamc:DropDownButton}}" TargetType="mamc:DropDownButton">
+                            <Setter Property="ToolTip" Value="全ての動画でフィルタ設定するには Shiftキー を同時押ししてください" />
                             <Setter Property="ArrowVisibility" Value="Collapsed" />
                             <Setter Property="BorderThickness" Value="0" />
                             <Setter Property="ButtonStyle" Value="{DynamicResource MetroCircleButtonStyle}" />
@@ -1437,6 +1438,7 @@
                             <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
                           </Style>
                           <Style x:Key="FilteringButton" TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
+                            <Setter Property="ToolTip" Value="全ての動画でフィルタ設定するには Shiftキー を同時押ししてください" />
                             <Setter Property="FocusVisualStyle" Value="{DynamicResource MetroCircleFocusVisual}" />
                             <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
                             <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />

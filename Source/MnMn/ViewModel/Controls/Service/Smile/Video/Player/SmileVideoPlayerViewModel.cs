@@ -533,7 +533,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.UserId, SelectedComment.UserId),
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.UserId, SelectedComment.UserId, IsGlobalSettingFromKeyPushed()),
                     o => SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.UserId)
                 );
             }
@@ -544,7 +544,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Command, (string)o),
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Command, (string)o, IsGlobalSettingFromKeyPushed()),
                     o => SelectedComment != null && !string.IsNullOrEmpty(o as string)
                 );
             }
@@ -555,7 +555,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 return CreateCommand(
-                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Comment, SelectedComment.Content),
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Comment, SelectedComment.Content, IsGlobalSettingFromKeyPushed()),
                     o => SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.Content)
                 );
             }
@@ -564,6 +564,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         #endregion
 
         #region function
+
+        static bool IsGlobalSettingFromKeyPushed()
+        {
+            return Keyboard.Modifiers == ModifierKeys.Shift;
+        }
 
         void SetAreaLength(double playerArea, double commentArea, double informationArea)
         {
@@ -1527,8 +1532,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayTime = PrevPlayedTime = Player.Time;
         }
 
-        void AddCommentFilter(SmileVideoCommentFilteringTarget target, string source)
+        void AddCommentFilter(SmileVideoCommentFilteringTarget target, string source, bool setGlobalSetting)
         {
+            Mediation.Logger.Debug($"{target}: {source}, global: {setGlobalSetting}");
+
+            // 同一っぽいデータがある場合は無視する
+            //if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
+            //    return;
+            //}
+
 
         }
 
