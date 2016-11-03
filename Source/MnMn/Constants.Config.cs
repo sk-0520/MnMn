@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriAbout => ReplaceAppConfig(appConfig.Get("app-uri-about"));
         public static string AppMailAbout => ReplaceAppConfig(appConfig.Get("app-mail-about"));
         public static string AppUriDevelopment => ReplaceAppConfig(appConfig.Get("app-uri-development"));
-        public static string AppUriForum => ReplaceAppConfig(appConfig.Get("app-uri-forum"));
+        public static Uri AppUriForum => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-forum")));
         public static string AppUriUpdate => ReplaceAppConfig(appConfig.Get("app-uri-update"));
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));

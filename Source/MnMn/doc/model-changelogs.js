@@ -84,6 +84,129 @@
 	},
 	*/
 	{
+		'date': '2016/11/03',
+		'version': '0.28.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'class': 'warning',
+						'subject': '内部的なお話だけど #228 で設定データモデルを改名したのでもっかしたらコメントフィルタ設定吹っ飛ぶかも',
+						'comments': [
+							'開発環境では大丈夫だったから大丈夫なんじゃないかな',
+							'でも保証できないから一応書いとく'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '世間的なソフトウェアのリリース周期から見るとそうでもないけど、なんか久しぶりのリリースって気がするね！',
+						'comments': [
+							'飲み会だったり酒飲んだりダークソウル3のDLCだったり宴会だったりで忙しいのですよ！'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '4c13c07c2be50878e7a6dca3ed9cca21f877334b',
+						'subject': '#215: 投稿者コメントはフィルタリング対象から外すべき',
+						'comments': [
+							'初期状態では外すようにした',
+							'更新履歴としてこれが機能なのか修正なのかよくわからんかったからとりあえず機能にした'
+						]
+					},
+					{
+						'revision': '0514d998e8b8b99f179b3ddd118f4268d1f11ea1',
+						'subject': '#182: コメントフィルタがどのフィルタ項目で許容されなくなったっか表示する'
+					},
+					{
+						'revision': '307d85d77b526ba86dca1675211ca022fe9a94fd',
+						'subject': '#217: フィルタリングされたコメントをコメント一覧で定型文に置き換える'
+					},
+					{
+						'revision': 'c5d1dc0832f44e2446fe907f8804b3cf2e7548bb',
+						'subject': '#62: フィルタリングアイテムの有効無効を切り替えられるようにする',
+						'comments': [
+							'無理やり工事したので内部的に設計と実装が喧嘩してる'
+						]
+					},
+					{
+						'revision': '6eb1393748b509c07a546347c6e18c419715d636',
+						'subject': '#126: ファインダーフィルタを簡易操作で行う'
+					},
+					{
+						'revision': '6b6d8cecfd3cab5f8490e7ba6500abb12e66a2a6',
+						'subject': '#127: コメントフィルタを簡易操作で行う',
+						'comments': [
+							'コメント一覧からコメント詳細で各種フィルタ選択を行えます',
+							'全ての動画にフィルタを適用するにはShiftキーを押しながらボタンやメニューを選択してください',
+							'WPF 長くやってるつもりだけど未だに毎回解消する方法を模索してる -> System.Windows.Data Error: 4 : Cannot find source for binding with reference'
+						]
+					},
+					{
+						'revision': '9e4bcfd58171474dab2bc224c815ca7eac5a98b8',
+						'subject': '#143: 外部再生プログラムの選択ダイアログを少し親切にする'
+					},
+					{
+						'revision': 'd422f880dd29ca34d94059fd28107624068f4e5c',
+						'subject': '#232: 本体タブにフォーラム追加',
+						'comments': [
+							'君は正しく、そしてフォーラムに書き込みたまえよ',
+							'良いか悪いかはともかく未制御の GeckoFx だと Cookie 落さないんだね'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '4e6362ee5da6ba067db44dd15f25f7d94d82aea1',
+						'subject': '#226: ファインダーフィルタを使用しない項目でもフィルタUIが表示できる'
+					},
+					{
+						'revision': '71e2b0ed03d9c0c4210ef259c7a3b5851ae10a0e',
+						'subject': '#229: 連続再生時が非ランダムだとプレイリスト周回毎に一周分の動画情報データがメモリにのしかかる',
+						'comments': [
+							'プレイリスト一周分の動画数 * クラス参照サイズ(たぶん x86 で 4 byte?) + (メタ情報) でプレイヤーウィンドウ破棄時にはクリアされるけどなんとなく気持ち悪いよね',
+							'要は直ちに影響はないからこそ影響ないうちに直しておこうって話'
+						]
+					},
+					{
+						'revision': '6b6d8cecfd3cab5f8490e7ba6500abb12e66a2a6',
+						'subject': '#230: 外部プログラム未設定時に外部プログラムで動画を開くと落ちる。落ちるて……',
+						'comments': [
+							'ネットワークやサービス、サードパーティ製ライブラリの都合ならともかくこのソフトウェア内部の都合で落ちるのはしんどいよね',
+							'つーか使用者の分母数も分からんけど報告もらってないし誰も使ってないんだろうなこれ'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'eb0302b9be76f1856a0cd7df71c4909862d4c66e',
+						'subject': '#228: コメントフィルタの命名が頭おかしい',
+						'comments': [
+							'SmileVideoCommentFilteringItemEditViewMode -> SmileVideoCommentFilteringItemSettingModel',
+							'ファイル名はまともだったからクラス名の SmileVideoCommentFilteringItemEditViewMode はリファクタで事故ったな'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2016/10/23',
 		'version': '0.27.0',
 		'isRc': false,

@@ -17,6 +17,7 @@
   xmlns:vlc_wpf="clr-namespace:Meta.Vlc.Wpf;assembly=Meta.Vlc.Wpf"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:cttn_sl_view_attached="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
@@ -1154,7 +1155,7 @@
                 </DockPanel>
               </Grid>
 
-              <Grid>
+              <Grid x:Name="listComment">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="*" />
@@ -1237,14 +1238,17 @@
                               <BeginStoryboard>
                                 <Storyboard>
                                   <ColorAnimation
-                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                  To="Transparent"
-                                  Duration="00:00:01"
-                                  AutoReverse="False"
-                                />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    To="Transparent"
+                                    Duration="00:00:01"
+                                    AutoReverse="False"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.ExitActions>
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Approval}" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
                           </DataTrigger>
                         </Style.Triggers>
                       </Style>
@@ -1266,20 +1270,23 @@
 
                           <TextBlock DockPanel.Dock="Right" Text="{Binding Timestamp, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}" Visibility="{Binding DataContext.PlayerShowPostTimestamp, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
 
-                          <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding ContentSingleLine}">
+                          <TextBlock TextTrimming="CharacterEllipsis">
                             <TextBlock.Style>
                               <Style TargetType="TextBlock">
                                 <Style.Triggers>
                                   <DataTrigger Binding="{Binding Approval}" Value="False">
-                                    <Setter Property="TextDecorations">
+                                    <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;{0}としてマークされました&gt;}" />
+                                    <!--<Setter Property="TextDecorations">
                                       <Setter.Value>
                                         <TextDecorationCollection>
                                           <TextDecoration Location="Strikethrough" />
                                         </TextDecorationCollection>
                                       </Setter.Value>
-                                    </Setter>
+                                    </Setter>-->
                                   </DataTrigger>
                                 </Style.Triggers>
+
+                                <Setter Property="Text" Value="{Binding ContentSingleLine}" />
                               </Style>
                             </TextBlock.Style>
                           </TextBlock>
@@ -1302,17 +1309,15 @@
                   Position="Right"
                   BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
                   Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                  IsOpen="{Binding IsSelectedComment}"
-                  >
-                  <DockPanel>
-                    <!--<TextBlock DockPanel.Dock="Top" TextAlignment="Center">
-                        <Hyperlink Command="{Binding ClearSelectedCommentCommand}">コメント詳細<Run FontSize="10">(クリックで閉じます)</Run></Hyperlink>
-                    </TextBlock>-->
-                    <ListBox
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        BorderBrush="Transparent"
-                        Background="Transparent"
-                      >
+                  IsOpen="{Binding IsOpenCommentDetail}"
+                  Width="{Binding ActualWidth, ElementName=listComment}"
+                >
+                  <Grid>
+                    <!--<ListBox
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      BorderBrush="Transparent"
+                      Background="Transparent"
+                    >
                       <ListBox.Resources>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                           <Setter Property="DockPanel.Dock" Value="Left" />
@@ -1369,45 +1374,190 @@
                           <TextBox Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
                         </DockPanel>
                       </ListBoxItem>
+                      <ListBoxItem>
+                        <ListBoxItem.Style>
+                          <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding SelectedComment.Approval}" Value="False">
+                                <Setter Property="Visibility" Value="Visible" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </Style>
+                        </ListBoxItem.Style>
+                        <DockPanel>
+                          <TextBlock>表示不許可</TextBlock>
+                          <TextBox Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
+                        </DockPanel>
+                      </ListBoxItem>
                       <Separator/>
                       <ListBoxItem>
                         <TextBox Height="Auto" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
                       </ListBoxItem>
-                    </ListBox>
-                  </DockPanel>
+                    </ListBox>-->
+                    <ScrollViewer>
+                      <Grid>
+                        <Grid.Resources>
+                          <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                          </Style>
+                          <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Style.Triggers>
+                              <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property = "BorderBrush" Value="Transparent"/>
+                              </Trigger>
+                              <Trigger Property="IsFocused" Value="true">
+                                <Setter Property = "BorderBrush" Value="Transparent"/>
+                              </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="IsReadOnly" Value="True" />
+                            <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                          </Style>
+                          <Style x:Key="FilteringGrid" TargetType="Grid">
+                            <Setter Property="cttn_sl_view_attached:GridHelpers.ColumnCount" Value="2" />
+                            <Setter Property="cttn_sl_view_attached:GridHelpers.StarColumns" Value="0" />
+                          </Style>
+                          <DataTemplate x:Key="FilterIcon">
+                            <Viewbox Margin="4" Style="{StaticResource MinimumIconBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
+                              </Canvas>
+                            </Viewbox>
+                          </DataTemplate>
+
+                          <sys:String x:Key="GlobalFilter">全ての動画でフィルタ設定するには Shiftキー を同時押ししてください</sys:String>
+
+                          <Style x:Key="FilteringDropDownButton" BasedOn="{StaticResource {x:Type mamc:DropDownButton}}" TargetType="mamc:DropDownButton">
+                            <Setter Property="ToolTip" Value="{StaticResource GlobalFilter}" />
+                            <Setter Property="ArrowVisibility" Value="Collapsed" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="ButtonStyle" Value="{DynamicResource MetroCircleButtonStyle}" />
+                            <Setter Property="FocusVisualStyle" Value="{DynamicResource MetroCircleFocusVisual}" />
+                            <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
+                            <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
+                          </Style>
+                          <Style x:Key="FilteringButton" TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
+                            <Setter Property="ToolTip" Value="{StaticResource GlobalFilter}" />
+                            <Setter Property="FocusVisualStyle" Value="{DynamicResource MetroCircleFocusVisual}" />
+                            <Setter Property="Width" Value="{StaticResource NormalIconWidth}" />
+                            <Setter Property="Height" Value="{StaticResource NormalIconHeight}" />
+                          </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0">表示時間</TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
+                        <!--<Button Grid.Row="0" Grid.Column="2">add filter</Button>-->
+
+                        <TextBlock Grid.Row="1" Grid.Column="0">投稿時間</TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0">スコア</TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedComment.Score, Mode=OneWay}"/>
+
+                        <Grid Grid.Row="3" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                          <TextBlock Grid.Column="0">ユーザーID</TextBlock>
+                          <Button Grid.Column="1" Command="{Binding SetFilteringUserIdCommand}" Style="{StaticResource FilteringButton}" >
+                            <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
+                          </Button>
+                        </Grid>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedComment.UserId, Mode=OneWay}"/>
+
+                        <Grid Grid.Row="4" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                          <TextBlock Grid.Column="0">コマンド</TextBlock>
+                          <mamc:DropDownButton Grid.Column="1" ArrowVisibility="Collapsed" Style="{StaticResource FilteringDropDownButton}" ItemsSource="{Binding SelectedComment.Commands}" >
+                            <mamc:DropDownButton.Resources>
+                              <!-- ItemContainerStyle でやると バインドエラー4 で死ぬ-->
+                              <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                <Setter Property="Command" Value="{Binding DataContext.SetFilteringCommandCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                <Setter Property="CommandParameter" Value="{Binding}" />
+                              </Style>
+                            </mamc:DropDownButton.Resources>
+                            <!--<mamc:DropDownButton.ItemContainerStyle>
+                              <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
+                                <Setter Property="Command" Value="{Binding }" />
+                                <Setter Property="CommandParameter" Value="{Binding}" />
+                              </Style>
+                            </mamc:DropDownButton.ItemContainerStyle>-->
+                            <mamc:DropDownButton.Content>
+                              <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
+                            </mamc:DropDownButton.Content>
+                          </mamc:DropDownButton>
+                        </Grid>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0">表示不許可</TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
+
+                        <Grid Grid.Row="6" Grid.Column="0" Style="{StaticResource FilteringGrid}">
+                          <TextBlock Grid.Column="0">コメント</TextBlock>
+                          <Button Grid.Column="1" Command="{Binding SetFilteringCommentCommand}" Style="{StaticResource FilteringButton}" >
+                            <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
+                          </Button>
+                        </Grid>
+                        <TextBox Grid.Row="6" Grid.RowSpan="2" Grid.Column="1" Height="Auto" VerticalAlignment="Top" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
+
+                      </Grid>
+                    </ScrollViewer>
+                  </Grid>
                 </mamc:Flyout>
               </Grid>
             </DockPanel>
           </TabItem>
           <TabItem Header="フィルタ">
-            <TabControl>
-              <TabItem Header="この動画">
-                <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
-                  <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="FilteringChanged">
-                      <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
-                    </i:EventTrigger>
-                  </i:Interaction.Triggers>
-                </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
-              </TabItem>
-              <TabItem>
-                <TabItem.Header>
-                  <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <!--<TextBlock>全ての動画</TextBlock>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <StackPanel Grid.Row="0">
+                <CheckBox IsChecked="{Binding IsEnabledOriginalPosterFilering}" Style="{StaticResource VerticalCheckBox}">投稿者コメントもフィルタ対象にする</CheckBox>
+              </StackPanel>
+              <TabControl Grid.Row="1">
+                <TabItem Header="この動画">
+                  <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering x:Name="localFilter">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="FilteringChanged">
+                        <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
+                </TabItem>
+                <TabItem VerticalContentAlignment="Stretch">
+                  <TabItem.Header>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                      <!--<TextBlock>全ての動画</TextBlock>
                     <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />-->
-                    <CheckBox Margin="0,0,4,0" ToolTip="全体フィルタ設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
-                    <TextBlock>全ての動画</TextBlock>
-                  </StackPanel>
-                </TabItem.Header>
-                <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">
-                  <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="FilteringChanged">
-                      <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
-                    </i:EventTrigger>
-                  </i:Interaction.Triggers>
-                </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
-              </TabItem>
-            </TabControl>
+                      <CheckBox Margin="0,0,4,0" ToolTip="全体フィルタ設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
+                      <TextBlock>全ての動画</TextBlock>
+                    </StackPanel>
+                  </TabItem.Header>
+                  <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="FilteringChanged">
+                        <i:InvokeCommandAction Command="{Binding ChangedFilteringCommand}" />
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering>
+                </TabItem>
+              </TabControl>
+            </Grid>
           </TabItem>
           <TabItem Header="設定">
             <StackPanel>

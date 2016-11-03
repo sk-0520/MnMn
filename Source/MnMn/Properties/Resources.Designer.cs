@@ -729,11 +729,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   全てのファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVide_Launcher_Item_Any {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVide_Launcher_Item_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プログラム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVide_Launcher_Item_Program {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVide_Launcher_Item_Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {
             get {
                 return ResourceManager.GetString("String_Service_Smile_SmileVideo_Bookmark_NewName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   重複コメントフィルタ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   全ての動画のフィルタ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   この動画のフィルタ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   共有NG に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood", resourceCulture);
             }
         }
         

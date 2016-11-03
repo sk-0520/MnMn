@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         Regex RegexChecker { get; set; } = null;
         bool IsInvalidRegex { get; set; } = false;
 
+        public string Name { get { return Setting.Name ?? Setting.Source; } }
+
         #endregion
 
         #region function
@@ -106,9 +108,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public bool Check(string target)
+        public bool IsHit(string target)
         {
+            if(!Setting.IsEnabled) {
+                return false;
+            }
             if(target == null) {
+                return false;
+            }
+            if(string.IsNullOrEmpty(Setting.Source)) {
                 return false;
             }
 

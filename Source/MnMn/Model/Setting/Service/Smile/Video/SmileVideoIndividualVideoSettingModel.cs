@@ -65,6 +65,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool IsEnabledGlobalCommentFilering { get; set; } = Constants.SettingServiceSmileVideoGlobalCommentFileringIsEnabled;
-
     }
 }

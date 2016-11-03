@@ -17,6 +17,8 @@
   d:DesignHeight="300" d:DesignWidth="300"
 >
   <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
     <cttn_sl_view_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -26,9 +28,8 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
-      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
+      <!--<RowDefinition Height="Auto" />-->
     </Grid.RowDefinitions>
 
     <Expander Grid.Row="0" Header="特別設定">
@@ -63,70 +64,94 @@
       </Grid>
     </Expander>
 
-    <Separator Grid.Row="1" />
-
-    <ListBox
-      x:Name="filterItems"
-      Grid.Row="2"
-      ItemsSource="{Binding FilteringViewModelItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
-      SelectionChanged="filterItems_SelectionChanged"
-    >
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Width="60" Text="{Binding Type, Converter={StaticResource EnumDisplayConverter}}" />
-            <TextBlock Width="80" Text="{Binding Target, Converter={StaticResource EnumDisplayConverter}}" />
-            <TextBlock Text="{Binding Source}" />
-          </StackPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
-
-    <StackPanel Grid.Row="3">
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-          <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <ComboBox x:Name="selectType" Grid.Column="0" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingType, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-          <ComboBox.ItemTemplate>
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="{StaticResource TopMargin}">
+      <StackPanel>
+        <ItemsControl ItemsSource="{Binding Filtering.CommentFilterItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ComboBox x:Name="selectTarget" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SelectedFilteringEditItem.EditingTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-          <ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <CheckBox x:Name="selectIgnoreCase" Grid.Column="2" IsChecked="{Binding SelectedFilteringEditItem.EditingIgnoreCase, RelativeSource={RelativeSource AncestorType=UserControl}}">大文字小文字を無視</CheckBox>
-      </Grid>
-      <TextBox x:Name="inputSource" Text="{Binding SelectedFilteringEditItem.EditingSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Click="UpdateButton_Click">
-          <Button.IsEnabled>
-            <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
-              <Binding Path="SelectedFilteringEditItem" Converter="{StaticResource LogicalIsNotNullConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-              <Binding Path="SelectedFilteringEditItem.EditingSource" Converter="{StaticResource HasTextLengthConverter}" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-            </MultiBinding>
-          </Button.IsEnabled>
-          更新
-        </Button>
-        <Button Grid.Column="1" Click="CreateButton_Click" IsEnabled="{Binding Text, Converter={StaticResource HasTextLengthConverter}, ElementName=inputSource}" >挿入</Button>
-        <Button Grid.Column="2" Click="RemoveButton_Click" IsEnabled="{Binding SelectedFilteringEditItem, Converter={StaticResource LogicalIsNotNullConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">削除</Button>
-        <!--<Button Grid.Column="2" Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">remove</Button>-->
-      </Grid>
-    </StackPanel>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
+                <Separator x:Name="separator" Grid.Row="0" />
+
+                <Expander Grid.Row="1">
+                  <Expander.Header>
+                    <Grid >
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="7*" />
+                      </Grid.ColumnDefinitions>
+
+                      <CheckBox Checked="CheckBox_Checked_UnChecked" Unchecked="CheckBox_Checked_UnChecked" IsChecked="{Binding IsEnabled}" />
+
+                      <ComboBox Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding Target}" ItemsSource="{Binding FilteringTargetItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <ComboBox.ItemTemplate>
+                          <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+                          </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                      </ComboBox>
+
+                      <TextBox Grid.Column="2" TextChanged="TextBox_TextChanged" Text="{Binding Source}" />
+                    </Grid>
+                  </Expander.Header>
+                  <StackPanel>
+                    <CheckBox Checked="CheckBox_Checked_UnChecked" Unchecked="CheckBox_Checked_UnChecked" Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding IgnoreCase}">大文字小文字を無視</CheckBox>
+                    <ListBox
+                      SelectionChanged="ListBoxCheckBox_SelectionChanged"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      ItemsSource="{Binding FilteringTypeItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                      SelectedItem="{Binding Type}"
+                    >
+                      <ListBox.Template>
+                        <ControlTemplate>
+                          <ItemsPresenter />
+                        </ControlTemplate>
+                      </ListBox.Template>
+                      <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                      </ListBox.ItemsPanel>
+                      <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                          <Setter Property="Template">
+                            <Setter.Value>
+                              <ControlTemplate TargetType="ListBoxItem">
+                                <RadioButton
+                                  Content="{Binding Converter={StaticResource EnumDisplayConverter}}"
+                                  IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected}"
+                                  IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}"
+                                  Style="{StaticResource VerticalRadioButton}"
+                                />
+                              </ControlTemplate>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </ListBox.ItemContainerStyle>
+                    </ListBox>
+                    <Button Margin="{StaticResource AllMargin}" Click="Button_Click">このフィルタを破棄</Button>
+                  </StackPanel>
+                </Expander>
+              </Grid>
+
+              <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                  <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
+                </DataTrigger>
+              </DataTemplate.Triggers>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Button Margin="{StaticResource AllMargin}" Command="{Binding Filtering.AddCommentFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">新規フィルタの追加</Button>
+      </StackPanel>
+    </ScrollViewer>
 
   </Grid>
 </UserControl>

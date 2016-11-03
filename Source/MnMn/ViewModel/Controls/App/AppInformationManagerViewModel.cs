@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             AppAboutManager = new AppAboutManagerViewModel(Mediation);
             AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
             AppIssueManager = new AppIssueManagerViewModel(Mediation);
+            AppForumManager = new AppForumManagerViewModel(Mediation);
             AppHelpManager = new AppHelpManagerViewModel(Mediation);
             AppSettingManager = new AppSettingManagerViewModel(Mediation);
             AppFlashPlayerManager = new AppFlashPlayerManagerViewModel(Mediation);
@@ -58,6 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppAboutManagerViewModel AppAboutManager { get; }
         public AppLoggingManagerViewModel AppLoggingManager { get; }
         public AppIssueManagerViewModel AppIssueManager { get; }
+        public AppForumManagerViewModel AppForumManager { get; }
         public AppHelpManagerViewModel AppHelpManager { get; }
         public AppSettingManagerViewModel AppSettingManager { get; }
         public AppFlashPlayerManagerViewModel AppFlashPlayerManager { get; }
@@ -80,6 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 AppAboutManager,
                 AppLoggingManager,
                 AppIssueManager,
+                AppForumManager,
                 AppHelpManager,
                 AppSettingManager,
                 AppFlashPlayerManager

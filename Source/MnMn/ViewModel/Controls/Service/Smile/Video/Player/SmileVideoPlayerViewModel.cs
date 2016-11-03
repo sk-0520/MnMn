@@ -528,9 +528,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => ChangeVolume((bool)o)); }
         }
 
+        public ICommand SetFilteringUserIdCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.UserId, SelectedComment.UserId, IsGlobalSettingFromKeyPushed()),
+                    o => SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.UserId)
+                );
+            }
+        }
+
+        public ICommand SetFilteringCommandCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Command, (string)o, IsGlobalSettingFromKeyPushed()),
+                    o => SelectedComment != null && !string.IsNullOrEmpty(o as string)
+                );
+            }
+        }
+
+        public ICommand SetFilteringCommentCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Comment, SelectedComment.Content, IsGlobalSettingFromKeyPushed()),
+                    o => SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.Content)
+                );
+            }
+        }
+
         #endregion
 
         #region function
+
+        static bool IsGlobalSettingFromKeyPushed()
+        {
+            return Keyboard.Modifiers == ModifierKeys.Shift;
+        }
 
         void SetAreaLength(double playerArea, double commentArea, double informationArea)
         {
@@ -563,6 +601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
             CommentStyleSetting = (SmileVideoCommentStyleSettingModel)Setting.Comment.StyleSetting.DeepClone();
+            IsEnabledOriginalPosterFilering = Setting.Comment.IsEnabledOriginalPosterFilering;
         }
 
         void ExportSetting()
@@ -591,6 +630,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
             Setting.Comment.StyleSetting = (SmileVideoCommentStyleSettingModel)CommentStyleSetting.DeepClone();
+            Setting.Comment.IsEnabledOriginalPosterFilering = IsEnabledOriginalPosterFilering;
         }
 
         public Task LoadAsync(IEnumerable<SmileVideoInformationViewModel> videoInformations, CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan)
@@ -599,7 +639,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CanPlayNextVieo.Value = true;
             return LoadAsync(PlayListItems.GetFirstItem(), false, thumbCacheSpan, imageCacheSpan);
         }
-
 
         void ChangePlayerSizeFromPercent(int percent)
         {
@@ -793,7 +832,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Logger.Debug(Player.Position.ToString());
             PrevPlayedTime = Player.Time;
         }
-
 
         void FireShowComments()
         {
@@ -1053,29 +1091,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentItems.Refresh();
         }
 
-        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value)
+        static void ApprovalCommentSet(IEnumerable<SmileVideoCommentViewModel> list, bool value, string noApprovalRemark, string noApprovalDetail)
         {
             foreach(var item in list) {
                 item.Approval = value;
+                if(item.Approval) {
+                    item.NoApprovalRemark.Value = null;
+                    item.NoApprovalDetail.Value = null;
+                } else {
+                    item.NoApprovalRemark.Value = noApprovalRemark;
+                    item.NoApprovalDetail.Value = noApprovalDetail;
+                }
             }
         }
 
-        void ApprovalCommentSharedNoGood()
+        void ApprovalCommentSharedNoGood(IEnumerable<SmileVideoCommentViewModel> comments)
         {
             // 共有NG
             if(IsEnabledSharedNoGood) {
-                var targetComments = CommentList.Where(c => c.Score <= Setting.Comment.SharedNoGoodScore);
-                ApprovalCommentSet(targetComments, false);
+                var targetComments = comments.Where(c => c.Score <= SharedNoGoodScore);
+                ApprovalCommentSet(targetComments, false, global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_SharedNoGood, $"score < {SharedNoGoodScore}");
             }
         }
 
-        void ApprovalCommentCustomOverlap(bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
+        void ApprovalCommentCustomOverlap(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, bool ignoreOverlapWord, TimeSpan ignoreOverlapTime)
         {
             if(!ignoreOverlapWord) {
                 return;
             }
 
-            var groupingComments = CommentList
+            var groupingComments = comments
                 .Where(c => c.Approval)
                 .OrderBy(c => c.ElapsedTime)
                 .GroupBy(c => c.Content.Trim())
@@ -1087,12 +1132,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var nowItem = groupingComment.ElementAt(i);
                     if(nowItem.ElapsedTime - prevItem.ElapsedTime <= ignoreOverlapTime) {
                         nowItem.Approval = false;
+                        if(!nowItem.Approval) {
+                            nowItem.NoApprovalRemark.Value = isGlobalFilter
+                                ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter
+                                : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter
+                            ;
+                            nowItem.NoApprovalDetail.Value = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap;
+                        }
                     }
                 }
             }
         }
 
-        void ApprovalCommentCustomDefineKeys(IReadOnlyList<string> defineKeys)
+        void ApprovalCommentCustomDefineKeys(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<string> defineKeys)
         {
             if(!defineKeys.Any()) {
                 return;
@@ -1105,14 +1157,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
                     Type = FilteringType.Regex,
                     Source = e.Extends["pattern"],
+                    Name = e.DisplayText,
                 })
                 .ToList()
             ;
 
-            ApprovalCommentCustomFilterItems(filterList);
+            ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filterList);
         }
 
-        void ApprovalCommentCustomFilterItems(IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
+        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
         {
             if(!filterList.Any()) {
                 return;
@@ -1120,28 +1173,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filters = filterList.Select(f => new SmileVideoCommentFiltering(f));
             foreach(var filter in filters.AsParallel()) {
-                foreach(var item in CommentList.AsParallel().Where(c => c.Approval)) {
-                    item.Approval = !filter.Check(item.Content, item.UserId, item.Commands);
+                foreach(var item in comments.AsParallel().Where(c => c.Approval)) {
+                    item.Approval = !filter.IsHit(item.Content, item.UserId, item.Commands);
+                    if(!item.Approval) {
+                        item.NoApprovalRemark.Value = isGlobalFilter
+                            ? global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_GlobalFilter
+                            : global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_SmileVideo_Comment_NoApproval_LocalFilter
+                        ;
+
+                        item.NoApprovalDetail.Value = filter.Name;
+                    }
                 }
             }
         }
 
-        private void ApprovalCommentCustom(SmileVideoFilteringViweModel filter)
+        private void ApprovalCommentCustom(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, SmileVideoFilteringViweModel filter)
         {
-            ApprovalCommentCustomOverlap(filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
-            ApprovalCommentCustomDefineKeys(filter.DefineKeys);
-            ApprovalCommentCustomFilterItems(filter.CommentFilterList.ModelList);
+            ApprovalCommentCustomOverlap(comments, isGlobalFilter, filter.IgnoreOverlapWord, filter.IgnoreOverlapTime);
+            ApprovalCommentCustomDefineKeys(comments, isGlobalFilter, filter.DefineKeys);
+            ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filter.CommentFilterList.ModelList);
         }
 
         void ApprovalComment()
         {
-            ApprovalCommentSet(CommentList, true);
+            if(!CommentList.Any()) {
+                return;
+            }
 
-            ApprovalCommentSharedNoGood();
+            var comments = IsEnabledOriginalPosterFilering ? CommentList : NormalCommentList;
 
-            ApprovalCommentCustom(LocalCommentFilering);
+            ApprovalCommentSet(CommentList, true, string.Empty, string.Empty);
+
+            ApprovalCommentSharedNoGood(comments);
+
+            ApprovalCommentCustom(comments, false, LocalCommentFilering);
             if(IsEnabledGlobalCommentFilering) {
-                ApprovalCommentCustom(GlobalCommentFilering);
+                ApprovalCommentCustom(comments, true, GlobalCommentFilering);
             }
         }
 
@@ -1465,6 +1532,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PlayTime = PrevPlayedTime = Player.Time;
         }
 
+        void AddCommentFilter(SmileVideoCommentFilteringTarget target, string source, bool setGlobalSetting)
+        {
+            Mediation.Logger.Debug($"{target}: {source}, global: {setGlobalSetting}");
+
+            var usingFilter = setGlobalSetting
+                ? GlobalCommentFilering
+                : LocalCommentFilering
+            ;
+
+            //同一っぽいデータがある場合は無視する
+            if(usingFilter.CommentFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
+                return;
+            }
+
+            var model = new SmileVideoCommentFilteringItemSettingModel() {
+                Source = source,
+                Target = target,
+                Type = FilteringType.PerfectMatch,
+                IgnoreCase = true,
+                IsEnabled = true,
+            };
+
+            usingFilter.AddCommentFilter(model);
+            ApprovalComment();
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1619,7 +1712,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var comments = SmileVideoCommentUtility.CreateCommentViewModels(rawMsgPacket, CommentStyleSetting);
             CommentList.InitializeRange(comments);
             CommentListCount = CommentList.Count;
-            ApprovalComment();
 
             var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
             CommentChartList.InitializeRange(chartItems);
@@ -1629,6 +1721,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             FilteringUserList.InitializeRange(userSequence);
             OriginalPosterCommentList.InitializeRange(CommentList.Where(c => c.IsOriginalPoster));
             OriginalPosterCommentListCount = OriginalPosterCommentList.Count;
+
+            ApprovalComment();
 
             if(FilteringCommentType != SmileVideoFilteringCommentType.All) {
                 RefreshFilteringComment();

@@ -30,6 +30,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         #region property
 
         /// <summary>
+        /// 有効無効。
+        /// </summary>
+        [DataMember]
+        public bool IsEnabled { get; set; } = true;
+
+        /// <summary>
         /// フィルタリング方法。
         /// </summary>
         [DataMember]
@@ -46,6 +52,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting
         /// </summary>
         [DataMember]
         public string Source { get; set; }
+
+        /// <summary>
+        /// フィルタ名。
+        /// </summary>
+        [DataMember]
+        public string Name { get; set; }
 
         #endregion
     }

@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -294,6 +295,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return CreateCommand(o => ChangedFiltering()); }
         }
 
+        public ICommand AddFinderFilteringCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var commandParameter = (SmileVideoFinderFilterCommandParameterModel)o;
+                        AddFinderFiltering(commandParameter.FilteringTarget, commandParameter.Source);
+                    },
+                    o => SelectedFinderItem != null
+                );
+            }
+        }
+
         public ICommand AddCheckItLaterCommand
         {
             get
@@ -497,6 +512,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void ChangedFiltering()
         {
             FinderItems.Refresh();
+        }
+
+        void AddFinderFiltering(SmileVideoFinderFilteringTarget target, string source)
+        {
+            Mediation.Logger.Debug($"{target}: {source}");
+
+            // 同一っぽいデータがある場合は無視する
+            if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
+                return;
+            }
+
+            var model = new SmileVideoFinderFilteringItemSettingModel() {
+                Source = source,
+                Target = target,
+                Type = FilteringType.PerfectMatch,
+                IgnoreCase = true,
+                IsEnabled = true,
+            };
+            FinderFilering.AddFinderFilter(model);
         }
 
         void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
