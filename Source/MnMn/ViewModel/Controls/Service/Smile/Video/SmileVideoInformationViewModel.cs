@@ -880,6 +880,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     o => {
                         var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
                         OpenVideoFromOpenParameterAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
+                    },
+                    o => {
+                        var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
+                        if(commandParameter.OpenMode == ExecuteOrOpenMode.Launcher) {
+                            var items = new[] {
+                                Setting.Execute.LauncherPath,
+                                Setting.Execute.LauncherParameter,
+                            };
+                            return items.All(s => !string.IsNullOrWhiteSpace(s));
+                        } else {
+                            return true;
+                        }
                     }
                 );
             }
@@ -1331,8 +1343,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
-            var args = SmileVideoInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
             try {
+                var args = SmileVideoInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
                 Process.Start(Setting.Execute.LauncherPath, args);
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);

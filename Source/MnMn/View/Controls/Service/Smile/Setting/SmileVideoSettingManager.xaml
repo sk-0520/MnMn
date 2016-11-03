@@ -100,6 +100,7 @@
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
@@ -115,6 +116,14 @@
                 <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameterList}" />
+
+                <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap">
+                  <Run>外部プログラムは理屈としてパラメタ―必須のため</Run>
+                  <Run FontWeight="Bold">プログラム</Run>
+                  <Run>と</Run>
+                  <Run FontWeight="Bold">パラメータ</Run>
+                  <Run>がそれぞれ設定されないと使用できません。</Run>
+                </TextBlock>
 
               </Grid>
             </GroupBox>
