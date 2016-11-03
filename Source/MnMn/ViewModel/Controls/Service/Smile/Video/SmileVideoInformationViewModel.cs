@@ -1331,8 +1331,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         public Task OpenVideoLauncherAsync(bool forceEconomy)
         {
-            var args = SmileVideoInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
             try {
+                var args = SmileVideoInformationUtility.MakeLauncherParameter(this, Setting.Execute.LauncherParameter);
                 Process.Start(Setting.Execute.LauncherPath, args);
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
