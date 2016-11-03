@@ -142,6 +142,15 @@
 					},
 					{
 						'revision': '',
+						'subject': '#127: コメントフィルタを簡易操作で行う',
+						'comments': [
+							'コメント一覧からコメント詳細で各種フィルタ選択を行えます',
+							'全ての動画にフィルタを適用するにはShiftキーを押しながらボタンやメニューを選択してください',
+							'WPF 長くやってるつもりだけど未だに毎回解消する方法を模索してる -> System.Windows.Data Error: 4 : Cannot find source for binding with reference'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
