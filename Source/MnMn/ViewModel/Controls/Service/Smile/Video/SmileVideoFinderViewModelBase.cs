@@ -515,6 +515,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void AddFinderFiltering(SmileVideoFinderFilteringTarget filteringTarget, string source)
         {
+            Mediation.Logger.Debug($"{filteringTarget}: {source}");
         }
 
         void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
