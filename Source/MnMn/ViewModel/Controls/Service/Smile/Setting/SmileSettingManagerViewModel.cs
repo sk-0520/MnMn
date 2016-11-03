@@ -23,6 +23,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
@@ -264,7 +266,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             {
                 return CreateCommand(
                     o => {
-                        LauncherPath = OpenDialog(LauncherPath);
+                        LauncherPath = OpenDialogLauncherPath(LauncherPath);
                     }
                 );
             }
@@ -291,13 +293,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             await Task.WhenAll(tasks);
         }
 
-        string OpenDialog(string path)
+        string OpenDialogLauncherPath(string path)
         {
             var existFile = File.Exists(path);
+
+            var filters = new DialogFilterList();
+            filters.Add(new DialogFilterItem(Properties.Resources.String_Service_Smile_SmileVide_Launcher_Item_Program, "*.exe"));
+            filters.Add(new DialogFilterItem(Properties.Resources.String_Service_Smile_SmileVide_Launcher_Item_Any, "*.*"));
 
             var dialog = new OpenFileDialog() {
                 FileName = existFile ? path : string.Empty,
                 InitialDirectory = existFile ? Path.GetDirectoryName(path) : Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                Filter = filters.FilterText,
                 CheckFileExists = true,
             };
             if(dialog.ShowDialog().GetValueOrDefault()) {

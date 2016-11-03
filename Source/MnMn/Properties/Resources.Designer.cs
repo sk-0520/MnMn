@@ -729,6 +729,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   全てのファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVide_Launcher_Item_Any {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVide_Launcher_Item_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プログラム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVide_Launcher_Item_Program {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVide_Launcher_Item_Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新規ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Bookmark_NewName {

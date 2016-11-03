@@ -364,4 +364,10 @@
   <data name="String_Service_Smile_SmileVideo_NewArrivals_Recommendations_Title" xml:space="preserve">
     <value>あなたにおすすめ</value>
   </data>
+  <data name="String_Service_Smile_SmileVide_Launcher_Item_Any" xml:space="preserve">
+    <value>全てのファイル</value>
+  </data>
+  <data name="String_Service_Smile_SmileVide_Launcher_Item_Program" xml:space="preserve">
+    <value>プログラム</value>
+  </data>
 </root>
