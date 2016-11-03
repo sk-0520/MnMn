@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             FilteringDefine = filteringDefine;
 
-            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
+            CommentFilterList = new MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>(CommentSetting.Items, default(object), SmileVideoCommentUtility.CreateVideoCommentFilter);
             if(FinderSetting != null) {
                 FinderFilterList = new MVMPairCreateDelegationCollection<SmileVideoFinderFilteringItemSettingModel, SmileVideoFinderFilteringItemEditViewModel>(FinderSetting.Items, default(object), (m, o) => new SmileVideoFinderFilteringItemEditViewModel(m));
                 FinderFilterItems = CollectionViewSource.GetDefaultView(FinderFilterList.ViewModelList);
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         SmileVideoCommentFilteringSettingModel CommentSetting { get; }
 
-        internal MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
+        internal MVMPairCreateDelegationCollection<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel> CommentFilterList { get; }
         public ICollectionView CommentFilterItems { get; }
 
         public bool IgnoreOverlapWord
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        var model = new SmileVideoCommentFilteringItemEditViewMode();
+                        var model = new SmileVideoCommentFilteringItemSettingModel();
                         AddCommentFilter(model);
                     }
                 );
@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentFilterList.Remove(target);
         }
 
-        private void AddCommentFilter(SmileVideoCommentFilteringItemEditViewMode model)
+        private void AddCommentFilter(SmileVideoCommentFilteringItemSettingModel model)
         {
             CommentFilterList.Add(model, null);
         }

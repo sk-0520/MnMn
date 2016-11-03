@@ -1116,7 +1116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
-                .Select(e => new SmileVideoCommentFilteringItemEditViewMode() {
+                .Select(e => new SmileVideoCommentFilteringItemSettingModel() {
                     Target = SmileVideoCommentFilteringTarget.Comment,
                     IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
                     Type = FilteringType.Regex,
@@ -1129,7 +1129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalCommentCustomFilterItems(comments, isGlobalFilter, filterList);
         }
 
-        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<SmileVideoCommentFilteringItemEditViewMode> filterList)
+        void ApprovalCommentCustomFilterItems(IEnumerable<SmileVideoCommentViewModel> comments, bool isGlobalFilter, IReadOnlyList<SmileVideoCommentFilteringItemSettingModel> filterList)
         {
             if(!filterList.Any()) {
                 return;

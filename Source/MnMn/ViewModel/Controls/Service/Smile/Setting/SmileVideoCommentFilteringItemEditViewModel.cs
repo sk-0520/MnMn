@@ -27,7 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 {
-    public class SmileVideoCommentFilteringItemEditViewModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringItemEditViewMode>
+    public class SmileVideoCommentFilteringItemEditViewModel: SingleModelWrapperViewModelBase<SmileVideoCommentFilteringItemSettingModel>
     {
         #region variable
 
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
 
         #endregion
 
-        public SmileVideoCommentFilteringItemEditViewModel(SmileVideoCommentFilteringItemEditViewMode model)
+        public SmileVideoCommentFilteringItemEditViewModel(SmileVideoCommentFilteringItemSettingModel model)
             : base(model)
         {
             //EditingType = model.Type;

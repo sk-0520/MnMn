@@ -93,7 +93,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'warning',
+						'subject': '内部的なお話だけど #228 で設定データモデルを改名したのでもっかしたらコメントフィルタ設定吹っ飛ぶかも',
+						'comments': [
+							'開発環境では大丈夫だったから大丈夫なんじゃないかな',
+							'でも保証できないから一応書いとく'
+						]
 					},
 					{
 						'revision': '',
@@ -163,7 +168,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#228: コメントフィルタの命名が頭おかしい',
+						'comments': [
+							'SmileVideoCommentFilteringItemEditViewMode -> SmileVideoCommentFilteringItemSettingModel',
+							'ファイル名はまともだったからクラス名の SmileVideoCommentFilteringItemEditViewMode はリファクタで事故ったな'
+						]
 					},
 					{
 						'revision': '',

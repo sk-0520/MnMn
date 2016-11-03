@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 {
     public class SmileVideoCommentFiltering: Filtering
     {
-        public SmileVideoCommentFiltering(SmileVideoCommentFilteringItemEditViewMode setting)
+        public SmileVideoCommentFiltering(SmileVideoCommentFilteringItemSettingModel setting)
             : base(setting)
         {
             SubSetting = setting;
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region property
 
-        public SmileVideoCommentFilteringItemEditViewMode SubSetting { get; }
+        public SmileVideoCommentFilteringItemSettingModel SubSetting { get; }
 
         #endregion
 

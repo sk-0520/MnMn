@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.Setting
             DependencyPropertyUtility.GetName(nameof(FilteringProperty)),
             typeof(SmileVideoFilteringViweModel),
             typeof(SmileVideoCommentFiltering),
-            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoCommentFilteringItemEditViewMode, SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringChanged))
+            new FrameworkPropertyMetadata(default(MVMPairCollectionBase<SmileVideoCommentFilteringItemSettingModel, SmileVideoCommentFilteringItemEditViewModel>), new PropertyChangedCallback(OnFilteringChanged))
         );
 
         private static void OnFilteringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

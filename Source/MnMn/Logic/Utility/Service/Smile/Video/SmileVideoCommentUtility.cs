@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         /// <param name="model"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static SmileVideoCommentFilteringItemEditViewModel CreateVideoCommentFilter(SmileVideoCommentFilteringItemEditViewMode model, object data)
+        public static SmileVideoCommentFilteringItemEditViewModel CreateVideoCommentFilter(SmileVideoCommentFilteringItemSettingModel model, object data)
         {
             return new SmileVideoCommentFilteringItemEditViewModel(model);
         }
