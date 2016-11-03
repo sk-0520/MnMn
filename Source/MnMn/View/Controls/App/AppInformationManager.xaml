@@ -5,7 +5,7 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.App.AppInformationManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  
+
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:cttn_pe_library_pedata_define="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=Package"
@@ -263,6 +263,10 @@
 
     <TabItem Header="次回リリース" DataContext="{Binding AppIssueManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="issueBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
+    </TabItem>
+
+    <TabItem Header="フォーラム" DataContext="{Binding AppForumManager}" Style="{StaticResource SectionTabItem}">
+      <app_view_controls:WebNavigator x:Name="forumBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
     <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}" Style="{StaticResource SectionTabItem}">

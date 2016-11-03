@@ -75,7 +75,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get
             {
                 return CreateCommand(o => {
-                    var s = (string)o;
+                    var s = o is Uri
+                        ? ((Uri)o).OriginalString
+                        : (string)o
+                    ;
+
                     if(s.Any(c => c == '@')) {
                         var mail = "mailto:" + s;
                         s = mail;
