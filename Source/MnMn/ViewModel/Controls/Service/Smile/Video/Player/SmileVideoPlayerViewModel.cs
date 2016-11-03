@@ -1536,12 +1536,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             Mediation.Logger.Debug($"{target}: {source}, global: {setGlobalSetting}");
 
-            // 同一っぽいデータがある場合は無視する
-            //if(FinderFilering.FinderFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
-            //    return;
-            //}
+            var usingFilter = setGlobalSetting
+                ? GlobalCommentFilering
+                : LocalCommentFilering
+            ;
 
+            //同一っぽいデータがある場合は無視する
+            if(usingFilter.CommentFilterList.Any(i => i.Model.Target == target && i.Model.Source == source)) {
+                return;
+            }
 
+            var model = new SmileVideoCommentFilteringItemSettingModel() {
+                Source = source,
+                Target = target,
+                Type = FilteringType.PerfectMatch,
+                IgnoreCase = true,
+                IsEnabled = true,
+            };
+
+            usingFilter.AddCommentFilter(model);
+            ApprovalComment();
         }
 
         #endregion

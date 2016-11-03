@@ -145,9 +145,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentFilterList.Remove(target);
         }
 
-        private void AddCommentFilter(SmileVideoCommentFilteringItemSettingModel model)
+        public SmileVideoCommentFilteringItemEditViewModel AddCommentFilter(SmileVideoCommentFilteringItemSettingModel model)
         {
-            CommentFilterList.Add(model, null);
+            var pair = CommentFilterList.Add(model, null);
+            return pair.ViewModel;
         }
 
         #endregion
