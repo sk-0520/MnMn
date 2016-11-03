@@ -880,6 +880,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     o => {
                         var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
                         OpenVideoFromOpenParameterAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
+                    },
+                    o => {
+                        var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
+                        if(commandParameter.OpenMode == ExecuteOrOpenMode.Launcher) {
+                            var items = new[] {
+                                Setting.Execute.LauncherPath,
+                                Setting.Execute.LauncherParameter,
+                            };
+                            return items.All(s => !string.IsNullOrWhiteSpace(s));
+                        } else {
+                            return true;
+                        }
                     }
                 );
             }
