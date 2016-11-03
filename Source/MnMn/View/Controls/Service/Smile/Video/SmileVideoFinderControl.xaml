@@ -16,6 +16,7 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
+  xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
@@ -294,6 +295,83 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
+            <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter}">
+              <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.VideoId}" />
+                    <Binding Path="SelectedFinderItem.Information.VideoId" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <MenuItem Header="タイトル" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.Title}" />
+                    <Binding Path="SelectedFinderItem.Information.Title" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <MenuItem Header="ユーザーID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.UserId}" />
+                    <Binding Path="SelectedFinderItem.Information.UserId" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <MenuItem Header="ユーザー名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.UserName}" />
+                    <Binding Path="SelectedFinderItem.Information.UserName" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.ChannelId}" />
+                    <Binding Path="SelectedFinderItem.Information.ChannelId" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.ChannelName}" />
+                    <Binding Path="SelectedFinderItem.Information.ChannelName" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              <!--
+              つかわんだろ
+              <MenuItem Header="コメント" Command="{Binding AddFinderFilteringCommand}">
+                <MenuItem.CommandParameter>
+                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                    <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.Description}" />
+                    <Binding Path="SelectedFinderItem.Information.Description" />
+                  </MultiBinding>
+                </MenuItem.CommandParameter>
+              </MenuItem>
+              -->
+              <MenuItem Header="タグ" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
+                <MenuItem.ItemContainerStyle>
+                  <Style TargetType="MenuItem">
+                    <Setter Property="Header" Value="{Binding TagName}"/>
+                    <Setter Property="Command" Value="{Binding DataContext.AddFinderFilteringCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    <Setter Property="CommandParameter">
+                      <Setter.Value>
+                        <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoFinderFilterCommandParameterModel">
+                          <Binding Source="{x:Static app_define_service_smile_video:SmileVideoFinderFilteringTarget.Tag}" />
+                          <Binding Path="TagName" />
+                        </MultiBinding>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+                </MenuItem.ItemContainerStyle>
+              </MenuItem>
+            </MenuItem>
             <Separator />
             <MenuItem Header="キャッシュ破棄" Command="{Binding SelectedFinderItem.Information.ClearCacheCommand}" />
           </ContextMenu>
