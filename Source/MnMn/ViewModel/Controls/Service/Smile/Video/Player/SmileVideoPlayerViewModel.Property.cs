@@ -509,8 +509,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 var prevSelectedComment = this._selectedComment;
                 if(SetVariableValue(ref this._selectedComment, value)) {
-                    IsSelectedComment = SelectedComment != null;
-                    if(IsSelectedComment) {
+                    IsOpenCommentDetail = SelectedComment != null;
+                    if(IsOpenCommentDetail) {
                         SelectedComment.IsSelected = true;
                     }
                     if(prevSelectedComment != null) {
@@ -671,10 +671,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// コメントが選択されているか。
         /// </summary>
-        public bool IsSelectedComment
+        public bool IsOpenCommentDetail
         {
-            get { return this._isSelectedComment; }
-            set { SetVariableValue(ref this._isSelectedComment, value); }
+            get { return this._isOpenCommentDetail; }
+            set
+            {
+                if(SetVariableValue(ref this._isOpenCommentDetail, value)) {
+                    if(!IsOpenCommentDetail) {
+                        SelectedComment = null;
+                    }
+                }
+            }
         }
         /// <summary>
         /// コメント表示制限数の有効状態。

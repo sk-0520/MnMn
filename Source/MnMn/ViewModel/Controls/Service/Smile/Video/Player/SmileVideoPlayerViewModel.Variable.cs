@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         int _commentListCount;
         int _originalPosterCommentListCount;
 
-        bool _isSelectedComment;
+        bool _isOpenCommentDetail;
         bool _isSelectedInformation;
         bool _isSettedMedia;
 

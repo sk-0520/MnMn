@@ -1154,7 +1154,7 @@
                 </DockPanel>
               </Grid>
 
-              <Grid>
+              <Grid x:Name="listComment">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="*" />
@@ -1308,8 +1308,9 @@
                   Position="Right"
                   BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
                   Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                  IsOpen="{Binding IsSelectedComment}"
-                  >
+                  IsOpen="{Binding IsOpenCommentDetail}"
+                  Width="{Binding ActualWidth, ElementName=listComment}"
+                >
                   <DockPanel>
                     <!--<TextBlock DockPanel.Dock="Top" TextAlignment="Center">
                         <Hyperlink Command="{Binding ClearSelectedCommentCommand}">コメント詳細<Run FontSize="10">(クリックで閉じます)</Run></Hyperlink>
