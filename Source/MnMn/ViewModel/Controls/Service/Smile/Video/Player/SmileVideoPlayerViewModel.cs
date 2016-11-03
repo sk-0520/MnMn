@@ -528,6 +528,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => ChangeVolume((bool)o)); }
         }
 
+        public ICommand SetFilteringUserIdCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.UserId, SelectedComment.UserId),
+                    o => SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.UserId)
+                );
+            }
+        }
+
+        public ICommand SetFilteringCommandCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Command, (string)o),
+                    o => SelectedComment != null && !string.IsNullOrEmpty(o as string)
+                );
+            }
+        }
+
+        public ICommand SetFilteringCommentCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddCommentFilter(SmileVideoCommentFilteringTarget.Comment, SelectedComment.Content),
+                    o => SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.Content)
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -601,7 +634,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CanPlayNextVieo.Value = true;
             return LoadAsync(PlayListItems.GetFirstItem(), false, thumbCacheSpan, imageCacheSpan);
         }
-
 
         void ChangePlayerSizeFromPercent(int percent)
         {
@@ -795,7 +827,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Mediation.Logger.Debug(Player.Position.ToString());
             PrevPlayedTime = Player.Time;
         }
-
 
         void FireShowComments()
         {
@@ -1494,6 +1525,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ClearComment();
             VideoPosition = Player.Position;
             PlayTime = PrevPlayedTime = Player.Time;
+        }
+
+        void AddCommentFilter(SmileVideoCommentFilteringTarget target, string source)
+        {
+
         }
 
         #endregion

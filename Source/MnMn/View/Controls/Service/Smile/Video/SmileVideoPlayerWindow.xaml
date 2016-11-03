@@ -1421,7 +1421,7 @@
                             <Setter Property="cttn_sl_view_attached:GridHelpers.StarColumns" Value="0" />
                           </Style>
                           <DataTemplate x:Key="FilterIcon">
-                            <Viewbox Margin="3" Style="{StaticResource MinimumIconBox}">
+                            <Viewbox Margin="4" Style="{StaticResource MinimumIconBox}">
                               <Canvas Style="{StaticResource IconCanvas-24x24}">
                                 <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
                               </Canvas>
@@ -1469,7 +1469,7 @@
 
                         <Grid Grid.Row="3" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">ユーザーID</TextBlock>
-                          <Button Grid.Column="1" Style="{StaticResource FilteringButton}" >
+                          <Button Grid.Column="1" Command="{Binding SetFilteringUserIdCommand}" Style="{StaticResource FilteringButton}" >
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                           </Button>
                         </Grid>
@@ -1477,7 +1477,13 @@
 
                         <Grid Grid.Row="4" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コマンド</TextBlock>
-                          <mamc:DropDownButton Grid.Column="1" ArrowVisibility="Collapsed" Style="{StaticResource FilteringDropDownButton}">
+                          <mamc:DropDownButton Grid.Column="1" ArrowVisibility="Collapsed" Style="{StaticResource FilteringDropDownButton}" ItemsSource="{Binding SelectedComment.Commands}" >
+                            <mamc:DropDownButton.ItemContainerStyle>
+                              <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                <Setter Property="Command" Value="{Binding DataContext.SetFilteringCommandCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                <Setter Property="CommandParameter" Value="{Binding}" />
+                              </Style>
+                            </mamc:DropDownButton.ItemContainerStyle>
                             <mamc:DropDownButton.Content>
                               <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                             </mamc:DropDownButton.Content>
@@ -1490,7 +1496,7 @@
 
                         <Grid Grid.Row="6" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コメント</TextBlock>
-                          <Button Grid.Column="1" Style="{StaticResource FilteringButton}" >
+                          <Button Grid.Column="1" Command="{Binding SetFilteringCommentCommand}" Style="{StaticResource FilteringButton}" >
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                           </Button>
                         </Grid>
