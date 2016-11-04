@@ -593,6 +593,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region SeekbarInnerFadeContentProperty
+
+        public static readonly DependencyProperty SeekbarInnerFadeContentProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SeekbarInnerFadeContentProperty)),
+            typeof(object),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSeekbarInnerFadeContentChanged))
+        );
+
+        private static void OnSeekbarInnerFadeContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.SeekbarInnerFadeContent = e.NewValue;
+            }
+        }
+
+        public object SeekbarInnerFadeContent
+        {
+            get { return GetValue(SeekbarInnerFadeContentProperty); }
+            set { SetValue(SeekbarInnerFadeContentProperty, value); }
+        }
+
+        #endregion
+
+        #region SeekbarInnerFadeVisibilityProperty
+
+        public static readonly DependencyProperty SeekbarInnerFadeVisibilityProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(SeekbarInnerFadeVisibilityProperty)),
+            typeof(Visibility),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSeekbarInnerFadeVisibilityChanged))
+        );
+
+        private static void OnSeekbarInnerFadeVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.SeekbarInnerFadeVisibility = (Visibility)e.NewValue;
+            }
+        }
+
+        public Visibility SeekbarInnerFadeVisibility
+        {
+            get { return (Visibility)GetValue(SeekbarInnerFadeVisibilityProperty); }
+            set { SetValue(SeekbarInnerFadeVisibilityProperty, value); }
+        }
+
+        #endregion
+
         #region SeekbarPopupContentProperty
 
         public static readonly DependencyProperty SeekbarPopupContentProperty = DependencyProperty.Register(

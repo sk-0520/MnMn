@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //Thickness _resizeBorderThickness = enabledResizeBorderThickness;
         //Thickness _windowBorderThickness = normalWindowBorderThickness;
 
-        bool _showCommentChart;
+        Visibility _showCommentChart;
 
         bool _isEnabledOriginalPosterFilering;
 

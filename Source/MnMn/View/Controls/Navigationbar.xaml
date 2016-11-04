@@ -133,6 +133,30 @@
                   </Thumb>
                 </Track.Thumb>
               </Track>
+              <ContentControl Content="{Binding SeekbarInnerFadeContent, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <ContentControl.Style>
+                  <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                      <EventTrigger RoutedEvent="Control.MouseEnter">
+                        <BeginStoryboard>
+                          <Storyboard >
+                            <DoubleAnimation Duration="00:00:00.25" To="1" Storyboard.TargetProperty="Opacity"/>
+                          </Storyboard>
+                        </BeginStoryboard>
+                      </EventTrigger>
+                      <EventTrigger RoutedEvent="Control.MouseLeave">
+                        <BeginStoryboard>
+                          <Storyboard >
+                            <DoubleAnimation Duration="00:00:00.5" To="0" Storyboard.TargetProperty="Opacity"/>
+                          </Storyboard>
+                        </BeginStoryboard>
+                      </EventTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="Visibility" Value="{Binding SeekbarInnerFadeVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                  </Style>
+                </ContentControl.Style>
+              </ContentControl>
               <Popup
                 AllowsTransparency="True"
                 PopupAnimation="Fade"
