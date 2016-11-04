@@ -1436,15 +1436,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
-            navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
-            navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
+            //navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
+            //navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
         }
 
         void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-            navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
-            navigationbar.seekbar.MouseLeave -= Seekbar_MouseLeave;
+            //navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
+            //navigationbar.seekbar.MouseLeave -= Seekbar_MouseLeave;
         }
 
         void SwitchFullScreen()
@@ -2208,18 +2208,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
-            //    ? Visibility.Visible
-            //    : Visibility.Collapsed
-            //;
-        }
+        //private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
+        //{
+        //    //ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
+        //    //    ? Visibility.Visible
+        //    //    : Visibility.Collapsed
+        //    //;
+        //}
 
-        private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
-        {
-            //ShowCommentChart = Visibility.Collapsed;
-        }
+        //private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //    //ShowCommentChart = Visibility.Collapsed;
+        //}
 
         #endregion
     }

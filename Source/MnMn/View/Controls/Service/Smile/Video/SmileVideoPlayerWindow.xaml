@@ -898,7 +898,7 @@
               <app_view_controls:Navigationbar.SeekbarInnerFadeContent>
                 <Border Visibility="{Binding ShowCommentChart, Converter={StaticResource BooleanToVisibilityConverter}}">
                   <Viewbox Stretch="Fill" >
-                    <oxy:Plot Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
+                    <oxy:Plot PlotAreaBorderThickness="0" LegendBorderThickness="0" Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
                       <oxy:Plot.Axes>
                         <oxy:LinearAxis IsAxisVisible="False" Position="Left" MajorGridlineStyle="None" />
                         <oxy:LinearAxis IsAxisVisible="False" Position="Bottom"/>
