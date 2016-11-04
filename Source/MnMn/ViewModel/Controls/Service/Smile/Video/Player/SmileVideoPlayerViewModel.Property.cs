@@ -1041,7 +1041,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// コメントグラフ表示状態。
         /// </summary>
-        public Visibility ShowCommentChart
+        public bool ShowCommentChart
         {
             get { return this._showCommentChart; }
             set { SetVariableValue(ref this._showCommentChart, value); }

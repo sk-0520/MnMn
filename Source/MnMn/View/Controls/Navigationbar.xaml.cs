@@ -618,31 +618,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
-        #region SeekbarInnerFadeVisibilityProperty
-
-        public static readonly DependencyProperty SeekbarInnerFadeVisibilityProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(SeekbarInnerFadeVisibilityProperty)),
-            typeof(Visibility),
-            typeof(Navigationbar),
-            new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSeekbarInnerFadeVisibilityChanged))
-        );
-
-        private static void OnSeekbarInnerFadeVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Navigationbar;
-            if(control != null) {
-                control.SeekbarInnerFadeVisibility = (Visibility)e.NewValue;
-            }
-        }
-
-        public Visibility SeekbarInnerFadeVisibility
-        {
-            get { return (Visibility)GetValue(SeekbarInnerFadeVisibilityProperty); }
-            set { SetValue(SeekbarInnerFadeVisibilityProperty, value); }
-        }
-
-        #endregion
-
         #region SeekbarPopupContentProperty
 
         public static readonly DependencyProperty SeekbarPopupContentProperty = DependencyProperty.Register(

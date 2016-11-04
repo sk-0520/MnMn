@@ -153,7 +153,6 @@
                       </EventTrigger>
                     </Style.Triggers>
                     <Setter Property="Opacity" Value="0" />
-                    <Setter Property="Visibility" Value="{Binding SeekbarInnerFadeVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                   </Style>
                 </ContentControl.Style>
               </ContentControl>

@@ -1715,6 +1715,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
             CommentChartList.InitializeRange(chartItems);
+            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
             var userSequence = SmileVideoCommentUtility.CreateFilteringUserItems(NormalCommentList);
@@ -1784,6 +1785,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             TotalTime = TimeSpan.Zero;
             SelectedComment = null;
             IsSettedMedia = false;
+            ShowCommentChart = false;
             if(View != null) {
                 if(Player != null && Player.State != Meta.Vlc.Interop.Media.MediaState.Playing && Player.State != Meta.Vlc.Interop.Media.MediaState.Paused) {
                     // https://github.com/higankanshi/Meta.Vlc/issues/80
@@ -2208,15 +2210,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
         {
-            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
-                ? Visibility.Visible
-                : Visibility.Collapsed
-            ;
+            //ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
+            //    ? Visibility.Visible
+            //    : Visibility.Collapsed
+            //;
         }
 
         private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
         {
-            ShowCommentChart = Visibility.Collapsed;
+            //ShowCommentChart = Visibility.Collapsed;
         }
 
         #endregion
