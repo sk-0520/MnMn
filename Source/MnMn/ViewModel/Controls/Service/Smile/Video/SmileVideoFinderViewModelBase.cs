@@ -39,6 +39,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
@@ -536,7 +537,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
         {
             var information = finderItem.Information;
-            Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
+            var item = information.ToVideoItemModel();
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+            //Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
         }
 
         #endregion

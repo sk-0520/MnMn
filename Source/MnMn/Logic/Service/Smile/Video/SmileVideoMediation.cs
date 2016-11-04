@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             switch(request.Parameter.Process) {
                 case SmileVideoProcess.CheckItLater: {
                         var param = (SmileVideoProcessCheckItLaterParameterModel)request.Parameter;
-                        var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem);
+                        var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
                         return new ResponseModel(request, result);
                     }
 
