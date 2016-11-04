@@ -897,14 +897,14 @@
               </app_view_controls:Navigationbar.ExstendsContent>
               <app_view_controls:Navigationbar.SeekbarInnerFadeContent>
                 <Border Visibility="{Binding ShowCommentChart, Converter={StaticResource BooleanToVisibilityConverter}}">
-                  <Viewbox Stretch="Fill" >
+                  <Viewbox Stretch="Fill" SnapsToDevicePixels="True" >
                     <oxy:Plot PlotAreaBorderThickness="0" LegendBorderThickness="0" Background="Transparent" Width="{Binding ActualWidth, ElementName=seekbar}" Height="20" IsLegendVisible="False" Padding="0" BorderThickness="0" >
                       <oxy:Plot.Axes>
                         <oxy:LinearAxis IsAxisVisible="False" Position="Left" MajorGridlineStyle="None" />
                         <oxy:LinearAxis IsAxisVisible="False" Position="Bottom"/>
                       </oxy:Plot.Axes>
                       <oxy:Plot.Series>
-                        <oxy:LineSeries Color="{DynamicResource Gray5}" ItemsSource="{Binding CommentChartList, Mode=OneWay}" />
+                        <oxy:LineSeries Color="{DynamicResource Gray5}" ItemsSource="{Binding CommentChartList, Mode=OneWay}" StrokeThickness="1" />
                       </oxy:Plot.Series>
                     </oxy:Plot>
                   </Viewbox>
