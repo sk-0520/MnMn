@@ -59,12 +59,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
         /// 後で見るに追加。
         /// </summary>
         /// <param name="videoItem"></param>
+        /// <param name="isForce"></param>
         /// <returns>追加できなかった場合は null。</returns>
-        public SmileVideoCheckItLaterModel AddLater(SmileVideoVideoItemModel videoItem)
+        public SmileVideoCheckItLaterModel AddLater(SmileVideoVideoItemModel videoItem, bool isForce)
         {
             var item = Setting.CheckItLater.FirstOrDefault(c => c.VideoId == videoItem.VideoId);
-            // 既に存在してチェック済みのものは追加しない
-            if(item != null && !item.IsChecked) {
+            // 強制でなければ既に存在してチェック済みのものは追加しない
+            if(!isForce && item != null && !item.IsChecked) {
                 return null;
             }
 
@@ -81,6 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             } else {
                 // 既存だがチェックされていない場合は上位に運ぶため一旦リストから破棄
                 Setting.CheckItLater.Remove(item);
+                item.CheckTimestamp = DateTime.Now;
             }
             Setting.CheckItLater.Insert(0, item);
 
