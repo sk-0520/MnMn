@@ -83,6 +83,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
                 // 既存だがチェックされていない場合は上位に運ぶため一旦リストから破棄
                 Setting.CheckItLater.Remove(item);
                 item.CheckTimestamp = DateTime.Now;
+                item.IsChecked = false;
             }
             Setting.CheckItLater.Insert(0, item);
 
