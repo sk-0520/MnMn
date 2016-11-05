@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
         public static Uri AppUriIssueResolved => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved")));
+        public static Uri AppUriQuestionnaire => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-questionnaire")));
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
 

@@ -269,6 +269,10 @@
       <app_view_controls:WebNavigator x:Name="forumBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>
 
+    <TabItem Header="目安箱" DataContext="{Binding AppQuestionnaireManager}" Style="{StaticResource SectionTabItem}">
+      <app_view_controls:WebNavigator x:Name="questionnaireBrowser" IsEnabledUserChangeSource="False"  NewWindowCommand="{Binding NewWindowCommand}" />
+    </TabItem>
+
     <TabItem Header="Flash Player 確認" DataContext="{Binding AppFlashPlayerManager}" Style="{StaticResource SectionTabItem}">
       <app_view_controls:WebNavigator x:Name="flashPlayerBrowser" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding NewWindowCommand}" />
     </TabItem>

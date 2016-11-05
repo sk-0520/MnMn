@@ -339,6 +339,7 @@
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
