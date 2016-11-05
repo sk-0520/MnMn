@@ -63,6 +63,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'smile-video-check_it_later',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'あとで見る'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,
