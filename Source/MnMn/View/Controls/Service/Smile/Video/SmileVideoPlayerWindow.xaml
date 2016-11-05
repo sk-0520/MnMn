@@ -867,23 +867,28 @@
                     </Viewbox>
                   </ToggleButton>
                   <Slider
-                    ToolTip="コメント有効領域"
                     Orientation="Vertical"
                     Minimum="50"
                     Maximum="100"
                     IsDirectionReversed="True"
                     Focusable="False"
                     Value="{Binding CommentEnabledPercent}"
-                  />
-                  <ToggleButton ToolTip="投稿者コメントもコメント有効領域の制限対象にする" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}">
-                    <!--<Image Source="/Resources/Service/Smile/Video/Player/OriginalPoster.png" Style="{StaticResource SmallIconImage}" />-->
-                    <Viewbox Style="{StaticResource SmallIconBox}">
-                      <Canvas Style="{StaticResource IconCanvas-24x24}">
-                        <!-- https://materialdesignicons.com/icon/comment-account-outline -->
-                        <Path Data="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M16,14H8V13C8,11.67 10.67,11 12,11C13.33,11 16,11.67 16,13V14M12,6A2,2 0 0,1 14,8A2,2 0 0,1 12,10A2,2 0 0,1 10,8A2,2 0 0,1 12,6Z" Style="{StaticResource SmallDefaultIconPath}" />
-                      </Canvas>
-                    </Viewbox>
-                  </ToggleButton>
+                  >
+                    <Slider.ToolTip>
+                      <ToolTip>
+                        <TextBlock>
+                          <Run>コメント有効領域</Run>
+                          <LineBreak />
+                          <Run>コンテキストメニューで拡張操作</Run>
+                        </TextBlock>
+                      </ToolTip>
+                    </Slider.ToolTip>
+                    <Slider.ContextMenu>
+                      <ContextMenu>
+                        <MenuItem Header="投稿者コメントもコメント有効領域の制限対象にする" IsCheckable="True" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}" />
+                      </ContextMenu>
+                    </Slider.ContextMenu>
+                  </Slider>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />-->
                     <Viewbox Style="{StaticResource SmallIconBox}">
