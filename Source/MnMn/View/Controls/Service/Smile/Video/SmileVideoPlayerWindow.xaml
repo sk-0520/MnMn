@@ -147,10 +147,11 @@
               Canvas.Left="0"
               Canvas.Top="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource NegativeDoubleConverter}}"
               Width="{Binding ActualWidth, ElementName=PART_SwitchComment}"
-              Background="{DynamicResource ControlBorderBrush}"
+              Background="{DynamicResource WindowBackgroundBrush}"
               BorderBrush="{DynamicResource AccentColorBrush3}"
               BorderThickness="2, 1, 2, 1"
               Opacity="0"
+              Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}"
             >
               <Slider
                 Orientation="Vertical"
