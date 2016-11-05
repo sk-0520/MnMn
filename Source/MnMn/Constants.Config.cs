@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string AppUriChangelogRelease => ReplaceAppConfig(appConfig.Get("app-uri-changelog-release"));
         //public static string UriChangelogRc => ReplaceAppConfig(appConfig.Get("app-uri-changelog-rc"));
         public static Uri AppUriIssueResolved => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-issue-resolved")));
+        public static Uri AppUriQuestionnaire => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-questionnaire")));
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
 
@@ -132,9 +133,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SettingApplicationThemeBaseTheme => appConfig.Get("setting-application-theme-base-theme");
         public static string SettingApplicationThemeAccent => appConfig.Get("setting-application-theme-accent");
 
-        public static IReadOnlyRange<int> NavigatorVolumeRange = appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
-        public static int NavigatorVolumeRangeMinimum => NavigatorVolumeRange.Head;
-        public static int NavigatorVolumeRangeMaximum => NavigatorVolumeRange.Tail;
+        public static IReadOnlyRange<int> NavigatorVolumeRange => appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
 
         /// <summary>
         /// タブヘッダ部をマウスホイールでスクロールするか。

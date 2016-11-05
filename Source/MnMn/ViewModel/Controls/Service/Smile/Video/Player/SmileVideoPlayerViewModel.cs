@@ -1152,13 +1152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
-                .Select(e => new SmileVideoCommentFilteringItemSettingModel() {
-                    Target = SmileVideoCommentFilteringTarget.Comment,
-                    IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
-                    Type = FilteringType.Regex,
-                    Source = e.Extends["pattern"],
-                    Name = e.DisplayText,
-                })
+                .Select(e => SmileVideoCommentUtility.ConvertFromDefined(e))
                 .ToList()
             ;
 
@@ -1436,15 +1430,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
-            navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
-            navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
+            //navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
+            //navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
         }
 
         void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-            navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
-            navigationbar.seekbar.MouseLeave -= Seekbar_MouseLeave;
+            //navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
+            //navigationbar.seekbar.MouseLeave -= Seekbar_MouseLeave;
         }
 
         void SwitchFullScreen()
@@ -1715,6 +1709,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var chartItems = SmileVideoCommentUtility.CreateCommentChartItems(CommentList, TotalTime);
             CommentChartList.InitializeRange(chartItems);
+            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
 
             NormalCommentList.InitializeRange(CommentList.Where(c => !c.IsOriginalPoster));
             var userSequence = SmileVideoCommentUtility.CreateFilteringUserItems(NormalCommentList);
@@ -1784,6 +1779,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             TotalTime = TimeSpan.Zero;
             SelectedComment = null;
             IsSettedMedia = false;
+            ShowCommentChart = false;
             if(View != null) {
                 if(Player != null && Player.State != Meta.Vlc.Interop.Media.MediaState.Playing && Player.State != Meta.Vlc.Interop.Media.MediaState.Paused) {
                     // https://github.com/higankanshi/Meta.Vlc/issues/80
@@ -1839,12 +1835,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.Volume = Volume;
             SetLocalFiltering();
 
-            // あれこれイベント
+            // あれこれイベント, すっごいキモいことになってる
             var content = Navigationbar.ExstendsContent as Panel;
-            EnabledCommentSlider = UIUtility.FindLogicalChildren<Slider>(content).First();
+            EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
-            EnabledCommentSlider.MouseEnter += EnabledCommentSlider_MouseEnter;
-            EnabledCommentSlider.MouseLeave += EnabledCommentSlider_MouseLeave;
+            EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
+            EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
 
             View.Loaded += View_Loaded;
             View.Closing += View_Closing;
@@ -1972,9 +1968,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.MouseWheel -= Player_MouseWheel;
             UnsetNavigationbarBaseEvent(Navigationbar);
 
-            if(EnabledCommentSlider != null) {
-                EnabledCommentSlider.MouseEnter -= EnabledCommentSlider_MouseEnter;
-                EnabledCommentSlider.MouseLeave -= EnabledCommentSlider_MouseLeave;
+            if(EnabledCommentControl != null) {
+                EnabledCommentControl.MouseEnter -= EnabledCommentControl_MouseEnter;
+                EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
             }
 
             View.Deactivated -= View_Deactivated;
@@ -2183,12 +2179,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //    ShowEnabledCommentPreviewArea = false;
         //}
 
-        private void EnabledCommentSlider_MouseEnter(object sender, MouseEventArgs e)
+        private void EnabledCommentControl_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = true;
         }
 
-        private void EnabledCommentSlider_MouseLeave(object sender, MouseEventArgs e)
+        private void EnabledCommentControl_MouseLeave(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = false;
         }
@@ -2206,15 +2202,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ShowCommentChart = CommentChartList.Any(c => 0 < c.Y);
-        }
+        //private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
+        //{
+        //    //ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
+        //    //    ? Visibility.Visible
+        //    //    : Visibility.Collapsed
+        //    //;
+        //}
 
-        private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ShowCommentChart = false;
-        }
+        //private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //    //ShowCommentChart = Visibility.Collapsed;
+        //}
 
         #endregion
     }

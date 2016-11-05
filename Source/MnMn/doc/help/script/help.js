@@ -39,6 +39,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'general-app-setting',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '本体設定'
+		}
+	},
+	{
 		name: 'smile',
 		localize: true,
 		level: 0,
@@ -60,6 +68,14 @@ var menuList = [
 		level: 1,
 		title: {
 			'ja-jp': '動画プレイヤー'
+		}
+	},
+	{
+		name: 'smile-video-check_it_later',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'あとで見る'
 		}
 	},
 	{

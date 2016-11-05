@@ -28,7 +28,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -390,6 +392,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .OrderByDescending(fu => fu.Count)
                 .ThenBy(fu => fu.UserId)
             ;
+
+            return result;
+        }
+
+
+        static T ConvertFromDefinedToEnum<T>(IReadOnlyDictionary<string, string> map, string key, T failResult)
+        {
+            string value;
+
+            if(map.TryGetValue(key, out value)) {
+                return EnumUtility.Parse<T>(map[key], false);
+            }
+
+            return failResult;
+        }
+
+        public static SmileVideoCommentFilteringItemSettingModel ConvertFromDefined(DefinedElementModel model)
+        {
+            var result = new SmileVideoCommentFilteringItemSettingModel() {
+                Target = ConvertFromDefinedToEnum(model.Extends, "target", SmileVideoCommentFilteringTarget.Comment),
+                IgnoreCase = RawValueUtility.ConvertBoolean(model.Extends["ignore-case"]),
+                Type = ConvertFromDefinedToEnum(model.Extends, "type", FilteringType.PartialMatch),
+                Source = model.Extends["pattern"],
+                Name = model.DisplayText,
+            };
 
             return result;
         }

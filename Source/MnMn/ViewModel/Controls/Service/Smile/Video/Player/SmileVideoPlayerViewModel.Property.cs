@@ -85,7 +85,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// コメント有効位置抑制スライダー要素。
         /// </summary>
-        Slider EnabledCommentSlider { get; set; }
+        Control EnabledCommentControl { get; set; }
+
+        public int VolumeMinimum { get { return Constants.NavigatorVolumeRange.Head; } }
+        public int VolumeMaximum { get { return Constants.NavigatorVolumeRange.Tail; } }
 
         /// <summary>
         /// タイトル。
@@ -1046,6 +1049,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return this._showCommentChart; }
             set { SetVariableValue(ref this._showCommentChart, value); }
         }
+
+
         /// <summary>
         /// コメントグラフデータ。
         /// </summary>

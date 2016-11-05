@@ -12,15 +12,15 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
-    public class AppForumManagerViewModel: ManagerViewModelBase
+    public class AppQuestionnaireManagerViewModel: ManagerViewModelBase
     {
-        public AppForumManagerViewModel(Mediation mediation)
+        public AppQuestionnaireManagerViewModel(Mediation mediation)
             : base(mediation)
         { }
 
         #region property
 
-        WebNavigator ForumBrowser { get; set; }
+        WebNavigator QuestionnaireBrowser { get; set; }
 
         #endregion
 
@@ -50,8 +50,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         protected override void ShowViewCore()
         {
-            if(ForumBrowser.IsEmptyContent) {
-                ForumBrowser.Navigate(Constants.AppUriForum);
+            if(QuestionnaireBrowser.IsEmptyContent) {
+                QuestionnaireBrowser.Navigate(QuestionnaireBrowser.HomeSource);
             }
         }
 
@@ -70,13 +70,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         public override void InitializeView(MainWindow view)
         {
-            ForumBrowser = view.information.forumBrowser;
-            ForumBrowser.HomeSource = Constants.AppUriIssueResolved;
+            QuestionnaireBrowser = view.information.questionnaireBrowser;
+            QuestionnaireBrowser.HomeSource = Constants.AppUriQuestionnaire;
         }
 
         public override void UninitializeView(MainWindow view)
         {
-            ForumBrowser = null;
+            QuestionnaireBrowser = null;
         }
 
         #endregion

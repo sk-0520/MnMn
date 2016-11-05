@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         protected override void ShowViewCore()
         {
             if(IssueBrowser.IsEmptyContent) {
-                IssueBrowser.Navigate(Constants.AppUriIssueResolved);
+                IssueBrowser.Navigate(IssueBrowser.HomeSource);
             }
         }
 

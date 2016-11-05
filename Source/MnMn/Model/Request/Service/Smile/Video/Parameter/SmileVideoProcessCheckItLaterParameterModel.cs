@@ -27,14 +27,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Paramet
     public class SmileVideoProcessCheckItLaterParameterModel: SmileVideoProcessParameterModelBase
     {
         public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem)
+            : this(videoItem, false)
+        { }
+
+        public SmileVideoProcessCheckItLaterParameterModel(SmileVideoVideoItemModel videoItem, bool isForce)
             : base(SmileVideoProcess.CheckItLater)
         {
             VideoItem = videoItem;
+            IsForce = isForce;
         }
 
         #region property
 
         public SmileVideoVideoItemModel VideoItem { get; }
+
+        public bool IsForce { get; }
 
         #endregion
     }
