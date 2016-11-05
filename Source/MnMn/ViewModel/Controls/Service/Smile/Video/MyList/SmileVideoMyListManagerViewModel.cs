@@ -30,6 +30,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -87,7 +88,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             MyList = Mediation.GetResultFromRequest<SmileVideoMyListModel>(new RequestModel(RequestKind.PlayListDefine, ServiceType.SmileVideo));
 
             var smileSetting = Mediation.GetResultFromRequest<SmileSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.Smile));
-            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkMyListFinderViewModel>(smileSetting.MyList.Bookmark, default(object), (model, data) => new SmileVideoBookmarkMyListFinderViewModel(Mediation, model));
+            MyListSetting = smileSetting.MyList;
+            BookmarkUserMyListPairs = new MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkMyListFinderViewModel>(MyListSetting.Bookmark, default(object), (model, data) => new SmileVideoBookmarkMyListFinderViewModel(Mediation, model));
 
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
@@ -96,6 +98,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         }
 
         #region property
+
+        SmileMyListSettingModel MyListSetting { get; }
 
         SmileVideoMyListModel MyList { get; }
 
@@ -206,6 +210,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     }
                 }
             }
+        }
+
+        public GridLength ParentWidth
+        {
+            get { return new GridLength(MyListSetting.ParentWidth, GridUnitType.Star); }
+            set { SetPropertyValue(MyListSetting, value.Value, nameof(MyListSetting.ParentWidth)); }
+        }
+        public GridLength ItemsWidth
+        {
+            get { return new GridLength(MyListSetting.ItemsWidth, GridUnitType.Star); }
+            set { SetPropertyValue(MyListSetting, value.Value, nameof(MyListSetting.ItemsWidth)); }
         }
 
         public SmileVideoAccountMyListFinderViewModel SelectedAccountFinder
