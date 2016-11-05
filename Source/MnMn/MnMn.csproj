@@ -393,6 +393,7 @@
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
+    <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\SmileUserHasBookmarkConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\ThumbnailPredominantColorConverter.cs" />
