@@ -93,7 +93,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'compatibility',
+						'subject': 'このままいけば次回リリース(0.30.0)でブックマークが初期化されますですよ',
+						'comments': [
+							'課題: #239 ブックマークのデータ構造を変更',
+							'窓口: https://groups.google.com/d/topic/mnmn-forum/-5SHfM0_tW0/discussion'
+						]
 					},
 					{
 						'revision': '',
