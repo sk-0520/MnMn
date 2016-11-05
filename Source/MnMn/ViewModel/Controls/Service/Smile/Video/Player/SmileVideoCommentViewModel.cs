@@ -111,8 +111,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public bool Approval
         {
             get { return this._approval; }
-            set { SetVariableValue(ref this._approval, value); }
+            set
+            {
+                if(SetVariableValue(ref this._approval, value)) {
+                    CallOnPropertyChange(nameof(NoApproval));
+                }
+            }
         }
+
+        public bool NoApproval => !Approval;
 
         /// <summary>
         /// 表示不許可の概要。

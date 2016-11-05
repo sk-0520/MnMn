@@ -1547,8 +1547,8 @@
                         </Grid>
                         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedComment.CommandsText, Mode=OneWay}"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0">表示不許可</TextBlock>
-                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}">表示不許可</TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="1"  Visibility="{Binding SelectedComment.NoApproval, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding SelectedComment.NoApprovalDetail.Value, Mode=OneWay}" />
 
                         <Grid Grid.Row="6" Grid.Column="0" Style="{StaticResource FilteringGrid}">
                           <TextBlock Grid.Column="0">コメント</TextBlock>
