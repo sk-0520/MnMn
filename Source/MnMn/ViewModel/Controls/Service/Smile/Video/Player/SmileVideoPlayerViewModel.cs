@@ -1841,12 +1841,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.Volume = Volume;
             SetLocalFiltering();
 
-            // あれこれイベント
+            // あれこれイベント, すっごいキモいことになってる
             var content = Navigationbar.ExstendsContent as Panel;
-            EnabledCommentSlider = UIUtility.FindLogicalChildren<Slider>(content).First();
+            EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
-            EnabledCommentSlider.MouseEnter += EnabledCommentSlider_MouseEnter;
-            EnabledCommentSlider.MouseLeave += EnabledCommentSlider_MouseLeave;
+            EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
+            EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
 
             View.Loaded += View_Loaded;
             View.Closing += View_Closing;
@@ -1974,9 +1974,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Player.MouseWheel -= Player_MouseWheel;
             UnsetNavigationbarBaseEvent(Navigationbar);
 
-            if(EnabledCommentSlider != null) {
-                EnabledCommentSlider.MouseEnter -= EnabledCommentSlider_MouseEnter;
-                EnabledCommentSlider.MouseLeave -= EnabledCommentSlider_MouseLeave;
+            if(EnabledCommentControl != null) {
+                EnabledCommentControl.MouseEnter -= EnabledCommentControl_MouseEnter;
+                EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
             }
 
             View.Deactivated -= View_Deactivated;
@@ -2185,12 +2185,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //    ShowEnabledCommentPreviewArea = false;
         //}
 
-        private void EnabledCommentSlider_MouseEnter(object sender, MouseEventArgs e)
+        private void EnabledCommentControl_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = true;
         }
 
-        private void EnabledCommentSlider_MouseLeave(object sender, MouseEventArgs e)
+        private void EnabledCommentControl_MouseLeave(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = false;
         }

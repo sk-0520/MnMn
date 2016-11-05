@@ -79,6 +79,7 @@
 
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
+      <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
@@ -129,6 +130,59 @@
         <Setter Property="Margin" Value="4,0,0,0" />
       </Style>
 
+      <ControlTemplate x:Key="CommentTemplate">
+        <Grid>
+          <ToggleButton x:Name="PART_SwitchComment" ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
+            <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />-->
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <!-- https://materialdesignicons.com/icon/comment-multiple-outline -->
+                <Path Data="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7C5,5.89 5.9,5 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.9 12.75,23 12.5,23V23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15Z" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+          </ToggleButton>
+          <Canvas Panel.ZIndex="100">
+            <Border
+              x:Name="PART_CommentAreaSliderParent"
+              Canvas.Left="0"
+              Canvas.Top="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource NegativeDoubleConverter}}"
+              Width="{Binding ActualWidth, ElementName=PART_SwitchComment}"
+              Background="{DynamicResource ControlBorderBrush}"
+              BorderBrush="{DynamicResource AccentColorBrush3}"
+              BorderThickness="2, 1, 2, 1"
+              Opacity="0"
+            >
+              <Slider
+                Orientation="Vertical"
+                Minimum="50"
+                Maximum="100"
+                Height="100"
+                IsDirectionReversed="True"
+                Focusable="False"
+                HorizontalAlignment="Center"
+                Value="{Binding CommentEnabledPercent}"
+                Style="{StaticResource FlatSlider}"
+              />
+            </Border>
+          </Canvas>
+        </Grid>
+        <ControlTemplate.Triggers>
+          <EventTrigger RoutedEvent="Control.MouseEnter">
+            <BeginStoryboard>
+              <Storyboard >
+                <DoubleAnimation Duration="00:00:00.1" To="0.9" Storyboard.TargetName="PART_CommentAreaSliderParent" Storyboard.TargetProperty="Opacity"/>
+              </Storyboard>
+            </BeginStoryboard>
+          </EventTrigger>
+          <EventTrigger RoutedEvent="Control.MouseLeave">
+            <BeginStoryboard>
+              <Storyboard >
+                <DoubleAnimation Duration="00:00:00.5" To="0" Storyboard.TargetName="PART_CommentAreaSliderParent" Storyboard.TargetProperty="Opacity"/>
+              </Storyboard>
+            </BeginStoryboard>
+          </EventTrigger>
+        </ControlTemplate.Triggers>
+      </ControlTemplate>
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
   <mamc:MetroWindow.InputBindings>
@@ -859,24 +913,8 @@
                       </Canvas>
                     </Viewbox>
                   </ToggleButton>
-                  <ToggleButton ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
-                    <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />-->
-                    <Viewbox Style="{StaticResource SmallIconBox}">
-                      <Canvas Style="{StaticResource IconCanvas-24x24}">
-                        <!-- https://materialdesignicons.com/icon/comment-multiple-outline -->
-                        <Path Data="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7C5,5.89 5.9,5 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.9 12.75,23 12.5,23V23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15Z" Style="{StaticResource SmallDefaultIconPath}" />
-                      </Canvas>
-                    </Viewbox>
-                  </ToggleButton>
-                  <Slider
-                    Orientation="Vertical"
-                    Minimum="50"
-                    Maximum="100"
-                    IsDirectionReversed="True"
-                    Focusable="False"
-                    Value="{Binding CommentEnabledPercent}"
-                  >
-                    <Slider.ToolTip>
+                  <Control Template="{StaticResource CommentTemplate}">
+                    <Control.ToolTip>
                       <ToolTip>
                         <TextBlock>
                           <Run>コメント有効領域</Run>
@@ -884,13 +922,13 @@
                           <Run>コンテキストメニューで拡張操作</Run>
                         </TextBlock>
                       </ToolTip>
-                    </Slider.ToolTip>
-                    <Slider.ContextMenu>
+                    </Control.ToolTip>
+                    <Control.ContextMenu>
                       <ContextMenu>
                         <MenuItem Header="投稿者コメントもコメント有効領域の制限対象にする" IsCheckable="True" IsChecked="{Binding IsEnabledOriginalPosterCommentArea}" />
                       </ContextMenu>
-                    </Slider.ContextMenu>
-                  </Slider>
+                    </Control.ContextMenu>
+                  </Control>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
                     <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />-->
                     <Viewbox Style="{StaticResource SmallIconBox}">

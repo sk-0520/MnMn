@@ -261,7 +261,8 @@
                   <Slider
                     x:Name="PART_VolumeSlider"
                     Orientation="Vertical"
-                    Height="80"
+                    Height="100"
+                    HorizontalAlignment="Center"
                     Focusable="False"
                     Minimum="{Binding VolumeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     Maximum="{Binding VolumeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -273,16 +274,10 @@
             </Grid>
 
             <ControlTemplate.Triggers>
-              <!--<Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="PART_VolumeSliderParent" Property="Visibility" Value="Visible" />
-              </Trigger>
-              <Trigger Property="IsMouseOver" Value="False">
-                <Setter TargetName="PART_VolumeSliderParent" Property="Visibility" Value="Collapsed" />
-              </Trigger>-->
               <EventTrigger RoutedEvent="Control.MouseEnter">
                 <BeginStoryboard>
                   <Storyboard >
-                    <DoubleAnimation Duration="00:00:00.25" To="0.8" Storyboard.TargetName="PART_VolumeSliderParent" Storyboard.TargetProperty="Opacity"/>
+                    <DoubleAnimation Duration="00:00:00.1" To="0.9" Storyboard.TargetName="PART_VolumeSliderParent" Storyboard.TargetProperty="Opacity"/>
                   </Storyboard>
                 </BeginStoryboard>
               </EventTrigger>
