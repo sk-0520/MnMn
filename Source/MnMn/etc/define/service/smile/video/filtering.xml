@@ -5,6 +5,8 @@
 			<word key="ja-jp" value="笑ってるだけのコメント" />
 		</words>
 		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="^\s*[wWｗＷ草][wWｗＷ草\s]*$" />
 			<extend key="ignore-case" value="false" />
 		</extends>
@@ -14,6 +16,8 @@
 			<word key="ja-jp" value="投稿者への労り" />
 		</words>
 		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="(うぽ(つ|っ))|(う(ｐ|p)乙)|(^[8８]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
@@ -23,6 +27,8 @@
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>
 		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あっ?(…|・)*?$)|(^[！？!\?)]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
@@ -32,6 +38,8 @@
 			<word key="ja-jp" value="話されても困る" />
 		</words>
 		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="(^[↑↓←→])|(.+→)|(挙手)|(^ノ|ﾉｼ?$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
@@ -41,6 +49,8 @@
 			<word key="ja-jp" value="無意味なコマンド的な何か" />
 		</words>
 		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="(^eco=)|(/ksk)|(/hidden)|(@|＠倍速)|(/逆再生)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
@@ -50,15 +60,19 @@
 			<word key="ja-jp" value="殺せ、同性愛者だ" />
 		</words>
 		<extends>
+			<extend key="target" value="Comment" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="(ん([\?？]))|((アッー)|(ｱｯｰ))|((今|いま)(なんでも))|(あくしろよ)|(あら＾)|(\w+([\(（].+[\)）]?))|(ファッ！？)|(説$)|(大胆な)" />
 			<extend key="ignore-case" value="true" />
 		</extends>
 	</element>
-	<element key="kiddie">
+	<element key="device">
 		<words>
-			<word key="ja-jp" value="話されても困る" />
+			<word key="ja-jp" value="あのゲーム機" />
 		</words>
 		<extends>
+			<extend key="target" value="Command" />
+			<extend key="type" value="Regex" />
 			<extend key="pattern" value="(^device:(3DS|WiiU)$)" />
 			<extend key="ignore-case" value="true" />
 		</extends>

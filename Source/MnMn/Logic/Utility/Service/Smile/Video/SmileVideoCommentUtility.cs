@@ -396,12 +396,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return result;
         }
 
+
+        static T ConvertFromDefinedToEnum<T>(IReadOnlyDictionary<string, string> map, string key, T failResult)
+        {
+            string value;
+
+            if(map.TryGetValue(key, out value)) {
+                return EnumUtility.Parse<T>(map[key], false);
+            }
+
+            return failResult;
+        }
+
         public static SmileVideoCommentFilteringItemSettingModel ConvertFromDefined(DefinedElementModel model)
         {
             var result = new SmileVideoCommentFilteringItemSettingModel() {
-                Target = SmileVideoCommentFilteringTarget.Comment,
+                Target = ConvertFromDefinedToEnum(model.Extends, "target", SmileVideoCommentFilteringTarget.Comment),
                 IgnoreCase = RawValueUtility.ConvertBoolean(model.Extends["ignore-case"]),
-                Type = FilteringType.Regex,
+                Type = ConvertFromDefinedToEnum(model.Extends, "type", FilteringType.PartialMatch),
                 Source = model.Extends["pattern"],
                 Name = model.DisplayText,
             };
