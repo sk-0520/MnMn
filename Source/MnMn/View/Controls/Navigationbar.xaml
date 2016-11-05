@@ -249,6 +249,7 @@
         Minimum="{Binding VolumeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
         Maximum="{Binding VolumeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
         Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        Style="{StaticResource FlatSlider}"
       />
       <ContentControl
         Grid.Column="3"
