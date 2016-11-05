@@ -7,6 +7,8 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
   xmlns:sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
+
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,6 +24,7 @@
       <sys:Double x:Key="ProgressHeight">NaN</sys:Double>
       <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -184,7 +187,7 @@
         <ColumnDefinition />
         <ColumnDefinition />
         <ColumnDefinition />
-        <ColumnDefinition />
+        <!--<ColumnDefinition />-->
       </Grid.ColumnDefinitions>
       <ToggleButton
         Grid.Column="0"
@@ -214,44 +217,84 @@
           </Canvas>
         </Viewbox>
       </ToggleButton>
-      <ToggleButton
-        x:Name="PART_AudioMute"
-        Grid.Column="1"
-        IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
-      >
-        <Viewbox Style="{StaticResource SmallIconBox}">
-          <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <Path>
-              <Path.Resources>
-                <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
-                      <!-- https://materialdesignicons.com/icon/volume-off -->
-                      <Setter Property="Data" Value="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False">
-                      <!-- https://materialdesignicons.com/icon/volume-high -->
-                      <Setter Property="Data" Value="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Path.Resources>
-            </Path>
-          </Canvas>
-        </Viewbox>
-      </ToggleButton>
-      <Slider
-        Grid.Column="2"
-        Orientation="Horizontal"
-        Width="40"
-        Focusable="False"
-        VerticalAlignment="Center"
-        Minimum="{Binding VolumeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
-        Maximum="{Binding VolumeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
-        Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
-      />
+
+      <Control Grid.Column="1">
+        <Control.Template>
+          <ControlTemplate>
+            <Grid>
+              <ToggleButton
+                x:Name="PART_AudioMute"
+                IsChecked="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LogicalNotConverter}}"
+              >
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path>
+                      <Path.Resources>
+                        <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
+                              <!-- https://materialdesignicons.com/icon/volume-off -->
+                              <Setter Property="Data" Value="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False">
+                              <!-- https://materialdesignicons.com/icon/volume-high -->
+                              <Setter Property="Data" Value="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </Path.Resources>
+                    </Path>
+                  </Canvas>
+                </Viewbox>
+              </ToggleButton>
+              <Canvas Panel.ZIndex="100">
+                <Border
+                  x:Name="PART_VolumeSliderParent"
+                  Canvas.Left="0"
+                  Canvas.Top="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource NegativeDoubleConverter}}"
+                  Width="{Binding ActualWidth, ElementName=PART_AudioMute}"
+                  Background="{DynamicResource WindowBackgroundBrush}"
+                  BorderBrush="{DynamicResource AccentColorBrush3}"
+                  BorderThickness="2, 1, 2, 1"
+                  Opacity="0"
+                >
+                  <Slider
+                    x:Name="PART_VolumeSlider"
+                    Orientation="Vertical"
+                    Height="100"
+                    HorizontalAlignment="Center"
+                    Focusable="False"
+                    Minimum="{Binding VolumeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Maximum="{Binding VolumeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Style="{StaticResource FlatSlider}"
+                  />
+                </Border>
+              </Canvas>
+            </Grid>
+
+            <ControlTemplate.Triggers>
+              <EventTrigger RoutedEvent="Control.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard >
+                    <DoubleAnimation Duration="00:00:00.1" To="0.9" Storyboard.TargetName="PART_VolumeSliderParent" Storyboard.TargetProperty="Opacity"/>
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+              <EventTrigger RoutedEvent="Control.MouseLeave">
+                <BeginStoryboard>
+                  <Storyboard >
+                    <DoubleAnimation Duration="00:00:00.5" To="0" Storyboard.TargetName="PART_VolumeSliderParent" Storyboard.TargetProperty="Opacity"/>
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </ControlTemplate.Triggers>
+
+          </ControlTemplate>
+        </Control.Template>
+      </Control>
       <ContentControl
-        Grid.Column="3"
+        Grid.Column="2"
         Content="{Binding ExstendsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
     </Grid>
