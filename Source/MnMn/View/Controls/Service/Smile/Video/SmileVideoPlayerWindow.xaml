@@ -813,6 +813,8 @@
               VideoPosition="{Binding VideoPosition}"
               VideoLoadedSize="{Binding VideoLoadedSize}"
               VideoTotalSize="{Binding VideoTotalSize}"
+              VolumeMinimum="{Binding VolumeMinimum, Mode=OneTime}"
+              VolumeMaximum="{Binding VolumeMaximum, Mode=OneTime}"
               Volume="{Binding Volume}"
               PlayTime="{Binding PlayTime}"
               TotalTime="{Binding TotalTime}"

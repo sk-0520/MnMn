@@ -246,8 +246,8 @@
         Width="40"
         Focusable="False"
         VerticalAlignment="Center"
-        Minimum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMinimum}}"
-        Maximum="{Binding Source={x:Static app:Constants.NavigatorVolumeRangeMaximum}}"
+        Minimum="{Binding VolumeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        Maximum="{Binding VolumeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}"
         Value="{Binding Volume, RelativeSource={RelativeSource AncestorType=UserControl}}"
       />
       <ContentControl

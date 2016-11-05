@@ -104,6 +104,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region VolumeMinimumProperty
+
+        public static readonly DependencyProperty VolumeMinimumProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(VolumeMinimumProperty)),
+            typeof(int),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnVolumeMinimumChanged))
+        );
+
+        private static void OnVolumeMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.VolumeMinimum = (int)e.NewValue;
+            }
+        }
+
+        public int VolumeMinimum
+        {
+            get { return (int)GetValue(VolumeMinimumProperty); }
+            set { SetValue(VolumeMinimumProperty, value); }
+        }
+
+        #endregion
+
+        #region VolumeMaximumProperty
+
+        public static readonly DependencyProperty VolumeMaximumProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(VolumeMaximumProperty)),
+            typeof(int),
+            typeof(Navigationbar),
+            new FrameworkPropertyMetadata(100, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnVolumeMaximumChanged))
+        );
+
+        private static void OnVolumeMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Navigationbar;
+            if(control != null) {
+                control.VolumeMaximum = (int)e.NewValue;
+            }
+        }
+
+        public int VolumeMaximum
+        {
+            get { return (int)GetValue(VolumeMaximumProperty); }
+            set { SetValue(VolumeMaximumProperty, value); }
+        }
+
+        #endregion
+
         #region VolumeProperty
 
         public static readonly DependencyProperty VolumeProperty = DependencyProperty.Register(

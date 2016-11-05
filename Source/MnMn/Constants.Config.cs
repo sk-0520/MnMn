@@ -132,9 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SettingApplicationThemeBaseTheme => appConfig.Get("setting-application-theme-base-theme");
         public static string SettingApplicationThemeAccent => appConfig.Get("setting-application-theme-accent");
 
-        public static IReadOnlyRange<int> NavigatorVolumeRange = appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
-        public static int NavigatorVolumeRangeMinimum => NavigatorVolumeRange.Head;
-        public static int NavigatorVolumeRangeMaximum => NavigatorVolumeRange.Tail;
+        public static IReadOnlyRange<int> NavigatorVolumeRange => appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
 
         /// <summary>
         /// タブヘッダ部をマウスホイールでスクロールするか。

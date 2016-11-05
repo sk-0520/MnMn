@@ -87,6 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         Slider EnabledCommentSlider { get; set; }
 
+        public int VolumeMinimum { get { return Constants.NavigatorVolumeRange.Head; } }
+        public int VolumeMaximum { get { return Constants.NavigatorVolumeRange.Tail; } }
+
         /// <summary>
         /// タイトル。
         /// </summary>
