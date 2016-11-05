@@ -84,9 +84,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.28.1',
-		'isRc': true,
+		'date': '2016/11/05',
+		'version': '0.29.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -94,7 +94,7 @@
 					{
 						'revision': '',
 						'class': 'compatibility',
-						'subject': 'このままいけば次回リリース(0.30.0)でブックマークが初期化されますですよ',
+						'subject': 'このままいけば次回リリース(0.30.0)でブックマークが初期化されますですわよ',
 						'comments': [
 							'課題: #239 ブックマークのデータ構造を変更',
 							'窓口: https://groups.google.com/d/topic/mnmn-forum/-5SHfM0_tW0/discussion'
@@ -102,7 +102,12 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '簡易アンケートフォームとして「目安箱」を実装しました',
+						'comments': [
+							'ログインやメールが不要なので気軽に書けます',
+							'ただし気軽に書けるのでその内容は無責任で投げやりだと思いますので開発側としてはそう頻繁に確認しません',
+							'意見の交換とそれを外部に周知できるフォーラムが、ソース公開しているフリーソフトウェアとしては健全だと思うのですよ'
+						]
 					},
 					{
 						'revision': '',
@@ -121,28 +126,28 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '5f45d7f200f062135bc745ed7a5ae43fb7cb8c7e',
 						'subject': '#227: あとで見るにユーザー操作で追加する場合はチェック済み期間を無視する',
 						'comments': [
 							'ファインダーからあと見るを選択した場合は既に見たか否かに関係なくあとで見るに追加されます'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '89d75d4089fa4abdde39f75ebc4f876950615cf4',
 						'subject': '#224: 投稿者コメントのコメント有効領域追従機能を有効領域設定部のコンテキストメニューに移す',
 						'comments': [
 							'一等地からの追放'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f8e12e9bc35c2b0abfb44f39c2c7aa1abcfa1a3d',
 						'subject': 'プレイヤーのナビゲータ部分をマウスオーバー時のみ表示するように変更した',
 						'comments': [
 							'タッチデバイス？ 聞こえんな～'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '8a62c18be22dee7375458cbbac35b1d8b4c088c2',
 						'subject': 'アンケート機能を一応つけた',
 						'comments': [
 							'MnMn -> 目安箱',
@@ -164,11 +169,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0ebee38a1616cc56769373fb2c6732c329457df8',
 						'subject': '#236: フォーラムタブ(のgecko)で新規ウィンドウ生成のハンドリングが出来てない'
 					},
 					{
-						'revision': '',
+						'revision': 'a273b3d0c842ddcb9e17876d425c7ebd707b63b0',
 						'subject': '#238: 定型フィルタをちょこっと整理したい',
 						'comments': [
 							'不具合があったとかじゃないけどフィルタ内容いじったし「修正」かな',
@@ -177,29 +182,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '1370d603af41ab9982e8ff20614bf728caa98aa4',
 						'subject': '#235: コメントフィルタリングで非NGには表示不許可項目を表示すべきでない'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
