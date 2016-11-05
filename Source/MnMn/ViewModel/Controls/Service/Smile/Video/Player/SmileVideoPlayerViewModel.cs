@@ -1152,13 +1152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var filterList = defineKeys
                 .Join(Mediation.Smile.VideoMediation.Filtering.Elements, d => d, e => e.Key, (d, e) => e)
-                .Select(e => new SmileVideoCommentFilteringItemSettingModel() {
-                    Target = SmileVideoCommentFilteringTarget.Comment,
-                    IgnoreCase = RawValueUtility.ConvertBoolean(e.Extends["ignore-case"]),
-                    Type = FilteringType.Regex,
-                    Source = e.Extends["pattern"],
-                    Name = e.DisplayText,
-                })
+                .Select(e => SmileVideoCommentUtility.ConvertFromDefined(e))
                 .ToList()
             ;
 
