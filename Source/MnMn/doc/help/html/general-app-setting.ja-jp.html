@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<p>
+			本体は基本的に設定する項目は少ないですが根幹に関わる部分が多いです。
+		</p>
+
+		<h2>キャッシュ</h2>
+		<dl>
+			<dt>ディレクトリ</dt>
+			<dd>
+				<p>
+					各種キャッシュデータの最上位配置ディレクトリを指定します。<br />
+					未指定の場合は <em class="dir">%LOCALAPPDATA\MnMn%</em> を使用します。
+				</p>
+				<div class="warning">
+					<p>
+						ディレクトリを変更した場合、変更前のキャッシュデータは変更後キャッシュディレクトリへ自動移動しません。
+					</p>
+				</div>
+			</dd>
+
+			<dt>期間</dt>
+			<dd>
+				<p>
+					キャッシュの有効期間を指定します。<br />
+					最低限この期間は生存するんじゃないかレベルの期間です。
+				</p>
+				<p>
+					期間を超えた場合に破棄されるかどうかはそのデータに依存します。
+				</p>
+				<div class="hint">
+					<p>
+						無期限は 0 だと思うよ。多分ね。
+					</p>
+				</div>
+			</dd>
+		</dl>
+
+		<h2>テーマ</h2>
+		<p>
+			<span class="word">app</span>の外観を指定します。
+		</p>
+		<p>
+			基本色とアクセントカラーを指定するだけなんですが組み合わせによっては非常に見辛いかもです。
+		</p>
+		<div class="warning">
+			<p>
+				変更したままでも使用可能ですが、プログラム再起動後にきちんと反映されます。
+			</p>
+		</div>
+
+		<h2>ブラウザ</h2>
+		<p>
+			まぁ基本的にさわらないでくださいとしか書きようがないね。
+		</p>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

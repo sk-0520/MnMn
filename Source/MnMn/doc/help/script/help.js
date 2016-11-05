@@ -39,6 +39,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'general-app-setting',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '本体設定'
+		}
+	},
+	{
 		name: 'smile',
 		localize: true,
 		level: 0,
