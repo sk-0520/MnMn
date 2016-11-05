@@ -320,6 +320,7 @@
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthBySignatureModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSessionOperationAuthModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcSrcIdToMultiplexerModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoBookmarkSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoDmcItemModel.cs" />
     <Compile Include="Model\Service\Smile\Video\SmileVideoFinderFilteringParameterModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Live\SmileLiveCategorySettingModel.cs" />
