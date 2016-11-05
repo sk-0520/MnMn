@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            Node = new SmileVideoBookmarkNodeViewModel(Setting.Bookmark);
+            Node = new SmileVideoBookmarkNodeViewModel(Setting.Bookmark.Root);
             NodeItems = Node.NodeList.ViewModelList;
         }
 

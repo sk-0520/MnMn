@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
     {
         #region property
 
+        [DataMember]
         public SmileVideoBookmarkItemSettingModel Root { get; } = new SmileVideoBookmarkItemSettingModel();
 
         #endregion
