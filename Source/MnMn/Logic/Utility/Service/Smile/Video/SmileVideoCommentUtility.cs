@@ -28,7 +28,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -390,6 +392,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .OrderByDescending(fu => fu.Count)
                 .ThenBy(fu => fu.UserId)
             ;
+
+            return result;
+        }
+
+        public static SmileVideoCommentFilteringItemSettingModel ConvertFromDefined(DefinedElementModel model)
+        {
+            var result = new SmileVideoCommentFilteringItemSettingModel() {
+                Target = SmileVideoCommentFilteringTarget.Comment,
+                IgnoreCase = RawValueUtility.ConvertBoolean(model.Extends["ignore-case"]),
+                Type = FilteringType.Regex,
+                Source = model.Extends["pattern"],
+                Name = model.DisplayText,
+            };
 
             return result;
         }

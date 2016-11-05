@@ -23,7 +23,7 @@
 			<word key="ja-jp" value="すごい一体感を感じる" />
 		</words>
 		<extends>
-			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あ(っ?…|・)?$)|(^[！？!\?)]+$)" />
+			<extend key="pattern" value="(ざわ)|(^(来|く)るぞ)|(鳥\s*肌)|(^あっ?(…|・)*?$)|(^[！？!\?)]+$)" />
 			<extend key="ignore-case" value="false" />
 		</extends>
 	</element>
@@ -47,10 +47,19 @@
 	</element>
 	<element key="kill-lgbt">
 		<words>
-			<word key="ja-jp" value="同性愛者だ、殺せ" />
+			<word key="ja-jp" value="殺せ、同性愛者だ" />
 		</words>
 		<extends>
 			<extend key="pattern" value="(ん([\?？]))|((アッー)|(ｱｯｰ))|((今|いま)(なんでも))|(あくしろよ)|(あら＾)|(\w+([\(（].+[\)）]?))|(ファッ！？)|(説$)|(大胆な)" />
+			<extend key="ignore-case" value="true" />
+		</extends>
+	</element>
+	<element key="kiddie">
+		<words>
+			<word key="ja-jp" value="話されても困る" />
+		</words>
+		<extends>
+			<extend key="pattern" value="(^device:(3DS|WiiU)$)" />
 			<extend key="ignore-case" value="true" />
 		</extends>
 	</element>
