@@ -217,6 +217,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region setting
 
+        public static double SettingServiceSmileUserGroupAreaStar = appConfig.Get("setting-service-smile-user-group-area-star", double.Parse);
+        public static double SettingServiceSmileUserItemsAreaStar = appConfig.Get("setting-service-smile-user-items-area-star", double.Parse);
+
         public static double SettingServiceSmileMyListGroupAreaStar => appConfig.Get("setting-service-smile-mylist-group-area-star", double.Parse);
         public static double SettingServiceSmileMyListItemsAreaStar => appConfig.Get("setting-service-smile-mylist-items-area-star", double.Parse);
 

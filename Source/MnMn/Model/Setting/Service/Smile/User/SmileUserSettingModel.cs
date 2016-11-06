@@ -41,6 +41,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User
         [DataMember]
         public FixedSizeCollectionModel<SmileUserItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileUserItemModel>(Constants.ServiceSmileUserHistoryCount, false);
 
+        [DataMember]
+        public double GroupWidth { get; set; } = Constants.SettingServiceSmileUserGroupAreaStar;
+        [DataMember]
+        public double ItemsWidth { get; set; } = Constants.SettingServiceSmileUserItemsAreaStar;
+
         #endregion
     }
 }
