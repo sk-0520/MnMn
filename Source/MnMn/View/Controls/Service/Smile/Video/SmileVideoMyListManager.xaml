@@ -110,7 +110,7 @@
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="{Binding ParentWidth, Mode=TwoWay}" />
+      <ColumnDefinition Width="{Binding GroupWidth, Mode=TwoWay}" />
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="{Binding ItemsWidth, Mode=TwoWay}" />
     </Grid.ColumnDefinitions>

@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         public FixedSizeCollectionModel<SmileMyListItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileMyListItemModel>(Constants.ServiceSmileMyListHistoryCount, false);
 
         [DataMember]
-        public double ParentWidth { get; set; } = Constants.SettingServiceSmileMyListParentAreaStar;
+        public double GrouptWidth { get; set; } = Constants.SettingServiceSmileMyListGroupAreaStar;
         [DataMember]
         public double ItemsWidth { get; set; } = Constants.SettingServiceSmileMyListItemsAreaStar;
 

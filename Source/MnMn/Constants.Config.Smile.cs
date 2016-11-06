@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #region setting
 
-        public static double SettingServiceSmileMyListParentAreaStar => appConfig.Get("setting-service-smile-mylist-parent-area-star", double.Parse);
+        public static double SettingServiceSmileMyListGroupAreaStar => appConfig.Get("setting-service-smile-mylist-group-area-star", double.Parse);
         public static double SettingServiceSmileMyListItemsAreaStar => appConfig.Get("setting-service-smile-mylist-items-area-star", double.Parse);
 
         #region video

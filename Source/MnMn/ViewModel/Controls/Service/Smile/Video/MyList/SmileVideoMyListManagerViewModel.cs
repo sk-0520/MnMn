@@ -212,10 +212,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
-        public GridLength ParentWidth
+        public GridLength GroupWidth
         {
-            get { return new GridLength(MyListSetting.ParentWidth, GridUnitType.Star); }
-            set { SetPropertyValue(MyListSetting, value.Value, nameof(MyListSetting.ParentWidth)); }
+            get { return new GridLength(MyListSetting.GrouptWidth, GridUnitType.Star); }
+            set { SetPropertyValue(MyListSetting, value.Value, nameof(MyListSetting.GrouptWidth)); }
         }
         public GridLength ItemsWidth
         {
