@@ -93,6 +93,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        public GridLength GroupWidth
+        {
+            get { return new GridLength(Setting.Bookmark.GroupWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.Bookmark, value.Value, nameof(Setting.Bookmark.GroupWidth)); }
+        }
+        public GridLength ItemsWidth
+        {
+            get { return new GridLength(Setting.Bookmark.ItemsWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.Bookmark, value.Value, nameof(Setting.Bookmark.ItemsWidth)); }
+        }
+
         public bool IsDragging
         {
             get { return this._isDragging; }

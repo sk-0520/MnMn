@@ -31,6 +31,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoBookmarkItemSettingModel Root { get; } = new SmileVideoBookmarkItemSettingModel();
 
+        [DataMember]
+        public double GroupWidth { get; set; } = Constants.SettingServiceSmileVideoBookmarkGroupAreaStar;
+        [DataMember]
+        public double ItemsWidth { get; set; } = Constants.SettingServiceSmileVideoBookmarkItemsAreaStar;
+
+
         #endregion
     }
 }

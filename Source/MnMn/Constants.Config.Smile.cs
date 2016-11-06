@@ -420,6 +420,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int SettingServiceSmileVideoDownloadDmcVideoWeight => appConfig.Get("setting-service-smile-smilevideo-download-dmc-video-weight", int.Parse);
         public static int SettingServiceSmileVideoDownloadDmcAudioWeight => appConfig.Get("setting-service-smile-smilevideo-download-dmc-audio-weight", int.Parse);
 
+        public static double SettingServiceSmileVideoBookmarkGroupAreaStar => appConfig.Get("setting-service-smile-smilevideo-bookmark-group-area-star", double.Parse);
+        public static double SettingServiceSmileVideoBookmarkItemsAreaStar => appConfig.Get("setting-service-smile-smilevideo-bookmark-items-area-star", double.Parse);
 
         #endregion
 

@@ -214,8 +214,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public GridLength GroupWidth
         {
-            get { return new GridLength(MyListSetting.GrouptWidth, GridUnitType.Star); }
-            set { SetPropertyValue(MyListSetting, value.Value, nameof(MyListSetting.GrouptWidth)); }
+            get { return new GridLength(MyListSetting.GroupWidth, GridUnitType.Star); }
+            set { SetPropertyValue(MyListSetting, value.Value, nameof(MyListSetting.GroupWidth)); }
         }
         public GridLength ItemsWidth
         {
