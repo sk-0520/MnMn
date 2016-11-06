@@ -8,6 +8,7 @@
 
   xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
+  xmlns:app_viewmodel_controls_service_smile_video_bookmark="clr-namespace:ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -19,6 +20,7 @@
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
+      <CollectionViewSource  x:Key="RootItems" Source="{Binding RootItems}" />
       <CollectionViewSource  x:Key="NodeItems" Source="{Binding NodeItems}" />
     </ResourceDictionary>
   </UserControl.Resources>
@@ -87,6 +89,14 @@
         </Button>
       </ToolBar>
       <TreeView Grid.Row="1" x:Name="treeNodes">
+        <TreeView.Resources>
+          <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkRootNodeViewModel}">
+            <TextBlock Text="{Binding Name}" />
+          </DataTemplate>
+          <HierarchicalDataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkNodeViewModel}" ItemsSource="{Binding NodeItems}">
+            <TextBlock Text="{Binding Name}" />
+          </HierarchicalDataTemplate>
+        </TreeView.Resources>
         <TreeView.ItemContainerStyle>
           <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
@@ -95,8 +105,9 @@
         </TreeView.ItemContainerStyle>
         <TreeView.ItemsSource>
           <CompositeCollection>
-            <TreeViewItem x:Name="nodeUnorganized" Header="未整理のブックマーク" />
-            <CollectionContainer Collection="{Binding Source={StaticResource NodeItems}}" />
+            <!--<TreeViewItem x:Name="nodeUnorganized" Header="未整理のブックマーク" />-->
+            <CollectionContainer Collection="{Binding Source={StaticResource RootItems}}" />
+            <!--<CollectionContainer Collection="{Binding Source={StaticResource NodeItems}}" />-->
           </CompositeCollection>
         </TreeView.ItemsSource>
         <TreeView.ItemTemplate>

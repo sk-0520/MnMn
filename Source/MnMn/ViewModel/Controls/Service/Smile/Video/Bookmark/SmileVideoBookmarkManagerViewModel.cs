@@ -54,7 +54,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            Node = new SmileVideoBookmarkNodeViewModel(Setting.Bookmark.Root);
+            Node = new SmileVideoBookmarkRootNodeViewModel(Setting.Bookmark.Root);
+            RootItems = new CollectionModel<SmileVideoBookmarkRootNodeViewModel>() {
+                Node,
+            };
             NodeItems = Node.NodeList.ViewModelList;
         }
 
@@ -62,10 +65,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         TreeView TreeNodes { get; set; }
 
-        TreeViewItem NodeUnorganized { get; set; }
+        //TreeViewItem NodeUnorganized { get; set; }
 
-        public SmileVideoBookmarkNodeViewModel Node { get; }
+        public SmileVideoBookmarkRootNodeViewModel Node { get; }
 
+        public CollectionModel<SmileVideoBookmarkRootNodeViewModel> RootItems { get; }
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
 
         public SmileVideoBookmarkNodeViewModel SelectedBookmarkNode
@@ -361,7 +365,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public override void InitializeView(MainWindow view)
         {
             TreeNodes = view.smile.bookmark.treeNodes;
-            NodeUnorganized = view.smile.bookmark.nodeUnorganized;
+            //NodeUnorganized = view.smile.bookmark.nodeUnorganized;
 
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
             view.smile.bookmark.treeNodes.PreviewMouseLeftButtonDown += TreeNodes_PreviewMouseLeftButtonDown;
@@ -390,9 +394,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 SelectedBookmarkNode = node;
             } else {
                 var viewNode = e.NewValue as TreeViewItem;
-                if(viewNode == NodeUnorganized) {
-                    SelectedBookmarkNode = Node;
-                }
+                //if(viewNode == NodeUnorganized) {
+                //    SelectedBookmarkNode = Node;
+                //}
             }
         }
 
