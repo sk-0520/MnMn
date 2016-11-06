@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         TreeView TreeNodes { get; set; }
 
+        TreeViewItem NodeUnorganized { get; set; }
+
         public SmileVideoBookmarkNodeViewModel Node { get; }
 
         public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
@@ -359,6 +361,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public override void InitializeView(MainWindow view)
         {
             TreeNodes = view.smile.bookmark.treeNodes;
+            NodeUnorganized = view.smile.bookmark.nodeUnorganized;
+
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
             view.smile.bookmark.treeNodes.PreviewMouseLeftButtonDown += TreeNodes_PreviewMouseLeftButtonDown;
             view.smile.bookmark.treeNodes.MouseMove += TreeNodes_MouseMove;
@@ -384,6 +388,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var node = e.NewValue as SmileVideoBookmarkNodeViewModel;
             if(node != null) {
                 SelectedBookmarkNode = node;
+            } else {
+                var viewNode = e.NewValue as TreeViewItem;
+                if(viewNode == NodeUnorganized) {
+                    SelectedBookmarkNode = Node;
+                }
             }
         }
 
