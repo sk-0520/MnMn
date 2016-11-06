@@ -321,6 +321,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand AddUnorganizedBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddUnorganizedBookmark(SelectedFinderItem),
+                    o => IsEnabledCheckItLaterMenu && SelectedFinderItem != null
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -540,6 +551,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var item = information.ToVideoItemModel();
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
             //Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
+        }
+
+        void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            var item = information.ToVideoItemModel();
+            Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.Node.VideoItems.Add(item);
         }
 
         #endregion
