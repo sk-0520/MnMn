@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -74,6 +75,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         #region property
 
         SmileSettingModel Setting { get; }
+
+        public GridLength GroupWidth
+        {
+            get { return new GridLength(Setting.User.GroupWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.User, value.Value, nameof(Setting.User.GroupWidth)); }
+        }
+        public GridLength ItemsWidth
+        {
+            get { return new GridLength(Setting.User.ItemsWidth, GridUnitType.Star); }
+            set { SetPropertyValue(Setting.User, value.Value, nameof(Setting.User.ItemsWidth)); }
+        }
+
 
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
         public SmileLoginUserInformationViewModel LoginUser { get; private set; }
