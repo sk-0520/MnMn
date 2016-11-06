@@ -48,7 +48,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         bool _isDragging = false;
         Point _dragStartPosition;
-        TreeView _treeNodes;
 
         #endregion
 
@@ -60,6 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
 
         #region property
+
+        TreeView TreeNodes { get; set; }
 
         public SmileVideoBookmarkNodeViewModel Node { get; }
 
@@ -357,7 +358,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         public override void InitializeView(MainWindow view)
         {
-            this._treeNodes = view.smile.bookmark.treeNodes;
+            TreeNodes = view.smile.bookmark.treeNodes;
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
             view.smile.bookmark.treeNodes.PreviewMouseLeftButtonDown += TreeNodes_PreviewMouseLeftButtonDown;
             view.smile.bookmark.treeNodes.MouseMove += TreeNodes_MouseMove;
@@ -401,7 +402,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 return;
             }
 
-            var isScrollDrag = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes)) == null;
+            var isScrollDrag = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes)) == null;
             if(isScrollDrag) {
                 // スクロールバーD&DはアイテムD&Dしない
                 return;
@@ -432,7 +433,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             if(e.Data.GetDataPresent(DragNodeFormat)) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
-                var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
+                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != null && srcNode != dstNode) {
                     var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
                     if(isChildNode) {
@@ -456,7 +457,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             if(e.Data.GetDataPresent(DragNodeFormat)) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
-                var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
+                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != null && srcNode != dstNode) {
                     var srcModel = srcNode.Model;
                     RemoveNode(srcNode);
