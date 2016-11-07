@@ -107,14 +107,14 @@
           <CompositeCollection>
             <!--<TreeViewItem x:Name="nodeUnorganized" Header="未整理のブックマーク" />-->
             <CollectionContainer Collection="{Binding Source={StaticResource RootItems}}" />
-            <!--<CollectionContainer Collection="{Binding Source={StaticResource NodeItems}}" />-->
+            <CollectionContainer Collection="{Binding Source={StaticResource NodeItems}}" />
           </CompositeCollection>
         </TreeView.ItemsSource>
-        <TreeView.ItemTemplate>
+        <!--<TreeView.ItemTemplate>
           <HierarchicalDataTemplate ItemsSource="{Binding NodeItems}">
             <TextBlock Text="{Binding Name}" />
           </HierarchicalDataTemplate>
-        </TreeView.ItemTemplate>
+        </TreeView.ItemTemplate>-->
       </TreeView>
       <Grid Grid.Row="2">
         <Grid.ColumnDefinitions>

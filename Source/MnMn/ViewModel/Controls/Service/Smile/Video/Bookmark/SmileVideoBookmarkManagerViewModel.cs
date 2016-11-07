@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             : base(mediation)
         {
             Node = new SmileVideoBookmarkRootNodeViewModel(Setting.Bookmark.Root);
+            Node.Name = Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_Unorganized;
             RootItems = new CollectionModel<SmileVideoBookmarkRootNodeViewModel>() {
                 Node,
             };
