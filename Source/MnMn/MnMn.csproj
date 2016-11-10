@@ -344,6 +344,7 @@
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\FinderDragAndDrop.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />
