@@ -248,6 +248,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 「あとで見る」メニューを有効にするか。
         /// </summary>
         public virtual bool IsEnabledCheckItLaterMenu { get; } = true;
+        /// <summary>
+        /// 「未整理のブックマーク」メニューを有効にするか。
+        /// </summary>
+        public virtual bool IsEnabledUnorganizedBookmarkMenu { get; } = true;
 
         /// <summary>
         /// 動画再生方法。
@@ -327,7 +331,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => AddUnorganizedBookmark(SelectedFinderItem),
-                    o => IsEnabledCheckItLaterMenu && SelectedFinderItem != null
+                    o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
                 );
             }
         }

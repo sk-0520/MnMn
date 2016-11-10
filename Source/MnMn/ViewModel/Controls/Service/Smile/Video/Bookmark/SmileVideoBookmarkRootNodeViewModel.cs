@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region SmileVideoBookmarkNodeViewModel
 
-        public override bool IsSystemNode => true;
+        public override bool IsSystemNode { get; } = true;
 
         #endregion
     }
