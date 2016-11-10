@@ -48,6 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region property
 
+        public virtual bool IsRootNode => false;
+        public virtual bool CanMoveNode => true;
+
         public bool IsSelected
         {
             get { return this._isSelected; }

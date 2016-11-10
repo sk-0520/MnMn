@@ -28,5 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkRootNodeViewModel(SmileVideoBookmarkItemSettingModel model)
             : base(model)
         { }
+
+        #region SmileVideoBookmarkNodeViewModel
+
+        public override bool IsRootNode => true;
+        public override bool CanMoveNode => false;
+
+        #endregion
     }
 }
