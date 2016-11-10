@@ -259,6 +259,7 @@
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
+    <Compile Include="IF\IDragAndDrop.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
     <Compile Include="IF\ReadOnly\ReadOnlyDefinedElement.cs" />
@@ -368,6 +369,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Variable.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
     <Compile Include="View\Controls\FocusedTabControl.cs" />
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">

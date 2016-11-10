@@ -76,6 +76,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public abstract CacheSpan DefaultImageCacheSpan { get; }
         public abstract object DefaultExtends { get; }
 
+        public virtual bool AllowDrop { get; } = false;
+        public virtual bool AllowDrag { get; } = false;
+        protected Point DraggingStartPosition { get; set; }
+
         /// <summary>
         /// 昇順か。
         /// </summary>

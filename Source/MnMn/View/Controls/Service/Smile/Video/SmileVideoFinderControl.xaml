@@ -228,6 +228,7 @@
         x:Name="PART_List"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
+        AllowDrop="{Binding AllowDrop}"
       >
         <ListBox.InputBindings>
           <KeyBinding Key="Return" Command="{Binding SelectedFinderItem.Information.OpenVideoDefaultCommand}" />
