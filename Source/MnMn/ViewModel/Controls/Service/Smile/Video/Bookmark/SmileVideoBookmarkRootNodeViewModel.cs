@@ -23,15 +23,15 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
-    public class SmileVideoBookmarkRootNodeViewModel: SmileVideoBookmarkNodeViewModel
+    public class SmileVideoBookmarkSystemNodeViewModel: SmileVideoBookmarkNodeViewModel
     {
-        public SmileVideoBookmarkRootNodeViewModel(SmileVideoBookmarkItemSettingModel model)
+        public SmileVideoBookmarkSystemNodeViewModel(SmileVideoBookmarkItemSettingModel model)
             : base(model)
         { }
 
         #region SmileVideoBookmarkNodeViewModel
 
-        public override bool IsRootNode => true;
+        public override bool IsSystemNode => true;
 
         #endregion
     }

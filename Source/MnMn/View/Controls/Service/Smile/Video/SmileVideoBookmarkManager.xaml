@@ -20,8 +20,8 @@
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
-      <CollectionViewSource  x:Key="RootItems" Source="{Binding RootItems}" />
-      <CollectionViewSource  x:Key="NodeItems" Source="{Binding NodeItems}" />
+      <CollectionViewSource  x:Key="SystemNodes" Source="{Binding SystemNodes}" />
+      <CollectionViewSource  x:Key="UserNodes" Source="{Binding UserNodes}" />
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
@@ -90,7 +90,7 @@
       </ToolBar>
       <TreeView Grid.Row="1" x:Name="treeNodes">
         <TreeView.Resources>
-          <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkRootNodeViewModel}">
+          <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkSystemNodeViewModel}">
             <TextBlock Text="{Binding Name}" />
           </DataTemplate>
           <HierarchicalDataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkNodeViewModel}" ItemsSource="{Binding NodeItems}">
@@ -106,8 +106,8 @@
         <TreeView.ItemsSource>
           <CompositeCollection>
             <!--<TreeViewItem x:Name="nodeUnorganized" Header="未整理のブックマーク" />-->
-            <CollectionContainer Collection="{Binding Source={StaticResource RootItems}}" />
-            <CollectionContainer Collection="{Binding Source={StaticResource NodeItems}}" />
+            <CollectionContainer Collection="{Binding Source={StaticResource SystemNodes}}" />
+            <CollectionContainer Collection="{Binding Source={StaticResource UserNodes}}" />
           </CompositeCollection>
         </TreeView.ItemsSource>
         <!--<TreeView.ItemTemplate>

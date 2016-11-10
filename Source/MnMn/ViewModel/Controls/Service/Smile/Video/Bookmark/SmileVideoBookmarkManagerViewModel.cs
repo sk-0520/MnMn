@@ -54,12 +54,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public SmileVideoBookmarkManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            Node = new SmileVideoBookmarkRootNodeViewModel(Setting.Bookmark.Root);
+            Node = new SmileVideoBookmarkSystemNodeViewModel(Setting.Bookmark.Root);
             Node.Name = Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_Unorganized;
-            RootItems = new CollectionModel<SmileVideoBookmarkRootNodeViewModel>() {
+            SystemNodes = new CollectionModel<SmileVideoBookmarkSystemNodeViewModel>() {
                 Node,
             };
-            NodeItems = Node.NodeList.ViewModelList;
+            UserNodes = Node.NodeList.ViewModelList;
         }
 
         #region property
@@ -68,10 +68,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         //TreeViewItem NodeUnorganized { get; set; }
 
-        public SmileVideoBookmarkRootNodeViewModel Node { get; }
+        public SmileVideoBookmarkSystemNodeViewModel Node { get; }
 
-        public CollectionModel<SmileVideoBookmarkRootNodeViewModel> RootItems { get; }
-        public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
+        public CollectionModel<SmileVideoBookmarkSystemNodeViewModel> SystemNodes { get; }
+        public CollectionModel<SmileVideoBookmarkNodeViewModel> UserNodes { get; }
 
         public SmileVideoBookmarkNodeViewModel SelectedBookmarkNode
         {
@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 return CreateCommand(
                     o => InsertNode(SelectedBookmarkNode),
-                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsRootNode
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode
                 );
             }
         }
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         RemoveNode(SelectedBookmarkNode);
                         SelectedBookmarkNode = GetSelectedNode();
                     },
-                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsRootNode
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode
                 );
             }
         }
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         if(SelectedBookmarkNode == null) {
                             return false;
                         }
-                        if(SelectedBookmarkNode.IsRootNode) {
+                        if(SelectedBookmarkNode.IsSystemNode) {
                             return false;
                         }
                         var parentNode = GetParentNode(SelectedBookmarkNode);
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         if(SelectedBookmarkNode == null) {
                             return false;
                         }
-                        if(SelectedBookmarkNode.IsRootNode) {
+                        if(SelectedBookmarkNode.IsSystemNode) {
                             return false;
                         }
                         var parentNode = GetParentNode(SelectedBookmarkNode);
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 return CreateCommand(
                     o => UpParentNode(SelectedBookmarkNode),
-                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsRootNode && GetParentNode(SelectedBookmarkNode) != Node
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode && GetParentNode(SelectedBookmarkNode) != Node
                 );
             }
         }
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodes(Func<SmileVideoBookmarkNodeViewModel, bool> expr)
         {
-            foreach(var node in NodeItems) {
+            foreach(var node in UserNodes) {
                 foreach(var item in GetNodesCore(node, expr)) {
                     yield return item;
                 }
@@ -358,7 +358,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             if(SelectedBookmarkNode != null && SelectedBookmarkNodeFinder.CanLoad) {
                 SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
             } else {
-                SelectedBookmarkNode = NodeItems.FirstOrDefault();
+                if(UserNodes.Any() && !Node.VideoItems.Any()) {
+                    SelectedBookmarkNode = UserNodes.FirstOrDefault();
+                } else {
+                    SelectedBookmarkNode = SystemNodes.First();
+                }
             }
             if(SelectedBookmarkNode != null) {
                 SelectedBookmarkNode.IsSelected = true;
@@ -456,16 +460,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             if(e.Data.GetDataPresent(DragNodeFormat)) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
-                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
-                if(dstNode != null && srcNode != dstNode) {
-                    var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
-                    if(isChildNode) {
-                        e.Effects = DragDropEffects.None;
-                    } else if(dstNode == GetParentNode(srcNode)) {
+                if(srcNode.IsSystemNode) {
+                    e.Effects = DragDropEffects.None;
+                } else {
+                    var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
+                    if(dstNode != null && srcNode != dstNode) {
+                        var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
+                        if(isChildNode) {
+                            e.Effects = DragDropEffects.None;
+                        } else if(dstNode == GetParentNode(srcNode)) {
+                            e.Effects = DragDropEffects.None;
+                        }
+                    } else {
                         e.Effects = DragDropEffects.None;
                     }
-                } else {
-                    e.Effects = DragDropEffects.None;
                 }
             } else {
                 e.Effects = DragDropEffects.None;
