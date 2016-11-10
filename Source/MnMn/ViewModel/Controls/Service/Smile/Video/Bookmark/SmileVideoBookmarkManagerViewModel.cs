@@ -126,15 +126,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get
             {
-                return CreateCommand(o => {
-                    var node = SelectedBookmarkNode;
-                    if(node != null) {
-                        node = GetParentNode(node);
-                    } else {
-                        node = Node;
-                    }
-                    AddNode(node);
-                });
+                return CreateCommand(
+                    o => {
+                        var node = SelectedBookmarkNode;
+                        if(node != null) {
+                            node = GetParentNode(node);
+                        } else {
+                            node = Node;
+                        }
+                        AddNode(node);
+                    },
+                    o => SelectedBookmarkNode != null
+                );
             }
         }
         public ICommand InsertNodeCommand
@@ -143,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 return CreateCommand(
                     o => InsertNode(SelectedBookmarkNode),
-                    o => SelectedBookmarkNode != null
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsRootNode
                 );
             }
         }
@@ -156,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         RemoveNode(SelectedBookmarkNode);
                         SelectedBookmarkNode = GetSelectedNode();
                     },
-                    o => SelectedBookmarkNode != null
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsRootNode
                 );
             }
         }
@@ -169,6 +172,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     o => UpNode(SelectedBookmarkNode),
                     o => {
                         if(SelectedBookmarkNode == null) {
+                            return false;
+                        }
+                        if(SelectedBookmarkNode.IsRootNode) {
                             return false;
                         }
                         var parentNode = GetParentNode(SelectedBookmarkNode);
@@ -188,6 +194,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         if(SelectedBookmarkNode == null) {
                             return false;
                         }
+                        if(SelectedBookmarkNode.IsRootNode) {
+                            return false;
+                        }
                         var parentNode = GetParentNode(SelectedBookmarkNode);
                         return parentNode.NodeItems.Count - 1 > parentNode.NodeItems.IndexOf(SelectedBookmarkNode);
                     }
@@ -201,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 return CreateCommand(
                     o => UpParentNode(SelectedBookmarkNode),
-                    o => GetParentNode(SelectedBookmarkNode) != Node
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsRootNode && GetParentNode(SelectedBookmarkNode) != Node
                 );
             }
         }

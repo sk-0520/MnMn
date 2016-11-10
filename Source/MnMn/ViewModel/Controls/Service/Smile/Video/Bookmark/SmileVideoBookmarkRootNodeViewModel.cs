@@ -32,7 +32,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         #region SmileVideoBookmarkNodeViewModel
 
         public override bool IsRootNode => true;
-        public override bool CanMoveNode => false;
 
         #endregion
     }
