@@ -122,7 +122,7 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0">名前:</Label>
-        <TextBox Grid.Column="1" Text="{Binding SelectedBookmarkNode.Name, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Text="{Binding SelectedBookmarkNode.Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding SelectedBookmarkNode.IsSystemNode}"/>
       </Grid>
     </Grid>
 
