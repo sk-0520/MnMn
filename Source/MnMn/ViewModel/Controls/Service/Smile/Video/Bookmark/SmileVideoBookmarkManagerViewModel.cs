@@ -27,7 +27,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -49,6 +51,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         bool _isDragging = false;
         Point _dragStartPosition;
 
+        bool _nodeAllowDrop = true;
+        bool _nodeIsEnabledDrag = true;
+
         #endregion
 
         public SmileVideoBookmarkManagerViewModel(Mediation mediation)
@@ -60,13 +65,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 Node,
             };
             UserNodes = Node.NodeList.ViewModelList;
+
+            NodeDragAndDrop = new DelegateDragAndDrop() {
+                CanDragStartFunc = CanDragStartNode,
+                GetDragParameterFunc = GetDragParameterNode,
+                DragEnterAction = DragEnterNode,
+                DragOverAction = DragOverNode,
+                DragLeaveAction = DragLeaveNode,
+                DropAction = DropNode,
+            };
         }
 
         #region property
 
         TreeView TreeNodes { get; set; }
 
-        //TreeViewItem NodeUnorganized { get; set; }
+        public IDragAndDrop NodeDragAndDrop { get; }
 
         public SmileVideoBookmarkSystemNodeViewModel Node { get; }
 
@@ -117,6 +131,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get { return this._isDragging; }
             set { SetVariableValue(ref this._isDragging, value); }
         }
+
+        public bool NodeAllowDrop
+        {
+            get { return this._nodeAllowDrop; }
+            set { SetVariableValue(ref this._nodeAllowDrop, value); }
+        }
+        public bool NodeIsEnabledDrag
+        {
+            get { return this._nodeIsEnabledDrag; }
+            set { SetVariableValue(ref this._nodeIsEnabledDrag, value); }
+        }
+
 
         #endregion
 
@@ -342,7 +368,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
+        protected virtual bool CanDragStartNode(UIElement sender, MouseEventArgs e)
+        {
+            return false;
+        }
 
+        protected virtual CheckResultModel<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
+        {
+            return CheckResultModel.Failure<DragParameterModel>();
+        }
+        protected virtual void DragEnterNode(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DragOverNode(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DragLeaveNode(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DropNode(UIElement sender, DragEventArgs e)
+        {
+
+        }
 
         #endregion
 
