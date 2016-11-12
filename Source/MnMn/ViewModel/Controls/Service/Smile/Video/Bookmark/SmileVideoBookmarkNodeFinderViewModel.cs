@@ -91,9 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videos = GetCheckedItems()
-                        .Select(i => i.Information)
-                    ;
+                    var videos = GetCheckedItems();
                     if(videos.Any()) {
                         RemoveCheckedVideos(videos);
                     }
@@ -128,10 +126,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             Node.VideoItems.SwapIndex(srcIndex, nextIndex);
         }
 
-        void RemoveCheckedVideos(IEnumerable<SmileVideoInformationViewModel> videoInformation)
+        void RemoveCheckedVideos(IEnumerable<SmileVideoFinderItemViewModel> finderItems)
         {
-            foreach(var video in videoInformation.ToArray()) {
-                var index = FinderItemList.FindIndex(i => i.Information == video);
+            foreach(var finderItem in finderItems.ToArray()) {
+                var index = FinderItemList.IndexOf(finderItem);
+                FinderItemList.RemoveAt(index);
+                Node.VideoItems.RemoveAt(index);
+            }
+        }
+
+        public void RemoveItem(SmileVideoFinderItemViewModel finderItem)
+        {
+            var index = FinderItemList.IndexOf(finderItem);
+            if(index != -1) {
                 FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
             }

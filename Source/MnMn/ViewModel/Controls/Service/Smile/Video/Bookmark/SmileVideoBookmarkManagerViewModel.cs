@@ -442,6 +442,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 var videoItem = finderItem.Information.ToVideoItemModel();
                 dstNode.VideoItems.Add(videoItem);
+                SelectedBookmarkNodeFinder.RemoveItem(SelectedBookmarkNodeFinder.SelectedFinderItem);
+                //SelectedBookmarkNode = dstNode;
             }
         }
 
