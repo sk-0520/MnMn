@@ -409,6 +409,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         e.Effects = DragDropEffects.None;
                     }
                 }
+            } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
+                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
+                if(dstNode != SelectedBookmarkNode) {
+                    e.Effects = DragDropEffects.Move;
+                } else {
+                    e.Effects = DragDropEffects.None;
+                }
             } else {
                 e.Effects = DragDropEffects.None;
             }
@@ -430,6 +437,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     var item = dstNode.NodeList.Add(srcModel, null);
                     item.ViewModel.IsSelected = true;
                 }
+            } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
+                var finderItem = (SmileVideoFinderItemViewModel)e.Data.GetData(typeof(SmileVideoFinderItemViewModel));
+                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
+                var videoItem = finderItem.Information.ToVideoItemModel();
+                dstNode.VideoItems.Add(videoItem);
             }
         }
 
