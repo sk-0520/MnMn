@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -139,7 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #endregion
 
-        #region SmileVideoHistoryFinderViewModelBase
+        #region SmileVideoFeedFinderViewModelBase
 
         protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.ViewCounter;
 
@@ -175,6 +176,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             IsUpDownEnabled = SelectedSortType == SmileVideoSortType.Number && FinderItems.Cast<object>().Count() == FinderItemList.Count;
 
+        }
+
+        public override bool IsEnabledDrag { get; } = true;
+
+        protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            return SelectedFinderItem != null;
+        }
+
+        protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            var data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);
+
+            var param = new DragParameterModel() {
+                Data = data,
+                Effects = DragDropEffects.Move,
+                Element = sender,
+            };
+
+            return CheckResultModel.Success(param);
         }
 
         #endregion
