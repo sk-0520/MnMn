@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
             AllowDrop = this.AssociatedObject.AllowDrop;
 
-            this.AssociatedObject.MouseDown += AssociatedObject_MouseDown;
+            this.AssociatedObject.PreviewMouseDown += AssociatedObject_MouseDown;
             this.AssociatedObject.MouseMove += AssociatedObject_MouseMove;
             this.AssociatedObject.DragEnter += AssociatedObject_DragEnter;
             this.AssociatedObject.DragOver += AssociatedObject_DragOver;
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         protected override void OnDetaching()
         {
-            this.AssociatedObject.MouseDown -= AssociatedObject_MouseDown;
+            this.AssociatedObject.PreviewMouseDown -= AssociatedObject_MouseDown;
             this.AssociatedObject.MouseMove -= AssociatedObject_MouseMove;
             this.AssociatedObject.DragEnter -= AssociatedObject_DragEnter;
             this.AssociatedObject.DragOver -= AssociatedObject_DragOver;
@@ -120,42 +120,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if(IsEnabledDrag) {
-                DragAndDrop.MouseDown?.Invoke((UIElement)sender, e);
+                DragAndDrop.MouseDown((UIElement)sender, e);
             }
         }
 
         void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if(IsEnabledDrag) {
-                DragAndDrop.MouseMove?.Invoke((UIElement)sender, e);
+                DragAndDrop.MouseMove((UIElement)sender, e);
             }
         }
 
         void AssociatedObject_DragEnter(object sender, DragEventArgs e)
         {
             if(IsEnabledDrag) {
-                DragAndDrop.DragEnter?.Invoke((UIElement)sender, e);
+                DragAndDrop.DragEnter((UIElement)sender, e);
             }
         }
 
         void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
             if(IsEnabledDrag) {
-                DragAndDrop.DragOver?.Invoke((UIElement)sender, e);
+                DragAndDrop.DragOver((UIElement)sender, e);
             }
         }
 
         void AssociatedObject_DragLeave(object sender, DragEventArgs e)
         {
             if(IsEnabledDrag) {
-                DragAndDrop.DragLeave?.Invoke((UIElement)sender, e);
+                DragAndDrop.DragLeave((UIElement)sender, e);
             }
         }
 
         void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
             if(AllowDrop) {
-                DragAndDrop.Drop?.Invoke((UIElement)sender, e);
+                DragAndDrop.Drop((UIElement)sender, e);
             }
         }
     }

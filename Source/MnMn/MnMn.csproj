@@ -287,6 +287,7 @@
       <DependentUpon>WebNavigatorCore.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
+    <Compile Include="Model\DragParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoFinderFilterCommandParameterModel.cs" />
@@ -344,7 +345,7 @@
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppIssueManagerViewModel.cs" />
-    <Compile Include="ViewModel\Controls\FinderDragAndDrop.cs" />
+    <Compile Include="Logic\DragAndDropBase.cs" />
     <Compile Include="ViewModel\Controls\FinderItemViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\FinderViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\InformationViewModelBase.cs" />

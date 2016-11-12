@@ -20,17 +20,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF
+namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    public interface IDragAndDrop
+    public class DragParameterModel: ModelBase
     {
-        void MouseDown(UIElement sender, MouseButtonEventArgs e);
-        void MouseMove(UIElement sender, MouseEventArgs e);
-        void DragEnter(UIElement sender, DragEventArgs e);
-        void DragOver(UIElement sender, DragEventArgs e);
-        void DragLeave(UIElement sender, DragEventArgs e);
-        void Drop(UIElement sender, DragEventArgs e);
+        #region property
+
+        public UIElement Element { get; set; }
+        public DataObject Data { get; set; }
+        public DragDropEffects Effects { get; set; }
+
+        #endregion
     }
 }
