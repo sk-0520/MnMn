@@ -27,6 +27,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
@@ -77,8 +78,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public abstract object DefaultExtends { get; }
 
         public virtual bool AllowDrop { get; } = false;
-        public virtual bool AllowDrag { get; } = false;
-        protected Point DraggingStartPosition { get; set; }
+        public virtual bool IsEnabledDrag { get; } = false;
+        public IDragAndDrop DragAndDrop { get; protected set; }
 
         /// <summary>
         /// 昇順か。
