@@ -48,22 +48,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         bool _isDragging = false;
         Point _dragStartPosition;
-        TreeView _treeNodes;
 
         #endregion
 
         public SmileVideoBookmarkManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            Node = new SmileVideoBookmarkNodeViewModel(Setting.Bookmark.Root);
-            NodeItems = Node.NodeList.ViewModelList;
+            Node = new SmileVideoBookmarkSystemNodeViewModel(Setting.Bookmark.Root);
+            Node.Name = Properties.Resources.String_Service_Smile_SmileVideo_Bookmark_Unorganized;
+            SystemNodes = new CollectionModel<SmileVideoBookmarkSystemNodeViewModel>() {
+                Node,
+            };
+            UserNodes = Node.NodeList.ViewModelList;
         }
 
         #region property
 
-        public SmileVideoBookmarkNodeViewModel Node { get; }
+        TreeView TreeNodes { get; set; }
 
-        public CollectionModel<SmileVideoBookmarkNodeViewModel> NodeItems { get; }
+        //TreeViewItem NodeUnorganized { get; set; }
+
+        public SmileVideoBookmarkSystemNodeViewModel Node { get; }
+
+        public CollectionModel<SmileVideoBookmarkSystemNodeViewModel> SystemNodes { get; }
+        public CollectionModel<SmileVideoBookmarkNodeViewModel> UserNodes { get; }
 
         public SmileVideoBookmarkNodeViewModel SelectedBookmarkNode
         {
@@ -118,15 +126,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get
             {
-                return CreateCommand(o => {
-                    var node = SelectedBookmarkNode;
-                    if(node != null) {
-                        node = GetParentNode(node);
-                    } else {
-                        node = Node;
-                    }
-                    AddNode(node);
-                });
+                return CreateCommand(
+                    o => {
+                        var node = SelectedBookmarkNode;
+                        if(node != null) {
+                            node = GetParentNode(node);
+                        } else {
+                            node = Node;
+                        }
+                        AddNode(node);
+                    },
+                    o => SelectedBookmarkNode != null
+                );
             }
         }
         public ICommand InsertNodeCommand
@@ -135,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 return CreateCommand(
                     o => InsertNode(SelectedBookmarkNode),
-                    o => SelectedBookmarkNode != null
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode
                 );
             }
         }
@@ -148,7 +159,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         RemoveNode(SelectedBookmarkNode);
                         SelectedBookmarkNode = GetSelectedNode();
                     },
-                    o => SelectedBookmarkNode != null
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode
                 );
             }
         }
@@ -161,6 +172,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     o => UpNode(SelectedBookmarkNode),
                     o => {
                         if(SelectedBookmarkNode == null) {
+                            return false;
+                        }
+                        if(SelectedBookmarkNode.IsSystemNode) {
                             return false;
                         }
                         var parentNode = GetParentNode(SelectedBookmarkNode);
@@ -180,6 +194,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         if(SelectedBookmarkNode == null) {
                             return false;
                         }
+                        if(SelectedBookmarkNode.IsSystemNode) {
+                            return false;
+                        }
                         var parentNode = GetParentNode(SelectedBookmarkNode);
                         return parentNode.NodeItems.Count - 1 > parentNode.NodeItems.IndexOf(SelectedBookmarkNode);
                     }
@@ -193,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             {
                 return CreateCommand(
                     o => UpParentNode(SelectedBookmarkNode),
-                    o => GetParentNode(SelectedBookmarkNode) != Node
+                    o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode && GetParentNode(SelectedBookmarkNode) != Node
                 );
             }
         }
@@ -216,7 +233,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodes(Func<SmileVideoBookmarkNodeViewModel, bool> expr)
         {
-            foreach(var node in NodeItems) {
+            foreach(var node in UserNodes) {
                 foreach(var item in GetNodesCore(node, expr)) {
                     yield return item;
                 }
@@ -341,7 +358,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             if(SelectedBookmarkNode != null && SelectedBookmarkNodeFinder.CanLoad) {
                 SelectedBookmarkNodeFinder.LoadDefaultCacheAsync().ConfigureAwait(false);
             } else {
-                SelectedBookmarkNode = NodeItems.FirstOrDefault();
+                if(UserNodes.Any() && !Node.VideoItems.Any()) {
+                    SelectedBookmarkNode = UserNodes.FirstOrDefault();
+                } else {
+                    SelectedBookmarkNode = SystemNodes.First();
+                }
             }
             if(SelectedBookmarkNode != null) {
                 SelectedBookmarkNode.IsSelected = true;
@@ -357,7 +378,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         }
         public override void InitializeView(MainWindow view)
         {
-            this._treeNodes = view.smile.bookmark.treeNodes;
+            TreeNodes = view.smile.bookmark.treeNodes;
+            //NodeUnorganized = view.smile.bookmark.nodeUnorganized;
+
             view.smile.bookmark.treeNodes.SelectedItemChanged += TreeNodes_SelectedItemChanged;
             view.smile.bookmark.treeNodes.PreviewMouseLeftButtonDown += TreeNodes_PreviewMouseLeftButtonDown;
             view.smile.bookmark.treeNodes.MouseMove += TreeNodes_MouseMove;
@@ -383,6 +406,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var node = e.NewValue as SmileVideoBookmarkNodeViewModel;
             if(node != null) {
                 SelectedBookmarkNode = node;
+            } else {
+                var viewNode = e.NewValue as TreeViewItem;
+                //if(viewNode == NodeUnorganized) {
+                //    SelectedBookmarkNode = Node;
+                //}
             }
         }
 
@@ -401,7 +429,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 return;
             }
 
-            var isScrollDrag = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes)) == null;
+            var isScrollDrag = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes)) == null;
             if(isScrollDrag) {
                 // スクロールバーD&DはアイテムD&Dしない
                 return;
@@ -432,16 +460,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             if(e.Data.GetDataPresent(DragNodeFormat)) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
-                var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
-                if(dstNode != null && srcNode != dstNode) {
-                    var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
-                    if(isChildNode) {
-                        e.Effects = DragDropEffects.None;
-                    } else if(dstNode == GetParentNode(srcNode)) {
+                if(srcNode.IsSystemNode) {
+                    e.Effects = DragDropEffects.None;
+                } else {
+                    var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
+                    if(dstNode != null && srcNode != dstNode) {
+                        var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
+                        if(isChildNode) {
+                            e.Effects = DragDropEffects.None;
+                        } else if(dstNode == GetParentNode(srcNode)) {
+                            e.Effects = DragDropEffects.None;
+                        }
+                    } else {
                         e.Effects = DragDropEffects.None;
                     }
-                } else {
-                    e.Effects = DragDropEffects.None;
                 }
             } else {
                 e.Effects = DragDropEffects.None;
@@ -456,7 +488,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             if(e.Data.GetDataPresent(DragNodeFormat)) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
-                var dstNode = GetNodeFromPosition(this._treeNodes, e.GetPosition(this._treeNodes));
+                var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != null && srcNode != dstNode) {
                     var srcModel = srcNode.Model;
                     RemoveNode(srcNode);

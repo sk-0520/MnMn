@@ -48,6 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region property
 
+        public virtual bool IsSystemNode { get; } = false;
+
         public bool IsSelected
         {
             get { return this._isSelected; }

@@ -370,4 +370,7 @@
   <data name="String_Service_Smile_SmileVide_Launcher_Item_Program" xml:space="preserve">
     <value>プログラム</value>
   </data>
+  <data name="String_Service_Smile_SmileVideo_Bookmark_Unorganized" xml:space="preserve">
+    <value>未整理のブックマーク</value>
+  </data>
 </root>
