@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
         {
             base.OnAttached();
 
-            AllowDrop = this.AssociatedObject.AllowDrop;
+            //AllowDrop = this.AssociatedObject.AllowDrop;
 
             this.AssociatedObject.PreviewMouseDown += AssociatedObject_MouseDown;
             this.AssociatedObject.MouseMove += AssociatedObject_MouseMove;
