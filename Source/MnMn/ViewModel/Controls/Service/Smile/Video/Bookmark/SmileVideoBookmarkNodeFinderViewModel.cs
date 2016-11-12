@@ -146,6 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public override bool IsUsingFinderFilter { get; } = false;
 
         public override bool IsEnabledCheckItLaterMenu { get; } = false;
+        public override bool IsEnabledUnorganizedBookmarkMenu { get; } = false;
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {

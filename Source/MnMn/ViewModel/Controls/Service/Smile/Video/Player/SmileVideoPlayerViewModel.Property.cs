@@ -663,7 +663,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get
             {
                 if(this._bookmarkItems == null) {
-                    var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.NodeItems;
+                    var treeItems = Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.UserNodes;
                     this._bookmarkItems = SmileVideoBookmarkUtility.ConvertFlatBookmarkItems(treeItems);
                 }
 

@@ -295,6 +295,7 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
+            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}" />
             <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter}">
               <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}">
                 <MenuItem.CommandParameter>
