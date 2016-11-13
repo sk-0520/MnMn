@@ -185,6 +185,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public DirectoryInfo CacheDirectory { get; private set; }
 
         public string UserId { get; }
+
+        public override string Title => UserName;
+
         public string UserName
         {
             get

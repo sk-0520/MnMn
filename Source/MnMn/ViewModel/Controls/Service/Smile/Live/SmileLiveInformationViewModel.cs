@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             }
         }
 
-        public string Title
+        public override string Title
         {
             get
             {

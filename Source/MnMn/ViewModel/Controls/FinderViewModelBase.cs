@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -51,6 +52,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         bool _isEnabledFinderFiltering = true;
         CheckedProcessType _selectedCheckedProcess;
 
+        IDragAndDrop _dragAndDrop;
+
         #endregion
 
         public FinderViewModelBase(Mediation mediation)
@@ -79,7 +82,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public virtual bool AllowDrop { get; } = false;
         public virtual bool IsEnabledDrag { get; } = false;
-        public IDragAndDrop DragAndDrop { get; protected set; }
+        public IDragAndDrop DragAndDrop
+        {
+            get { return this._dragAndDrop; }
+            protected set { SetVariableValue(ref this._dragAndDrop, value); }
+        }
 
         /// <summary>
         /// 昇順か。
@@ -139,7 +146,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public TFinderItemViewModel SelectedFinderItem
         {
             get { return this._selectedFinderItem; }
-            set { SetVariableValue(ref this._selectedFinderItem, value); }
+            set
+            {
+                SetVariableValue(ref this._selectedFinderItem, value);
+                if(SelectedFinderItem == null) {
+                    Mediation.Logger.Debug("null!!!");
+                } else {
+                    Mediation.Logger.Debug(SelectedFinderItem.Information.Title);
+                }
+            }
         }
 
         /// <summary>

@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -509,6 +510,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var node = e.NewValue as SmileVideoBookmarkNodeViewModel;
             if(node != null) {
                 SelectedBookmarkNode = node;
+
+                var ss = string.Join("\n", SelectedBookmarkNode.VideoItems.Select(v => v.VideoTitle));
+                Mediation.Logger.Debug("----\n" + ss);
             } else {
                 var viewNode = e.NewValue as TreeViewItem;
                 //if(viewNode == NodeUnorganized) {

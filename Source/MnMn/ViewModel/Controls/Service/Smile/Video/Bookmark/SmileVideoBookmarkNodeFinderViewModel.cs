@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -189,7 +190,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
         {
+            if(SelectedFinderItem != null) {
+                Mediation.Logger.Debug(SelectedFinderItem.Information.Title);
+            } else {
+                Mediation.Logger.Debug("null!");
+            }
+
             return SelectedFinderItem != null;
+            //return true;
         }
 
         protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
