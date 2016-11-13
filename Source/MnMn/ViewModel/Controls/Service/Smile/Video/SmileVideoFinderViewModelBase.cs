@@ -85,6 +85,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             //FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
+
+            DragAndDrop = new DelegateDragAndDrop() {
+                CanDragStartFunc = CanDragStartFromFinder,
+                GetDragParameterFunc = GetDragParameterFromFinder,
+                DragEnterAction = DragEnterFromFinder,
+                DragOverAction = DragOverFromFinder,
+                DragLeaveAction = DragLeaveFromFinder,
+                DropAction = DropFromFinder
+            };
         }
 
         #region property
@@ -563,6 +572,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var item = information.ToVideoItemModel();
             Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.Node.VideoItems.Add(item);
         }
+
+        protected virtual bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            return false;
+        }
+
+        protected virtual CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            return CheckResultModel.Failure<DragParameterModel>();
+        }
+        protected virtual void DragEnterFromFinder(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DragOverFromFinder(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DragLeaveFromFinder(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DropFromFinder(UIElement sender, DragEventArgs e)
+        { }
 
         #endregion
 

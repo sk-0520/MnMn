@@ -16,9 +16,11 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -90,9 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videos = GetCheckedItems()
-                        .Select(i => i.Information)
-                    ;
+                    var videos = GetCheckedItems();
                     if(videos.Any()) {
                         RemoveCheckedVideos(videos);
                     }
@@ -127,10 +127,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             Node.VideoItems.SwapIndex(srcIndex, nextIndex);
         }
 
-        void RemoveCheckedVideos(IEnumerable<SmileVideoInformationViewModel> videoInformation)
+        void RemoveCheckedVideos(IEnumerable<SmileVideoFinderItemViewModel> finderItems)
         {
-            foreach(var video in videoInformation.ToArray()) {
-                var index = FinderItemList.FindIndex(i => i.Information == video);
+            foreach(var finderItem in finderItems.ToArray()) {
+                var index = FinderItemList.IndexOf(finderItem);
+                FinderItemList.RemoveAt(index);
+                Node.VideoItems.RemoveAt(index);
+            }
+        }
+
+        public void RemoveItem(SmileVideoFinderItemViewModel finderItem)
+        {
+            var index = FinderItemList.IndexOf(finderItem);
+            if(index != -1) {
                 FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
             }
@@ -139,7 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #endregion
 
-        #region SmileVideoHistoryFinderViewModelBase
+        #region SmileVideoFeedFinderViewModelBase
 
         protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.ViewCounter;
 
@@ -175,6 +184,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             IsUpDownEnabled = SelectedSortType == SmileVideoSortType.Number && FinderItems.Cast<object>().Count() == FinderItemList.Count;
 
+        }
+
+        public override bool IsEnabledDrag { get; } = true;
+
+        protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            return SelectedFinderItem != null;
+        }
+
+        protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            var data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);
+
+            var param = new DragParameterModel() {
+                Data = data,
+                Effects = DragDropEffects.Move,
+                Element = sender,
+            };
+
+            return CheckResultModel.Success(param);
         }
 
         #endregion

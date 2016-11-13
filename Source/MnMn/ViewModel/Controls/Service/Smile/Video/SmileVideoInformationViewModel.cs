@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string Title
+        public override string Title
         {
             get
             {

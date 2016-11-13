@@ -53,6 +53,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             set { SetVariableValue(ref this._referenceCount, value); }
         }
 
+        public abstract string Title { get; }
+
         /// <summary>
         /// サムネイル読み込み状態。
         /// </summary>

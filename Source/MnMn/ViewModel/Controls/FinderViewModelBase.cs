@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -27,6 +28,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
@@ -49,6 +51,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         bool _showFilterSetting;
         bool _isEnabledFinderFiltering = true;
         CheckedProcessType _selectedCheckedProcess;
+
+        IDragAndDrop _dragAndDrop;
 
         #endregion
 
@@ -75,6 +79,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public abstract CacheSpan DefaultInformationCacheSpan { get; }
         public abstract CacheSpan DefaultImageCacheSpan { get; }
         public abstract object DefaultExtends { get; }
+
+        public virtual bool AllowDrop { get; } = false;
+        public virtual bool IsEnabledDrag { get; } = false;
+        public IDragAndDrop DragAndDrop
+        {
+            get { return this._dragAndDrop; }
+            set { SetVariableValue(ref this._dragAndDrop, value); }
+        }
 
         /// <summary>
         /// 昇順か。
