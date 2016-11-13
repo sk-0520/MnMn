@@ -1751,6 +1751,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(UserName),
                 nameof(ChannelName),
                 nameof(IsChannelVideo),
+                nameof(IsEnabledGlobalCommentFilering),
             };
             CallOnPropertyChange(propertyNames);
 
