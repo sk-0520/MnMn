@@ -22,7 +22,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -190,7 +192,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
         {
-            return SelectedFinderItem != null;
+            if(SelectedFinderItem != null) {
+                var position = e.GetPosition(sender);
+                var item = sender.InputHitTest(position);
+                var hitTestResults = VisualTreeHelper.HitTest(sender, position);
+                if(hitTestResults != null) {
+                    var element = hitTestResults.VisualHit as FrameworkElement;
+                    if(element != null) {
+                        return element.DataContext is SmileVideoFinderItemViewModel;
+                    }
+                }
+            }
+
+            return false;
         }
 
         protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
