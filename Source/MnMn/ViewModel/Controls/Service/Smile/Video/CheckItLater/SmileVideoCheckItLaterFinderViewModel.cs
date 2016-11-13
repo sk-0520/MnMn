@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
     public class SmileVideoCheckItLaterFinderViewModel: SmileVideoFeedFinderViewModelBase
     {
         public SmileVideoCheckItLaterFinderViewModel(Mediation mediation)
-            : base(mediation)
+            : base(mediation, 0)
         { }
 
         #region property

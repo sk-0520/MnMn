@@ -213,6 +213,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoRelationVideoOrderDescending => appConfig.Get("service-smile-relation-video-order-descending");
 
+        #region live
+
+        /// <summary>
+        /// 動画データ取得中になんかエラー発生から再開のリトライ数。
+        /// </summary>
+        public static int ServiceSmileLiveCategoryBaseCount => appConfig.Get("service-smile-smilelive-category-base-count", int.Parse);
+
+        #endregion
+
         #endregion
 
         #region setting

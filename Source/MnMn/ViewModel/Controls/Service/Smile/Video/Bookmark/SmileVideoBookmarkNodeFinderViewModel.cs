@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         #endregion
 
         public SmileVideoBookmarkNodeFinderViewModel(Mediation mediation, SmileVideoBookmarkNodeViewModel node)
-            : base(mediation)
+            : base(mediation, 0)
         {
             Node = node;
         }
