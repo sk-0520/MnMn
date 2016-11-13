@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public FinderViewModelBase(Mediation mediation, int baseNumber)
         {
             Mediation = mediation;
+            BaseNumber = baseNumber;
+
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
         }
 
@@ -333,7 +335,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             var finderItems = items
                 .Select((v, i) => new { Information = v, Index = i })
                 .Where(v => v.Information != null)
-                .Select(v => CreateFinderItem(v.Information, v.Index + 1))
+                .Select(v => CreateFinderItem(v.Information, BaseNumber + v.Index + 1))
                 .ToArray()
             ;
 

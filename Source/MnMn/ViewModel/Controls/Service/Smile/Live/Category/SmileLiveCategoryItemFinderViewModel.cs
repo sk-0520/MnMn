@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         #endregion
 
         public SmileLiveCategoryItemFinderViewModel(Mediation mediation, SmileLiveCategoryModel categoryDefine, DefinedElementModel sort, DefinedElementModel order, DefinedElementModel category, int index)
-            : base(mediation, index)
+            : base(mediation, index * Constants.ServiceSmileLiveCategoryBaseCount)
         {
             CategoryDefine = categoryDefine;
 
