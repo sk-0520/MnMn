@@ -391,6 +391,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             return CheckResultModel.Success(param);
         }
+
         void DragEnterAndOverNode(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DragNodeFormat)) {
@@ -399,7 +400,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     e.Effects = DragDropEffects.None;
                 } else {
                     var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
-                    if(dstNode != null && srcNode != dstNode) {
+                    if(dstNode != null && srcNode != dstNode && !dstNode.IsSystemNode) {
                         var isChildNode = GetNodesCore(srcNode, _ => true).Any(n => n == dstNode);
                         if(isChildNode) {
                             e.Effects = DragDropEffects.None;
@@ -422,8 +423,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
             e.Handled = true;
         }
+
         void DragLeaveNode(UIElement sender, DragEventArgs e)
         { }
+
         void DropNode(UIElement sender, DragEventArgs e)
         {
             e.Handled = true;
