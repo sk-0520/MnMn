@@ -151,6 +151,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#131: GC処理のタスクが精神衛生上きつい'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]

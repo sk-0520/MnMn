@@ -224,18 +224,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         Task<long> GarbageCollectionCahceVideosAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 var baseDirInfo = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-                var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly);
+                var cacheDirInfos = baseDirInfo.GetDirectories("*", SearchOption.TopDirectoryOnly).ToArray();
                 //long result = 0;
                 //foreach(var dir in cacheDirInfos) {
                 //    //TODO: オーバーフロー
                 //    result += await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan);
                 //};
-                var tasks = cacheDirInfos.Select(dir => GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan, force));
-                var result = Task.WhenAll(tasks).Result.Sum();
-
-                return result;
+                //var tasks = cacheDirInfos.Select(dir => GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan, force));
+                //var result = Task.WhenAll(tasks).Result.Sum();
+                //
+                //return result;
+                long totalSize = 0;
+                foreach(var dir in cacheDirInfos) {
+                    var result = await GarbageCollectionCahceVideoAsync(dir.Name, dir, garbageCollectionLevel, cacheSpan, force);
+                    totalSize += result;
+                }
+                return totalSize;
             });
         }
 
