@@ -84,24 +84,21 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.29.1',
-		'isRc': true,
+		'date': '2016/11/13',
+		'version': '0.30.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'class': 'compatibility',
+						'subject': '#239対応により動画のブックマークデータが破棄されます',
+						'comments': [
+							'どうしても引き継ぎたい場合は setting.json を手動で何とかする必要があります',
+							'https://groups.google.com/d/topic/mnmn-forum/-5SHfM0_tW0/discussion'
+						]
 					}
 				]
 			},
@@ -109,7 +106,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'dfd0f64694184571f6adb6abf97c7e95349e5bfb',
 						'subject': '#167: マイリスト・ブックマークの領域調整を設定に落す',
 						'comments': [
 							'#239 対応によりブックマークのデータ拡張性が増したので対応',
@@ -117,20 +114,16 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '978b492f4d67a7ec848e6f4d5e68fc32acb217e3',
 						'subject': '#241: とりあえずブックマーク的なことを行う'
 					},
 					{
-						'revision': '',
+						'revision': '43fc7cb898f992bf0826e04143b00e3481d86dc4',
 						'subject': '#242: ファインダー表示要素のD&Dをサポートする',
 						'comments': [
 							'ブックマークのアイテム移動ができるようになったよ',
 							'マイリストはAPIがあるっぽいから今回分からは見送り'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -138,7 +131,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'd1c06d30a6495e42492ad2f8820b1db0122c145f',
 						'subject': '#239: ブックマークのデータ構造を変更',
 						'comments': [
 							'やべぇ……2コミットでそれも少ししかキーボードさわってないのに出来てもた、マウス操作の方が多かった',
@@ -146,37 +139,20 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f6406367744703f8873c2b92fbd6c5814ffe7d0f',
 						'subject': '#237: 全ての動画に対するフィルタリングチェック状態がなんか変だね'
 					},
 					{
-						'revision': '',
+						'revision': '2076e3d7b58f5349a8f2230786244a2a3244804c',
 						'subject': '#131: GC処理のタスクが精神衛生上きつい'
 					},
 					{
-						'revision': '',
+						'revision': 'c6e22d6277f3536094a9034b0085e5cd1fe0bf63',
 						'subject': '#234: マウスカーソルを動かさずにフルスクリーンにするとカーソルが表示されたままになる'
 					},
 					{
-						'revision': '',
+						'revision': 'e49d245ceafd068ff709b9c8556e1a3bb4759f9b',
 						'subject': '#225: すんごい今更だけど検索時の動画につく表示番号が全て1始まりってどうなの'
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
