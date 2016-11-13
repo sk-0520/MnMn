@@ -190,14 +190,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
         {
-            if(SelectedFinderItem != null) {
-                Mediation.Logger.Debug(SelectedFinderItem.Information.Title);
-            } else {
-                Mediation.Logger.Debug("null!");
-            }
-
             return SelectedFinderItem != null;
-            //return true;
         }
 
         protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)

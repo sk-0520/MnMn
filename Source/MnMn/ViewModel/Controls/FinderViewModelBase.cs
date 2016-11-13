@@ -146,15 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public TFinderItemViewModel SelectedFinderItem
         {
             get { return this._selectedFinderItem; }
-            set
-            {
-                SetVariableValue(ref this._selectedFinderItem, value);
-                if(SelectedFinderItem == null) {
-                    Mediation.Logger.Debug("null!!!");
-                } else {
-                    Mediation.Logger.Debug(SelectedFinderItem.Information.Title);
-                }
-            }
+            set { SetVariableValue(ref this._selectedFinderItem, value); }
         }
 
         /// <summary>
