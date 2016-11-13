@@ -29,6 +29,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
+    [Obsolete]
     [ValueConversion(typeof(Color), typeof(ImageSource))]
     public class ColoringConverter: IValueConverter
     {

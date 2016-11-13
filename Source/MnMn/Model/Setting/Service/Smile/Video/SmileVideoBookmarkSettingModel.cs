@@ -20,31 +20,21 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
 {
     [DataContract]
-    public class SmileMyListSettingModel: ModelBase
+    public class SmileVideoBookmarkSettingModel: SettingModelBase
     {
         #region property
 
-        /// <summary>
-        /// ブックマーク。
-        /// </summary>
         [DataMember]
-        public CollectionModel<SmileMyListBookmarkItemModel> Bookmark { get; set; } = new CollectionModel<SmileMyListBookmarkItemModel>();
-
-        /// <summary>
-        /// 履歴。
-        /// </summary>
-        [DataMember]
-        public FixedSizeCollectionModel<SmileMyListItemModel> History { get; set; } = new FixedSizeCollectionModel<SmileMyListItemModel>(Constants.ServiceSmileMyListHistoryCount, false);
+        public SmileVideoBookmarkItemSettingModel Root { get; } = new SmileVideoBookmarkItemSettingModel();
 
         [DataMember]
-        public double GroupWidth { get; set; } = Constants.SettingServiceSmileMyListGroupAreaStar;
+        public double GroupWidth { get; set; } = Constants.SettingServiceSmileVideoBookmarkGroupAreaStar;
         [DataMember]
-        public double ItemsWidth { get; set; } = Constants.SettingServiceSmileMyListItemsAreaStar;
+        public double ItemsWidth { get; set; } = Constants.SettingServiceSmileVideoBookmarkItemsAreaStar;
 
 
         #endregion

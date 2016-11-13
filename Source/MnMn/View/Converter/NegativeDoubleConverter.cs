@@ -8,6 +8,7 @@ using System.Windows.Data;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
+    [Obsolete]
     [ValueConversion(typeof(double), typeof(double))]
     public class NegativeDoubleConverter: IValueConverter
     {

@@ -213,9 +213,24 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string ServiceSmileVideoRelationVideoOrderDescending => appConfig.Get("service-smile-relation-video-order-descending");
 
+        #region live
+
+        /// <summary>
+        /// 動画データ取得中になんかエラー発生から再開のリトライ数。
+        /// </summary>
+        public static int ServiceSmileLiveCategoryBaseCount => appConfig.Get("service-smile-smilelive-category-base-count", int.Parse);
+
+        #endregion
+
         #endregion
 
         #region setting
+
+        public static double SettingServiceSmileUserGroupAreaStar = appConfig.Get("setting-service-smile-user-group-area-star", double.Parse);
+        public static double SettingServiceSmileUserItemsAreaStar = appConfig.Get("setting-service-smile-user-items-area-star", double.Parse);
+
+        public static double SettingServiceSmileMyListGroupAreaStar => appConfig.Get("setting-service-smile-mylist-group-area-star", double.Parse);
+        public static double SettingServiceSmileMyListItemsAreaStar => appConfig.Get("setting-service-smile-mylist-items-area-star", double.Parse);
 
         #region video
 
@@ -417,6 +432,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int SettingServiceSmileVideoDownloadDmcVideoWeight => appConfig.Get("setting-service-smile-smilevideo-download-dmc-video-weight", int.Parse);
         public static int SettingServiceSmileVideoDownloadDmcAudioWeight => appConfig.Get("setting-service-smile-smilevideo-download-dmc-audio-weight", int.Parse);
 
+        public static double SettingServiceSmileVideoBookmarkGroupAreaStar => appConfig.Get("setting-service-smile-smilevideo-bookmark-group-area-star", double.Parse);
+        public static double SettingServiceSmileVideoBookmarkItemsAreaStar => appConfig.Get("setting-service-smile-smilevideo-bookmark-items-area-star", double.Parse);
 
         #endregion
 

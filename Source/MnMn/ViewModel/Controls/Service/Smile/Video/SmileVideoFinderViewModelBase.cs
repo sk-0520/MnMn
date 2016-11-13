@@ -67,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoFinderViewModelBase(Mediation mediation)
-            : base(mediation)
+        public SmileVideoFinderViewModelBase(Mediation mediation, int baseNumber)
+            : base(mediation, baseNumber)
         {
             //Mediation = mediation;
 
@@ -85,6 +85,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             //FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
             FinderItems.Filter = FilterItems;
+
+            DragAndDrop = new DelegateDragAndDrop() {
+                CanDragStartFunc = CanDragStartFromFinder,
+                GetDragParameterFunc = GetDragParameterFromFinder,
+                DragEnterAction = DragEnterFromFinder,
+                DragOverAction = DragOverFromFinder,
+                DragLeaveAction = DragLeaveFromFinder,
+                DropAction = DropFromFinder
+            };
         }
 
         #region property
@@ -248,6 +257,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// 「あとで見る」メニューを有効にするか。
         /// </summary>
         public virtual bool IsEnabledCheckItLaterMenu { get; } = true;
+        /// <summary>
+        /// 「未整理のブックマーク」メニューを有効にするか。
+        /// </summary>
+        public virtual bool IsEnabledUnorganizedBookmarkMenu { get; } = true;
 
         /// <summary>
         /// 動画再生方法。
@@ -317,6 +330,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => AddCheckItLater(SelectedFinderItem),
                     o => IsEnabledCheckItLaterMenu && SelectedFinderItem != null
+                );
+            }
+        }
+
+        public ICommand AddUnorganizedBookmarkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => AddUnorganizedBookmark(SelectedFinderItem),
+                    o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
                 );
             }
         }
@@ -541,6 +565,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
             //Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
         }
+
+        void AddUnorganizedBookmark(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            var item = information.ToVideoItemModel();
+            Mediation.ManagerPack.SmileManager.VideoManager.BookmarkManager.Node.VideoItems.Add(item);
+        }
+
+        protected virtual bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            return false;
+        }
+
+        protected virtual CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            return CheckResultModel.Failure<DragParameterModel>();
+        }
+        protected virtual void DragEnterFromFinder(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DragOverFromFinder(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DragLeaveFromFinder(UIElement sender, DragEventArgs e)
+        { }
+        protected virtual void DropFromFinder(UIElement sender, DragEventArgs e)
+        { }
 
         #endregion
 

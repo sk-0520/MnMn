@@ -16,11 +16,15 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
@@ -40,7 +44,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         #endregion
 
         public SmileVideoBookmarkNodeFinderViewModel(Mediation mediation, SmileVideoBookmarkNodeViewModel node)
-            : base(mediation)
+            : base(mediation, 0)
         {
             Node = node;
         }
@@ -90,9 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(o => {
-                    var videos = GetCheckedItems()
-                        .Select(i => i.Information)
-                    ;
+                    var videos = GetCheckedItems();
                     if(videos.Any()) {
                         RemoveCheckedVideos(videos);
                     }
@@ -127,10 +129,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             Node.VideoItems.SwapIndex(srcIndex, nextIndex);
         }
 
-        void RemoveCheckedVideos(IEnumerable<SmileVideoInformationViewModel> videoInformation)
+        void RemoveCheckedVideos(IEnumerable<SmileVideoFinderItemViewModel> finderItems)
         {
-            foreach(var video in videoInformation.ToArray()) {
-                var index = FinderItemList.FindIndex(i => i.Information == video);
+            foreach(var finderItem in finderItems.ToArray()) {
+                var index = FinderItemList.IndexOf(finderItem);
+                FinderItemList.RemoveAt(index);
+                Node.VideoItems.RemoveAt(index);
+            }
+        }
+
+        public void RemoveItem(SmileVideoFinderItemViewModel finderItem)
+        {
+            var index = FinderItemList.IndexOf(finderItem);
+            if(index != -1) {
                 FinderItemList.RemoveAt(index);
                 Node.VideoItems.RemoveAt(index);
             }
@@ -139,13 +150,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #endregion
 
-        #region SmileVideoHistoryFinderViewModelBase
+        #region SmileVideoFeedFinderViewModelBase
 
         protected override SmileVideoInformationFlags InformationFlags { get; } = SmileVideoInformationFlags.MylistCounter | SmileVideoInformationFlags.CommentCounter | SmileVideoInformationFlags.ViewCounter;
 
         public override bool IsUsingFinderFilter { get; } = false;
 
         public override bool IsEnabledCheckItLaterMenu { get; } = false;
+        public override bool IsEnabledUnorganizedBookmarkMenu { get; } = false;
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
@@ -174,6 +186,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             IsUpDownEnabled = SelectedSortType == SmileVideoSortType.Number && FinderItems.Cast<object>().Count() == FinderItemList.Count;
 
+        }
+
+        public override bool IsEnabledDrag { get; } = true;
+
+        protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            if(SelectedFinderItem != null) {
+                var position = e.GetPosition(sender);
+                var item = sender.InputHitTest(position);
+                var hitTestResults = VisualTreeHelper.HitTest(sender, position);
+                if(hitTestResults != null) {
+                    var element = hitTestResults.VisualHit as FrameworkElement;
+                    if(element != null) {
+                        return element.DataContext is SmileVideoFinderItemViewModel;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        protected override CheckResultModel<DragParameterModel> GetDragParameterFromFinder(UIElement sender, MouseEventArgs e)
+        {
+            var data = new DataObject(SelectedFinderItem.GetType(), SelectedFinderItem);
+
+            var param = new DragParameterModel() {
+                Data = data,
+                Effects = DragDropEffects.Move,
+                Element = sender,
+            };
+
+            return CheckResultModel.Success(param);
         }
 
         #endregion

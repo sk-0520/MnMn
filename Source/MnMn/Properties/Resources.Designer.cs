@@ -756,6 +756,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   未整理のブックマーク に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_SmileVideo_Bookmark_Unorganized {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_SmileVideo_Bookmark_Unorganized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   重複コメントフィルタ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_SmileVideo_Comment_NoApproval_Detail_Overlap {

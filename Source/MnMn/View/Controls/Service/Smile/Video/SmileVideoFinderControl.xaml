@@ -17,6 +17,7 @@
 
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
   xmlns:app_view_controls_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video"
@@ -228,7 +229,11 @@
         x:Name="PART_List"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
+        AllowDrop="{Binding AllowDrop}"
       >
+        <i:Interaction.Behaviors>
+          <app_view_attachment:DragAndDropBehavior AllowDrop="{Binding AllowDrop, Mode=OneWay}" IsEnabledDrag="{Binding IsEnabledDrag, Mode=OneWay}" DragAndDrop="{Binding DragAndDrop}" />
+        </i:Interaction.Behaviors>
         <ListBox.InputBindings>
           <KeyBinding Key="Return" Command="{Binding SelectedFinderItem.Information.OpenVideoDefaultCommand}" />
           <KeyBinding Key="Space" Command="{Binding SelectedFinderItem.ToggleCheckCommand}" />
@@ -295,6 +300,7 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
+            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}" />
             <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter}">
               <MenuItem Header="動画ID" Command="{Binding AddFinderFilteringCommand}">
                 <MenuItem.CommandParameter>

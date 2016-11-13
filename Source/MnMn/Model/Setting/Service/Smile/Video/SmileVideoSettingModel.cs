@@ -76,7 +76,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// ブックマーク。
         /// </summary>
         [DataMember]
-        public SmileVideoBookmarkItemSettingModel Bookmark { get; } = new SmileVideoBookmarkItemSettingModel();
+        //public SmileVideoBookmarkItemSettingModel Bookmark { get; } = new SmileVideoBookmarkItemSettingModel();
+        public SmileVideoBookmarkSettingModel Bookmark { get; } = new SmileVideoBookmarkSettingModel();
 
         /// <summary>
         /// あとで見る。
