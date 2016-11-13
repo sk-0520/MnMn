@@ -67,8 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        public SmileVideoFinderViewModelBase(Mediation mediation)
-            : base(mediation)
+        public SmileVideoFinderViewModelBase(Mediation mediation, int baseNumber)
+            : base(mediation, baseNumber)
         {
             //Mediation = mediation;
 

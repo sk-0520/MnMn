@@ -56,13 +56,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        public FinderViewModelBase(Mediation mediation)
+        public FinderViewModelBase(Mediation mediation, int baseNumber)
         {
             Mediation = mediation;
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
         }
 
         #region property
+
+        protected int BaseNumber { get; }
 
         protected CollectionModel<TFinderItemViewModel> FinderItemList { get; } = new CollectionModel<TFinderItemViewModel>();
         public virtual IReadOnlyList<TFinderItemViewModel> FinderItemsViewer => FinderItemList;
