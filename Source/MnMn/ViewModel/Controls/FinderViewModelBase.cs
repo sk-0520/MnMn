@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public IDragAndDrop DragAndDrop
         {
             get { return this._dragAndDrop; }
-            protected set { SetVariableValue(ref this._dragAndDrop, value); }
+            set { SetVariableValue(ref this._dragAndDrop, value); }
         }
 
         /// <summary>

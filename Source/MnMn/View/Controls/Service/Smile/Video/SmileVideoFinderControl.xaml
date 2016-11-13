@@ -232,7 +232,7 @@
         AllowDrop="{Binding AllowDrop}"
       >
         <i:Interaction.Behaviors>
-          <app_view_attachment:DragAndDropBehavior AllowDrop="{Binding AllowDrop, Mode=OneWay}" IsEnabledDrag="{Binding IsEnabledDrag, Mode=OneWay}" DragAndDrop="{Binding DragAndDrop, Mode=OneWay}" />
+          <app_view_attachment:DragAndDropBehavior AllowDrop="{Binding AllowDrop, Mode=OneWay}" IsEnabledDrag="{Binding IsEnabledDrag, Mode=OneWay}" DragAndDrop="{Binding DragAndDrop}" />
         </i:Interaction.Behaviors>
         <ListBox.InputBindings>
           <KeyBinding Key="Return" Command="{Binding SelectedFinderItem.Information.OpenVideoDefaultCommand}" />
