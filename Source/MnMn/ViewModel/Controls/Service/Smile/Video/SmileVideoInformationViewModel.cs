@@ -1477,10 +1477,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             try {
                 long size = 0;
+
+                WatchPageHtmlFile.Refresh();
                 if(WatchPageHtmlFile.Exists) {
                     size += WatchPageHtmlFile.Length;
                     WatchPageHtmlFile.Delete();
                 }
+
+                GetflvFile.Refresh();
                 if(GetflvFile.Exists) {
                     size += GetflvFile.Length;
                     GetflvFile.Delete();
@@ -1499,6 +1503,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(!CanGarbageCollection) {
                 return CheckResultModel.Failure<long>();
+            }
+
+            // キャッシュディレクトリ自体がなければ終了する
+            CacheDirectory.Refresh();
+            if(!CacheDirectory.Exists) {
+                return CheckResultModel.Success(0L);
             }
 
             long largeSize = 0;
