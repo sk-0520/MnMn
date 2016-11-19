@@ -95,6 +95,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
             BookmarkUserMyListItems = CollectionViewSource.GetDefaultView(BookmarkUserMyListPairs.ViewModelList);
             HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
+
+            var tagNames = BookmarkUserMyListPairs.ModelList
+                .Where(b => !string.IsNullOrWhiteSpace(b.TagNames))
+                .Select(b => b.TagNames.Split(Constants.SmileMyListBookmarkTagTokenSplitter))
+                .Select(ts => ts.Where(s => !string.IsNullOrWhiteSpace(s)))
+                .SelectMany(ts => ts)
+                .OrderBy(s => s)
+                .Distinct()
+            ;
+            BookmarkTagNames = CollectionModel.Create(tagNames);
         }
 
         #region property
@@ -145,6 +155,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkMyListFinderViewModel> BookmarkUserMyListPairs { get; }
         public ICollectionView BookmarkUserMyListItems { get; }
+
+        public CollectionModel<string> BookmarkTagNames { get; }
 
         CollectionModel<SmileVideoItemsMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoItemsMyListFinderViewModel>();
         public ICollectionView HistoryUserMyListItems { get; }

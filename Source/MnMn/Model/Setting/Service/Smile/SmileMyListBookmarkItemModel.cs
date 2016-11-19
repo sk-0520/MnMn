@@ -43,9 +43,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
 
         /// <summary>
         /// タグ。
+        /// <para>色々試したけど直にカンマ区切りとかのほうが使いやすかった。</para>
         /// </summary>
         [DataMember]
-        public CollectionModel<string> TagNames { get; set; } = new CollectionModel<string>();
+        public string TagNames { get; set; }
 
         #endregion
     }

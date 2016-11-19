@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
@@ -47,6 +48,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     CallOnPropertyChange(nameof(MyListName));
                 }
             }
+        }
+
+        public string TagNames
+        {
+            get { return BookmarkItem.TagNames; }
+            set { SetPropertyValue(BookmarkItem, value); }
         }
 
         #endregion
