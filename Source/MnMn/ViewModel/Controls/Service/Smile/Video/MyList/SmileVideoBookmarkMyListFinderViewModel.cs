@@ -53,7 +53,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public string TagNames
         {
             get { return BookmarkItem.TagNames; }
-            set { SetPropertyValue(BookmarkItem, value); }
+            set
+            {
+                var originTags = value.Split(Constants.SmileMyListBookmarkTagTokenSplitter)
+                    .Select(s => s.Trim())
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray()
+                ;
+                var distinctNoOrderTags = new List<string>(originTags.Length);
+                foreach(var tag in originTags) {
+                    if(!distinctNoOrderTags.Contains(tag)) {
+                        distinctNoOrderTags.Add(tag);
+                    }
+                }
+                var splitter = $"{Constants.SmileMyListBookmarkTagTokenSplitter} ";
+                var joinTags = string.Join(splitter, distinctNoOrderTags);
+                SetPropertyValue(BookmarkItem, joinTags);
+            }
         }
 
         #endregion
