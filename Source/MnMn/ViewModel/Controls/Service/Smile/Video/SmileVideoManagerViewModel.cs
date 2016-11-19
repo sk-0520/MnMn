@@ -188,6 +188,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             CheckUtility.EnforceNotNullAndNotWhiteSpace(videoId);
 
             var targetFile = SmileVideoInformationUtility.GetGetthumbinfoFile(Mediation, videoId);
+            try {
+                targetFile.Refresh();
+            } catch(IOException ex) {
+                Mediation.Logger.Warning(ex);
+            }
             if(!targetFile.Exists && baseDirectory.Exists) {
                 try {
                     // thumbなけりゃディレクトリごとポイする
