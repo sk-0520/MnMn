@@ -1438,22 +1438,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 needSave = true;
             }
 
-
-            var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToArray();
             var dmcCheckes = new List<CheckResultModel<long>>();
-            foreach(var dmcFile in dmcFiles) {
-                var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
-                if(check.IsSuccess) {
-                    var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
-                    SmileVideoDmcItemModel item;
-                    if(IndividualVideoSetting.DmcItems.TryGetValue(role, out item)) {
-                        item.IsLoaded = false;
+
+            try {
+                var dmcFiles = CacheDirectory.EnumerateFiles("*-video.*.dmc.*", SearchOption.TopDirectoryOnly).ToArray();
+                foreach(var dmcFile in dmcFiles) {
+                    var check = GarbageCollectionFromFile(dmcFile, cacheSpan, force);
+                    if(check.IsSuccess) {
+                        var role = Regex.Replace(dmcFile.Name, @".*-video\.(\[.*\])\.dmc\..*", "$1");
+                        SmileVideoDmcItemModel item;
+                        if(IndividualVideoSetting.DmcItems.TryGetValue(role, out item)) {
+                            item.IsLoaded = false;
+                        }
+                        needSave = true;
                     }
-                    needSave = true;
+                    dmcCheckes.Add(check);
                 }
-                dmcCheckes.Add(check);
+                CallOnPropertyChange(nameof(LoadedDmcVideos));
+            } catch(Exception ex) {
+                Mediation.Logger.Error(ex);
             }
-            CallOnPropertyChange(nameof(LoadedDmcVideos));
 
             var checks = new[] {
                 normalCheck,
