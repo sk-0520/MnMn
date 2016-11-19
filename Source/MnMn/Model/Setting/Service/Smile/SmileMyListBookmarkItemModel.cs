@@ -41,6 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         [DataMember]
         public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
 
+        /// <summary>
+        /// タグ。
+        /// </summary>
+        [DataMember]
+        public CollectionModel<string> TagNames { get; set; } = new CollectionModel<string>();
+
         #endregion
     }
 }
