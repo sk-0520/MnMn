@@ -31,6 +31,7 @@
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
       <cttn_sl_view_converter:AutoColorConverter x:Key="AutoColorConverter" />
+      <cttn_sl_view_converter:RatioConverter x:Key="RatioConverter" />
 
       <app_view_converter:ColoringConverter x:Key="ColoringConverter" />
       <app_view_converter:SourceLoadStateIsNotCompletedConverter x:Key="SourceLoadStateIsNotCompletedConverter" />
@@ -301,7 +302,11 @@
                   </Canvas>
                 </Viewbox>
               </Button>
+
+              <Separator />
+              <CheckBox IsChecked="{Binding UsingBookmarkTagFilter}">タグ</CheckBox>
             </ToolBar>
+
             <Expander DockPanel.Dock="Bottom" Header="編集">
               <Grid>
                 <Grid.RowDefinitions>
@@ -325,7 +330,24 @@
               </Grid>
             </Expander>
 
-            <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Grid Grid.Column="0" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource RatioConverter}, ConverterParameter=0.3}" Visibility="{Binding UsingBookmarkTagFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <ComboBox Grid.Row="0" ItemsSource="{Binding BookmarkTagNames}">
+                </ComboBox>
+              </Grid>
+
+              <ListBox Grid.Column="1" Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />
+            </Grid>
           </DockPanel>
         </TabItem>
 

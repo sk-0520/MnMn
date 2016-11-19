@@ -158,6 +158,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         public CollectionModel<string> BookmarkTagNames { get; }
 
+        public bool UsingBookmarkTagFilter
+        {
+            get { return MyListSetting.UsingBookmarkTagFilter; }
+            set { SetPropertyValue(MyListSetting, value); }
+        }
+
         CollectionModel<SmileVideoItemsMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoItemsMyListFinderViewModel>();
         public ICollectionView HistoryUserMyListItems { get; }
 
