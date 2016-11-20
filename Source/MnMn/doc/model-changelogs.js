@@ -144,6 +144,10 @@
 					{
 						'revision': '',
 						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
 					}
 				]
 			},
@@ -161,7 +165,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#251: マイリストのプレースホルダがtoolkitを使用したまま'
 					},
 					{
 						'revision': '',
