@@ -367,6 +367,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkRootNodeViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkMyListFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListBookmarkFilterViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>

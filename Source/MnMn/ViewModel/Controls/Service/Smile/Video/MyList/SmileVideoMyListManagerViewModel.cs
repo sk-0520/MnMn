@@ -94,17 +94,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             SearchUserMyListItems = CollectionViewSource.GetDefaultView(SearchUserMyList);
             AccountMyListItems = CollectionViewSource.GetDefaultView(AccountMyList);
             BookmarkUserMyListItems = CollectionViewSource.GetDefaultView(BookmarkUserMyListPairs.ViewModelList);
+            BookmarkUserMyListItems.Filter = BookmarkUserMyListFilter;
             HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
 
-            var tagNames = BookmarkUserMyListPairs.ModelList
-                .Where(b => !string.IsNullOrWhiteSpace(b.TagNames))
-                .Select(b => b.TagNames.Split(Constants.SmileMyListBookmarkTagTokenSplitter))
-                .Select(ts => ts.Where(s => !string.IsNullOrWhiteSpace(s)))
-                .SelectMany(ts => ts)
-                .OrderBy(s => s)
-                .Distinct()
-            ;
-            BookmarkTagNames = CollectionModel.Create(tagNames);
+            SetTagItems();
         }
 
         #region property
@@ -156,12 +149,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         MVMPairCreateDelegationCollection<SmileMyListBookmarkItemModel, SmileVideoBookmarkMyListFinderViewModel> BookmarkUserMyListPairs { get; }
         public ICollectionView BookmarkUserMyListItems { get; }
 
-        public CollectionModel<string> BookmarkTagNames { get; }
+        public CollectionModel<SmileVideoMyListBookmarkFilterViewModel> BookmarkTagItems { get; } = new CollectionModel<SmileVideoMyListBookmarkFilterViewModel>();
 
         public bool UsingBookmarkTagFilter
         {
             get { return MyListSetting.UsingBookmarkTagFilter; }
-            set { SetPropertyValue(MyListSetting, value); }
+            set
+            {
+                if(SetPropertyValue(MyListSetting, value)) {
+                    BookmarkUserMyListItems.Refresh();
+                }
+            }
         }
 
         CollectionModel<SmileVideoItemsMyListFinderViewModel> HistoryUserMyList { get; } = new CollectionModel<SmileVideoItemsMyListFinderViewModel>();
@@ -256,11 +254,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             get { return this._selectedBookmarkFinder; }
             set
             {
+                var prev = SelectedBookmarkFinder;
                 if(SetVariableValue(ref this._selectedBookmarkFinder, value)) {
-                    ChangedSelectedFinder(this._selectedBookmarkFinder);
+                    if(prev != null) {
+                        prev.PropertyChanged -= SelectedBookmarkFinder_PropertyChanged;
+                    }
+                    if(SelectedBookmarkFinder != null) {
+                        SelectedBookmarkFinder.PropertyChanged += SelectedBookmarkFinder_PropertyChanged;
+                    }
+                    ChangedSelectedFinder(SelectedBookmarkFinder);
                 }
             }
         }
+
         public SmileVideoMyListFinderViewModelBase SelectedSearchFinder
         {
             get { return this._selectedSearchFinder; }
@@ -877,6 +883,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             });
         }
 
+        void SetTagItems()
+        {
+            var prevItems = BookmarkTagItems.ToArray();
+            foreach(var item in prevItems) {
+                item.PropertyChanged -= Item_PropertyChanged;
+            }
+
+            var tagNames = BookmarkUserMyListPairs.ModelList
+                .Where(b => !string.IsNullOrWhiteSpace(b.TagNames))
+                .Select(b => b.TagNames.Split(Constants.SmileMyListBookmarkTagTokenSplitter))
+                .Select(ts => ts.Select(s => s.Trim()))
+                .Select(ts => ts.Where(s => !string.IsNullOrWhiteSpace(s)))
+                .SelectMany(ts => ts)
+                .OrderBy(s => s)
+                .Distinct()
+                .Select(s => new SmileVideoMyListBookmarkFilterViewModel(s))
+            ;
+            BookmarkTagItems.InitializeRange(tagNames);
+
+            foreach(var item in BookmarkTagItems) {
+                item.PropertyChanged += Item_PropertyChanged;
+            }
+        }
+
+        bool BookmarkUserMyListFilter(object obj)
+        {
+            if(!UsingBookmarkTagFilter) {
+                return true;
+            }
+
+            if(BookmarkTagItems.All(b => !b.IsChecked.GetValueOrDefault())) {
+                return true;
+            }
+
+            var targetTags = BookmarkTagItems.Where(b => b.IsChanged);
+
+            var vm = (SmileVideoBookmarkMyListFinderViewModel)obj;
+            var myTags = vm.TagNameItems.ToArray();
+            var show = targetTags.All(t => myTags.Any(s => s == t.TagName));
+            Mediation.Logger.Information($"{show}");
+
+            return show;
+        }
+
+
 
         #endregion
 
@@ -926,5 +977,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         }
 
         #endregion
+
+        void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SmileVideoMyListBookmarkFilterViewModel.IsChecked)) {
+                BookmarkUserMyListItems.Refresh();
+            }
+        }
+
+        private void SelectedBookmarkFinder_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SmileVideoBookmarkMyListFinderViewModel.TagNames)) {
+                SetTagItems();
+            }
+        }
+
     }
 }

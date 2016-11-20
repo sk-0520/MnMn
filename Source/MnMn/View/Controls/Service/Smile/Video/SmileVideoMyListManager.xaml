@@ -338,12 +338,26 @@
 
               <Grid Grid.Column="0" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource RatioConverter}, ConverterParameter=0.3}" Visibility="{Binding UsingBookmarkTagFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto" />
                   <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <ComboBox Grid.Row="0" ItemsSource="{Binding BookmarkTagNames}">
-                </ComboBox>
+                <ScrollViewer Grid.Row="1">
+                  <ItemsControl ItemsSource="{Binding BookmarkTagItems}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Grid>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                          </Grid.ColumnDefinitions>
+
+                          <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}" />
+                          <TextBlock Grid.Column="1" Text="{Binding TagName}" />
+                        </Grid>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </ScrollViewer>
               </Grid>
 
               <ListBox Grid.Column="1" Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />

@@ -72,6 +72,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
         }
 
+        public IEnumerable<string> TagNameItems
+        {
+            get
+            {
+                if(BookmarkItem.TagNames != null) {
+                    return BookmarkItem.TagNames.Split(Constants.SmileMyListBookmarkTagTokenSplitter)
+                        .Select(s => s.Trim())
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                    ;
+                } else {
+                    return Enumerable.Empty<string>();
+                }
+            }
+        }
+
         #endregion
 
         #region command
