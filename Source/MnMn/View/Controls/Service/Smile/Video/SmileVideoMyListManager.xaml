@@ -307,6 +307,25 @@
               <CheckBox IsChecked="{Binding UsingBookmarkTagFilter}">タグ</CheckBox>
             </ToolBar>
 
+            <StackPanel DockPanel.Dock="Top" MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DockPanel}, Converter={StaticResource RatioConverter}, ConverterParameter=0.3}" Visibility="{Binding UsingBookmarkTagFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <ScrollViewer >
+                <ItemsControl ItemsSource="{Binding BookmarkTagItems}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding TagName}" Margin="{StaticResource IndependentMargin}" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </ScrollViewer>
+
+              <Separator/>
+            </StackPanel>
+
             <Expander DockPanel.Dock="Bottom" Header="編集">
               <Grid>
                 <Grid.RowDefinitions>
@@ -330,30 +349,8 @@
               </Grid>
             </Expander>
 
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
 
-              <Grid Grid.Column="0" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource RatioConverter}, ConverterParameter=0.3}" Visibility="{Binding UsingBookmarkTagFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <Grid.RowDefinitions>
-                  <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <ScrollViewer Grid.Row="1">
-                  <ItemsControl ItemsSource="{Binding BookmarkTagItems}">
-                    <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding TagName}" />
-                      </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                  </ItemsControl>
-                </ScrollViewer>
-              </Grid>
-
-              <ListBox Grid.Column="1" Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />
-            </Grid>
+            <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedBookmarkFinder}" ItemsSource="{Binding BookmarkUserMyListItems}" />
           </DockPanel>
         </TabItem>
 

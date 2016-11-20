@@ -906,12 +906,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 if(prev != null) {
                     item.IsChecked = prev.IsChecked;
                 }
-            }
-            BookmarkTagItems.InitializeRange(tagNames);
 
-            foreach(var item in BookmarkTagItems) {
                 item.PropertyChanged += Item_PropertyChanged;
             }
+            BookmarkTagItems.InitializeRange(tagNames);
         }
 
         bool BookmarkUserMyListFilter(object obj)
