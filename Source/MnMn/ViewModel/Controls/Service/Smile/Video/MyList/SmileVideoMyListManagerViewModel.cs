@@ -899,7 +899,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 .OrderBy(s => s)
                 .Distinct()
                 .Select(s => new SmileVideoMyListBookmarkFilterViewModel(s))
+                .ToArray()
             ;
+            foreach(var item in tagNames) {
+                var prev = prevItems.FirstOrDefault(t => t.TagName == item.TagName);
+                if(prev != null) {
+                    item.IsChecked = prev.IsChecked;
+                }
+            }
             BookmarkTagItems.InitializeRange(tagNames);
 
             foreach(var item in BookmarkTagItems) {
@@ -917,7 +924,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 return true;
             }
 
-            var targetTags = BookmarkTagItems.Where(b => b.IsChanged);
+            var targetTags = BookmarkTagItems.Where(b => b.IsChecked.GetValueOrDefault());
 
             var vm = (SmileVideoBookmarkMyListFinderViewModel)obj;
             var myTags = vm.TagNameItems.ToArray();

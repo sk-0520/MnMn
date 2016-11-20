@@ -345,15 +345,7 @@
                   <ItemsControl ItemsSource="{Binding BookmarkTagItems}">
                     <ItemsControl.ItemTemplate>
                       <DataTemplate>
-                        <Grid>
-                          <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                          </Grid.ColumnDefinitions>
-
-                          <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}" />
-                          <TextBlock Grid.Column="1" Text="{Binding TagName}" />
-                        </Grid>
+                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding TagName}" />
                       </DataTemplate>
                     </ItemsControl.ItemTemplate>
                   </ItemsControl>
