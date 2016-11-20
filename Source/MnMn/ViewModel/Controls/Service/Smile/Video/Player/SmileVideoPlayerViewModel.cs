@@ -747,11 +747,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(!IsSettedMedia && !IsViewClosed) {
                 Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
-                Player.RebuildPlayer();
+
+                //Player.RebuildPlayer();
+
                 //Player.Dispatcher.Invoke(() => {
-                var uri = new Uri(PlayFile.FullName);
-                Mediation.Logger.Debug($"{VideoId}: set media {uri}");
-                Player.LoadMedia(uri);
+                Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
+                Player.LoadMedia(PlayFile.FullName);
+
                 //});
                 IsSettedMedia = true;
             }
