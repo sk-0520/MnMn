@@ -746,9 +746,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetMedia()
         {
             if(!IsSettedMedia && !IsViewClosed) {
+                Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
+
+                //Player.RebuildPlayer();
+
                 //Player.Dispatcher.Invoke(() => {
                 Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
                 Player.LoadMedia(PlayFile.FullName);
+
                 //});
                 IsSettedMedia = true;
             }
@@ -1797,8 +1802,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override Task StopPrevProcessAsync()
         {
-            var processTask = base.StopPrevProcessAsync();
-            var playerTask = Task.CompletedTask;
+            //var processTask = base.StopPrevProcessAsync();
+            //var playerTask = Task.CompletedTask;
             if(Player != null) {
                 if(Player.State != Meta.Vlc.Interop.Media.MediaState.Stopped) {
                     //playerTask = Task.Run(() => {
@@ -1808,11 +1813,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     //InitializeStatus();
                     //});
                 }
-                Mediation.Logger.Debug($"{nameof(Player.RebuildPlayer)}");
-                Player.RebuildPlayer();
+                //Mediation.Logger.Debug($"{nameof(Player.RebuildPlayer)}");
+                //Player.RebuildPlayer();
             }
 
-            return Task.WhenAll(processTask, playerTask);
+            //return Task.WhenAll(processTask, playerTask);
+            return base.StopPrevProcessAsync();
         }
 
         #endregion
