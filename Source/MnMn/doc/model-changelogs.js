@@ -147,7 +147,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#250: Meta.Vlc を 16.11.19 に更新',
+						'comments': [
+							'願望だけど #247 が解決すればいいなぁ',
+							'解決しなかったらガリガリ頑張りますかぁ'
+						]
 					},
 					{
 						'revision': '',
