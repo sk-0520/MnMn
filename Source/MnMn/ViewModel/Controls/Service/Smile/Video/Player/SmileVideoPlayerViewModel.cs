@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     var baseUri = new Uri("http://dic.nicovideo.jp/a/");
                     var uri = new Uri(baseUri, viewModel.TagName);
                     try {
-                        Process.Start(uri.ToHttpEncodeString());
+                        Process.Start(uri.OriginalString);
                     } catch(Exception ex) {
                         Mediation.Logger.Warning(ex);
                     }
