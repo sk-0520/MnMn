@@ -101,12 +101,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Meta.Vlc">
-      <HintPath>..\packages\Meta.Vlc.16.11.19\lib\net45\x86\Meta.Vlc.dll</HintPath>
+      <HintPath>..\packages\Meta.Vlc.16.05.01\lib\net45\x86\Meta.Vlc.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Meta.Vlc.Wpf">
-      <HintPath>..\packages\Meta.Vlc.Wpf.16.11.19\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
+      <HintPath>..\packages\Meta.Vlc.Wpf.16.05.01.2\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
