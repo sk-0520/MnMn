@@ -80,22 +80,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static async Task<BitmapSource> LoadBitmapBinaryAsync(HttpClient client, Uri loadUri, int maxCount, TimeSpan waitTime, ILogger logger)
         {
             var count = 0;
-            byte[] binary = null;
+            //byte[] binary = null;
             logger.Trace($"{nameof(loadUri)}: {loadUri}");
             do {
                 try {
-                    binary = await client.GetByteArrayAsync(loadUri);
+                    var binary = await client.GetByteArrayAsync(loadUri);
+                    if(binary == null) {
+                        logger.Trace($"{nameof(loadUri)}, binary is null");
+                        continue;
+                    }
+                    logger.Trace($"{nameof(loadUri)}, length: {binary.Length}");
+                    return CacheImageUtility.GetBitmapSource(binary);
                 } catch(Exception ex) {
                     logger.Warning(ex);
                     if(count != 0) {
                         Thread.Sleep(waitTime);
                     }
                 }
-            } while(count++ < maxCount && binary == null);
-
-            if(binary != null) {
-                return CacheImageUtility.GetBitmapSource(binary);
-            }
+            } while(count++ < maxCount);
 
             logger.Error($"error {nameof(loadUri)} -> {loadUri}");
             return null;
