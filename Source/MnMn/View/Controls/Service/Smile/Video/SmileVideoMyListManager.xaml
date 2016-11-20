@@ -304,7 +304,7 @@
               </Button>
 
               <Separator />
-              <CheckBox IsChecked="{Binding UsingBookmarkTagFilter}">タグ</CheckBox>
+              <CheckBox IsChecked="{Binding UsingBookmarkTagFilter}">タグフィルタ</CheckBox>
             </ToolBar>
 
             <StackPanel DockPanel.Dock="Top" MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DockPanel}, Converter={StaticResource RatioConverter}, ConverterParameter=0.3}" Visibility="{Binding UsingBookmarkTagFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -331,7 +331,6 @@
                 <Grid.RowDefinitions>
                   <RowDefinition />
                   <RowDefinition />
-                  <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
@@ -339,12 +338,23 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0">名前</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedBookmarkFinder.MyListCustomName, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid Grid.Row="0" Grid.Column="1">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="1" Grid.Column="1" Command="{Binding SelectedBookmarkFinder.RefreshBookmarkItemCommand}">オリジナルの名称に戻す</Button>
+                  <TextBox Grid.Column="0" Text="{Binding SelectedBookmarkFinder.MyListCustomName, UpdateSourceTrigger=PropertyChanged}" />
+                  <Button Grid.Column="1" Command="{Binding SelectedBookmarkFinder.RefreshBookmarkItemCommand}">戻す</Button>
+                </Grid>
 
-                <Label Grid.Row="2" Grid.Column="0">タグ</Label>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedBookmarkFinder.TagNames, UpdateSourceTrigger=LostFocus}" />
+                <Label Grid.Row="1" Grid.Column="0">
+                  <TextBlock>
+                    <Run>タグ</Run>
+                    <Run FontSize="9" Text="{Binding BookmarkTagTokenSplitter, StringFormat=( {0} 区切り), Mode=OneTime}" />
+                  </TextBlock>
+                </Label>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedBookmarkFinder.TagNames, UpdateSourceTrigger=LostFocus}" />
 
               </Grid>
             </Expander>

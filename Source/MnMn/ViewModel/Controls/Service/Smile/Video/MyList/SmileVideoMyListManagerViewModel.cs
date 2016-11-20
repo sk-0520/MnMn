@@ -106,6 +106,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         SmileVideoMyListModel MyList { get; }
 
+        public char BookmarkTagTokenSplitter { get { return Constants.SmileMyListBookmarkTagTokenSplitter; } }
+
         CollectionModel<SmileVideoAccountMyListFinderViewModel> AccountMyList { get; } = new CollectionModel<SmileVideoAccountMyListFinderViewModel>();
         public ICollectionView AccountMyListItems { get; }
         public IReadOnlyList<SmileVideoAccountMyListFinderViewModel> AccountMyListViewer => AccountMyList;
@@ -512,7 +514,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 return CreateCommand(
                     o => ChangePositionBookmarkUserMyList((SmileVideoBookmarkMyListFinderViewModel)o, true),
-                    o => IsSelectedBookmark && SelectedBookmarkFinder != null && 0 < BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoBookmarkMyListFinderViewModel)o)
+                    o => IsSelectedBookmark && !UsingBookmarkTagFilter && SelectedBookmarkFinder != null && 0 < BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoBookmarkMyListFinderViewModel)o)
                 );
             }
         }
@@ -523,7 +525,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 return CreateCommand(
                     o => ChangePositionBookmarkUserMyList((SmileVideoBookmarkMyListFinderViewModel)o, false),
-                    o => IsSelectedBookmark && SelectedBookmarkFinder != null && BookmarkUserMyListPairs.Count - 1 > BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoBookmarkMyListFinderViewModel)o)
+                    o => IsSelectedBookmark && !UsingBookmarkTagFilter && SelectedBookmarkFinder != null && BookmarkUserMyListPairs.Count - 1 > BookmarkUserMyListPairs.ViewModelList.IndexOf((SmileVideoBookmarkMyListFinderViewModel)o)
                 );
             }
         }
@@ -783,6 +785,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         void RemoveSelectedBookmarkUserMyList()
         {
             BookmarkUserMyListPairs.Remove(SelectedBookmarkFinder);
+            SetTagItems();
         }
 
         void ChangePositionBookmarkUserMyList(SmileVideoBookmarkMyListFinderViewModel viewModel, bool isUp)
@@ -927,7 +930,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var vm = (SmileVideoBookmarkMyListFinderViewModel)obj;
             var myTags = vm.TagNameItems.ToArray();
             var show = targetTags.All(t => myTags.Any(s => s == t.TagName));
-            Mediation.Logger.Information($"{show}");
+            //Mediation.Logger.Information($"{show}");
 
             return show;
         }
