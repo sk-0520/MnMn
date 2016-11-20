@@ -65,12 +65,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static Task SaveBitmapSourceToPngAsync(BitmapSource bitmapSource, string savePath, ILogger logger)
         {
-            return Task.Run(() => {
-                Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
-                    var encoder = new PngBitmapEncoder();
-                    SaveBitmapSource(bitmapSource, savePath, encoder, logger);
-                }));
-            });
+            //return Task.Run(() => {
+            //    Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
+            //        var encoder = new PngBitmapEncoder();
+            //        SaveBitmapSource(bitmapSource, savePath, encoder, logger);
+            //    }));
+            //});
+            return Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
+                var encoder = new PngBitmapEncoder();
+                SaveBitmapSource(bitmapSource, savePath, encoder, logger);
+            })).Task;
         }
 
         public static async Task<BitmapSource> LoadBitmapBinaryAsync(HttpClient client, Uri loadUri, int maxCount, TimeSpan waitTime, ILogger logger)
