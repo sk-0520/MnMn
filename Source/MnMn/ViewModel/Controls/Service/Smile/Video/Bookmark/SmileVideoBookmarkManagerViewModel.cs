@@ -38,11 +38,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 {
     public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        #region define
+        //#region define
 
-        static readonly string DragNodeFormat = Constants.ApplicationName + "**Node";
+        //static readonly string DragNodeFormat = Constants.ApplicationName + "**Node";
 
-        #endregion
+        //#endregion
 
         #region variable
 
@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         CheckResultModel<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
         {
-            var data = new DataObject(DragNodeFormat, SelectedBookmarkNode);
+            var data = new DataObject(SelectedBookmarkNode.GetType(), SelectedBookmarkNode);
             var param = new DragParameterModel() {
                 Data = data,
                 Effects = DragDropEffects.Move,
@@ -379,8 +379,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void DragEnterAndOverNode(UIElement sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DragNodeFormat)) {
-                var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
+            if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
+                var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));
                 if(srcNode.IsSystemNode) {
                     e.Effects = DragDropEffects.None;
                 } else {
@@ -417,8 +417,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             e.Handled = true;
             e.Effects = DragDropEffects.None;
 
-            if(e.Data.GetDataPresent(DragNodeFormat)) {
-                var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(DragNodeFormat);
+            if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
+                var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != null && srcNode != dstNode) {
                     var srcModel = srcNode.Model;
