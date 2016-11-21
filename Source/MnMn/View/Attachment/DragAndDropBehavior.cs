@@ -37,55 +37,55 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         #endregion
 
-        #region AllowDropProperty
+        //#region AllowDropProperty
 
-        public static readonly DependencyProperty AllowDropProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(AllowDropProperty)),
-            typeof(bool),
-            typeof(DragAndDropBehavior),
-            new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnAllowDropChanged))
-        );
+        //public static readonly DependencyProperty AllowDropProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(AllowDropProperty)),
+        //    typeof(bool),
+        //    typeof(DragAndDropBehavior),
+        //    new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnAllowDropChanged))
+        //);
 
-        private static void OnAllowDropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as DragAndDropBehavior;
-            if(control != null) {
-                control.AllowDrop = (bool)e.NewValue;
-            }
-        }
+        //private static void OnAllowDropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var control = d as DragAndDropBehavior;
+        //    if(control != null) {
+        //        control.AllowDrop = (bool)e.NewValue;
+        //    }
+        //}
 
-        public bool AllowDrop
-        {
-            get { return (bool)GetValue(AllowDropProperty); }
-            set { SetValue(AllowDropProperty, value); }
-        }
+        //public bool AllowDrop
+        //{
+        //    get { return (bool)GetValue(AllowDropProperty); }
+        //    set { SetValue(AllowDropProperty, value); }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region IsEnabledDragProperty
+        //#region IsEnabledDragProperty
 
-        public static readonly DependencyProperty IsEnabledDragProperty = DependencyProperty.Register(
-            DependencyPropertyUtility.GetName(nameof(IsEnabledDragProperty)),
-            typeof(bool),
-            typeof(DragAndDropBehavior),
-            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledDragChanged))
-        );
+        //public static readonly DependencyProperty IsEnabledDragProperty = DependencyProperty.Register(
+        //    DependencyPropertyUtility.GetName(nameof(IsEnabledDragProperty)),
+        //    typeof(bool),
+        //    typeof(DragAndDropBehavior),
+        //    new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledDragChanged))
+        //);
 
-        private static void OnIsEnabledDragChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as DragAndDropBehavior;
-            if(control != null) {
-                control.IsEnabledDrag = (bool)e.NewValue;
-            }
-        }
+        //private static void OnIsEnabledDragChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var control = d as DragAndDropBehavior;
+        //    if(control != null) {
+        //        control.IsEnabledDrag = (bool)e.NewValue;
+        //    }
+        //}
 
-        public bool IsEnabledDrag
-        {
-            get { return (bool)GetValue(IsEnabledDragProperty); }
-            set { SetValue(IsEnabledDragProperty, value); }
-        }
+        //public bool IsEnabledDrag
+        //{
+        //    get { return (bool)GetValue(IsEnabledDragProperty); }
+        //    set { SetValue(IsEnabledDragProperty, value); }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Behavior
 
@@ -119,44 +119,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if(IsEnabledDrag) {
-                DragAndDrop.MouseDown((UIElement)sender, e);
-            }
+            DragAndDrop.MouseDown((UIElement)sender, e);
         }
 
         void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if(IsEnabledDrag) {
-                DragAndDrop.MouseMove((UIElement)sender, e);
-            }
+            DragAndDrop.MouseMove((UIElement)sender, e);
         }
 
         void AssociatedObject_DragEnter(object sender, DragEventArgs e)
         {
-            if(IsEnabledDrag) {
-                DragAndDrop.DragEnter((UIElement)sender, e);
-            }
+            DragAndDrop.DragEnter((UIElement)sender, e);
         }
 
         void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
-            if(IsEnabledDrag) {
-                DragAndDrop.DragOver((UIElement)sender, e);
-            }
+            DragAndDrop.DragOver((UIElement)sender, e);
         }
 
         void AssociatedObject_DragLeave(object sender, DragEventArgs e)
         {
-            if(IsEnabledDrag) {
-                DragAndDrop.DragLeave((UIElement)sender, e);
-            }
+            DragAndDrop.DragLeave((UIElement)sender, e);
         }
 
         void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
-            if(AllowDrop) {
-                DragAndDrop.Drop((UIElement)sender, e);
-            }
+            DragAndDrop.Drop((UIElement)sender, e);
         }
     }
 }

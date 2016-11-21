@@ -91,7 +91,7 @@
           </Viewbox>
         </Button>
       </ToolBar>
-      <TreeView Grid.Row="1" x:Name="treeNodes" AllowDrop="{Binding NodeAllowDrop}">
+      <TreeView Grid.Row="1" x:Name="treeNodes" AllowDrop="True">
         <TreeView.Resources>
           <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkSystemNodeViewModel}">
             <TextBlock Text="{Binding Name}" />
@@ -101,7 +101,7 @@
           </HierarchicalDataTemplate>
         </TreeView.Resources>
         <i:Interaction.Behaviors>
-          <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding NodeDragAndDrop, Mode=OneWay}" AllowDrop="{Binding NodeAllowDrop, Mode=OneWay}" IsEnabledDrag="{Binding NodeIsEnabledDrag, Mode=OneWay}" />
+          <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding NodeDragAndDrop, Mode=OneWay}" />
         </i:Interaction.Behaviors>
 
         <TreeView.ItemContainerStyle>

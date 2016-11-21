@@ -188,8 +188,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         }
 
-        public override bool IsEnabledDrag { get; } = true;
-
         protected override bool CanDragStartFromFinder(UIElement sender, MouseEventArgs e)
         {
             if(SelectedFinderItem != null) {
