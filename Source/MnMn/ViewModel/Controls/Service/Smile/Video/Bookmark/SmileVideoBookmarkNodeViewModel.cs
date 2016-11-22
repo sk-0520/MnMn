@@ -23,11 +23,12 @@ using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
-    public class SmileVideoBookmarkNodeViewModel: SingleModelWrapperViewModelBase<SmileVideoBookmarkItemSettingModel>
+    public class SmileVideoBookmarkNodeViewModel: SingleModelWrapperViewModelBase<SmileVideoBookmarkItemSettingModel>, IDropable
     {
         #region variable
 
@@ -36,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         int _level;
 
         //string _editingName;
+        bool _isDragOver;
 
         #endregion
 
@@ -117,6 +119,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         //    ResetChangeFlag();
         //}
+
+        #endregion
+
+        #region IDropable
+
+        public bool IsDragOver
+        {
+            get { return this._isDragOver; }
+            set { SetVariableValue(ref this._isDragOver, value); }
+        }
 
         #endregion
 

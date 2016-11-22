@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         SmileVideoBookmarkNodeFinderViewModel _selectedBookmarkNodeFinder;
         SmileVideoBookmarkNodeViewModel _selectedBookmarkNode;
+        SmileVideoBookmarkNodeViewModel _dragUnderBookmarkNode;
 
         //bool _isDragging = false;
         //Point _dragStartPosition;
@@ -95,6 +96,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                         //SelectedBookmarkNode.ClearEditingValue();
                         var finder = new SmileVideoBookmarkNodeFinderViewModel(Mediation, SelectedBookmarkNode);
                         SelectedBookmarkNodeFinder = finder;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// ドラッグ中アイテムの下にあるノード。
+        /// </summary>
+        SmileVideoBookmarkNodeViewModel DragOverBookmarkNode
+        {
+            get { return this._dragUnderBookmarkNode; }
+            set
+            {
+                var prev = DragOverBookmarkNode;
+
+                if(SetVariableValue(ref this._dragUnderBookmarkNode, value)) {
+                    if(DragOverBookmarkNode != null) {
+                        DragOverBookmarkNode.IsDragOver = true;
+                    }
+                    if(prev != null) {
+                        prev.IsDragOver = false;
                     }
                 }
             }
@@ -231,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         #region function
 
-        IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodesCore(SmileVideoBookmarkNodeViewModel node, Func<SmileVideoBookmarkNodeViewModel, bool> expr)
+        IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodesCore(SmileVideoBookmarkNodeViewModel node, Predicate<SmileVideoBookmarkNodeViewModel> expr)
         {
             foreach(var child in node.NodeItems) {
                 foreach(var item in GetNodesCore(child, expr)) {
@@ -243,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 yield return node;
             }
         }
-        IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodes(Func<SmileVideoBookmarkNodeViewModel, bool> expr)
+        IEnumerable<SmileVideoBookmarkNodeViewModel> GetNodes(Predicate<SmileVideoBookmarkNodeViewModel> expr)
         {
             foreach(var node in UserNodes) {
                 foreach(var item in GetNodesCore(node, expr)) {
@@ -367,6 +389,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         CheckResultModel<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
         {
+            SelectedBookmarkNode.IsDragOver = true;
+
             var data = new DataObject(SelectedBookmarkNode.GetType(), SelectedBookmarkNode);
             var param = new DragParameterModel() {
                 Data = data,
@@ -391,6 +415,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                             e.Effects = DragDropEffects.None;
                         } else if(dstNode == GetParentNode(srcNode)) {
                             e.Effects = DragDropEffects.None;
+                        } else {
+                            e.Effects = DragDropEffects.Move;
+                            DragOverBookmarkNode = dstNode;
                         }
                     } else {
                         e.Effects = DragDropEffects.None;
@@ -400,22 +427,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != SelectedBookmarkNode) {
                     e.Effects = DragDropEffects.Move;
+                    DragOverBookmarkNode = dstNode;
                 } else {
                     e.Effects = DragDropEffects.None;
                 }
             } else {
                 e.Effects = DragDropEffects.None;
             }
+
+            if(e.Effects == DragDropEffects.None) {
+                DragOverBookmarkNode = null;
+            }
             e.Handled = true;
         }
 
         void DragLeaveNode(UIElement sender, DragEventArgs e)
-        { }
+        {
+            DragOverBookmarkNode = null;
+            foreach(var node in GetNodes(n => n.IsDragOver).ToArray()) {
+                node.IsDragOver = false;
+            }
+        }
 
         void DropNode(UIElement sender, DragEventArgs e)
         {
             e.Handled = true;
             e.Effects = DragDropEffects.None;
+            DragOverBookmarkNode = null;
 
             if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));

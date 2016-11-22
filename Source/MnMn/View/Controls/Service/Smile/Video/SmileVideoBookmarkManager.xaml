@@ -106,6 +106,11 @@
 
         <TreeView.ItemContainerStyle>
           <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsDragOver}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+              </DataTrigger>
+            </Style.Triggers>
             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
             <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}"/>
           </Style>
