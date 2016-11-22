@@ -110,6 +110,13 @@
               <DataTrigger Binding="{Binding IsDragOver}" Value="True">
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
               </DataTrigger>
+              <DataTrigger Binding="{Binding DataContext.IsDragOver, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                <Setter Property="Padding">
+                  <Setter.Value>
+                    <Thickness Left="0" Right="0" Top="{StaticResource BaseMargin}" Bottom="{StaticResource BaseMargin}" />
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
             </Style.Triggers>
             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
             <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}"/>

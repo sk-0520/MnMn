@@ -391,6 +391,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         CheckResultModel<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
         {
+            IsDragOver = true;
+
             SelectedBookmarkNode.IsDragging = true;
 
             var data = new DataObject(SelectedBookmarkNode.GetType(), SelectedBookmarkNode);
@@ -405,6 +407,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void DragEnterAndOverNode(UIElement sender, DragEventArgs e)
         {
+            IsDragOver = true;
+
             if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));
                 if(srcNode.IsSystemNode) {
@@ -445,6 +449,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void DragLeaveNode(UIElement sender, DragEventArgs e)
         {
+            IsDragOver = false;
             DragOverBookmarkNode = null;
             foreach(var node in GetNodes(n => n.IsDragOver).ToArray()) {
                 node.IsDragOver = false;
@@ -456,6 +461,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             e.Handled = true;
             e.Effects = DragDropEffects.None;
             DragOverBookmarkNode = null;
+            IsDragOver = false;
 
             if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));
