@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         //string _editingName;
         bool _isDragOver;
+        bool _isDragging;
 
         #endregion
 
@@ -128,6 +129,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         {
             get { return this._isDragOver; }
             set { SetVariableValue(ref this._isDragOver, value); }
+        }
+
+        #endregion
+
+        #region IDraggable
+
+        public bool IsDragging
+        {
+            get { return this._isDragging; }
+            set { SetVariableValue(ref this._isDragging, value); }
         }
 
         #endregion

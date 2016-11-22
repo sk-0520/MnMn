@@ -389,7 +389,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         CheckResultModel<DragParameterModel> GetDragParameterNode(UIElement sender, MouseEventArgs e)
         {
-            SelectedBookmarkNode.IsDragOver = true;
+            SelectedBookmarkNode.IsDragging = true;
 
             var data = new DataObject(SelectedBookmarkNode.GetType(), SelectedBookmarkNode);
             var param = new DragParameterModel() {
@@ -457,6 +457,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));
+                srcNode.IsDragging = false;
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
                 if(dstNode != null && srcNode != dstNode) {
                     var srcModel = srcNode.Model;
