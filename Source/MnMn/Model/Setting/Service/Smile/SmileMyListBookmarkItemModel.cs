@@ -41,6 +41,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         [DataMember]
         public CollectionModel<string> Videos { get; set; } = new CollectionModel<string>();
 
+        /// <summary>
+        /// タグ。
+        /// <para>色々試したけど直にカンマ区切りとかのほうが使いやすかった。</para>
+        /// </summary>
+        [DataMember]
+        public string TagNames { get; set; }
+
         #endregion
     }
 }

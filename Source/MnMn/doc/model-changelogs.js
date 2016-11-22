@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#244: マイリストのブックマーク一覧を検索しやすくする'
 					},
 					{
 						'revision': '',

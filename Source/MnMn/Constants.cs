@@ -338,6 +338,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileUserCacheDirectoryName { get; } = "user";
         public static string SmileMyListCacheDirectoryName { get; } = "mylist";
 
+        public static char SmileMyListBookmarkTagTokenSplitter { get; } = ';';
+
         public static string SmileLiveUriListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-list.xml");
         public static string SmileLiveUriParametersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "uri-params.xml");
         public static string SmileLiveRequestHeadersListPath { get; } = Path.Combine(DefineSmileLiveDirectoryPath, "request-headers.xml");
