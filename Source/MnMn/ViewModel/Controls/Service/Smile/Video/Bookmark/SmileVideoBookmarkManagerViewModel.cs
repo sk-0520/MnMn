@@ -29,6 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -36,7 +37,7 @@ using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
-    public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase
+    public class SmileVideoBookmarkManagerViewModel: SmileVideoCustomManagerViewModelBase, IDropable
     {
         //#region define
 
@@ -49,6 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         SmileVideoBookmarkNodeFinderViewModel _selectedBookmarkNodeFinder;
         SmileVideoBookmarkNodeViewModel _selectedBookmarkNode;
         SmileVideoBookmarkNodeViewModel _dragUnderBookmarkNode;
+        bool _isDragOver;
 
         //bool _isDragging = false;
         //Point _dragStartPosition;
@@ -527,6 +529,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
         public override Task<long> GarbageCollectionAsync(GarbageCollectionLevel garbageCollectionLevel, CacheSpan cacheSpan, bool force)
         {
             return GarbageCollectionDummyResult;
+        }
+
+        #endregion
+
+        #region IDropable
+
+        public bool IsDragOver
+        {
+            get { return this._isDragOver; }
+            set { SetVariableValue(ref this._isDragOver, value); }
         }
 
         #endregion
