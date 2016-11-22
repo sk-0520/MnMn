@@ -256,6 +256,8 @@
     <Compile Include="Define\SourceLoadState.cs" />
     <Compile Include="Define\TextShowType.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
+    <Compile Include="IF\Control\IDraggable.cs" />
+    <Compile Include="IF\Control\IDropable.cs" />
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
