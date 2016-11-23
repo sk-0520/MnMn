@@ -73,6 +73,7 @@
                 <Hyperlink Command="{Binding CopyShortInformationCommand}">短い情報</Hyperlink>
                 <Hyperlink Command="{Binding CopyLongInformationCommand}">長い情報</Hyperlink>
             </TextBlock>
+            <Button Template="{StaticResource HyperLink}">テストリンク</Button>
           </StackPanel>
 
         </StackPanel>
