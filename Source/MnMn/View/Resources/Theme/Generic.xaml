@@ -698,43 +698,56 @@
     </Setter>
   </Style>
 
-  <ControlTemplate x:Key="HyperLink" TargetType="Button">
-    <ControlTemplate.Resources>
-      <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
-    </ControlTemplate.Resources>
-    <ContentControl x:Name="Content" FontSize="{DynamicResource NormalFontSize}" Cursor="Hand">
-      <ContentControl.Style>
-        <Style TargetType="ContentControl">
-          <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Effect">
-                <Setter.Value>
-                  <DropShadowEffect Color="{DynamicResource AccentColor2}" Direction="0" BlurRadius="4" ShadowDepth="0" />
-                </Setter.Value>
-              </Setter>
-            </Trigger>
-            <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="True">
-              <Setter Property="Effect">
-                <Setter.Value>
-                  <DropShadowEffect Color="{DynamicResource AccentBaseColor}" Direction="0" BlurRadius="2" ShadowDepth="0" />
-                </Setter.Value>
-              </Setter>
-              <Setter Property="Cursor" Value="Hand" />
-            </DataTrigger>
-          </Style.Triggers>
+  <Style x:Key="HyperLink" TargetType="Button">
+    <Style.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Cursor" Value="Arrow" />
+      </Trigger>
+    </Style.Triggers>
 
-          <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        </Style>
-      </ContentControl.Style>
-      <ContentControl.Content>
-        <StackPanel HorizontalAlignment="Left" >
-          <ContentControl x:Name="HyperLink" Content="{TemplateBinding Content}" Foreground="{Binding Foreground, ElementName=Content}" />
-          <Rectangle Grid.Row="1" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
-        </StackPanel>
-      </ContentControl.Content>
-    </ContentControl>
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <ControlTemplate.Resources>
+            <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
+          </ControlTemplate.Resources>
+          <ContentControl x:Name="Content" FontSize="{DynamicResource NormalFontSize}" Cursor="Hand">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Effect">
+                      <Setter.Value>
+                        <DropShadowEffect Color="{DynamicResource AccentColor2}" Direction="0" BlurRadius="4" ShadowDepth="0" />
+                      </Setter.Value>
+                    </Setter>
+                  </Trigger>
+                  <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="True">
+                    <Setter Property="Effect">
+                      <Setter.Value>
+                        <DropShadowEffect Color="{DynamicResource AccentBaseColor}" Direction="0" BlurRadius="2" ShadowDepth="0" />
+                      </Setter.Value>
+                    </Setter>
+                    <Setter Property="Cursor" Value="Hand" />
+                  </DataTrigger>
+                </Style.Triggers>
 
-  </ControlTemplate>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+              </Style>
+            </ContentControl.Style>
+            <ContentControl.Content>
+              <StackPanel HorizontalAlignment="Left" >
+                <ContentControl x:Name="HyperLink" Content="{TemplateBinding Content}" Foreground="{Binding Foreground, ElementName=Content}" />
+                <Rectangle Grid.Row="1" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
+              </StackPanel>
+            </ContentControl.Content>
+          </ContentControl>
+
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
   <!--CheckBox-->
   <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
