@@ -34,6 +34,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
 {
@@ -407,8 +408,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
         void DragEnterAndOverNode(UIElement sender, DragEventArgs e)
         {
-            IsDragOver = true;
-
+            var prev = IsDragOver;
+            if(!prev) {
+                IsDragOver = true;
+            }
             if(e.Data.GetDataPresent(typeof(SmileVideoBookmarkNodeViewModel))) {
                 var srcNode = (SmileVideoBookmarkNodeViewModel)e.Data.GetData(typeof(SmileVideoBookmarkNodeViewModel));
                 if(srcNode.IsSystemNode) {
@@ -443,7 +446,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
 
             if(e.Effects == DragDropEffects.None) {
                 DragOverBookmarkNode = null;
+            } else if(IsDragOver && !prev) {
+                TreeNodes.ScrollToCenterOfView(DragOverBookmarkNode, true, false);
             }
+
             e.Handled = true;
         }
 
