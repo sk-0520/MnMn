@@ -1559,13 +1559,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         /// <summary>
         /// あとで見るから外す処理。
+        /// <para>スレッドIDかなーと思ったけどそんなこともなかったぞ！IDの扱いがわけわからん！</para>
         /// </summary>
-        /// <param name="id">動画IDかスレッドIDを指定。</param>
-        void SetCheckItLater(string id)
+        /// <param name="videoId">動画ID。</param>
+        void SetCheckedCheckItLater(string videoId, Uri watchUrl)
         {
             var later = Setting.CheckItLater
                 .Where(c => !c.IsChecked)
-                .FirstOrDefault(c => c.VideoId == id)
+                .FirstOrDefault(c => c.VideoId == videoId || c.WatchUrl?.OriginalString == watchUrl?.OriginalString)
             ;
             if(later != null) {
                 later.IsChecked = true;
@@ -1619,7 +1620,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AddHistory(historyModel);
 
-            SetCheckItLater(videoInformation.VideoId);
+            SetCheckedCheckItLater(videoInformation.VideoId, videoInformation.WatchUrl);
 
             return base.LoadAsync(videoInformation, false, thumbCacheSpan, imageCacheSpan);
         }
@@ -1634,6 +1635,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 
             base.OnDownloadStart(sender, e);
+
+            // スレッドIDですらなかった
+            //Information.LoadGetthreadkeyAsync().ContinueWith(t => {
+            //    try {
+            //        var id = Information.ThreadId;
+            //        SetCheckedCheckItLater(id);
+            //    } catch(InvalidOperationException ex) {
+            //        Mediation.Logger.Error(ex);
+            //    }
+            //});
         }
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
