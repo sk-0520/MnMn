@@ -84,8 +84,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public abstract CacheSpan DefaultImageCacheSpan { get; }
         public abstract object DefaultExtends { get; }
 
-        public virtual bool AllowDrop { get; } = false;
-        public virtual bool IsEnabledDrag { get; } = false;
         public IDragAndDrop DragAndDrop
         {
             get { return this._dragAndDrop; }

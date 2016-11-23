@@ -229,10 +229,9 @@
         x:Name="PART_List"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
-        AllowDrop="{Binding AllowDrop}"
       >
         <i:Interaction.Behaviors>
-          <app_view_attachment:DragAndDropBehavior AllowDrop="{Binding AllowDrop, Mode=OneWay}" IsEnabledDrag="{Binding IsEnabledDrag, Mode=OneWay}" DragAndDrop="{Binding DragAndDrop}" />
+          <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
         </i:Interaction.Behaviors>
         <ListBox.InputBindings>
           <KeyBinding Key="Return" Command="{Binding SelectedFinderItem.Information.OpenVideoDefaultCommand}" />
