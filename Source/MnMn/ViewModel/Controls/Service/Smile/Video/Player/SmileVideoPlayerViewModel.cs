@@ -1557,6 +1557,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalComment();
         }
 
+        /// <summary>
+        /// あとで見るから外す処理。
+        /// <para>スレッドIDかなーと思ったけどそんなこともなかったぞ！IDの扱いがわけわからん！</para>
+        /// </summary>
+        /// <param name="videoId">動画ID。</param>
+        void SetCheckedCheckItLater(string videoId, Uri watchUrl)
+        {
+            var later = Setting.CheckItLater
+                .Where(c => !c.IsChecked)
+                .FirstOrDefault(c => c.VideoId == videoId || c.WatchUrl?.OriginalString == watchUrl?.OriginalString)
+            ;
+            if(later != null) {
+                later.IsChecked = true;
+                later.CheckTimestamp = DateTime.Now;
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1603,14 +1620,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AddHistory(historyModel);
 
-            var later = Setting.CheckItLater
-                .Where(c => !c.IsChecked)
-                .FirstOrDefault(c => c.VideoId == videoInformation.VideoId)
-            ;
-            if(later != null) {
-                later.IsChecked = true;
-                later.CheckTimestamp = DateTime.Now;
-            }
+            SetCheckedCheckItLater(videoInformation.VideoId, videoInformation.WatchUrl);
 
             return base.LoadAsync(videoInformation, false, thumbCacheSpan, imageCacheSpan);
         }
@@ -1625,6 +1635,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 
             base.OnDownloadStart(sender, e);
+
+            // スレッドIDですらなかった
+            //Information.LoadGetthreadkeyAsync().ContinueWith(t => {
+            //    try {
+            //        var id = Information.ThreadId;
+            //        SetCheckedCheckItLater(id);
+            //    } catch(InvalidOperationException ex) {
+            //        Mediation.Logger.Error(ex);
+            //    }
+            //});
         }
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
