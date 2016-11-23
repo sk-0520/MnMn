@@ -68,6 +68,14 @@
 
         <GroupBox Header="テーマ">
           <StackPanel>
+            <Button Style="{StaticResource HyperLink}">テストリンク</Button>
+            <Button Style="{StaticResource HyperLink}" IsEnabled="False">テストリンク(disabled)</Button>
+            <Button Style="{StaticResource HyperLink}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Folder}" />
+              </Canvas>
+            </Button>
+
             <CheckBox Grid.Column="0" IsChecked="{Binding IsRandomTheme}" Style="{StaticResource VerticalCheckBox}">ランダム</CheckBox>
             <Grid>
               <Grid.ColumnDefinitions>

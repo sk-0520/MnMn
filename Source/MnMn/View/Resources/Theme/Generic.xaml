@@ -702,8 +702,17 @@
     <Style.Triggers>
       <Trigger Property="IsEnabled" Value="False">
         <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="Opacity" Value="0.5" />
       </Trigger>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Opacity" Value="0.75" />
+      </Trigger>
+      <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="True">
+        <Setter Property="Opacity" Value="1" />
+      </DataTrigger>
     </Style.Triggers>
+
+    <Setter Property="Opacity" Value="0.8" />
 
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
@@ -719,14 +728,14 @@
                   <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Effect">
                       <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource AccentColor2}" Direction="0" BlurRadius="4" ShadowDepth="0" />
+                        <DropShadowEffect Color="{DynamicResource AccentColor4}" Direction="0" BlurRadius="2" ShadowDepth="0" />
                       </Setter.Value>
                     </Setter>
                   </Trigger>
                   <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="True">
                     <Setter Property="Effect">
                       <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource AccentBaseColor}" Direction="0" BlurRadius="2" ShadowDepth="0" />
+                        <DropShadowEffect Color="{DynamicResource AccentBaseColor}" Direction="0" BlurRadius="4" ShadowDepth="0" />
                       </Setter.Value>
                     </Setter>
                     <Setter Property="Cursor" Value="Hand" />
@@ -738,7 +747,7 @@
             </ContentControl.Style>
             <ContentControl.Content>
               <StackPanel HorizontalAlignment="Left" >
-                <ContentControl x:Name="HyperLink" Content="{TemplateBinding Content}" Foreground="{Binding Foreground, ElementName=Content}" />
+                <ContentControl x:Name="HyperLink" Content="{TemplateBinding Content}" Foreground="{Binding Foreground, ElementName=Content}" FontWeight="Bold" />
                 <Rectangle Grid.Row="1" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
               </StackPanel>
             </ContentControl.Content>
