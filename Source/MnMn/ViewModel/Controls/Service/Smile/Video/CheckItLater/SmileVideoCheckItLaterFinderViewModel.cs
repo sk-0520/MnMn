@@ -76,7 +76,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             var finderItem = (SmileVideoFinderItemViewModel)obj;
             var viewModel = finderItem.Information;
 
-            return !IdLaterMap[viewModel.VideoId].IsChecked;
+            SmileVideoCheckItLaterModel checkItLater;
+            if(IdLaterMap.TryGetValue(viewModel.VideoId, out checkItLater)) {
+                return !checkItLater.IsChecked;
+            }
+
+            // 表示できないよりは表示できた方がいいんじゃないかと
+            return true;
         }
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()

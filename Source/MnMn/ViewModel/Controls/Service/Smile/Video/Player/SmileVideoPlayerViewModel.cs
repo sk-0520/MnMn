@@ -1557,6 +1557,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ApprovalComment();
         }
 
+        /// <summary>
+        /// あとで見るから外す処理。
+        /// </summary>
+        /// <param name="id">動画IDかスレッドIDを指定。</param>
+        void SetCheckItLater(string id)
+        {
+            var later = Setting.CheckItLater
+                .Where(c => !c.IsChecked)
+                .FirstOrDefault(c => c.VideoId == id)
+            ;
+            if(later != null) {
+                later.IsChecked = true;
+                later.CheckTimestamp = DateTime.Now;
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1603,14 +1619,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             AddHistory(historyModel);
 
-            var later = Setting.CheckItLater
-                .Where(c => !c.IsChecked)
-                .FirstOrDefault(c => c.VideoId == videoInformation.VideoId)
-            ;
-            if(later != null) {
-                later.IsChecked = true;
-                later.CheckTimestamp = DateTime.Now;
-            }
+            SetCheckItLater(videoInformation.VideoId);
 
             return base.LoadAsync(videoInformation, false, thumbCacheSpan, imageCacheSpan);
         }
