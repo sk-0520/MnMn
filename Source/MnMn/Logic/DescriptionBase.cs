@@ -53,9 +53,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected string MakeLinkCore(string link, string text, string commandName)
         {
             var linkElementSource = $@"
-                <Hyperlink Command='{{Binding {commandName}}}' CommandParameter='{link}'>
+                <Button Style='{{StaticResource Hyperlink}}' Command='{{Binding {commandName}}}' CommandParameter='{link}'>
                     <TextBlock Text='{text}' />
-                </Hyperlink>
+                </Button>
             "
                 .SplitLines()
                 .Select(s => s.Trim())

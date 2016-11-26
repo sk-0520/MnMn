@@ -721,6 +721,7 @@
     </Style.Triggers>
 
     <Setter Property="Opacity" Value="0.8" />
+    <Setter Property="VerticalAlignment" Value="Center" />
 
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
@@ -729,7 +730,7 @@
           <ControlTemplate.Resources>
             <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
           </ControlTemplate.Resources>
-          <ContentControl x:Name="Content" FontSize="{DynamicResource NormalFontSize}" Cursor="Hand">
+          <ContentControl x:Name="Content" Cursor="Hand">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>
@@ -754,10 +755,18 @@
               </Style>
             </ContentControl.Style>
             <ContentControl.Content>
-              <StackPanel HorizontalAlignment="Left" >
-                <ContentControl x:Name="HyperLink" Content="{TemplateBinding Content}" Foreground="{Binding Foreground, ElementName=Content}" FontWeight="Bold" />
-                <Rectangle Grid.Row="1" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
-              </StackPanel>
+              <Grid HorizontalAlignment="Left" >
+                <ContentControl
+                  x:Name="HyperLink"
+                  VerticalAlignment="Center"
+                  Content="{TemplateBinding Content}"
+                  Foreground="{Binding Foreground, ElementName=Content}"
+                  FontWeight="Bold"
+                  Margin="0"
+                  Padding="0"
+                />
+                <Rectangle VerticalAlignment="Bottom" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
+              </Grid>
             </ContentControl.Content>
           </ContentControl>
 
