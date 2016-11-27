@@ -1667,32 +1667,30 @@
               <!--<TextBlock Text="{Binding UserName}" />-->
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
-                <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
-                  <Hyperlink Command="{Binding OpenUserOrChannelIdCommand}">
-                    <Run>
-                      <Run.Resources>
-                        <Style TargetType="Run">
-                          <Style.Triggers>
-                            <MultiDataTrigger>
-                              <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
-                                <Condition Binding="{Binding IsChannelVideo}" Value="False" />
-                              </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding UserName, Mode=OneWay}" />
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                              <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
-                                <Condition Binding="{Binding IsChannelVideo}" Value="True" />
-                              </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding ChannelName, Mode=OneWay}" />
-                            </MultiDataTrigger>
-                          </Style.Triggers>
-                        </Style>
-                      </Run.Resources>
-                    </Run>
-                  </Hyperlink>
-                </TextBlock>
+                <Button Style="{StaticResource Hyperlink}" Width="{StaticResource ImageWidth}" Command="{Binding OpenUserOrChannelIdCommand}">
+                  <TextBlock TextTrimming="CharacterEllipsis">
+                    <TextBlock.Resources>
+                      <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                              <Condition Binding="{Binding IsChannelVideo}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Text" Value="{Binding UserName, Mode=OneWay}" />
+                          </MultiDataTrigger>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                              <Condition Binding="{Binding IsChannelVideo}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Text" Value="{Binding ChannelName, Mode=OneWay}" />
+                          </MultiDataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Resources>
+                  </TextBlock>
+                </Button>
               </Grid>
 
             </StackPanel>

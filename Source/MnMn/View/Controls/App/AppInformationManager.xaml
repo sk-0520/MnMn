@@ -297,11 +297,9 @@
               </ControlTemplate>
             </Button.Template>
           </Button>
-          <TextBlock>
-            <Hyperlink Command="{Binding OpenHelpCommand}">
-              ヘルプファイルを Web ブラウザで直接開く
-            </Hyperlink>
-          </TextBlock>
+          <Button Style="{StaticResource Hyperlink}"  Command="{Binding OpenHelpCommand}">
+            ヘルプファイルを Web ブラウザで直接開く
+          </Button>
         </DockPanel>
       </Grid>
     </TabItem>
