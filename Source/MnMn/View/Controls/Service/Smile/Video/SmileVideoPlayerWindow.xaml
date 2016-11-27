@@ -1801,16 +1801,15 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <TextBlock TextAlignment="Center" Width="{StaticResource VideoInfoWidth}" Height="{StaticResource VideoInfoHeight}" ToolTip="{Binding Title, Mode=OneTime}">
-                    <Hyperlink Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
+                  <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Width="{StaticResource VideoInfoWidth}" ToolTip="{Binding Title, Mode=OneTime}">
+                    <StackPanel>
                       <Grid>
                         <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
                         <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
                       </Grid>
-                      <LineBreak />
                       <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Title, Mode=OneTime}" />
-                    </Hyperlink>
-                  </TextBlock>
+                    </StackPanel>
+                  </Button>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
