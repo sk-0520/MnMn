@@ -140,6 +140,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsNavigatingProperty
+
+        public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsNavigatingProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsNavigatingChanged))
+        );
+
+        private static void OnIsNavigatingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsNavigating = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsNavigating
+        {
+            get { return (bool)GetValue(IsNavigatingProperty); }
+            set { SetValue(IsNavigatingProperty, value); }
+        }
+
+        #endregion
+
         #region NewWindowCommand
 
         #region NewWindowCommandProperty
@@ -366,6 +391,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+
+
         #endregion
 
         #region command
@@ -399,6 +426,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 return new DelegateCommand(
                     o => GoForward(),
                     o => CanGoForward
+                );
+            }
+        }
+
+        public ICommand ReloadDocumentCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Refresh(),
+                    o => !IsNavigating
+                );
+            }
+        }
+
+        public ICommand StopDocumentCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Stop(),
+                    o => IsNavigating
                 );
             }
         }
@@ -527,6 +576,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             );
         }
 
+        public void Stop()
+        {
+            DoAction(
+                b => b.InvokeScript("eval", "document.execCommand('Stop');"),
+                b => b.Stop()
+            );
+            IsNavigating = false;
+        }
+
         void InitializedDefault()
         {
             BrowserDefault = new WebBrowser();
@@ -634,21 +692,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
+            IsNavigating = true;
         }
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
+            IsNavigating = true;
         }
 
 
         private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
         {
+            IsNavigating = false;
             CommandManager.InvalidateRequerySuggested();
         }
 
         private void BrowserGeckoFx_Navigated(object sender, GeckoNavigatedEventArgs e)
         {
+            IsNavigating = false;
             CommandManager.InvalidateRequerySuggested();
         }
 
