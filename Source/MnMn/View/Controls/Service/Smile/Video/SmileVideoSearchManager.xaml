@@ -45,14 +45,9 @@
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <TextBlock>
-                <Hyperlink
-                  Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                  CommandParameter="{Binding}"
-                >
-                  <Run Text="{Binding TagName, Mode=OneTime}" />
-                </Hyperlink>
-              </TextBlock>
+              <Button HorizontalAlignment="Center" Style="{StaticResource Hyperlink}" Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+              </Button>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
 
@@ -397,14 +392,14 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                       <DataTemplate>
-                        <TextBlock Margin="4,0">
-                          <Hyperlink
-                            Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoSearchManager} }"
-                            CommandParameter="{Binding}"
-                          >
-                            <Run Text="{Binding TagName, Mode=OneTime}" />
-                          </Hyperlink>
-                        </TextBlock>
+                        <Button 
+                          Style="{StaticResource Hyperlink}"
+                          Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=app_view_controls_service_smile_video:SmileVideoSearchManager} }"
+                          CommandParameter="{Binding}"
+                          Margin="{StaticResource IndependentHorizonMargin}"
+                        >
+                          <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+                        </Button>
                       </DataTemplate>
                     </ItemsControl.ItemTemplate>
                   </ItemsControl>
