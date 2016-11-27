@@ -720,6 +720,7 @@
 
     <Setter Property="Opacity" Value="0.8" />
     <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Background" Value="Transparent" />
 
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
