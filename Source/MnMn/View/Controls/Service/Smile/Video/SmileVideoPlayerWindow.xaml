@@ -1773,10 +1773,15 @@
               </Grid>
               <Grid Grid.Row="1">
                 <FlowDocumentScrollViewer
-                x:Name="documentDescription"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
-              >
+                  x:Name="documentDescription"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+                >
+                  <FlowDocumentScrollViewer.Resources>
+                    <Style TargetType="Run">
+                      <Setter Property="BaselineAlignment" Value="Center"/>
+                    </Style>
+                  </FlowDocumentScrollViewer.Resources>
                   <FlowDocument
                     FontSize="11.5"
                     PagePadding="10, 2, 10, 0"
