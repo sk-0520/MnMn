@@ -171,8 +171,9 @@
     <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
   </Style>
 
+  <!-- リンク系は実装のレイアウト依存 -->
   <Style x:Key="MinimumLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
-    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
     <Setter Property="Margin" Value="{StaticResource IndependentMargin}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
@@ -190,7 +191,7 @@
   </Style>
 
   <Style x:Key="SmallLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
-    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
@@ -393,6 +394,11 @@
     <Setter Property="Margin" Value="{StaticResource ItemMargin}" />
     <Setter Property="Width" Value="8" />
     <Setter Property="Height" Value="8" />
+  </Style>
+
+  <Style x:Key="ItemPanel" TargetType="StackPanel">
+    <Setter Property="Orientation" Value="Horizontal" />
+    <Setter Property="VerticalAlignment" Value="Center" />
   </Style>
 
   <!--TabDictionary-->
@@ -694,6 +700,76 @@
     <Setter Property="Margin">
       <Setter.Value>
         <Thickness Left="{StaticResource HalfMargin}" Top="{StaticResource BitMargin}" Right="{StaticResource HalfMargin}" Bottom="{StaticResource BitMargin}" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="Hyperlink" TargetType="Button">
+    <Style.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="Opacity" Value="0.5" />
+      </Trigger>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Opacity" Value="0.75" />
+      </Trigger>
+      <Trigger Property="IsPressed" Value="True">
+        <Setter Property="Opacity" Value="1" />
+      </Trigger>
+    </Style.Triggers>
+
+    <Setter Property="Opacity" Value="0.8" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Background" Value="Transparent" />
+
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <ControlTemplate.Resources>
+            <cttn_sl_view_converter:ComplementaryColorConverter x:Key="ComplementaryColorConverter" />
+          </ControlTemplate.Resources>
+          <ContentControl x:Name="Content" Cursor="Hand">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Effect">
+                      <Setter.Value>
+                        <DropShadowEffect Color="{DynamicResource AccentColor4}" Direction="0" BlurRadius="2" ShadowDepth="0" />
+                      </Setter.Value>
+                    </Setter>
+                  </Trigger>
+                  <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                    <Setter Property="Effect">
+                      <Setter.Value>
+                        <DropShadowEffect Color="{DynamicResource AccentBaseColor}" Direction="0" BlurRadius="4" ShadowDepth="0" />
+                      </Setter.Value>
+                    </Setter>
+                    <Setter Property="Cursor" Value="Hand" />
+                  </DataTrigger>
+                </Style.Triggers>
+
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+              </Style>
+            </ContentControl.Style>
+            <ContentControl.Content>
+              <Grid HorizontalAlignment="Left" >
+                <ContentControl
+                  x:Name="HyperLink"
+                  VerticalAlignment="Center"
+                  Content="{TemplateBinding Content}"
+                  Foreground="{Binding Foreground, ElementName=Content}"
+                  FontWeight="Bold"
+                  Margin="0"
+                  Padding="0"
+                />
+                <Rectangle VerticalAlignment="Bottom" Height="1" Fill="{Binding Foreground, ElementName=Content}" Width="{Binding ActualWidth, ElementName=HyperLink}" />
+              </Grid>
+            </ContentControl.Content>
+          </ContentControl>
+
+        </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>

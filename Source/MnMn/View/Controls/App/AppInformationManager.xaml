@@ -69,32 +69,24 @@
 
           <StackPanel Margin="{StaticResource ContentMargin}">
             <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
-            <TextBlock>
-                <Hyperlink Command="{Binding CopyShortInformationCommand}">短い情報</Hyperlink>
-                <Hyperlink Command="{Binding CopyLongInformationCommand}">長い情報</Hyperlink>
-            </TextBlock>
+            <StackPanel Orientation="Horizontal">
+              <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyShortInformationCommand}" Margin="{StaticResource RightMargin}">短い情報</Button>
+              <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyLongInformationCommand}">長い情報</Button>
+            </StackPanel>
           </StackPanel>
 
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource ContentMargin}">
           <StackPanel.Resources>
-            <Style TargetType="TextBlock">
-              <Setter Property="Margin" Value="0,2" />
+            <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
+              <Setter Property="Margin" Value="{StaticResource IndependentVericalMargin}" />
             </Style>
           </StackPanel.Resources>
-          <TextBlock>
-            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriAbout}">Webサイト</Hyperlink>
-          </TextBlock>
-          <TextBlock>
-            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppMailAbout}">メール送信</Hyperlink>
-          </TextBlock>
-          <TextBlock>
-            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriDevelopment}">開発ページ</Hyperlink>
-          </TextBlock>
-          <TextBlock>
-            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Hyperlink>
-          </TextBlock>
+          <Button Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriAbout}">Webサイト</Button>
+          <Button Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppMailAbout}">メール送信</Button>
+          <Button Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriDevelopment}">開発ページ</Button>
+          <Button Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Button>
         </StackPanel>
 
         <ListView Grid.Row="0" Grid.Column="2" Margin="{StaticResource ContentMargin}" ItemsSource="{Binding ComponentCollection}">
@@ -105,30 +97,32 @@
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                       <TextBlock>
-                        <Hyperlink Command="{Binding DataContext.AppAboutManager.OpenLinkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Uri}">
+                        <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.AppAboutManager.OpenLinkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Uri}">
+                          <StackPanel Style="{StaticResource ItemPanel}">
                           <TextBlock>
-                            <TextBlock.Style>
-                              <Style TargetType="TextBlock" >
-                                <!-- 今持ってるフォントで表示できたやつを渋々使用 -->
-                                <Style.Triggers>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Library}">
-                                    <Setter Property="Text" Value="⚙" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Image}">
-                                    <Setter Property="Text" Value="✍" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Source}">
-                                    <Setter Property="Text" Value="📖" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.WebPage}">
-                                    <Setter Property="Text" Value="🏠" />
-                                  </DataTrigger>
-                                </Style.Triggers>
-                              </Style>
-                            </TextBlock.Style>
+                              <TextBlock.Style>
+                                <Style TargetType="TextBlock" >
+                                  <!-- 今持ってるフォントで表示できたやつを渋々使用 -->
+                                  <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Library}">
+                                      <Setter Property="Text" Value="⚙" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Image}">
+                                      <Setter Property="Text" Value="✍" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Source}">
+                                      <Setter Property="Text" Value="📖" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.WebPage}">
+                                      <Setter Property="Text" Value="🏠" />
+                                    </DataTrigger>
+                                  </Style.Triggers>
+                                </Style>
+                              </TextBlock.Style>
                           </TextBlock>
                           <TextBlock Text="{Binding Name}" />
-                        </Hyperlink>
+                          </StackPanel>
+                        </Button>
                       </TextBlock>
                     </StackPanel>
                   </DataTemplate>
@@ -305,11 +299,9 @@
               </ControlTemplate>
             </Button.Template>
           </Button>
-          <TextBlock>
-            <Hyperlink Command="{Binding OpenHelpCommand}">
-              ヘルプファイルを Web ブラウザで直接開く
-            </Hyperlink>
-          </TextBlock>
+          <Button Style="{StaticResource Hyperlink}"  Command="{Binding OpenHelpCommand}">
+            ヘルプファイルを Web ブラウザで直接開く
+          </Button>
         </DockPanel>
       </Grid>
     </TabItem>

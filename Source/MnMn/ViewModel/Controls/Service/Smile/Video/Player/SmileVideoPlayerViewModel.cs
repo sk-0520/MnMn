@@ -937,12 +937,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var flowDocumentSource = description.ConvertFlowDocumentFromHtml(Information.DescriptionHtmlSource);
 #if false
 #if DEBUG
-            var h = Path.Combine(DownloadDirectory.FullName, $"description.html");
+            var h = Path.Combine(Information.CacheDirectory.FullName, $"description.html");
             using(var s = File.CreateText(h)) {
-                s.Write(VideoInformation.DescriptionHtml);
+                s.Write(Information.DescriptionHtmlSource);
             }
             foreach(var ext in new[] { "xml", "xaml" }) {
-                var x = Path.Combine(DownloadDirectory.FullName, $"description.{ext}");
+                var x = Path.Combine(Information.CacheDirectory.FullName, $"description.{ext}");
                 using(var s = File.CreateText(x)) {
                     s.Write(flowDocumentSource);
                 }
