@@ -44,6 +44,7 @@
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
@@ -69,8 +70,15 @@
             </Canvas>
           </Viewbox>
         </Button>
-        <TextBox x:Name="location" Grid.Column="3" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        <Button Grid.Column="4" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Button Grid.Column="3" ToolTip="更新" Command="{Binding ReloadDocumentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Reload}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </Button>
+        <TextBox x:Name="location" Grid.Column="4" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <Button Grid.Column="5" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_NavigationGo}" Style="{StaticResource SmallDefaultIconPath}" />

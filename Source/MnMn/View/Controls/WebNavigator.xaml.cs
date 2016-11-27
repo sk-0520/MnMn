@@ -403,6 +403,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public ICommand ReloadDocumentCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Refresh(),
+                    o => true
+                );
+            }
+        }
+
         public ICommand ChangeSourceCommand
         {
             get
