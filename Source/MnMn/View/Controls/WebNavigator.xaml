@@ -70,12 +70,37 @@
             </Canvas>
           </Viewbox>
         </Button>
-        <Button Grid.Column="3" ToolTip="更新" Command="{Binding ReloadDocumentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
-          <Viewbox Style="{StaticResource SmallIconBox}">
-            <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_Reload}" Style="{StaticResource SmallDefaultIconPath}" />
-            </Canvas>
-          </Viewbox>
+        <Button Grid.Column="3" >
+          <Button.Style>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsNavigating, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                  <Setter Property="ToolTip" Value="中止"/>
+                  <Setter Property="Command" Value="{Binding StopDocumentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                  <Setter Property="Content">
+                    <Setter.Value>
+                      <Viewbox Style="{StaticResource SmallIconBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}">
+                          <Path Data="{StaticResource Image_Stop}" Style="{StaticResource SmallDefaultIconPath}" />
+                        </Canvas>
+                      </Viewbox>
+                    </Setter.Value>
+                  </Setter>
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="ToolTip" Value="更新"/>
+              <Setter Property="Command" Value="{Binding ReloadDocumentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+              <Setter Property="Content">
+                <Setter.Value>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Reload}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </Button.Style>
         </Button>
         <TextBox x:Name="location" Grid.Column="4" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         <Button Grid.Column="5" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
