@@ -1746,27 +1746,22 @@
                             <Path Data="{StaticResource Image_Lock}" Style="{StaticResource MinimumDefaultIconPath}" />
                           </Canvas>
                         </Viewbox>
-                        <TextBlock Style="{StaticResource {x:Type TextBlock}}">
-                          <Hyperlink
-                            Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            CommandParameter="{Binding}"
-                          >
-                            <Run Text="{Binding TagName, Mode=OneTime}" />
-                          </Hyperlink>
-                        </TextBlock>
-                        <Button Cursor="Hand" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
-                          <Button.Template>
-                            <ControlTemplate>
-                              <!--<Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />-->
-                              <Viewbox Style="{StaticResource {x:Type Viewbox}}">
-                                <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
-                                </Canvas>
-                              </Viewbox>
-                            </ControlTemplate>
-                          </Button.Template>
+                        <Button
+                          Style="{StaticResource Hyperlink}"
+                          Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                          CommandParameter="{Binding}"
+                        >
+                          <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+                        </Button>
+                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                          <Viewbox Style="{StaticResource {x:Type Viewbox}}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                              <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
                         </Button>
                       </StackPanel>
+
                       <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                           <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>

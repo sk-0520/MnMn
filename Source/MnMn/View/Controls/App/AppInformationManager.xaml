@@ -97,30 +97,32 @@
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                       <TextBlock>
-                        <Hyperlink Command="{Binding DataContext.AppAboutManager.OpenLinkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Uri}">
+                        <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.AppAboutManager.OpenLinkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Uri}">
+                          <StackPanel Style="{StaticResource ItemPanel}">
                           <TextBlock>
-                            <TextBlock.Style>
-                              <Style TargetType="TextBlock" >
-                                <!-- 今持ってるフォントで表示できたやつを渋々使用 -->
-                                <Style.Triggers>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Library}">
-                                    <Setter Property="Text" Value="⚙" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Image}">
-                                    <Setter Property="Text" Value="✍" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Source}">
-                                    <Setter Property="Text" Value="📖" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.WebPage}">
-                                    <Setter Property="Text" Value="🏠" />
-                                  </DataTrigger>
-                                </Style.Triggers>
-                              </Style>
-                            </TextBlock.Style>
+                              <TextBlock.Style>
+                                <Style TargetType="TextBlock" >
+                                  <!-- 今持ってるフォントで表示できたやつを渋々使用 -->
+                                  <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Library}">
+                                      <Setter Property="Text" Value="⚙" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Image}">
+                                      <Setter Property="Text" Value="✍" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.Source}">
+                                      <Setter Property="Text" Value="📖" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Kind}" Value="{x:Static cttn_pe_library_pedata_define:ComponentKind.WebPage}">
+                                      <Setter Property="Text" Value="🏠" />
+                                    </DataTrigger>
+                                  </Style.Triggers>
+                                </Style>
+                              </TextBlock.Style>
                           </TextBlock>
                           <TextBlock Text="{Binding Name}" />
-                        </Hyperlink>
+                          </StackPanel>
+                        </Button>
                       </TextBlock>
                     </StackPanel>
                   </DataTemplate>
