@@ -275,34 +275,9 @@
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
-          <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <app_view_controls:WebNavigator x:Name="helpBrowser" Grid.Row="0" IsEnabledUserChangeSource="False" NewWindowCommand="{Binding NewWindowCommand}" />
-        <DockPanel Grid.Row="1" Visibility="{Binding ShowHelpOpenWebBrowserTips, Converter={StaticResource BooleanToVisibilityConverter}}">
-          <DockPanel.Style>
-            <Style TargetType="DockPanel">
-              <!-- Hyperlinkと色の相性悪そうだし HotTrackBrushKey のテキスト色が分からん
-              <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                  <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" />
-                </Trigger>
-              </Style.Triggers>
-              -->
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" />
-            </Style>
-          </DockPanel.Style>
-          <Button DockPanel.Dock="Right" Padding="4" Command="{Binding HideHelpOpenWebBrowserTipsCommand}">
-            <Button.Template>
-              <ControlTemplate>
-                <TextBlock FontWeight="Bold">×</TextBlock>
-              </ControlTemplate>
-            </Button.Template>
-          </Button>
-          <Button Style="{StaticResource Hyperlink}"  Command="{Binding OpenHelpCommand}">
-            ヘルプファイルを Web ブラウザで直接開く
-          </Button>
-        </DockPanel>
       </Grid>
     </TabItem>
 
