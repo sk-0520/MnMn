@@ -62,20 +62,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             get { return CreateCommand(o => ShowHelpOpenWebBrowserTips = false); }
         }
 
-        public ICommand OpenHelpCommand
-        {
-            get
-            {
-                return CreateCommand(o => {
-                    try {
-                        Process.Start(Constants.HelpFilePath);
-                    } catch(Exception ex) {
-                        Mediation.Logger.Error(ex);
-                    }
-                });
-            }
-        }
-
         public ICommand NewWindowCommand
         {
             get
