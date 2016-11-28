@@ -176,21 +176,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             });
         }
 
-        static string GetDefaultBrowserCommandCore(RegistryKey registryKey, string name)
+        static string GetDefaultBrowserCommandCore(RegistryKey registryKey, string path, string name = null)
         {
-            using(var registry = registryKey.OpenSubKey(name, false)) {
+            using(var registry = registryKey.OpenSubKey(path, false)) {
                 if(registry == null) {
                     return null;
                 }
 
-                var value = (string)registry.GetValue(null);
+                var value = (string)registry.GetValue(name);
                 return value;
             }
         }
 
         public static string GetDefaultBrowserCommand()
         {
-            var currentUser = GetDefaultBrowserCommandCore(Registry.CurrentUser, @"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http");
+            var choiceBurowserId = GetDefaultBrowserCommandCore(Registry.CurrentUser, @"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice", "Progid");
+            if(choiceBurowserId != null) {
+                using(var registry = Registry.ClassesRoot.OpenSubKey($@"{choiceBurowserId}\Shell\Open\Command")) {
+                    var choiceBurowser = (string)registry.GetValue(null);
+                    if(choiceBurowser != null) {
+                        return choiceBurowser;
+                    }
+                }
+            }
+
+            var currentUser = GetDefaultBrowserCommandCore(Registry.CurrentUser, @"Software\Classes\http\shell\open\command");
             if(currentUser != null) {
                 return currentUser;
             }
