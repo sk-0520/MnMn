@@ -47,6 +47,7 @@
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0" ToolTip="ホームへ" Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -108,6 +109,11 @@
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_NavigationGo}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
+          </Viewbox>
+        </Button>
+        <Button Grid.Column="6" Command="{Binding OpenDefaultBrowserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledDefaultBrowser, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Image Source="{Binding DefaultBrowserIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" />
           </Viewbox>
         </Button>
       </Grid>

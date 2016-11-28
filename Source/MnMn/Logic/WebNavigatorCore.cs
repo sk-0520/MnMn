@@ -23,6 +23,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -52,6 +54,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         static bool IsInitialized { get; set; } = false;
         static bool IsUninitialized { get; set; } = false;
+
+        /// <summary>
+        /// システムのデフォルトブラウザ。
+        /// <para>null の時は設定されてないか上手いこと取ってこれなかった。</para>
+        /// </summary>
+        public static ExecuteData? DefaultBrowserExecuteData { get; private set; }
+        public static ImageSource DefaultBrowserIcon { get; private set; }
 
         #endregion
 
@@ -88,12 +97,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     break;
             }
 
-            var command = GetDefaultBrowserCommand();
-            var pureExecData = GetBrowserPureExecuteData(command);
-            var data = GetBrowserExecuteData(pureExecData, new Uri("http://asd.cxz"));
+            RefreshDefaultBrowser();
 
             IsInitialized = true;
             IsUninitialized = false;
+        }
+
+        public static void RefreshDefaultBrowser()
+        {
+            DefaultBrowserExecuteData = null;
+            DefaultBrowserIcon = null;
+
+            var command = GetDefaultBrowserCommand();
+            if(string.IsNullOrWhiteSpace(command)) {
+                Mediation.Logger.Warning($"fail: default browser: registry is null");
+                return;
+            }
+
+            try {
+                DefaultBrowserExecuteData = GetBrowserPureExecuteData(command);
+            } catch(Exception ex) {
+                Mediation.Logger.Warning($"fail: default browser: {command}");
+                Mediation.Logger.Warning(ex);
+            }
+
+            if(DefaultBrowserExecuteData.HasValue) {
+                Application.Current.Dispatcher.Invoke(() => {
+                    var path = DefaultBrowserExecuteData.Value.ApplicationPath ?? string.Empty;
+                    var usingPath = Environment.ExpandEnvironmentVariables(path);
+                    if(File.Exists(usingPath)) {
+                        DefaultBrowserIcon = IconUtility.Load(usingPath, Library.SharedLibrary.Define.IconScale.Small, 0, Mediation.Logger);
+                    }
+                });
+            }
         }
 
         static void UninitializeDefault()
@@ -207,7 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return GetBrowserPureExecuteDataCore(browserCommand);
         }
 
-        public static ExecuteData GetBrowserExecuteData(ExecuteData executeData, Uri uri)
+        public static ExecuteData GetOpenUriExecuteData(ExecuteData executeData, Uri uri)
         {
             IEnumerable<string> arguments;
 

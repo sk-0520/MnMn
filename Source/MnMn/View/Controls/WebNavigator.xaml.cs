@@ -165,6 +165,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         #endregion
 
+        #region IsEnabledDefaultBrowserProperty
+
+        public static readonly DependencyProperty IsEnabledDefaultBrowserProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsEnabledDefaultBrowserProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledDefaultBrowserChanged))
+        );
+
+        private static void OnIsEnabledDefaultBrowserChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsEnabledDefaultBrowser = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsEnabledDefaultBrowser
+        {
+            get { return (bool)GetValue(IsEnabledDefaultBrowserProperty); }
+            set { SetValue(IsEnabledDefaultBrowserProperty, value); }
+        }
+
+        #endregion
+
         #region NewWindowCommand
 
         #region NewWindowCommandProperty
@@ -391,7 +416,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-
+        public ImageSource DefaultBrowserIcon
+        {
+            get { return WebNavigatorCore.DefaultBrowserIcon; }
+        }
 
         #endregion
 
@@ -464,6 +492,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         }
                     },
                     o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
+                );
+            }
+        }
+
+        public ICommand OpenDefaultBrowserCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => OpenDefaultBrowser(Source),
+                    o => Source != null && WebNavigatorCore.DefaultBrowserExecuteData.HasValue
                 );
             }
         }
@@ -620,6 +659,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             this.container.Content = host;
+        }
+
+        void OpenDefaultBrowser(Uri uri)
+        {
+            var defaultData = WebNavigatorCore.DefaultBrowserExecuteData;
+            try {
+                var executeData = WebNavigatorCore.GetOpenUriExecuteData(defaultData.Value, Source);
+                Process.Start(executeData.ApplicationPath, string.Join(" ", executeData.Arguments));
+            } catch(Exception ex) {
+                Debug.WriteLine(ex);
+            }
         }
 
         #endregion
