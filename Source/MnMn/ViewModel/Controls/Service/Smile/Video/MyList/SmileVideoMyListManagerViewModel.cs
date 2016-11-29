@@ -314,7 +314,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     if(this._selectedPage != null) {
                         this._selectedPage.IsChecked = true;
                         SearchUserMyList.InitializeRange(this._selectedPage.ViewModel.Items);
-                        SelectedSearchFinder = (SmileVideoSearchMyListFinderViewModel)this._selectedPage.ViewModel.Items.First();
+                        Task.Run(() => {
+                            SelectedSearchFinder = (SmileVideoSearchMyListFinderViewModel)this._selectedPage.ViewModel.Items.First();
+                        });
                     }
                     if(oldSelectedPage != null) {
                         oldSelectedPage.IsChecked = false;
