@@ -352,12 +352,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         {
             get
             {
-                return CreateCommand(o => {
-                    var finder = o as SmileVideoMyListFinderViewModelBase;
-                    if(finder != null) {
-                        Mediation.ManagerPack.SmileManager.VideoManager.MyListManager.AddBookmarkUserMyListCommand.TryExecute(finder);
+                return CreateCommand(
+                    o => {
+                        var finder = o as SmileVideoMyListFinderViewModelBase;
+                        if(finder != null) {
+                            Mediation.ManagerPack.SmileManager.VideoManager.MyListManager.AddBookmarkUserMyListCommand.TryExecute(finder);
+                        }
+                    },
+                    o => {
+                        var finder = o as SmileVideoMyListFinderViewModelBase;
+                        if(finder != null) {
+                            var canSaveState = new[] {
+                                SourceLoadState.InformationLoading,
+                                SourceLoadState.Completed,
+                            };
+                            return canSaveState.Any(l => l == finder.FinderLoadState);
+                        }
+
+                        return false;
                     }
-                });
+                );
             }
         }
 
