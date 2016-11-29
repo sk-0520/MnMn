@@ -293,10 +293,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         public SmileVideoMyListFinderViewModelBase SelectedCurrentFinder
         {
             get { return this._selectedCurrentFinder; }
-            set { SetVariableValue(ref this._selectedCurrentFinder, value); }
+            set {
+                var prev = SelectedCurrentFinder;
+                if(SetVariableValue(ref this._selectedCurrentFinder, value)) {
+                    if(prev != null) {
+                        prev.PropertyChanged -= SelectedCurrentFinder_PropertyChanged;
+                    }
+                    if(SelectedCurrentFinder != null) {
+                        SelectedCurrentFinder.PropertyChanged += SelectedCurrentFinder_PropertyChanged;
+                    }
+                }
+            }
         }
-
-
 
         public string InputSearchMyList
         {
@@ -1001,6 +1009,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 SetTagItems();
             }
         }
+
+        private void SelectedCurrentFinder_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SmileVideoMyListFinderViewModelBase.FinderLoadState)) {
+                CommandManager.InvalidateRequerySuggested();
+                var finder = sender as SmileVideoMyListFinderViewModelBase;
+                if(finder != null) {
+                    if(finder.FinderLoadState == SourceLoadState.Completed) {
+                        finder.PropertyChanged -= SelectedCurrentFinder_PropertyChanged;
+                    }
+                }
+            }
+        }
+
 
     }
 }
