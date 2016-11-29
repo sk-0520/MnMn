@@ -69,6 +69,9 @@
       <TabItem Header="ニコニコ動画" DataContext="{Binding SmileManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileManager x:Name="smile" />
       </TabItem>
+      <TabItem Header="ブラウザ" DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_app:AppGeneralBrowserManager x:Name="general" />
+      </TabItem>
       <TabItem Header="{x:Static app:Constants.ApplicationName}" DataContext="{Binding AppInformationManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_app:AppInformationManager x:Name="information" />
       </TabItem>
