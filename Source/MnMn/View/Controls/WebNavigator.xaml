@@ -103,7 +103,13 @@
             </Style>
           </Button.Style>
         </Button>
-        <TextBox x:Name="location" Grid.Column="4" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        <TextBox x:Name="location" Grid.Column="4" IsReadOnly="{Binding IsEnabledUserChangeSource, Converter={StaticResource LogicalNotConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
+          <TextBox.InputBindings>
+            <KeyBinding Key="Return" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          </TextBox.InputBindings>
+        </TextBox>
+
         <Button Grid.Column="5" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
