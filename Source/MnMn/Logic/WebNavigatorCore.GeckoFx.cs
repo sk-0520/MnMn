@@ -108,7 +108,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             foreach(var browser in CreatedGeckoBrowsers) {
                 browser.Disposed -= GeckoBrowser_Disposed;
-                browser.Dispose();
+                try {
+                    browser.Dispose();
+                } catch(Exception ex) {
+                    Mediation.Logger.Error(ex);
+                }
             }
             Xpcom.Shutdown();
 
