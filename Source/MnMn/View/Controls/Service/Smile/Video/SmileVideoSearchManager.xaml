@@ -96,6 +96,11 @@
         <ComboBox.InputBindings>
           <KeyBinding Key="Enter" Command="{Binding SearchCommand}" />
         </ComboBox.InputBindings>
+        <ComboBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel Orientation="Vertical"  />
+          </ItemsPanelTemplate>
+        </ComboBox.ItemsPanel>
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Width="{Binding ElementName=listSearch, Path=ActualWidth}">
