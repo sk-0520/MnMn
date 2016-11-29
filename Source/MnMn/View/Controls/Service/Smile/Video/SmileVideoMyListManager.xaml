@@ -248,7 +248,13 @@
               </TextBox>
               <Button Command="{Binding SearchUserMyListCommand}">検索</Button>
               <Separator />
-              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" >ブックマーク追加</Button>
+              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" ToolTip="ブックマーク追加">
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </Button>
             </ToolBar>
 
             <app_view_controls:Pager
@@ -369,7 +375,13 @@
         <TabItem x:Name="viewHistory" Header="履歴" IsSelected="{Binding IsSelectedHistory}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedHistoryFinder}">ブックマーク追加</Button>
+              <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedHistoryFinder}" ToolTip="ブックマーク追加">
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </Button>
             </ToolBar>
             <ListBox Style="{StaticResource MyListBox}" SelectedItem="{Binding SelectedHistoryFinder}" ItemsSource="{Binding HistoryUserMyListItems}" />
           </DockPanel>
