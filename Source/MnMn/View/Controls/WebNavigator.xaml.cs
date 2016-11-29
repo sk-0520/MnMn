@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -574,6 +575,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 b => b.Navigate(uri.OriginalString)
             );
             IsEmptyContent = false;
+
+            this.container.Dispatcher.Invoke(() => {
+                this.container.Focus();
+            }, DispatcherPriority.SystemIdle);
         }
 
         public void NavigateEmpty()
