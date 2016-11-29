@@ -129,6 +129,9 @@
 
         </Grid>
       </TabItem>
+      <TabItem Header="ブラウザ" DataContext="{Binding AppBrowserManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_app:AppGeneralBrowserManager x:Name="general" />
+      </TabItem>
     </TabControl>
   </DockPanel>
 </mamc:MetroWindow>

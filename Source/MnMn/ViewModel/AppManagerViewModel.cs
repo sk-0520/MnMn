@@ -66,6 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             SmileManager = new SmileManagerViewModel(Mediation);
             AppUpdateManager = new AppUpdateManagerViewModel(Mediation);
             AppInformationManager = new AppInformationManagerViewModel(Mediation, appLogger);
+            AppBrowserManager = new AppBrowserManagerViewModel(Mediation);
 
             Mediation.SetManager(ServiceType.Application, new ApplicationManagerPackModel(this, SmileManager));
 
@@ -89,6 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         public AppUpdateManagerViewModel AppUpdateManager { get; }
         public AppInformationManagerViewModel AppInformationManager { get; }
+        public AppBrowserManagerViewModel AppBrowserManager { get; }
         public SmileManagerViewModel SmileManager { get; }
 
         public SessionViewModelBase SmileSession { get; }
@@ -183,6 +185,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             return new ManagerViewModelBase[] {
                 AppUpdateManager,
                 AppInformationManager,
+                AppBrowserManager,
                 SmileManager,
             };
         }

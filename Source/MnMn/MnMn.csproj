@@ -345,6 +345,7 @@
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
@@ -379,6 +380,9 @@
     </Compile>
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\App\AppGeneralBrowserManager.xaml.cs">
+      <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\FocusedTabControl.cs" />
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
       <SubType>Component</SubType>
@@ -772,6 +776,10 @@
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
+    <Page Include="View\Controls\App\AppGeneralBrowserManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveCategoryContext.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
