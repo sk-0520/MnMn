@@ -1487,6 +1487,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Keyboard.ClearFocus();
                 Keyboard.Focus(View);
             }
+
+            CallOnPropertyChange(nameof(IsNormalWindow));
         }
 
         public void MoveForeground()

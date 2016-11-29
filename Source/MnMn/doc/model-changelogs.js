@@ -163,6 +163,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#259: Windows10でフルスクリーン時にタスクバーが表示される',
+						'comments': [
+							'我が家の 1607-14393.447 なら大丈夫だった',
+							'Trigger と WindowsAPI と WPF の状態が絡み合うとぐっちゃぐちゃなんのね'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
