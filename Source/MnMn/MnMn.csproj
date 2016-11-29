@@ -202,6 +202,7 @@
     <Compile Include="Constants.Function.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
@@ -256,6 +257,8 @@
     <Compile Include="Define\SourceLoadState.cs" />
     <Compile Include="Define\TextShowType.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
+    <Compile Include="IF\Control\IDraggable.cs" />
+    <Compile Include="IF\Control\IDropable.cs" />
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
@@ -342,6 +345,7 @@
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
+    <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppForumManagerViewModel.cs" />
@@ -367,6 +371,7 @@
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkRootNodeViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkMyListFinderViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListBookmarkFilterViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
@@ -375,6 +380,9 @@
     </Compile>
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
+    <Compile Include="View\Controls\App\AppGeneralBrowserManager.xaml.cs">
+      <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\FocusedTabControl.cs" />
     <Compile Include="View\Controls\ServiceGeckoWebBrowser.cs">
       <SubType>Component</SubType>
@@ -400,6 +408,7 @@
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\TokenizedTextBox.cs" />
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
@@ -767,6 +776,10 @@
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
+    <Page Include="View\Controls\App\AppGeneralBrowserManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Service\Smile\Live\SmileLiveCategoryContext.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

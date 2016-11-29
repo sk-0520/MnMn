@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -136,6 +137,56 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         {
             get { return (bool)GetValue(IsEnabledUserChangeSourceProperty); }
             set { SetValue(IsEnabledUserChangeSourceProperty, value); }
+        }
+
+        #endregion
+
+        #region IsNavigatingProperty
+
+        public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsNavigatingProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsNavigatingChanged))
+        );
+
+        private static void OnIsNavigatingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsNavigating = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsNavigating
+        {
+            get { return (bool)GetValue(IsNavigatingProperty); }
+            set { SetValue(IsNavigatingProperty, value); }
+        }
+
+        #endregion
+
+        #region IsEnabledDefaultBrowserProperty
+
+        public static readonly DependencyProperty IsEnabledDefaultBrowserProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(IsEnabledDefaultBrowserProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledDefaultBrowserChanged))
+        );
+
+        private static void OnIsEnabledDefaultBrowserChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.IsEnabledDefaultBrowser = (bool)e.NewValue;
+            }
+        }
+
+        public bool IsEnabledDefaultBrowser
+        {
+            get { return (bool)GetValue(IsEnabledDefaultBrowserProperty); }
+            set { SetValue(IsEnabledDefaultBrowserProperty, value); }
         }
 
         #endregion
@@ -366,6 +417,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public ImageSource DefaultBrowserIcon
+        {
+            get { return WebNavigatorCore.DefaultBrowserIcon; }
+        }
+
         #endregion
 
         #region command
@@ -403,6 +459,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        public ICommand ReloadDocumentCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Refresh(),
+                    o => !IsNavigating
+                );
+            }
+        }
+
+        public ICommand StopDocumentCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => Stop(),
+                    o => IsNavigating
+                );
+            }
+        }
+
         public ICommand ChangeSourceCommand
         {
             get
@@ -415,6 +493,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                         }
                     },
                     o => IsEnabledUserChangeSource && !string.IsNullOrWhiteSpace(location.Text)
+                );
+            }
+        }
+
+        public ICommand OpenDefaultBrowserCommand
+        {
+            get
+            {
+                return new DelegateCommand(
+                    o => OpenDefaultBrowser(Source),
+                    o => Source != null && WebNavigatorCore.DefaultBrowserExecuteData.HasValue
                 );
             }
         }
@@ -486,6 +575,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 b => b.Navigate(uri.OriginalString)
             );
             IsEmptyContent = false;
+
+            this.container.Dispatcher.Invoke(() => {
+                this.container.Focus();
+            }, DispatcherPriority.SystemIdle);
         }
 
         public void NavigateEmpty()
@@ -527,6 +620,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             );
         }
 
+        public void Stop()
+        {
+            DoAction(
+                b => b.InvokeScript("eval", "document.execCommand('Stop');"),
+                b => b.Stop()
+            );
+            IsNavigating = false;
+        }
+
         void InitializedDefault()
         {
             BrowserDefault = new WebBrowser();
@@ -562,6 +664,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             this.container.Content = host;
+        }
+
+        void OpenDefaultBrowser(Uri uri)
+        {
+            var defaultData = WebNavigatorCore.DefaultBrowserExecuteData;
+            try {
+                var executeData = WebNavigatorCore.GetOpenUriExecuteData(defaultData.Value, Source);
+                Process.Start(executeData.ApplicationPath, string.Join(" ", executeData.Arguments));
+            } catch(Exception ex) {
+                Debug.WriteLine(ex);
+            }
         }
 
         #endregion
@@ -634,21 +747,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
+            IsNavigating = true;
         }
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
+            IsNavigating = true;
         }
 
 
         private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
         {
+            IsNavigating = false;
             CommandManager.InvalidateRequerySuggested();
         }
 
         private void BrowserGeckoFx_Navigated(object sender, GeckoNavigatedEventArgs e)
         {
+            IsNavigating = false;
             CommandManager.InvalidateRequerySuggested();
         }
 

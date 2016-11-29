@@ -46,6 +46,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         [DataMember]
         public double ItemsWidth { get; set; } = Constants.SettingServiceSmileMyListItemsAreaStar;
 
+        [DataMember]
+        public bool UsingBookmarkTagFilter { get; set; } = Constants.SettingServiceSmileMyListUsingBookmarkTagFilter;
 
         #endregion
     }

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         static string GetSettingBaseDirectory()
         {
             var baseDir = HasOptionSettingRootDirectoryPath
-                ? Path.Combine(OptionValueSettingRootDirectoryPath, Constants.ApplicationDirectoryName)
+                ? Path.Combine(Environment.ExpandEnvironmentVariables(OptionValueSettingRootDirectoryPath), Constants.ApplicationDirectoryName)
                 : null
             ;
             if(string.IsNullOrWhiteSpace(baseDir)) {

@@ -61,13 +61,8 @@
               </PasswordBox>
 
               <StackPanel Grid.Row="2">
-                <TextBlock Grid.Column="0" TextAlignment="Center">
-                  <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountRegister}">会員登録</Hyperlink>
-                </TextBlock>
-
-                <TextBlock Grid.Column="1" TextAlignment="Center">
-                  <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountReset}">パスワード再発行</Hyperlink>
-                </TextBlock>
+                <Button HorizontalAlignment="Center" Style="{StaticResource Hyperlink}" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountRegister}">会員登録</Button>
+                <Button HorizontalAlignment="Center" Style="{StaticResource Hyperlink}" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static app:Constants.ServiceSmileAccountReset}">パスワード再発行</Button>
               </StackPanel>
               <Grid Grid.Row="2" Grid.Column="2">
                 <Grid.ColumnDefinitions>

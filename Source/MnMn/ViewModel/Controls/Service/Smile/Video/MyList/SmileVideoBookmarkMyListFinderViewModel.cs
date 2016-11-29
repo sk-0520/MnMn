@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
@@ -45,6 +46,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             {
                 if(SetPropertyValue(BookmarkItem, value, nameof(BookmarkItem.MyListCustomName))) {
                     CallOnPropertyChange(nameof(MyListName));
+                }
+            }
+        }
+
+        public string TagNames
+        {
+            get { return BookmarkItem.TagNames; }
+            set
+            {
+                var originTags = value.Split(Constants.SmileMyListBookmarkTagTokenSplitter)
+                    .Select(s => s.Trim())
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray()
+                ;
+                var distinctNoOrderTags = new List<string>(originTags.Length);
+                foreach(var tag in originTags) {
+                    if(!distinctNoOrderTags.Contains(tag)) {
+                        distinctNoOrderTags.Add(tag);
+                    }
+                }
+                var splitter = $"{Constants.SmileMyListBookmarkTagTokenSplitter} ";
+                var joinTags = string.Join(splitter, distinctNoOrderTags);
+                SetPropertyValue(BookmarkItem, joinTags);
+            }
+        }
+
+        public IEnumerable<string> TagNameItems
+        {
+            get
+            {
+                if(BookmarkItem.TagNames != null) {
+                    return BookmarkItem.TagNames.Split(Constants.SmileMyListBookmarkTagTokenSplitter)
+                        .Select(s => s.Trim())
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                    ;
+                } else {
+                    return Enumerable.Empty<string>();
                 }
             }
         }

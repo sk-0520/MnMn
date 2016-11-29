@@ -1667,32 +1667,30 @@
               <!--<TextBlock Text="{Binding UserName}" />-->
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
-                <TextBlock Width="{StaticResource ImageWidth}" TextTrimming="CharacterEllipsis">
-                  <Hyperlink Command="{Binding OpenUserOrChannelIdCommand}">
-                    <Run>
-                      <Run.Resources>
-                        <Style TargetType="Run">
-                          <Style.Triggers>
-                            <MultiDataTrigger>
-                              <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
-                                <Condition Binding="{Binding IsChannelVideo}" Value="False" />
-                              </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding UserName, Mode=OneWay}" />
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                              <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
-                                <Condition Binding="{Binding IsChannelVideo}" Value="True" />
-                              </MultiDataTrigger.Conditions>
-                              <Setter Property="Text" Value="{Binding ChannelName, Mode=OneWay}" />
-                            </MultiDataTrigger>
-                          </Style.Triggers>
-                        </Style>
-                      </Run.Resources>
-                    </Run>
-                  </Hyperlink>
-                </TextBlock>
+                <Button Style="{StaticResource Hyperlink}" Width="{StaticResource ImageWidth}" Command="{Binding OpenUserOrChannelIdCommand}">
+                  <TextBlock TextTrimming="CharacterEllipsis">
+                    <TextBlock.Resources>
+                      <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                              <Condition Binding="{Binding IsChannelVideo}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Text" Value="{Binding UserName, Mode=OneWay}" />
+                          </MultiDataTrigger>
+                          <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                              <Condition Binding="{Binding InformationLoadState}" Value="Loaded" />
+                              <Condition Binding="{Binding IsChannelVideo}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Text" Value="{Binding ChannelName, Mode=OneWay}" />
+                          </MultiDataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Resources>
+                  </TextBlock>
+                </Button>
               </Grid>
 
             </StackPanel>
@@ -1748,27 +1746,22 @@
                             <Path Data="{StaticResource Image_Lock}" Style="{StaticResource MinimumDefaultIconPath}" />
                           </Canvas>
                         </Viewbox>
-                        <TextBlock Style="{StaticResource {x:Type TextBlock}}">
-                          <Hyperlink
-                            Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            CommandParameter="{Binding}"
-                          >
-                            <Run Text="{Binding TagName, Mode=OneTime}" />
-                          </Hyperlink>
-                        </TextBlock>
-                        <Button Cursor="Hand" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
-                          <Button.Template>
-                            <ControlTemplate>
-                              <!--<Image Cursor="Hand" Source="/Resources/Service/Smile/Video/Player/Pedia.png" />-->
-                              <Viewbox Style="{StaticResource {x:Type Viewbox}}">
-                                <Canvas Style="{StaticResource IconCanvas-24x24}" >
-                                  <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
-                                </Canvas>
-                              </Viewbox>
-                            </ControlTemplate>
-                          </Button.Template>
+                        <Button
+                          Style="{StaticResource Hyperlink}"
+                          Command="{Binding DataContext.SearchTagCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                          CommandParameter="{Binding}"
+                        >
+                          <TextBlock Text="{Binding TagName, Mode=OneTime}" />
+                        </Button>
+                        <Button Style="{StaticResource Hyperlink}" Margin="{StaticResource IndependentHorizonMargin}" Command="{Binding DataContext.OpenPediaCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Visibility="{Binding ExistPedia, Converter={StaticResource BooleanToVisibilityConverter}}">
+                          <Viewbox Style="{StaticResource {x:Type Viewbox}}">
+                            <Canvas Style="{StaticResource IconCanvas-24x24}" >
+                              <Path Data="{StaticResource Image_Book}" Style="{StaticResource MinimumLinkIconPath}" />
+                            </Canvas>
+                          </Viewbox>
                         </Button>
                       </StackPanel>
+
                       <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                           <Setter Property="Visibility" TargetName="separator" Value="Collapsed"/>
@@ -1780,10 +1773,15 @@
               </Grid>
               <Grid Grid.Row="1">
                 <FlowDocumentScrollViewer
-                x:Name="documentDescription"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
-              >
+                  x:Name="documentDescription"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+                >
+                  <FlowDocumentScrollViewer.Resources>
+                    <Style TargetType="Run">
+                      <Setter Property="BaselineAlignment" Value="Center"/>
+                    </Style>
+                  </FlowDocumentScrollViewer.Resources>
                   <FlowDocument
                     FontSize="11.5"
                     PagePadding="10, 2, 10, 0"
@@ -1803,16 +1801,15 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <TextBlock TextAlignment="Center" Width="{StaticResource VideoInfoWidth}" Height="{StaticResource VideoInfoHeight}" ToolTip="{Binding Title, Mode=OneTime}">
-                    <Hyperlink Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
+                  <Button Style="{StaticResource Hyperlink}" Command="{Binding DataContext.OpenRelationVideo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Width="{StaticResource VideoInfoWidth}" ToolTip="{Binding Title, Mode=OneTime}">
+                    <StackPanel>
                       <Grid>
                         <app_view_controls:LoadStateNavigator ShowStateText="True" LoadState="{Binding ThumbnailLoadState}" />
                         <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
                       </Grid>
-                      <LineBreak />
                       <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Title, Mode=OneTime}" />
-                    </Hyperlink>
-                  </TextBlock>
+                    </StackPanel>
+                  </Button>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>

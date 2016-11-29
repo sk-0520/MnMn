@@ -53,6 +53,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static Uri AppUriQuestionnaire => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-questionnaire")));
         public static string AppUriWebNavigatorGeckoFxPlugins => ReplaceAppConfig(appConfig.Get("app-uri-web_navigator-plugins"));
         public static Uri AppUriFlashPlayerVersion => new Uri(ReplaceAppConfig(appConfig.Get("app-uri-flashplayer-version")));
+        public static Uri AppUriGeneralBrowserHome => new Uri(appConfig.Get("app-uri-general-browser"));
 
         public static WebNavigatorEngine WebNavigatorEngine => appConfig.Get("web_navigator-engine", s => EnumUtility.Parse<WebNavigatorEngine>(s, false));
         public static string WebNavigatorGeckoFxLibraryDirectoryName => appConfig.Get("web_navigator-geckofx-lib-dir-name");

@@ -279,7 +279,13 @@
                   </Grid.ColumnDefinitions>
                   <DockPanel Grid.Column="0">
                     <ToolBar DockPanel.Dock="Top">
-                      <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedMyListFinder}" >ブックマーク追加</Button>
+                      <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedMyListFinder}"  ToolTip="ブックマーク追加">
+                        <Viewbox Style="{StaticResource SmallIconBox}">
+                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                            <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                          </Canvas>
+                        </Viewbox>
+                      </Button>
                     </ToolBar>
                     <ListBox ItemsSource="{Binding MyListItems}" SelectedItem="{Binding SelectedMyListFinder}">
                       <ListBox.ItemTemplate>
