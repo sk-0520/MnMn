@@ -769,16 +769,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void PlayMovie()
         {
-            Player.IsMute = IsMute;
-            Player.Volume = Volume;
-
-            //return View.Dispatcher.BeginInvoke(new Action(() => {
             ClearComment();
             if(!IsViewClosed) {
-                Player.Play();
-                CanVideoPlay = true;
+                var sw = new Stopwatch();
+                sw.Start();
+                Mediation.Logger.Debug($"{VideoId}: play invoke...");
+                Player.Dispatcher.BeginInvoke(new Action(() => {
+                    Player.IsMute = IsMute;
+                    Player.Volume = Volume;
+
+                    var prePlayTime = sw.Elapsed;
+                    Player.Play();
+                    var playedTime = sw.Elapsed;
+                    sw.Stop();
+
+                    CanVideoPlay = true;
+                    Mediation.Logger.Debug($"{VideoId}: play! {prePlayTime} - {playedTime}");
+                }), DispatcherPriority.SystemIdle);
             }
-            //}), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
         void StopMovie(bool isStopComment)
@@ -1468,27 +1476,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 View.Deactivated -= View_Deactivated;
 
-                var logicalViewArea = new Rect(Left, Top, Width, Height);
-                var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
-                var podRect = PodStructUtility.Convert(deviceViewArea);
-                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+                //var logicalViewArea = new Rect(Left, Top, Width, Height);
+                //var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
+                //var podRect = PodStructUtility.Convert(deviceViewArea);
+                //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+                //View.WindowState = WindowState.Normal;
+                State = WindowState.Normal;
             } else {
-                View.Deactivated += View_Deactivated;
-
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
 
-                var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
-                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+                //var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
+                //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+
+                //View.ShowMaxRestoreButton = false;
+                //View.ShowMinButton = false;
+                //View.ShowCloseButton = false;
+                ////View.WindowStyle = WindowStyle.None;
+                //View.IgnoreTaskbarOnMaximize = true;
+                //View.ResizeMode = ResizeMode.NoResize;
+                //View.IgnoreTaskbarOnMaximize = true;
+                //View.WindowState = WindowState.Maximized;
+                State = WindowState.Maximized;
 
                 // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
                 var scope = FocusManager.GetFocusScope(View);
                 FocusManager.SetFocusedElement(scope, null);
                 Keyboard.ClearFocus();
                 Keyboard.Focus(View);
+
+                View.Dispatcher.BeginInvoke(new Action(() => {
+                    View.Deactivated += View_Deactivated;
+                }), DispatcherPriority.SystemIdle);
             }
 
-            CallOnPropertyChange(nameof(IsNormalWindow));
+            //CallOnPropertyChange(nameof(IsNormalWindow));
         }
 
         public void MoveForeground()
@@ -2227,7 +2249,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void View_Deactivated(object sender, EventArgs e)
         {
             if(Setting.Player.InactiveIsFullScreenRestore) {
-                SetWindowMode(true);
+                var restoreNormalWindow = true;
+                if(Setting.Player.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
+                    var hWnd = HandleUtility.GetWindowHandle(View);
+                    var screenModel = Screen.FromHandle(hWnd);
+                    restoreNormalWindow = screenModel.Primary;
+                }
+                if(restoreNormalWindow) {
+                    SetWindowMode(true);
+                }
             }
         }
 

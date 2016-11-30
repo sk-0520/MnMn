@@ -395,6 +395,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static int SettingServiceSmileVideoPlayerSeekOperationPercentStep => appConfig.Get("setting-service-smile-smilevideo-player-seek-operation-percent-step", int.Parse);
 
         public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestorePrimaryDisplayOnly => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore-primary-display-only", bool.Parse);
 
         public static double SettingServiceSmileVideoPlayerPlayerAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-player-area-star", double.Parse);
         public static double SettingServiceSmileVideoPlayerCommentAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-comment-area-star", double.Parse);
