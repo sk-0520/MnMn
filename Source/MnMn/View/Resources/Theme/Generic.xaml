@@ -822,6 +822,40 @@
     </Setter>
   </Style>
 
+  <Style x:Key="HighlightLabel" TargetType="Label">
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Label">
+          <Border
+            CornerRadius="4" 
+            BorderThickness="1" 
+            BorderBrush="{DynamicResource SemiTransparentWhiteBrush}" 
+            Padding="{StaticResource IndependentMargin}"
+          >
+            <Border.Background>
+              <RadialGradientBrush 
+                GradientOrigin="0.5,0.5" 
+                Center="0.5,0.5" 
+                RadiusX="0.5" 
+                RadiusY="0.5"
+                Opacity="0.7"
+              >
+                <GradientStop Color="{DynamicResource AccentColor}" Offset="0" />
+                <GradientStop Color="{DynamicResource AccentColor2}" Offset="0.75" />
+                <GradientStop Color="{DynamicResource AccentColor3}" Offset="1" />
+              </RadialGradientBrush>
+            </Border.Background>
+              
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  
   <!--CheckBox-->
   <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
     <Setter Property="VerticalAlignment" Value="Center" />

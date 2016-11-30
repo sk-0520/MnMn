@@ -125,7 +125,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#264: あとで見るの新着件数表示UIを整える'
 					},
 					{
 						'revision': '',
