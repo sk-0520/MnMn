@@ -34,6 +34,9 @@
   <sys:Double x:Key="BaseMargin">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
   <sys:Double x:Key="SeparatorHeight">4</sys:Double>
+  <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
+  <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
+  <sys:Double x:Key="BigIndentWidth">40</sys:Double>
   <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMargin}" Top="0" Right="0" Bottom="0" />
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="0" />
   <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
@@ -337,6 +340,20 @@
   <!-- RepeatButton -->
   <Style x:Key="ScrollButton" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
     <Setter Property="Focusable" Value="False" />
+  </Style>
+
+  <Style x:Key="Indent" TargetType="Separator">
+    <Setter Property="Background" Value="{x:Null}" />
+  </Style>
+
+  <Style x:Key="SmallIndent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource SmallIndentWidth}" />
+  </Style>
+  <Style x:Key="NormalIndent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource NormalIndentWidth}" />
+  </Style>
+  <Style x:Key="BigIndent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource BigIndentWidth}" />
   </Style>
 
   <!-- GridSplitter -->
