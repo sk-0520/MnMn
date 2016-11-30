@@ -2238,12 +2238,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //ClearSelectedComment();
         }
 
-        //[Obsolete]
         private void View_Deactivated(object sender, EventArgs e)
         {
             if(Setting.Player.InactiveIsFullScreenRestore) {
-
-                SetWindowMode(true);
+                var restoreNormalWindow = true;
+                if(Setting.Player.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
+                    var hWnd = HandleUtility.GetWindowHandle(View);
+                    var screenModel = Screen.FromHandle(hWnd);
+                    restoreNormalWindow = screenModel.Primary;
+                }
+                if(restoreNormalWindow) {
+                    SetWindowMode(true);
+                }
             }
         }
 
