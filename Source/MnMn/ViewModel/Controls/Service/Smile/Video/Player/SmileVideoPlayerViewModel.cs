@@ -769,16 +769,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void PlayMovie()
         {
-            Player.IsMute = IsMute;
-            Player.Volume = Volume;
-
-            //return View.Dispatcher.BeginInvoke(new Action(() => {
             ClearComment();
             if(!IsViewClosed) {
-                Player.Play();
-                CanVideoPlay = true;
+                var sw = new Stopwatch();
+                sw.Start();
+                Mediation.Logger.Debug($"{VideoId}: play invoke...");
+                Player.Dispatcher.BeginInvoke(new Action(() => {
+                    Player.IsMute = IsMute;
+                    Player.Volume = Volume;
+
+                    var prePlayTime = sw.Elapsed;
+                    Player.Play();
+                    var playedTime = sw.Elapsed;
+                    sw.Stop();
+
+                    CanVideoPlay = true;
+                    Mediation.Logger.Debug($"{VideoId}: play! {prePlayTime} - {playedTime}");
+                }), DispatcherPriority.SystemIdle);
             }
-            //}), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
         void StopMovie(bool isStopComment)
