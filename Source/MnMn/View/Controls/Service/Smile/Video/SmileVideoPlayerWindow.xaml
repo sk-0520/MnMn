@@ -288,6 +288,9 @@
           <Setter Property="BorderThickness" Value="0" />
           <Setter Property="ResizeMode" Value="NoResize" />
           <Setter Property="ShowCloseButton" Value="False" />
+          <Setter Property="ShowMaxRestoreButton" Value="False" />
+          <Setter Property="ShowMinButton" Value="False" />
+          <Setter Property="IgnoreTaskbarOnMaximize" Value="True" />
         </DataTrigger>
       </Style.Triggers>
       <!--<Setter Property="BorderBrush">

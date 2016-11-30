@@ -1466,20 +1466,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //    WindowBorderThickness = normalWindowBorderThickness;
                 //}
 
-                View.Deactivated -= View_Deactivated;
+                //View.Deactivated -= View_Deactivated;
 
-                var logicalViewArea = new Rect(Left, Top, Width, Height);
-                var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
-                var podRect = PodStructUtility.Convert(deviceViewArea);
-                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+                //var logicalViewArea = new Rect(Left, Top, Width, Height);
+                //var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
+                //var podRect = PodStructUtility.Convert(deviceViewArea);
+                //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+                //View.WindowState = WindowState.Normal;
+                State = WindowState.Normal;
             } else {
-                View.Deactivated += View_Deactivated;
+                //View.Deactivated += View_Deactivated;
 
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
 
-                var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
-                NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+                //var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
+                //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+
+                //View.ShowMaxRestoreButton = false;
+                //View.ShowMinButton = false;
+                //View.ShowCloseButton = false;
+                ////View.WindowStyle = WindowStyle.None;
+                //View.IgnoreTaskbarOnMaximize = true;
+                //View.ResizeMode = ResizeMode.NoResize;
+                //View.IgnoreTaskbarOnMaximize = true;
+                //View.WindowState = WindowState.Maximized;
+                State = WindowState.Maximized;
 
                 // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
                 var scope = FocusManager.GetFocusScope(View);
@@ -1488,7 +1500,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Keyboard.Focus(View);
             }
 
-            CallOnPropertyChange(nameof(IsNormalWindow));
+            //CallOnPropertyChange(nameof(IsNormalWindow));
         }
 
         public void MoveForeground()
@@ -2002,7 +2014,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
             }
 
-            View.Deactivated -= View_Deactivated;
+            //View.Deactivated -= View_Deactivated;
 
             IsViewClosed = true;
 
@@ -2224,6 +2236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //ClearSelectedComment();
         }
 
+        [Obsolete]
         private void View_Deactivated(object sender, EventArgs e)
         {
             if(Setting.Player.InactiveIsFullScreenRestore) {
