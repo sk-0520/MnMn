@@ -2242,6 +2242,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void View_Deactivated(object sender, EventArgs e)
         {
             if(Setting.Player.InactiveIsFullScreenRestore) {
+
                 SetWindowMode(true);
             }
         }
