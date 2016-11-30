@@ -318,7 +318,18 @@
 
   <!--Button -->
   <Style x:Key="ReloadButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-    <Setter Property="Content" Value="↻" />
+    <!--<Setter Property="Content" Value="↻" />-->
+    <Setter Property="ContentTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Reload}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="MinWidth" Value="0" />
     <!--なんできえるかねー-->
