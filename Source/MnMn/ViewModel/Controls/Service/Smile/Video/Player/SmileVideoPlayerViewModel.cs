@@ -1466,7 +1466,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //    WindowBorderThickness = normalWindowBorderThickness;
                 //}
 
-                //View.Deactivated -= View_Deactivated;
+                View.Deactivated -= View_Deactivated;
 
                 //var logicalViewArea = new Rect(Left, Top, Width, Height);
                 //var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
@@ -1475,8 +1475,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //View.WindowState = WindowState.Normal;
                 State = WindowState.Normal;
             } else {
-                //View.Deactivated += View_Deactivated;
-
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
 
@@ -1498,6 +1496,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 FocusManager.SetFocusedElement(scope, null);
                 Keyboard.ClearFocus();
                 Keyboard.Focus(View);
+
+                View.Deactivated += View_Deactivated;
             }
 
             //CallOnPropertyChange(nameof(IsNormalWindow));
@@ -2014,7 +2014,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
             }
 
-            //View.Deactivated -= View_Deactivated;
+            View.Deactivated -= View_Deactivated;
 
             IsViewClosed = true;
 
@@ -2236,7 +2236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //ClearSelectedComment();
         }
 
-        [Obsolete]
+        //[Obsolete]
         private void View_Deactivated(object sender, EventArgs e)
         {
             if(Setting.Player.InactiveIsFullScreenRestore) {
