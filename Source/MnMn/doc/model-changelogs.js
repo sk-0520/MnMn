@@ -110,7 +110,18 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': ' #260: 自身の所属するディスプレイでフルスクリーンを実施する',
+						'comments': [
+							'#259 の対応で Per monitor DPI Aware を MnMn 側で考慮する必要がなくなった',
+							'Windows 10 に変えたから Per monitor DPI Aware のために課題作ったのにこの無意味さよ、テーマ実装時点で対応できたなこりゃ'
+						]
+					},
+					{
+						'revision': '',
+						'subject': '非アクティブ時にフルスクリーン解除をメインディスプレイでのフルスクリーンに限定する設定の追加',
+						'comments': [
+							'これも #259 の恩恵'
+						]
 					},
 					{
 						'revision': '',
@@ -127,7 +138,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#259: Windows10でフルスクリーン時にタスクバーが表示される',
+						'comments': [
+							'Mahapps.Metro の処理を用いて対応したので WindowsAPI 使わなくなった',
+							'DPI 処理も Mahapps.Metro で完結してすごく見通しが良くなった気がするよ',
+							'でも前回みたいにリリースしたら使えなかった！みたいな事態になりそうで怖い'
+						]
 					},
 					{
 						'revision': '',
