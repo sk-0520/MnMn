@@ -774,7 +774,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 var sw = new Stopwatch();
                 sw.Start();
                 Mediation.Logger.Debug($"{VideoId}: play invoke...");
-                Player.Dispatcher.BeginInvoke(new Action(() => {
+                Player.Dispatcher.Invoke(new Action(() => {
                     Player.IsMute = IsMute;
                     Player.Volume = Volume;
 
