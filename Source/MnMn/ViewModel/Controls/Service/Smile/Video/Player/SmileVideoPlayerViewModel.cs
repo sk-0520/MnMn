@@ -1497,7 +1497,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Keyboard.ClearFocus();
                 Keyboard.Focus(View);
 
-                View.Deactivated += View_Deactivated;
+                View.Dispatcher.BeginInvoke(new Action(() => {
+                    View.Deactivated += View_Deactivated;
+                }), DispatcherPriority.SystemIdle);
             }
 
             //CallOnPropertyChange(nameof(IsNormalWindow));
