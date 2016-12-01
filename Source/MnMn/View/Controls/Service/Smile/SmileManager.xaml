@@ -75,9 +75,12 @@
         <TabItem.Header>
           <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <TextBlock Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
+            <!--
             <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="Red" Background="Red" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}">
               <TextBlock FontSize="9" Text="{Binding ItemCount}" />
             </Border>
+            -->
+            <Label Style="{StaticResource HighlightLabel}" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding ItemCount}" />
           </Grid>
         </TabItem.Header>
         <app_view_controls_service_smile_video:SmileVideoCheckItLaterManager x:Name="checkItLater" />

@@ -34,6 +34,9 @@
   <sys:Double x:Key="BaseMargin">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
   <sys:Double x:Key="SeparatorHeight">4</sys:Double>
+  <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
+  <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
+  <sys:Double x:Key="BigIndentWidth">40</sys:Double>
   <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMargin}" Top="0" Right="0" Bottom="0" />
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="0" />
   <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
@@ -278,6 +281,9 @@
   <!-- https://materialdesignicons.com/icon/stop-circle-outline -->
   <Geometry x:Key="Image_Stop">M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4M9,9V15H15V9</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/close -->
+  <Geometry x:Key="Image_Close">M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z</Geometry>
+
   <!-- ============ 完結させられる図形 ============= -->
   <!-- ぼやけるーん
   <Style x:Key="Icon_AddBookmark" TargetType="ContentControl">
@@ -315,7 +321,18 @@
 
   <!--Button -->
   <Style x:Key="ReloadButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-    <Setter Property="Content" Value="↻" />
+    <!--<Setter Property="Content" Value="↻" />-->
+    <Setter Property="ContentTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Reload}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="MinWidth" Value="0" />
     <!--なんできえるかねー-->
@@ -337,6 +354,20 @@
   <!-- RepeatButton -->
   <Style x:Key="ScrollButton" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
     <Setter Property="Focusable" Value="False" />
+  </Style>
+
+  <Style x:Key="Indent" TargetType="Separator">
+    <Setter Property="Background" Value="{x:Null}" />
+  </Style>
+
+  <Style x:Key="SmallIndent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource SmallIndentWidth}" />
+  </Style>
+  <Style x:Key="NormalIndent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource NormalIndentWidth}" />
+  </Style>
+  <Style x:Key="BigIndent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource BigIndentWidth}" />
   </Style>
 
   <!-- GridSplitter -->
@@ -422,9 +453,9 @@
   </Style>
 
   <Style x:Key="TabCloseButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-    <Style.Resources>
+    <!--<Style.Resources>
       <sys:Double x:Key="length">18</sys:Double>
-    </Style.Resources>
+    </Style.Resources>-->
     <Setter Property="Tag" Value="{x:Static app:Constants.TagTabCloseButton}" />
     <Setter Property="VerticalAlignment" Value="Top" />
     <Setter Property="Margin" Value="2,0,0,0" />
@@ -434,10 +465,21 @@
     <Setter Property="FontSize" Value="10" />
     <Setter Property="Content" Value="r" />
     -->
-    <Setter Property="FontSize" Value="7" />
-    <Setter Property="Content" Value="❌"/>
-    <Setter Property="Width" Value="{StaticResource length}"/>
-    <Setter Property="Height" Value="{StaticResource length}"/>
+    <!--<Setter Property="FontSize" Value="7" />-->
+    <!--<Setter Property="Content" Value="❌"/>-->
+    <Setter Property="ContentTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Close}" Style="{StaticResource MinimumDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>
+    <!--<Setter Property="Width" Value="{StaticResource length}"/>
+    <Setter Property="Height" Value="{StaticResource length}"/>-->
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="MinWidth" Value="0" />
 
@@ -780,6 +822,40 @@
     </Setter>
   </Style>
 
+  <Style x:Key="HighlightLabel" TargetType="Label">
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Label">
+          <Border
+            CornerRadius="4" 
+            BorderThickness="1" 
+            BorderBrush="{DynamicResource SemiTransparentWhiteBrush}" 
+            Padding="{StaticResource IndependentMargin}"
+          >
+            <Border.Background>
+              <RadialGradientBrush 
+                GradientOrigin="0.5,0.5" 
+                Center="0.5,0.5" 
+                RadiusX="0.5" 
+                RadiusY="0.5"
+                Opacity="0.7"
+              >
+                <GradientStop Color="{DynamicResource AccentColor}" Offset="0" />
+                <GradientStop Color="{DynamicResource AccentColor2}" Offset="0.75" />
+                <GradientStop Color="{DynamicResource AccentColor3}" Offset="1" />
+              </RadialGradientBrush>
+            </Border.Background>
+              
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  
   <!--CheckBox-->
   <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
     <Setter Property="VerticalAlignment" Value="Center" />

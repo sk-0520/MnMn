@@ -180,6 +180,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// </summary>
         [DataMember]
         public bool InactiveIsFullScreenRestore { get; set; } = Constants.SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore;
+        /// <summary>
+        /// <see cref="InactiveIsFullScreenRestore"/>の対象をプライマリディスプレイ時でのみ適用するか。
+        /// </summary>
+        [DataMember]
+        public bool InactiveIsFullScreenRestorePrimaryDisplayOnly { get; set; } = Constants.SettingServiceSmileVideoPlayerInactiveIsFullScreenRestorePrimaryDisplayOnly;
 
         /// <summary>
         ///
