@@ -57,7 +57,7 @@
 	</element>
 	<element key="kill-lgbt">
 		<words>
-			<word key="ja-jp" value="殺せ、同性愛者だ" />
+			<word key="ja-jp" value="LGBT関連" />
 		</words>
 		<extends>
 			<extend key="target" value="Comment" />
