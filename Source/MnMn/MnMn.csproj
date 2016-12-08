@@ -278,6 +278,7 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
+    <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveFeedUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
