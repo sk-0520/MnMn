@@ -721,6 +721,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   内臓ブラウザ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_IDescription_MenuOpenWebAppBrowserLink {
+            get {
+                return ResourceManager.GetString("String_App_IDescription_MenuOpenWebAppBrowserLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ひらく に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_IDescription_MenuOpenWebLink {
+            get {
+                return ResourceManager.GetString("String_App_IDescription_MenuOpenWebLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新バージョン(${NEW-VERSION})がリリースされています。
         ///現バージョン(${NOW-VERSION})から更新を行いますか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>

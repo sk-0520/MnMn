@@ -25,6 +25,7 @@ using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -76,7 +77,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
                             attribute.Value = attrValue;
                         }
-                        contextMenuOuterElement.AppendChild(menuItemElement);
+                        var xMenuItemNode = x.ImportNode(menuItemElement, true);
+                        contextMenuElement.AppendChild(xMenuItemNode);
                     }
                 }
             });
@@ -87,7 +89,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ["link"] = link,
                 ["text"] = text,
             };
-            var elementSource = element.OuterXml;
+
+            var removeRegex = new Regex(@"(xmlns="".*?"")");
+            var elementSource = removeRegex.Replace(element.OuterXml, string.Empty);
             var madeElementSource = AppUtility.ReplaceString(elementSource, map);
 
             return madeElementSource;
@@ -160,7 +164,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 var linkUri = scheme + domainPath;
 
-                var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName);
+                var menuItems = new[] {
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenWebLink, nameof(IDescription.MenuOpenWebLinkCommand)),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenWebAppBrowserLink, nameof(IDescription.MenuOpenWebLinkAppBrowserCmmand)),
+                };
+
+                var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName, menuItems);
 
                 return linkElementSource;
             });

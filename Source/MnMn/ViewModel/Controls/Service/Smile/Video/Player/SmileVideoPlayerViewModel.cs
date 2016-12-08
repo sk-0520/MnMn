@@ -1946,6 +1946,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region ISmileVideoDescription
 
+        public ICommand MenuOpenWebLinkCommand { get { return CreateCommand(o => { }); } }
+        public ICommand MenuOpenWebLinkAppBrowserCmmand { get { return CreateCommand(o => { }); } }
+
         public ICommand OpenWebLinkCommand
         {
             get

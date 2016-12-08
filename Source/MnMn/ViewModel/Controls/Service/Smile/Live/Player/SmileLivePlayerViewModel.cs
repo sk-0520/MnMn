@@ -567,6 +567,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #region ISmileDescription
 
+        public ICommand MenuOpenWebLinkCommand { get { return CreateCommand(o => { }); } }
+        public ICommand MenuOpenWebLinkAppBrowserCmmand { get { return CreateCommand(o => { }); } }
+
         public ICommand OpenWebLinkCommand { get { return CreateCommand(o => OpenWebLink((string)o)); } }
         public ICommand OpenVideoLinkCommand { get { return CreateCommand(o => OpenVideoLinkAsync((string)o)); } }
         public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => OpenMyListLink((string)o)); } }
