@@ -23,6 +23,8 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using HTMLConverter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -50,18 +52,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
+
         protected string MakeLinkCore(string link, string text, string commandName)
         {
-            var linkElementSource = $@"
-                <Button Style='{{StaticResource Hyperlink}}' Command='{{Binding {commandName}}}' CommandParameter='{link}'>
-                    <TextBlock Text='{text}' />
-                </Button>
-            "
-                .SplitLines()
-                .Select(s => s.Trim())
-            ;
+            var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink);
 
-            return string.Join(string.Empty, linkElementSource);
+            var map = new StringsModel() {
+                ["command"] = commandName,
+                ["link"] = link,
+                ["text"] = text,
+            };
+            var elementSource = element.OuterXml;
+            var madeElementSource = AppUtility.ReplaceString(elementSource, map);
+
+            return madeElementSource;
+
+            //var linkElementSource = $@"
+            //    <Button Style='{{StaticResource Hyperlink}}' Command='{{Binding {commandName}}}' CommandParameter='{link}'>
+            //        <TextBlock Text='{text}' />
+            //    </Button>
+            //"
+            //    .SplitLines()
+            //    .Select(s => s.Trim())
+            //;
+
+            //return string.Join(string.Empty, linkElementSource);
         }
 
         protected string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)

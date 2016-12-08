@@ -373,4 +373,7 @@
   <data name="String_Service_Smile_SmileVideo_Bookmark_Unorganized" xml:space="preserve">
     <value>未整理のブックマーク</value>
   </data>
+  <data name="File_Xaml_DescriptionLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\file\xaml\descriptionlink.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

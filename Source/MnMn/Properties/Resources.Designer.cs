@@ -102,6 +102,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   &lt;Button&gt;
+        ///  
+        ///&lt;/Button&gt; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Xaml_DescriptionLink {
+            get {
+                return ResourceManager.GetString("File_Xaml_DescriptionLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_CheckedProcessType_RandomPlay {

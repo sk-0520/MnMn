@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -108,6 +109,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 SetRandomTheme();
             } else {
                 SetThemeDefine(theme.ApplicationTheme, theme.BaseTheme, theme.Accent);
+            }
+        }
+
+        public static XmlElement ExtractResourceXamlElement(string xamlSource)
+        {
+            using(var stream = new StringReader(xamlSource)) {
+                //using(var reader = XmlReader.Create(stream)) {
+                //    return reader.ReadOuterXml();
+                //}
+                var xml= new XmlDocument();
+                xml.Load(stream);
+
+                var element = xml.DocumentElement.ChildNodes
+                    .Cast<XmlNode>()
+                    .FirstOrDefault(n => n.NodeType == XmlNodeType.Element)
+                ;
+
+                return element as XmlElement;
             }
         }
 
