@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <summary>
     /// 毎度毎度 Dictionary&lt;string, string&gt; 入力がしんどい。
     /// </summary>
-    public class StringsModel: Dictionary<string, string>
+    public sealed class StringsModel: Dictionary<string, string>
     {
         //
         // 概要:

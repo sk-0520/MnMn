@@ -20,7 +20,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -52,10 +55,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-
-        protected string MakeLinkCore(string link, string text, string commandName)
+        protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuItem> menuItems = null)
         {
-            var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink);
+            var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink, (x, e) => {
+                if(menuItems != null && menuItems.Any()) {
+                    //
+                    var contextMenuOuterElement = x.CreateElement($"{e.Name}.{nameof(ContextMenu)}");
+                    e.AppendChild(contextMenuOuterElement);
+
+                    var contextMenuElement = x.CreateElement($"{nameof(ContextMenu)}");
+                    contextMenuOuterElement.AppendChild(contextMenuElement);
+                    foreach(var menuItem in menuItems) {
+                        var menuItemElement =AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionMenuItem, null);
+                        //var menuItemElement = x.CreateElement($"{nameof(MenuItem)}");
+                        var menuMap = new StringsModel() {
+                            ["header"] = menuItem.HeaderText,
+                            ["command"] = menuItem.Command,
+                        };
+                        foreach(XmlAttribute attribute in menuItemElement.Attributes) {
+                            var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
+                            attribute.Value = attrValue;
+                        }
+                        contextMenuOuterElement.AppendChild(menuItemElement);
+                    }
+                }
+            });
+
 
             var map = new StringsModel() {
                 ["command"] = commandName,

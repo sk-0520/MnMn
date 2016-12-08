@@ -112,21 +112,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
         }
 
-        public static XmlElement ExtractResourceXamlElement(string xamlSource)
+        /// <summary>
+        /// XAML(XML)から第一要素取得。
+        /// <para>リソースとして定義したXAMLの子要素を取得する。</para>
+        /// </summary>
+        /// <param name="xamlSource"></param>
+        /// <returns></returns>
+        public static XmlElement ExtractResourceXamlElement(string xamlSource, Action<XmlDocument, XmlElement> action)
         {
             using(var stream = new StringReader(xamlSource)) {
-                //using(var reader = XmlReader.Create(stream)) {
-                //    return reader.ReadOuterXml();
-                //}
                 var xml= new XmlDocument();
                 xml.Load(stream);
 
                 var element = xml.DocumentElement.ChildNodes
                     .Cast<XmlNode>()
-                    .FirstOrDefault(n => n.NodeType == XmlNodeType.Element)
+                    .FirstOrDefault(n => n.NodeType == XmlNodeType.Element) as XmlElement
                 ;
+                if(action != null) {
+                    action(xml, element);
+                }
 
-                return element as XmlElement;
+                return element;
             }
         }
 
