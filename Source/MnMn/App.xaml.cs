@@ -51,6 +51,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         App()
         {
             SplashWindow = new SplashWindow();
+
+            //var t = new DispatcherTimer() {
+            //    Interval = TimeSpan.FromSeconds(10),
+            //};
+            //t.Tick += (sender, e) => { throw new Exception("dmy"); };
+            //t.Start();
         }
 
         #region property
@@ -69,11 +75,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void CatchUnhandleException(Exception ex, bool callerUiThread)
         {
+            Debug.WriteLine($"{nameof(callerUiThread)} = {callerUiThread}");
             if(Mediation != null && Mediation.Logger != null) {
                 Mediation.Logger.Fatal(ex);
             } else {
                 Debug.WriteLine(ex);
             }
+
+            Shutdown();
         }
 
         CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
@@ -215,7 +224,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             MainWindow.Show();
             SplashWindow.Close();
-
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -232,8 +240,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            e.Handled = true;
             CatchUnhandleException(e.Exception, true);
-            //e.Handled = true;
         }
 
         /// <summary>
@@ -242,8 +250,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             CatchUnhandleException((Exception)e.ExceptionObject, false);
-
-            Shutdown();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
