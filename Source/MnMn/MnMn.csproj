@@ -202,6 +202,9 @@
     <Compile Include="Constants.Function.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Constants.Xaml.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\DescriptionContextMenuItem.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
@@ -785,6 +788,10 @@
       <Generator>MSBuild:Compile</Generator>
     </None>
     <None Include="Resources\File\Xaml\DescriptionMenuItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\File\Xaml\SmallIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>

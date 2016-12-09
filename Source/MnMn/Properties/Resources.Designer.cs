@@ -129,13 +129,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
         ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
         ///&gt;
-        ///  &lt;MenuItem Header=&quot;${header}&quot; Command=&quot;{Binding ${command}}&quot; /&gt;
+        ///  &lt;MenuItem Header=&quot;${header}&quot; Command=&quot;{Binding ${command}}&quot; CommandParameter=&quot;${link}&quot; /&gt;
         ///&lt;/UserControl&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string File_Xaml_DescriptionMenuItem {
             get {
                 return ResourceManager.GetString("File_Xaml_DescriptionMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;UserControl 
+        ///  x:Name=&quot;dummy&quot;
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
+        ///&gt;
+        ///  &lt;Viewbox Style=&quot;{StaticResource SmallIconBox}&quot;&gt;
+        ///    &lt;Canvas Style=&quot;{StaticResource IconCanvas-24x24}&quot;&gt;
+        ///      &lt;Path Data=&quot;{StaticResource ${icon-key}}&quot; Style=&quot;{Static [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Xaml_SmallIcon {
+            get {
+                return ResourceManager.GetString("File_Xaml_SmallIcon", resourceCulture);
             }
         }
         

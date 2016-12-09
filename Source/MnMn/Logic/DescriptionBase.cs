@@ -56,6 +56,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
+        void ReplaceAttibute(XmlElement element, IReadOnlyDictionary<string,string> map)
+        {
+            foreach(XmlAttribute attribute in element.Attributes) {
+                var attrValue = AppUtility.ReplaceString(attribute.Value, map);
+                attribute.Value = attrValue;
+            }
+        }
+
+        static IEnumerable<XmlElement> GetAllElements(XmlElement element)
+        {
+            if(element.HasChildNodes) {
+                var children = element.ChildNodes
+                    .OfType<XmlElement>()
+                    .Select(e => GetAllElements(e))
+                    .SelectMany(es => es)
+                ;
+                foreach(var e in children) {
+                    yield return e;
+                }
+            }
+            yield return element;
+        }
+
         protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuItem> menuItems = null)
         {
             var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink, (x, e) => {
@@ -72,13 +95,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         var menuMap = new StringsModel() {
                             ["header"] = menuItem.HeaderText,
                             ["command"] = menuItem.Command,
+                            ["link"] = menuItem.CommandParameter ?? link,
                         };
-                        foreach(XmlAttribute attribute in menuItemElement.Attributes) {
-                            var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
-                            attribute.Value = attrValue;
-                        }
+                        //foreach(XmlAttribute attribute in menuItemElement.Attributes) {
+                        //    var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
+                        //    attribute.Value = attrValue;
+                        //}
+                        ReplaceAttibute(menuItemElement, menuMap);
+
                         var xMenuItemNode = x.ImportNode(menuItemElement, true);
                         contextMenuElement.AppendChild(xMenuItemNode);
+
+                        if(menuItem.Icon != null) {
+
+                        } else if(menuItem.IconKey != null && menuItem.IconStyle != null) {
+                            var iconOuterElement = x.CreateElement($"{xMenuItemNode.Name}.{nameof(MenuItem.Icon)}");
+                            xMenuItemNode.AppendChild(iconOuterElement);
+
+                            var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
+                            var iconMap = new StringsModel() {
+                                ["icon-key"] = menuItem.IconKey,
+                                ["icon-style"] = menuItem.IconStyle,
+                            };
+                            foreach(var icon in GetAllElements(iconElement)) {
+                                ReplaceAttibute(icon, iconMap);
+                            }
+
+
+                            var xIconNode = x.ImportNode(iconElement, true);
+                            iconOuterElement.AppendChild(xIconNode);
+                        }
                     }
                 }
             });
@@ -165,9 +211,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var linkUri = scheme + domainPath;
 
                 var menuItems = new[] {
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand)),
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand)),
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand)),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                 };
 
                 var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName, menuItems);
