@@ -39,8 +39,10 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -117,10 +119,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        private object RequestShowViewCore(ShowViewRequestModel request)
+        {
+            Debug.Assert(request.ServiceType == ServiceType.Application);
+
+            if(request.ParameterIsViewModel) {
+                throw new NotImplementedException();
+            } else {
+                var appBrowserParameter = request.Parameter as AppBrowserParameterModel;
+                ManagerPack.AppManager.AppBrowserManager.NavigateFromParameter(appBrowserParameter);
+
+                return ManagerPack.AppManager.AppBrowserManager;
+            }
+
+            throw new NotImplementedException();
+        }
+
         private ResponseModel Request_ShowView(ShowViewRequestModel request)
         {
             var result = RestrictUtility.Block(() => {
                 switch(request.ServiceType) {
+                    case ServiceType.Application:
+                        return RequestShowViewCore(request);
+
                     case ServiceType.Smile:
                     case ServiceType.SmileVideo:
                     case ServiceType.SmileLive:
@@ -153,6 +174,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(viewModel != null) {
                 // コントロール側はうまいことがんばる
                 switch(request.ServiceType) {
+                    case ServiceType.Application:
+                        if(viewModel is AppBrowserManagerViewModel) {
+                            ManagerPack.AppManager.SelectedManager = viewModel as ManagerViewModelBase;
+                            return new ResponseModel(request, null);
+                        }
+                        throw new NotImplementedException();
+
                     case ServiceType.Smile:
                     case ServiceType.SmileVideo:
                     case ServiceType.SmileLive:

@@ -8,6 +8,7 @@ using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.App;
 
@@ -39,6 +40,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                     }
                 );
             }
+        }
+
+        #endregion
+
+        #region function
+
+        void Navigate(Uri uri)
+        {
+            Browser.Navigate(uri);
+        }
+
+        public void NavigateFromParameter(AppBrowserParameterModel parameter)
+        {
+            Navigate(parameter.Uri);
         }
 
         #endregion
@@ -77,6 +92,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             if(Browser.IsEmptyContent) {
                 Browser.Navigate(Browser.HomeSource);
             }
+        }
+
+        internal void NavigateFromParameter(object appBrowserParameter)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

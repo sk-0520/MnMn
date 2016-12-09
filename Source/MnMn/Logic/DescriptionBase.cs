@@ -20,9 +20,15 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using HTMLConverter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -50,18 +56,102 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        protected string MakeLinkCore(string link, string text, string commandName)
+        void ReplaceAttibute(XmlElement element, IReadOnlyDictionary<string,string> map)
         {
-            var linkElementSource = $@"
-                <Button Style='{{StaticResource Hyperlink}}' Command='{{Binding {commandName}}}' CommandParameter='{link}'>
-                    <TextBlock Text='{text}' />
-                </Button>
-            "
-                .SplitLines()
-                .Select(s => s.Trim())
-            ;
+            foreach(XmlAttribute attribute in element.Attributes) {
+                var attrValue = AppUtility.ReplaceString(attribute.Value, map);
+                attribute.Value = attrValue;
+            }
+        }
 
-            return string.Join(string.Empty, linkElementSource);
+        static IEnumerable<XmlElement> GetAllElements(XmlElement element)
+        {
+            if(element.HasChildNodes) {
+                var children = element.ChildNodes
+                    .OfType<XmlElement>()
+                    .Select(e => GetAllElements(e))
+                    .SelectMany(es => es)
+                ;
+                foreach(var e in children) {
+                    yield return e;
+                }
+            }
+            yield return element;
+        }
+
+        protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuItem> menuItems = null)
+        {
+            var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink, (x, e) => {
+                if(menuItems != null && menuItems.Any()) {
+                    //
+                    var contextMenuOuterElement = x.CreateElement($"{e.Name}.{nameof(ContextMenu)}");
+                    e.AppendChild(contextMenuOuterElement);
+
+                    var contextMenuElement = x.CreateElement($"{nameof(ContextMenu)}");
+                    contextMenuOuterElement.AppendChild(contextMenuElement);
+                    foreach(var menuItem in menuItems) {
+                        var menuItemElement =AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionMenuItem, null);
+                        //var menuItemElement = x.CreateElement($"{nameof(MenuItem)}");
+                        var menuMap = new StringsModel() {
+                            ["header"] = menuItem.HeaderText,
+                            ["command"] = menuItem.Command,
+                            ["link"] = menuItem.CommandParameter ?? link,
+                        };
+                        //foreach(XmlAttribute attribute in menuItemElement.Attributes) {
+                        //    var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
+                        //    attribute.Value = attrValue;
+                        //}
+                        ReplaceAttibute(menuItemElement, menuMap);
+
+                        var xMenuItemNode = x.ImportNode(menuItemElement, true);
+                        contextMenuElement.AppendChild(xMenuItemNode);
+
+                        if(menuItem.IconKey != null && menuItem.IconStyle != null) {
+                            var iconOuterElement = x.CreateElement($"{xMenuItemNode.Name}.{nameof(MenuItem.Icon)}");
+                            xMenuItemNode.AppendChild(iconOuterElement);
+
+                            if(true || menuItem.IconKey != null && menuItem.IconStyle != null) {
+
+                                var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
+                                var iconMap = new StringsModel() {
+                                    ["icon-key"] = menuItem.IconKey,
+                                    ["icon-style"] = menuItem.IconStyle,
+                                };
+                                foreach(var icon in GetAllElements(iconElement)) {
+                                    ReplaceAttibute(icon, iconMap);
+                                }
+
+                                var xIconNode = x.ImportNode(iconElement, true);
+                                iconOuterElement.AppendChild(xIconNode);
+                            }
+                        }
+                    }
+                }
+            });
+
+
+            var map = new StringsModel() {
+                ["command"] = commandName,
+                ["link"] = link,
+                ["text"] = text,
+            };
+
+            var removeRegex = new Regex(@"(xmlns="".*?"")");
+            var elementSource = removeRegex.Replace(element.OuterXml, string.Empty);
+            var madeElementSource = AppUtility.ReplaceString(elementSource, map);
+
+            return madeElementSource;
+
+            //var linkElementSource = $@"
+            //    <Button Style='{{StaticResource Hyperlink}}' Command='{{Binding {commandName}}}' CommandParameter='{link}'>
+            //        <TextBlock Text='{text}' />
+            //    </Button>
+            //"
+            //    .SplitLines()
+            //    .Select(s => s.Trim())
+            //;
+
+            //return string.Join(string.Empty, linkElementSource);
         }
 
         protected string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)
@@ -108,7 +198,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             );
 
             var replacedSource = regLink.Replace(flowDocumentSource, m => {
-                var domainPath = m.Groups["DOMAIN_PATH"].Value;
+                var domainPath = (m.Groups["DOMAIN_PATH"].Value ?? string.Empty).Trim();
                 if(domainPath.StartsWith(skipDomainPath)) {
                     return m.Groups[0].Value;
                 }
@@ -120,7 +210,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 var linkUri = scheme + domainPath;
 
-                var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName);
+                var menuItems = new[] {
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
+                };
+
+                var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName, menuItems);
 
                 return linkElementSource;
             });

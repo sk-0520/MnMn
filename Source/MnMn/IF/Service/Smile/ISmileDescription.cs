@@ -23,9 +23,8 @@ using System.Windows.Input;
 
 namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
 {
-    public interface ISmileDescription
+    public interface ISmileDescription: IDescription
     {
-        ICommand OpenWebLinkCommand { get; }
         ICommand OpenVideoLinkCommand { get; }
         ICommand OpenMyListLinkCommand { get; }
         ICommand OpenUserLinkCommand { get; }

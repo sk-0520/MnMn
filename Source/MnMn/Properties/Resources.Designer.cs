@@ -102,6 +102,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   &lt;UserControl 
+        ///  x:Name=&quot;dummy&quot;
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
+        ///&gt;
+        ///  &lt;Button Style=&quot;{StaticResource Hyperlink}&quot; Command=&quot;{Binding ${command}}&quot; CommandParameter=&quot;${link}&quot;&gt;
+        ///    &lt;TextBlock Text=&apos;${text}&apos; /&gt;
+        ///  &lt;/Button&gt;
+        ///&lt;/UserControl&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Xaml_DescriptionLink {
+            get {
+                return ResourceManager.GetString("File_Xaml_DescriptionLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;UserControl 
+        ///  x:Name=&quot;dummy&quot;
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
+        ///&gt;
+        ///  &lt;MenuItem Header=&quot;${header}&quot; Command=&quot;{Binding ${command}}&quot; CommandParameter=&quot;${link}&quot; /&gt;
+        ///&lt;/UserControl&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Xaml_DescriptionMenuItem {
+            get {
+                return ResourceManager.GetString("File_Xaml_DescriptionMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;UserControl 
+        ///  x:Name=&quot;dummy&quot;
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
+        ///&gt;
+        ///  &lt;Viewbox Style=&quot;{StaticResource SmallIconBox}&quot;&gt;
+        ///    &lt;Canvas Style=&quot;{StaticResource IconCanvas-24x24}&quot;&gt;
+        ///      &lt;Path Data=&quot;{StaticResource ${icon-key}}&quot; Style=&quot;{Static [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Xaml_SmallIcon {
+            get {
+                return ResourceManager.GetString("File_Xaml_SmallIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_CheckedProcessType_RandomPlay {
@@ -679,6 +735,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_App_Define_UpdateCheckState_UnChecked {
             get {
                 return ResourceManager.GetString("String_App_Define_UpdateCheckState_UnChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URIをコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_IDescription_MenuCopyUri {
+            get {
+                return ResourceManager.GetString("String_App_IDescription_MenuCopyUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   デフォルトブラウザで開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_IDescription_MenuOpenUri {
+            get {
+                return ResourceManager.GetString("String_App_IDescription_MenuOpenUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   内臓ブラウザで開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_IDescription_MenuOpenUriInAppBrowser {
+            get {
+                return ResourceManager.GetString("String_App_IDescription_MenuOpenUriInAppBrowser", resourceCulture);
             }
         }
         
