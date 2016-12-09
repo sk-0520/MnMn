@@ -106,24 +106,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         var xMenuItemNode = x.ImportNode(menuItemElement, true);
                         contextMenuElement.AppendChild(xMenuItemNode);
 
-                        if(menuItem.Icon != null) {
-
-                        } else if(menuItem.IconKey != null && menuItem.IconStyle != null) {
+                        if(menuItem.IconKey != null && menuItem.IconStyle != null) {
                             var iconOuterElement = x.CreateElement($"{xMenuItemNode.Name}.{nameof(MenuItem.Icon)}");
                             xMenuItemNode.AppendChild(iconOuterElement);
 
-                            var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
-                            var iconMap = new StringsModel() {
-                                ["icon-key"] = menuItem.IconKey,
-                                ["icon-style"] = menuItem.IconStyle,
-                            };
-                            foreach(var icon in GetAllElements(iconElement)) {
-                                ReplaceAttibute(icon, iconMap);
+                            if(true || menuItem.IconKey != null && menuItem.IconStyle != null) {
+
+                                var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
+                                var iconMap = new StringsModel() {
+                                    ["icon-key"] = menuItem.IconKey,
+                                    ["icon-style"] = menuItem.IconStyle,
+                                };
+                                foreach(var icon in GetAllElements(iconElement)) {
+                                    ReplaceAttibute(icon, iconMap);
+                                }
+
+                                var xIconNode = x.ImportNode(iconElement, true);
+                                iconOuterElement.AppendChild(xIconNode);
                             }
-
-
-                            var xIconNode = x.ImportNode(iconElement, true);
-                            iconOuterElement.AppendChild(xIconNode);
                         }
                     }
                 }

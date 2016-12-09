@@ -23,12 +23,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data
             IconStyle = iconStyle;
         }
 
-        public DescriptionContextMenuItem(string headerText, string command, string commandParameter, ImageSource icon)
-            : this(headerText, command, commandParameter)
-        {
-            Icon = icon;
-        }
-
         #region proeprty
 
         public string HeaderText { get; }
@@ -38,8 +32,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data
 
         public string IconKey { get; }
         public string IconStyle { get; }
-
-        public ImageSource Icon { get; }
 
         #endregion
     }
