@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             );
 
             var replacedSource = regLink.Replace(flowDocumentSource, m => {
-                var domainPath = m.Groups["DOMAIN_PATH"].Value;
+                var domainPath = (m.Groups["DOMAIN_PATH"].Value ?? string.Empty).Trim();
                 if(domainPath.StartsWith(skipDomainPath)) {
                     return m.Groups[0].Value;
                 }

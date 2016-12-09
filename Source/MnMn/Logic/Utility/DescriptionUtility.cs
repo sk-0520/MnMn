@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -51,6 +52,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             if(Uri.TryCreate((string)parameter, UriKind.RelativeOrAbsolute, out uri)) {
                 OpenUriInAppBrowserCore(uri, communication);
             }
+        }
+
+        static void CopyUriCore(string uri, ILogger logger)
+        {
+            try {
+                Clipboard.SetText(uri);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+        }
+
+        public static void CopyUri(object parameter, ILogger logger)
+        {
+            CopyUriCore((string)parameter, logger);
         }
 
         #endregion

@@ -1941,11 +1941,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
         }
         public ICommand MenuOpenUriCommand => OpenUriCommand;
-
         public ICommand MenuOpenUriInAppBrowserCmmand {
             get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
         }
-        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => { }); } }
+        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
 
         public ICommand OpenVideoLinkCommand
         {
