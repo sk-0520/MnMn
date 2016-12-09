@@ -560,9 +560,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #region ISmileDescription
 
-        public ICommand OpenWebLinkCommand { get { return CreateCommand(o => DescriptionUtility.OpenWebLink(o, Mediation.Logger)); } }
-        public ICommand MenuOpenWebLinkCommand { get { return CreateCommand(o => { }); } }
-        public ICommand MenuOpenWebLinkAppBrowserCmmand { get { return CreateCommand(o => { }); } }
+        public ICommand OpenUriCommand { get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); } }
+        public ICommand MenuOpenUriCommand { get { return CreateCommand(o => { }); } }
+        public ICommand MenuOpenUriInAppBrowserCmmand { get { return CreateCommand(o => { }); } }
+        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => { }); } }
 
         public ICommand OpenVideoLinkCommand { get { return CreateCommand(o => OpenVideoLinkAsync((string)o)); } }
         public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => OpenMyListLink((string)o)); } }

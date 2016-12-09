@@ -301,6 +301,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\ProcessRequestModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessCheckItLaterParameterModel.cs" />

@@ -379,10 +379,13 @@
   <data name="File_Xaml_DescriptionMenuItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\xaml\descriptionmenuitem.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="String_App_IDescription_MenuOpenWebAppBrowserLink" xml:space="preserve">
-    <value>内臓ブラウザ</value>
+  <data name="String_App_IDescription_MenuOpenUriInAppBrowser" xml:space="preserve">
+    <value>内臓ブラウザで開く</value>
   </data>
-  <data name="String_App_IDescription_MenuOpenWebLink" xml:space="preserve">
-    <value>ひらく</value>
+  <data name="String_App_IDescription_MenuOpenUri" xml:space="preserve">
+    <value>デフォルトブラウザで開く</value>
+  </data>
+  <data name="String_App_IDescription_MenuCopyUri" xml:space="preserve">
+    <value>URIをコピー</value>
   </data>
 </root>

@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
         protected override string ConvertFlowDocumentFromHtmlCore(string flowDocumentSource)
         {
-            var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource, nameof(ISmileDescription.OpenWebLinkCommand));
+            var convertedFlowDocumentSource = ConvertLinkFromPlainText(flowDocumentSource, nameof(ISmileDescription.OpenUriCommand));
             convertedFlowDocumentSource = ConvertLinkFromMyList(convertedFlowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromUserId(convertedFlowDocumentSource);
             convertedFlowDocumentSource = ConvertLinkFromVideoId(convertedFlowDocumentSource);

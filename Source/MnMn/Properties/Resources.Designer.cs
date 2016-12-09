@@ -721,20 +721,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   内臓ブラウザ に類似しているローカライズされた文字列を検索します。
+        ///   URIをコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_App_IDescription_MenuOpenWebAppBrowserLink {
+        internal static string String_App_IDescription_MenuCopyUri {
             get {
-                return ResourceManager.GetString("String_App_IDescription_MenuOpenWebAppBrowserLink", resourceCulture);
+                return ResourceManager.GetString("String_App_IDescription_MenuCopyUri", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   ひらく に類似しているローカライズされた文字列を検索します。
+        ///   デフォルトブラウザで開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_App_IDescription_MenuOpenWebLink {
+        internal static string String_App_IDescription_MenuOpenUri {
             get {
-                return ResourceManager.GetString("String_App_IDescription_MenuOpenWebLink", resourceCulture);
+                return ResourceManager.GetString("String_App_IDescription_MenuOpenUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   内臓ブラウザで開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_IDescription_MenuOpenUriInAppBrowser {
+            get {
+                return ResourceManager.GetString("String_App_IDescription_MenuOpenUriInAppBrowser", resourceCulture);
             }
         }
         

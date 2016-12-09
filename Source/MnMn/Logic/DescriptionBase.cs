@@ -165,8 +165,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var linkUri = scheme + domainPath;
 
                 var menuItems = new[] {
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenWebLink, nameof(IDescription.MenuOpenWebLinkCommand)),
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenWebAppBrowserLink, nameof(IDescription.MenuOpenWebLinkAppBrowserCmmand)),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand)),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand)),
+                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand)),
                 };
 
                 var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName, menuItems);

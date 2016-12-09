@@ -9,8 +9,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IDescription
     {
-        ICommand OpenWebLinkCommand { get; }
-        ICommand MenuOpenWebLinkCommand { get; }
-        ICommand MenuOpenWebLinkAppBrowserCmmand { get; }
+        ICommand OpenUriCommand { get; }
+        ICommand MenuOpenUriCommand { get; }
+        ICommand MenuOpenUriInAppBrowserCmmand { get; }
+        ICommand MenuCopyUriCmmand { get; }
     }
 }

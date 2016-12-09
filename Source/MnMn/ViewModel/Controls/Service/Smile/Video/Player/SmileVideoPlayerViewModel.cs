@@ -1936,12 +1936,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region ISmileVideoDescription
 
-        public ICommand OpenWebLinkCommand
+        public ICommand OpenUriCommand
         {
-            get { return CreateCommand(o => DescriptionUtility.OpenWebLink(o, Mediation.Logger)); }
+            get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
         }
-        public ICommand MenuOpenWebLinkCommand { get { return CreateCommand(o => { }); } }
-        public ICommand MenuOpenWebLinkAppBrowserCmmand { get { return CreateCommand(o => { }); } }
+        public ICommand MenuOpenUriCommand => OpenUriCommand;
+
+        public ICommand MenuOpenUriInAppBrowserCmmand {
+            get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
+        }
+        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => { }); } }
 
         public ICommand OpenVideoLinkCommand
         {

@@ -5,7 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
@@ -14,11 +18,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         #region function
 
         /// <summary>
-        /// <see cref="IDescription.OpenWebLinkCommand"/>
+        /// <see cref="IDescription.OpenUriCommand"/>
         /// </summary>
         /// <param name="link"></param>
         /// <param name="logger"></param>
-        static void OpenWebLinkCore(string link, ILogger logger)
+        static void OpenUriCore(string link, ILogger logger)
         {
             try {
                 Process.Start(link);
@@ -27,9 +31,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
         }
 
-        public static void OpenWebLink(object parameter, ILogger logger)
+        public static void OpenUri(object parameter, ILogger logger)
         {
-            OpenWebLinkCore((string)parameter, logger);
+            OpenUriCore((string)parameter, logger);
+        }
+
+        static void OpenUriInAppBrowserCore(Uri uri, ICommunication communication)
+        {
+            var parameter = new AppBrowserParameterModel() {
+                Uri = uri,
+            };
+            //communication.GetResultFromRequest();
+            communication.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Application, parameter, ShowViewState.Foreground));
+        }
+
+        public static void OpenUriInAppBrowser(object parameter, ICommunication communication)
+        {
+            Uri uri;
+            if(Uri.TryCreate((string)parameter, UriKind.RelativeOrAbsolute, out uri)) {
+                OpenUriInAppBrowserCore(uri, communication);
+            }
         }
 
         #endregion
