@@ -276,7 +276,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// クラッシュレポート保管ディレクトリ名。
         /// </summary>
         public static string CrashReportDirectoryName { get; } = "crash";
-        public static string CrashReportFileExtension { get; } = "crash.log";
+        public static string CrashReportFileExtension { get; } = "crash-log.xml";
         public static string CrashReportSearchPattern { get; } = "*." + CrashReportFileExtension;
         public static int CrashReportCount { get; } = 10;
 

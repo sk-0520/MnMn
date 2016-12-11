@@ -54,11 +54,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             SplashWindow = new SplashWindow();
 
-            //var t = new DispatcherTimer() {
-            //    Interval = TimeSpan.FromSeconds(10),
-            //};
-            //t.Tick += (sender, e) => { throw new Exception("dmy"); };
-            //t.Start();
+            var t = new DispatcherTimer() {
+                Interval = TimeSpan.FromSeconds(10),
+            };
+            t.Tick += (sender, e) => { throw new Exception("dmy"); };
+            t.Start();
         }
 
         #region property
@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
             } else {
                 Debug.WriteLine(ex);
             }
+
+            CreateCrashReport(ex, callerUiThread);
 
             Shutdown();
         }
@@ -179,8 +181,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             });
         }
 
-        void CreateCrashReport()
-        { }
+        void CreateCrashReport(Exception ex, bool callerUiThread)
+        {
+            var crashReport = new CrashReportModel(ex, callerUiThread);
+            var dir = VariableConstants.GetCrashReportDirectory();
+            var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
+            SerializeUtility.SaveXmlDataToFile(path, crashReport);
+        }
 
         #endregion
 
