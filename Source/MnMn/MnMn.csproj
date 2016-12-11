@@ -297,6 +297,7 @@
       <DependentUpon>WebNavigatorCore.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
+    <Compile Include="Model\CrashReportModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />

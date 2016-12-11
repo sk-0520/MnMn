@@ -83,6 +83,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return Directory.CreateDirectory(path);
         }
 
+        public static DirectoryInfo GetCrashReportDirectory()
+        {
+            var baseDir = GetSettingBaseDirectory();
+            var path = Path.Combine(baseDir, Constants.CrashReportDirectoryName);
+
+            return Directory.CreateDirectory(path);
+        }
+
+
         #endregion
 
     }

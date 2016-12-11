@@ -33,8 +33,10 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -51,6 +53,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
         App()
         {
             SplashWindow = new SplashWindow();
+
+            //var t = new DispatcherTimer() {
+            //    Interval = TimeSpan.FromSeconds(10),
+            //};
+            //t.Tick += (sender, e) => { throw new Exception("dmy"); };
+            //t.Start();
         }
 
         #region property
@@ -69,11 +77,16 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void CatchUnhandleException(Exception ex, bool callerUiThread)
         {
+            Debug.WriteLine($"{nameof(callerUiThread)} = {callerUiThread}");
             if(Mediation != null && Mediation.Logger != null) {
                 Mediation.Logger.Fatal(ex);
             } else {
                 Debug.WriteLine(ex);
             }
+
+            CreateCrashReport(ex, callerUiThread);
+
+            Shutdown();
         }
 
         CheckResultModel<AppSettingModel> LoadSetting(ILogger logger)
@@ -134,6 +147,46 @@ namespace ContentTypeTextNet.MnMn.MnMn
                     XmlLanguage.GetLanguage(usingCultureInfo.IetfLanguageTag)
                 )
             );
+        }
+
+        static DateTime? GetCrashReportFileTimestamp(FileInfo file)
+        {
+            DateTime dateTime;
+            if(DateTime.TryParseExact(Path.GetFileNameWithoutExtension(file.Name), Constants.FormatTimestampFileName, CultureInfo.InvariantCulture, DateTimeStyles.AllowLeadingWhite, out dateTime)) {
+                return dateTime;
+            }
+
+            if(file.Exists) {
+                return file.CreationTime;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 古い異常終了時のデータを破棄。
+        /// </summary>
+        /// <returns></returns>
+        Task InitializeCrashReportAsync()
+        {
+            return Task.Run(() => {
+                var dir = VariableConstants.GetCrashReportDirectory();
+                dir.Refresh();
+                if(dir.Exists) {
+                    FileUtility.RotateFiles(dir.FullName, Constants.CrashReportSearchPattern, OrderBy.Descending, Constants.CrashReportCount, ex => {
+                        Mediation.Logger.Error(ex);
+                        return true;
+                    });
+                }
+            });
+        }
+
+        void CreateCrashReport(Exception ex, bool callerUiThread)
+        {
+            var crashReport = new CrashReportModel(ex, callerUiThread);
+            var dir = VariableConstants.GetCrashReportDirectory();
+            var path = Path.Combine(dir.FullName, PathUtility.AppendExtension(Constants.GetNowTimestampFileName(), Constants.CrashReportFileExtension));
+            SerializeUtility.SaveXmlDataToFile(path, crashReport);
         }
 
         #endregion
@@ -206,7 +259,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             SplashWindow.Show();
 
-            await AppManager.InitializeAsync();
+            var initializeTasks = new [] {
+                InitializeCrashReportAsync(),
+                AppManager.InitializeAsync(),
+            };
+            await Task.WhenAll(initializeTasks);
+
             View = new MainWindow() {
                 DataContext = AppManager,
             };
@@ -215,7 +273,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager.InitializeView(View);
             MainWindow.Show();
             SplashWindow.Close();
-
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -232,8 +289,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            e.Handled = true;
             CatchUnhandleException(e.Exception, true);
-            //e.Handled = true;
         }
 
         /// <summary>
@@ -242,8 +299,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             CatchUnhandleException((Exception)e.ExceptionObject, false);
-
-            Shutdown();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
