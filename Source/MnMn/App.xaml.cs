@@ -33,8 +33,10 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -145,6 +147,41 @@ namespace ContentTypeTextNet.MnMn.MnMn
             );
         }
 
+        static DateTime? GetCrashReportFileTimestamp(FileInfo file)
+        {
+            DateTime dateTime;
+            if(DateTime.TryParseExact(Path.GetFileNameWithoutExtension(file.Name), Constants.FormatTimestampFileName, CultureInfo.InvariantCulture, DateTimeStyles.AllowLeadingWhite, out dateTime)) {
+                return dateTime;
+            }
+
+            if(file.Exists) {
+                return file.CreationTime;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 古い異常終了時のデータを破棄。
+        /// </summary>
+        /// <returns></returns>
+        Task InitializeCrashReportAsync()
+        {
+            return Task.Run(() => {
+                var dir = VariableConstants.GetCrashReportDirectory();
+                dir.Refresh();
+                if(dir.Exists) {
+                    FileUtility.RotateFiles(dir.FullName, Constants.CrashReportSearchPattern, OrderBy.Descending, Constants.CrashReportCount, ex => {
+                        Mediation.Logger.Error(ex);
+                        return true;
+                    });
+                }
+            });
+        }
+
+        void CreateCrashReport()
+        { }
+
         #endregion
 
         #region Application
@@ -215,7 +252,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
             SplashWindow.Show();
 
-            await AppManager.InitializeAsync();
+            var initializeTasks = new [] {
+                InitializeCrashReportAsync(),
+                AppManager.InitializeAsync(),
+            };
+            await Task.WhenAll(initializeTasks);
+
             View = new MainWindow() {
                 DataContext = AppManager,
             };
