@@ -54,11 +54,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         {
             SplashWindow = new SplashWindow();
 
-            var t = new DispatcherTimer() {
-                Interval = TimeSpan.FromSeconds(10),
-            };
-            t.Tick += (sender, e) => { throw new Exception("dmy"); };
-            t.Start();
+            //var t = new DispatcherTimer() {
+            //    Interval = TimeSpan.FromSeconds(10),
+            //};
+            //t.Tick += (sender, e) => { throw new Exception("dmy"); };
+            //t.Start();
         }
 
         #region property
