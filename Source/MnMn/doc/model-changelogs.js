@@ -84,24 +84,19 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.33.1',
-		'isRc': true,
+		'date': '2016/12/11',
+		'version': '0.34.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '12月ってほんと時間ないな',
+						'comments': [
+							'師でもないのに走り回るとはこれいかに'
+						]
 					}
 				]
 			},
@@ -109,22 +104,14 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'c1471f4a99185bc572916149eab59e79e4d7dedf',
 						'subject': '#140: 非ハンドリング例外を強制ログ出力する',
 						'comments': [
-							'クラッシュ時のレポート送信先サーバーを用意する時間なかったからローカルファイルに落とすようにした',
-							"基本的には %appdata%\\MnMn\\crash にクラッシュ時のログがシステム時間で落とされる ",
+							'クラッシュ時のレポート送信先サーバー(サービス)を用意する時間なかったからローカルファイルに落とすようにした',
+							"基本的には %appdata%\\MnMn\\crash にクラッシュ時のログがシステム時間で落とされる",
 							'バグ報告もらえるなら上記のログをもらえるとありがたい',
 							'わたしとあなたで環境が違うのです、落ちたの一言じゃわかんないのです'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -132,23 +119,19 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '01b7d4ea908707cd991d9c8b6706b699a4c88d94',
 						'subject': '#268: ファインダーの昇順・降順ボタンのアイコン消えてないっすか',
 						'comments': [
 							'再現手順が確立できてなかったけどたぶん直ったよ'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '9986524215e83f31128c8308ca270feedafb91a4',
 						'subject': '#272: フィルタの特別設定、「殺せ、同性愛者だ」を「LGBT関連」に変更する'
 					},
 					{
-						'revision': '',
+						'revision': 'd1921be5136f91e905d048f2a16d1b6230d67d38',
 						'subject': '#273: ブックマークの動画アイテムをツリーノード範囲外にD&Dすると落ちる'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -156,20 +139,12 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '15027d72f36766e3e8c8b7fc52e278239ae8b620',
 						'subject': '#254: 動画説明文の各種リンクにコンテキストメニューを追加する',
 						'comments': [
 							'今回実装は後々のためのインフラ整備が主',
 							'試験的な意味合いで共通処理として URI にコンテキストメニュー追加'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
