@@ -1036,16 +1036,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SmileDescriptionUtility.OpenUserId(userId, Mediation);
         }
 
-        void OpenWebLink(string link)
-        {
-            //try {
-            //    Process.Start(link);
-            //} catch(Exception ex) {
-            //    Mediation.Logger.Warning(ex);
-            //}
-            SmileDescriptionUtility.OpenWebLink(link, Mediation.Logger);
-        }
-
         Task OpenVideoLinkAsync(string videoId)
         {
             var cancel = new CancellationTokenSource();
@@ -1946,18 +1936,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region ISmileVideoDescription
 
-        public ICommand OpenWebLinkCommand
+        public ICommand OpenUriCommand
         {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var link = o as string;
-                        OpenWebLink(link);
-                    }
-                );
-            }
+            get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
         }
+        public ICommand MenuOpenUriCommand => OpenUriCommand;
+        public ICommand MenuOpenUriInAppBrowserCmmand {
+            get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
+        }
+        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
 
         public ICommand OpenVideoLinkCommand
         {

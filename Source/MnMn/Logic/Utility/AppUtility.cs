@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -108,6 +109,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 SetRandomTheme();
             } else {
                 SetThemeDefine(theme.ApplicationTheme, theme.BaseTheme, theme.Accent);
+            }
+        }
+
+        /// <summary>
+        /// XAML(XML)から第一要素取得。
+        /// <para>リソースとして定義したXAMLの子要素を取得する。</para>
+        /// </summary>
+        /// <param name="xamlSource"></param>
+        /// <returns></returns>
+        public static XmlElement ExtractResourceXamlElement(string xamlSource, Action<XmlDocument, XmlElement> action)
+        {
+            using(var stream = new StringReader(xamlSource)) {
+                var xml= new XmlDocument();
+                xml.Load(stream);
+
+                var element = xml.DocumentElement.ChildNodes
+                    .Cast<XmlNode>()
+                    .FirstOrDefault(n => n.NodeType == XmlNodeType.Element) as XmlElement
+                ;
+                if(action != null) {
+                    action(xml, element);
+                }
+
+                return element;
             }
         }
 

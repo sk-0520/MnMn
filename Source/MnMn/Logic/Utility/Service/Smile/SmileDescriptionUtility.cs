@@ -34,20 +34,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
     public static class SmileDescriptionUtility
     {
         /// <summary>
-        /// <see cref="ISmileDescription.OpenWebLinkCommand"/>
-        /// </summary>
-        /// <param name="link"></param>
-        /// <param name="logger"></param>
-        public static void OpenWebLink(string link, ILogger logger)
-        {
-            try {
-                Process.Start(link);
-            } catch(Exception ex) {
-                logger.Warning(ex);
-            }
-        }
-
-        /// <summary>
         ///<see cref="ISmileDescription.OpenMyListLinkCommand"/>
         /// <para>TODO: Videoにべったり依存。</para>
         /// </summary>

@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     /// <summary>
     /// 毎度毎度 Dictionary&lt;string, string&gt; 入力がしんどい。
     /// </summary>
-    public class StringsModel: Dictionary<string, string>
+    public sealed class StringsModel: Dictionary<string, string>
     {
         //
         // 概要:
@@ -106,20 +106,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         public StringsModel(IDictionary<string, string> dictionary, IEqualityComparer<string> comparer)
             : base(dictionary, comparer)
         { }
-        //
-        // 概要:
-        //     シリアル化したデータを使用して、System.Collections.Generic.Dictionary`2 クラスの新しいインスタンスを初期化します。
-        //
-        // パラメーター:
-        //   info:
-        //     System.Runtime.Serialization.SerializationInfo をシリアル化するために必要な情報を格納している System.Collections.Generic.Dictionary`2
-        //     オブジェクト。
-        //
-        //   context:
-        //     System.Collections.Generic.Dictionary`2 に関連付けられているシリアル化ストリームの送信元および送信先を格納している
-        //     System.Runtime.Serialization.StreamingContext 構造体。
-        protected StringsModel(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
+        ////
+        //// 概要:
+        ////     シリアル化したデータを使用して、System.Collections.Generic.Dictionary`2 クラスの新しいインスタンスを初期化します。
+        ////
+        //// パラメーター:
+        ////   info:
+        ////     System.Runtime.Serialization.SerializationInfo をシリアル化するために必要な情報を格納している System.Collections.Generic.Dictionary`2
+        ////     オブジェクト。
+        ////
+        ////   context:
+        ////     System.Collections.Generic.Dictionary`2 に関連付けられているシリアル化ストリームの送信元および送信先を格納している
+        ////     System.Runtime.Serialization.StreamingContext 構造体。
+        //protected StringsModel(SerializationInfo info, StreamingContext context)
+        //    : base(info, context)
+        //{ }
     }
 }

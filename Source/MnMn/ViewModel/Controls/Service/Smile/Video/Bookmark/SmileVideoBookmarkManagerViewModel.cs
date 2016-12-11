@@ -434,7 +434,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 }
             } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
-                if(dstNode != SelectedBookmarkNode) {
+                if(dstNode != null && dstNode != SelectedBookmarkNode) {
                     e.Effects = DragDropEffects.Move;
                     DragOverBookmarkNode = dstNode;
                 } else {
@@ -482,10 +482,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             } else if(e.Data.GetDataPresent(typeof(SmileVideoFinderItemViewModel))) {
                 var finderItem = (SmileVideoFinderItemViewModel)e.Data.GetData(typeof(SmileVideoFinderItemViewModel));
                 var dstNode = GetNodeFromPosition(TreeNodes, e.GetPosition(TreeNodes));
-                var videoItem = finderItem.Information.ToVideoItemModel();
-                dstNode.VideoItems.Add(videoItem);
-                SelectedBookmarkNodeFinder.RemoveItem(SelectedBookmarkNodeFinder.SelectedFinderItem);
-                SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();
+                if(dstNode != null) {
+                    var videoItem = finderItem.Information.ToVideoItemModel();
+                    dstNode.VideoItems.Add(videoItem);
+                    SelectedBookmarkNodeFinder.RemoveItem(SelectedBookmarkNodeFinder.SelectedFinderItem);
+                    SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();
+                }
             }
         }
 

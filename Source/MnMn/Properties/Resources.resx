@@ -373,4 +373,22 @@
   <data name="String_Service_Smile_SmileVideo_Bookmark_Unorganized" xml:space="preserve">
     <value>未整理のブックマーク</value>
   </data>
+  <data name="File_Xaml_DescriptionLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\file\xaml\descriptionlink.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="File_Xaml_DescriptionMenuItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\file\xaml\descriptionmenuitem.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="String_App_IDescription_MenuOpenUriInAppBrowser" xml:space="preserve">
+    <value>内臓ブラウザで開く</value>
+  </data>
+  <data name="String_App_IDescription_MenuOpenUri" xml:space="preserve">
+    <value>デフォルトブラウザで開く</value>
+  </data>
+  <data name="String_App_IDescription_MenuCopyUri" xml:space="preserve">
+    <value>URIをコピー</value>
+  </data>
+  <data name="File_Xaml_SmallIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\file\xaml\smallicon.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

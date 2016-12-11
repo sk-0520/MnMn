@@ -202,6 +202,10 @@
     <Compile Include="Constants.Function.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Constants.Xaml.cs">
+      <DependentUpon>Constants.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DescriptionContextMenuItem.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
@@ -262,6 +266,7 @@
     <Compile Include="IF\Control\IPagerFinder.cs" />
     <Compile Include="IF\Control\ISelectable.cs" />
     <Compile Include="IF\Control\IWindowState.cs" />
+    <Compile Include="IF\IDescription.cs" />
     <Compile Include="IF\IDragAndDrop.cs" />
     <Compile Include="IF\IGarbageCollection.cs" />
     <Compile Include="IF\IGetRequestHeader.cs" />
@@ -276,6 +281,7 @@
     <Compile Include="Logic\Service\Smile\Live\SmileLiveMediation.cs" />
     <Compile Include="Logic\Service\Smile\SmileDescription.cs" />
     <Compile Include="Logic\Service\Smile\Video\Api\V1\Dmc.cs" />
+    <Compile Include="Logic\Utility\DescriptionUtility.cs" />
     <Compile Include="Logic\Utility\ItemsControlUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveFeedUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Live\SmileLiveInformationUtility.cs" />
@@ -291,6 +297,7 @@
       <DependentUpon>WebNavigatorCore.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Wrapper\WrapperBase.cs" />
+    <Compile Include="Model\CrashReportModel.cs" />
     <Compile Include="Model\DragParameterModel.cs" />
     <Compile Include="Model\MultiCommandParameter\MultiCommandParameterModelBase.cs" />
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoChangeVideoPositionCommandParameterModel.cs" />
@@ -298,6 +305,7 @@
     <Compile Include="Model\MultiCommandParameter\Service\Smile\Video\SmileVideoOpenVideoCommandParameterModel.cs" />
     <Compile Include="Model\Order\AppCleanMemoryOrderModel.cs" />
     <Compile Include="Model\RawModelBase.cs" />
+    <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\ProcessRequestModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessCheckItLaterParameterModel.cs" />
@@ -409,6 +417,7 @@
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TokenizedTextBox.cs" />
+    <Compile Include="View\Converter\Base64ImageSourceConverter.cs" />
     <Compile Include="View\Converter\MultiCommandParameterConverter.cs" />
     <Compile Include="View\Converter\NegativeDoubleConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Live\ElapsedTimeFromNowTimeConverter.cs" />
@@ -776,6 +785,18 @@
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
+    <None Include="Resources\File\Xaml\DescriptionLink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Include="Resources\File\Xaml\DescriptionMenuItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\File\Xaml\SmallIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
     <Page Include="View\Controls\App\AppGeneralBrowserManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
