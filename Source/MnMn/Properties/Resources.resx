@@ -391,4 +391,11 @@
   <data name="File_Xaml_SmallIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\xaml\smallicon.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String_App_ExecuteBetaVersion_Warning" xml:space="preserve">
+    <value>この MnMn はβ版ですが、β版として起動されていません。
+明示的な起動(/execute-beta)が行われておらず、設定データ・キャッシュがリリース版と混在する可能性があるためこのまま続行することはお勧めしません。
+β版をリリース版と混合せず使用するには "&lt;MnMn&gt;\bat\beta.bat" を実行してください。
+
+このまま起動してもよろしいですか。</value>
+  </data>
 </root>

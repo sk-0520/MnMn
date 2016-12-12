@@ -34,6 +34,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public static bool HasOptionSmileUserAccountPassword => CommandLine.HasValue(optionSmileUserAccountPassword);
         public static string OptionValueSmileUserAccountPassword => CommandLine.GetValue(optionSmileUserAccountPassword);
 
+        const string optionExecuteBetaVersion = "execute-beta";
+        public static bool HasOptionExecuteBetaVersion => CommandLine.HasValue(optionExecuteBetaVersion);
+
         #endregion
 
         #region function
