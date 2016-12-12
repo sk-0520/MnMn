@@ -189,12 +189,37 @@ namespace ContentTypeTextNet.MnMn.MnMn
             SerializeUtility.SaveXmlDataToFile(path, crashReport);
         }
 
+        bool ShowBetaMessageIfNoBetaFlag()
+        {
+            if(VariableConstants.HasOptionExecuteBetaVersion) {
+                // フラグ指定があれば実行OK
+                return true;
+            }
+
+            var dialogResult = MessageBox.Show(
+                MnMn.Properties.Resources.String_App_ExecuteBetaVersion_Warning, 
+                $"{Constants.ApplicationName}:{Constants.ApplicationVersion}",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning,
+                MessageBoxResult.No,
+                MessageBoxOptions.DefaultDesktopOnly
+            );
+
+            return dialogResult == MessageBoxResult.OK;
+        }
+
         #endregion
 
         #region Application
 
         protected async override void OnStartup(StartupEventArgs e)
         {
+#if BETA
+            if(!ShowBetaMessageIfNoBetaFlag()) {
+                Shutdown();
+            }
+#endif
+
             var logger = new Pe.PeMain.Logic.AppLogger();
             logger.IsStock = true;
 
@@ -221,6 +246,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 #if DEBUG
             DoDebug();
 #endif
+
             //var dir = VariableConstants.GetSettingDirectory();
             //var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
             //var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
@@ -282,7 +308,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             base.OnExit(e);
         }
 
-        #endregion
+#endregion
 
         /// <summary>
         /// UIスレッド
