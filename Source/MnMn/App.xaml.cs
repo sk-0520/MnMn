@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         protected async override void OnStartup(StartupEventArgs e)
         {
-#if BETA
+#if !BETA
             if(!ShowBetaMessageIfNoBetaFlag()) {
                 Shutdown();
             }
