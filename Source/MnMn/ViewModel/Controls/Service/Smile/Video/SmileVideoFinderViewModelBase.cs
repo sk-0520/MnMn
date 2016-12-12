@@ -345,6 +345,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand CopyCustomInformationCommand
+        {
+            get {
+                return CreateCommand(
+                    o => CopyCustomInformation(SelectedFinderItem.Information),
+                    o => SelectedFinderItem != null
+                );
+            }
+        }
+
+        public ICommand CopyInformationTextCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CopyInformationText((string)o),
+                    o => SelectedFinderItem != null && !string.IsNullOrEmpty((string)o)
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -590,6 +611,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         { }
         protected virtual void DropFromFinder(UIElement sender, DragEventArgs e)
         { }
+
+        void CopyCustomInformation(SmileVideoInformationViewModel information)
+        {
+
+        }
+
+        void CopyInformationText(string text)
+        {
+
+        }
 
         #endregion
 
