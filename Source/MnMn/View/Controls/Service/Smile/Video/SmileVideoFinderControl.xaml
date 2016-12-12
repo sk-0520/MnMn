@@ -43,6 +43,7 @@
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
@@ -66,6 +67,13 @@
       <Style x:Key="BodyContentVisibility" TargetType="Grid">
         <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
       </Style>
+
+      <Viewbox x:Key="Icon_Tag" Style="{StaticResource SmallIconBox}">
+        <Canvas Style="{StaticResource IconCanvas-24x24}">
+          <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
+        </Canvas>
+      </Viewbox>
+
 
     </ResourceDictionary>
   </UserControl.Resources>
@@ -309,13 +317,25 @@
                   </Canvas>
                 </Viewbox>
               </MenuItem.Icon>
-              <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" />
+              
+              <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
               <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}" />
               <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}" />
               <MenuItem Header="ユーザーID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}" />
               <MenuItem Header="ユーザー名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}" />
-              <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"/>
+              <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}" />
               <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}" />
+
+              <!--<MenuItem Header="タグ" Icon="{StaticResource Icon_Tag}" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
+                <MenuItem.ItemContainerStyle>
+                  <Style TargetType="MenuItem" >
+                    <Setter Property="Header" Value="{Binding TagName}"/>
+                    <Setter Property="Command" Value="{Binding DataContext.CopyInformationTextCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    <Setter Property="CommandParameter" Value="{Binding TagName}" />
+                  </Style>
+                </MenuItem.ItemContainerStyle>
+              </MenuItem>-->
+
             </MenuItem>
             <Separator />
             <MenuItem Header="フィルタ追加" IsEnabled="{Binding IsUsingFinderFilter}">

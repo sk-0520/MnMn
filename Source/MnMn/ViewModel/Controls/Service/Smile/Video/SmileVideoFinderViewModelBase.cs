@@ -619,7 +619,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         void CopyInformationText(string text)
         {
-
+            Debug.WriteLine(text);
         }
 
         #endregion
