@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         #region property
 
-        Dictionary<string, SmileVideoCheckItLaterModel> IdLaterMap { get; } = new Dictionary<string, SmileVideoCheckItLaterModel>();
+        Dictionary<string, SmileVideoCheckItLaterModel> IdAndUrlLaterMap { get; } = new Dictionary<string, SmileVideoCheckItLaterModel>();
 
         #endregion
 
@@ -78,7 +78,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             var viewModel = finderItem.Information;
 
             SmileVideoCheckItLaterModel checkItLater;
-            if(IdLaterMap.TryGetValue(viewModel.VideoId, out checkItLater)) {
+            if(IdAndUrlLaterMap.TryGetValue(viewModel.VideoId, out checkItLater)) {
+                return !checkItLater.IsChecked;
+            }
+            if(viewModel.WatchUrl != null && IdAndUrlLaterMap.TryGetValue(viewModel.WatchUrl.OriginalString, out checkItLater)) {
                 return !checkItLater.IsChecked;
             }
 
@@ -88,11 +91,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
 
         protected override Task<FeedSmileVideoModel> LoadFeedAsync()
         {
-            IdLaterMap.Clear();
+            IdAndUrlLaterMap.Clear();
 
             var result = new FeedSmileVideoModel();
             foreach(var model in Setting.CheckItLater.Where(c => !c.IsChecked)) {
-                IdLaterMap.Add(model.VideoId, model);
+                if(IdAndUrlLaterMap.ContainsKey(model.VideoId)) {
+                    continue;
+                }
+                IdAndUrlLaterMap.Add(model.VideoId, model);
+
+                // 視聴ページが既に含まれている場合はもう何もしない
+                if(model.WatchUrl != null) {
+                    if(IdAndUrlLaterMap.ContainsKey(model.WatchUrl.OriginalString)) {
+                        continue;
+                    }
+
+                    IdAndUrlLaterMap.Add(model.WatchUrl.OriginalString, model);
+                }
 
                 var item = new FeedSmileVideoItemModel();
 
