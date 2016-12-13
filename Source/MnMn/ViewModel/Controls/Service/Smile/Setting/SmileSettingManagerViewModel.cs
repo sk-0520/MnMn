@@ -87,8 +87,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get
             {
                 var list = new[] {
-                    "a",
-                    "b",
+                    SmileVideoInformationUtility.customCopyFormatVideoId,
+                    SmileVideoInformationUtility.customCopyFormatVideoTitle,
+                    SmileVideoInformationUtility.customCopyFormatVideoPage,
                 };
 
                 return string.Join(", ", list.Select(s => "${" + s + "}"));
