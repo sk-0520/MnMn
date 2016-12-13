@@ -43,7 +43,7 @@
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-      <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+      <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
@@ -68,7 +68,7 @@
         <Setter Property="Visibility" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource NullToVisibilityConverter}}" />
       </Style>
 
-      <Viewbox x:Key="Icon_Tag" Style="{StaticResource SmallIconBox}">
+      <Viewbox x:Key="Icon_Tag" x:Shared="False" Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
           <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
@@ -255,6 +255,9 @@
         <ListBox.ContextMenu>
           <!-- http://stackoverflow.com/questions/2617122/wpf-menuitem-command-binding-to-elementname-results-to-system-windows-data-error?answertab=votes#tab-top -->
           <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
+            <ContextMenu.Resources>
+              <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
+            </ContextMenu.Resources>
             <!--EnumToBooleanConverter-->
             <MenuItem Header="プレイヤーで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}}" >
               <MenuItem Header="再生中プレイヤー" IsChecked="{Binding OpenPlayerInNewWindow, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
@@ -319,23 +322,41 @@
                 </Viewbox>
               </MenuItem.Icon>
               
-              <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
-              <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}" />
-              <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}" />
-              <MenuItem Header="ユーザーID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}" />
-              <MenuItem Header="ユーザー名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}" />
-              <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}" />
-              <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}" />
+              <MenuItem.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Setter Property="Header" Value="{Binding TagName}"/>
+                  <Setter Property="Command" Value="{Binding DataContext.CopyInformationTextCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                  <Setter Property="CommandParameter" Value="{Binding TagName}" />
+                  <Setter Property="Icon" Value="{StaticResource Icon_Tag}" />
+                </Style>
+              </MenuItem.ItemContainerStyle>
 
-              <MenuItem Header="タグ" Icon="{StaticResource Icon_Tag}" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
-                <MenuItem.ItemContainerStyle>
-                  <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding TagName}"/>
-                    <Setter Property="Command" Value="{Binding DataContext.CopyInformationTextCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                    <Setter Property="CommandParameter" Value="{Binding TagName}" />
-                  </Style>
-                </MenuItem.ItemContainerStyle>
-              </MenuItem>
+              <MenuItem.ItemsSource>
+                <CompositeCollection>
+                  <MenuItem Header="カスタム" Command="{Binding CopyCustomInformationCommand}" Style="{StaticResource {x:Type MenuItem}}" />
+                  <MenuItem Header="動画ID" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.VideoId}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="タイトル" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.Title}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="ユーザーID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserId}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="ユーザー名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo, Converter={StaticResource LogicalNotConverter}}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.UserName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}"  Style="{StaticResource {x:Type MenuItem}}"/>
+                  <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}"  Style="{StaticResource {x:Type MenuItem}}"/>
+
+                  <Separator>
+                    <Separator.Style>
+                      <Style TargetType="Separator" BasedOn="{StaticResource {x:Type Separator}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding SelectedFinderItem.Information.TagList, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Separator.Style>
+                  </Separator>
+                  <CollectionContainer Collection="{Binding Source={StaticResource TagList}}" />
+
+                </CompositeCollection>
+              </MenuItem.ItemsSource>
+              
 
             </MenuItem>
             <Separator />
