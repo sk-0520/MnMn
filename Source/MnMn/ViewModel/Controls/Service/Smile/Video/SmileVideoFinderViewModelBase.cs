@@ -351,7 +351,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get {
                 return CreateCommand(
                     o => CopyCustomInformation(SelectedFinderItem.Information),
-                    o => SelectedFinderItem != null
+                    o => SelectedFinderItem != null && !string.IsNullOrWhiteSpace(Setting.Common.CustomCopyFormat)
                 );
             }
         }

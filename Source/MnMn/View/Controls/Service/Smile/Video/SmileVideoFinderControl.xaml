@@ -47,6 +47,7 @@
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
+      <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
 
       <Thickness x:Key="ValueCell">8,2</Thickness>
@@ -324,7 +325,7 @@
               
               <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                  <Setter Property="Header" Value="{Binding TagName}"/>
+                  <Setter Property="Header" Value="{Binding TagName, Converter={StaticResource EscapeAccessKeyConverter}}"/>
                   <Setter Property="Command" Value="{Binding DataContext.CopyInformationTextCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                   <Setter Property="CommandParameter" Value="{Binding TagName}" />
                   <Setter Property="Icon" Value="{StaticResource Icon_Tag}" />
