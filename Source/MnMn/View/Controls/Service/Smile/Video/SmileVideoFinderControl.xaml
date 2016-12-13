@@ -253,7 +253,8 @@
           </Style>
         </ListBox.ItemContainerStyle>
         <ListBox.ContextMenu>
-          <ContextMenu>
+          <!-- http://stackoverflow.com/questions/2617122/wpf-menuitem-command-binding-to-elementname-results-to-system-windows-data-error?answertab=votes#tab-top -->
+          <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
             <!--EnumToBooleanConverter-->
             <MenuItem Header="プレイヤーで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}}" >
               <MenuItem Header="再生中プレイヤー" IsChecked="{Binding OpenPlayerInNewWindow, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
@@ -326,15 +327,15 @@
               <MenuItem Header="チャンネルID" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelId}" />
               <MenuItem Header="チャンネル名" IsEnabled="{Binding SelectedFinderItem.Information.IsChannelVideo}" Command="{Binding CopyInformationTextCommand}" CommandParameter="{Binding SelectedFinderItem.Information.ChannelName}" />
 
-              <!--<MenuItem Header="タグ" Icon="{StaticResource Icon_Tag}" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
+              <MenuItem Header="タグ" Icon="{StaticResource Icon_Tag}" ItemsSource="{Binding SelectedFinderItem.Information.TagList}">
                 <MenuItem.ItemContainerStyle>
-                  <Style TargetType="MenuItem" >
+                  <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                     <Setter Property="Header" Value="{Binding TagName}"/>
                     <Setter Property="Command" Value="{Binding DataContext.CopyInformationTextCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     <Setter Property="CommandParameter" Value="{Binding TagName}" />
                   </Style>
                 </MenuItem.ItemContainerStyle>
-              </MenuItem>-->
+              </MenuItem>
 
             </MenuItem>
             <Separator />
