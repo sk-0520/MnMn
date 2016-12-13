@@ -22,7 +22,7 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignHeight="900"
+  d:DesignHeight="1200"
   d:DesignWidth="600"
 >
   <UserControl.Resources>
@@ -84,7 +84,28 @@
           </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Column="0" Header="動画再生方法">
+        <GroupBox Header="共通設定">
+          <StackPanel>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Row="0" Grid.Column="0">カスタムコピー書式</Label>
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CommonCustomCopyFormat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
+
+              <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CommonCustomCopyList}" />
+
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="動画再生方法">
           <StackPanel>
             <RadioButton Content="プレイヤーで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />
             <RadioButton Content="ブラウザで開く" IsChecked="{Binding OpenMode, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}, Converter={StaticResource EnumToBooleanConverter}}" Style="{StaticResource VerticalRadioButton}" />

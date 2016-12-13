@@ -31,6 +31,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         #region property
 
         /// <summary>
+        /// 共通設定。
+        /// </summary>
+        [DataMember]
+        public SmileVideoCommonSettingModel Common { get; set; } = new SmileVideoCommonSettingModel();
+
+        /// <summary>
         /// コメント設定。
         /// </summary>
         [DataMember]
