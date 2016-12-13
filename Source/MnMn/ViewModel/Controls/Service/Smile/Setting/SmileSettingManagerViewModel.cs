@@ -76,6 +76,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetVariableValue(ref this._editingAccountPassword, value); }
         }
 
+        public string CommonCustomCopyFormat
+        {
+            get { return Setting.Video.Common.CustomCopyFormat; }
+            set { SetPropertyValue(Setting.Video.Common, value, nameof(Setting.Video.Common.CustomCopyFormat)); }
+        }
+
+        public string CommonCustomCopyList
+        {
+            get
+            {
+                var list = new[] {
+                    "a",
+                    "b",
+                };
+
+                return string.Join(", ", list.Select(s => "${" + s + "}"));
+            }
+        }
+
         /// <summary>
         /// 動画再生方法。
         /// </summary>
