@@ -367,6 +367,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public ICommand SearchInformationTextCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SearchInformationText((string)o),
+                    o => SelectedFinderItem != null && !string.IsNullOrEmpty((string)o)
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -632,6 +643,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 Mediation.Logger.Warning(ex);
             }
         }
+
+        void SearchInformationText(string text)
+        { }
 
         #endregion
 
