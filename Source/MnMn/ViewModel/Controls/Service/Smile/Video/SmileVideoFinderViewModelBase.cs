@@ -651,7 +651,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         void SearchInformationText(string text)
-        { }
+        {
+            var parameter = new SmileVideoSearchParameterModel() {
+                SearchType = FinderSearchType,
+                Query = text,
+            };
+
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+        }
 
         #endregion
 
