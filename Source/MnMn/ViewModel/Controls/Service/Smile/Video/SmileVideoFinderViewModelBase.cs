@@ -272,6 +272,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool OpenPlayerInNewWindow => Setting.Execute.OpenPlayerInNewWindow;
 
+        public SearchType FinderSearchType
+        {
+            get { return Setting.Search.FinderSearchType; }
+            set { SetPropertyValue(Setting.Search, value, nameof(Setting.Search.FinderSearchType)); }
+        }
+
         #endregion
 
         #region command

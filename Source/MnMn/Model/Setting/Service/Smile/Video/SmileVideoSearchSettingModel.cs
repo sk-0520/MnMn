@@ -47,6 +47,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SearchType DefaultType { get; set; } = SearchType.Tag;
 
+        [DataMember]
+        public SearchType FinderSearchType { get; set; } = SearchType.Tag;
+
         /// <summary>
         /// 検索履歴。
         /// </summary>
