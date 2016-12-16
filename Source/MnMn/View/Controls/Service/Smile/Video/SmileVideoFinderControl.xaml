@@ -44,6 +44,7 @@
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <cttn_sl_view_converter:IsEmptyCollectionConverter x:Key="IsEmptyCollectionConverter" />
+      <cttn_sl_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
@@ -358,6 +359,35 @@
                 </CompositeCollection>
               </MenuItem.ItemsSource>
               
+
+            </MenuItem>
+            <MenuItem Header="検索" IsEnabled="{Binding SelectedFinderItem.Information.TagList, Converter={StaticResource IsNotEmptyCollectionConverter}}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Search}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+
+              <MenuItem.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Setter Property="Header" Value="{Binding TagName, Converter={StaticResource EscapeAccessKeyConverter}}"/>
+                  <Setter Property="Command" Value="{Binding DataContext.SearchInformationTextCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                  <Setter Property="CommandParameter" Value="{Binding TagName}" />
+                  <Setter Property="Icon" Value="{StaticResource Icon_Tag}" />
+                </Style>
+              </MenuItem.ItemContainerStyle>
+
+              <MenuItem.ItemsSource>
+                <CompositeCollection>
+                  <MenuItem IsCheckable="True" IsChecked="{Binding FinderSearchType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:SearchType.Tag}}" Header="{Binding Source={x:Static app_define:SearchType.Tag}, Converter={StaticResource EnumDisplayConverter}}" Style="{StaticResource {x:Type MenuItem}}" />
+                  <MenuItem IsCheckable="True" IsChecked="{Binding FinderSearchType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:SearchType.Keyword}}" Header="{Binding Source={x:Static app_define:SearchType.Keyword}, Converter={StaticResource EnumDisplayConverter}}" Style="{StaticResource {x:Type MenuItem}}" />
+                  <Separator />
+                  
+                  <CollectionContainer Collection="{Binding Source={StaticResource TagList}}" />
+                </CompositeCollection>
+              </MenuItem.ItemsSource>
 
             </MenuItem>
             <Separator />

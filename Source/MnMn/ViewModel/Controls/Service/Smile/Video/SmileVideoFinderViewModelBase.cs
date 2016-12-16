@@ -272,6 +272,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool OpenPlayerInNewWindow => Setting.Execute.OpenPlayerInNewWindow;
 
+        public SearchType FinderSearchType
+        {
+            get { return Setting.Search.FinderSearchType; }
+            set { SetPropertyValue(Setting.Search, value, nameof(Setting.Search.FinderSearchType)); }
+        }
+
         #endregion
 
         #region command
@@ -362,6 +368,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             {
                 return CreateCommand(
                     o => CopyInformationText((string)o),
+                    o => SelectedFinderItem != null && !string.IsNullOrEmpty((string)o)
+                );
+            }
+        }
+
+        public ICommand SearchInformationTextCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SearchInformationText((string)o),
                     o => SelectedFinderItem != null && !string.IsNullOrEmpty((string)o)
                 );
             }
@@ -631,6 +648,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             } catch(Exception ex) {
                 Mediation.Logger.Warning(ex);
             }
+        }
+
+        void SearchInformationText(string text)
+        {
+            var parameter = new SmileVideoSearchParameterModel() {
+                SearchType = FinderSearchType,
+                Query = text,
+            };
+
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
         }
 
         #endregion
