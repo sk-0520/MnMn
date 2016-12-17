@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
+using System.Windows;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -94,6 +95,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         {
             var myListId = (string)parameter;
             return AddMyListBookmarkCoreAsync(myListId, mediation);
+        }
+
+        static void CopyMyListIdCore(string myListId, ILogger logger)
+        {
+            try {
+                Clipboard.SetText(myListId);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+        }
+
+        public static void CopyMyListId(object parameter, ILogger logger)
+        {
+            var myListId = (string)parameter;
+            CopyMyListIdCore(myListId, logger);
         }
 
         /// <summary>

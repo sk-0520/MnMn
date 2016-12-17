@@ -810,18 +810,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         /// <summary>
         ///   ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_ISmileDescription_MenuAddMyListLinkCommand {
+        internal static string String_Service_Smile_ISmileDescription_MenuAddMyList {
             get {
-                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyListLinkCommand", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   マイリストIDをコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuCopyMyListId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuCopyMyListId", resourceCulture);
             }
         }
         
         /// <summary>
         ///   開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand {
+        internal static string String_Service_Smile_ISmileDescription_MenuOpenMyList {
             get {
-                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyList", resourceCulture);
             }
         }
         
