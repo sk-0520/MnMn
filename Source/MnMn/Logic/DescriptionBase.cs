@@ -79,10 +79,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             yield return element;
         }
 
-        protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuItem> menuItems = null)
+        protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuItem> menuItems)
         {
             var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink, (x, e) => {
-                if(menuItems != null && menuItems.Any()) {
+                if(menuItems.Any()) {
                     //
                     var contextMenuOuterElement = x.CreateElement($"{e.Name}.{nameof(ContextMenu)}");
                     e.AppendChild(contextMenuOuterElement);
