@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="myListId"></param>
-        public static void OpenMyListId(string myListId, ICommunication communicator)
+        static void OpenMyListIdCore(string myListId, ICommunication communicator)
         {
             var parameter = new SmileVideoSearchMyListParameterModel() {
                 Query = myListId,
@@ -50,17 +50,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         }
 
         /// <summary>
+        ///<see cref="ISmileDescription.OpenMyListLinkCommand"/>
+        /// <para>TODO: Videoにべったり依存。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="myListId"></param>
+        public static void OpenMyListId(object parameter, ICommunication communicator)
+        {
+            OpenMyListIdCore((string)parameter, communicator);
+        }
+
+        /// <summary>
         /// <see cref="ISmileDescription.OpenUserLinkCommand"/>
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="userId"></param>
-        public static void OpenUserId(string userId, ICommunication communicator)
+        static void OpenUserIdCore(string userId, ICommunication communicator)
         {
             var parameter = new SmileOpenUserIdParameterModel() {
                 UserId = userId,
             };
 
             communicator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
+        }
+
+        /// <summary>
+        /// <see cref="ISmileDescription.OpenUserLinkCommand"/>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="userId"></param>
+        public static void OpenUserId(string parameter, ICommunication communicator)
+        {
+            OpenUserIdCore((string)parameter, communicator);
         }
     }
 }
