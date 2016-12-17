@@ -1046,17 +1046,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        void OpenMyListLink(string myListId)
-        {
-            //var parameter = new SmileVideoSearchMyListParameterModel() {
-            //    Query = myListId,
-            //    QueryType = SmileVideoSearchMyListQueryType.MyListId,
-            //};
-
-            //Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
-            SmileDescriptionUtility.OpenMyListId(myListId, Mediation);
-        }
-
         void RefreshFilteringComment()
         {
             Debug.Assert(FilteringCommentType != SmileVideoFilteringCommentType.All);
@@ -1959,18 +1948,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenMyListLinkCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        var myListId = o as string;
-                        OpenMyListLink(myListId);
-                    }
-                );
-            }
-        }
+        public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
+        public ICommand MenuOpenMyListLinkCommand => OpenMyListLinkCommand;
 
         public ICommand OpenUserLinkCommand
         {

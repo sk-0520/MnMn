@@ -808,6 +808,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新しいマイリスト に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_MyList_CreateGroupName {

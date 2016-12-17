@@ -46,7 +46,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 object outputValue;
                 if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, target, typeof(string), ServiceType)) {
                     var link = (string)outputValue;
-                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenMyListLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
+
+                    var menuItems = new[] {
+                        new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand, nameof(ISmileDescription.MenuOpenMyListLinkCommand), null),
+                    };
+
+                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenMyListLinkCommand), menuItems);
                 } else {
                     return m.Groups[0].Value;
                 }

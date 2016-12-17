@@ -458,12 +458,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         }
 
 
-        void OpenMyListLink(string myListId)
-        {
-            SmileDescriptionUtility.OpenMyListId(myListId, Mediation);
-        }
-
-
         void OpenUserLink(string userId)
         {
             SmileDescriptionUtility.OpenUserId(userId, Mediation);
@@ -572,7 +566,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
 
         public ICommand OpenVideoLinkCommand { get { return CreateCommand(o => OpenVideoLinkAsync((string)o)); } }
-        public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => OpenMyListLink((string)o)); } }
+
+        public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
+        public ICommand MenuOpenMyListLinkCommand => OpenMyListLinkCommand;
+
         public ICommand OpenUserLinkCommand { get { return CreateCommand(o => OpenUserLink((string)o)); } }
 
         #endregion

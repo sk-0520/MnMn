@@ -26,7 +26,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
     public interface ISmileDescription: IDescription
     {
         ICommand OpenVideoLinkCommand { get; }
+
         ICommand OpenMyListLinkCommand { get; }
+        ICommand MenuOpenMyListLinkCommand { get; }
+
         ICommand OpenUserLinkCommand { get; }
     }
 }
