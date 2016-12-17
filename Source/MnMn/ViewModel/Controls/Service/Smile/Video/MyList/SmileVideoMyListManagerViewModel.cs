@@ -740,17 +740,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             }
             if(group == null) {
                 group = await mylist.LoadGroupAsync(myListId);
+            }
+            if(group != null) {
                 SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
+
+                var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
+
+                ClearSearchUserMyListPage();
+                SearchUserMyList.InitializeRange(new[] { finder });
+                if(SearchUserMyList.Any()) {
+                    SelectedSearchFinder = (SmileVideoMyListFinderViewModelBase)SearchUserMyList.First();
+                }
             }
-
-            var finder = new SmileVideoMatchMyListFinderViewModel(Mediation, group, myListId, false);
-
-            ClearSearchUserMyListPage();
-            SearchUserMyList.InitializeRange(new[] { finder });
-            if(SearchUserMyList.Any()) {
-                SelectedSearchFinder = (SmileVideoMyListFinderViewModelBase)SearchUserMyList.First();
-            }
-
         }
 
         async Task SearchUserMyListFromKeywordAsync(string query)
@@ -815,7 +816,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             BookmarkUserMyListPairs.SwapIndex(srcIndex, nextIndex);
         }
 
-        void AddBookmarkUserMyList(SmileVideoMyListFinderViewModelBase finder)
+        internal void AddBookmarkUserMyList(SmileVideoMyListFinderViewModelBase finder)
         {
             CheckUtility.DebugEnforceNotNull(finder);
 

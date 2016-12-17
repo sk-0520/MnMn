@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                     var menuItems = new[] {
                         new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand, nameof(ISmileDescription.MenuOpenMyListLinkCommand), null),
+                        new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddMyListLinkCommand, nameof(ISmileDescription.MenuAddMyListLinkCommand), null),
                     };
 
                     return MakeLinkCore(link, target, nameof(ISmileDescription.OpenMyListLinkCommand), menuItems);

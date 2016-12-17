@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
 
         ICommand OpenMyListLinkCommand { get; }
         ICommand MenuOpenMyListLinkCommand { get; }
+        ICommand MenuAddMyListLinkCommand { get; }
 
         ICommand OpenUserLinkCommand { get; }
     }

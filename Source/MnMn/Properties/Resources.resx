@@ -398,6 +398,9 @@
 
 このまま起動してもよろしいですか。</value>
   </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuAddMyListLinkCommand" xml:space="preserve">
+    <value>ブックマーク</value>
+  </data>
   <data name="String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand" xml:space="preserve">
     <value>開く</value>
   </data>

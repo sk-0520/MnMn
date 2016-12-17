@@ -808,6 +808,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   ブックマーク に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuAddMyListLinkCommand {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyListLinkCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_ISmileDescription_MenuOpenMyListLinkCommand {

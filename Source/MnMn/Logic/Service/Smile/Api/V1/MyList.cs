@@ -98,6 +98,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
+                if(rawJson == null) {
+                    return null;
+                }
                 using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
                     var result = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
 
