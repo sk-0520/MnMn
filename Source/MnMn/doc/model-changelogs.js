@@ -84,24 +84,22 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.34.1',
-		'isRc': true,
+		'date': '2016/12/18',
+		'version': '0.35.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': 'やっぱりなーってところだけど Hyper-V って音出ないんよね',
+						'comments': [
+							'さすがサーバー用途、でも Linux 入れると遅いという',
+							'RDP でつなげば音が出るけど 1 クリック でインスタンスまでひとっとびっな機能がないから億劫になるね',
+							'まぁいまのとこ音が不具合起こしてる報告もらってないし基本は Hyper-V での接続でいけそう',
+							'ちなみに仮想の Windows7 は手動で .NET 4.6 入れた後、Windows Update 274 件パッチ適用になった(now適用中)'
+						]
 					}
 				]
 			},
@@ -109,7 +107,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '207ab6151926b6269f50f42d7123849d783987af',
 						'subject': '#274: β版モジュールを未指定で実行した場合には警告表示を行う',
 						'comments': [
 							'β版実行時にはコマンドライン引数(/execute-beta)が指定されていなければ警告を表示するようにした',
@@ -119,7 +117,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c6398cdb473b41771899df33aa93563abb6ad7fa',
 						'subject': '#270: ファインダーのコンテキストメニューにクリップボード操作処理の追加',
 						'comments': [
 							'今回実装分では 動画ID(video-id), 動画タイトル(video-title), 動画視聴ページURI(video-page) をサポート',
@@ -127,22 +125,22 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '82fd97a4b02cae0e680f0919011d6125a36160f7',
 						'subject': '#271: ファインダーのコンテキストメニューからキーワード or タグ検索処理の追加',
 						'comments': [
 							'チェック選択がちょっと妥協',
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'eef52f6a22b2ab75883e3b7be2bf57d851814e9b',
 						'subject': '#281: ファインダーのコンテキストメニュー内のフィルタにタグも一元的に配置する'
 					},
 					{
-						'revision': '',
+						'revision': '5415f948e13e4651d8bbfc91add0e0e1dbc48f14',
 						'subject': '#265: 自前で作ったフィルタリングを忘れたころに見ると内容が何を指してるか分からん'
 					},
 					{
-						'revision': '',
+						'revision': '4f199b2d196b7447fc97c2aee9b17d218ece7e96',
 						'subject': '動画説明文のマイリストIDにコンテキストメニュー追加',
 						'comments': [
 							'親課題である #258 は未取り込み'
@@ -154,7 +152,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4209e00195eedc5751308afecbec59a7f80c0d33',
 						'subject': '#280: 「あとで見る」の削除機能で一部の動画が削除できない',
 						'comments': [
 							'動画IDが getthumbinfo のものと違う(頭にxxがついていない動画ID)の場合、二つのIDがごっちゃになってた',
@@ -162,33 +160,15 @@
 						]
 					},
 					{
-						'revision': '',
-						'subject': '#278: あとで見るの通知アイコンのデザインをほんの少しだけちょっぴり変える'
+						'revision': '39dd90a65ccb02bc00dfc4f6e0fad1f3f21be943',
+						'subject': '#278: あとで見るの通知アイコンのデザインをほんの少しだけちょっぴり変える',
+						'comments': [
+							'実装は diff でわかるけど視覚上分かる人はいないと思う。自分でも分からんし'
+						]
 					},
 					{
-						'revision': '',
+						'revision': '59dac638f48927bb161e80d88c38c13b1fe0088b',
 						'subject': '#276: 内臓ブラウザから標準ブラウザで開く機能の七面倒臭い処理をやめる'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
