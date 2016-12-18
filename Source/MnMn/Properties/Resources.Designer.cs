@@ -126,12 +126,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         ///  x:Name=&quot;dummy&quot;
         ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  
+        ///  xmlns:app_view_converter=&quot;clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter;assembly=ContentTypeTextNet.MnMn.MnMn&quot;
+        ///  
         ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
         ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
         ///&gt;
-        ///  &lt;MenuItem Header=&quot;${header}&quot; Command=&quot;{Binding ${command}}&quot; CommandParameter=&quot;${link}&quot; /&gt;
-        ///&lt;/UserControl&gt;
-        /// に類似しているローカライズされた文字列を検索します。
+        ///  &lt;MenuItem Header=&quot;${header}&quot; Comm [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string File_Xaml_DescriptionMenuItem {
             get {
@@ -739,6 +740,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   この MnMn はβ版ですが、β版として起動されていません。
+        ///明示的な起動(/execute-beta)が行われておらず、設定データ・キャッシュがリリース版と混在する可能性があるためこのまま続行することはお勧めしません。
+        ///β版をリリース版と混合せず使用するには &quot;&lt;MnMn&gt;\bat\beta.bat&quot; を実行してください。
+        ///
+        ///このまま起動してもよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_ExecuteBetaVersion_Warning {
+            get {
+                return ResourceManager.GetString("String_App_ExecuteBetaVersion_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   URIをコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_IDescription_MenuCopyUri {
@@ -790,6 +804,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         internal static string String_Log_Filter_Log {
             get {
                 return ResourceManager.GetString("String_Log_Filter_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブックマーク に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuAddMyList {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   マイリストIDをコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuCopyMyListId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuCopyMyListId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuOpenMyList {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyList", resourceCulture);
             }
         }
         

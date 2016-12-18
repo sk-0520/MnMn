@@ -46,6 +46,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         public const string launcherParameterVideoTitle = "video-title";
         public const string launcherParameterVideoPage = "video-page";
 
+        public const string customCopyFormatVideoId = "video-id";
+        public const string customCopyFormatVideoTitle = "video-title";
+        public const string customCopyFormatVideoPage = "video-page";
+
         #endregion
 
         #region function
@@ -150,6 +154,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return $"[{video}]-[{audio}]";
         }
 
-        #endregion
-    }
+        public static string GetCustomFormatedText(SmileVideoInformationViewModel information, string customCopyFormat)
+        {
+            var map = new Dictionary<string, string>() {
+                { customCopyFormatVideoId, information.VideoId },
+                { customCopyFormatVideoTitle, information.Title },
+                { customCopyFormatVideoPage, information.WatchUrl.OriginalString },
+            };
+            var result = AppUtility.ReplaceString(customCopyFormat, map);
+
+            return result;
+        }
+
+    #endregion
+}
 }

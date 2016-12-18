@@ -28,6 +28,12 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
+using System.IO;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
+using System.Windows;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -39,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="myListId"></param>
-        public static void OpenMyListId(string myListId, ICommunication communicator)
+        static void OpenMyListIdCore(string myListId, ICommunication communicator)
         {
             var parameter = new SmileVideoSearchMyListParameterModel() {
                 Query = myListId,
@@ -50,17 +56,84 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         }
 
         /// <summary>
+        ///<see cref="ISmileDescription.OpenMyListLinkCommand"/>
+        /// <para>TODO: Videoにべったり依存。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="myListId"></param>
+        public static void OpenMyListId(object parameter, ICommunication communicator)
+        {
+            OpenMyListIdCore((string)parameter, communicator);
+        }
+
+        static async Task AddMyListBookmarkCoreAsync(string myListId, Mediation mediation)
+        {
+            var dirInfo = mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Smile));
+            var cachedDirPath = Path.Combine(dirInfo.FullName, Constants.SmileMyListCacheDirectoryName);
+            var cacheDirectory = RestrictUtility.Is(Directory.Exists(cachedDirPath), () => new DirectoryInfo(cachedDirPath), () => Directory.CreateDirectory(cachedDirPath));
+            var cacheFile = new FileInfo(Path.Combine(cacheDirectory.FullName, PathUtility.CreateFileName(myListId, "xml")));
+
+            var mylist = new Logic.Service.Smile.Api.V1.MyList(mediation);
+            FeedSmileVideoModel group = null;
+            if(CacheImageUtility.ExistImage(cacheFile.FullName, Constants.ServiceSmileMyListCacheSpan)) {
+                using(var stream = new FileStream(cacheFile.FullName, FileMode.Open, FileAccess.Read)) {
+                    group = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
+                }
+            }
+            if(group == null) {
+                group = await mylist.LoadGroupAsync(myListId);
+            }
+            if(group != null) {
+                SerializeUtility.SaveXmlSerializeToFile(cacheFile.FullName, group);
+                var finder = new SmileVideoMatchMyListFinderViewModel(mediation, group, myListId, false);
+                await finder.LoadDefaultCacheAsync();
+                mediation.Smile.VideoMediation.ManagerPack.MyListManager.AddBookmarkUserMyList(finder);
+            }
+        }
+
+        public static Task AddMyListBookmarkAsync(object parameter, Mediation mediation)
+        {
+            var myListId = (string)parameter;
+            return AddMyListBookmarkCoreAsync(myListId, mediation);
+        }
+
+        static void CopyMyListIdCore(string myListId, ILogger logger)
+        {
+            try {
+                Clipboard.SetText(myListId);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+        }
+
+        public static void CopyMyListId(object parameter, ILogger logger)
+        {
+            var myListId = (string)parameter;
+            CopyMyListIdCore(myListId, logger);
+        }
+
+        /// <summary>
         /// <see cref="ISmileDescription.OpenUserLinkCommand"/>
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="userId"></param>
-        public static void OpenUserId(string userId, ICommunication communicator)
+        static void OpenUserIdCore(string userId, ICommunication communicator)
         {
             var parameter = new SmileOpenUserIdParameterModel() {
                 UserId = userId,
             };
 
             communicator.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
+        }
+
+        /// <summary>
+        /// <see cref="ISmileDescription.OpenUserLinkCommand"/>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="userId"></param>
+        public static void OpenUserId(string parameter, ICommunication communicator)
+        {
+            OpenUserIdCore((string)parameter, communicator);
         }
     }
 }

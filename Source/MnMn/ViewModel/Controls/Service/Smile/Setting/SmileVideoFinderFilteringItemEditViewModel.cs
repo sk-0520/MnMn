@@ -74,6 +74,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             get { return Model.IgnoreCase; }
             set { SetModelValue(value); }
         }
+        public string Name
+        {
+            get { return Model.Name; }
+            set { SetModelValue(value); }
+        }
 
         //public FilteringType EditingType
         //{

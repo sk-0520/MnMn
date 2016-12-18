@@ -35,6 +35,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -271,6 +272,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public virtual bool OpenPlayerInNewWindow => Setting.Execute.OpenPlayerInNewWindow;
 
+        public SearchType FinderSearchType
+        {
+            get { return Setting.Search.FinderSearchType; }
+            set { SetPropertyValue(Setting.Search, value, nameof(Setting.Search.FinderSearchType)); }
+        }
+
         #endregion
 
         #region command
@@ -341,6 +348,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 return CreateCommand(
                     o => AddUnorganizedBookmark(SelectedFinderItem),
                     o => IsEnabledUnorganizedBookmarkMenu && SelectedFinderItem != null
+                );
+            }
+        }
+
+        public ICommand CopyCustomInformationCommand
+        {
+            get {
+                return CreateCommand(
+                    o => CopyCustomInformation(SelectedFinderItem.Information),
+                    o => SelectedFinderItem != null && !string.IsNullOrWhiteSpace(Setting.Common.CustomCopyFormat)
+                );
+            }
+        }
+
+        public ICommand CopyInformationTextCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => CopyInformationText((string)o),
+                    o => SelectedFinderItem != null && !string.IsNullOrEmpty((string)o)
+                );
+            }
+        }
+
+        public ICommand SearchInformationTextCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => SearchInformationText((string)o),
+                    o => SelectedFinderItem != null && !string.IsNullOrEmpty((string)o)
                 );
             }
         }
@@ -590,6 +629,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         { }
         protected virtual void DropFromFinder(UIElement sender, DragEventArgs e)
         { }
+
+        void CopyCustomInformation(SmileVideoInformationViewModel information)
+        {
+            if(string.IsNullOrEmpty(Setting.Common.CustomCopyFormat)) {
+                Mediation.Logger.Information($"{nameof(Setting.Common.CustomCopyFormat)} is empty");
+                return;
+            }
+
+            var text = SmileVideoInformationUtility.GetCustomFormatedText(information, Setting.Common.CustomCopyFormat);
+            CopyInformationText(text);
+        }
+
+        void CopyInformationText(string text)
+        {
+            try {
+                Clipboard.SetText(text);
+            } catch(Exception ex) {
+                Mediation.Logger.Warning(ex);
+            }
+        }
+
+        void SearchInformationText(string text)
+        {
+            var parameter = new SmileVideoSearchParameterModel() {
+                SearchType = FinderSearchType,
+                Query = text,
+            };
+
+            Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, parameter, ShowViewState.Foreground));
+        }
 
         #endregion
 

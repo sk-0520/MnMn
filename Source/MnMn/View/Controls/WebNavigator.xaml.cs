@@ -668,10 +668,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void OpenDefaultBrowser(Uri uri)
         {
-            var defaultData = WebNavigatorCore.DefaultBrowserExecuteData;
+            //var defaultData = WebNavigatorCore.DefaultBrowserExecuteData;
             try {
-                var executeData = WebNavigatorCore.GetOpenUriExecuteData(defaultData.Value, Source);
-                Process.Start(executeData.ApplicationPath, string.Join(" ", executeData.Arguments));
+                //var executeData = WebNavigatorCore.GetOpenUriExecuteData(defaultData.Value, Source);
+                //Process.Start(executeData.ApplicationPath, string.Join(" ", executeData.Arguments));
+                Process.Start(uri.OriginalString);
             } catch(Exception ex) {
                 Debug.WriteLine(ex);
             }

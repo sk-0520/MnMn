@@ -830,12 +830,13 @@
     <Setter Property="HorizontalAlignment" Value="Right" />
     <Setter Property="VerticalAlignment" Value="Bottom" />
     <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="FontWeight" Value="Bold" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Label">
           <Border
             CornerRadius="4" 
-            BorderThickness="1" 
+            BorderThickness="2,1" 
             BorderBrush="{DynamicResource SemiTransparentWhiteBrush}" 
             Padding="{StaticResource IndependentMargin}"
           >
