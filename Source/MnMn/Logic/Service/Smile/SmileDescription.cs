@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                     var menuItems = new[] {
                         new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyList, nameof(ISmileDescription.MenuOpenMyListLinkCommand), null),
-                        new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddMyList, nameof(ISmileDescription.MenuAddMyListLinkCommand), null),
+                        //new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddMyList, nameof(ISmileDescription.MenuAddMyListLinkCommand), null),
                         new DescriptionContextMenuItem(Properties.Resources.String_Service_Smile_ISmileDescription_MenuCopyMyListId, nameof(ISmileDescription.MenuCopyMyListIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                     };
 
