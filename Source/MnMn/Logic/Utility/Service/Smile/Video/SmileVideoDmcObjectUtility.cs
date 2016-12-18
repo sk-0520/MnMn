@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return index;
         }
 
-        static IList<string> GetSoredVideoWeights(IEnumerable<string> videos)
+        static IList<string> GetSortedVideoWeights(IEnumerable<string> videos)
         {
             var items = videos
                 .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightVideoSort.Match(s) })
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return items.ToList();
         }
 
-        static IList<string> GetSoredAudioWeights(IEnumerable<string> videos)
+        static IList<string> GetSortedAudioWeights(IEnumerable<string> videos)
         {
             var items = videos
                 .Select(s => new { Source = s, Match = Constants.ServiceSmileVideoDownloadDmcWeightAudioSort.Match(s) })
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         [Obsolete]
         public static string GetVideoWeight(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
-            var items = GetSoredVideoWeights(mux.VideoSrcIds);
+            var items = GetSortedVideoWeights(mux.VideoSrcIds);
             var index = GetWeightIndex(items, threshold);
 
             return items[index];
@@ -115,12 +115,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static IEnumerable<string> GetVideoWeights(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
-            return GetWeights(GetSoredVideoWeights, mux.VideoSrcIds, threshold);
+            return GetWeights(GetSortedVideoWeights, mux.VideoSrcIds, threshold);
         }
 
         public static IEnumerable<string> GetAudioWeights(RawSmileVideoDmcSrcIdToMultiplexerModel mux, int threshold)
         {
-            return GetWeights(GetSoredAudioWeights, mux.AudioSrcIds, threshold);
+            return GetWeights(GetSortedAudioWeights, mux.AudioSrcIds, threshold);
         }
 
     }
