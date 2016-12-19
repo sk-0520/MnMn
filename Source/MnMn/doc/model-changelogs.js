@@ -149,7 +149,14 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#277: GeckoFx を 45.0.28 に更新',
+						'comments': [
+							'ちょっとばかし危険な感じ',
+							'正規の手順踏んでないような気がするんよねぇ、特にこの辺り: Xpcom.EnableProfileMonitoring -> Xpcom.Initialize',
+							'いやでも geckofx の 113 見る限り他のプロファイルとの共存目的なんかね(https://bitbucket.org/geckofx/geckofx-45.0/issues/113)',
+							'動かなかったら教えてちょ'
+						]
 					},
 					{
 						'revision': '',
