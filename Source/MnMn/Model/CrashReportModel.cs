@@ -20,14 +20,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         public CrashReportModel(Exception ex, bool callerUiThread)
             : this()
         {
-            CrashMessage = ex.Message;
+            CrashString = ex.ToString();
             CallerUiThread = callerUiThread;
         }
 
         #region property
 
         [DataMember]
-        public string CrashMessage { get; set; }
+        public string CrashString { get; set; }
 
         [DataMember]
         public bool CallerUiThread { get; set; }
