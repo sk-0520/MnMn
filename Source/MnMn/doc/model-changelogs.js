@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning'
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning',
 						'comments': [
 							''
 						]
@@ -144,7 +144,8 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': 'Extended.Wpf.Toolkit 2.9 -> 3.0'
 					},
 					{
 						'revision': '',
