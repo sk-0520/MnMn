@@ -566,6 +566,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
 
         public ICommand OpenVideoLinkCommand { get { return CreateCommand(o => OpenVideoLinkAsync((string)o)); } }
+        public ICommand MenuOpenVideoLinkCommand => OpenVideoLinkCommand;
+        public ICommand MenuOpenVideoLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
 
         public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
         public ICommand MenuOpenMyListLinkCommand => OpenMyListLinkCommand;

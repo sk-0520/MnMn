@@ -34,11 +34,37 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using System.Windows;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
     public static class SmileDescriptionUtility
     {
+        static async Task MenuOpenVideoLinkInNewWindowCoreAsync(string videoId, ICommunication communicator)
+        {
+            var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
+            var videoInformation = await communicator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+
+            await videoInformation.OpenVideoDefaultAsync(false);
+        }
+
+        public static Task MenuOpenVideoLinkInNewWindowAsync(object parameter, ICommunication communicator)
+        {
+            var videoId = (string)parameter;
+            if(string.IsNullOrWhiteSpace(videoId)) {
+                return Task.CompletedTask;
+            }
+
+            return MenuOpenVideoLinkInNewWindowCoreAsync(videoId, communicator);
+        }
+
+        public static void CopyVideoId(object parameter, ILogger logger)
+        {
+            var myListId = (string)parameter;
+            DescriptionUtility.CopyText(myListId, logger);
+        }
+
         /// <summary>
         ///<see cref="ISmileDescription.OpenMyListLinkCommand"/>
         /// <para>TODO: Videoにべったり依存。</para>
@@ -97,19 +123,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             return AddMyListBookmarkCoreAsync(myListId, mediation);
         }
 
-        static void CopyMyListIdCore(string myListId, ILogger logger)
-        {
-            try {
-                Clipboard.SetText(myListId);
-            } catch(Exception ex) {
-                logger.Warning(ex);
-            }
-        }
-
         public static void CopyMyListId(object parameter, ILogger logger)
         {
             var myListId = (string)parameter;
-            CopyMyListIdCore(myListId, logger);
+            DescriptionUtility.CopyText(myListId, logger);
         }
 
         /// <summary>

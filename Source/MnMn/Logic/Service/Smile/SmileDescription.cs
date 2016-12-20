@@ -85,7 +85,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 object outputValue;
                 if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, target, typeof(string), ServiceType)) {
                     var link = (string)outputValue;
-                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenVideoLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
+
+                    var menuItems = new[] {
+                        new DescriptionContextMenuItem(true, "open", nameof(ISmileDescription.MenuOpenVideoLinkCommand), null),
+                        new DescriptionContextMenuItem(false, "new window", nameof(ISmileDescription.MenuOpenVideoLinkInNewWindowCommand), null),
+                        new DescriptionContextMenuItem(false, "copy", nameof(ISmileDescription.MenuCopyVideoIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
+                    };
+
+                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenVideoLinkCommand), menuItems);
                 } else {
                     return m.Groups[0].Value;
                 }

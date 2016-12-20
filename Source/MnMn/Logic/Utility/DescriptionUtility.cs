@@ -18,6 +18,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
     {
         #region function
 
+        internal static void CopyText(string text, ILogger logger)
+        {
+            try {
+                Clipboard.SetText(text);
+            } catch(Exception ex) {
+                logger.Warning(ex);
+            }
+        }
+
         /// <summary>
         /// <see cref="IDescription.OpenUriCommand"/>
         /// </summary>
@@ -54,18 +63,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             }
         }
 
-        static void CopyUriCore(string uri, ILogger logger)
-        {
-            try {
-                Clipboard.SetText(uri);
-            } catch(Exception ex) {
-                logger.Warning(ex);
-            }
-        }
-
         public static void CopyUri(object parameter, ILogger logger)
         {
-            CopyUriCore((string)parameter, logger);
+            CopyText((string)parameter, logger);
         }
 
         #endregion
