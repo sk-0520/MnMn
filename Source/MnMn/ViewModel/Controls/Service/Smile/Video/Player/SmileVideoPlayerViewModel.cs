@@ -473,8 +473,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(IsNormalWindow) {
                         return;
                     }
-                    // フルスクリーン時は元に戻してあげる
-                    SetWindowMode(true);
+                    if(Mouse.LeftButton == MouseButtonState.Pressed) {
+                        // フルスクリーン時は元に戻してあげる
+                        SetWindowMode(true);
+                    }
                 });
             }
         }
