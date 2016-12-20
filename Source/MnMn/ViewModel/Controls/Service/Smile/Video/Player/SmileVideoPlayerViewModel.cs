@@ -92,6 +92,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -1043,6 +1044,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var cancel = new CancellationTokenSource();
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
             return Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request).ContinueWith(t => {
+                if(t.Status == TaskStatus.Faulted) {
+                    Mediation.Logger.Error(t.Exception);
+                    return Task.CompletedTask;
+                }
                 var videoInformation = t.Result;
                 return LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
@@ -1051,8 +1056,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private async void AddPlayListAync(string videoId)
         {
             var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
-
-            PlayListItems.Add(videoInformation);
+            if(videoInformation != null) {
+                PlayListItems.Add(videoInformation);
+            }
         }
 
 
