@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
         ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
         ///&gt;
-        ///  &lt;MenuItem Header=&quot;${header}&quot; Comm [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///  &lt;MenuItem Header=&quot;${header}&quot; Font [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string File_Xaml_DescriptionMenuItem {
             get {
@@ -810,9 +810,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         /// <summary>
         ///   ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_ISmileDescription_MenuAddMyList {
+        internal static string String_Service_Smile_ISmileDescription_MenuAddMyListId {
             get {
-                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyList", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyListId", resourceCulture);
             }
         }
         
@@ -828,9 +828,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         /// <summary>
         ///   開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String_Service_Smile_ISmileDescription_MenuOpenMyList {
+        internal static string String_Service_Smile_ISmileDescription_MenuOpenMyListId {
             get {
-                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyList", resourceCulture);
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyListId", resourceCulture);
             }
         }
         

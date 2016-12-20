@@ -398,13 +398,13 @@
 
 このまま起動してもよろしいですか。</value>
   </data>
-  <data name="String_Service_Smile_ISmileDescription_MenuAddMyList" xml:space="preserve">
+  <data name="String_Service_Smile_ISmileDescription_MenuAddMyListId" xml:space="preserve">
     <value>ブックマーク</value>
   </data>
   <data name="String_Service_Smile_ISmileDescription_MenuCopyMyListId" xml:space="preserve">
     <value>マイリストIDをコピー</value>
   </data>
-  <data name="String_Service_Smile_ISmileDescription_MenuOpenMyList" xml:space="preserve">
+  <data name="String_Service_Smile_ISmileDescription_MenuOpenMyListId" xml:space="preserve">
     <value>開く</value>
   </data>
 </root>
