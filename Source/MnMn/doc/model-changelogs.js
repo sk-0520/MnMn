@@ -114,7 +114,7 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#279: 各種メニューのデフォルト状態をWindowsのUXに準拠させる'
 					},
 					{
 						'revision': '',
