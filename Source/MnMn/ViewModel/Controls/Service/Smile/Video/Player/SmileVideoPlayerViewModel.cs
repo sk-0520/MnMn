@@ -473,8 +473,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(IsNormalWindow) {
                         return;
                     }
-                    // フルスクリーン時は元に戻してあげる
-                    SetWindowMode(true);
+                    if(Mouse.LeftButton == MouseButtonState.Pressed) {
+                        // フルスクリーン時は元に戻してあげる
+                        SetWindowMode(true);
+                    }
                 });
             }
         }
@@ -2034,6 +2036,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void VideoSilder_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if(e.LeftButton != MouseButtonState.Pressed) {
+                e.Handled = true;
+                return;
+            }
+
             if(!CanVideoPlay) {
                 return;
             }
