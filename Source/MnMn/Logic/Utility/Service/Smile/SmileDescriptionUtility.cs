@@ -41,11 +41,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
     public static class SmileDescriptionUtility
     {
-        static async Task MenuOpenVideoLinkInNewWindowCoreAsync(string videoId, ICommunication communicator)
+        public static Task<SmileVideoInformationViewModel> GetVideoInformationAsync(string videoId, ICommunication communicator)
         {
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
-            var videoInformation = await communicator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+            return communicator.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+        }
 
+        static async Task MenuOpenVideoLinkInNewWindowCoreAsync(string videoId, ICommunication communicator)
+        {
+            var videoInformation = await GetVideoInformationAsync(videoId, communicator);
             await videoInformation.OpenVideoDefaultAsync(false);
         }
 

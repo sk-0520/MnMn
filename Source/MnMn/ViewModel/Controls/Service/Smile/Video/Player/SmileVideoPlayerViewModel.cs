@@ -1048,6 +1048,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        private async void AddPlayListAync(string videoId)
+        {
+            var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
+
+            PlayListItems.Add(videoInformation);
+        }
+
+
         void RefreshFilteringComment()
         {
             Debug.Assert(FilteringCommentType != SmileVideoFilteringCommentType.All);
@@ -1952,6 +1960,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
         public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
         public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
+        public ICommand MenuAddPlayListVideoIdLinkCommand
+        {
+            get {
+                return CreateCommand(o => {
+                    var videoId = (string)o;
+                    if(string.IsNullOrWhiteSpace(videoId)) {
+                        return;
+                    }
+
+                    AddPlayListAync(videoId);
+                });
+            }
+        }
 
         public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
         public ICommand MenuOpenMyListIdLinkCommand => OpenMyListIdLinkCommand;

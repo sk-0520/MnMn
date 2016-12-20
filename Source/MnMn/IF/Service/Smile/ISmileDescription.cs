@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
         ICommand OpenVideoIdLinkCommand { get; }
         ICommand MenuOpenVideoIdLinkCommand { get; }
         ICommand MenuOpenVideoIdLinkInNewWindowCommand { get; }
+        ICommand MenuAddPlayListVideoIdLinkCommand { get; }
         ICommand MenuCopyVideoIdCommand { get; }
 
         ICommand OpenMyListIdLinkCommand { get; }
