@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
@@ -96,6 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             ["header"] = menuItem.HeaderText,
                             ["command"] = menuItem.Command,
                             ["link"] = menuItem.CommandParameter ?? link,
+                            ["font-weight"] = menuItem.IsDefault ? nameof(FontWeights.Bold) : nameof(FontWeights.Normal),
                         };
                         //foreach(XmlAttribute attribute in menuItemElement.Attributes) {
                         //    var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
@@ -211,9 +213,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 var linkUri = scheme + domainPath;
 
                 var menuItems = new[] {
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null),
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
-                    new DescriptionContextMenuItem(Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
+                    new DescriptionContextMenuItem(true, Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null),
+                    new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
+                    new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                 };
 
                 var linkElementSource = MakeLinkCore(linkUri, m.Groups[0].Value, commandName, menuItems);
