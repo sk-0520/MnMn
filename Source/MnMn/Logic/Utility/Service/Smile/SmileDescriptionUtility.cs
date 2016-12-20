@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         }
 
         /// <summary>
-        ///<see cref="ISmileDescription.OpenMyListLinkCommand"/>
+        ///<see cref="ISmileDescription.OpenMyListIdLinkCommand"/>
         /// <para>TODO: Videoにべったり依存。</para>
         /// </summary>
         /// <param name="communicator"></param>
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         }
 
         /// <summary>
-        ///<see cref="ISmileDescription.OpenMyListLinkCommand"/>
+        ///<see cref="ISmileDescription.OpenMyListIdLinkCommand"/>
         /// <para>TODO: Videoにべったり依存。</para>
         /// </summary>
         /// <param name="parameter"></param>
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         }
 
         /// <summary>
-        /// <see cref="ISmileDescription.OpenUserLinkCommand"/>
+        /// <see cref="ISmileDescription.OpenUserIdLinkCommand"/>
         /// </summary>
         /// <param name="communicator"></param>
         /// <param name="userId"></param>
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         }
 
         /// <summary>
-        /// <see cref="ISmileDescription.OpenUserLinkCommand"/>
+        /// <see cref="ISmileDescription.OpenUserIdLinkCommand"/>
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="userId"></param>

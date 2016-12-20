@@ -1937,7 +1937,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
         public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
 
-        public ICommand OpenVideoLinkCommand
+        public ICommand OpenVideoIdLinkCommand
         {
             get
             {
@@ -1949,16 +1949,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
-        public ICommand MenuOpenVideoLinkCommand => OpenVideoLinkCommand;
-        public ICommand MenuOpenVideoLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
+        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
         public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
 
-        public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
-        public ICommand MenuOpenMyListLinkCommand => OpenMyListLinkCommand;
-        public ICommand MenuAddMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
+        public ICommand MenuOpenMyListIdLinkCommand => OpenMyListIdLinkCommand;
+        public ICommand MenuAddMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediation).ConfigureAwait(false)); } }
         public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediation.Logger)); } }
 
-        public ICommand OpenUserLinkCommand
+        public ICommand OpenUserIdLinkCommand
         {
             get
             {

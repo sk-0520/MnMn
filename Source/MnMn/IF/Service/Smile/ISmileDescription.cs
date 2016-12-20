@@ -25,16 +25,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video
 {
     public interface ISmileDescription: IDescription
     {
-        ICommand OpenVideoLinkCommand { get; }
-        ICommand MenuOpenVideoLinkCommand { get; }
-        ICommand MenuOpenVideoLinkInNewWindowCommand { get; }
+        ICommand OpenVideoIdLinkCommand { get; }
+        ICommand MenuOpenVideoIdLinkCommand { get; }
+        ICommand MenuOpenVideoIdLinkInNewWindowCommand { get; }
         ICommand MenuCopyVideoIdCommand { get; }
 
-        ICommand OpenMyListLinkCommand { get; }
-        ICommand MenuOpenMyListLinkCommand { get; }
-        ICommand MenuAddMyListLinkCommand { get; }
+        ICommand OpenMyListIdLinkCommand { get; }
+        ICommand MenuOpenMyListIdLinkCommand { get; }
+        ICommand MenuAddMyListIdLinkCommand { get; }
         ICommand MenuCopyMyListIdCommand { get; }
 
-        ICommand OpenUserLinkCommand { get; }
+        ICommand OpenUserIdLinkCommand { get; }
     }
 }
