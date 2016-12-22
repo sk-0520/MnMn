@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList
 using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -69,6 +70,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
 
             return MenuOpenVideoLinkInNewWindowCoreAsync(videoId, communicator);
+        }
+
+        static async Task AddUnorganizedBookmarkCoreAsync(string videoId, ICommunication communicator, SmileVideoBookmarkManagerViewModel bookmarkManager)
+        {
+            var videoInformation = await GetVideoInformationAsync(videoId, communicator);
+            if(videoInformation != null) {
+                var item = videoInformation.ToVideoItemModel();
+                bookmarkManager.Node.VideoItems.Add(item);
+            }
+        }
+
+        public static Task AddUnorganizedBookmarkAsync(object parameter, ICommunication communicator, SmileVideoBookmarkManagerViewModel bookmarkManager)
+        {
+            var videoId = (string)parameter;
+
+            if(string.IsNullOrWhiteSpace(videoId)) {
+                return Task.CompletedTask;
+            }
+
+            return AddUnorganizedBookmarkCoreAsync(videoId, communicator, bookmarkManager);
         }
 
         public static void CopyVideoId(object parameter, ILogger logger)

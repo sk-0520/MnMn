@@ -570,6 +570,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
         public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
         public ICommand MenuAddPlayListVideoIdLinkCommand { get { return CreateCommand(o => { Mediation.Logger.Trace("not impl"); }); } }
+        public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
+        }
 
         public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
         public ICommand MenuOpenMyListIdLinkCommand => OpenMyListIdLinkCommand;

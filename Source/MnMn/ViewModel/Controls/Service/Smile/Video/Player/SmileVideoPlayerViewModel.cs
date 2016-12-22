@@ -1053,7 +1053,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private async void AddPlayListAync(string videoId)
+        private async Task AddPlayListAync(string videoId)
         {
             var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
             if(videoInformation != null) {
@@ -1969,15 +1969,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICommand MenuAddPlayListVideoIdLinkCommand
         {
             get {
-                return CreateCommand(o => {
-                    var videoId = (string)o;
-                    if(string.IsNullOrWhiteSpace(videoId)) {
-                        return;
-                    }
+                return CreateCommand(
+                    o => {
+                        var videoId = (string)o;
+                        if(string.IsNullOrWhiteSpace(videoId)) {
+                            return;
+                        }
 
-                    AddPlayListAync(videoId);
-                });
+                        AddPlayListAync(videoId).ConfigureAwait(false);
+                    }
+                );
             }
+        }
+        public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
         }
 
         public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }

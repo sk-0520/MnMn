@@ -90,6 +90,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                         new DescriptionContextMenuItem(true, "open", nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null),
                         new DescriptionContextMenuItem(false, "new window", nameof(ISmileDescription.MenuOpenVideoIdLinkInNewWindowCommand), null),
                         new DescriptionContextMenuItem(false, "add playlist", nameof(ISmileDescription.MenuAddPlayListVideoIdLinkCommand), null),
+                        new DescriptionContextMenuItem(false, "add bookmark", nameof(ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommand), null),
                         new DescriptionContextMenuItem(false, "copy", nameof(ISmileDescription.MenuCopyVideoIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                     };
 
