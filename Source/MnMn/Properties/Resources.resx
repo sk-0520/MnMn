@@ -407,4 +407,7 @@
   <data name="String_Service_Smile_ISmileDescription_MenuOpenMyListId" xml:space="preserve">
     <value>開く</value>
   </data>
+  <data name="File_Xaml_DescriptionMenuSeparator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\file\xaml\descriptionmenuseparator.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

@@ -145,6 +145,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         ///  x:Name=&quot;dummy&quot;
         ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  
+        ///  xmlns:app_view_converter=&quot;clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter;assembly=ContentTypeTextNet.MnMn.MnMn&quot;
+        ///  
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
+        ///&gt;
+        ///  &lt;Separator /&gt;
+        ///&lt;/UserControl&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File_Xaml_DescriptionMenuSeparator {
+            get {
+                return ResourceManager.GetString("File_Xaml_DescriptionMenuSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;UserControl 
+        ///  x:Name=&quot;dummy&quot;
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
         ///  d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;
         ///&gt;
