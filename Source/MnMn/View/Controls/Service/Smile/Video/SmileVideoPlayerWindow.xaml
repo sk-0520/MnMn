@@ -189,7 +189,9 @@
   <mamc:MetroWindow.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
+
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
+    <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
     <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding LoadNextPlayListItemCommand}" />
     <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding LoadPrevPlayListItemCommand}" />

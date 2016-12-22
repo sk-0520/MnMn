@@ -466,6 +466,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SeekHeadCommand
+        {
+            get { return CreateCommand(o => SeekHead()); }
+        }
+
         public ICommand FullScreenCancelCommand
         {
             get
@@ -1593,6 +1598,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void SeekHead()
+        {
+            if(Player != null && Player.IsSeekable) {
+                //ChangeSeekVideoPosition(true, true, 0);
+                ClearComment();
+                Player.Position = 0;
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1946,7 +1960,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
         }
         public ICommand MenuOpenUriCommand => OpenUriCommand;
-        public ICommand MenuOpenUriInAppBrowserCmmand {
+        public ICommand MenuOpenUriInAppBrowserCmmand
+        {
             get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
         }
         public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
@@ -1968,7 +1983,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
         public ICommand MenuAddPlayListVideoIdLinkCommand
         {
-            get {
+            get
+            {
                 return CreateCommand(
                     o => {
                         var videoId = (string)o;

@@ -122,6 +122,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#291: プレイヤー上で Home 押下により動画先頭へ遷移する'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
