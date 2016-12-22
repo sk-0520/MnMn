@@ -89,15 +89,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     var link = (string)outputValue;
 
                     var menuItems = new DescriptionContextMenuBase[] {
-                        new DescriptionContextMenuItem(true, "open", nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null),
-                        new DescriptionContextMenuItem(false, "new window", nameof(ISmileDescription.MenuOpenVideoIdLinkInNewWindowCommand), null),
+                        new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoId, nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow, nameof(ISmileDescription.MenuOpenVideoIdLinkInNewWindowCommand), null),
                         new DescriptionContextMenuSeparator(),
-                        new DescriptionContextMenuItem(false, "add playlist", nameof(ISmileDescription.MenuAddPlayListVideoIdLinkCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId, nameof(ISmileDescription.MenuAddPlayListVideoIdLinkCommand), null),
                         new DescriptionContextMenuSeparator(),
-                        new DescriptionContextMenuItem(false, "add check it later", nameof(ISmileDescription.MenuAddCheckItLaterVideoIdCommand), null),
-                        new DescriptionContextMenuItem(false, "add bookmark", nameof(ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddCheckItLaterVideoId, nameof(ISmileDescription.MenuAddCheckItLaterVideoIdCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId, nameof(ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommand), null),
                         new DescriptionContextMenuSeparator(),
-                        new DescriptionContextMenuItem(false, "copy", nameof(ISmileDescription.MenuCopyVideoIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuCopyVideoId, nameof(ISmileDescription.MenuCopyVideoIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                     };
 
                     return MakeLinkCore(link, target, nameof(ISmileDescription.OpenVideoIdLinkCommand), menuItems);

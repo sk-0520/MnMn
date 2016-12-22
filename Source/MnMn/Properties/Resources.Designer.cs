@@ -829,11 +829,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   あとで見るに追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuAddCheckItLaterVideoId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddCheckItLaterVideoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ブックマーク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_ISmileDescription_MenuAddMyListId {
             get {
                 return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddMyListId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プレイリストに追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未整理のブックマークに追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId", resourceCulture);
             }
         }
         
@@ -847,11 +874,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   動画IDのコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuCopyVideoId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuCopyVideoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_ISmileDescription_MenuOpenMyListId {
             get {
                 return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenMyListId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   動画を再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuOpenVideoId {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenVideoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいプレイヤーで再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow {
+            get {
+                return ResourceManager.GetString("String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow", resourceCulture);
             }
         }
         

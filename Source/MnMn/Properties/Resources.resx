@@ -410,4 +410,22 @@
   <data name="File_Xaml_DescriptionMenuSeparator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\xaml\descriptionmenuseparator.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuAddCheckItLaterVideoId" xml:space="preserve">
+    <value>あとで見るに追加</value>
+  </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId" xml:space="preserve">
+    <value>プレイリストに追加</value>
+  </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId" xml:space="preserve">
+    <value>未整理のブックマークに追加</value>
+  </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuCopyVideoId" xml:space="preserve">
+    <value>動画IDのコピー</value>
+  </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuOpenVideoId" xml:space="preserve">
+    <value>動画を再生</value>
+  </data>
+  <data name="String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow" xml:space="preserve">
+    <value>新しいプレイヤーで再生</value>
+  </data>
 </root>
