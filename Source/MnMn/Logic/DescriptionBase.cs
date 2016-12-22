@@ -25,6 +25,7 @@ using System.Windows.Controls;
 using System.Xml;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Data.Description;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
@@ -80,7 +81,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             yield return element;
         }
 
-        protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuItem> menuItems)
+        protected string MakeLinkCore(string link, string text, string commandName, IEnumerable<DescriptionContextMenuBase> menuItems)
         {
             var element = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionLink, (x, e) => {
                 if(menuItems.Any()) {
@@ -91,40 +92,47 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     var contextMenuElement = x.CreateElement($"{nameof(ContextMenu)}");
                     contextMenuOuterElement.AppendChild(contextMenuElement);
                     foreach(var menuItem in menuItems) {
-                        var menuItemElement =AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionMenuItem, null);
-                        //var menuItemElement = x.CreateElement($"{nameof(MenuItem)}");
-                        var menuMap = new StringsModel() {
-                            ["header"] = menuItem.HeaderText,
-                            ["command"] = menuItem.Command,
-                            ["link"] = menuItem.CommandParameter ?? link,
-                            ["font-weight"] = menuItem.IsDefault ? nameof(FontWeights.Bold) : nameof(FontWeights.Normal),
-                        };
-                        //foreach(XmlAttribute attribute in menuItemElement.Attributes) {
-                        //    var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
-                        //    attribute.Value = attrValue;
-                        //}
-                        ReplaceAttibute(menuItemElement, menuMap);
+                        if(menuItem is DescriptionContextMenuSeparator) {
+                            var menuSeparatorElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionMenuSeparator, null);
+                            var xMenuItemNode = x.ImportNode(menuSeparatorElement, true);
+                            contextMenuElement.AppendChild(xMenuItemNode);
+                        } else {
+                            var menu = (DescriptionContextMenuItem)menuItem;
+                            var menuItemElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionMenuItem, null);
+                            //var menuItemElement = x.CreateElement($"{nameof(MenuItem)}");
+                            var menuMap = new StringsModel() {
+                                ["header"] = menu.HeaderText,
+                                ["command"] = menu.Command,
+                                ["link"] = menu.CommandParameter ?? link,
+                                ["font-weight"] = menu.IsDefault ? nameof(FontWeights.Bold) : nameof(FontWeights.Normal),
+                            };
+                            //foreach(XmlAttribute attribute in menuItemElement.Attributes) {
+                            //    var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
+                            //    attribute.Value = attrValue;
+                            //}
+                            ReplaceAttibute(menuItemElement, menuMap);
 
-                        var xMenuItemNode = x.ImportNode(menuItemElement, true);
-                        contextMenuElement.AppendChild(xMenuItemNode);
+                            var xMenuItemNode = x.ImportNode(menuItemElement, true);
+                            contextMenuElement.AppendChild(xMenuItemNode);
 
-                        if(menuItem.IconKey != null && menuItem.IconStyle != null) {
-                            var iconOuterElement = x.CreateElement($"{xMenuItemNode.Name}.{nameof(MenuItem.Icon)}");
-                            xMenuItemNode.AppendChild(iconOuterElement);
+                            if(menu.IconKey != null && menu.IconStyle != null) {
+                                var iconOuterElement = x.CreateElement($"{xMenuItemNode.Name}.{nameof(MenuItem.Icon)}");
+                                xMenuItemNode.AppendChild(iconOuterElement);
 
-                            if(true || menuItem.IconKey != null && menuItem.IconStyle != null) {
+                                if(true || menu.IconKey != null && menu.IconStyle != null) {
 
-                                var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
-                                var iconMap = new StringsModel() {
-                                    ["icon-key"] = menuItem.IconKey,
-                                    ["icon-style"] = menuItem.IconStyle,
-                                };
-                                foreach(var icon in GetAllElements(iconElement)) {
-                                    ReplaceAttibute(icon, iconMap);
+                                    var iconElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_SmallIcon, null);
+                                    var iconMap = new StringsModel() {
+                                        ["icon-key"] = menu.IconKey,
+                                        ["icon-style"] = menu.IconStyle,
+                                    };
+                                    foreach(var icon in GetAllElements(iconElement)) {
+                                        ReplaceAttibute(icon, iconMap);
+                                    }
+
+                                    var xIconNode = x.ImportNode(iconElement, true);
+                                    iconOuterElement.AppendChild(xIconNode);
                                 }
-
-                                var xIconNode = x.ImportNode(iconElement, true);
-                                iconOuterElement.AppendChild(xIconNode);
                             }
                         }
                     }
@@ -212,9 +220,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 var linkUri = scheme + domainPath;
 
-                var menuItems = new[] {
+                var menuItems = new DescriptionContextMenuBase[] {
                     new DescriptionContextMenuItem(true, Properties.Resources.String_App_IDescription_MenuOpenUri, nameof(IDescription.MenuOpenUriCommand), null),
                     new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuOpenUriInAppBrowser, nameof(IDescription.MenuOpenUriInAppBrowserCmmand), null),
+                    new DescriptionContextMenuSeparator(),
                     new DescriptionContextMenuItem(false, Properties.Resources.String_App_IDescription_MenuCopyUri, nameof(IDescription.MenuCopyUriCmmand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                 };
 

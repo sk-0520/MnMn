@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Data.Description;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
@@ -47,13 +48,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetMyListId, target, typeof(string), ServiceType)) {
                     var link = (string)outputValue;
 
-                    var menuItems = new[] {
-                        new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyList, nameof(ISmileDescription.MenuOpenMyListLinkCommand), null),
+                    var menuItems = new DescriptionContextMenuBase[] {
+                        new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyListId, nameof(ISmileDescription.MenuOpenMyListIdLinkCommand), null),
                         //new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddMyList, nameof(ISmileDescription.MenuAddMyListLinkCommand), null),
+                        new DescriptionContextMenuSeparator(),
                         new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuCopyMyListId, nameof(ISmileDescription.MenuCopyMyListIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                     };
 
-                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenMyListLinkCommand), menuItems);
+                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenMyListIdLinkCommand), menuItems);
                 } else {
                     return m.Groups[0].Value;
                 }
@@ -69,7 +71,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 object outputValue;
                 if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetUserId, target, typeof(string), ServiceType)) {
                     var link = (string)outputValue;
-                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenUserLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
+                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenUserIdLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
                 } else {
                     return m.Groups[0].Value;
                 }
@@ -85,7 +87,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                 object outputValue;
                 if(ConvertCompatibility.ConvertValue(out outputValue, typeof(string), SmileMediationKey.inputGetVideoId, target, typeof(string), ServiceType)) {
                     var link = (string)outputValue;
-                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenVideoLinkCommand), Enumerable.Empty<DescriptionContextMenuItem>());
+
+                    var menuItems = new DescriptionContextMenuBase[] {
+                        new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoId, nameof(ISmileDescription.MenuOpenVideoIdLinkCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow, nameof(ISmileDescription.MenuOpenVideoIdLinkInNewWindowCommand), null),
+                        new DescriptionContextMenuSeparator(),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId, nameof(ISmileDescription.MenuAddPlayListVideoIdLinkCommand), null),
+                        new DescriptionContextMenuSeparator(),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddCheckItLaterVideoId, nameof(ISmileDescription.MenuAddCheckItLaterVideoIdCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId, nameof(ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommand), null),
+                        new DescriptionContextMenuSeparator(),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuCopyVideoId, nameof(ISmileDescription.MenuCopyVideoIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
+                    };
+
+                    return MakeLinkCore(link, target, nameof(ISmileDescription.OpenVideoIdLinkCommand), menuItems);
                 } else {
                     return m.Groups[0].Value;
                 }

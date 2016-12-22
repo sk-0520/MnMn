@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Data
+namespace ContentTypeTextNet.MnMn.MnMn.Data.Description
 {
-    public class DescriptionContextMenuItem
+    public class DescriptionContextMenuItem: DescriptionContextMenuBase
     {
         public DescriptionContextMenuItem(bool isDefault, string headerText, string command, string commandParameter)
         {

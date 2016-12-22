@@ -205,7 +205,9 @@
     <Compile Include="Constants.Xaml.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\DescriptionContextMenuItem.cs" />
+    <Compile Include="Data\Description\DescriptionContextMenuItem.cs" />
+    <Compile Include="Data\Description\DescriptionContextMenuBase.cs" />
+    <Compile Include="Data\Description\DescriptionContextMenuSeparator.cs" />
     <Compile Include="Data\ExecuteData.cs" />
     <Compile Include="Data\WebNavigatorEventData.cs" />
     <Compile Include="Define\CacheState.cs" />
@@ -796,6 +798,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\File\Xaml\SmallIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\File\Xaml\DescriptionMenuSeparator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
