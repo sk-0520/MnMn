@@ -37,6 +37,7 @@ using System.Windows;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 {
@@ -70,6 +71,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
             }
 
             return MenuOpenVideoLinkInNewWindowCoreAsync(videoId, communicator);
+        }
+        /*
+                void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
+        {
+            var information = finderItem.Information;
+            var item = information.ToVideoItemModel();
+            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+            //Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
+        }
+
+         * */
+
+        static async Task AddCheckItLaterVideoIdCoreAsync(string videoId, ICommunication communicator, SmileVideoCheckItLaterManagerViewModel checkItLaterManager)
+        {
+            var videoInformation = await GetVideoInformationAsync(videoId, communicator);
+            if(videoInformation != null) {
+                var item = videoInformation.ToVideoItemModel();
+                communicator.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
+            }
+        }
+
+        public static Task AddCheckItLaterVideoIdAsync(object parameter, ICommunication communicator, SmileVideoCheckItLaterManagerViewModel checkItLaterManager)
+        {
+            var videoId = (string)parameter;
+
+            if(string.IsNullOrWhiteSpace(videoId)) {
+                return Task.CompletedTask;
+            }
+
+            return AddCheckItLaterVideoIdCoreAsync(videoId, communicator, checkItLaterManager);
         }
 
         static async Task AddUnorganizedBookmarkCoreAsync(string videoId, ICommunication communicator, SmileVideoBookmarkManagerViewModel bookmarkManager)

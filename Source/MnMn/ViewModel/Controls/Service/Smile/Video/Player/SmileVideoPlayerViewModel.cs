@@ -1981,6 +1981,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
+        public ICommand MenuAddCheckItLaterVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
+        }
         public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
         {
             get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
