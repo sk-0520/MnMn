@@ -263,6 +263,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             AppManager = new AppManagerViewModel(Mediation, logger);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             WebNavigatorCore.Initialize(Mediation);
+            AppUtility.InitializeTheme(Mediation.Logger);
             AppUtility.SetTheme(setting.Theme);
 
             if(!CheckAccept(setting.RunningInformation, logger)) {
@@ -315,7 +316,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
             CatchUnhandleException(e.Exception, true);
         }
 
