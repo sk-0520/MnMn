@@ -26,6 +26,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
@@ -74,7 +75,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 //Debug.WriteLine(rawMessage.Result);
-                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawMessage.Result))) {
+                using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(rawMessage.Result))) {
                     var result = ConvertFromRawPacketData(stream);
                     return result;
                 }
@@ -119,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Post);
                 if(response.IsSuccess) {
                     Mediation.Logger.Trace(response.Result);
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(response.Result))) {
+                    using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(response.Result))) {
                         var result = ConvertFromRawPacketResultData(stream);
                         return result;
                     }

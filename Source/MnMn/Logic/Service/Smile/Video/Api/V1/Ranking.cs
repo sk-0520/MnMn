@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 if(!feedResult.IsSuccess) {
                     return null;
                 } else {
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
+                    using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(feedResult.Result))) {
                         return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
                     }
                 }

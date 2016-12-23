@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
 {
@@ -21,7 +23,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter
         {
             var source = (string)value;
             var binary = System.Convert.FromBase64String(source);
-            using(var stream = new MemoryStream(binary)) {
+            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binary)) {
                 return BitmapFrame.Create(stream);
             }
         }

@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
 using Newtonsoft.Json.Linq;
@@ -115,7 +116,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
                 page.ReplaceUriParameters["limit"] = getCount.ToString();
                 page.ReplaceUriParameters["context"] = Constants.ServiceSmileContentsSearchContext;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(response.Result))) {
+                using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(response.Result))) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileContentsSearchModel>(stream);
                 }
             }

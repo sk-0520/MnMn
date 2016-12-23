@@ -9,6 +9,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
@@ -92,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
             var jsonUser = "{" + rawUser + "}";
 
-            using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonUser))) {
+            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(jsonUser))) {
                 var result = SerializeUtility.LoadJsonDataFromStream<RawSmileUserAccountSimpleModel>(stream);
                 // 暫定対処だが現時点で年齢が18歳以上ならそう補正する
                 var age = RawValueUtility.ConvertInteger(result.Age);
@@ -260,7 +261,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
                 if(!feedResult.IsSuccess) {
                     return null;
                 } else {
-                    using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(feedResult.Result))) {
+                    using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(feedResult.Result))) {
                         return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
                     }
                 }
