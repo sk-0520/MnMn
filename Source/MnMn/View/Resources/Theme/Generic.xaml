@@ -29,21 +29,21 @@
   <Thickness x:Key="IndependentMargin">2</Thickness>
   <Thickness x:Key="IndependentHorizonMargin">2,0</Thickness>
   <Thickness x:Key="IndependentVericalMargin">0,2</Thickness>
-  <sys:Double x:Key="BitMargin">1</sys:Double>
-  <sys:Double x:Key="HalfMargin">4</sys:Double>
-  <sys:Double x:Key="BaseMargin">8</sys:Double>
+  <sys:Double x:Key="BitMarginWidth">1</sys:Double>
+  <sys:Double x:Key="HalfMarginWidth">4</sys:Double>
+  <sys:Double x:Key="BaseMarginWidth">8</sys:Double>
   <sys:Double x:Key="SeparatorWidth">4</sys:Double>
   <sys:Double x:Key="SeparatorHeight">4</sys:Double>
   <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
   <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
   <sys:Double x:Key="BigIndentWidth">40</sys:Double>
-  <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMargin}" Top="0" Right="0" Bottom="0" />
-  <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="0" />
-  <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
-  <Thickness x:Key="BottomMargin" Left="0" Top="0" Right="0" Bottom="{StaticResource BaseMargin}" />
-  <Thickness x:Key="AllMargin" Left="{StaticResource BaseMargin}" Top="{StaticResource BaseMargin}" Right="{StaticResource BaseMargin}" Bottom="{StaticResource BaseMargin}" />
-  <Thickness x:Key="VericalMargin" Left="0" Top="{StaticResource BaseMargin}" Right="0" Bottom="{StaticResource BaseMargin}" />
-  <Thickness x:Key="HorizonMargin" Left="{StaticResource BaseMargin}" Top="0" Right="{StaticResource BaseMargin}" Bottom="0" />
+  <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="0" Bottom="0" />
+  <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMarginWidth}" Right="0" Bottom="0" />
+  <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />
+  <Thickness x:Key="BottomMargin" Left="0" Top="0" Right="0" Bottom="{StaticResource BaseMarginWidth}" />
+  <Thickness x:Key="AllMargin" Left="{StaticResource BaseMarginWidth}" Top="{StaticResource BaseMarginWidth}" Right="{StaticResource BaseMarginWidth}" Bottom="{StaticResource BaseMarginWidth}" />
+  <Thickness x:Key="VericalMargin" Left="0" Top="{StaticResource BaseMarginWidth}" Right="0" Bottom="{StaticResource BaseMarginWidth}" />
+  <Thickness x:Key="HorizonMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />
   <Thickness x:Key="BasePadding" Left="4" Top="4" Right="4" Bottom="4" />
 
   <sys:Double x:Key="FontSmallSize">10</sys:Double>
@@ -506,14 +506,14 @@
   <Style x:Key="VerticalTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="0" Top="{StaticResource HalfMargin}" Right="0" Bottom="{StaticResource HalfMargin}" />
+        <Thickness Left="0" Top="{StaticResource HalfMarginWidth}" Right="0" Bottom="{StaticResource HalfMarginWidth}" />
       </Setter.Value>
     </Setter>
   </Style>
   <Style x:Key="HorizontalTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="{StaticResource HalfMargin}" Top="0" Right="{StaticResource HalfMargin}" Bottom="0" />
+        <Thickness Left="{StaticResource HalfMarginWidth}" Top="0" Right="{StaticResource HalfMarginWidth}" Bottom="0" />
       </Setter.Value>
     </Setter>
   </Style>
@@ -546,14 +546,14 @@
   <Style x:Key="VerticalPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="0" Top="{StaticResource HalfMargin}" Right="0" Bottom="{StaticResource HalfMargin}" />
+        <Thickness Left="0" Top="{StaticResource HalfMarginWidth}" Right="0" Bottom="{StaticResource HalfMarginWidth}" />
       </Setter.Value>
     </Setter>
   </Style>
   <Style x:Key="HorizontalPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="{StaticResource HalfMargin}" Top="0" Right="{StaticResource HalfMargin}" Bottom="0" />
+        <Thickness Left="{StaticResource HalfMarginWidth}" Top="0" Right="{StaticResource HalfMarginWidth}" Bottom="0" />
       </Setter.Value>
     </Setter>
   </Style>
@@ -573,14 +573,14 @@
   <Style x:Key="VerticalNumericUpDown" TargetType="mamc:NumericUpDown" BasedOn="{StaticResource {x:Type mamc:NumericUpDown}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="0" Top="{StaticResource HalfMargin}" Right="0" Bottom="{StaticResource HalfMargin}" />
+        <Thickness Left="0" Top="{StaticResource HalfMarginWidth}" Right="0" Bottom="{StaticResource HalfMarginWidth}" />
       </Setter.Value>
     </Setter>
   </Style>
   <Style x:Key="HorizontalNumericUpDown" TargetType="mamc:NumericUpDown" BasedOn="{StaticResource {x:Type mamc:NumericUpDown}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="{StaticResource HalfMargin}" Top="0" Right="{StaticResource HalfMargin}" Bottom="0" />
+        <Thickness Left="{StaticResource HalfMarginWidth}" Top="0" Right="{StaticResource HalfMarginWidth}" Bottom="0" />
       </Setter.Value>
     </Setter>
   </Style>
@@ -744,14 +744,14 @@
   <Style x:Key="VerticalButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="{StaticResource BitMargin}" Top="{StaticResource HalfMargin}" Right="{StaticResource BitMargin}" Bottom="{StaticResource HalfMargin}" />
+        <Thickness Left="{StaticResource BitMarginWidth}" Top="{StaticResource HalfMarginWidth}" Right="{StaticResource BitMarginWidth}" Bottom="{StaticResource HalfMarginWidth}" />
       </Setter.Value>
     </Setter>
   </Style>
   <Style x:Key="HorizontalButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
     <Setter Property="Margin">
       <Setter.Value>
-        <Thickness Left="{StaticResource HalfMargin}" Top="{StaticResource BitMargin}" Right="{StaticResource HalfMargin}" Bottom="{StaticResource BitMargin}" />
+        <Thickness Left="{StaticResource HalfMarginWidth}" Top="{StaticResource BitMarginWidth}" Right="{StaticResource HalfMarginWidth}" Bottom="{StaticResource BitMarginWidth}" />
       </Setter.Value>
     </Setter>
   </Style>

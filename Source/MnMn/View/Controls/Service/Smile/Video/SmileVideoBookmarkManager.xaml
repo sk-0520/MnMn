@@ -113,7 +113,7 @@
               <DataTrigger Binding="{Binding DataContext.IsDragOver, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
                 <Setter Property="Padding">
                   <Setter.Value>
-                    <Thickness Left="0" Right="0" Top="{StaticResource BaseMargin}" Bottom="{StaticResource BaseMargin}" />
+                    <Thickness Left="0" Right="0" Top="{StaticResource BaseMarginWidth}" Bottom="{StaticResource BaseMarginWidth}" />
                   </Setter.Value>
                 </Setter>
               </DataTrigger>
