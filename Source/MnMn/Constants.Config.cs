@@ -89,6 +89,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static TimeSpan MutexWaitTime => appConfig.Get("mutex-wait-time", TimeSpan.Parse);
         public static int LogViewCount => appConfig.Get("log-view-count", int.Parse);
         public static int TextFileSaveBuffer => appConfig.Get("text-file-save-buffer", int.Parse);
+        public static int TextStreamWriteBuffer => appConfig.Get("text-stream-write-buffer", int.Parse);
 
         public static int BackupArchiveCount => appConfig.Get("backup-archive-count", int.Parse);
         public static int BackupSettingCount => appConfig.Get("backup-setting-count", int.Parse);
