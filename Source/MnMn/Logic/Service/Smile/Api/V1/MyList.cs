@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
-                using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(rawJson))) {
+                using(var stream = StreamUtility.ToUtf8Stream(rawJson)) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileAccountMyListDefaultModel>(stream);
                 }
             }
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
-                using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(rawJson))) {
+                using(var stream = StreamUtility.ToUtf8Stream(rawJson)) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileAccountMyListGroupModel>(stream);
                 }
             }
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 if(rawJson == null) {
                     return null;
                 }
-                using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(rawJson))) {
+                using(var stream = StreamUtility.ToUtf8Stream(rawJson)) {
                     var result = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
 
                     result.Channel.Title = SmileMyListUtility.TrimTitle(result.Channel.Title);

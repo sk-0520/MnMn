@@ -8,6 +8,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live.Api
 
         public static FeedSmileLiveModel ConvertFromRssText(string rssText)
         {
-            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(rssText))) {
+            using(var stream = StreamUtility.ToUtf8Stream(rssText)) {
                 return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileLiveModel>(stream);
             }
         }
