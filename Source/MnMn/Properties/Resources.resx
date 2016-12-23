@@ -428,4 +428,7 @@
   <data name="String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow" xml:space="preserve">
     <value>新しいプレイヤーで再生</value>
   </data>
+  <data name="File_Xaml_Theme_Base_BaseGray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\file\xaml\theme\base\basegray.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>
