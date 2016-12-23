@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -172,14 +173,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(headers)}: {headers}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        protected void ThrowNotSupportConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(binary)}: {binary}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        protected void ThrowNotSupportGetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(binary)}: {binary}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
         protected void ThrowNotSupportConvertString(Uri uri, string text, ServiceType serviceType)
@@ -503,12 +504,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        public virtual void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        public virtual Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
