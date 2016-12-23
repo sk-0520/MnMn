@@ -12,11 +12,39 @@
 			<words>
 				<word key="ja-jp" value="" />
 			</words>
+			<extends>
+				<extend key="custom" value="false" />
+				<extend key="can-select" value="true" />
+			</extends>
+		</element>
+		<element key="BaseGrayLight">
+			<words>
+				<word key="ja-jp" value="" />
+			</words>
+			<extends>
+				<extend key="custom" value="true" />
+				<extend key="can-select" value="true" />
+				<extend key="resource" value="pack://application:,,,/MnMn;component/View/Resources/Theme/Base/BaseGrayLight.xaml" />
+			</extends>
+		</element>
+		<element key="BaseGrayDark">
+			<words>
+				<word key="ja-jp" value="" />
+			</words>
+			<extends>
+				<extend key="custom" value="true" />
+				<extend key="can-select" value="false" />
+				<extend key="resource" value="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+			</extends>
 		</element>
 		<element key="BaseDark">
 			<words>
 				<word key="ja-jp" value="" />
 			</words>
+			<extends>
+				<extend key="custom" value="false" />
+				<extend key="can-select" value="true" />
+			</extends>
 		</element>
 	</base>
 	<accent>

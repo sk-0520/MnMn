@@ -180,29 +180,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   &lt;ResourceDictionary 
-        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
-        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-        ///  
-        ///  xmlns:options=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation/options&quot;
-        ///  
-        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
-        ///  mc:Ignorable=&quot;options&quot;
-        ///&gt;
-        ///
-        ///  &lt;Color x:Key=&quot;BlackColor&quot;&gt;#323232&lt;/Color&gt;
-        ///  &lt;Color x:Key=&quot;WhiteColor&quot;&gt;#CCCCCC&lt;/Color&gt;
-        ///
-        ///  &lt;Color x:Key=&quot;Gray1&quot;&gt;#FF333333&lt;/Color&gt;
-        ///  &lt;Color x:Key=&quot;Gray2&quot;&gt;#FF7F7F7 [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string File_Xaml_Theme_Base_BaseGray {
-            get {
-                return ResourceManager.GetString("File_Xaml_Theme_Base_BaseGray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_CheckedProcessType_RandomPlay {
