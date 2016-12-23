@@ -45,6 +45,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <NoWarn>RECS0154</NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</OutputPath>
@@ -58,6 +59,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <NoWarn>RECS0154</NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>

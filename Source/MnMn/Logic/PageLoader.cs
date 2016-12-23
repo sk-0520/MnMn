@@ -250,15 +250,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected async Task<string> GetTextAsync(HttpResponseMessage response)
         {
-            var rawBinary = await response.Content.ReadAsByteArrayAsync();
-            var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(rawBinary);
-            Mediation.ConvertBinary(Uri, stream, ServiceType);
-            var encoding = Mediation.GetEncoding(Uri, stream, ServiceType);
-            var binary = stream.ToArray();
-            var plainText = encoding.GetString(binary);
-            var convertedText = Mediation.ConvertString(Uri, plainText, ServiceType);
+            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag()) {
+                using(var responseStream = await response.Content.ReadAsStreamAsync()) {
+                    responseStream.CopyTo(stream);
+                    stream.Position = 0;
+                }
 
-            return convertedText;
+                Mediation.ConvertBinary(Uri, stream, ServiceType);
+                var encoding = Mediation.GetEncoding(Uri, stream, ServiceType);
+
+                var binary = stream.GetBuffer();
+                var length = (int)stream.Length;
+
+                var plainText = encoding.GetString(binary, 0, length);
+
+                var convertedText = Mediation.ConvertString(Uri, plainText, ServiceType);
+
+                return convertedText;
+            }
         }
 
         /// <summary>
