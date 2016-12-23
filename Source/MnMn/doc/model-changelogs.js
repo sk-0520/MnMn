@@ -151,6 +151,15 @@
 					},
 					{
 						'revision': '',
+						'subject': '#297: MemoryStreamからLOHを考慮したメモリ用ストリームに置き換える',
+						'comments': [
+							'Microsoft.IO.RecyclableMemoryStreamManager(https://github.com/Microsoft/Microsoft.IO.RecyclableMemoryStream)を使用した',
+							'効果の程はまだわからない、下手すればぐっちゃぐちゃになるし上手くいけばいい感じになるハズ',
+							'(上手くいく前提で)これが .NET Framework に組み込まれたらいいなぁと思う今日この頃'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
