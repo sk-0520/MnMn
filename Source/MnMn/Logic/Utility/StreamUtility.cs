@@ -8,7 +8,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
-    public static class EncodingUtility
+    public static class StreamUtility
     {
         public static Stream ToStream(string text, Encoding encoding, int bufferSize)
         {
