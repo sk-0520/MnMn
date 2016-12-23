@@ -27,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static BitmapSource GetBitmapSource(byte[] binary)
         {
-            using(var stream = new MemoryStream(binary)) {
+            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binary)) {
                 return GetBitmapSource(stream);
             }
         }
