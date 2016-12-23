@@ -99,7 +99,7 @@
               <ComboBox Grid.Column="1" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
 
               <Label Grid.Column="2" Margin="{StaticResource LeftMargin}">アクセント</Label>
-              <ComboBox Grid.Column="3" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
+              <ComboBox Grid.Column="3" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
             </Grid>
             <TextBlock Margin="{StaticResource TopMargin}">*テーマは再起動後にきちんと反映されます*</TextBlock>
           </StackPanel>

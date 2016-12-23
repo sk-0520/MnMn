@@ -96,7 +96,7 @@
 				<word key="ja-jp" value="ライム" />
 			</words>
 			<extends>
-				<extend key="color" value="#AccentBaseColor" />
+				<extend key="color" value="#FFA4C400" />
 			</extends>
 		</element>
 		<element key="Emerald">
