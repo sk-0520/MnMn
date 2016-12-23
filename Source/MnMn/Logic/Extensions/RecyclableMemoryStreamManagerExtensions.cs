@@ -12,14 +12,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
 {
     public static class RecyclableMemoryStreamManagerExtensions
     {
+        static string MakeTag(string callerFilePath, int callerLineNumber, string callerMemberName)
+        {
+            var result = $"{callerMemberName}: {callerFilePath}({callerLineNumber})";
+            return result;
+        }
+
         public static MemoryStream GetStreamWidthAutoTag(this RecyclableMemoryStreamManager memoryStreamManager, byte[] buffer, int offset, int count, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1, [CallerMemberName] string callerMemberName = "")
         {
-            var tag = $"{callerMemberName}: {callerFilePath}({callerLineNumber})";
+            var tag = MakeTag(callerFilePath, callerLineNumber, callerMemberName);
             return memoryStreamManager.GetStream(tag, buffer, offset, count);
         }
         public static MemoryStream GetStreamWidthAutoTag(this RecyclableMemoryStreamManager memoryStreamManager, byte[] buffer, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1, [CallerMemberName] string callerMemberName = "")
         {
             return GetStreamWidthAutoTag(memoryStreamManager, buffer, 0, buffer.Length, callerFilePath, callerLineNumber, callerMemberName);
+        }
+
+        // タグ付けする意味もあんまりなさそう。
+        public static MemoryStream GetStreamWidthAutoTag(this RecyclableMemoryStreamManager memoryStreamManager, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1, [CallerMemberName] string callerMemberName = "")
+        {
+            var tag = MakeTag(callerFilePath, callerLineNumber, callerMemberName);
+            return memoryStreamManager.GetStream(tag);
         }
     }
 }

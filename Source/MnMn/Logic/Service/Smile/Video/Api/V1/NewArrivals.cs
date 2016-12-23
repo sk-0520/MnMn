@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 if(!feedResult.IsSuccess) {
                     return null;
                 } else {
-                    using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(feedResult.Result))) {
+                    using(var stream = StreamUtility.ToUtf8Stream(feedResult.Result)) {
                         return SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
                     }
                 }

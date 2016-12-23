@@ -24,6 +24,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         static RawSmileVideoDmcObjectModel ConvertFromRawData(string s)
         {
-            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(s))) {
+            using(var stream = StreamUtility.ToUtf8Stream(s)) {
                 var result = SerializeUtility.LoadXmlSerializeFromStream<RawSmileVideoDmcObjectModel>(stream);
                 result.Raw = s;
                 return result;

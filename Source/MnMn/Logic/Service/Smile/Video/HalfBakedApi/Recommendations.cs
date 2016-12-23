@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
 
         public static RawSmileVideoRecommendModel Load(string s)
         {
-            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(s))) {
+            using(var stream = StreamUtility.ToUtf8Stream(s)) {
                 var result = SerializeUtility.LoadJsonDataFromStream<RawSmileVideoRecommendModel>(stream);
                 return result;
             }
