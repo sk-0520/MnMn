@@ -90,9 +90,9 @@
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition />
+                <ColumnDefinition Width="7*" />
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0">基本テーマ</Label>

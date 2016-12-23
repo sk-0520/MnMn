@@ -23,7 +23,7 @@
 				<word key="ja-jp" value="灰" />
 			</words>
 			<extends>
-				<extend key="color" value="#ffCCCCCC" />
+				<extend key="color" value="#FFCCCCCC" />
 				<extend key="custom" value="true" />
 				<extend key="can-select" value="true" />
 				<extend key="resource" value="pack://application:,,,/MnMn;component/View/Resources/Theme/Base/BaseGrayLight.xaml" />
