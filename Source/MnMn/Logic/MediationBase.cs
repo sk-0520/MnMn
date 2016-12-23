@@ -173,12 +173,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(headers)}: {headers}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertBinary(Uri uri, Stream binary, ServiceType serviceType)
+        protected void ThrowNotSupportConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
         {
-            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(binary)}: {binary}, {nameof(serviceType)}: {serviceType}");
+            throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetEncoding(Uri uri, byte[] stream, ServiceType serviceType)
+        protected void ThrowNotSupportGetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
@@ -509,7 +509,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        public virtual Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

@@ -498,16 +498,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.GetEncoding(uri, binary, serviceType);
+                    return Smile.GetEncoding(uri, stream, serviceType);
 
                 default:
-                    ThrowNotSupportGetEncoding(uri, binary, serviceType);
+                    ThrowNotSupportGetEncoding(uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }

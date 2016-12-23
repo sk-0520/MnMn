@@ -253,8 +253,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var rawBinary = await response.Content.ReadAsByteArrayAsync();
             var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(rawBinary);
             Mediation.ConvertBinary(Uri, stream, ServiceType);
+            var encoding = Mediation.GetEncoding(Uri, stream, ServiceType);
             var binary = stream.ToArray();
-            var encoding = Mediation.GetEncoding(Uri, binary, ServiceType);
             var plainText = encoding.GetString(binary);
             var convertedText = Mediation.ConvertString(Uri, plainText, ServiceType);
 

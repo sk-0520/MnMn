@@ -288,7 +288,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
         { }
 
-        public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
             return Encoding.UTF8;
         }
