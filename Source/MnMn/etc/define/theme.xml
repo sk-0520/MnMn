@@ -10,7 +10,7 @@
 	<base>
 		<element key="BaseLight">
 			<words>
-				<word key="ja-jp" value="白色" />
+				<word key="ja-jp" value="白" />
 			</words>
 			<extends>
 				<extend key="smaple" value="#FFFFFFFF" />
@@ -20,7 +20,7 @@
 		</element>
 		<element key="BaseGrayLight">
 			<words>
-				<word key="ja-jp" value="灰色" />
+				<word key="ja-jp" value="灰" />
 			</words>
 			<extends>
 				<extend key="smaple" value="#ffCCCCCC" />
@@ -41,7 +41,7 @@
 		</element>
 		<element key="BaseDark">
 			<words>
-				<word key="ja-jp" value="黒色" />
+				<word key="ja-jp" value="黒" />
 			</words>
 			<extends>
 				<extend key="smaple" value="#FF252525" />
