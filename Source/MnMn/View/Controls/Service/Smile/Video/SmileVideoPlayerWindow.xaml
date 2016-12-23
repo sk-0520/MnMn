@@ -891,7 +891,7 @@
                 <Style TargetType="app_view_controls:Navigationbar">
                   <Style.Triggers>
                     <DataTrigger Binding="{Binding IsNormalWindow}" Value="False">
-                      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                      <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
                     </DataTrigger>
                   </Style.Triggers>
                 </Style>
