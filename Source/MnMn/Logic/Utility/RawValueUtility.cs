@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Media;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
@@ -229,6 +230,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         {
             var terms = new[] { "byte", "KB", "MB", "GB" };
             return ConvertHumanLikeByte(byteSize, terms);
+        }
+
+        public static Color ConvertColor(string text)
+        {
+            if(string.IsNullOrWhiteSpace(text)) {
+                return Colors.Transparent;
+            }
+
+            return (Color)ColorConverter.ConvertFromString(text);
         }
 
         #endregion
