@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
@@ -47,7 +48,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             page.ReplaceUriParameters["video-id"] = videoId;
             var plainXml = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
-            using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
+            //using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(plainXml.Result))) {
+            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(Encoding.UTF8.GetBytes(plainXml.Result))) {
                 var result = ConvertFromRawData(stream);
                 result.Raw = plainXml.Result;
                 return result;
