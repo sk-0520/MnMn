@@ -10,18 +10,20 @@
 	<base>
 		<element key="BaseLight">
 			<words>
-				<word key="ja-jp" value="" />
+				<word key="ja-jp" value="白色" />
 			</words>
 			<extends>
+				<extend key="smaple" value="#FFFFFFFF" />
 				<extend key="custom" value="false" />
 				<extend key="can-select" value="true" />
 			</extends>
 		</element>
 		<element key="BaseGrayLight">
 			<words>
-				<word key="ja-jp" value="" />
+				<word key="ja-jp" value="灰色" />
 			</words>
 			<extends>
+				<extend key="smaple" value="#ffCCCCCC" />
 				<extend key="custom" value="true" />
 				<extend key="can-select" value="true" />
 				<extend key="resource" value="pack://application:,,,/MnMn;component/View/Resources/Theme/Base/BaseGrayLight.xaml" />
@@ -39,9 +41,10 @@
 		</element>
 		<element key="BaseDark">
 			<words>
-				<word key="ja-jp" value="" />
+				<word key="ja-jp" value="黒色" />
 			</words>
 			<extends>
+				<extend key="smaple" value="#FF252525" />
 				<extend key="custom" value="false" />
 				<extend key="can-select" value="true" />
 			</extends>
