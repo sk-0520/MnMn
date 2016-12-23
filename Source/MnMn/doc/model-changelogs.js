@@ -200,7 +200,8 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': 'mahapps.metro 1.3.0 -> 1.4.0'
 					}
 				]
 			}
