@@ -117,14 +117,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get
             {
-                return CreateCommand(o => {
-                    Mediation.Order(new AppSaveOrderModel(true));
-                    UpdateExecuteAsunc().ContinueWith(t => {
-                        if(t.Result) {
-                            Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
-                        }
-                    });
-                });
+                return CreateCommand(
+                    o => {
+                        Mediation.Order(new AppSaveOrderModel(true));
+                        UpdateExecuteAsunc().ContinueWith(t => {
+                            if(t.Result) {
+                                Mediation.Order(new Model.Request.OrderModel(OrderKind.Exit, ServiceType.Application));
+                            }
+                        });
+                    },
+                    o => HasUpdate
+                );
             }
         }
 

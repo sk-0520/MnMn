@@ -26,6 +26,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
-                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
+                using(var stream = StreamUtility.ToUtf8Stream(rawJson)) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileAccountMyListDefaultModel>(stream);
                 }
             }
@@ -77,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
 
                 var rawJson = response.Result;
-                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
+                using(var stream = StreamUtility.ToUtf8Stream(rawJson)) {
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileAccountMyListGroupModel>(stream);
                 }
             }
@@ -101,7 +102,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1
                 if(rawJson == null) {
                     return null;
                 }
-                using(var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson))) {
+                using(var stream = StreamUtility.ToUtf8Stream(rawJson)) {
                     var result = SerializeUtility.LoadXmlSerializeFromStream<FeedSmileVideoModel>(stream);
 
                     result.Channel.Title = SmileMyListUtility.TrimTitle(result.Channel.Title);

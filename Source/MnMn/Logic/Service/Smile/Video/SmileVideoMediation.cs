@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -284,12 +285,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return CheckModel.Success();
         }
 
-        public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
-        {
-            return binary;
-        }
+        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        { }
 
-        public override Encoding GetEncoding(Uri uri, byte[] binary, ServiceType serviceType)
+        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
         {
             return Encoding.UTF8;
         }

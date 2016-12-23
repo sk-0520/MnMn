@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning'
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning',
 						'comments': [
 							''
 						]
@@ -83,6 +83,153 @@
 		]
 	},
 	*/
+	{
+		'date': '2016/12/24',
+		'version': '0.36.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': 'めりくりいぶ'
+					},
+					{
+						'revision': '',
+						'subject': '根深い LOH 対策をかなり頑張った',
+						'comments': [
+							'理屈はわかるんだけど .NET Framework で実装する際に 85KB 以上のメモリ確保に気を付けないといけないのすっごい辛いんで何とかなんねーのかね',
+							'The MemoryManager is thread-safe (streams themselves are inherently NOT thread safe). 都合良い脳内変換で RecyclableMemoryStreamManager がスレッドセーフを担保してくれると信じる',
+							'かなり手を入れたから動作が心配',
+							'根治は望まないけどある程度解決されたと願いたい -> このコマンドを実行するための十分な記憶域がありません'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'ef73fbfea80ba3203cd5da0db9b6464f6c4544ca',
+						'subject': '#296: ファインダーコンテキストメニューの「プレイヤーで開く」を一元表示する'
+					},
+					{
+						'revision': '7d4b1575f15588676995e3fa0ffa663fc73788e7',
+						'subject': '#279: 各種メニューのデフォルト状態をWindowsのUXに準拠させる',
+						'comments': [
+							'Windows っていうか Explorer なんかね',
+							'つーか Windows の UX ガイドラインはページ数多すぎて読めない'
+						]
+					},
+					{
+						'revision': '0cb497de14c162edc025c5c862a8f60f3cdac1fa',
+						'subject': '#284: 動画説明文の動画IDにコンテキストメニューを追加する'
+					},
+					{
+						'revision': '4768b8045760f7c3553b696da63afa14d01fb0c9',
+						'subject': '#291: プレイヤー上で Home 押下により動画先頭へ遷移する'
+					},
+					{
+						'revision': '3884bbb8f47cc4e55b56e9d07abfcf61d647707f',
+						'subject': '#304: テーマ設定をローカライズしたり視覚的にしたりする',
+						'comments': [
+							'英語の色名翻訳って難しいのね',
+							'美術的な知識無いからなんだろうけど Taupe とか Sienna いわれても直感で分からん',
+							'ググったり Wikipedia からコピったりした。気になる人は和訳ください',
+							'そもそもモグラ色ってなんだ'
+						]
+					},
+					{
+						'revision': '065695e1e4f6c1b75e958a2fd1c01f883858cfab',
+						'subject': '#196: テーマに灰色を！',
+						'comments': [
+							'なんか違うけどカスタムテーマ追加できることが分かったからよしとする',
+							'灰色はなんでか知らないけど再起動必須だなぁ、多分 StaticResource にしてるからだと思うけど再起動必要って書いてるから深く追ってない'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '0ebe3b9e44100af68cd44ff6ba81b861cbd785bd',
+						'subject': '#288: クラッシュレポートのメッセージ内容にスタックトレースが含まれていない',
+						'comments': [
+							'自分で `ex.Message` してた。申し開きもない。死にたい'
+						]
+					},
+					{
+						'revision': '4b3c4f29dceef2d033c863f12445017d4530817c',
+						'subject': '#285: クリック処理におけるマウスボタンをきちんと対処する',
+						'comments': [
+							'以下をマウス操作左ボタンに限定',
+							'フルスクリーン解除',
+							'シークバー操作'
+						]
+					},
+					{
+						'revision': '0bed0576784fa16964fb6a97cc2ad1d908a6ec6b',
+						'subject': '#297: MemoryStreamからLOHを考慮したメモリ用ストリームに置き換える',
+						'comments': [
+							'Microsoft.IO.RecyclableMemoryStreamManager(https://github.com/Microsoft/Microsoft.IO.RecyclableMemoryStream)を使用した',
+							'効果の程はまだわからない、下手すればぐっちゃぐちゃになるし上手くいけばいい感じになるハズ',
+							'(上手くいく前提で)これが .NET Framework に組み込まれたらいいなぁと思う今日この頃'
+						]
+					},
+					{
+						'revision': '8ed06cc2683da8d4a2fac60885389f84aa8bf275',
+						'subject': '#298: 文字列のエンコード処理でLOHを考慮する',
+						'comments': [
+							'ほとんどの #297 がこっちの処理になった'
+						]
+					},
+					{
+						'revision': 'd0a6ffb12e79b5ea8f3fc14fcbae427e5232abad',
+						'subject': '#299: 生バイナリを配列として扱う際にLOHを考慮する'
+					},
+					{
+						'revision': 'a08a389e6101b95b532579fd997bb330aa42a06e',
+						'subject': '#302: プレイヤーフルスクリーン時にシーク時間の視認性が悪い'
+					},
+					{
+						'revision': 'd3616e5260446df9cc964e7233b9539793f6a323',
+						'subject': '#305: アップデート UI のボタンを下部に集合させてアップデートボタンは差別化する',
+						'comments': [
+							'ボタンのスタイルを Geckofx のプラグイン更新ボタンみたいにした'
+						]
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '7eb9357188d6ca97153733d3997f8dc0161f32be',
+						'class': 'nuget',
+						'subject': 'Extended.Wpf.Toolkit 2.9 -> 3.0'
+					},
+					{
+						'revision': 'e49eb301e49191e37a02800fa3025f7aa1027259',
+						'class': 'nuget',
+						'subject': '#277: GeckoFx を 45.0.28 に更新',
+						'comments': [
+							'ちょっとばかし危険な感じ',
+							'正規の手順踏んでないような気がするんよねぇ、特にこの辺り: Xpcom.EnableProfileMonitoring -> Xpcom.Initialize',
+							'いやでも geckofx の 113 見る限り他のプロファイルとの共存目的なんかね(https://bitbucket.org/geckofx/geckofx-45.0/issues/113)',
+							'動かなかったら教えてちょ'
+						]
+					},
+					{
+						'revision': '3a46a66580c9f0c442e4464cbf1687da3244739c',
+						'class': 'nuget',
+						'subject': 'mahapps.metro 1.3.0 -> 1.4.0'
+					}
+				]
+			}
+		]
+	},
 	{
 		'date': '2016/12/18',
 		'version': '0.35.0',

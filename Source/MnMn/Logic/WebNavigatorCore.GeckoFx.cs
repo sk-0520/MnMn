@@ -57,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var settingDirectory = Mediation.GetResultFromRequest<DirectoryInfo>(new RequestModel(RequestKind.CacheDirectory, ServiceType.Application));
             var profileDirectoryPath = Path.Combine(settingDirectory.FullName, Constants.WebNavigatorGeckoFxProfileDirectoryName);
             var profileDirectory = Directory.CreateDirectory(profileDirectoryPath);
+            profileDirectory.Refresh();
+            Xpcom.EnableProfileMonitoring = false;
             Xpcom.ProfileDirectory = profileDirectory.FullName;
             Xpcom.Initialize(Constants.WebNavigatorGeckoFxLibraryDirectoryPath);
 

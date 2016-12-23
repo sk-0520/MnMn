@@ -49,6 +49,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             SelectedApplicationTheme = AppSetting.Theme.ApplicationTheme;
             SelectedAccent = AppSetting.Theme.Accent;
             SelectedBaseTheme = AppSetting.Theme.BaseTheme;
+
+            var baseThemeItems = ThemeDefine.BaseItems.Where(t => RawValueUtility.ConvertBoolean( t.Extends["can-select"]));
+            BaseThemeItems = CollectionModel.Create(baseThemeItems);
         }
 
         #region property
@@ -109,10 +112,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return ThemeDefine.ApplicationItems; }
         }
-        public CollectionModel<DefinedElementModel> BaseThemeItems
-        {
-            get { return ThemeDefine.BaseItems; }
-        }
+        public CollectionModel<DefinedElementModel> BaseThemeItems { get; }
+
         public CollectionModel<DefinedElementModel> AccentItems
         {
             get { return ThemeDefine.AccentItems; }

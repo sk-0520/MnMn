@@ -196,10 +196,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(e.Action == NotifyCollectionChangedAction.Add | e.Action == NotifyCollectionChangedAction.Reset) {
                 if(CurrenItem == null) {
                     CurrenItem = this.FirstOrDefault();
-                } else if(Items.IndexOf(CurrenItem) == -1) {
-                    CurrenItem = this.FirstOrDefault();
                 } else {
-                    CurrenItem = this.Last();
+                    var index = Items.IndexOf(CurrenItem);
+                    if(index == -1) {
+                        CurrenItem = this.FirstOrDefault();
+                    } else {
+                        CurrenItem = this[index];
+                    }
                 }
                 CurrenIndex = Items.IndexOf(CurrenItem);
             }

@@ -28,7 +28,7 @@ function makeIssueLink() {
 		var li = itemList[i];
 
 		var linkElements = li.getElementsByTagName('a');
-		if (linkElements.length == 1 && linkElements[0].className == 'rev') {
+		if (1 <= linkElements.length && linkElements[0].className == 'rev') {
 			var linkElement = linkElements[0];
 			var rev = linkElement.innerHTML;
 			var link = revisionLink + rev;

@@ -92,6 +92,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {
@@ -465,6 +466,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SeekHeadCommand
+        {
+            get { return CreateCommand(o => SeekHead()); }
+        }
+
         public ICommand FullScreenCancelCommand
         {
             get
@@ -473,8 +479,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(IsNormalWindow) {
                         return;
                     }
-                    // フルスクリーン時は元に戻してあげる
-                    SetWindowMode(true);
+                    if(Mouse.LeftButton == MouseButtonState.Pressed) {
+                        // フルスクリーン時は元に戻してあげる
+                        SetWindowMode(true);
+                    }
                 });
             }
         }
@@ -1041,10 +1049,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var cancel = new CancellationTokenSource();
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
             return Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request).ContinueWith(t => {
+                if(t.Status == TaskStatus.Faulted) {
+                    Mediation.Logger.Error(t.Exception);
+                    return Task.CompletedTask;
+                }
                 var videoInformation = t.Result;
                 return LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+        private async Task AddPlayListAync(string videoId)
+        {
+            var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
+            if(videoInformation != null) {
+                PlayListItems.Add(videoInformation);
+            }
+        }
+
 
         void RefreshFilteringComment()
         {
@@ -1577,6 +1598,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void SeekHead()
+        {
+            if(Player != null && Player.IsSeekable) {
+                //ChangeSeekVideoPosition(true, true, 0);
+                ClearComment();
+                Player.Position = 0;
+            }
+        }
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1930,12 +1960,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
         }
         public ICommand MenuOpenUriCommand => OpenUriCommand;
-        public ICommand MenuOpenUriInAppBrowserCmmand {
+        public ICommand MenuOpenUriInAppBrowserCmmand
+        {
             get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
         }
         public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
 
-        public ICommand OpenVideoLinkCommand
+        public ICommand OpenVideoIdLinkCommand
         {
             get
             {
@@ -1947,13 +1978,40 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 );
             }
         }
+        public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
+        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
+        public ICommand MenuAddPlayListVideoIdLinkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var videoId = (string)o;
+                        if(string.IsNullOrWhiteSpace(videoId)) {
+                            return;
+                        }
 
-        public ICommand OpenMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
-        public ICommand MenuOpenMyListLinkCommand => OpenMyListLinkCommand;
-        public ICommand MenuAddMyListLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediation).ConfigureAwait(false)); } }
+                        AddPlayListAync(videoId).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+        public ICommand MenuAddCheckItLaterVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
+        }
+        public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
+        }
+
+        public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
+        public ICommand MenuOpenMyListIdLinkCommand => OpenMyListIdLinkCommand;
+        public ICommand MenuAddMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediation).ConfigureAwait(false)); } }
         public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediation.Logger)); } }
 
-        public ICommand OpenUserLinkCommand
+        public ICommand OpenUserIdLinkCommand
         {
             get
             {
@@ -2034,6 +2092,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void VideoSilder_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if(e.LeftButton != MouseButtonState.Pressed) {
+                e.Handled = true;
+                return;
+            }
+
             if(!CanVideoPlay) {
                 return;
             }

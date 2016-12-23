@@ -10,130 +10,230 @@
 	<base>
 		<element key="BaseLight">
 			<words>
-				<word key="ja-jp" value="" />
+				<word key="ja-jp" value="白" />
 			</words>
+			<extends>
+				<extend key="color" value="#FFFFFFFF" />
+				<extend key="custom" value="false" />
+				<extend key="can-select" value="true" />
+			</extends>
 		</element>
-		<element key="BaseDark">
+		<element key="BaseGrayLight">
+			<words>
+				<word key="ja-jp" value="灰" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFCCCCCC" />
+				<extend key="custom" value="true" />
+				<extend key="can-select" value="true" />
+				<extend key="resource" value="pack://application:,,,/MnMn;component/View/Resources/Theme/Base/BaseGrayLight.xaml" />
+			</extends>
+		</element>
+		<element key="BaseGrayDark">
 			<words>
 				<word key="ja-jp" value="" />
 			</words>
+			<extends>
+				<extend key="custom" value="true" />
+				<extend key="can-select" value="false" />
+				<extend key="resource" value="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+			</extends>
+		</element>
+		<element key="BaseDark">
+			<words>
+				<word key="ja-jp" value="黒" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF252525" />
+				<extend key="custom" value="false" />
+				<extend key="can-select" value="true" />
+			</extends>
 		</element>
 	</base>
 	<accent>
 		<element key="Red">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="赤" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFE51400" />
+			</extends>
 		</element>
 		<element key="Green">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="緑" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF60A917" />
+			</extends>
 		</element>
 		<element key="Blue">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="青" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF119EDA" />
+			</extends>
 		</element>
 		<element key="Purple">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="紫" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF6459DF" />
+			</extends>
 		</element>
 		<element key="Orange">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="オレンジ" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFFA6800" />
+			</extends>
 		</element>
 		<element key="Lime">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="ライム" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFA4C400" />
+			</extends>
 		</element>
 		<element key="Emerald">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="エメラルド" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF008A00" />
+			</extends>
 		</element>
 		<element key="Teal">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="青緑" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF00ABA9" />
+			</extends>
 		</element>
 		<element key="Cyan">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="シアン" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF1BA1E2" />
+			</extends>
 		</element>
 		<element key="Cobalt">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="コバルト" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF0050EF" />
+			</extends>
 		</element>
 		<element key="Indigo">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="藍" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF6A00FF" />
+			</extends>
 		</element>
 		<element key="Violet">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="青紫" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFAA00FF" />
+			</extends>
 		</element>
 		<element key="Pink">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="ピンク" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFF472D0" />
+			</extends>
 		</element>
 		<element key="Magenta">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="紅紫" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFD80073" />
+			</extends>
 		</element>
 		<element key="Crimson">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="真紅" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFA20025" />
+			</extends>
 		</element>
 		<element key="Amber">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="琥珀" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFF0A30A" />
+			</extends>
 		</element>
 		<element key="Yellow">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="黄" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFFEDE06" />
+			</extends>
 		</element>
 		<element key="Brown">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="茶" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF825A2C" />
+			</extends>
 		</element>
 		<element key="Olive">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="オリーブ" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF6D8764" />
+			</extends>
 		</element>
 		<element key="Steel">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="スチール" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF647687" />
+			</extends>
 		</element>
 		<element key="Mauve">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="モーブ" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF76608A" />
+			</extends>
 		</element>
 		<element key="Taupe">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="モグラ" />
+			</words>
+			<extends>
+				<extend key="color" value="#FF87794E" />
+			</extends>
 		</element>
 		<element key="Sienna">
-			<word>
-				<word key="ja-jp" value="" />
-			</word>
+			<words>
+				<word key="ja-jp" value="シェンナ (sienna) は、水和酸化鉄を主成分とし、ケイ酸コロイドと少量のマンガンを含む天然の土を原料とする、やや黒味を帯びた黄褐色の顔料。" />
+			</words>
+			<extends>
+				<extend key="color" value="#FFA0522D" />
+			</extends>
 		</element>
 	</accent>
 </theme>

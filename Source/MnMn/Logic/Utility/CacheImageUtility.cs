@@ -27,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 {
@@ -46,9 +47,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return bitmap;
         }
 
+        [Obsolete]
         public static BitmapSource GetBitmapSource(byte[] binary)
         {
-            using(var stream = new MemoryStream(binary)) {
+            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binary)) {
                 return GetBitmapSource(stream);
             }
         }
@@ -81,16 +83,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         {
             var count = 0;
             //byte[] binary = null;
-            logger.Trace($"{nameof(loadUri)}: {loadUri}");
+            logger.Trace($"{nameof(loadUri)}({loadUri}), start");
             do {
                 try {
-                    var binary = await client.GetByteArrayAsync(loadUri);
-                    if(binary == null) {
-                        logger.Trace($"{nameof(loadUri)}, binary is null");
-                        continue;
+                    Stream stream = null;
+
+                    // ネットワークのストリームは早めに閉じたい
+                    using(var responseStream = await client.GetStreamAsync(loadUri)) {
+                        if(responseStream == null) {
+                            logger.Trace($"{nameof(loadUri)}({loadUri}), {nameof(responseStream)} is null");
+                            continue;
+                        }
+
+                        stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag();
+                        responseStream.CopyTo(stream);
                     }
-                    logger.Trace($"{nameof(loadUri)}, length: {binary.Length}");
-                    return CacheImageUtility.GetBitmapSource(binary);
+
+                    if(stream != null) {
+                        using(stream) {
+                            stream.Position = 0;
+                            logger.Trace($"{nameof(loadUri)}({loadUri}), length: {stream.Length}");
+                            return GetBitmapSource(stream);
+                        }
+                    }
+
                 } catch(Exception ex) {
                     logger.Warning(ex);
                     if(count != 0) {
@@ -99,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
                 }
             } while(count++ < maxCount);
 
-            logger.Error($"error {nameof(loadUri)} -> {loadUri}");
+            logger.Error($"error {nameof(loadUri)}({loadUri}), retry fail");
             return null;
         }
 

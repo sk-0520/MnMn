@@ -40,6 +40,7 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <cttn_sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+      <cttn_sl_view_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
@@ -269,33 +270,70 @@
               <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
             </ContextMenu.Resources>
             <!--EnumToBooleanConverter-->
-            <MenuItem Header="プレイヤーで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Application}}" >
-              <MenuItem Header="再生中プレイヤー" IsChecked="{Binding OpenPlayerInNewWindow, Mode=OneWay, Converter={StaticResource LogicalNotConverter}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
-                <MenuItem.CommandParameter>
-                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
-                    <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
-                    <Binding>
-                      <Binding.Source>
-                        <sys:Boolean>False</sys:Boolean>
-                      </Binding.Source>
-                    </Binding>
-                  </MultiBinding>
-                </MenuItem.CommandParameter>
-              </MenuItem>
-              <MenuItem Header="新規プレイヤー" IsChecked="{Binding OpenPlayerInNewWindow, Mode=OneWay}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
-                <MenuItem.CommandParameter>
-                  <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
-                    <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
-                    <Binding>
-                      <Binding.Source>
-                        <sys:Boolean>True</sys:Boolean>
-                      </Binding.Source>
-                    </Binding>
-                  </MultiBinding>
-                </MenuItem.CommandParameter>
-              </MenuItem>
+            <MenuItem Header="再生中プレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+              <MenuItem.Style>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Style.Triggers>
+                    <DataTrigger Value="True">
+                      <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
+                          <Binding Path="OpenPlayerInNewWindow" Mode="OneWay" Converter="{StaticResource LogicalNotConverter}" />
+                          <Binding Path="OpenMode" Mode="OneWay" Converter="{StaticResource EnumToBooleanConverter}" ConverterParameter="{x:Static app_define:ExecuteOrOpenMode.Application}" />
+                        </MultiBinding>
+                      </DataTrigger.Binding>
+                      <Setter Property="FontWeight" Value="Bold" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </MenuItem.Style>
+              <MenuItem.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
+                  <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
+                  <Binding>
+                    <Binding.Source>
+                      <sys:Boolean>False</sys:Boolean>
+                    </Binding.Source>
+                  </Binding>
+                </MultiBinding>
+              </MenuItem.CommandParameter>
             </MenuItem>
-            <MenuItem Header="ブラウザで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+            <MenuItem Header="新規プレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
+              <MenuItem.Style>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Style.Triggers>
+                    <DataTrigger Value="True">
+                      <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
+                          <Binding Path="OpenPlayerInNewWindow" Mode="OneWay" />
+                          <Binding Path="OpenMode" Mode="OneWay" Converter="{StaticResource EnumToBooleanConverter}" ConverterParameter="{x:Static app_define:ExecuteOrOpenMode.Application}" />
+                        </MultiBinding>
+                      </DataTrigger.Binding>
+                      <Setter Property="FontWeight" Value="Bold" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </MenuItem.Style>
+              <MenuItem.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
+                  <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Application}" />
+                  <Binding>
+                    <Binding.Source>
+                      <sys:Boolean>True</sys:Boolean>
+                    </Binding.Source>
+                  </Binding>
+                </MultiBinding>
+              </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="ブラウザで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+              <MenuItem.Style>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Browser}}" Value="True">
+                      <Setter Property="FontWeight" Value="Bold" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </MenuItem.Style>
               <MenuItem.CommandParameter>
                 <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
                   <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Browser}" />
@@ -307,7 +345,16 @@
                 </MultiBinding>
               </MenuItem.CommandParameter>
             </MenuItem>
-            <MenuItem Header="外部プログラムで開く" IsChecked="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}}" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+            <MenuItem Header="外部プログラムで開く"  Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}">
+              <MenuItem.Style>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding OpenMode, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:ExecuteOrOpenMode.Launcher}}" Value="True">
+                      <Setter Property="FontWeight" Value="Bold" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </MenuItem.Style>
               <MenuItem.CommandParameter>
                 <MultiBinding Converter="{StaticResource MultiCommandParameterConverter}" ConverterParameter="Service.Smile.Video.SmileVideoOpenVideoCommandParameterModel">
                   <Binding Source="{x:Static app_define:ExecuteOrOpenMode.Launcher}" />

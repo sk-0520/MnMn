@@ -75,6 +75,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return CultureInfo.CurrentCulture.Name;
         }
 
+        /// <summary>
+        /// テーマの初期化。
+        /// <para>人が触ることは考慮しない。</para>
+        /// </summary>
+        public static void InitializeTheme(ILogger logger)
+        {
+            var theme = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);
+
+            var customBaseItems = theme.BaseItems
+                .Where(t => RawValueUtility.ConvertBoolean(t.Extends["custom"]))
+            ;
+            foreach(var baseItem in customBaseItems) {
+                logger.Information($"base theme: {baseItem.Key}, {baseItem.Extends["resource"]}");
+                ThemeManager.AddAppTheme(baseItem.Key, new Uri(baseItem.Extends["resource"]));
+            }
+        }
+
         static void SetThemeDefine(string applicationTheme, string baseTheme, string accent)
         {
             Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
