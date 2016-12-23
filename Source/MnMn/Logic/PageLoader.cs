@@ -27,6 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Delegate;
 using ContentTypeTextNet.MnMn.MnMn.IF;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 
@@ -250,9 +251,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected async Task<string> GetTextAsync(HttpResponseMessage response)
         {
             var rawBinary = await response.Content.ReadAsByteArrayAsync();
-            var convertedBinary = Mediation.ConvertBinary(Uri, rawBinary, ServiceType);
-            var encoding = Mediation.GetEncoding(Uri, convertedBinary, ServiceType);
-            var plainText = encoding.GetString(convertedBinary);
+            var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(rawBinary);
+            Mediation.ConvertBinary(Uri, stream, ServiceType);
+            var binary = stream.ToArray();
+            var encoding = Mediation.GetEncoding(Uri, binary, ServiceType);
+            var plainText = encoding.GetString(binary);
             var convertedText = Mediation.ConvertString(Uri, plainText, ServiceType);
 
             return convertedText;

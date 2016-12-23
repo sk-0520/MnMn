@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -44,8 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
         /// <param name="uri">受信データの送り元。</param>
         /// <param name="binary">バイナリデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
-        /// <returns></returns>
-        byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType);
+        void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType);
         /// <summary>
         /// 受信後に呼び出されるバイナリから文字コード取得処理。
         /// </summary>

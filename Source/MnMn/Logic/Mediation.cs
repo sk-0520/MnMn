@@ -483,16 +483,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertBinary(uri, binary, serviceType);
+                    Smile.ConvertBinary(uri, stream, serviceType);
+                    break;
 
                 default:
-                    ThrowNotSupportConvertBinary(uri, binary, serviceType);
+                    ThrowNotSupportConvertBinary(uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }

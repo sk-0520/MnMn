@@ -17,6 +17,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -345,20 +346,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override byte[] ConvertBinary(Uri uri, byte[] binary, ServiceType serviceType)
+        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return binary;
+                    break;
 
                 case ServiceType.SmileVideo:
-                    return VideoMediation.ConvertBinary(uri, binary, serviceType);
+                    VideoMediation.ConvertBinary(uri, stream, serviceType);
+                    break;
 
                 case ServiceType.SmileLive:
-                    return LiveMediation.ConvertBinary(uri, binary, serviceType);
+                    LiveMediation.ConvertBinary(uri, stream, serviceType);
+                    break;
 
                 default:
-                    ThrowNotSupportConvertBinary(uri, binary, serviceType);
+                    ThrowNotSupportConvertBinary(uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
