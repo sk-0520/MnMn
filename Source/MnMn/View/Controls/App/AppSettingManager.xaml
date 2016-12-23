@@ -10,6 +10,7 @@
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
+  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -18,6 +19,23 @@
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <cttn_sl_view_converter:TimeSpanToHourConverter x:Key="TimeSpanToHourConverter" />
+    <cttn_sl_view_converter:AutoColorConverter x:Key="AutoColorConverter" />
+    <app_view_converter:TextToColorConverter x:Key="TextToColorConverter" />
+
+    <DataTemplate x:Key="ThemeSelectItem">
+      <StackPanel Style="{StaticResource ItemPanel}">
+        <Ellipse StrokeThickness="1" Width="{StaticResource SmallIconWidth}" Height="{StaticResource SmallIconHeight}" Margin="{StaticResource ItemMargin}">
+          <Ellipse.Fill>
+            <SolidColorBrush Color="{Binding Extends[color], Converter={StaticResource TextToColorConverter}}" />
+          </Ellipse.Fill>
+          <Ellipse.Stroke>
+            <SolidColorBrush Color="{Binding Fill.Color, RelativeSource={RelativeSource AncestorType=Ellipse}, Converter={StaticResource AutoColorConverter}}" />
+          </Ellipse.Stroke>
+        </Ellipse>
+        <TextBlock Text="{Binding DisplayText}" />
+        <TextBlock Margin="{StaticResource LeftMargin}" Text="{Binding Extends[color], StringFormat=({0})}" />
+      </StackPanel>
+    </DataTemplate>
   </UserControl.Resources>
   <Grid>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -78,7 +96,7 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0">基本テーマ</Label>
-              <ComboBox Grid.Column="1" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
+              <ComboBox Grid.Column="1" SelectedValuePath="Key" ItemTemplate="{StaticResource ThemeSelectItem}" ItemsSource="{Binding BaseThemeItems}" SelectedValue="{Binding SelectedBaseTheme}" />
 
               <Label Grid.Column="2" Margin="{StaticResource LeftMargin}">アクセント</Label>
               <ComboBox Grid.Column="3" DisplayMemberPath="DisplayText" SelectedValuePath="Key" ItemsSource="{Binding AccentItems}" SelectedValue="{Binding SelectedAccent}" />
