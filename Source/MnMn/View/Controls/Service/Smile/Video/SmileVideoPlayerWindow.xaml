@@ -289,12 +289,12 @@
           <Setter Property="Topmost" Value="True" />
           <Setter Property="BorderThickness" Value="0" />
           <Setter Property="ResizeMode" Value="NoResize" />
-          <Setter Property="ShowCloseButton" Value="False" />
-          <Setter Property="ShowMaxRestoreButton" Value="False" />
-          <Setter Property="ShowMinButton" Value="False" />
           <Setter Property="IgnoreTaskbarOnMaximize" Value="True" />
         </DataTrigger>
       </Style.Triggers>
+      <Setter Property="ShowCloseButton" Value="{Binding IsNormalWindow}" />
+      <Setter Property="ShowMaxRestoreButton" Value="{Binding IsNormalWindow}" />
+      <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
       <!--<Setter Property="BorderBrush">
         <Setter.Value>
           <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />

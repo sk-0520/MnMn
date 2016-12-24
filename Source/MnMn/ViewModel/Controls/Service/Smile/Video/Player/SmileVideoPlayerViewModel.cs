@@ -1482,6 +1482,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
                 //View.WindowState = WindowState.Normal;
                 State = WindowState.Normal;
+
+                View.UseNoneWindowStyle = false;
+                View.ShowTitleBar = true; // <-- this must be set to true
+                View.IgnoreTaskbarOnMaximize = false;
             } else {
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
@@ -1497,7 +1501,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //View.ResizeMode = ResizeMode.NoResize;
                 //View.IgnoreTaskbarOnMaximize = true;
                 //View.WindowState = WindowState.Maximized;
+                //State = WindowState.Maximized;
+
+                View.IgnoreTaskbarOnMaximize = true;
                 State = WindowState.Maximized;
+                View.UseNoneWindowStyle = true;
 
                 // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
                 var scope = FocusManager.GetFocusScope(View);
