@@ -833,13 +833,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public double CommentFps
+        public int CommentFps
         {
             get { return CommentStyleSetting.Fps; }
             set
             {
                 if(SetPropertyValue(CommentStyleSetting, (int)value, nameof(CommentStyleSetting.Fps))) {
-                    ChangedCommentFPfs();
+                    ChangedCommentFps();
                 }
             }
         }

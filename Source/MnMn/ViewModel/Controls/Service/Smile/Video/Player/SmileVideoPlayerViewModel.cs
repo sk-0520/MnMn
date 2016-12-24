@@ -1266,8 +1266,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void ChangedCommentFPfs()
+        void ChangedCommentFps()
         {
+            //NOTE: 実行中アニメーションは特に意味なさげ
+            //foreach(var comment in ShowingCommentList.ToArray()) {
+            //    Timeline.SetDesiredFrameRate(comment.Animation, CommentFps);
+            //}
         }
 
         void ChangedCommentShowTime(TimeSpan prevTime)

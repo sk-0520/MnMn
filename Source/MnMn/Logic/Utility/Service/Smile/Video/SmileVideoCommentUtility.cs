@@ -189,6 +189,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             animation.To = -element.ActualWidth;
             animation.Duration = new Duration(showTime);
 
+            Timeline.SetDesiredFrameRate(animation, commentViewModel.Fps);
+
             return animation;
         }
 
@@ -202,29 +204,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             animation.From = animation.To = 0;
             animation.Duration = new Duration(showTime);
 
+            Timeline.SetDesiredFrameRate(animation, Constants.FrameworkFps.Head);
+
             return animation;
         }
 
         static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
         {
-            AnimationTimeline animation;
-
             switch(commentViewModel.Vertical) {
                 case SmileVideoCommentVertical.Normal:
-                    animation = CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
-                    break;
+                    return CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
 
                 case SmileVideoCommentVertical.Top:
                 case SmileVideoCommentVertical.Bottom:
-                    animation = CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
-                    break;
+                    return CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
 
                 default:
                     throw new NotImplementedException();
             }
-
-            Timeline.SetDesiredFrameRate(animation, commentViewModel.Fps);
-            return animation;
         }
 
         public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)

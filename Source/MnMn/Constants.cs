@@ -324,7 +324,9 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string DefineSmileDirectoryPath { get; } = Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
 
-        public static IReadOnlyRange<int> FrameworkFps => RangeModel.Create(15, 60);
+        public static IReadOnlyRange<int> FrameworkFps { get; } = RangeModel.Create(1, 60);
+        public static double FrameworkFpsMinimum { get; } = FrameworkFps.Head;
+        public static double FrameworkFpsMaximum { get; } = FrameworkFps.Tail;
 
         public static string SmileUriListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
         public static string SmileUriParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
