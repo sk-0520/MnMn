@@ -1645,14 +1645,21 @@
               />
 
               <Label Grid.Row="3" Grid.Column="0">透明度</Label>
-              <Slider Grid.Row="3" Grid.Column="1" Minimum="0.1" Maximum="1" LargeChange="0.1"  Value="{Binding CommentFontAlpha}"/>
+              <Slider VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Minimum="0.1" Maximum="1" LargeChange="0.1"  Value="{Binding CommentFontAlpha}"/>
 
               <Label Grid.Row="4" Grid.Column="0">表示時間</Label>
               <!-- TODO: UI側で制限 -->
-              <Slider Grid.Row="4" Grid.Column="1" Minimum="1000" Maximum="10000" LargeChange="1000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
+              <Slider VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Minimum="1000" Maximum="10000" LargeChange="1000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
 
-              <Label Grid.Row="5" Grid.Column="0">FPS</Label>
-              <Slider Grid.Row="5" Grid.Column="1" Minimum="{x:Static app:Constants.FrameworkFpsMinimum}" Maximum="{x:Static app:Constants.FrameworkFpsMaximum}" Value="{Binding CommentFps}" />
+              <Label Grid.Row="5" Grid.Column="0">フレームレート</Label>
+              <Slider VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" LargeChange="1" Minimum="{x:Static app:Constants.FrameworkFpsMinimum}" Maximum="{x:Static app:Constants.FrameworkFpsMaximum}" Value="{Binding CommentFps}">
+                <Slider.ToolTip>
+                  <TextBlock>
+                    <Run>FPS: </Run>
+                    <Run Text="{Binding CommentFps, Mode=OneWay}" />
+                  </TextBlock>
+                </Slider.ToolTip>
+              </Slider>
 
               <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding CommentConvertPairYenSlash}">
                 <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
