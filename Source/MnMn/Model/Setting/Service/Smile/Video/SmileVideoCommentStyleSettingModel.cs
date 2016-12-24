@@ -49,6 +49,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember, IsDeepClone]
         public double FontAlpha { get; set; } = Constants.SettingServiceSmileVideoCommentFontAlpha;
         /// <summary>
+        /// コメントFPS。
+        /// </summary>
+        [DataMember, IsDeepClone]
+        public int Fps { get; set; } = Constants.SettingServiceSmileVideoPlayerCommentFps;
+        /// <summary>
         /// 太字。
         /// </summary>
         [DataMember, IsDeepClone]

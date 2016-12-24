@@ -413,6 +413,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static bool SettingServiceSmileVideoGlobalCommentFileringIsEnabled => appConfig.Get("setting-service-smile-smilevideo-player-global-comment-filtering-is-enabled", bool.Parse);
 
+        public static int SettingServiceSmileVideoPlayerCommentFps => appConfig.Get("setting-service-smile-smilevideo-player-comment-fps", int.Parse);
+
         /// <summary>
         /// 動画再生方法。
         /// </summary>

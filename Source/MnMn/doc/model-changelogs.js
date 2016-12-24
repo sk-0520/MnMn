@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#287: コメントの描画フレームレートを設定可能にする'
 					},
 					{
 						'revision': '',

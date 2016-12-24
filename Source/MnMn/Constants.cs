@@ -23,6 +23,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -321,6 +323,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// etc/define/smile
         /// </summary>
         public static string DefineSmileDirectoryPath { get; } = Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
+
+        public static IReadOnlyRange<int> FrameworkFps { get; } = RangeModel.Create(1, 60);
+        public static double FrameworkFpsMinimum { get; } = FrameworkFps.Head;
+        public static double FrameworkFpsMaximum { get; } = FrameworkFps.Tail;
 
         public static string SmileUriListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
         public static string SmileUriParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");
