@@ -207,17 +207,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         static AnimationTimeline CreateCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
         {
+            AnimationTimeline animation;
+
             switch(commentViewModel.Vertical) {
                 case SmileVideoCommentVertical.Normal:
-                    return CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+                    animation = CreateMarqueeCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+                    break;
 
                 case SmileVideoCommentVertical.Top:
                 case SmileVideoCommentVertical.Bottom:
-                    return CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+                    animation = CreateTopBottomCommentAnimeation(commentViewModel, element, commentArea, prevTime, showTime);
+                    break;
 
                 default:
                     throw new NotImplementedException();
             }
+
+            Timeline.SetDesiredFrameRate(animation, commentViewModel.Fps);
+            return animation;
         }
 
         public static void FireShowSingleComment(SmileVideoCommentViewModel commentViewModel, Canvas commentParentElement, Size commentArea, TimeSpan prevTime, IList<SmileVideoCommentDataModel> showingCommentList, SmileVideoCommentStyleSettingModel setting)

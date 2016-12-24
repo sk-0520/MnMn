@@ -1266,6 +1266,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ChangedCommentFPfs()
+        {
+        }
+
         void ChangedCommentShowTime(TimeSpan prevTime)
         {
 #if false // ややっこしいんじゃふざけんな
@@ -1297,6 +1301,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentStyleSetting.FontBold = Constants.SettingServiceSmileVideoCommentFontBold;
             CommentStyleSetting.FontItalic = Constants.SettingServiceSmileVideoCommentFontItalic;
             CommentStyleSetting.FontAlpha = Constants.SettingServiceSmileVideoCommentFontAlpha;
+            CommentStyleSetting.Fps = Constants.SettingServiceSmileVideoPlayerCommentFps;
             CommentStyleSetting.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
             CommentStyleSetting.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
             CommentStyleSetting.TextShowKind = Constants.SettingServiceSmileVideoCommentTextShowKind;
@@ -1311,6 +1316,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentFontBold),
                 nameof(CommentFontItalic),
                 nameof(CommentFontAlpha),
+                nameof(CommentFps),
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
                 nameof(PlayerTextShowKind),

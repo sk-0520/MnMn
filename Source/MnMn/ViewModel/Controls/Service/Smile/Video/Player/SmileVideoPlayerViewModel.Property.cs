@@ -833,6 +833,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public double CommentFps
+        {
+            get { return CommentStyleSetting.Fps; }
+            set
+            {
+                if(SetPropertyValue(CommentStyleSetting, (int)value, nameof(CommentStyleSetting.Fps))) {
+                    ChangedCommentFPfs();
+                }
+            }
+        }
+
         /// <summary>
         /// コメント表示時間。
         /// </summary>
