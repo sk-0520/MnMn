@@ -23,6 +23,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -259,6 +261,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string SettingFileName { get; } = "setting.json";
         /// <summary>
+        /// 設定ファイル名。
+        /// </summary>
+        public static string InformationFileName { get; } = "information.txt";
+        /// <summary>
         /// アーカイブディレクトリ名。
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
@@ -271,6 +277,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// バックアップファイルローテートパターン。
         /// </summary>
         public static string BackupSearchPattern { get; } = "*.json.gz";
+
+        public static string PublicExportFileNamePattern { get; } = "*.zip";
 
         /// <summary>
         /// クラッシュレポート保管ディレクトリ名。
@@ -321,6 +329,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// etc/define/smile
         /// </summary>
         public static string DefineSmileDirectoryPath { get; } = Path.Combine(DefineServiceDirectoryPath, ServiceSmileName);
+
+        public static IReadOnlyRange<int> FrameworkFps { get; } = RangeModel.Create(1, 60);
+        public static double FrameworkFpsMinimum { get; } = FrameworkFps.Head;
+        public static double FrameworkFpsMaximum { get; } = FrameworkFps.Tail;
 
         public static string SmileUriListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-list.xml");
         public static string SmileUriParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "uri-params.xml");

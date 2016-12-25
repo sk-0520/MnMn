@@ -41,23 +41,23 @@ namespace MnMnTest.Logic
             }
         }
 
-        [TestMethod]
-        public void SequenceNextTest()
-        {
-            var list = new PlayListManager<Item>() {
-                IsRandom = false,
-            };
+        //[TestMethod]
+        //public void SequenceNextTest()
+        //{
+        //    var list = new PlayListManager<Item>() {
+        //        IsRandom = false,
+        //    };
 
-            list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
-            for(var i = 0; i < 10; i++) {
-                var item = list.ChangeNextItem();
-                Assert.IsTrue(i + 1 == item.Number);
-            }
-            for(var i = 0; i < 10; i++) {
-                var item = list.ChangeNextItem();
-                Assert.IsTrue(i + 1 == item.Number);
-            }
-        }
+        //    list.AddRange(Enumerable.Range(1, 10).Select(i => new Item(i)));
+        //    for(var i = 0; i < 10; i++) {
+        //        var item = list.ChangeNextItem();
+        //        Assert.IsTrue(i + 1 == item.Number);
+        //    }
+        //    for(var i = 0; i < 10; i++) {
+        //        var item = list.ChangeNextItem();
+        //        Assert.IsTrue(i + 1 == item.Number);
+        //    }
+        //}
         [TestMethod]
         public void SequencePrevTest()
         {

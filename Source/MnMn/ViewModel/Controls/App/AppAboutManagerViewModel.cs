@@ -18,19 +18,25 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
@@ -163,6 +169,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        public ICommand ExportPublicInformationFileCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        ExportPublicInformationFileFromDialog();
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -173,6 +191,63 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 Process.Start(command);
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
+            }
+        }
+
+        void ExportPublicInformationFileFromDialog()
+        {
+            var filter = new DialogFilterList();
+            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Setting_PublicExportFileName, Constants.PublicExportFileNamePattern));
+
+            var dialog = new SaveFileDialog() {
+                Filter = filter.FilterText,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                FileName = $"{Constants.ApplicationName}_public-export_{Constants.GetNowTimestampFileName()}",
+            };
+            if(dialog.ShowDialog().GetValueOrDefault()) {
+                try {
+                    var filePath = dialog.FileName;
+                    ExportPublicInformationFile(filePath);
+                } catch(Exception ex) {
+                    Mediation.Logger.Error(ex);
+                }
+            }
+        }
+
+        AppSettingModel StripCredentials(Stream settingStream)
+        {
+            var stripSetting = SerializeUtility.LoadSetting<AppSettingModel>(settingStream, SerializeFileType.Json, Mediation.Logger);
+
+            stripSetting.ServiceSmileSetting.Account = new Model.Setting.Service.Smile.SmileUserAccountModel();
+
+            return stripSetting;
+        }
+
+        void ExportPublicInformationFile(string filePath)
+        {
+            var baseSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            using(var baseSettingStream = GlobalManager.MemoryStream.GetStreamWidthAutoTag()) {
+                SerializeUtility.SaveSetting(baseSettingStream, baseSetting, SerializeFileType.Json, Mediation.Logger);
+                baseSettingStream.Position = 0;
+
+                var stripSetting = StripCredentials(baseSettingStream);
+
+                FileUtility.MakeFileParentDirectory(filePath);
+                using(var exportStream = new ZipArchive(new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
+
+                    var settingEntry = exportStream.CreateEntry(Constants.SettingFileName);
+                    using(var zipStream = settingEntry.Open()) {
+                        SerializeUtility.SaveSetting(zipStream, stripSetting, SerializeFileType.Json, Mediation.Logger);
+                    }
+
+                    var informationEntry = exportStream.CreateEntry(Constants.InformationFileName);
+                    using(var zipStream = informationEntry.Open()) {
+                        using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
+                            var info = new AppInformationCollection();
+                            streamWriter.Write(info.ToString());
+                        }
+                    }
+                }
             }
         }
 

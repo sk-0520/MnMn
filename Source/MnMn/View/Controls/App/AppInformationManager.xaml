@@ -73,6 +73,14 @@
               <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyShortInformationCommand}" Margin="{StaticResource RightMargin}">短い情報</Button>
               <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyLongInformationCommand}">長い情報</Button>
             </StackPanel>
+
+            <TextBlock Margin="{StaticResource TopMargin}" TextWrapping="Wrap">
+              <Run>報告用に詳細なデータをファイル出力するには下部の</Run>
+              <Run FontWeight="Bold" Text="{Binding Text, ElementName=commandExportPublic}" />
+              <Run>を使用してください。</Run>
+              <LineBreak />
+              <Run>資格情報を省いた設定ファイルと端末情報の格納されたファイルが出力されます。</Run>
+            </TextBlock>
           </StackPanel>
 
         </StackPanel>
@@ -133,17 +141,53 @@
           </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-          <UniformGrid Rows="1" Columns="6">
-            <UniformGrid.Resources>
-              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                <Setter Property="Margin" Value="4,0" />
-              </Style>
-            </UniformGrid.Resources>
-            <Button Command="{Binding OpenAppDirectoryCommand}">本体</Button>
-            <Button Command="{Binding OpenSettingDirectoryCommand}">データ</Button>
-            <Button Command="{Binding OpenCacheDirectoryCommand}">キャッシュ</Button>
-          </UniformGrid>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+          <StackPanel.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+              <Setter Property="Margin" Value="{StaticResource LeftMargin}" />
+              <Setter Property="Padding" Value="{StaticResource BasePadding}" />
+            </Style>
+          </StackPanel.Resources>
+          <Button Command="{Binding OpenAppDirectoryCommand}">
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock>本体</TextBlock>
+            </StackPanel>
+          </Button>
+          <Button Command="{Binding OpenSettingDirectoryCommand}">
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock>データ</TextBlock>
+            </StackPanel>
+          </Button>
+          <Button Command="{Binding OpenCacheDirectoryCommand}">
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Folder}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock>キャッシュ</TextBlock>
+            </StackPanel>
+          </Button>
+          <Button Command="{Binding ExportPublicInformationFileCommand}">
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Export}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock x:Name="commandExportPublic">報告用データ出力</TextBlock>
+            </StackPanel>
+          </Button>
         </StackPanel>
       </Grid>
     </TabItem>

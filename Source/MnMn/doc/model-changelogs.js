@@ -84,6 +84,101 @@
 	},
 	*/
 	{
+		'date': '2016/12/25',
+		'version': '0.37.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': 'めりくり🎅'
+					},
+					{
+						'revision': '',
+						'class': 'warning',
+						'subject': 'HTML レンダリングエンジンが Trident の際に IE 描画バージョンを切り替える #159 のサポートを打ち切ったため 0.19.0 未満からアップデートする場合にレジストリにゴミが残ります',
+						'comments': [
+							'問題になることはまずありません',
+							'一応書いとくと HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION, HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_DOCUMENT_COMPATIBLE_MODE に MnMn.exe が残ります',
+							'App.config の `web_navigator-engine` が `Default` の場合は引き続き対応が実施されますがそもそもプログラム内部での連携すらできないので問題なし'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': 'a566d4c60e62e8831b89105269fe8df96b10701e',
+						'subject': '#287: コメントの描画フレームレートを設定可能にする'
+					},
+					{
+						'revision': 'f173429f107d8167e56bf24edd8403677933dfa7',
+						'subject': '#314: (特定少数への)公開可能な設定ファイル出力機能の追加',
+						'comments': [
+							'MnMn -> 情報, 下部にある「報告用データ出力」を押下',
+							'不具合とか報告していただいた際に、開発側で再現できなかったり再現までの道のりが複雑な場合はここで出力されたファイルをくれるとかなり助かります',
+							'出力される内容は資格情報を省いた設定ファイルと「報告用情報のコピー」の長い情報になります',
+							'公開可能って言ってもそんなに公開すべきものでもないしフォーラムやなんやで情報頂いた際にも出力ファイルは別途個別にメールで流してもらえるとありがたいです',
+							'堂々と公開してもらってもいいですけど。。。'
+						]
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '3f560594729ae84e9bd062e4e3f9562b48e54bf2',
+						'subject': '307: ヘルプ: 本体設定-> キャッシュの未指定ディレクトリの環境変数記載ミス'
+					},
+					{
+						'revision': '56b66dedc567603d19e2a27e20a29c4dfcc82cfd',
+						'subject': '#308: フルスクリーン時にタイトルバーが残ったままになっている'
+					},
+					{
+						'revision': '2ffe8eba28f50c7e31cd8eb72e1f7850a796e9aa',
+						'subject': '#306: 自動テストが#284の影響で失敗してるよ！',
+						'comments': [
+							'該当テスト削った;-)',
+							'TDD 警察に捕まりそうだけど実装した後にテスト書いたから無罪放免だろ'
+						]
+					},
+					{
+						'revision': '8b1c32df2433eb3facdf1dbea13fdad03881189c',
+						'subject': '#311: 破棄ウィンドウに対する DataContext には null を設定する'
+					},
+					{
+						'revision': '40fc3767876afb7db97807a5cbc31f50979d2019',
+						'subject': '#312: クラッシュ時のレポート出力でUIと非UIスレッドの2ファイル出力される'
+					},
+					{
+						'revision': 'acb6cb2dc490f0b12e01914b57f7d04222a4a26f',
+						'subject': '#310: 各種UIのスライダー垂直方向を上部から中央に変更する'
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': 'e609dc7194571d12626baf82101c902e55421882',
+						'subject': '#309: コメント一覧のコメントフィルタリング対象に対するスタイルが曖昧'
+					},
+					{
+						'revision': 'b1efa53cc92a5a50deebe3bd941ffe0586982b4a',
+						'subject': '#159: 終了時にWebBrowser制御用レジストリの掃除を一人で続ける',
+						'comments': [
+							'0.19.0 から 18 世代サポートしたしもういいだろ'
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2016/12/24',
 		'version': '0.36.0',
 		'isRc': false,

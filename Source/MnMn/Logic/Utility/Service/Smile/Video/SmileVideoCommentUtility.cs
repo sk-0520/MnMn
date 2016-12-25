@@ -189,6 +189,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             animation.To = -element.ActualWidth;
             animation.Duration = new Duration(showTime);
 
+            Timeline.SetDesiredFrameRate(animation, commentViewModel.Fps);
+
             return animation;
         }
 
@@ -201,6 +203,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             // アニメーションさせる必要ないけど停止や移動なんかを考えるとIFとしてアニメーションの方が楽
             animation.From = animation.To = 0;
             animation.Duration = new Duration(showTime);
+
+            Timeline.SetDesiredFrameRate(animation, Constants.FrameworkFps.Head);
 
             return animation;
         }

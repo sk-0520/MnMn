@@ -158,9 +158,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 default:
                     break;
             }
-
-            // #159
-            UninitializeDefault();
         }
 
         /// <summary>

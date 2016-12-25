@@ -19,6 +19,7 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:cttn_sl_view_attached="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Attached;assembly=ContentTypeTextNet.SharedLibrary"
 
+  xmlns:app="clr-namespace:ContentTypeTextNet.MnMn.MnMn"
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
   xmlns:app_define_service_smile_video="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video"
   xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
@@ -289,12 +290,12 @@
           <Setter Property="Topmost" Value="True" />
           <Setter Property="BorderThickness" Value="0" />
           <Setter Property="ResizeMode" Value="NoResize" />
-          <Setter Property="ShowCloseButton" Value="False" />
-          <Setter Property="ShowMaxRestoreButton" Value="False" />
-          <Setter Property="ShowMinButton" Value="False" />
           <Setter Property="IgnoreTaskbarOnMaximize" Value="True" />
         </DataTrigger>
       </Style.Triggers>
+      <Setter Property="ShowCloseButton" Value="{Binding IsNormalWindow}" />
+      <Setter Property="ShowMaxRestoreButton" Value="{Binding IsNormalWindow}" />
+      <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
       <!--<Setter Property="BorderBrush">
         <Setter.Value>
           <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
@@ -1108,7 +1109,7 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
                   <TextBlock DockPanel.Dock="Right">高</TextBlock>
-                  <Slider Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
+                  <Slider VerticalAlignment="Center" Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
@@ -1196,6 +1197,7 @@
                   <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
                   <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
                   <Slider
+                    VerticalAlignment="Center"
                     Minimum="1"
                     Maximum="50"
                     LargeChange="5"
@@ -1298,7 +1300,8 @@
                             </DataTrigger.ExitActions>
                           </DataTrigger>
                           <DataTrigger Binding="{Binding Approval}" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
+                            <Setter Property="Background" Value="{DynamicResource SemiTransparentGreyBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SemiTransparentWhiteBrush}" />
                           </DataTrigger>
                         </Style.Triggers>
                       </Style>
@@ -1610,10 +1613,29 @@
             </Grid>
           </TabItem>
           <TabItem Header="設定">
-            <StackPanel>
-              <Button Command="{Binding ResetCommentSettingCommand}">コメント設定の初期化</Button>
-              <Separator />
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding ResetCommentSettingCommand}">コメント設定の初期化</Button>
+
+              <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+
+              <Label Grid.Row="2" Grid.Column="0">フォント</Label>
               <app_view_controls:FontSelectControl
+                Grid.Row="2" Grid.Column="1"
                 FamilyName="{Binding CommentFontFamily}"
                 IsEnabledBold="True"
                 IsEnabledItalic="True"
@@ -1623,26 +1645,34 @@
                 SizeMinimum="10"
                 SizeMaximum="50"
               />
-              <DockPanel>
-                <Label DockPanel.Dock="Left">透明度</Label>
-                <Slider Minimum="0.1" Maximum="1" LargeChange="0.1"  Value="{Binding CommentFontAlpha}"/>
-              </DockPanel>
-              <DockPanel>
-                <Label DockPanel.Dock="Left">表示時間</Label>
-                <!-- TODO: UI側で制限 -->
-                <Slider Minimum="1000" Maximum="10000" LargeChange="1000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
-              </DockPanel>
-              <CheckBox IsChecked="{Binding CommentConvertPairYenSlash}">
+
+              <Label Grid.Row="3" Grid.Column="0">透明度</Label>
+              <Slider VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Minimum="0.1" Maximum="1" LargeChange="0.1"  Value="{Binding CommentFontAlpha}"/>
+
+              <Label Grid.Row="4" Grid.Column="0">表示時間</Label>
+              <!-- TODO: UI側で制限 -->
+              <Slider VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Minimum="1000" Maximum="10000" LargeChange="1000" Value="{Binding CommentShowTime, Converter={StaticResource TimeSpanToMillisecondConverter}}" />
+
+              <Label Grid.Row="5" Grid.Column="0">フレームレート</Label>
+              <Slider VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" LargeChange="1" Minimum="{x:Static app:Constants.FrameworkFpsMinimum}" Maximum="{x:Static app:Constants.FrameworkFpsMaximum}" Value="{Binding CommentFps}">
+                <Slider.ToolTip>
+                  <TextBlock>
+                    <Run>FPS: </Run>
+                    <Run Text="{Binding CommentFps, Mode=OneWay}" />
+                  </TextBlock>
+                </Slider.ToolTip>
+              </Slider>
+
+              <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding CommentConvertPairYenSlash}">
                 <TextBlock TextWrapping="Wrap">コメント内の/と対になる円記号(&#xA5;)をバックスラッシュ(&#x29F5;)に変換</TextBlock>
               </CheckBox>
-              <DockPanel>
-                <Label Content="テキスト描画" DockPanel.Dock="Left" />
-                <StackPanel Orientation="Horizontal">
-                  <RadioButton VerticalAlignment="Center" Content="影付き" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
-                  <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
-                </StackPanel>
-              </DockPanel>
-            </StackPanel>
+
+              <Label Grid.Row="7" Grid.Column="0" Content="テキスト描画" DockPanel.Dock="Left" />
+              <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
+                <RadioButton VerticalAlignment="Center" Content="影付き" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
+                <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
+              </StackPanel>
+            </Grid>
           </TabItem>
         </TabControl>
       </Grid>

@@ -1266,6 +1266,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ChangedCommentFps()
+        {
+            //NOTE: 実行中アニメーションは特に意味なさげ
+            //foreach(var comment in ShowingCommentList.ToArray()) {
+            //    Timeline.SetDesiredFrameRate(comment.Animation, CommentFps);
+            //}
+        }
+
         void ChangedCommentShowTime(TimeSpan prevTime)
         {
 #if false // ややっこしいんじゃふざけんな
@@ -1297,6 +1305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentStyleSetting.FontBold = Constants.SettingServiceSmileVideoCommentFontBold;
             CommentStyleSetting.FontItalic = Constants.SettingServiceSmileVideoCommentFontItalic;
             CommentStyleSetting.FontAlpha = Constants.SettingServiceSmileVideoCommentFontAlpha;
+            CommentStyleSetting.Fps = Constants.SettingServiceSmileVideoPlayerCommentFps;
             CommentStyleSetting.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
             CommentStyleSetting.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
             CommentStyleSetting.TextShowKind = Constants.SettingServiceSmileVideoCommentTextShowKind;
@@ -1311,6 +1320,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentFontBold),
                 nameof(CommentFontItalic),
                 nameof(CommentFontAlpha),
+                nameof(CommentFps),
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
                 nameof(PlayerTextShowKind),
@@ -1482,6 +1492,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
                 //View.WindowState = WindowState.Normal;
                 State = WindowState.Normal;
+
+                View.UseNoneWindowStyle = false;
+                View.ShowTitleBar = true; // <-- this must be set to true
+                View.IgnoreTaskbarOnMaximize = false;
             } else {
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
@@ -1497,7 +1511,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //View.ResizeMode = ResizeMode.NoResize;
                 //View.IgnoreTaskbarOnMaximize = true;
                 //View.WindowState = WindowState.Maximized;
+                //State = WindowState.Maximized;
+
+                View.IgnoreTaskbarOnMaximize = true;
                 State = WindowState.Maximized;
+                View.UseNoneWindowStyle = true;
 
                 // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
                 var scope = FocusManager.GetFocusScope(View);
@@ -1632,8 +1650,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(Information != null) {
                 Information.IsPlaying = false;
                 Information.SaveSetting(false);
-                // 軽めにGC
-                Mediation.Order(new AppCleanMemoryOrderModel(false));
+                // LOHも含めてGC
+                Mediation.Order(new AppCleanMemoryOrderModel(true));
             }
 
             var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);

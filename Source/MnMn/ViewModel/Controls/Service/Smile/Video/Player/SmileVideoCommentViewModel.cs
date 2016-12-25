@@ -291,6 +291,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         public SmileVideoCommentVertical Vertical { get; }
 
+        public int Fps { get { return Setting.Fps; } }
+
         #endregion
 
         #region function
