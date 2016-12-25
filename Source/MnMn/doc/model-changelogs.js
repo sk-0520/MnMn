@@ -93,7 +93,13 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'warning',
+						'subject': 'HTML レンダリングエンジンが Trident の際に IE 描画バージョンを切り替える #159 のサポートを打ち切ったため 0.19.0 未満からアップデートする場合にレジストリにゴミが残ります',
+						'comments': [
+							'問題になることはまずありません',
+							'一応書いとくと HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION, HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_DOCUMENT_COMPATIBLE_MODE に MnMn.exe が残ります',
+							'App.config の `web_navigator-engine` が `Default` の場合は引き続き対応が実施されますがそもそもプログラム内部での連携すらできないので問題なし'
+						]
 					},
 					{
 						'revision': '',
@@ -175,7 +181,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#159: 終了時にWebBrowser制御用レジストリの掃除を一人で続ける',
+						'comments': [
+							'0.19.0 から 18 世代サポートしたしもういいだろ'
+						]
 					},
 					{
 						'revision': '',
