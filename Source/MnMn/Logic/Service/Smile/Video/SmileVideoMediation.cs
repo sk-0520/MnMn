@@ -374,6 +374,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             player.IsWorkingPlayer.Value = false;
             Players.Remove(window);
 
+            window.DataContext = null;
+
             // 判断基準なし
             var nextPlayer = Players
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
@@ -382,6 +384,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             if(nextPlayer != null) {
                 nextPlayer.IsWorkingPlayer.Value = true;
             }
+
+            player.Dispose();
         }
 
     }

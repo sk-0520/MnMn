@@ -143,6 +143,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#311: 破棄ウィンドウに対する DataContext には null を設定する'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
