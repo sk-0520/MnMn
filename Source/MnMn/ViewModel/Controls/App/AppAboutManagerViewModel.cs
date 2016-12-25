@@ -169,13 +169,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        public ICommand ExportPublicSettingFileCommand
+        public ICommand ExportPublicInformationFileCommand
         {
             get
             {
                 return CreateCommand(
                     o => {
-                        ExportPublicSettingFileFromDialog();
+                        ExportPublicInformationFileFromDialog();
                     }
                 );
             }
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        void ExportPublicSettingFileFromDialog()
+        void ExportPublicInformationFileFromDialog()
         {
             var filter = new DialogFilterList();
             filter.Add(new DialogFilterItem(Properties.Resources.String_App_Setting_PublicExportFileName, Constants.PublicExportFileNamePattern));
@@ -202,12 +202,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             var dialog = new SaveFileDialog() {
                 Filter = filter.FilterText,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                FileName = $"{Constants.ApplicationVersion}-{Constants.GetNowTimestampFileName()}",
+                FileName = $"{Constants.ApplicationName}_public-export_{Constants.GetNowTimestampFileName()}",
             };
             if(dialog.ShowDialog().GetValueOrDefault()) {
                 try {
                     var filePath = dialog.FileName;
-                    ExportPublicSettingFile(filePath);
+                    ExportPublicInformationFile(filePath);
                 } catch(Exception ex) {
                     Mediation.Logger.Error(ex);
                 }
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return stripSetting;
         }
 
-        void ExportPublicSettingFile(string filePath)
+        void ExportPublicInformationFile(string filePath)
         {
             var baseSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
             using(var baseSettingStream = GlobalManager.MemoryStream.GetStreamWidthAutoTag()) {

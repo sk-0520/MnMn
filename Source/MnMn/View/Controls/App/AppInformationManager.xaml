@@ -170,14 +170,14 @@
               <TextBlock>キャッシュ</TextBlock>
             </StackPanel>
           </Button>
-          <Button Command="{Binding ExportPublicSettingFileCommand}">
+          <Button Command="{Binding ExportPublicInformationFileCommand}">
             <StackPanel Style="{StaticResource ItemPanel}">
               <Viewbox Style="{StaticResource SmallItemBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Export}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
-              <TextBlock>資格情報破棄データ出力</TextBlock>
+              <TextBlock>報告用データ出力</TextBlock>
             </StackPanel>
           </Button>
         </StackPanel>
