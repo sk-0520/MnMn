@@ -428,4 +428,7 @@
   <data name="String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow" xml:space="preserve">
     <value>新しいプレイヤーで再生</value>
   </data>
+  <data name="String_App_Setting_PublicExportFileName" xml:space="preserve">
+    <value>報告用設定・情報データファイル</value>
+  </data>
 </root>

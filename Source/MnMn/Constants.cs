@@ -261,6 +261,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string SettingFileName { get; } = "setting.json";
         /// <summary>
+        /// 設定ファイル名。
+        /// </summary>
+        public static string InformationFileName { get; } = "information.txt";
+        /// <summary>
         /// アーカイブディレクトリ名。
         /// </summary>
         public static string ArchiveDirectoryName { get; } = "archive";
@@ -273,6 +277,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// バックアップファイルローテートパターン。
         /// </summary>
         public static string BackupSearchPattern { get; } = "*.json.gz";
+
+        public static string PublicExportFileNamePattern { get; } = "*.zip";
 
         /// <summary>
         /// クラッシュレポート保管ディレクトリ名。
