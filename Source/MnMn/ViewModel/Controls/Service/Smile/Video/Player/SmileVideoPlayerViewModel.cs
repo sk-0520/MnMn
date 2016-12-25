@@ -1650,8 +1650,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(Information != null) {
                 Information.IsPlaying = false;
                 Information.SaveSetting(false);
-                // 軽めにGC
-                Mediation.Order(new AppCleanMemoryOrderModel(false));
+                // LOHも含めてGC
+                Mediation.Order(new AppCleanMemoryOrderModel(true));
             }
 
             var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);

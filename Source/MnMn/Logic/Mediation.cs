@@ -266,21 +266,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             if(order.IsTargetLargeObjectHeap) {
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-            } else {
-                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Default;
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
-            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Default;
-
             var gcUsingMemory = GC.GetTotalMemory(true);
             var gcTime = DateTime.Now;
 
+            // なんでこんなことしてるんだ
             var detail = new[] {
                 prevTime.ToString() + " " + prevUsingMemory.ToString(),
-                "GC",
+                "GC (LOH: " + order.IsTargetLargeObjectHeap.ToString() + ")",
                 gcTime.ToString() + " " + gcUsingMemory.ToString(),
             };
             var gcSize = RawValueUtility.ConvertHumanLikeByte(prevUsingMemory - gcUsingMemory);
