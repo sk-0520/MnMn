@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         void ExportPublicSettingFileFromDialog()
         {
             var filter = new DialogFilterList();
-            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Setting_PublicExportFileName, Constants.BackupSearchPattern));
+            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Setting_PublicExportFileName, Constants.PublicExportFileNamePattern));
 
             var dialog = new SaveFileDialog() {
                 Filter = filter.FilterText,
@@ -233,8 +233,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 var stripSetting = StripCredentials(baseSettingStream);
 
                 FileUtility.MakeFileParentDirectory(filePath);
-                using(var exportStream = new GZipStream(new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read), CompressionMode.Compress)) {
-                    SerializeUtility.SaveSetting(exportStream, stripSetting, SerializeFileType.Json, Mediation.Logger);
+                using(var exportStream = new ZipArchive(new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), ZipArchiveMode.Create)) {
+
+                    var settingEntry = exportStream.CreateEntry(Constants.SettingFileName);
+                    using(var zipStream = settingEntry.Open()) {
+                        SerializeUtility.SaveSetting(zipStream, stripSetting, SerializeFileType.Json, Mediation.Logger);
+                    }
+
+                    var informationEntry = exportStream.CreateEntry(Constants.InformationFileName);
+                    using(var zipStream = informationEntry.Open()) {
+                        using(var streamWriter = new StreamWriter(zipStream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
+                            var info = new AppInformationCollection();
+                            streamWriter.Write(info.ToString());
+                        }
+                    }
                 }
             }
         }

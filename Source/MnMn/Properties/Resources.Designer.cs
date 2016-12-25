@@ -801,7 +801,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   公開可能設定ファイル に類似しているローカライズされた文字列を検索します。
+        ///   報告用設定・情報データファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Setting_PublicExportFileName {
             get {

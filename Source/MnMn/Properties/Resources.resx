@@ -429,6 +429,6 @@
     <value>新しいプレイヤーで再生</value>
   </data>
   <data name="String_App_Setting_PublicExportFileName" xml:space="preserve">
-    <value>公開可能設定ファイル</value>
+    <value>報告用設定・情報データファイル</value>
   </data>
 </root>
