@@ -1109,7 +1109,7 @@
                   <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
                   <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
                   <TextBlock DockPanel.Dock="Right">高</TextBlock>
-                  <Slider Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
+                  <Slider VerticalAlignment="Center" Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </DockPanel>
                 <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
@@ -1197,6 +1197,7 @@
                   <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
                   <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
                   <Slider
+                    VerticalAlignment="Center"
                     Minimum="1"
                     Maximum="50"
                     LargeChange="5"
