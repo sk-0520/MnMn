@@ -18,19 +18,25 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Data;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 {
@@ -169,7 +175,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             {
                 return CreateCommand(
                     o => {
-
+                        ExportPublicSettingFileFromDialog();
                     }
                 );
             }
@@ -185,6 +191,48 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 Process.Start(command);
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
+            }
+        }
+
+        void ExportPublicSettingFileFromDialog()
+        {
+            var filter = new DialogFilterList();
+            filter.Add(new DialogFilterItem(Properties.Resources.String_App_Setting_PublicExportFileName, Constants.BackupSearchPattern));
+
+            var dialog = new SaveFileDialog();
+            dialog.Filter = filter.FilterText;
+            if(dialog.ShowDialog().GetValueOrDefault()) {
+                try {
+                    var filePath = dialog.FileName;
+                    ExportPublicSettingFile(filePath);
+                } catch(Exception ex) {
+                    Mediation.Logger.Error(ex);
+                }
+            }
+        }
+
+        AppSettingModel StripCredentials(Stream settingStream)
+        {
+            var stripSetting = SerializeUtility.LoadSetting<AppSettingModel>(settingStream, SerializeFileType.Json, Mediation.Logger);
+
+            stripSetting.ServiceSmileSetting.Account = new Model.Setting.Service.Smile.SmileUserAccountModel();
+
+            return stripSetting;
+        }
+
+        void ExportPublicSettingFile(string filePath)
+        {
+            var baseSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(RequestKind.Setting, ServiceType.Application));
+            using(var baseSettingStream = GlobalManager.MemoryStream.GetStreamWidthAutoTag()) {
+                SerializeUtility.SaveSetting(baseSettingStream, baseSetting, SerializeFileType.Json, Mediation.Logger);
+                baseSettingStream.Position = 0;
+
+                var stripSetting = StripCredentials(baseSettingStream);
+
+                FileUtility.MakeFileParentDirectory(filePath);
+                using(var exportStream = new GZipStream(new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read), CompressionMode.Compress)) {
+                    SerializeUtility.SaveSetting(exportStream, stripSetting, SerializeFileType.Json, Mediation.Logger);
+                }
             }
         }
 

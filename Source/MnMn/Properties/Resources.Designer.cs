@@ -801,6 +801,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   公開可能設定ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Setting_PublicExportFileName {
+            get {
+                return ResourceManager.GetString("String_App_Setting_PublicExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新バージョン(${NEW-VERSION})がリリースされています。
         ///現バージョン(${NOW-VERSION})から更新を行いますか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
