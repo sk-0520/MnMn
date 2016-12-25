@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            //e.Handled = true;
+            AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
             CatchUnhandleException(e.Exception, true);
         }
 
