@@ -1300,7 +1300,8 @@
                             </DataTrigger.ExitActions>
                           </DataTrigger>
                           <DataTrigger Binding="{Binding Approval}" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
+                            <Setter Property="Background" Value="{DynamicResource SemiTransparentGreyBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SemiTransparentWhiteBrush}" />
                           </DataTrigger>
                         </Style.Triggers>
                       </Style>
