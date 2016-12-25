@@ -163,6 +163,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        public ICommand ExportPublicSettingFileCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
