@@ -199,8 +199,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             var filter = new DialogFilterList();
             filter.Add(new DialogFilterItem(Properties.Resources.String_App_Setting_PublicExportFileName, Constants.BackupSearchPattern));
 
-            var dialog = new SaveFileDialog();
-            dialog.Filter = filter.FilterText;
+            var dialog = new SaveFileDialog() {
+                Filter = filter.FilterText,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                FileName = $"{Constants.ApplicationVersion}-{Constants.GetNowTimestampFileName()}",
+            };
             if(dialog.ShowDialog().GetValueOrDefault()) {
                 try {
                     var filePath = dialog.FileName;
