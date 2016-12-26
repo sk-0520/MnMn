@@ -17,8 +17,8 @@
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
-  d:DesignWidth="600"
-  d:DesignHeight="300"
+  d:DesignWidth="650"
+  d:DesignHeight="400"
 >
   <UserControl.Resources>
     <ResourceDictionary>
@@ -38,13 +38,14 @@
       </TabItem.Resources>
       <Grid>
         <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
           <RowDefinition />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="180" />
+          <ColumnDefinition Width="3.5*" />
           <ColumnDefinition Width="Auto" />
-          <ColumnDefinition />
+          <ColumnDefinition Width="6.5*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="{StaticResource ContentMargin}">
@@ -66,26 +67,37 @@
           </Grid>
 
           <TextBox IsReadOnly="True" Text="{x:Static app:Constants.ApplicationVersion}" />
-
-          <StackPanel Margin="{StaticResource ContentMargin}">
-            <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
-            <StackPanel Orientation="Horizontal">
-              <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyShortInformationCommand}" Margin="{StaticResource RightMargin}">短い情報</Button>
-              <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyLongInformationCommand}">長い情報</Button>
-            </StackPanel>
-
-            <TextBlock Margin="{StaticResource TopMargin}" TextWrapping="Wrap">
-              <Run>報告用に詳細なデータをファイル出力するには下部の</Run>
-              <Run FontWeight="Bold" Text="{Binding Text, ElementName=commandExportPublic}" />
-              <Run>を使用してください。</Run>
-              <LineBreak />
-              <Run>資格情報を省いた設定ファイルと端末情報の格納されたファイルが出力されます。</Run>
-            </TextBlock>
-          </StackPanel>
-
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="{StaticResource ContentMargin}">
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource ContentMargin}">
+          <TextBlock FontWeight="Bold" >報告用情報のコピー</TextBlock>
+          <StackPanel Orientation="Horizontal">
+            <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyShortInformationCommand}" Margin="{StaticResource RightMargin}">短い情報</Button>
+            <Button Style="{StaticResource Hyperlink}" Command="{Binding CopyLongInformationCommand}">長い情報</Button>
+          </StackPanel>
+
+          <TextBlock Margin="{StaticResource TopMargin}" TextWrapping="Wrap">
+            <Run>報告用に詳細なデータをファイル出力するには下部の</Run>
+            <Run FontWeight="Bold" Text="{Binding Text, ElementName=commandExportPublic}" />
+            <Run>を使用してください。</Run>
+            <LineBreak />
+            <Run>資格情報を省いた設定ファイルと端末情報の格納されたファイルが出力されます。</Run>
+          </TextBlock>
+
+          <GroupBox>
+            <Grid>
+              <Grid.RowDefinitions>
+                
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+            </Grid>
+          </GroupBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="{StaticResource ContentMargin}">
           <StackPanel.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
               <Setter Property="Margin" Value="{StaticResource IndependentVericalMargin}" />
@@ -97,7 +109,7 @@
           <Button Command="{Binding OpenLinkCommand}" CommandParameter="{x:Static app:Constants.AppUriForum}">フォーラム</Button>
         </StackPanel>
 
-        <ListView Grid.Row="0" Grid.Column="2" Margin="{StaticResource ContentMargin}" ItemsSource="{Binding ComponentCollection}">
+        <ListView Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Margin="{StaticResource ContentMargin}" ItemsSource="{Binding ComponentCollection}">
           <ListView.View>
             <GridView>
               <GridViewColumn Header="コンポーネント">
@@ -141,7 +153,7 @@
           </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
           <StackPanel.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
               <Setter Property="Margin" Value="{StaticResource LeftMargin}" />
