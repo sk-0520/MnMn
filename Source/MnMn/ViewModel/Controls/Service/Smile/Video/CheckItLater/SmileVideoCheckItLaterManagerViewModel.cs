@@ -20,7 +20,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 
@@ -113,9 +119,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ch
             CallOnPropertyChangeDisplayItem();
         }
 
-        public override Task InitializeAsync()
+        public override async Task InitializeAsync()
         {
-            return Task.CompletedTask;
+            // 動画IDの補正処理
+            foreach(var item in Setting.CheckItLater) {
+                if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId)) {
+                    var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
+                    try {
+                        var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                        item.VideoId = info.VideoId;
+                    } catch(SmileVideoGetthumbinfoFailureException ex) {
+                        // やっばいことになったら破棄
+                        Mediation.Logger.Warning(ex);
+                        item.IsChecked = false;
+                    }
+                }
+            }
+
+            //return Task.CompletedTask;
         }
 
         public override void InitializeView(MainWindow view)
