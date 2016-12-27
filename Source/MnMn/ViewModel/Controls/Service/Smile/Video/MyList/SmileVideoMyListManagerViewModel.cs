@@ -32,6 +32,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video.Parameter;
@@ -972,17 +973,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         protected override void HideViewCore()
         { }
 
-        public override Task InitializeAsync()
+        public override async Task InitializeAsync()
         {
+            // 動画IDの補正処理
+            foreach(var bookmark in BookmarkUserMyListPairs.ModelList) {
+                foreach(var item in bookmark.Videos.Select((v,i) => new { VideoId = v, Index = i})) {
+                    if(SmileIdUtility.NeedCorrectionVideoId(item.VideoId)) {
+                        var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
+                        try {
+                            var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                            bookmark.Videos[item.Index] = info.VideoId;
+                        } catch(SmileVideoGetthumbinfoFailureException ex) {
+                            // やっばいことになったら破棄
+                            Mediation.Logger.Warning(ex);
+                        }
+                    }
+                }
+            }
+
             Application.Current.Dispatcher.Invoke(() => {
                 AccountMyList.Clear();
             });
 
             if(Session.IsLoggedIn) {
-                return LoadAccountMyListAsync(false, null);
+                await LoadAccountMyListAsync(false, null);
             }
-
-            return Task.CompletedTask;
         }
 
         public override void InitializeView(MainWindow view)
