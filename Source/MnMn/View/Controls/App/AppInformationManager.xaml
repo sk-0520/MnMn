@@ -87,7 +87,7 @@
             <Run>資格情報を省いた設定ファイルと端末情報の格納されたファイルが出力されます。</Run>
           </TextBlock>
 
-          <GroupBox Header="情報">
+          <GroupBox Margin="{StaticResource TopMargin}" Header="情報">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
               <Grid>
                 <Grid.Resources>

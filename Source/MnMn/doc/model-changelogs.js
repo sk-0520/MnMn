@@ -110,7 +110,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#173: 本体情報にあれこれ情報表示する'
 					},
 					{
 						'revision': '',
