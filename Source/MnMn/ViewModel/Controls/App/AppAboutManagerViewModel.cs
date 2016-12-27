@@ -56,6 +56,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         ComponentItemCollectionModel _componentCollection;
         long _totalMemorySize;
 
+        long _workingSet;
+        long _virtualMemorySize;
+
         #endregion
 
         public AppAboutManagerViewModel(Mediation mediation)
@@ -80,6 +83,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         {
             get { return this._totalMemorySize; }
             private set { SetVariableValue(ref this._totalMemorySize, value); }
+        }
+
+        public long WorkingSet
+        {
+            get { return this._workingSet; }
+            private set { SetVariableValue(ref this._workingSet, value); }
+        }
+
+        public long VirtualMemorySize
+        {
+            get { return this._virtualMemorySize; }
+            private set { SetVariableValue(ref this._virtualMemorySize, value); }
         }
 
         #endregion
@@ -229,6 +244,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         void ReloadUsingMemory()
         {
             TotalMemorySize = GC.GetTotalMemory(false);
+            using(var process = Process.GetCurrentProcess()) {
+                WorkingSet = process.WorkingSet64;
+                VirtualMemorySize = process.VirtualMemorySize64;
+            }
         }
 
         void ExportPublicInformationFileFromDialog()

@@ -87,9 +87,15 @@
             <Run>資格情報を省いた設定ファイルと端末情報の格納されたファイルが出力されます。</Run>
           </TextBlock>
 
-          <GroupBox Header="info">
+          <GroupBox Header="情報">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
               <Grid>
+                <Grid.Resources>
+                  <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                  </Style>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                   <RowDefinition />
                   <RowDefinition />
@@ -101,7 +107,7 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0">memory</Label>
+                <Label Grid.Row="0" Grid.Column="0">マネージヒープ</Label>
                 <Grid Grid.Row="0" Grid.Column="1">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -109,7 +115,7 @@
                     <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding TotalMemorySize, Mode=OneWay, Converter={StaticResource HumanLikeByteConverter}}" />
+                  <TextBlock Grid.Column="0" Margin="{StaticResource RightMargin}" Text="{Binding TotalMemorySize, Mode=OneWay, Converter={StaticResource HumanLikeByteConverter}}" />
 
                   <Button Grid.Column="1" Command="{Binding ReloadUsingMemoryCommand}">
                     <Viewbox Style="{StaticResource SmallIconBox}">
@@ -120,8 +126,13 @@
                   </Button>
 
                   <Button Grid.Column="2" Command="{Binding GarbageCollectionMemoryCommand}">GC</Button>
-
                 </Grid>
+
+                <Label Grid.Row="1" Grid.Column="0">物理メモリ</Label>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding WorkingSet, Converter={StaticResource HumanLikeByteConverter}}" />
+
+                <Label Grid.Row="2" Grid.Column="0">仮想メモリ</Label>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding VirtualMemorySize, Converter={StaticResource HumanLikeByteConverter}}" />
 
               </Grid>
 
