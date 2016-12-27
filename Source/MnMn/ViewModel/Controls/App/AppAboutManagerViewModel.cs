@@ -29,9 +29,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -51,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region variable
 
         ComponentItemCollectionModel _componentCollection;
+        long _totalMemorySize;
 
         #endregion
 
@@ -70,6 +74,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                 return this._componentCollection;
             }
+        }
+
+        public long TotalMemorySize
+        {
+            get { return this._totalMemorySize; }
+            private set { SetVariableValue(ref this._totalMemorySize, value); }
         }
 
         #endregion
@@ -138,6 +148,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        public ICommand ReloadUsingMemoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => ReloadUsingMemory());
+            }
+        }
+
+        public ICommand GarbageCollectionMemoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        Mediation.Order(new AppCleanMemoryOrderModel(true));
+                        ReloadUsingMemoryCommand.TryExecute(null);
+                    }
+                );
+            }
+        }
+
+
         public ICommand OpenAppDirectoryCommand
         {
             get
@@ -192,6 +224,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
             }
+        }
+
+        void ReloadUsingMemory()
+        {
+            TotalMemorySize = GC.GetTotalMemory(false);
         }
 
         void ExportPublicInformationFileFromDialog()
@@ -261,7 +298,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         protected override void ShowViewCore()
-        { }
+        {
+            ReloadUsingMemory();
+        }
 
         protected override void HideViewCore()
         { }
