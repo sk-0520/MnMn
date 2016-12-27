@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
@@ -65,14 +66,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         string GetSafeVideoId(string videoId)
         {
-            if(!string.IsNullOrEmpty(videoId)) {
-                if(char.IsDigit(videoId[0])) {
-                    var task = LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan);
-                    var information = task.Result;
-                    Mediation.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
-                    information.DecrementReference();
-                    return information.VideoId;
-                }
+            if(SmileIdUtility.NeedCorrectionVideoId(videoId)) {
+                var task = LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan);
+                var information = task.Result;
+                Mediation.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
+                information.DecrementReference();
+                return information.VideoId;
             }
 
             return videoId;
