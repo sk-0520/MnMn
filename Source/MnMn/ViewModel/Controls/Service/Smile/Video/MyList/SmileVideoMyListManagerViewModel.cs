@@ -849,6 +849,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 nowMyList.MyListName = t.Result.Channel.Title;
 
                 var newModels = t.Result.Channel.Items;
+
                 var newViewModels = newModels
                     .Select(item => {
                         var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.None));

@@ -65,12 +65,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         string GetSafeVideoId(string videoId)
         {
+            if(!string.IsNullOrEmpty(videoId)) {
+                if(char.IsDigit(videoId[0])) {
+                    var task = LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan);
+                    var information = task.Result;
+                    return information.VideoId;
+                }
+            }
+
             return videoId;
         }
 
         public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
         {
-            var usingVideoId = GetSafeVideoId(videoId);
+            var usingVideoId = videoId;
 
             SmileVideoInformationViewModel result;
             if(TryGetValue(usingVideoId, out result)) {
