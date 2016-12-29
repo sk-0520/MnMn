@@ -67,11 +67,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         string GetSafeVideoId(string videoId)
         {
             if(SmileIdUtility.NeedCorrectionVideoId(videoId)) {
-                var task = LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan);
-                var information = task.Result;
-                Mediation.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
-                information.DecrementReference();
-                return information.VideoId;
+                return LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(t => {
+                    if(t.IsFaulted) {
+                        Mediation.Logger.Error($"number videid: convert error {videoId}");
+                        return videoId;
+                    }
+                    var information = t.Result;
+                    Mediation.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
+                    information.DecrementReference();
+                    return information.VideoId;
+                }).Result;
             }
 
             return videoId;
