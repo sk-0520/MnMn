@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
         {
-            MakeDescription();
+            ChangedProperty();
         }
 
     }

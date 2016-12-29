@@ -72,6 +72,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         //Thickness _windowBorderThickness = normalWindowBorderThickness;
         bool _isNormalWindow = true;
 
+        string _descriptionHtmlSource;
+
         #endregion
 
         public SmileLivePlayerViewModel(Mediation mediation)
@@ -117,10 +119,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         /// </summary>
         bool IsViewClosed { get; set; }
 
-        /// <summary>
-        /// 投降者コメントが構築されたか。
-        /// </summary>
-        bool IsMadeDescription { get; set; } = false;
+        ///// <summary>
+        ///// 投降者コメントが構築されたか。
+        ///// </summary>
+        //bool IsMadeDescription { get; set; } = false;
 
         public bool IsNormalWindow
         {
@@ -192,6 +194,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         }
 
         #endregion
+
+        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
+
+        public string DescriptionHtmlSource
+        {
+            get { return this._descriptionHtmlSource; }
+            set { SetVariableValue(ref this._descriptionHtmlSource, value); }
+        }
 
         #endregion
 
@@ -290,8 +300,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                 if(response.IsSuccess) {
                     var htmlSource = response.Result;
 
-                    var descriptionHtml = GetDescription(htmlSource);
-                    MakeDescription(descriptionHtml);
+                    DescriptionHtmlSource = GetDescription(htmlSource);
+                    //MakeDescription(descriptionHtml);
                 }
 
                 return LoadWatchPageAsync();
@@ -387,41 +397,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             return baseElement.InnerHtml;
         }
 
-        void MakeDescription(string htmlSource)
-        {
-            IsMadeDescription = true;
+        //void MakeDescription(string htmlSource)
+        //{
+        //    IsMadeDescription = true;
 
-            var description = new SmileDescription(Mediation);
-            var flowDocumentSource = description.ConvertFlowDocumentFromHtml(htmlSource);
+        //    var description = new SmileDescription(Mediation);
+        //    var flowDocumentSource = description.ConvertFlowDocumentFromHtml(htmlSource);
 
-            DocumentDescription.Dispatcher.Invoke(() => {
-                var document = DocumentDescription.Document;
+        //    DocumentDescription.Dispatcher.Invoke(() => {
+        //        var document = DocumentDescription.Document;
 
-                document.Blocks.Clear();
+        //        document.Blocks.Clear();
 
-                using(var stringReader = new StringReader(flowDocumentSource))
-                using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
-                    try {
-                        var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
-                        document.Blocks.AddRange(flowDocument.Blocks.ToArray());
-                    } catch(XamlParseException ex) {
-                        Mediation.Logger.Error(ex);
-                        var error = new Paragraph();
-                        error.Inlines.Add(ex.ToString());
+        //        using(var stringReader = new StringReader(flowDocumentSource))
+        //        using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
+        //            try {
+        //                var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
+        //                document.Blocks.AddRange(flowDocument.Blocks.ToArray());
+        //            } catch(XamlParseException ex) {
+        //                Mediation.Logger.Error(ex);
+        //                var error = new Paragraph();
+        //                error.Inlines.Add(ex.ToString());
 
-                        var raw = new Paragraph();
-                        raw.Inlines.Add(flowDocumentSource);
+        //                var raw = new Paragraph();
+        //                raw.Inlines.Add(flowDocumentSource);
 
-                        document.Blocks.Add(error);
-                        document.Blocks.Add(raw);
-                    }
-                }
+        //                document.Blocks.Add(error);
+        //                document.Blocks.Add(raw);
+        //            }
+        //        }
 
-                document.FontSize = DocumentDescription.FontSize;
-                document.FontFamily = DocumentDescription.FontFamily;
-                document.FontStretch = DocumentDescription.FontStretch;
-            });
-        }
+        //        document.FontSize = DocumentDescription.FontSize;
+        //        document.FontFamily = DocumentDescription.FontFamily;
+        //        document.FontStretch = DocumentDescription.FontStretch;
+        //    });
+        //}
 
         void SourceLoaded(WebNavigatorEventDataBase eventData)
         {
