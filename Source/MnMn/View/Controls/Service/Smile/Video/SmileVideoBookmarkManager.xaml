@@ -103,20 +103,20 @@
 
               <TextBlock Grid.Column="0" Text="{Binding Name}" />
 
-              <StackPanel x:Name="commandsPlay" Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <StackPanel x:Name="commandsPlay" Grid.Column="1" >
                 <Button Command="{Binding DataContext.SequentialPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">play</Button>
                 <Button Command="{Binding DataContext.RandomPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">rand</Button>
               </StackPanel>
             </Grid>
             
-            <!--<ControlTemplate.Triggers>
+            <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="commandsPlay" Property="Visibility" Value="Visible" />
               </Trigger>
               <Trigger Property="IsMouseOver" Value="False">
                 <Setter TargetName="commandsPlay" Property="Visibility" Value="Collapsed" />
               </Trigger>
-            </ControlTemplate.Triggers>-->
+            </ControlTemplate.Triggers>
           </ControlTemplate>
           
           <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkSystemNodeViewModel}">

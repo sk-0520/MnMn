@@ -263,8 +263,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(
-                    o => PlayAllItemAsync((SmileVideoBookmarkNodeViewModel)o, false).ConfigureAwait(false),
-                    o => SelectedBookmarkNodeFinder != null && SelectedBookmarkNodeFinder.FinderItemsViewer.Any()
+                    o => PlayAllVideosAsync((SmileVideoBookmarkNodeViewModel)o, false).ConfigureAwait(false),
+                    o => 0 < ((SmileVideoBookmarkNodeViewModel)o)?.VideoItems.Count
                 );
             }
         }
@@ -274,8 +274,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             get
             {
                 return CreateCommand(
-                    o => PlayAllItemAsync((SmileVideoBookmarkNodeViewModel)o, true).ConfigureAwait(false),
-                    o => SelectedBookmarkNodeFinder != null && SelectedBookmarkNodeFinder.FinderItemsViewer.Any()
+                    o => PlayAllVideosAsync((SmileVideoBookmarkNodeViewModel)o, true).ConfigureAwait(false),
+                    o => 0 < ((SmileVideoBookmarkNodeViewModel)o)?.VideoItems.Count
                 );
             }
         }
@@ -519,7 +519,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             }
         }
 
-        async Task PlayAllItemAsync(SmileVideoBookmarkNodeViewModel node, bool isRandom)
+        async Task PlayAllVideosAsync(SmileVideoBookmarkNodeViewModel node, bool isRandom)
         {
             var playList = new List<SmileVideoInformationViewModel>(node.VideoItems.Count);
 
@@ -539,7 +539,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
             } else {
-                Mediation.Logger.Warning($"{nameof(playList)}: empty");
+                Mediation.Logger.Warning($"{node.Name}: {nameof(playList)}: empty");
             }
         }
 
