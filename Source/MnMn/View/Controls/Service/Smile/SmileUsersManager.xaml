@@ -130,140 +130,142 @@
               <TabItem Header="ユーザー情報" IsSelected="{Binding IsUserSelected}">
                 <Grid>
                   <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="160" />
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Grid Grid.Column="0" Width="150" VerticalAlignment="Top" Height="150">
-                    <Image Source="{Binding ThumbnailImage}" />
-                    <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
-                  </Grid>
+                  <StackPanel Grid.Row="0" Grid.Column="0" >
+                    <Grid Width="150" VerticalAlignment="Top" Height="150">
+                      <Image Source="{Binding ThumbnailImage}" />
+                      <app_view_controls:LoadStateNavigator LoadState="{Binding ThumbnailLoadState}" />
+                    </Grid>
 
-                  <FlowDocumentScrollViewer Grid.Column="1" VerticalAlignment="Stretch">
+                    <Button Grid.Row="1" Visibility="{Binding IsNotMyAccount, Converter={StaticResource BooleanToVisibilityConverter}}" CommandParameter="{Binding}">
+                      <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                          <Style.Triggers>
+                            <DataTrigger Value="True">
+                              <DataTrigger.Binding>
+                                <MultiBinding Converter="{StaticResource SmileUserHasBookmarkConverter}">
+                                  <MultiBinding.Bindings>
+                                    <Binding Path="." />
+                                    <Binding Path="DataContext.UserBookmarkItems" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                  </MultiBinding.Bindings>
+                                </MultiBinding>
+                              </DataTrigger.Binding>
+                              <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                              <Setter Property="Content" Value="ブックマークから削除" />
+                            </DataTrigger>
+                            <DataTrigger Value="False">
+                              <DataTrigger.Binding>
+                                <MultiBinding Converter="{StaticResource SmileUserHasBookmarkConverter}">
+                                  <MultiBinding.Bindings>
+                                    <Binding Path="." />
+                                    <Binding Path="DataContext.UserBookmarkItems" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                  </MultiBinding.Bindings>
+                                </MultiBinding>
+                              </DataTrigger.Binding>
+                              <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                              <Setter Property="Content" Value="ブックマークに追加" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </Button.Style>
+                    </Button>
+
+                  </StackPanel>
+
+                  <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                      <StackPanel.Resources>
+                        <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        </Style>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        </Style>
+                      </StackPanel.Resources>
+
+                      <Label>ユーザー名</Label>
+                      <TextBox Text="{Binding UserName, Mode=OneWay}" />
+
+                      <Label>ユーザーID</Label>
+                      <TextBox Text="{Binding UserId, Mode=OneWay}" />
+
+                      <Label>登録</Label>
+                      <TextBox Text="{Binding ResistedVersion, Mode=OneWay}" />
+
+                      <Label>会員情報</Label>
+                      <TextBox>
+                        <TextBox.Style>
+                          <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsPremium}" Value="True">
+                                <Setter Property="Text" Value="プレミアム会員" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding IsPremium}" Value="False">
+                                <Setter Property="Text" Value="一般会員" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBox.Style>
+                      </TextBox>
+
+                      <Label>性別</Label>
+                      <TextBox>
+                        <TextBox.Style>
+                          <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsPublicGender}" Value="True">
+                                <Setter Property="Text" Value="{Binding Gender, Mode=OneWay}" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding IsPublicGender}" Value="False">
+                                <Setter Property="Text" Value="非公開" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBox.Style>
+                      </TextBox>
+
+                      <Label>誕生日</Label>
+                      <TextBox>
+                        <TextBox.Style>
+                          <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsPublicBirthday}" Value="True">
+                                <Setter Property="Text" Value="{Binding Birthday, Mode=OneWay}" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding IsPublicBirthday}" Value="False">
+                                <Setter Property="Text" Value="非公開" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBox.Style>
+                      </TextBox>
+
+                      <Label>地域</Label>
+                      <TextBox>
+                        <TextBox.Style>
+                          <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                            <Style.Triggers>
+                              <DataTrigger Binding="{Binding IsPublicLocation}" Value="True">
+                                <Setter Property="Text" Value="{Binding Location, Mode=OneWay}" />
+                              </DataTrigger>
+                              <DataTrigger Binding="{Binding IsPublicBirthday}" Value="False">
+                                <Setter Property="Text" Value="非公開" />
+                              </DataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </TextBox.Style>
+                      </TextBox>
+                    </StackPanel>
+                  </ScrollViewer>
+
+                  <FlowDocumentScrollViewer Grid.Column="2" VerticalAlignment="Stretch">
                     <FlowDocumentScrollViewer.Document>
                       <FlowDocument>
                         <Paragraph>
-                          <Button Visibility="{Binding IsNotMyAccount, Converter={StaticResource BooleanToVisibilityConverter}}" CommandParameter="{Binding}">
-                            <Button.Style>
-                              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                <Style.Triggers>
-                                  <DataTrigger Value="True">
-                                    <DataTrigger.Binding>
-                                      <MultiBinding Converter="{StaticResource SmileUserHasBookmarkConverter}">
-                                        <MultiBinding.Bindings>
-                                          <Binding Path="." />
-                                          <Binding Path="DataContext.UserBookmarkItems" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-                                        </MultiBinding.Bindings>
-                                      </MultiBinding>
-                                    </DataTrigger.Binding>
-                                    <Setter Property="Command" Value="{Binding DataContext.RemoveBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                                    <Setter Property="Content" Value="ブックマークから削除" />
-                                  </DataTrigger>
-                                  <DataTrigger Value="False">
-                                    <DataTrigger.Binding>
-                                      <MultiBinding Converter="{StaticResource SmileUserHasBookmarkConverter}">
-                                        <MultiBinding.Bindings>
-                                          <Binding Path="." />
-                                          <Binding Path="DataContext.UserBookmarkItems" RelativeSource="{RelativeSource AncestorType=UserControl}" />
-                                        </MultiBinding.Bindings>
-                                      </MultiBinding>
-                                    </DataTrigger.Binding>
-                                    <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                                    <Setter Property="Content" Value="ブックマークに追加" />
-                                  </DataTrigger>
-                                </Style.Triggers>
-                              </Style>
-                            </Button.Style>
-                          </Button>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextBlock Text="{Binding UserName, Mode=OneTime}" />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextBlock>
-                            <Run>ID:</Run>
-                            <Run Text="{Binding UserId, Mode=OneWay}" />
-                            <TextBlock>(</TextBlock>
-                            <Run Text="{Binding ResistedVersion, Mode=OneWay}" />
-                            <TextBlock>)</TextBlock>
-                          </TextBlock>
-
-                          <TextBlock>
-                            <TextBlock.Style>
-                              <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                  <DataTrigger Binding="{Binding IsPremium}" Value="True">
-                                    <Setter Property="Text" Value="プレミアム会員" />
-                                  </DataTrigger>
-                                  <DataTrigger Binding="{Binding IsPremium}" Value="False">
-                                    <Setter Property="Text" Value="一般会員" />
-                                  </DataTrigger>
-                                </Style.Triggers>
-                              </Style>
-                            </TextBlock.Style>
-                          </TextBlock>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextBlock>
-                            <Run>性別:</Run>
-                            <Run>
-                              <Run.Style>
-                                <Style TargetType="Run">
-                                  <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsPublicGender}" Value="True">
-                                      <Setter Property="Text" Value="{Binding Gender, Mode=OneWay}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsPublicGender}" Value="False">
-                                      <Setter Property="Text" Value="非公開" />
-                                    </DataTrigger>
-                                  </Style.Triggers>
-                                </Style>
-                              </Run.Style>
-                            </Run>
-                          </TextBlock>
-
-                          <TextBlock>
-                            <Run>誕生日:</Run>
-                            <Run>
-                              <Run.Style>
-                                <Style TargetType="Run">
-                                  <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsPublicBirthday}" Value="True">
-                                      <Setter Property="Text" Value="{Binding Birthday, Mode=OneWay}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsPublicBirthday}" Value="False">
-                                      <Setter Property="Text" Value="非公開" />
-                                    </DataTrigger>
-                                  </Style.Triggers>
-                                </Style>
-                              </Run.Style>
-                            </Run>
-                          </TextBlock>
-
-                          <TextBlock>
-                            <Run>地域:</Run>
-                            <Run>
-                              <Run.Style>
-                                <Style TargetType="Run">
-                                  <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsPublicLocation}" Value="True">
-                                      <Setter Property="Text" Value="{Binding Location, Mode=OneWay}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsPublicLocation}" Value="False">
-                                      <Setter Property="Text" Value="非公開" />
-                                    </DataTrigger>
-                                  </Style.Triggers>
-                                </Style>
-                              </Run.Style>
-                            </Run>
-                          </TextBlock>
-
-                        </Paragraph>
-
-                        <Paragraph>
                           <TextBlock Text="{Binding Description}" />
                         </Paragraph>
-
                       </FlowDocument>
                     </FlowDocumentScrollViewer.Document>
                   </FlowDocumentScrollViewer>
