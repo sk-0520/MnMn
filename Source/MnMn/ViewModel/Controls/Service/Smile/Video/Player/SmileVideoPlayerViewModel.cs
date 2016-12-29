@@ -1498,6 +1498,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.UseNoneWindowStyle = false;
                 View.ShowTitleBar = true; // <-- this must be set to true
                 View.IgnoreTaskbarOnMaximize = false;
+
+                ResetFocus();
             } else {
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
@@ -1519,18 +1521,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 State = WindowState.Maximized;
                 View.UseNoneWindowStyle = true;
 
-                // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
-                var scope = FocusManager.GetFocusScope(View);
-                FocusManager.SetFocusedElement(scope, null);
-                Keyboard.ClearFocus();
-                Keyboard.Focus(View);
-
                 View.Dispatcher.BeginInvoke(new Action(() => {
                     View.Deactivated += View_Deactivated;
+                    ResetFocus();
                 }), DispatcherPriority.SystemIdle);
             }
 
             //CallOnPropertyChange(nameof(IsNormalWindow));
+        }
+
+        void ResetFocus()
+        {
+            // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
+            var scope = FocusManager.GetFocusScope(View);
+            FocusManager.SetFocusedElement(scope, null);
+            Keyboard.ClearFocus();
+            Keyboard.Focus(View);
         }
 
         public void MoveForeground()
