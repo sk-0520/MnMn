@@ -303,7 +303,6 @@
                     <i:Interaction.Behaviors>
                       <app_view_attachment:HtmlDescriptionBehavior 
                         HtmlSource="{Binding DescriptionHtmlSource}" 
-                        Target="{Binding Mode=OneWay}"
                         DescriptionProcessor="{Binding DescriptionProcessor}"
                       />
                     </i:Interaction.Behaviors>
