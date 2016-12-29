@@ -154,12 +154,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.HalfBakedApi
 
             var descriptionElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@id='description_full']");
             if(descriptionElement != null) {
-                var lines = descriptionElement.InnerText
+                var lines = descriptionElement.InnerHtml
                     .SplitLines()
                     .Select(s => s.Trim())
                     .Where(s => 0 < s.Length)
                 ;
-                result.Description = string.Join(Environment.NewLine, lines);
+                result.DescriptionHtmlSource = string.Join(Environment.NewLine, lines);
             }
 
             var sidebarElement = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='sidebar']");

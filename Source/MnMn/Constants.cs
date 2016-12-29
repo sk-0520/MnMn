@@ -339,6 +339,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static string SmileRequestHeadersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-headers.xml");
         public static string SmileRequestParametersListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-params.xml");
         public static string SmileRequestMappingsListPath { get; } = Path.Combine(DefineSmileDirectoryPath, "request-mappings.xml");
+        public static string SmileUserInformationPath { get; } = Path.Combine(DefineSmileDirectoryPath, "user.xml");
 
         public static string DefineSmileVideoDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileVideoName);
         public static string DefineSmileLiveDirectoryPath { get; } = Path.Combine(DefineSmileDirectoryPath, ServiceSmileLiveName);

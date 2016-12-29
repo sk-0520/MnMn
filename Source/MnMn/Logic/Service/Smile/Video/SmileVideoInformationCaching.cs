@@ -27,6 +27,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Raw;
@@ -65,12 +66,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         string GetSafeVideoId(string videoId)
         {
+            if(SmileIdUtility.NeedCorrectionVideoId(videoId)) {
+                return LoadFromVideoIdAsync(videoId, Constants.ServiceSmileVideoThumbCacheSpan).ContinueWith(t => {
+                    if(t.IsFaulted) {
+                        Mediation.Logger.Error($"number videid: convert error {videoId}");
+                        return videoId;
+                    }
+                    var information = t.Result;
+                    Mediation.Logger.Debug($"number videid: {videoId} to {information.VideoId}");
+                    information.DecrementReference();
+                    return information.VideoId;
+                }).Result;
+            }
+
             return videoId;
+        }
+
+        SmileVideoInformationViewModel GetVideoInformationFromCorrectionId(string safeVideoId, SmileVideoInformationViewModel baseInformation)
+        {
+            return Get(safeVideoId, () => {
+                if(baseInformation.VideoId == safeVideoId) {
+                    return baseInformation;
+                } else {
+                    // 動画IDが異なる(生の nnnn 形式と 動画情報の xxnnnn 形式)ことが分かれば動画情報取得処理が動いているためキャッシュ上の動画情報を返す
+                    var correctionInformation = LoadFromVideoIdAsync(baseInformation.VideoId, default(CacheSpan)).Result;
+                    return correctionInformation;
+                }
+            });
         }
 
         public Task<SmileVideoInformationViewModel> LoadFromVideoIdAsync(string videoId, CacheSpan thumbCacheSpan)
         {
-            var usingVideoId = GetSafeVideoId(videoId);
+            var usingVideoId = videoId;
 
             SmileVideoInformationViewModel result;
             if(TryGetValue(usingVideoId, out result)) {
@@ -102,6 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var usingVideoId = GetSafeVideoId(thumb.VideoId);
 
+            // こいつの動画IDは xxnnnn 形式前提だから補正しない(前提が崩れたらちょっとしんどいね！)
             var result = Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, thumb, UnOrdered));
             result.IncrementReference();
 
@@ -112,7 +140,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             var usingVideoId = GetSafeVideoId(search.ContentId);
 
-            var result = Get(usingVideoId, () => new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+            var result = GetVideoInformationFromCorrectionId(usingVideoId, new SmileVideoInformationViewModel(Mediation, search, UnOrdered));
+
             result.IncrementReference();
 
             return result;
@@ -123,7 +152,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             //TODO: 動画ID取得意外と面倒なのね
             var tempResult = new SmileVideoInformationViewModel(Mediation, feed, UnOrdered, informationFlags);
             var usingVideoId = GetSafeVideoId(tempResult.VideoId);
-            var result = Get(usingVideoId, () => tempResult);
+            var result = GetVideoInformationFromCorrectionId(usingVideoId, tempResult);
             result.IncrementReference();
 
             return result;

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Markup;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -17,6 +21,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
     public static class DescriptionUtility
     {
         #region function
+
+        public static void SetDescriptionDocument(FlowDocumentScrollViewer documentViewer, string flowDocumentSource, ILogger logger)
+        {
+            var document = documentViewer.Document;
+
+            document.Blocks.Clear();
+
+            using(var stringReader = new StringReader(flowDocumentSource))
+            using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
+                try {
+                    var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
+                    document.Blocks.AddRange(flowDocument.Blocks.ToArray());
+                } catch(XamlParseException ex) {
+                    logger.Error(ex);
+                    var error = new Paragraph();
+                    error.Inlines.Add(ex.ToString());
+
+                    var raw = new Paragraph();
+                    raw.Inlines.Add(flowDocumentSource);
+
+                    document.Blocks.Add(error);
+                    document.Blocks.Add(raw);
+                }
+            }
+
+            document.FontSize = documentViewer.FontSize;
+            document.FontFamily = documentViewer.FontFamily;
+            document.FontStretch = documentViewer.FontStretch;
+        }
 
         internal static void CopyText(string text, ILogger logger)
         {

@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -62,6 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             BaseNumber = baseNumber;
 
             FinderItems = CollectionViewSource.GetDefaultView(FinderItemList);
+            
         }
 
         #region property
@@ -79,6 +81,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         /// フィルタリング設定をそもそも使用するか。
         /// </summary>
         public virtual bool IsUsingFinderFilter { get; } = true;
+
+        /// <summary>
+        /// 表に出てこない処理か。
+        /// <para>けっこうな設計ミス。</para>
+        /// </summary>
+        internal virtual bool IsBackgroundOnly { get; set; } = false;
 
         public abstract CacheSpan DefaultInformationCacheSpan { get; }
         public abstract CacheSpan DefaultImageCacheSpan { get; }
@@ -282,7 +290,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         {
             return Task.Run(() => {
                 FinderLoadState = SourceLoadState.InformationLoading;
-                return LoadImageAsync(FinderItemList.Select(i => i.Information), imageCacheSpan);
+                if(IsBackgroundOnly) {
+                    return Task.CompletedTask;
+                } else {
+                    return LoadImageAsync(FinderItemList.Select(i => i.Information), imageCacheSpan);
+                }
             }, CancelLoading.Token).ContinueWith(t => {
                 FinderLoadState = SourceLoadState.Completed;
                 NowLoading = false;
@@ -338,7 +350,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             ;
 
             return LoadInformationAsync(finderItems.Select(i => i.Information), informationCacheSpan).ContinueWith(t => {
-                Application.Current.Dispatcher.Invoke(new Action(() => {
+                Dispatcher dispatcher;
+                if(IsBackgroundOnly) {
+                    var view = (CollectionView)FinderItems;
+                    dispatcher = view.Dispatcher;
+                } else {
+                    dispatcher = Application.Current.Dispatcher;
+                }
+                dispatcher.Invoke(new Action(() => {
                     FinderItemList.InitializeRange(finderItems);
                     ChangeSortItems();
                 }));

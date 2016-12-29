@@ -232,11 +232,25 @@
               </Grid.RowDefinitions>
 
               <Grid Grid.Row="1">
-                <FlowDocumentScrollViewer
+                <FlowDocumentScrollViewer Style="{StaticResource PlayerDescriptionDocument}">
+                  <i:Interaction.Behaviors>
+                    <app_view_attachment:HtmlDescriptionBehavior 
+                      HtmlSource="{Binding DescriptionHtmlSource, Mode=OneWay}" 
+                      DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
+                    />
+                  </i:Interaction.Behaviors>
+                </FlowDocumentScrollViewer>
+                <!--<FlowDocumentScrollViewer
                   x:Name="documentDescription"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
                 >
+                  <i:Interaction.Behaviors>
+                    <app_view_attachment:HtmlDescriptionBehavior 
+                      HtmlSource="{Binding DescriptionHtmlSource, Mode=OneWay}" 
+                      DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
+                    />
+                  </i:Interaction.Behaviors>
                   <FlowDocumentScrollViewer.Resources>
                     <Style TargetType="Run">
                       <Setter Property="BaselineAlignment" Value="Center"/>
@@ -246,7 +260,7 @@
                     FontSize="11.5"
                     PagePadding="10, 2, 10, 0"
                   />
-                </FlowDocumentScrollViewer>
+                </FlowDocumentScrollViewer>-->
               </Grid>
 
 

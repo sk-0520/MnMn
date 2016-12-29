@@ -25,16 +25,19 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.User;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
@@ -69,6 +72,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             UserHistoryCollection = new MVMPairCreateDelegationCollection<SmileUserItemModel, SmileUserHistoryItemViewModel>(Setting.User.History, default(object), CreateHistoryItem);
             UserHistoryItems = CollectionViewSource.GetDefaultView(UserHistoryCollection.ViewModelList);
 
+            // NOTE: Mediation を経由していない
+            UserDefined = SerializeUtility.LoadXmlSerializeFromFile<SmileUserDefinedModel>(Constants.SmileUserInformationPath);
+
             CheckItLaterCheckTimer.Tick += CheckItLaterCheckTimer_Tick;
         }
 
@@ -87,6 +93,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             set { SetPropertyValue(Setting.User, value.Value, nameof(Setting.User.ItemsWidth)); }
         }
 
+        SmileUserDefinedModel UserDefined { get; }
+
+        public IEnumerable<SmileUserVersionViewModel> UserVersionItems
+        {
+            get { return UserDefined.VersionItems.Select(i => new SmileUserVersionViewModel(i)); }
+        }
 
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
         public SmileLoginUserInformationViewModel LoginUser { get; private set; }

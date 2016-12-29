@@ -29,9 +29,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -51,6 +54,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         #region variable
 
         ComponentItemCollectionModel _componentCollection;
+        long _totalMemorySize;
+
+        long _workingSet;
+        long _virtualMemorySize;
 
         #endregion
 
@@ -70,6 +77,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
                 return this._componentCollection;
             }
+        }
+
+        public long TotalMemorySize
+        {
+            get { return this._totalMemorySize; }
+            private set { SetVariableValue(ref this._totalMemorySize, value); }
+        }
+
+        public long WorkingSet
+        {
+            get { return this._workingSet; }
+            private set { SetVariableValue(ref this._workingSet, value); }
+        }
+
+        public long VirtualMemorySize
+        {
+            get { return this._virtualMemorySize; }
+            private set { SetVariableValue(ref this._virtualMemorySize, value); }
         }
 
         #endregion
@@ -138,6 +163,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
+        public ICommand ReloadUsingMemoryCommand
+        {
+            get
+            {
+                return CreateCommand(o => ReloadUsingMemory());
+            }
+        }
+
+        public ICommand GarbageCollectionMemoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        Mediation.Order(new AppCleanMemoryOrderModel(true));
+                        ReloadUsingMemoryCommand.TryExecute(null);
+                    }
+                );
+            }
+        }
+
+
         public ICommand OpenAppDirectoryCommand
         {
             get
@@ -191,6 +238,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 Process.Start(command);
             } catch(Exception ex) {
                 Mediation.Logger.Error(ex);
+            }
+        }
+
+        void ReloadUsingMemory()
+        {
+            TotalMemorySize = GC.GetTotalMemory(false);
+            using(var process = Process.GetCurrentProcess()) {
+                WorkingSet = process.WorkingSet64;
+                VirtualMemorySize = process.VirtualMemorySize64;
             }
         }
 
@@ -261,7 +317,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         }
 
         protected override void ShowViewCore()
-        { }
+        {
+            ReloadUsingMemory();
+        }
 
         protected override void HideViewCore()
         { }
