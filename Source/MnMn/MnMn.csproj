@@ -331,6 +331,7 @@
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveThumbnailModel.cs" />
     <Compile Include="Model\Service\Smile\Live\SmileLiveCategoryModel.cs" />
+    <Compile Include="Model\Service\Smile\SmileUserDefinedModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcClientInformationModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthInfoModel.cs" />
     <Compile Include="Model\Service\Smile\Video\Raw\RawSmileVideoDmcContentAuthModel.cs" />
