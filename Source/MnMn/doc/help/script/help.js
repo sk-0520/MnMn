@@ -103,6 +103,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-older',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '過去配布アーカイブ'
+		}
+	},
+	{
 		name: 'others-development',
 		localize: true,
 		level: 1,
