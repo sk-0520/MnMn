@@ -216,6 +216,9 @@
                               SelectedValue="{Binding LockedResistedVersion}"
                               PreviewMouseDown="ListBox_PreviewMouseDown"
                             >
+                              <i:Interaction.Behaviors>
+                                <package_stackoverflow_com:ScrollIntoViewForListBox />
+                              </i:Interaction.Behaviors>
                               <ListBox.ItemTemplate>
                                 <DataTemplate>
                                   <StackPanel Orientation="Horizontal">

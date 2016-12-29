@@ -94,7 +94,7 @@
 				<word key="ja-jp" value="ニコニコ動画（原宿）" />
 			</words>
 			<extends>
-				<extend key="start" value="2010/29" />
+				<extend key="start" value="2010/10/29" />
 			</extends>
 		</element>
 		<element key="Zero">
