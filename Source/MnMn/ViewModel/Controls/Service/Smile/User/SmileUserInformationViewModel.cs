@@ -276,6 +276,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 return string.Empty;
             }
         }
+        public string LockedResistedVersion
+        {
+            get { return ResistedVersion; }
+            set
+            {
+                if(value != LockedResistedVersion) {
+                    CallOnPropertyChange(nameof(LockedResistedVersion));
+                }
+            }
+        }
+
         public bool IsPremium
         {
             get
@@ -487,6 +498,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 nameof(IsPublicBirthday),
                 nameof(Birthday),
                 nameof(ResistedVersion),
+                nameof(LockedResistedVersion),
                 nameof(IsPremium),
                 nameof(Description),
                 nameof(IsPublicMyList),
@@ -494,6 +506,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 nameof(IsPublicReport),
             };
             CallOnPropertyChange(propertyNames);
+
         }
 
         #endregion
