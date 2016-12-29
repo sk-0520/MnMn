@@ -404,6 +404,7 @@
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
+    <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />
     <Compile Include="View\Controls\App\AppGeneralBrowserManager.xaml.cs">
       <DependentUpon>AppGeneralBrowserManager.xaml</DependentUpon>
