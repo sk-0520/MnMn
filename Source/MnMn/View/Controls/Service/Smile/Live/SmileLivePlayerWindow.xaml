@@ -232,7 +232,7 @@
               </Grid.RowDefinitions>
 
               <Grid Grid.Row="1">
-                <FlowDocumentScrollViewer x:Name="documentDescription" Style="{StaticResource PlayerDescriptionDocument}">
+                <FlowDocumentScrollViewer Style="{StaticResource PlayerDescriptionDocument}">
                   <i:Interaction.Behaviors>
                     <app_view_attachment:HtmlDescriptionBehavior 
                       HtmlSource="{Binding DescriptionHtmlSource, Mode=OneWay}" 

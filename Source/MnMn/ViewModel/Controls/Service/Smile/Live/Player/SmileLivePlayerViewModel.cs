@@ -109,10 +109,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public FewViewModel<bool> PlayerShowDetailArea { get; } = new FewViewModel<bool>();
 
         public FewViewModel<LoadState> PlayerLoadState { get; } = new FewViewModel<LoadState>();
-        /// <summary>
-        /// 動画紹介文書表示要素。
-        /// </summary>
-        FlowDocumentScrollViewer DocumentDescription { get; set; }
+        ///// <summary>
+        ///// 動画紹介文書表示要素。
+        ///// </summary>
+        //FlowDocumentScrollViewer DocumentDescription { get; set; }
 
         /// <summary>
         /// ビューが閉じられたか。
@@ -482,7 +482,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             View = (SmileLivePlayerWindow)view;
             NavigatorPlayer = View.navigatorPlayer;
 
-            DocumentDescription = View.documentDescription;
+            //DocumentDescription = View.documentDescription;
 
             //
             View.Closed += View_Closed;

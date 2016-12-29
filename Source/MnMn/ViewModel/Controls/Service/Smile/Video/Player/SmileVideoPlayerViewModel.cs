@@ -1909,7 +1909,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Navigationbar = View.seekbar;
             CommentView = View.commentView;
             DetailComment = View.detailComment;
-            DocumentDescription = View.documentDescription;
+            //DocumentDescription = View.documentDescription;
 
             // 初期設定
             Player.Volume = Volume;

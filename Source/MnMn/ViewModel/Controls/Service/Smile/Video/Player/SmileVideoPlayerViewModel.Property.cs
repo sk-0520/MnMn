@@ -79,10 +79,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <para>使ってないんよねぇ。</para>
         /// </summary>
         Flyout DetailComment { get; set; }
-        /// <summary>
-        /// 動画紹介文書表示要素。
-        /// </summary>
-        FlowDocumentScrollViewer DocumentDescription { get; set; }
+        ///// <summary>
+        ///// 動画紹介文書表示要素。
+        ///// </summary>
+        //FlowDocumentScrollViewer DocumentDescription { get; set; }
         /// <summary>
         /// コメント有効位置抑制スライダー要素。
         /// </summary>
