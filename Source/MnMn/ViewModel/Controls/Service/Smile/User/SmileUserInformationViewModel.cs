@@ -494,6 +494,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 nameof(IsPublicReport),
             };
             CallOnPropertyChange(propertyNames);
+
         }
 
         #endregion

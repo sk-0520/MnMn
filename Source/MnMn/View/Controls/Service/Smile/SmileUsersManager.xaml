@@ -6,7 +6,13 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+
   xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  
+  xmlns:package_stackoverflow_com="clr-namespace:Package.stackoverflow.com;assembly=Package"
+
+  xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
 
   xmlns:app_view_converter_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
@@ -26,6 +32,7 @@
       </ResourceDictionary.MergedDictionaries>-->
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
       <app_view_converter_service_smile:SmileUserHasBookmarkConverter x:Key="SmileUserHasBookmarkConverter" />
       <Style x:Key="ReadonlyText" TargetType="TextBox">
         <Setter Property="IsReadOnly" Value="True" />
@@ -200,7 +207,8 @@
 
                       <StackPanel>
                         <Label>登録</Label>
-                        <!--<TextBox Text="{Binding ResistedVersion, Mode=OneWay}" />-->
+                        <TextBox Text="{Binding ResistedVersion, Mode=OneWay}" />
+
                         <Grid>
                           <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -219,8 +227,8 @@
                               </Canvas>
                             </Viewbox>
                           </RepeatButton>
-                          
-                          <ScrollViewer x:Name="PART_ScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+
+                          <!--<ScrollViewer x:Name="PART_ScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                             <ItemsControl ItemsSource="{Binding DataContext.UserVersionItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
                               <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -229,11 +237,53 @@
                               </ItemsControl.ItemsPanel>
                               <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                  <TextBlock Text="{Binding DisplayText}" />
+                                  <TextBlock Text="{Binding Key}">
+                                    <TextBlock.Style>
+                                      <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                          <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                              <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}">
+                                                <Binding Path="Key" />
+                                                <Binding Path="DataContext.ResistedVersion" Mode="OneWay" RelativeSource="{RelativeSource AncestorType=TabControl}" />
+                                              </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <Setter Property="Background" Value="Red" />
+                                          </DataTrigger>
+                                        </Style.Triggers>
+                                      </Style>
+                                    </TextBlock.Style>
+                                  </TextBlock>
                                 </DataTemplate>
                               </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                          </ScrollViewer>
+                          </ScrollViewer>-->
+                          <ListBox 
+                            x:Name="PART_ScrollViewer" 
+                            Grid.Column="1" 
+                            SelectedValuePath="Key"
+                            ItemsSource="{Binding DataContext.UserVersionItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            SelectedValue="{Binding ResistedVersion, Mode=OneWay}"
+                            PreviewMouseDown="ListBox_PreviewMouseDown"
+                          >
+                            <i:Interaction.Behaviors>
+                              <package_stackoverflow_com:ScrollIntoViewForListBox  />
+                            </i:Interaction.Behaviors>
+                            <ListBox.ItemsPanel>
+                              <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" />
+                              </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                              <DataTemplate>
+                                <Grid>
+                                  <TextBlock Text="{Binding DisplayText}" />
+                                </Grid>
+                              </DataTemplate>
+                            </ListBox.ItemTemplate>
+                          </ListBox>
 
                           <RepeatButton
                             Grid.Column="2"

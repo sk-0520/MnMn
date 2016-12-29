@@ -9,7 +9,7 @@
 				<extend key="start" value="2006/12/12" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="β">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（β）" />
 			</words>
@@ -17,7 +17,7 @@
 				<extend key="start" value="2007/01/15" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="γ">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（γ）" />
 			</words>
@@ -25,7 +25,7 @@
 				<extend key="start" value="2007/06/06" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="RC">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（RC）" />
 			</words>
@@ -33,7 +33,7 @@
 				<extend key="start" value="2007/06/18" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="RC2">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（RC2）" />
 			</words>
@@ -41,7 +41,7 @@
 				<extend key="start" value="2007/10/10" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="SP1">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（SP1）" />
 			</words>
@@ -49,7 +49,7 @@
 				<extend key="start" value="2008/03/05" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="夏">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（夏）" />
 			</words>
@@ -57,7 +57,7 @@
 				<extend key="start" value="2008/07/05" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="秋">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（秋）" />
 			</words>
@@ -66,7 +66,7 @@
 				<extend key="tail" value="" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="冬">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（冬）" />
 			</words>
@@ -74,7 +74,7 @@
 				<extend key="start" value="2008/15/05" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="ββ">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（ββ）" />
 			</words>
@@ -82,7 +82,7 @@
 				<extend key="start" value="2008/12/12" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="9">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（9）" />
 			</words>
@@ -90,7 +90,7 @@
 				<extend key="start" value="2009/10/29" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="原宿">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画（原宿）" />
 			</words>
@@ -98,7 +98,7 @@
 				<extend key="start" value="2010/29" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="Zero">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画:Zero" />
 			</words>
@@ -106,7 +106,7 @@
 				<extend key="start" value="2012/05/01" />
 			</extends>
 		</element>
-		<element key="">
+		<element key=":Q">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画:Q" />
 			</words>
@@ -114,7 +114,7 @@
 				<extend key="start" value="2012/10/17" />
 			</extends>
 		</element>
-		<element key="">
+		<element key="GINZA">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画:GINZA" />
 			</words>
