@@ -5,6 +5,8 @@
   x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.SmileUsersManager"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
+  xmlns:mamc="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
   xmlns:app_view_converter_service_smile="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile"
   xmlns:app_view_controls="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Controls"
@@ -183,6 +185,11 @@
                         </Style>
                         <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                         </Style>
+                        <Style TargetType="RepeatButton" BasedOn="{StaticResource ScrollButton}">
+                          <Setter Property="MinHeight" Value="0" />
+                          <Setter Property="MinWidth" Value="0" />
+                          <Setter Property="Padding" Value="0" />
+                        </Style>
                       </StackPanel.Resources>
 
                       <Label>ユーザー名</Label>
@@ -191,8 +198,56 @@
                       <Label>ユーザーID</Label>
                       <TextBox Text="{Binding UserId, Mode=OneWay}" />
 
-                      <Label>登録</Label>
-                      <TextBox Text="{Binding ResistedVersion, Mode=OneWay}" />
+                      <StackPanel>
+                        <Label>登録</Label>
+                        <!--<TextBox Text="{Binding ResistedVersion, Mode=OneWay}" />-->
+                        <Grid>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                          </Grid.ColumnDefinitions>
+
+                          <RepeatButton
+                            Grid.Column="0"
+                            CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+                            Command="ScrollBar.LineLeftCommand"
+                          >
+                            <Viewbox Style="{StaticResource SmallIconBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_ScrollLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+                              </Canvas>
+                            </Viewbox>
+                          </RepeatButton>
+                          
+                          <ScrollViewer x:Name="PART_ScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                            <ItemsControl ItemsSource="{Binding DataContext.UserVersionItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                              <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                  <VirtualizingStackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                              </ItemsControl.ItemsPanel>
+                              <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                  <TextBlock Text="{Binding DisplayText}" />
+                                </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                          </ScrollViewer>
+
+                          <RepeatButton
+                            Grid.Column="2"
+                            CommandTarget="{Binding ElementName=PART_ScrollViewer}"
+                            Command="ScrollBar.LineRightCommand"
+                          >
+                            <Viewbox Style="{StaticResource SmallIconBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_ScrollRight}" Style="{StaticResource SmallDefaultIconPath}" />
+                              </Canvas>
+                            </Viewbox>
+                          </RepeatButton>
+                        </Grid>
+                      </StackPanel>
 
                       <Label>会員情報</Label>
                       <TextBox>
