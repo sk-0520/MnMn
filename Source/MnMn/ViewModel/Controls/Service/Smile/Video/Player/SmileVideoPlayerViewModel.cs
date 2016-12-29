@@ -1935,6 +1935,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             View.Loaded += View_Loaded;
             View.Activated += View_Activated;
             View.Closing += View_Closing;
+            Player.MouseDown += Player_MouseDown;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
@@ -2352,6 +2353,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //{
         //    //ShowCommentChart = Visibility.Collapsed;
         //}
+
+        void Player_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(PlayerState == PlayerState.Playing) {
+                ResetFocus();
+            }
+        }
 
         #endregion
     }
