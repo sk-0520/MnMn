@@ -1498,6 +1498,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.UseNoneWindowStyle = false;
                 View.ShowTitleBar = true; // <-- this must be set to true
                 View.IgnoreTaskbarOnMaximize = false;
+
+                ResetFocus();
             } else {
                 //ResizeBorderThickness = new Thickness(0);
                 //WindowBorderThickness = new Thickness(0);
@@ -1519,18 +1521,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 State = WindowState.Maximized;
                 View.UseNoneWindowStyle = true;
 
-                // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
-                var scope = FocusManager.GetFocusScope(View);
-                FocusManager.SetFocusedElement(scope, null);
-                Keyboard.ClearFocus();
-                Keyboard.Focus(View);
-
                 View.Dispatcher.BeginInvoke(new Action(() => {
                     View.Deactivated += View_Deactivated;
+                    ResetFocus();
                 }), DispatcherPriority.SystemIdle);
             }
 
             //CallOnPropertyChange(nameof(IsNormalWindow));
+        }
+
+        void ResetFocus()
+        {
+            // #164: http://stackoverflow.com/questions/2052389/wpf-reset-focus-on-button-click
+            var scope = FocusManager.GetFocusScope(View);
+            FocusManager.SetFocusedElement(scope, null);
+            Keyboard.ClearFocus();
+            Keyboard.Focus(View);
         }
 
         public void MoveForeground()
@@ -1573,6 +1579,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ClearComment();
             VideoPosition = Player.Position;
             PlayTime = PrevPlayedTime = Player.Time;
+
+            ResetFocus();
         }
 
         void AddCommentFilter(SmileVideoCommentFilteringTarget target, string source, bool setGlobalSetting)
@@ -1624,6 +1632,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //ChangeSeekVideoPosition(true, true, 0);
                 ClearComment();
                 Player.Position = 0;
+
+                ResetFocus();
             }
         }
 
@@ -1923,7 +1933,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
 
             View.Loaded += View_Loaded;
+            View.Activated += View_Activated;
             View.Closing += View_Closing;
+            Player.MouseDown += Player_MouseDown;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
             Player.StateChanged += Player_StateChanged;
@@ -2058,6 +2070,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //TODO: closingはまずくね…?
 
             View.Loaded -= View_Loaded;
+            View.Activated -= View_Activated;
             View.Closing -= View_Closing;
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
@@ -2127,6 +2140,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 return;
             }
+
+            ResetFocus();
 
             var seekbar = (Slider)sender;
             seekbar.CaptureMouse();
@@ -2319,6 +2334,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void View_Activated(object sender, EventArgs e)
+        {
+            if(!IsViewClosed) {
+                ResetFocus();
+            }
+        }
+
         //private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
         //{
         //    //ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
@@ -2331,6 +2353,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //{
         //    //ShowCommentChart = Visibility.Collapsed;
         //}
+
+        void Player_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(PlayerState == PlayerState.Playing) {
+                ResetFocus();
+            }
+        }
 
         #endregion
     }
