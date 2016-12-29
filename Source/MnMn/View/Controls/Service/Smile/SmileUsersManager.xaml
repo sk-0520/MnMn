@@ -189,13 +189,12 @@
                     <StackPanel>
                       <StackPanel.Resources>
                         <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                          <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}" />
                         </Style>
                         <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                        </Style>
-                        <Style TargetType="RepeatButton" BasedOn="{StaticResource ScrollButton}">
-                          <Setter Property="MinHeight" Value="0" />
-                          <Setter Property="MinWidth" Value="0" />
-                          <Setter Property="Padding" Value="0" />
+                          <Setter Property="IsReadOnly" Value="True" />
+                          <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
+                          <Setter Property="mamc:TextBoxHelper.SelectAllOnFocus" Value="True" />
                         </Style>
                       </StackPanel.Resources>
 
@@ -208,7 +207,7 @@
                       <Label>登録</Label>
                       <Grid>
                         <TextBox x:Name="showVersion" Text="{Binding ResistedVersion, Mode=OneWay}" />
-                        <Popup PlacementTarget="{Binding ElementName=showVersion}" IsOpen="{Binding IsKeyboardFocused,ElementName=showVersion, Mode=OneWay}">
+                        <Popup Placement="Left" PlacementTarget="{Binding ElementName=showVersion}" IsOpen="{Binding IsKeyboardFocused,ElementName=showVersion, Mode=OneWay}">
                           <Border>
                             <ListBox
                               SelectedValuePath="Key"
