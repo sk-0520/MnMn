@@ -87,6 +87,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         JObject _dmcInfo;
 
         //int _referenceCount;
+        string _descriptionHtmlSource;
 
         #endregion
 
@@ -209,7 +210,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 動画紹介HTMLソース。
         /// </summary>
-        public string DescriptionHtmlSource { get; private set; }
+        public string DescriptionHtmlSource
+        {
+            get { return this._descriptionHtmlSource; }
+            // DescriptionBase用のIFとしてpublic。
+            set { SetVariableValue(ref this._descriptionHtmlSource, value); }
+        }
+
         public string PageVideoToken { get; private set; }
         /// <summary>
         /// 元にしている動画生情報。

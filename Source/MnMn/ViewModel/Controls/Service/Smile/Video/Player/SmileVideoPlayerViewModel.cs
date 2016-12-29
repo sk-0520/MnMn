@@ -944,55 +944,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void MakeDescription()
-        {
-            IsMadeDescription = true;
+//        void MakeDescription()
+//        {
+//            //var a = true; if(a) return;
 
-            //var flowDocumentSource = SmileDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
-            var description = new SmileDescription(Mediation);
-            var flowDocumentSource = description.ConvertFlowDocumentFromHtml(Information.DescriptionHtmlSource);
-#if false
-#if DEBUG
-            var h = Path.Combine(Information.CacheDirectory.FullName, $"description.html");
-            using(var s = File.CreateText(h)) {
-                s.Write(Information.DescriptionHtmlSource);
-            }
-            foreach(var ext in new[] { "xml", "xaml" }) {
-                var x = Path.Combine(Information.CacheDirectory.FullName, $"description.{ext}");
-                using(var s = File.CreateText(x)) {
-                    s.Write(flowDocumentSource);
-                }
-            }
-#endif
-#endif
-            DocumentDescription.Dispatcher.Invoke(() => {
-                var document = DocumentDescription.Document;
+//            IsMadeDescription = true;
 
-                document.Blocks.Clear();
+//            //var flowDocumentSource = SmileDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
+//            var description = new SmileDescription(Mediation);
+//            var flowDocumentSource = description.ConvertFlowDocumentFromHtml(Information.DescriptionHtmlSource);
+//#if false
+//#if DEBUG
+//            var h = Path.Combine(Information.CacheDirectory.FullName, $"description.html");
+//            using(var s = File.CreateText(h)) {
+//                s.Write(Information.DescriptionHtmlSource);
+//            }
+//            foreach(var ext in new[] { "xml", "xaml" }) {
+//                var x = Path.Combine(Information.CacheDirectory.FullName, $"description.{ext}");
+//                using(var s = File.CreateText(x)) {
+//                    s.Write(flowDocumentSource);
+//                }
+//            }
+//#endif
+//#endif
+//            DocumentDescription.Dispatcher.Invoke(() => {
+//                var document = DocumentDescription.Document;
 
-                using(var stringReader = new StringReader(flowDocumentSource))
-                using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
-                    try {
-                        var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
-                        document.Blocks.AddRange(flowDocument.Blocks.ToArray());
-                    } catch(XamlParseException ex) {
-                        Mediation.Logger.Error(ex);
-                        var error = new Paragraph();
-                        error.Inlines.Add(ex.ToString());
+//                document.Blocks.Clear();
 
-                        var raw = new Paragraph();
-                        raw.Inlines.Add(flowDocumentSource);
+//                using(var stringReader = new StringReader(flowDocumentSource))
+//                using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
+//                    try {
+//                        var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
+//                        document.Blocks.AddRange(flowDocument.Blocks.ToArray());
+//                    } catch(XamlParseException ex) {
+//                        Mediation.Logger.Error(ex);
+//                        var error = new Paragraph();
+//                        error.Inlines.Add(ex.ToString());
 
-                        document.Blocks.Add(error);
-                        document.Blocks.Add(raw);
-                    }
-                }
+//                        var raw = new Paragraph();
+//                        raw.Inlines.Add(flowDocumentSource);
 
-                document.FontSize = DocumentDescription.FontSize;
-                document.FontFamily = DocumentDescription.FontFamily;
-                document.FontStretch = DocumentDescription.FontStretch;
-            });
-        }
+//                        document.Blocks.Add(error);
+//                        document.Blocks.Add(raw);
+//                    }
+//                }
+
+//                document.FontSize = DocumentDescription.FontSize;
+//                document.FontFamily = DocumentDescription.FontFamily;
+//                document.FontStretch = DocumentDescription.FontStretch;
+//            });
+//        }
 
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
         {
@@ -1678,9 +1680,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
-            if(!IsMadeDescription) {
-                MakeDescription();
-            }
+            //if(!IsMadeDescription) {
+            //    MakeDescription();
+            //}
             if(!IsCheckedTagPedia) {
                 CheckTagPedia();
             }
@@ -1740,9 +1742,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(DownloadCancel == null || !DownloadCancel.IsCancellationRequested) {
                 if(Information.PageHtmlLoadState == LoadState.Loaded) {
-                    if(!IsMadeDescription) {
-                        MakeDescription();
-                    }
+                    //if(!IsMadeDescription) {
+                    //    MakeDescription();
+                    //}
                     if(!IsCheckedTagPedia) {
                         CheckTagPedia();
                     }
@@ -1846,7 +1848,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             _prevStateChangedPosition = initPrevStateChangedPosition;
             IsBufferingStop = false;
             UserOperationStop.Value = false;
-            IsMadeDescription = false;
+            //IsMadeDescription = false;
             IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;

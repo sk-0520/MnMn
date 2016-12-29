@@ -393,7 +393,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public DescriptionBase DescriptionProcessor
         {
             get { return new SmileDescription(Mediation); }
-            set { }
         }
 
         #endregion

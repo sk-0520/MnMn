@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Define.UI.Player;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video;
@@ -370,10 +371,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public FewViewModel<bool> UserOperationStop { get; } = new FewViewModel<bool>(false);
 
-        /// <summary>
-        /// 投降者コメントが構築されたか。
-        /// </summary>
-        bool IsMadeDescription { get; set; } = false;
+        ///// <summary>
+        ///// 投降者コメントが構築されたか。
+        ///// </summary>
+        //bool IsMadeDescription { get; set; } = false;
         /// <summary>
         ///
         /// </summary>
@@ -1089,6 +1090,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
+
+        public DescriptionBase DescriptionProcessor => new SmileDescription(Mediation);
 
         #endregion
     }

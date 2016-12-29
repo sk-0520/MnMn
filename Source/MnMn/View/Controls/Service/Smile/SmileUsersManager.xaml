@@ -303,7 +303,7 @@
                     <i:Interaction.Behaviors>
                       <app_view_attachment:HtmlDescriptionBehavior 
                         HtmlSource="{Binding DescriptionHtmlSource}" 
-                        DescriptionProcessor="{Binding DescriptionProcessor}"
+                        DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                       />
                     </i:Interaction.Behaviors>
                     <FlowDocument
