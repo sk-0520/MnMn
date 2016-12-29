@@ -719,8 +719,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             //IsProcessCancel = true;
 
             if(DownloadCancel != null) {
-                Mediation.Logger.Trace($"{VideoId}: Cancel!");
+                Mediation.Logger.Trace($"{VideoId}: download cancel!");
                 DownloadCancel.Cancel();
+                DownloadCancel.Dispose();
+                DownloadCancel = null;
             }
 
             if(UsingDmc.Value) {
@@ -810,7 +812,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
 
                 var dmc = new Dmc(Mediation);
-                return dmc.CloseAsync(DmcApiUri, DmcObject);
+                return dmc.CloseAsync(DmcApiUri, DmcObject).ContinueWith(t => {
+                    var dmcApiUri = DmcApiUri;
+                    DmcApiUri = null;
+                    Mediation.Logger.Trace($"cancel set null: {DmcApiUri}");
+                });
             }
 
             return Task.CompletedTask;
