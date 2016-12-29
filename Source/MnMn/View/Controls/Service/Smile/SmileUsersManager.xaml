@@ -299,17 +299,17 @@
                     </StackPanel>
                   </ScrollViewer>
 
-                  <FlowDocumentScrollViewer Grid.Column="2" VerticalAlignment="Stretch">
+                  <FlowDocumentScrollViewer Grid.Column="2" VerticalAlignment="Stretch" Style="{StaticResource HtmlDescriptionDocument}">
                     <i:Interaction.Behaviors>
                       <app_view_attachment:HtmlDescriptionBehavior 
                         HtmlSource="{Binding DescriptionHtmlSource}" 
                         DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                       />
                     </i:Interaction.Behaviors>
-                    <FlowDocument
+                    <!--<FlowDocument
                       FontSize="11.5"
                       PagePadding="10, 2, 10, 0"
-                    />
+                    />-->
                     <!--<FlowDocumentScrollViewer.Document>
                       <FlowDocument>
                         <Paragraph>
