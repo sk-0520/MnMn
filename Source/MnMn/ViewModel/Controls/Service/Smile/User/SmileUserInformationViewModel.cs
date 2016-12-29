@@ -32,9 +32,12 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile;
@@ -46,7 +49,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
     /// <summary>
     /// ユーザー情報表示用VM。
     /// </summary>
-    public class SmileUserInformationViewModel: InformationViewModelBase
+    public class SmileUserInformationViewModel: InformationViewModelBase, ISmileDescription
     {
         #region variable
 
@@ -308,6 +311,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
                 return string.Empty;
             }
+            set { /* dummy */}
         }
         public bool IsPublicMyList
         {
@@ -386,6 +390,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             }
         }
 
+        public DescriptionBase DescriptionProcessor
+        {
+            get { return new SmileDescription(Mediation); }
+            set { }
+        }
+
         #endregion
 
         #region function
@@ -443,6 +453,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             CallOnPropertyChange(nameof(PostFinder));
 
             return PostFinder.LoadDefaultCacheAsync();
+        }
+
+        Task OpenVideoLinkAsync(string videoId)
+        {
+            Mediation.Logger.Error($"not impl: {videoId}");
+            return Task.CompletedTask;
         }
 
         #endregion
@@ -508,6 +524,57 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             CallOnPropertyChange(propertyNames);
 
         }
+
+        #endregion
+
+        #region ISmileDescription
+
+        #region ISmileVideoDescription
+
+        public ICommand OpenUriCommand
+        {
+            get { return CreateCommand(o => DescriptionUtility.OpenUri(o, Mediation.Logger)); }
+        }
+        public ICommand MenuOpenUriCommand => OpenUriCommand;
+        public ICommand MenuOpenUriInAppBrowserCmmand
+        {
+            get { return CreateCommand(o => DescriptionUtility.OpenUriInAppBrowser(o, Mediation)); }
+        }
+        public ICommand MenuCopyUriCmmand { get { return CreateCommand(o => DescriptionUtility.CopyUri(o, Mediation.Logger)); } }
+
+        public ICommand OpenVideoIdLinkCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var videoId = o as string;
+                        OpenVideoLinkAsync(videoId).ConfigureAwait(false);
+                    }
+                );
+            }
+        }
+        public ICommand MenuOpenVideoIdLinkCommand => OpenVideoIdLinkCommand;
+        public ICommand MenuOpenVideoIdLinkInNewWindowCommand { get { return CreateCommand(o => SmileDescriptionUtility.MenuOpenVideoLinkInNewWindowAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuCopyVideoIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyVideoId(o, Mediation.Logger)); } }
+        public ICommand MenuAddPlayListVideoIdLinkCommand { get { return CreateCommand(o => { Mediation.Logger.Trace("not impl"); }); } }
+        public ICommand MenuAddCheckItLaterVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddCheckItLaterVideoIdAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager).ConfigureAwait(false)); }
+        }
+        public ICommand MenuAddUnorganizedBookmarkVideoIdCommand
+        {
+            get { return CreateCommand(o => SmileDescriptionUtility.AddUnorganizedBookmarkAsync(o, Mediation, Mediation.Smile.VideoMediation.ManagerPack.BookmarkManager).ConfigureAwait(false)); }
+        }
+
+        public ICommand OpenMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenMyListId(o, Mediation)); } }
+        public ICommand MenuOpenMyListIdLinkCommand => OpenMyListIdLinkCommand;
+        public ICommand MenuAddMyListIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.AddMyListBookmarkAsync(o, Mediation).ConfigureAwait(false)); } }
+        public ICommand MenuCopyMyListIdCommand { get { return CreateCommand(o => SmileDescriptionUtility.CopyMyListId(o, Mediation.Logger)); } }
+
+        public ICommand OpenUserIdLinkCommand { get { return CreateCommand(o => SmileDescriptionUtility.OpenUserId((string)o, Mediation)); } }
+
+        #endregion
 
         #endregion
     }
