@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile
         public bool IsPublicLocation { get; set; }
 
         [DataMember]
-        public string Description { get; set; }
+        public string DescriptionHtmlSource { get; set; }
 
         [DataMember]
         public Uri ThumbnailUri { get; set; }

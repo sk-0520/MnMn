@@ -298,12 +298,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 return false;
             }
         }
-        public string Description
+        public string DescriptionHtmlSource
         {
             get
             {
                 if(InformationLoadState == LoadState.Loaded) {
-                    return UserInformation.Description;
+                    return UserInformation.DescriptionHtmlSource;
                 }
 
                 return string.Empty;
@@ -500,7 +500,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 nameof(ResistedVersion),
                 nameof(LockedResistedVersion),
                 nameof(IsPremium),
-                nameof(Description),
+                nameof(DescriptionHtmlSource),
                 nameof(IsPublicMyList),
                 nameof(IsPublicPost),
                 nameof(IsPublicReport),

@@ -302,7 +302,7 @@
                     <FlowDocumentScrollViewer.Document>
                       <FlowDocument>
                         <Paragraph>
-                          <TextBlock Text="{Binding Description}" />
+                          <TextBlock Text="{Binding DescriptionHtmlSource}" />
                         </Paragraph>
                       </FlowDocument>
                     </FlowDocumentScrollViewer.Document>
