@@ -98,14 +98,31 @@
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <TextBlock Grid.Column="0" Text="{Binding Name}" />
+              <TextBlock x:Name="displayText" VerticalAlignment="Center" Grid.Column="0" Text="{Binding Name}" />
 
-              <StackPanel x:Name="commandsPlay" Grid.Column="1" >
-                <Button Command="{Binding DataContext.SequentialPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">play</Button>
-                <Button Command="{Binding DataContext.RandomPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">rand</Button>
+              <StackPanel x:Name="commandsPlay" Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="{StaticResource RightMargin}">
+                <Button Command="{Binding DataContext.SequentialPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource Hyperlink}" Margin="{StaticResource RightMargin}">
+                  <StackPanel Style="{StaticResource ItemPanel}">
+                    <Viewbox Style="{StaticResource MinimumItemBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Play_Sequential}" Style="{StaticResource MinimumLinkIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                    <TextBlock>再生</TextBlock>
+                  </StackPanel>
+                </Button>
+                <Button Command="{Binding DataContext.RandomPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource Hyperlink}">
+                  <StackPanel Style="{StaticResource ItemPanel}">
+                    <Viewbox Style="{StaticResource MinimumIconBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Play_Random}" Style="{StaticResource MinimumLinkIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                    <TextBlock>ランダム</TextBlock>
+                  </StackPanel>
+                </Button>
               </StackPanel>
             </Grid>
             
