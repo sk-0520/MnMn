@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<user>
+	<version>
+		<element key="仮">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（仮）" />
+			</words>
+			<extends>
+				<extend key="start" value="2006/12/12" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（β）" />
+			</words>
+			<extends>
+				<extend key="start" value="2007/01/15" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（γ）" />
+			</words>
+			<extends>
+				<extend key="start" value="2007/06/06" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（RC）" />
+			</words>
+			<extends>
+				<extend key="start" value="2007/06/18" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（RC2）" />
+			</words>
+			<extends>
+				<extend key="start" value="2007/10/10" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（SP1）" />
+			</words>
+			<extends>
+				<extend key="start" value="2008/03/05" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（夏）" />
+			</words>
+			<extends>
+				<extend key="start" value="2008/07/05" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（秋）" />
+			</words>
+			<extends>
+				<extend key="start" value="2008/10/01" />
+				<extend key="tail" value="" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（冬）" />
+			</words>
+			<extends>
+				<extend key="start" value="2008/15/05" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（ββ）" />
+			</words>
+			<extends>
+				<extend key="start" value="2008/12/12" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（9）" />
+			</words>
+			<extends>
+				<extend key="start" value="2009/10/29" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画（原宿）" />
+			</words>
+			<extends>
+				<extend key="start" value="2010/29" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画:Zero" />
+			</words>
+			<extends>
+				<extend key="start" value="2012/05/01" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画:Q" />
+			</words>
+			<extends>
+				<extend key="start" value="2012/10/17" />
+			</extends>
+		</element>
+		<element key="">
+			<words>
+				<word key="ja-jp" value="ニコニコ動画:GINZA" />
+			</words>
+			<extends>
+				<extend key="start" value="2013/10/08" />
+			</extends>
+		</element>
+		<!--
+		<element key="">
+			<words>
+				<word key="ja-jp" value="" />
+			</words>
+			<extends>
+				<extend key="start" value="" />
+			</extends>
+		</element>
+		-->
+	</version>
+</user>
