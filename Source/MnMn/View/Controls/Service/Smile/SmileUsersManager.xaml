@@ -205,99 +205,30 @@
                       <Label>ユーザーID</Label>
                       <TextBox Text="{Binding UserId, Mode=OneWay}" />
 
-                      <StackPanel>
-                        <Label>登録</Label>
-                        <TextBox Text="{Binding ResistedVersion, Mode=OneWay}" />
-
-                        <Grid>
-                          <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                          </Grid.ColumnDefinitions>
-
-                          <RepeatButton
-                            Grid.Column="0"
-                            CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-                            Command="ScrollBar.LineLeftCommand"
-                          >
-                            <Viewbox Style="{StaticResource SmallIconBox}">
-                              <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                <Path Data="{StaticResource Image_ScrollLeft}" Style="{StaticResource SmallDefaultIconPath}" />
-                              </Canvas>
-                            </Viewbox>
-                          </RepeatButton>
-
-                          <!--<ScrollViewer x:Name="PART_ScrollViewer" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                            <ItemsControl ItemsSource="{Binding DataContext.UserVersionItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                              <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                  <VirtualizingStackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                              </ItemsControl.ItemsPanel>
-                              <ItemsControl.ItemTemplate>
+                      <Label>登録</Label>
+                      <Grid>
+                        <TextBox x:Name="showVersion" Text="{Binding ResistedVersion, Mode=OneWay}" />
+                        <Popup PlacementTarget="{Binding ElementName=showVersion}" IsOpen="{Binding IsKeyboardFocused,ElementName=showVersion, Mode=OneWay}">
+                          <Border>
+                            <ListBox
+                              SelectedValuePath="Key"
+                              ItemsSource="{Binding DataContext.UserVersionItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              SelectedValue="{Binding LockedResistedVersion}"
+                              PreviewMouseDown="ListBox_PreviewMouseDown"
+                            >
+                              <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                  <TextBlock Text="{Binding Key}">
-                                    <TextBlock.Style>
-                                      <Style TargetType="TextBlock">
-                                        <Style.Triggers>
-                                          <DataTrigger Value="True">
-                                            <DataTrigger.Binding>
-                                              <MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}">
-                                                <Binding Path="Key" />
-                                                <Binding Path="DataContext.ResistedVersion" Mode="OneWay" RelativeSource="{RelativeSource AncestorType=TabControl}" />
-                                              </MultiBinding>
-                                            </DataTrigger.Binding>
-                                            <Setter Property="Background" Value="Red" />
-                                          </DataTrigger>
-                                        </Style.Triggers>
-                                      </Style>
-                                    </TextBlock.Style>
-                                  </TextBlock>
+                                  <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding StartTime, StringFormat=yyyy/MM/dd}" />
+                                    <TextBlock Text=": " />
+                                    <TextBlock Text="{Binding DisplayText}" />
+                                  </StackPanel>
                                 </DataTemplate>
-                              </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                          </ScrollViewer>-->
-                          <ListBox 
-                            x:Name="PART_ScrollViewer" 
-                            Grid.Column="1" 
-                            SelectedValuePath="Key"
-                            ItemsSource="{Binding DataContext.UserVersionItems, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            SelectedValue="{Binding ResistedVersion, Mode=OneWay}"
-                            PreviewMouseDown="ListBox_PreviewMouseDown"
-                          >
-                            <i:Interaction.Behaviors>
-                              <package_stackoverflow_com:ScrollIntoViewForListBox  />
-                            </i:Interaction.Behaviors>
-                            <ListBox.ItemsPanel>
-                              <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Horizontal" />
-                              </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                              <DataTemplate>
-                                <Grid>
-                                  <TextBlock Text="{Binding DisplayText}" />
-                                </Grid>
-                              </DataTemplate>
-                            </ListBox.ItemTemplate>
-                          </ListBox>
-
-                          <RepeatButton
-                            Grid.Column="2"
-                            CommandTarget="{Binding ElementName=PART_ScrollViewer}"
-                            Command="ScrollBar.LineRightCommand"
-                          >
-                            <Viewbox Style="{StaticResource SmallIconBox}">
-                              <Canvas Style="{StaticResource IconCanvas-24x24}">
-                                <Path Data="{StaticResource Image_ScrollRight}" Style="{StaticResource SmallDefaultIconPath}" />
-                              </Canvas>
-                            </Viewbox>
-                          </RepeatButton>
-                        </Grid>
-                      </StackPanel>
+                              </ListBox.ItemTemplate>
+                            </ListBox>
+                          </Border>
+                        </Popup>
+                      </Grid>
 
                       <Label>会員情報</Label>
                       <TextBox>

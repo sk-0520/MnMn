@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile
 
         private void ListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //e.Handled = true;
+            e.Handled = true;
         }
     }
 }

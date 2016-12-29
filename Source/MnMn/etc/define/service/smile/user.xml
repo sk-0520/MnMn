@@ -63,7 +63,6 @@
 			</words>
 			<extends>
 				<extend key="start" value="2008/10/01" />
-				<extend key="tail" value="" />
 			</extends>
 		</element>
 		<element key="冬">
@@ -71,7 +70,7 @@
 				<word key="ja-jp" value="ニコニコ動画（冬）" />
 			</words>
 			<extends>
-				<extend key="start" value="2008/15/05" />
+				<extend key="start" value="2008/12/05" />
 			</extends>
 		</element>
 		<element key="ββ">

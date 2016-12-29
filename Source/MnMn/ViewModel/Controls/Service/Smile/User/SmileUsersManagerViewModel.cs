@@ -95,9 +95,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
 
         SmileUserDefinedModel UserDefined { get; }
 
-        public CollectionModel<DefinedElementModel> UserVersionItems
+        public IEnumerable<SmileUserVersionViewModel> UserVersionItems
         {
-            get { return UserDefined.VersionItems; }
+            get { return UserDefined.VersionItems.Select(i => new SmileUserVersionViewModel(i)); }
         }
 
         public CollectionModel<SmileUserInformationViewModel> UserItems { get; } = new CollectionModel<SmileUserInformationViewModel>();
