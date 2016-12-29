@@ -1579,6 +1579,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             ClearComment();
             VideoPosition = Player.Position;
             PlayTime = PrevPlayedTime = Player.Time;
+
+            ResetFocus();
         }
 
         void AddCommentFilter(SmileVideoCommentFilteringTarget target, string source, bool setGlobalSetting)
@@ -1630,6 +1632,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //ChangeSeekVideoPosition(true, true, 0);
                 ClearComment();
                 Player.Position = 0;
+
+                ResetFocus();
             }
         }
 
@@ -1929,6 +1933,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
 
             View.Loaded += View_Loaded;
+            View.Activated += View_Activated;
             View.Closing += View_Closing;
             Player.PositionChanged += Player_PositionChanged;
             Player.SizeChanged += Player_SizeChanged;
@@ -2064,6 +2069,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //TODO: closingはまずくね…?
 
             View.Loaded -= View_Loaded;
+            View.Activated -= View_Activated;
             View.Closing -= View_Closing;
             Player.PositionChanged -= Player_PositionChanged;
             Player.SizeChanged -= Player_SizeChanged;
@@ -2133,6 +2139,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!CanVideoPlay) {
                 return;
             }
+
+            ResetFocus();
 
             var seekbar = (Slider)sender;
             seekbar.CaptureMouse();
@@ -2322,6 +2330,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 if(restoreNormalWindow) {
                     SetWindowMode(true);
                 }
+            }
+        }
+
+        void View_Activated(object sender, EventArgs e)
+        {
+            if(!IsViewClosed) {
+                ResetFocus();
             }
         }
 
