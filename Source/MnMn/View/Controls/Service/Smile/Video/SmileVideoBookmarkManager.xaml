@@ -23,6 +23,7 @@
         <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <CollectionViewSource  x:Key="SystemNodes" Source="{Binding SystemNodes}" />
       <CollectionViewSource  x:Key="UserNodes" Source="{Binding UserNodes}" />
     </ResourceDictionary>
@@ -93,11 +94,36 @@
       </ToolBar>
       <TreeView Grid.Row="1" x:Name="treeNodes" AllowDrop="True">
         <TreeView.Resources>
+          <ControlTemplate x:Key="Node">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Grid.Column="0" Text="{Binding Name}" />
+
+              <StackPanel x:Name="commandsPlay" Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button Command="{Binding DataContext.SequentialPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">play</Button>
+                <Button Command="{Binding DataContext.RandomPlayCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">rand</Button>
+              </StackPanel>
+            </Grid>
+            
+            <!--<ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="commandsPlay" Property="Visibility" Value="Visible" />
+              </Trigger>
+              <Trigger Property="IsMouseOver" Value="False">
+                <Setter TargetName="commandsPlay" Property="Visibility" Value="Collapsed" />
+              </Trigger>
+            </ControlTemplate.Triggers>-->
+          </ControlTemplate>
+          
           <DataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkSystemNodeViewModel}">
-            <TextBlock Text="{Binding Name}" />
+            <Control Template="{StaticResource Node}" />
           </DataTemplate>
           <HierarchicalDataTemplate DataType="{x:Type app_viewmodel_controls_service_smile_video_bookmark:SmileVideoBookmarkNodeViewModel}" ItemsSource="{Binding NodeItems}">
-            <TextBlock Text="{Binding Name}" />
+            <Control Template="{StaticResource Node}" />
           </HierarchicalDataTemplate>
         </TreeView.Resources>
         <i:Interaction.Behaviors>
