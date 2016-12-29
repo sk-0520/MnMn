@@ -28,12 +28,18 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Model;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using Package.stackoverflow.com;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark
@@ -248,6 +254,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                 return CreateCommand(
                     o => UpParentNode(SelectedBookmarkNode),
                     o => SelectedBookmarkNode != null && !SelectedBookmarkNode.IsSystemNode && GetParentNode(SelectedBookmarkNode) != Node
+                );
+            }
+        }
+
+        public ICommand SequentialPlayCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => PlayAllVideosAsync((SmileVideoBookmarkNodeViewModel)o, false).ConfigureAwait(false),
+                    o => 0 < ((SmileVideoBookmarkNodeViewModel)o)?.VideoItems.Count
+                );
+            }
+        }
+
+        public ICommand RandomPlayCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => PlayAllVideosAsync((SmileVideoBookmarkNodeViewModel)o, true).ConfigureAwait(false),
+                    o => 0 < ((SmileVideoBookmarkNodeViewModel)o)?.VideoItems.Count
                 );
             }
         }
@@ -488,6 +516,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
                     SelectedBookmarkNodeFinder.RemoveItem(SelectedBookmarkNodeFinder.SelectedFinderItem);
                     SelectedBookmarkNodeFinder.SelectedFinderItem = SelectedBookmarkNodeFinder.FinderItems.Cast<SmileVideoFinderItemViewModel>().FirstOrDefault();
                 }
+            }
+        }
+
+        async Task PlayAllVideosAsync(SmileVideoBookmarkNodeViewModel node, bool isRandom)
+        {
+            var playList = new List<SmileVideoInformationViewModel>(node.VideoItems.Count);
+
+            foreach(var video in node.VideoItems) {
+                var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(video.VideoId, Constants.ServiceSmileVideoThumbCacheSpan));
+                try {
+                    var info = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
+                    playList.Add(info);
+                } catch(SmileVideoGetthumbinfoFailureException ex) {
+                    Mediation.Logger.Warning(ex);
+                }
+            }
+
+            if(playList.Any()) {
+                var vm = new SmileVideoPlayerViewModel(Mediation);
+                vm.IsRandomPlay = isRandom;
+                var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+            } else {
+                Mediation.Logger.Warning($"{node.Name}: {nameof(playList)}: empty");
             }
         }
 
