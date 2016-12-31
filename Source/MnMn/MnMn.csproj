@@ -996,7 +996,6 @@
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoGetthumbinfoUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoFeedUtility.cs" />
     <Compile Include="Logic\Utility\RawValueUtility.cs" />
-    <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Model\CheckResultModel.cs" />
     <Compile Include="Model\Feed\Rss2\Rss2GuidModel.cs" />
     <Compile Include="Model\Feed\Rss2\Rss2ItemModel.cs" />
