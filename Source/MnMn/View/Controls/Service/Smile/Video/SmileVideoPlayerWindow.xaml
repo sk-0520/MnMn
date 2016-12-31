@@ -1072,7 +1072,7 @@
               </xctk:DropDownButton.DropDownContent>
               コマンド
             </xctk:DropDownButton>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PostCommentBody, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox Grid.Row="1" Grid.Column="1" mamc:TextBoxHelper.Watermark="コメント入力" Text="{Binding PostCommentBody, UpdateSourceTrigger=PropertyChanged}">
               <TextBox.InputBindings>
                 <KeyBinding Key="Return" Command="{Binding PostCommentCommand}" />
                 <KeyBinding Key="Esc" Command="{Binding ClearCommentCommand}" />
