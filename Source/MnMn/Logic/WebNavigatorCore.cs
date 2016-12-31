@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     var path = DefaultBrowserExecuteData.Value.ApplicationPath ?? string.Empty;
                     var usingPath = Environment.ExpandEnvironmentVariables(path);
                     if(File.Exists(usingPath)) {
-                        DefaultBrowserIcon = IconUtility.Load(usingPath, Library.SharedLibrary.Define.IconScale.Small, 0, Mediation.Logger);
+                        DefaultBrowserIcon = IconUtility.Load(usingPath, ContentTypeTextNet.Library.SharedLibrary.Define.IconScale.Small, 0, Mediation.Logger);
                     }
                 });
             }
