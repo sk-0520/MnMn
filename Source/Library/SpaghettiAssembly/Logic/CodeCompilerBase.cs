@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
         public IList<string> AssemblyNames { get; } = new List<string>(defaultAssemblyNames);
 
         protected CodeDomProvider Provider { get; private set; }
+        protected CompilerResults Results { get; private set; }
 
         #endregion
 
@@ -88,6 +90,31 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
             var provider = CreateProvider();
 
             Provider = provider;
+        }
+
+        bool Compile(string source)
+        {
+            var stopWatch = new Stopwatch();
+
+            OnCompileMessage(CompileMessageKind.Compile, $"start: {DateTime.Now.ToString("u")}");
+
+            stopWatch.Start();
+            Results = Provider.CompileAssemblyFromSource(CompilerParameters, source);
+            stopWatch.Stop();
+
+            var compileElapsed = stopWatch.Elapsed;
+            
+            OnCompileMessage(CompileMessageKind.Compile, $"code: {Results.NativeCompilerReturnValue}, end: {DateTime.Now.ToString("u")}, time: {compileElapsed}");
+
+            foreach(var msg in Results.Output) {
+                OnCompileMessage(CompileMessageKind.Compile, msg);
+            }
+
+            foreach(var err in Results.Errors.Cast< CompilerError>()) {
+                OnCompileMessage(CompileMessageKind.Error, err.ToString());
+            }
+
+            return Results.Errors.Count == 0;
         }
 
         #endregion

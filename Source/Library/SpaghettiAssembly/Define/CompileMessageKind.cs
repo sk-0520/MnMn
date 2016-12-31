@@ -11,6 +11,11 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define
         /// <summary>
         /// コンパイル前の処理。
         /// </summary>
-        PreProcessor
+        PreProcessor,
+        /// <summary>
+        /// コンパイル処理。
+        /// </summary>
+        Compile,
+        Error,
     }
 }
