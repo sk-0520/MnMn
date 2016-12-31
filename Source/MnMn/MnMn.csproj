@@ -1340,7 +1340,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="etc\image\service\smile\video\" />
-    <Folder Include="etc\script\smile\" />
+    <Folder Include="etc\script\tune\service\smile\live\" />
+    <Folder Include="etc\script\tune\service\smile\video\" />
     <Folder Include="Logic\Service\Smile\Live\HalfBakedApi\" />
   </ItemGroup>
   <ItemGroup>
