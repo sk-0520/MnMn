@@ -90,6 +90,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         #region function
 
+        static string GetServiceDisplayText(ServiceType serviceType)
+        {
+            switch(serviceType) {
+
+                case ServiceType.Application:
+                    return Constants.applicationName;
+
+                case ServiceType.Smile:
+                    return Properties.Resources.String_App_Define_ServiceType_Smile;
+
+                case ServiceType.SmileVideo:
+                    return Properties.Resources.String_App_Define_ServiceType_SmileVideo;
+
+                case ServiceType.SmileLive:
+                    return Properties.Resources.String_App_Define_ServiceType_SmileLive;
+
+                default:
+                    throw new NotImplementedException();
+
+            }
+        }
+
         void ChangeTitle()
         {
             if(AssociatedObject != null) {
@@ -99,7 +121,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
                     build = $"<{build}> ";
                 }
 
-                var serviceText = DisplayTextUtility.GetDisplayText(Service);
+                //var serviceText = DisplayTextUtility.GetDisplayText(Service);
+                var serviceText = GetServiceDisplayText(Service);
                 var baseTitle = $"{build}{serviceText}: {Title}";
                 if(!isReleaseVersion) {
                     baseTitle += $" <{Constants.ApplicationVersionRevision}>";

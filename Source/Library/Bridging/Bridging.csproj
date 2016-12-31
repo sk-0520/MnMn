@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CDE064A0-0133-4C6B-AD46-32E9429D4715}</ProjectGuid>
+    <ProjectGuid>{89A67E67-827B-44D6-A237-BE50813883AC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ContentTypeTextNet.MnMn.Library.SpaghettiAssembly</RootNamespace>
-    <AssemblyName>SpaghettiAssembly</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.MnMn.Library.Bridging</RootNamespace>
+    <AssemblyName>Bridging</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -34,24 +34,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContentTypeTextNet.PInvoke, Version=1.0.6134.22209, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ContentTypeTextNet.PInvoke.1.0.0.23\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
-      <Private>True</Private>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ContentTypeTextNet.SharedLibrary, Version=0.1.6209.9908, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.97\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
-      <Private>True</Private>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,31 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.Define\ServiceType.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IConvertCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IRequestCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IResponseCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IUriCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.Model\CheckModel.cs" />
-    <Compile Include="Define\CodeLanguage.cs" />
-    <Compile Include="Define\CompileMessageEventArgs.cs" />
-    <Compile Include="Define\CompileMessageKind.cs" />
-    <Compile Include="Logic\CodeCompilerBase.cs" />
-    <Compile Include="Logic\CSharpCodeCompiler.cs" />
+    <Compile Include="Attribute\DisplayTextAttributeBase.cs" />
+    <Compile Include="Attribute\TextDisplayAttribute.cs" />
+    <Compile Include="Define\ServiceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bridging\Bridging.csproj">
-      <Project>{89a67e67-827b-44d6-a237-be50813883ac}</Project>
-      <Name>Bridging</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

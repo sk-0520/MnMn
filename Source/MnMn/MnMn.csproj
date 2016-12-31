@@ -202,9 +202,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Attribute\DisplayTextAttributeBase.cs" />
     <Compile Include="Attribute\EnumResourceDisplayAttribute.cs" />
-    <Compile Include="Attribute\TextDisplayAttribute.cs" />
     <Compile Include="Constants.Config.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
@@ -241,7 +239,6 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoFinderFilteringTarget.cs" />
     <Compile Include="Define\UpdateCheckState.cs" />
     <Compile Include="Define\DefinedImageSourceKind.cs" />
-    <Compile Include="Define\DisplayKind.cs" />
     <Compile Include="Define\Event\DownloadStartType.cs" />
     <Compile Include="Define\Event\DownloadStartEventArgs.cs" />
     <Compile Include="Define\Event\DownloadingErrorEventArgs.cs" />
@@ -1374,6 +1371,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Library\Bridging\Bridging.csproj">
+      <Project>{89a67e67-827b-44d6-a237-be50813883ac}</Project>
+      <Name>Bridging</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{922d77b4-f3b7-4685-b6dc-6ecb0f4bbe8f}</Project>
       <Name>Package</Name>
