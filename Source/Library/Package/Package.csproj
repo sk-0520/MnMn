@@ -1202,7 +1202,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SpaghettiAssembly\SpaghettiAssembly.csproj">
+      <Project>{cde064a0-0133-4c6b-ad46-32e9429d4715}</Project>
+      <Name>SpaghettiAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Geckofx45.45.0.28\build\Geckofx45.targets" Condition="Exists('..\..\packages\Geckofx45.45.0.28\build\Geckofx45.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
