@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
     public class AppSaveOrderModel: OrderModel
     {
         public AppSaveOrderModel(bool isBackup)
-            : base(Define.OrderKind.Save, Define.ServiceType.Application)
+            : base(Define.OrderKind.Save, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application)
         {
             IsBackup = isBackup;
         }

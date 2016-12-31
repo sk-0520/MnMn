@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Order
         /// </summary>
         /// <param name="isTargetLargeObjectHeap">LOHを含めるか</param>
         public AppCleanMemoryOrderModel(bool isTargetLargeObjectHeap)
-            : base(Define.OrderKind.CleanMemory, Define.ServiceType.Application)
+            : base(OrderKind.CleanMemory, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application)
         {
             IsTargetLargeObjectHeap = isTargetLargeObjectHeap;
         }

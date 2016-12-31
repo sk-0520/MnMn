@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
     public class SmileVideoProcessRequestModel: ProcessRequestModelBase<SmileVideoProcessParameterModelBase>
     {
         public SmileVideoProcessRequestModel(SmileVideoProcessParameterModelBase parameter)
-            : base(ServiceType.SmileVideo, parameter)
+            : base(ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.SmileVideo, parameter)
         { }
     }
 }

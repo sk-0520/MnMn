@@ -27,6 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppSettingManagerViewModel(Mediation mediation)
             : base(mediation)
         {
-            AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, Define.ServiceType.Application));
+            AppSetting = Mediation.GetResultFromRequest<AppSettingModel>(new Model.Request.RequestModel(Define.RequestKind.Setting, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Application));
             ThemeDefine = SerializeUtility.LoadXmlSerializeFromFile<ThemeDefineModel>(Constants.ApplicationThemeDefinePath);
             SelectedApplicationTheme = AppSetting.Theme.ApplicationTheme;
             SelectedAccent = AppSetting.Theme.Accent;

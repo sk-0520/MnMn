@@ -93,6 +93,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.MultiCommandParameter.Service.Smile.Vid
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player
 {

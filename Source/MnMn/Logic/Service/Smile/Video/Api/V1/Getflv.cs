@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;

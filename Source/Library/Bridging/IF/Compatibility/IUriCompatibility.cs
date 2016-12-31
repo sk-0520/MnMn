@@ -19,33 +19,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Define
+
+namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
 {
     /// <summary>
-    /// 対象サービス種別。
+    /// URI変換の互換処理。
     /// </summary>
-    internal enum ServiceType
+    public interface IUriCompatibility
     {
         /// <summary>
-        /// 本体。
+        /// 処理前に実行されるURI変更処理。
         /// </summary>
-        //[TextDisplay(Constants.applicationName)]
-        Application,
-        /// <summary>
-        /// ニコニコ。
-        /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_Smile))]
-        Smile,
-        /// <summary>
-        /// ニコニコ動画。
-        /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileVideo))]
-        SmileVideo,
-        /// <summary>
-        /// ニコニコ生放送。
-        /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileLive))]
-        SmileLive,
+        /// <param name="uri">使用するURI</param>
+        /// <param name="serviceType">呼び出し元の使用目的</param>
+        /// <returns></returns>
+        string ConvertUri(string uri, ServiceType serviceType);
     }
 }

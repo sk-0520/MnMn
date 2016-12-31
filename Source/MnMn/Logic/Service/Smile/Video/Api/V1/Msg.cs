@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoMsgPacketModel> LoadAsync(Uri msgServer, string threadId, string userId, int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount, RawSmileVideoGetthreadkeyModel threadkeyModel)
         {
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msg, ServiceType.SmileVideo)) {
                 //page.ParameterType = ParameterType.Mapping;
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
                 page.ReplaceRequestParameters["thread-id"] = threadId;
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoPostKeyModel> LoadPostKeyAsync(string threadId, int commentCount)
         {
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPostKey, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPostKey, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["block-no"] = (Math.Floor((commentCount + 1) / 100.0)).ToString();
                 page.ReplaceUriParameters["thread-id"] = threadId;
 
@@ -105,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, Session, SmileVideoMediationKey.msgPost, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["msg-uri"] = msgServer.OriginalString;
 
                 page.ReplaceRequestParameters["thread-id"] = threadId;

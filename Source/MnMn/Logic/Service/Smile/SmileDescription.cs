@@ -19,11 +19,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.Description;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
-using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
 using ContentTypeTextNet.MnMn.MnMn.IF.Service.Smile.Video;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
@@ -35,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         { }
 
         public SmileDescription(IConvertCompatibility convertCompatibility)
-            : this(convertCompatibility, ServiceType.Smile)
+            : this(convertCompatibility, ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Smile)
         { }
 
         #region function

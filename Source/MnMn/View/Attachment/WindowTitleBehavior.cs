@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 

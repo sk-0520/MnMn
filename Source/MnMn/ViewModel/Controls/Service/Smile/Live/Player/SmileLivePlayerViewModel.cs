@@ -31,6 +31,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;

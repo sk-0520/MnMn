@@ -60,12 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.Define\ServiceType.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IConvertCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IRequestCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IResponseCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.IF.Compatibility\IUriCompatibility.cs" />
-    <Compile Include="ContentTypeTextNet.MnMn.MnMn.Model\CheckModel.cs" />
     <Compile Include="Define\CodeLanguage.cs" />
     <Compile Include="Define\CompileMessageEventArgs.cs" />
     <Compile Include="Define\CompileMessageKind.cs" />
@@ -73,9 +67,7 @@
     <Compile Include="Logic\CSharpCodeCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
     public class SmileVideoCustomSettingRequestModel: CustomSettingRequestModelBase
     {
         public SmileVideoCustomSettingRequestModel(SmileVideoCustomSettingKind customSettingKind)
-            :base(ServiceType.SmileVideo)
+            :base(ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.SmileVideo)
         {
             CustomSettingKind = customSettingKind;
         }

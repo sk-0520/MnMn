@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile.Video
     public class SmileVideoInformationCacheRequestModel: CustomCacheDataRequestModelBase
     {
         public SmileVideoInformationCacheRequestModel(SmileVideoInformationCacheParameterModel parameter)
-            : base(Define.ServiceType.SmileVideo, parameter)
+            : base(ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.SmileVideo, parameter)
         {
             CacheParameter = (SmileVideoInformationCacheParameterModel)Parameter;
         }

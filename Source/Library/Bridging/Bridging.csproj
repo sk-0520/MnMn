@@ -59,6 +59,10 @@
     <Compile Include="Attribute\DisplayTextAttributeBase.cs" />
     <Compile Include="Attribute\TextDisplayAttribute.cs" />
     <Compile Include="Define\ServiceType.cs" />
+    <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
+    <Compile Include="IF\Compatibility\IRequestCompatibility.cs" />
+    <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
+    <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
     <Compile Include="Model\CheckModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
