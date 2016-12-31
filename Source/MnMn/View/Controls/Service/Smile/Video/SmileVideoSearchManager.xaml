@@ -166,6 +166,9 @@
                 <StackPanel.Resources>
                   <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="{StaticResource LeftMargin}" />
+                    <Setter Property="Padding" Value="1" />
+                    <Setter Property="MinWidth" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
                   </Style>
                 </StackPanel.Resources>
                 <Button CommandParameter="{Binding}">
