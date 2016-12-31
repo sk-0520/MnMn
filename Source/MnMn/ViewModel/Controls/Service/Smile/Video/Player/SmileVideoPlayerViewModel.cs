@@ -1065,6 +1065,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var videoInformation = await SmileDescriptionUtility.GetVideoInformationAsync(videoId, Mediation);
             if(videoInformation != null) {
                 PlayListItems.Add(videoInformation);
+                CanPlayNextVieo.Value = true;
             }
         }
 
