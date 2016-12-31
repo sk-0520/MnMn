@@ -71,6 +71,9 @@
     <SlowCheetah_NuGetImportPath Condition=" '$(SlowCheetah_NuGetImportPath)'=='' ">$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\Properties\SlowCheetah\SlowCheetah.Transforms.targets ))</SlowCheetah_NuGetImportPath>
     <SlowCheetahTargets Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='true' and Exists('$(SlowCheetah_NuGetImportPath)') ">$(SlowCheetah_NuGetImportPath)</SlowCheetahTargets>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContentTypeTextNet.PInvoke">
       <HintPath>..\packages\ContentTypeTextNet.PInvoke.1.0.0.23\lib\net46\ContentTypeTextNet.PInvoke.dll</HintPath>
@@ -811,6 +814,7 @@
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
     <Resource Include="Resources\Navigationbar\Wait.png" />
+    <None Include="Properties\app.manifest" />
     <None Include="Resources\File\Xaml\DescriptionLink.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

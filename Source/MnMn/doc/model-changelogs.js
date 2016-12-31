@@ -144,7 +144,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#326: 明示的なマニフェストを使用する',
+						'comments': [
+							'副作的なものだけど Windows のバージョンが正しく取得できるようになった'
+						]
 					},
 					{
 						'revision': '',
