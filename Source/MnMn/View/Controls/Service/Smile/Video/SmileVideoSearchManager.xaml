@@ -82,6 +82,8 @@
         x:Name="listSearch"
         Grid.Column="1"
         IsEditable="True"
+        VirtualizingStackPanel.IsVirtualizing="True" 
+        VirtualizingStackPanel.VirtualizationMode="Recycling"
         Text="{Binding InputQuery}"
         ItemsSource="{Binding SearchHistoryItems}"
         SelectedItem="{Binding SelectedQueryHistory}"
