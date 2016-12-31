@@ -278,12 +278,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadVideoEnd()
         { }
 
-        protected async Task LoadVideoAsync(Uri downloadUri, FileInfo donwloadFile, long headPosition)
+        protected async Task LoadVideoAsync(Uri downloadUri, FileInfo downloadFile, long headPosition)
         {
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
-            VideoFile = donwloadFile;
+            VideoFile = downloadFile;
             DownloadUri = downloadUri;
 
             DownloadCancel = new CancellationTokenSource();
