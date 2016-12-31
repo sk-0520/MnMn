@@ -34,7 +34,6 @@
       <TextBox
         mamc:TextBoxHelper.Watermark="動画ID: smXXXXXX"
         mamc:TextBoxHelper.ButtonCommand="{Binding OpenVideoPlayerCommand}"
-        Width="140"
         Text="{Binding InputVideoId, UpdateSourceTrigger=PropertyChanged}"
         Style="{StaticResource SearchTextBox}"
       >
