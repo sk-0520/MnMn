@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             : base(uriListPath, uriParametersPath, requestHeaderPath, requestParametersPath, requestMappingsPath)
         {
             Mediation = mediation;
+
+            Script = CreateScript();
         }
 
         #region property
@@ -47,6 +49,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         internal abstract object RequestShowView(ShowViewRequestModel reque);
 
         internal abstract void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack);
+
+        #endregion
+
+        #region 
+
+        protected override SpaghettiScript CreateScript()
+        {
+            var myType = GetType();
+            var domainName = myType.Namespace + "." + myType.Name;
+
+            return new SpaghettiScript(domainName, Mediation.Logger);
+        }
 
         #endregion
     }

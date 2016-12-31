@@ -100,6 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected MappingsModel RequestMappingList { get; }
 
+        protected SpaghettiScript Script { get; set; }
+
         #endregion
 
         #region function
@@ -422,6 +424,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             return result;
         }
+
+        protected abstract SpaghettiScript CreateScript();
 
         #endregion
 

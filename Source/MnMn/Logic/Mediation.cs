@@ -64,6 +64,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Logger.LoggerConfig.PutsConsole = true;
             Logger.Information("start!");
 
+            Script = CreateScript();
+
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
@@ -311,6 +313,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region MediationBase
+
+        protected override SpaghettiScript CreateScript()
+        {
+            var myType = GetType();
+            var domainName = myType.Namespace + "." + myType.Name;
+
+            return new SpaghettiScript(domainName, Logger);
+        }
 
         public override ResponseModel Request(RequestModel request)
         {
