@@ -166,7 +166,7 @@
                 <StackPanel.Resources>
                   <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="{StaticResource LeftMargin}" />
-                    <Setter Property="Padding" Value="1" />
+                    <Setter Property="Padding" Value="{StaticResource IndependentMargin}" />
                     <Setter Property="MinWidth" Value="0" />
                     <Setter Property="MinHeight" Value="0" />
                   </Style>
@@ -185,7 +185,7 @@
                                     <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
                                   </Canvas>
                                 </Viewbox>
-                                <TextBlock VerticalAlignment="Center">タグ検索</TextBlock>
+                                <TextBlock VerticalAlignment="Center">タグで再検索</TextBlock>
                               </StackPanel>
                             </Setter.Value>
                           </Setter>
@@ -200,7 +200,7 @@
                                     <Path Data="{StaticResource Image_Keyword}" Style="{StaticResource SmallDefaultIconPath}" />
                                   </Canvas>
                                 </Viewbox>
-                                <TextBlock VerticalAlignment="Center">キーワード検索</TextBlock>
+                                <TextBlock VerticalAlignment="Center">キーワードで再検索</TextBlock>
                               </StackPanel>
                             </Setter.Value>
                           </Setter>
