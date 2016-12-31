@@ -1072,7 +1072,7 @@
               </xctk:DropDownButton.DropDownContent>
               コマンド
             </xctk:DropDownButton>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PostCommentBody}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PostCommentBody, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button Grid.Row="1" Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
 
             <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
@@ -1086,7 +1086,13 @@
                   <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
               </DockPanel.Style>
-              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
+              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">
+                <Viewbox Style="{StaticResource MinimumIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Remove}" Style="{StaticResource MinimumAccentIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </Button>
               <!--<xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True"  Text="{Binding CommentInformation}" />-->
               <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" IsReadOnly="True" Text="{Binding CommentInformation, Mode=OneWay}" />
             </DockPanel>
