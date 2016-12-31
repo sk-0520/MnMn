@@ -3,8 +3,10 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
 
@@ -13,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
     /// <summary>
     /// 
     /// </summary>
-    public abstract class CodeCompilerBase: DisposeFinalizeBase
+    public abstract class CodeCompilerBase: MarshalByRefObject, IDisposable
     {
         #region define
 
@@ -30,6 +32,19 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
 
         public event EventHandler<CompileMessageEventArgs> CompileMessage;
 
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
+        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// </summary>
+        [field: NonSerialized]
+        public event EventHandler Disposing;
+
+        #endregion
+
+        #region variable
+
+        bool _isDisposed = false;
+
         #endregion
 
         public CodeCompilerBase(CodeLanguage codeLanguage, CompilerParameters compilerParameters)
@@ -42,7 +57,28 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
             CompilerParameters = CompilerParameters;
         }
 
+        ~CodeCompilerBase()
+        {
+            Dispose(false);
+        }
+
         #region property
+
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>されたか。
+        /// </summary>
+        [IgnoreDataMember, XmlIgnore]
+        public bool IsDisposed
+        {
+            get { return this._isDisposed; }
+            protected set
+            {
+                if(this._isDisposed && !value) {
+                    ResetDispose();
+                }
+                this._isDisposed = value;
+            }
+        }
 
         /// <summary>
         /// 言語。
@@ -63,6 +99,14 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
         #endregion
 
         #region function
+
+        /// <summary>
+        /// <see cref="IsDisposed"/>を再度無効にする場合に呼び出される。
+        /// </summary>
+        protected virtual void ResetDispose()
+        {
+            GC.ReRegisterForFinalize(this);
+        }
 
         void OnCompileMessage(CompileMessageKind kind, string message)
         {
@@ -92,7 +136,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
             Provider = provider;
         }
 
-        bool Compile(string source)
+        public bool Compile(string source)
         {
             var stopWatch = new Stopwatch();
 
@@ -117,22 +161,42 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
             return Results.Errors.Count == 0;
         }
 
-        #endregion
-
-        #region DisposeFinalizeBase
-
-        protected override void Dispose(bool disposing)
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>の内部処理。
+        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
+        /// </summary>
+        /// <param name="disposing">CLRの管理下か。</param>
+        protected virtual void Dispose(bool disposing)
         {
-            if(!IsDisposed) {
+            if(IsDisposed) {
                 if(disposing) {
                     if(Provider != null) {
                         Provider.Dispose();
                     }
                 }
+                return;
             }
 
-            base.Dispose(disposing);
+            if(Disposing != null) {
+                Disposing(this, EventArgs.Empty);
+            }
+
+            IsDisposed = true;
+            GC.SuppressFinalize(this);
         }
+
+        #endregion
+
+        #region IDisposable
+
+        /// <summary>
+        /// 解放。
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
         #endregion
     }
 }
