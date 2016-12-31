@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
 
 namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
