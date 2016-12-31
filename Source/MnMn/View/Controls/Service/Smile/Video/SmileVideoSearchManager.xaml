@@ -179,13 +179,13 @@
                           <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromTagCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                           <Setter Property="Content">
                             <Setter.Value>
-                              <StackPanel Orientation="Horizontal">
+                              <StackPanel Style="{StaticResource ItemPanel}">
                                 <Viewbox Style="{StaticResource SmallItemBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">
                                     <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
                                   </Canvas>
                                 </Viewbox>
-                                <TextBlock VerticalAlignment="Center">タグで再検索</TextBlock>
+                                <TextBlock>タグで再検索</TextBlock>
                               </StackPanel>
                             </Setter.Value>
                           </Setter>
@@ -194,13 +194,13 @@
                           <Setter Property="Command" Value="{Binding DataContext.SearchHistoryFromKeywordCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                           <Setter Property="Content">
                             <Setter.Value>
-                              <StackPanel Orientation="Horizontal">
+                              <StackPanel Style="{StaticResource ItemPanel}">
                                 <Viewbox Style="{StaticResource SmallItemBox}">
                                   <Canvas Style="{StaticResource IconCanvas-24x24}">
                                     <Path Data="{StaticResource Image_Keyword}" Style="{StaticResource SmallDefaultIconPath}" />
                                   </Canvas>
                                 </Viewbox>
-                                <TextBlock VerticalAlignment="Center">キーワードで再検索</TextBlock>
+                                <TextBlock>キーワードで再検索</TextBlock>
                               </StackPanel>
                             </Setter.Value>
                           </Setter>
@@ -210,7 +210,16 @@
                   </Button.Style>
                 </Button>
                 
-                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">削除</Button>
+                <Button Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                  <StackPanel Style="{StaticResource ItemPanel}">
+                    <Viewbox Style="{StaticResource SmallItemBox}">
+                      <Canvas Style="{StaticResource IconCanvas-24x24}">
+                        <Path Data="{StaticResource Image_Remove}" Style="{StaticResource SmallDefaultIconPath}" />
+                      </Canvas>
+                    </Viewbox>
+                    <TextBlock>削除</TextBlock>
+                  </StackPanel>
+                </Button>
               </StackPanel>
 
               <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right">
