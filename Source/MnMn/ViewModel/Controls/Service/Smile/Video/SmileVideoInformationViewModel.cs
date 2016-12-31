@@ -1063,8 +1063,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThrowNotGetthumbinfoSource();
 
             var roll = $"video.{SmileVideoInformationUtility.GetDmcRoleKey(video, audio)}.dmc";
-
-            return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
+            var baseName = GetCacheFileName(VideoId, roll, ext);
+            var safeName = PathUtility.ToSafeNameDefault(baseName);
+            return Path.Combine(CacheDirectory.FullName, safeName);
         }
 
         //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
