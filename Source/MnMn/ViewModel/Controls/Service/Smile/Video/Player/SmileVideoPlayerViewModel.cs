@@ -429,6 +429,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ClearCommentCommand
+        {
+            get { return CreateCommand(o => ResetCommentInformation()); }
+        }
+
         public ICommand CloseCommentInformationCommand
         {
             get
