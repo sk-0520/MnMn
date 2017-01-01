@@ -95,6 +95,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'tune-appconfig',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'アプリケーション構成ファイル'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,
