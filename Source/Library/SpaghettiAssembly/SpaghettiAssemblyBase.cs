@@ -29,12 +29,6 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             "System.dll",
             "System.Core.dll",
             "System.Data.dll",
-            //// MnMn 用
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib", "ContentTypeTextNet.SharedLibrary.dll"),
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib", "Bridging.dll"),
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MnMn.exe"),
-            //"ContentTypeTextNet.SharedLibrary.dll",
-            //"",
         };
 
         #endregion

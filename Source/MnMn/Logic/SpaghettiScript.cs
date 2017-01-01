@@ -100,6 +100,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             using(var logger = new TimeLogger(Logger, $"load: {key}, {data.File.FullName}")) {
                 var model = SerializeUtility.LoadXmlSerializeFromFile<SpaghettiSourceModel>(data.File.FullName);
+
+                var appendLibrary = new[] {
+                    Path.Combine(Constants.LibraryDirectoryPath, "ContentTypeTextNet.SharedLibrary.dll"),
+                    Path.Combine(Constants.LibraryDirectoryPath, "Bridging.dll"),
+                    Path.Combine(Constants.AssemblyPath),
+                };
+                var unionAssemblyNames = model.Parameter.AssemblyNames
+                    .Concat(appendLibrary)
+                    .GroupBy(s => s)
+                    .Select(g => g.Key)
+                ;
+
+                model.Parameter.AssemblyNames.InitializeRange(unionAssemblyNames);
+
                 return model;
             }
         }
