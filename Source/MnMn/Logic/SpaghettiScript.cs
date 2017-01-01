@@ -175,6 +175,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             // コンパイル
                             try {
                                 var source = LoadSource(key, data);
+
+                                data.SkipNext = source.SkipNext;
+
                                 if(CompileSource(key, data, source)) {
                                     goto ScriptState_Success;
                                 }

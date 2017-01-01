@@ -19,9 +19,16 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
         #region CodeCompilerBase
 
-        protected override CodeDomProvider CreateProvider()
+        protected override CodeDomProvider CreateProvider(IDictionary<string, string> providerOptions)
         {
-            var provider = new CSharpCodeProvider();
+            var map = new Dictionary<string, string>(providerOptions);
+
+            // 未指定の場合にコンパイラバージョン限定
+            if(!map.ContainsKey("CompilerVersion")) {
+                map["CompilerVersion"] = "v4.0";
+            }
+
+            var provider = new CSharpCodeProvider(map);
 
             return provider;
         }

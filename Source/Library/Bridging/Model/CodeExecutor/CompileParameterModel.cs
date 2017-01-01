@@ -29,37 +29,39 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
         //
         // 戻り値:
         //     実行可能ファイルを生成する場合は true。それ以外の場合は false。
-        public bool GenerateExecutable { get; set; }
+        public bool GenerateExecutable { get; set; } = true;
         //
         // 概要:
         //     メモリ内で出力を生成するかどうかを示す値を取得または設定します。
         //
         // 戻り値:
         //     コンパイラがメモリ内で出力を生成する場合は true。それ以外の場合は false。
-        public bool GenerateInMemory { get; set; }
+        public bool GenerateInMemory { get; set; } = true;
         //
         // 概要:
         //     コンパイルされた実行可能ファイルにデバッグ情報を含めるかどうかを示す値を取得または設定します。
         //
         // 戻り値:
         //     デバッグ情報を生成する場合は true。それ以外の場合は false。
-        public bool IncludeDebugInformation { get; set; }
+        public bool IncludeDebugInformation { get; set; } = false;
         //
         // 概要:
         //     警告をエラーとして扱うかどうかを示す値を取得または設定します。
         //
         // 戻り値:
         //     警告をエラーとして扱う場合は true。それ以外の場合は false。
-        public bool TreatWarningsAsErrors { get; set; }
+        public bool TreatWarningsAsErrors { get; set; } = true;
         //
         // 概要:
         //     コンパイラがコンパイルを中止する警告レベルを取得または設定します。
         //
         // 戻り値:
         //     コンパイラがコンパイルを中止する警告レベル。
-        public int WarningLevel { get; set; }
+        public int WarningLevel { get; set; } = 4;
 
         public CollectionModel<string> AssemblyNames { get; set; } = new CollectionModel<string>();
+
+        public CollectionModel<KeyValuePair<string, string>> ProviderOptions { get; set; } = new CollectionModel<KeyValuePair<string, string>>();
 
         #endregion
     }

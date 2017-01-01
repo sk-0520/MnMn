@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             }
         }
 
-        protected abstract CodeDomProvider CreateProvider();
+        protected abstract CodeDomProvider CreateProvider(IDictionary<string, string> options);
 
         public virtual void Initialize(CodeInitializeModel initializeModel)
         {
@@ -228,7 +228,8 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             foreach(var assemblyName in defaultAssemblyNames.Concat(compilerParameter.AssemblyNames)) {
                 AppendAssembly(compilerParameters, assemblyName);
             }
-            Provider = CreateProvider();
+            var providerOptions = compilerParameter.ProviderOptions.ToDictionary(p => p.Key, p => p.Value);
+            Provider = CreateProvider(providerOptions);
 
             Results = Provider.CompileAssemblyFromSource(compilerParameters, source);
             stopWatch.Stop();

@@ -1,7 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<spaghetti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<code-language>CSharp</code-language>
-	<code>
+<SpaghettiCode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CodeLanguage>CSharp</CodeLanguage>
+	<SkipNext>false</SkipNext>
+	<Parameter>
+		<GenerateExecutable>true</GenerateExecutable>
+		<GenerateInMemory>true</GenerateInMemory>
+		<IncludeDebugInformation>false</IncludeDebugInformation>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningLevel>4</WarningLevel>
+		<AssemblyNames/>
+		<ProviderOptions/>
+	</Parameter>
+	<Code>
 		<![CDATA[
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
@@ -14,5 +24,6 @@ public class Spaghetti
 	}
 	
 }
-]]></code>
-</spaghetti>
+]]>
+	</Code>
+</SpaghettiCode>

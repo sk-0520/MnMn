@@ -13,20 +13,21 @@ using Gecko.DOM.Xml;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [Serializable, XmlRoot("spaghetti")]
+    [Serializable, XmlRoot("SpaghettiCode")]
     public class SpaghettiSourceModel:ModelBase
     {
         #region property
 
-        [XmlElement("code-language")]
         public CodeLanguage CodeLanguage { get; set; }
+
+        public bool SkipNext { get; set; }
 
         public CompileParameterModel Parameter { get; set; } = new CompileParameterModel();
 
         [XmlIgnore]
         public string Code { get; set; }
 
-        [XmlElement("code")]
+        [XmlElement("Code")]
         [XmlText]
         public XmlNode[] CDataCode
         {
