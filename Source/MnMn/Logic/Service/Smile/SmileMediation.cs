@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return text;
+                    return ConvertStringCore(key, uri, text, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertString(key, uri, text, serviceType);

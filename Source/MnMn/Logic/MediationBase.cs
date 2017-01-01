@@ -463,6 +463,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return Encoding.UTF8;
         }
 
+        protected string ConvertStringCore(string key, Uri uri, string text, ServiceType serviceType)
+        {
+            return text;
+        }
 
         #endregion
 

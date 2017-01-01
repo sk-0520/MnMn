@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
-            return text;
+            return ConvertStringCore(key, uri, text, serviceType);
         }
 
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
