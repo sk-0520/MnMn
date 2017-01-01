@@ -29,6 +29,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IRequestCompatibility,
         IResponseCompatibility
     {
+        #region define
+
+        static readonly string[] appReferenceAssemblies = new[] {
+            Path.Combine(Constants.LibraryDirectoryPath, "ContentTypeTextNet.SharedLibrary.dll"),
+            Path.Combine(Constants.LibraryDirectoryPath, "Bridging.dll"),
+            Path.Combine(Constants.AssemblyPath),
+        };
+
+        static readonly string[] defaultClrNameSpace = new[] {
+            "System",
+            "System.IO",
+            "System.Linq",
+            "System.Collections",
+            "System.Collections.Generic",
+            "System.Text",
+            "System.Text.RegularExpressions",
+            "System.Net.Http.Headers",
+            "System.Diagnostics"
+        };
+
+        static readonly string[] defaultAppNameSpace = new[] {
+            typeof(IConvertCompatibility),
+            typeof(IRequestCompatibility),
+            typeof(IResponseCompatibility),
+            typeof(IUriCompatibility),
+            typeof(ServiceType),
+            typeof(CheckModel),
+        }.Select(t => t.Namespace).ToArray();
+
+        #endregion
+
         public SpaghettiScript(string domainName, ILogger logger)
         {
             Logger = logger;
@@ -105,44 +136,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         SpaghettiSourceModel LoadSource(string key, SpaghettiPreparationData data)
         {
-            using(var logger = new TimeLogger(Logger, $"load: {key}, {data.File.FullName}")) {
+            using(var logger = new TimeLogger(Logger, $"[{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] load")) {
                 var model = SerializeUtility.LoadXmlSerializeFromFile<SpaghettiSourceModel>(data.File.FullName);
 
-                var appendLibrary = new[] {
-                    Path.Combine(Constants.LibraryDirectoryPath, "ContentTypeTextNet.SharedLibrary.dll"),
-                    Path.Combine(Constants.LibraryDirectoryPath, "Bridging.dll"),
-                    Path.Combine(Constants.AssemblyPath),
-                };
                 var unionAssemblyNames = model.Parameter.AssemblyNames
-                    .Concat(appendLibrary)
+                    .Concat(appReferenceAssemblies)
                     .GroupBy(s => s)
                     .Select(g => g.Key)
                 ;
 
                 model.Parameter.AssemblyNames.InitializeRange(unionAssemblyNames);
 
-                var defaultNameSpace = new[] {
-                    "System",
-                    "System.IO",
-                    "System.Linq",
-                    "System.Collections",
-                    "System.Collections.Generic",
-                    "System.Text",
-                    "System.Text.RegularExpressions",
-                    "System.Net.Http.Headers",
-                    "System.Diagnostics"
-                };
-                var appendAppNameSpace = new[] {
-                    typeof(IConvertCompatibility),
-                    typeof(IRequestCompatibility),
-                    typeof(IResponseCompatibility),
-                    typeof(IUriCompatibility),
-                    typeof(ServiceType),
-                    typeof(CheckModel),
-                }.Select(t => t.Namespace);
+
                 var unionNameSpace = model.NameSpace
-                    .Concat(defaultNameSpace)
-                    .Concat(appendAppNameSpace)
+                    .Concat(defaultClrNameSpace)
+                    .Concat(defaultAppNameSpace)
                     .GroupBy(s => s)
                     .Select(g => g.Key)
                     .Select(u => $"using {u};")
@@ -169,46 +177,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         ICodeExecutor CreateSpaghettiAssembly(string key, string fileName,  CodeLanguage codeLanguage)
         {
-            var codeMakerMap = new Dictionary<CodeLanguage, string> {
-                [CodeLanguage.CSharp] = "ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.SpaghettiAssemblyCSharp",
-            };
-            var spaghettiAssembly = (ICodeExecutor)LocalDomain.CreateInstanceAndUnwrap(
-                "SpaghettiAssembly",
-                codeMakerMap[codeLanguage]
-            );
+            using(var logger = new TimeLogger(Logger, $"[{GetId(key, fileName)}] create spaghetti")) {
+                var codeMakerMap = new Dictionary<CodeLanguage, string> {
+                    [CodeLanguage.CSharp] = "ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.SpaghettiAssemblyCSharp",
+                };
+                var spaghettiAssembly = (ICodeExecutor)LocalDomain.CreateInstanceAndUnwrap(
+                    "SpaghettiAssembly",
+                    codeMakerMap[codeLanguage]
+                );
 
-            var initializeModel = new CodeInitializeModel() {
-                DomainName = LocalDomain.FriendlyName,
-                Identifier = key,
-                Sequence = fileName,
-            };
+                var initializeModel = new CodeInitializeModel() {
+                    DomainName = LocalDomain.FriendlyName,
+                    Identifier = key,
+                    Sequence = fileName,
+                };
 
-            spaghettiAssembly.Initialize(initializeModel);
+                spaghettiAssembly.Initialize(initializeModel);
 
-            return spaghettiAssembly;
+                return spaghettiAssembly;
+            }
         }
 
         bool CompileSource(string key, SpaghettiPreparationData data, SpaghettiSourceModel source)
         {
-            var codeExecutor = CreateSpaghettiAssembly(key, Path.GetFileNameWithoutExtension(data.File.Name), source.CodeLanguage);
+            using(var logger = new TimeLogger(Logger, $"[{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] compile source")) {
+                var codeExecutor = CreateSpaghettiAssembly(key, Path.GetFileNameWithoutExtension(data.File.Name), source.CodeLanguage);
 
-            codeExecutor.CompileMessage += SpaghettiAssembly_CompileMessage;
+                codeExecutor.CompileMessage += SpaghettiAssembly_CompileMessage;
 
-            var compiled = codeExecutor.Compile(source.Parameter, source.Code, "SpaghettiCode");
+                var compiled = codeExecutor.Compile(source.Parameter, source.Code, "SpaghettiCode");
 
-            codeExecutor.CompileMessage -= SpaghettiAssembly_CompileMessage;
+                codeExecutor.CompileMessage -= SpaghettiAssembly_CompileMessage;
 
-            if(compiled) {
-                data.State = ScriptState.Success;
-                data.CodeExecutor = codeExecutor;
+                if(compiled) {
+                    data.State = ScriptState.Success;
+                    data.CodeExecutor = codeExecutor;
 
-                data.CodeExecutor.TraceMessage += CodeExecutor_TraceMessage;
+                    data.CodeExecutor.TraceMessage += CodeExecutor_TraceMessage;
 
-                return true;
-            } else {
-                data.State = ScriptState.Error;
+                    return true;
+                } else {
+                    data.State = ScriptState.Error;
 
-                return false;
+                    return false;
+                }
             }
         }
 
@@ -244,11 +256,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         ScriptState_Success:
                         {
                             if(!data.CodeExecutor.HasType(interfaceType)) {
-                                Logger.Information($"{key}; not impl <{interfaceType}>, {data.File.Name}");
+                                Logger.Information($"{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] not impl: {interfaceType}", error);
                                 continue;
                             }
 
                             try {
+                                Logger.Trace($"{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] invoke: {methodName}");
+
                                 var invokeArgs = new List<object>(args);
                                 invokeArgs[resultOriginIndex] = recycleValue;
 
@@ -257,6 +271,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                                 if(data.SkipNext) {
                                     if(usingResult) {
+                                        Logger.Trace($"{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] skip next");
                                         return (TResult)rawConvertedNewValue;
                                     } else {
                                         return default(TResult);
@@ -283,7 +298,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 ? "unknown error"
                                 : error.Message
                             ;
-                            Logger.Error($"{key}/{data.File.Name}", error);
+                            Logger.Error($"{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] {msg}" , error);
                         }
                         break;
                 }
@@ -375,6 +390,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
 
             base.Dispose(disposing);
+        }
+
+        string GetId(string key, string fileName)
+        {
+            return $"{LocalDomain.FriendlyName}/{key}/{fileName}";
         }
 
         #endregion
