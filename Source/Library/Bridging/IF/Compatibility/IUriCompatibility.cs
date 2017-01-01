@@ -35,6 +35,6 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="uri">使用するURI</param>
         /// <param name="serviceType">呼び出し元の使用目的</param>
         /// <returns></returns>
-        string ConvertUri(string uri, ServiceType serviceType);
+        string ConvertUri(string key, string uri, ServiceType serviceType);
     }
 }

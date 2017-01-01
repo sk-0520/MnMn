@@ -384,16 +384,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override string ConvertUri(string uri, ServiceType serviceType)
+        public override string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertUri(uri, serviceType);
+                    return Smile.ConvertUri(key, uri, serviceType);
 
                 default:
-                    ThrowNotSupportConvertUri(uri, serviceType);
+                    ThrowNotSupportConvertUri(key, uri, serviceType);
                     throw new NotImplementedException();
             }
         }

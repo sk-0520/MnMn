@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ParameterType = rawUri.RequestParameterType;
             Uri = RestrictUtility.IsNull(
                 ForceUri, () => {
-                    var convertedUri = Mediation.ConvertUri(rawUri.Uri, ServiceType);
+                    var convertedUri = Mediation.ConvertUri(Key, rawUri.Uri, ServiceType);
                     return new Uri(convertedUri);
                 },
                 uri => uri

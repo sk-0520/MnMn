@@ -220,10 +220,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetUriCore(key, replaceMap, serviceType);
         }
 
-        public override string ConvertUri(string uri, ServiceType serviceType)
+        public override string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
-                ThrowNotSupportConvertUri(uri, serviceType);
+                ThrowNotSupportConvertUri(key, uri, serviceType);
             }
 
             return uri;

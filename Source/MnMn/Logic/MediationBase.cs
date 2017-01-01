@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertUri(string uri, ServiceType serviceType)
+        protected void ThrowNotSupportConvertUri(string key, string uri, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IUriCompatibility
 
-        public virtual string ConvertUri(string uri, ServiceType serviceType)
+        public virtual string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
