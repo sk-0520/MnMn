@@ -483,6 +483,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return mapping;
         }
 
+        /// <summary>
+        /// 明示的な呼び出しが必要。
+        /// </summary>
+        /// <param name="outputValue"></param>
+        /// <param name="outputType"></param>
+        /// <param name="inputKey"></param>
+        /// <param name="inputValue"></param>
+        /// <param name="inputType"></param>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        protected bool ConvertValueCompatibility(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
+        {
+            outputValue = inputValue;
+            return true;
+        }
 
         #endregion
 
