@@ -91,6 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #region MediationBase
 
+        protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileLiveName);
+
         internal override object RequestShowView(ShowViewRequestModel request)
         {
             CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileLive);

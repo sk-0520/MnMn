@@ -319,7 +319,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var myType = GetType();
             var domainName = myType.Namespace + "." + myType.Name;
 
-            return new SpaghettiScript(domainName, Logger);
+            var script = new SpaghettiScript(domainName, Logger);
+
+            script.ConstructPreparations(new DirectoryInfo(Constants.SpaghettiDirectoryPath), GetKeys());
+
+            return script;
         }
 
         public override ResponseModel Request(RequestModel request)

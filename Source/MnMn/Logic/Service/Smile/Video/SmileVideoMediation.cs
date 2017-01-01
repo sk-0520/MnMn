@@ -193,6 +193,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region MediationBase
 
+        protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName);
+
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
         {
             CheckUtility.Enforce(serviceType == ServiceType.SmileVideo);

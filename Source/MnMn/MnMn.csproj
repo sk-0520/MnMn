@@ -223,6 +223,7 @@
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
+    <Compile Include="Define\ScriptState.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveInformationSource.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveMediationKey.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveSortType.cs" />
@@ -369,6 +370,8 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchPinModel.cs" />
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
+    <Compile Include="Data\SpaghettiPreparationData.cs" />
+    <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
@@ -517,6 +520,12 @@
     </Content>
     <Content Include="etc\define\theme.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\script\spaghetti\service\smile\video-session-login%40test.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\script\spaghetti\service\smile\video\video-ranking%40test.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\File\Html\UpdateState.html" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
@@ -1332,8 +1341,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="etc\image\service\smile\video\" />
-    <Folder Include="etc\script\tune\service\smile\live\" />
-    <Folder Include="etc\script\tune\service\smile\video\" />
+    <Folder Include="etc\script\spaghetti\service\smile\live\" />
     <Folder Include="Logic\Service\Smile\Live\HalfBakedApi\" />
   </ItemGroup>
   <ItemGroup>

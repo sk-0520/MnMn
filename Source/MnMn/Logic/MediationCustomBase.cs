@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected Mediation Mediation { get; private set; }
 
+        protected virtual string ScriptDirectoryPath { get; }
+
         #endregion
 
         #region function
@@ -59,7 +62,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var myType = GetType();
             var domainName = myType.Namespace + "." + myType.Name;
 
-            return new SpaghettiScript(domainName, Mediation.Logger);
+            var script = new SpaghettiScript(domainName, Mediation.Logger);
+
+            script.ConstructPreparations(new DirectoryInfo(ScriptDirectoryPath), GetKeys());
+
+            return script;
         }
 
         #endregion

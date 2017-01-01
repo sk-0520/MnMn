@@ -427,6 +427,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected abstract SpaghettiScript CreateScript();
 
+        protected IEnumerable<string> GetKeys()
+        {
+            var baseKeys = new[] {
+                UriList.Items.Select(i => i.Key),
+                UriParameterList.Parameters.Select(i => i.Key),
+                RequestHeaderList.Parameters.Select(i => i.Key),
+                RequestParameterList.Parameters.Select(i => i.Key),
+                RequestMappingList.Mappings.Select(i => i.Key),
+            };
+
+            return baseKeys
+                .SelectMany(k => k)
+                .GroupBy(k => k)
+                .Select(s => s.Key)
+            ;
+        }
+
         #endregion
 
         #region ICommunication
