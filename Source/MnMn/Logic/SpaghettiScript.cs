@@ -161,13 +161,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        #endregion
+        struct Void { }
 
-        #region IUriCompatibility
-
-        public string ConvertUri(string key, string uri, ServiceType serviceType)
+        TResult DoFunc<TResult>(string key, int resultOriginIndex, string methodName, params object[] args)
         {
-            var convertedValue = uri;
+            var convertedValue = args[resultOriginIndex];
 
             foreach(var data in Preparations[key]) {
                 Exception error = null;
@@ -180,7 +178,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 if(CompileSource(key, data, source)) {
                                     goto ScriptState_Success;
                                 }
-                            } catch (Exception ex) {
+                            } catch(Exception ex) {
                                 error = ex;
                             }
                         }
@@ -190,11 +188,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         ScriptState_Success:
                         {
                             try {
-                                var convertedUri = (string)data.CodeExecutor.Invoke(nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+                                var invokeArgs = new List<object>(args);
+                                invokeArgs[resultOriginIndex] = convertedValue;
+                                var convertedNewValue = (TResult)data.CodeExecutor.Invoke(methodName, invokeArgs.ToArray());
+
                                 if(data.SkipNext) {
-                                    return convertedUri;
+                                    return convertedNewValue;
                                 } else {
-                                    convertedValue = convertedUri;
+                                    convertedValue = convertedNewValue;
                                 }
                             } catch(Exception ex) {
                                 error = ex;
@@ -216,9 +217,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
             }
 
-            return convertedValue;
+            return (TResult)convertedValue;
         }
 
+        void DoAction(string key, int resultOriginIndex, string methodName, Func<SpaghettiPreparationData, object[], Void> func, params object[] args)
+        {
+            DoAction(key, resultOriginIndex, methodName, func, args);
+        }
+
+        #endregion
+
+        #region IUriCompatibility
+
+        public string ConvertUri(string key, string uri, ServiceType serviceType)
+        {
+            return DoFunc<string>(key, 1, nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+        }
 
         #endregion
 
