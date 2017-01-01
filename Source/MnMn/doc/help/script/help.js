@@ -103,6 +103,22 @@ var menuList = [
 		}
 	},
 	{
+		name: 'tune-defined',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '定義ファイル'
+		}
+	},
+	{
+		name: 'tune-spaghetti',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '互換用コード🍝'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,
