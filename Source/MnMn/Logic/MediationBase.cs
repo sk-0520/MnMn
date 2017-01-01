@@ -451,26 +451,50 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(Script.HasKey(key)) {
                 var result = Script.ConvertUri(key, uri, serviceType);
-                return result;
+                if(result != default(string)) {
+                    return result;
+                }
             }
             return uri;
         }
 
         protected CheckModel CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                var result = Script.CheckResponseHeader(key, uri, headers, serviceType);
+                if(result != default(CheckModel)) {
+                    return result;
+                }
+            }
             return CheckModel.Success();
         }
 
         protected void ConvertBinaryCore(string key, Uri uri, Stream stream, ServiceType serviceType)
-        { }
+        {
+            if(Script.HasKey(key)) {
+                Script.ConvertBinary(key, uri, stream, serviceType);
+            }
+        }
 
         protected Encoding GetEncodingCore(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                var result = Script.GetEncoding(key, uri, stream, serviceType);
+                if(result != default(Encoding)) {
+                    return result;
+                }
+            }
             return Encoding.UTF8;
         }
 
         protected string ConvertStringCore(string key, Uri uri, string text, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertString(key, uri, text, serviceType);
+                if(result != default(string)) {
+                    return result;
+                }
+            }
             return text;
         }
 
@@ -478,7 +502,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(Script.HasKey(key)) {
                 var result = Script.ConvertRequestHeader(key, requestHeaders, serviceType);
-                return result;
+                if(result != default(IDictionary<string, string>)) {
+                    return result;
+                }
             }
             return requestHeaders;
         }
@@ -487,7 +513,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(Script.HasKey(key)) {
                 var result = Script.ConvertRequestParameter(key, requestParams, serviceType);
-                return result;
+                if(result != default(IDictionary<string, string>)) {
+                    return result;
+                }
             }
             return requestParams;
         }
@@ -496,7 +524,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(Script.HasKey(key)) {
                 var result = Script.ConvertRequestMapping(key, mapping, serviceType);
-                return result;
+                if(result != default(string)) {
+                    return result;
+                }
             }
             return mapping;
         }

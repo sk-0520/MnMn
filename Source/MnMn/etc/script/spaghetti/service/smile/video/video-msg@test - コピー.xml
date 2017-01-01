@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SpaghettiCode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CodeLanguage>CSharp</CodeLanguage>
+	<SkipNext>false</SkipNext>
+	<Parameter>
+		<IncludeDebugInformation>false</IncludeDebugInformation>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningLevel>4</WarningLevel>
+		<AssemblyNames/>
+		<ProviderOptions/>
+	</Parameter>
+	<Code>
+		<![CDATA[
+public class SpaghettiCode:IResponseCompatibility{
+        public CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+				return CheckModel.Success();
+        }
+
+        public void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+        }
+        public Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+				return Encoding.ASCII;
+        }
+        public string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
+        {
+				return  text;
+        }
+    }
+]]>
+	</Code>
+</SpaghettiCode>

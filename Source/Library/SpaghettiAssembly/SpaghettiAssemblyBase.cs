@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             "System.dll",
             "System.Core.dll",
             "System.Data.dll",
+            "System.Net.Http.dll",
         };
 
         #endregion

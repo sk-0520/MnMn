@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     public class SpaghettiScript: 
         DisposeFinalizeBase, 
         IUriCompatibility,
-        IRequestCompatibility
+        IRequestCompatibility,
+        IResponseCompatibility
     {
         public SpaghettiScript(string domainName, ILogger logger)
         {
@@ -123,8 +125,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     "System",
                     "System.IO",
                     "System.Linq",
+                    "System.Collections",
+                    "System.Collections.Generic",
                     "System.Text",
                     "System.Text.RegularExpressions",
+                    "System.Net.Http.Headers",
                 };
                 var appendAppNameSpace = new[] {
                     typeof(IConvertCompatibility),
@@ -205,9 +210,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         struct Void { }
 
-        TResult DoFunc<TResult>(string key, int resultOriginIndex, Type interfaceType, string methodName, params object[] args)
+        TResult DoFunc<TResult>(string key, bool usingResult, bool recycle, int resultOriginIndex, Type interfaceType, string methodName, params object[] args)
         {
-            var convertedValue = args[resultOriginIndex];
+            var resultValue = default(TResult);
+            var recycleValue = args[resultOriginIndex];
+            var isChanged = false;
 
             foreach(var data in Preparations[key]) {
                 Exception error = null;
@@ -239,13 +246,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                             try {
                                 var invokeArgs = new List<object>(args);
-                                invokeArgs[resultOriginIndex] = convertedValue;
-                                var convertedNewValue = (TResult)data.CodeExecutor.Invoke(methodName, invokeArgs.ToArray());
+                                invokeArgs[resultOriginIndex] = recycleValue;
+
+                                var rawConvertedNewValue = data.CodeExecutor.Invoke(methodName, invokeArgs.ToArray());
+                                isChanged = true;
 
                                 if(data.SkipNext) {
-                                    return convertedNewValue;
+                                    if(usingResult) {
+                                        return (TResult)rawConvertedNewValue;
+                                    } else {
+                                        return default(TResult);
+                                    }
                                 } else {
-                                    convertedValue = convertedNewValue;
+                                    if(recycle) {
+                                        recycleValue = (TResult)rawConvertedNewValue;
+                                    }
+                                    if(usingResult) {
+                                        resultValue = (TResult)rawConvertedNewValue;
+                                    }
                                 }
                             } catch(Exception ex) {
                                 error = ex;
@@ -267,12 +285,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 }
             }
 
-            return (TResult)convertedValue;
+            if(usingResult && isChanged) {
+                return resultValue;
+            } else {
+                return default(TResult);
+            }
         }
 
-        void DoAction(string key, int resultOriginIndex, string methodName, Func<SpaghettiPreparationData, object[], Void> func, params object[] args)
+        void DoAction(string key, bool recycle, int resultOriginIndex, Type interfaceType, string methodName, params object[] args)
         {
-            DoAction(key, resultOriginIndex, methodName, func, args);
+            DoFunc<Void>(key, false, recycle, resultOriginIndex, interfaceType, methodName, args);
         }
 
         #endregion
@@ -281,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string ConvertUri(string key, string uri, ServiceType serviceType)
         {
-            return DoFunc<string>(key, 1, typeof(IUriCompatibility), nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+            return DoFunc<string>(key, true, true, 1, typeof(IUriCompatibility), nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
         }
 
         #endregion
@@ -290,17 +312,41 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
-            return DoFunc<IDictionary<string, string>>(key, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestHeader), key, requestHeaders, serviceType);
+            return DoFunc<IDictionary<string, string>>(key, true, true, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestHeader), key, requestHeaders, serviceType);
         }
 
         public IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
-            return DoFunc<IDictionary<string, string>>(key, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestParameter), key, requestParams, serviceType);
+            return DoFunc<IDictionary<string, string>>(key, true, true, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestParameter), key, requestParams, serviceType);
         }
 
         public string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
-            return DoFunc<string>(key, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestMapping), key, mapping, serviceType);
+            return DoFunc<string>(key, true, true, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestMapping), key, mapping, serviceType);
+        }
+
+        #endregion
+
+        #region IResponseCompatibility
+
+        public CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            return DoFunc<CheckModel>(key, false, true, 1, typeof(IResponseCompatibility), nameof(IResponseCompatibility.CheckResponseHeader), key, uri, headers, serviceType);
+        }
+
+        public void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+            DoAction(key, false, 2, typeof(IResponseCompatibility), nameof(IResponseCompatibility.ConvertBinary), key, uri, stream, serviceType);
+        }
+
+        public Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+            return DoFunc<Encoding>(key, true, false, 2, typeof(IResponseCompatibility), nameof(IResponseCompatibility.GetEncoding), key, uri, stream, serviceType);
+        }
+
+        public string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
+        {
+            return DoFunc<string>(key, true, true, 2, typeof(IResponseCompatibility), nameof(IResponseCompatibility.ConvertString), key, uri, text, serviceType);
         }
 
         #endregion
