@@ -170,32 +170,53 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var convertedValue = uri;
 
             foreach(var data in Preparations[key]) {
+                Exception error = null;
+
                 switch(data.State) {
                     case ScriptState.None: {
                             // コンパイル
-                            var source = LoadSource(key, data);
-                            if(CompileSource(key, data, source)) {
-                                goto ScriptState_Success;
+                            try {
+                                var source = LoadSource(key, data);
+                                if(CompileSource(key, data, source)) {
+                                    goto ScriptState_Success;
+                                }
+                            } catch (Exception ex) {
+                                error = ex;
                             }
                         }
-                        break;
+                        goto ScriptState_Error;
 
                     case ScriptState.Success:
                         ScriptState_Success:
                         {
-                            var convertedUri = (string)data.CodeExecutor.Invoke(nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
-                            if(data.SkipNext) {
-                                return convertedUri;
-                            } else {
-                                convertedValue = convertedUri;
+                            try {
+                                var convertedUri = (string)data.CodeExecutor.Invoke(nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+                                if(data.SkipNext) {
+                                    return convertedUri;
+                                } else {
+                                    convertedValue = convertedUri;
+                                }
+                            } catch(Exception ex) {
+                                error = ex;
+                                goto ScriptState_Error;
                             }
                         }
                         break;
 
+                    case ScriptState.Error:
+                        ScriptState_Error:
+                        {
+                            var msg = error == null
+                                ? "unknown error"
+                                : error.Message
+                            ;
+                            Logger.Error($"{key}/{data.File.Name}", error);
+                        }
+                        break;
                 }
             }
 
-            return uri;
+            return convertedValue;
         }
 
 
