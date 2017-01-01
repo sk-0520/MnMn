@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportConvertUri(key, uri, serviceType);
             }
 
-            return uri;
+            return ConvertUriCore(key, uri, serviceType);
         }
 
         public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
