@@ -249,8 +249,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
             }
 
-            return (IDictionary<string, string>)requestHeaders;
-
+            return ConvertRequestHeaderCore(key, requestHeaders, serviceType);
         }
 
         public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)

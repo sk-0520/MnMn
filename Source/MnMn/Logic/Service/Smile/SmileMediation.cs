@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return (IDictionary<string, string>)requestHeaders;
+                    return ConvertRequestHeaderCore(key, requestHeaders, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertRequestHeader(key, requestHeaders, serviceType);

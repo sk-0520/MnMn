@@ -468,6 +468,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return text;
         }
 
+        protected IDictionary<string, string> ConvertRequestHeaderCore(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            return (IDictionary<string, string>)requestHeaders;
+        }
+
+
         #endregion
 
         #region ICommunication
