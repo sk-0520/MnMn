@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(ParameterType) {
                 case ParameterType.Plain: {
                         var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
-                        var singleContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)rawContent, ServiceType);
+                        var singleContent = Mediation.ConvertRequestParameter(Key, (IReadOnlyDictionary<string, string>)rawContent, ServiceType);
                         var multiContents = singleContent
                             .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
                             .ToArray()
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case ParameterType.Mapping: {
                         var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
-                        var convertedContent = Mediation.ConvertRequestMapping(mappingResult.Result, ServiceType);
+                        var convertedContent = Mediation.ConvertRequestMapping(Key, mappingResult.Result, ServiceType);
                         Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", convertedContent);
                         MappingContent = new StringContent(convertedContent);
                         if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {

@@ -159,17 +159,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestHeaders)}: {requestHeaders}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestMapping(string mapping, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(mapping)}: {mapping}, {nameof(serviceType)}: {serviceType}");
         }
@@ -509,12 +509,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        public virtual IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public virtual IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public virtual string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

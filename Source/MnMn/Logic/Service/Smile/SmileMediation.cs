@@ -255,7 +255,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                     return LiveMediation.ConvertRequestHeader(key, requestHeaders, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                    ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
                     throw new NotImplementedException();
             }
         }
@@ -314,38 +314,38 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                     return (IDictionary<string, string>)requestParams;
 
                 case ServiceType.SmileVideo:
-                    return VideoMediation.ConvertRequestParameter(requestParams, serviceType);
+                    return VideoMediation.ConvertRequestParameter(key, requestParams, serviceType);
 
                 case ServiceType.SmileLive:
-                    return LiveMediation.ConvertRequestParameter(requestParams, serviceType);
+                    return LiveMediation.ConvertRequestParameter(key, requestParams, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                     return mapping;
 
                 case ServiceType.SmileVideo:
-                    return VideoMediation.ConvertRequestMapping(mapping, serviceType);
+                    return VideoMediation.ConvertRequestMapping(key, mapping, serviceType);
 
                 case ServiceType.SmileLive:
-                    return LiveMediation.ConvertRequestMapping(mapping, serviceType);
+                    return LiveMediation.ConvertRequestMapping(key, mapping, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestMapping(mapping, serviceType);
+                    ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
                     throw new NotImplementedException();
             }
         }

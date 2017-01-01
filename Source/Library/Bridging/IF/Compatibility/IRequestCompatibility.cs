@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="requestParams">使用するリクエストデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType);
+        IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType);
 
-        string ConvertRequestMapping(string mapping, ServiceType serviceType);
+        string ConvertRequestMapping(string key, string mapping, ServiceType serviceType);
     }
 }

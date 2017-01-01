@@ -421,7 +421,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return Smile.ConvertRequestHeader(key, requestHeaders, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                    ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
                     throw new NotImplementedException();
             }
         }
@@ -454,30 +454,30 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertRequestParameter(requestParams, serviceType);
+                    return Smile.ConvertRequestParameter(key, requestParams, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertRequestMapping(mapping, serviceType);
+                    return Smile.ConvertRequestMapping(key, mapping, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestMapping(mapping, serviceType);
+                    ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
                     throw new NotImplementedException();
             }
         }
