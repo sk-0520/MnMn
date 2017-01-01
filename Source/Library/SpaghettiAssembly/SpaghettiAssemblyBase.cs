@@ -35,8 +35,6 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
         #region event
 
-        public event EventHandler<CompileMessageEventArgs> CompileMessage;
-
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
@@ -65,30 +63,6 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         #region property
 
         public bool IsInitialized { get; private set; }
-
-        /// <summary>
-        /// <see cref="IDisposable.Dispose"/>されたか。
-        /// </summary>
-        [IgnoreDataMember, XmlIgnore]
-        public bool IsDisposed
-        {
-            get { return this._isDisposed; }
-            protected set
-            {
-                if(this._isDisposed && !value) {
-                    ResetDispose();
-                }
-                this._isDisposed = value;
-            }
-        }
-
-        /// <summary>
-        /// 言語。
-        /// </summary>
-        public CodeLanguage CodeLanguage { get; }
-
-        public string DomainName { get; private set; }
-        public string Identifier { get; private set; }
 
         protected CodeDomProvider Provider { get; private set; }
         protected CompilerResults Results { get; private set; }
@@ -145,6 +119,60 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             IsInitialized = true;
         }
 
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>の内部処理。
+        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
+        /// </summary>
+        /// <param name="disposing">CLRの管理下か。</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if(IsDisposed) {
+                if(disposing) {
+                    if(Provider != null) {
+                        Provider.Dispose();
+                    }
+                }
+                return;
+            }
+
+            if(Disposing != null) {
+                Disposing(this, EventArgs.Empty);
+            }
+
+            IsDisposed = true;
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region ICodeExecutor
+
+        public event EventHandler<CompileMessageEventArgs> CompileMessage;
+
+        /// <summary>
+        /// 言語。
+        /// </summary>
+        public CodeLanguage CodeLanguage { get; }
+
+        public string DomainName { get; private set; }
+        public string Identifier { get; private set; }
+
+        /// <summary>
+        /// <see cref="IDisposable.Dispose"/>されたか。
+        /// </summary>
+        [IgnoreDataMember, XmlIgnore]
+        public bool IsDisposed
+        {
+            get { return this._isDisposed; }
+            protected set
+            {
+                if(this._isDisposed && !value) {
+                    ResetDispose();
+                }
+                this._isDisposed = value;
+            }
+        }
+
         public bool Compile(CompileParameterModel compilerParameter, string source)
         {
             NeedInitialized();
@@ -172,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             stopWatch.Stop();
 
             var compileElapsed = stopWatch.Elapsed;
-            
+
             OnCompileMessage(CompileMessageKind.Compile, $"code: {Results.NativeCompilerReturnValue}, end: {DateTime.Now.ToString("u")}, time: {compileElapsed}");
 
             foreach(var msg in Results.Output) {
@@ -182,41 +210,13 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             foreach(var err in Results.Errors.Cast<CompilerError>()) {
                 if(err.IsWarning) {
                     OnCompileMessage(CompileMessageKind.Warning, err.ToString());
-                } else{
+                } else {
                     OnCompileMessage(CompileMessageKind.Error, err.ToString());
                 }
             }
 
             return !Results.Errors.HasErrors;
         }
-
-        /// <summary>
-        /// <see cref="IDisposable.Dispose"/>の内部処理。
-        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
-        /// </summary>
-        /// <param name="disposing">CLRの管理下か。</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if(IsDisposed) {
-                if(disposing) {
-                    if(Provider != null) {
-                        Provider.Dispose();
-                    }
-                }
-                return;
-            }
-
-            if(Disposing != null) {
-                Disposing(this, EventArgs.Empty);
-            }
-
-            IsDisposed = true;
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-
-        #region IDisposable
 
         /// <summary>
         /// 解放。
