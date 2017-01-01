@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IGetRequestParameter,
         ICommunication,
         IUriCompatibility,
+        IRequestCompatibility,
         IResponseCompatibility,
         IConvertCompatibility
     {
@@ -503,7 +504,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IRequestCompatibility
 
-        public virtual IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public virtual IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

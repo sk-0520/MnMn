@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestHeaderCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);

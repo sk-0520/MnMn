@@ -412,13 +412,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertRequestHeader(requestHeaders, serviceType);
+                    return Smile.ConvertRequestHeader(key, requestHeaders, serviceType);
 
                 default:
                     ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);

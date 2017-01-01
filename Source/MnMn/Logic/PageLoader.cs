@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void MakeRequestHeader()
         {
             var rawHeader = Mediation.GetRequestHeader(Key, ReplaceRequestHeaders, ServiceType);
-            var convertedHeader = Mediation.ConvertRequestHeader((IReadOnlyDictionary<string, string>)rawHeader, ServiceType);
+            var convertedHeader = Mediation.ConvertRequestHeader(Key, (IReadOnlyDictionary<string, string>)rawHeader, ServiceType);
             Headers = (Dictionary<string, string>)convertedHeader;
 
             Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
