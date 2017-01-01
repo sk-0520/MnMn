@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         struct Void { }
 
-        TResult DoFunc<TResult>(string key, int resultOriginIndex, string methodName, params object[] args)
+        TResult DoFunc<TResult>(string key, int resultOriginIndex, Type interfaceType, string methodName, params object[] args)
         {
             var convertedValue = args[resultOriginIndex];
 
@@ -187,6 +187,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     case ScriptState.Success:
                         ScriptState_Success:
                         {
+                            if(!data.CodeExecutor.HasType(interfaceType)) {
+                                Logger.Information($"{key}; not impl <{interfaceType}>, {data.File.Name}");
+                                continue;
+                            }
+
                             try {
                                 var invokeArgs = new List<object>(args);
                                 invokeArgs[resultOriginIndex] = convertedValue;
@@ -231,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string ConvertUri(string key, string uri, ServiceType serviceType)
         {
-            return DoFunc<string>(key, 1, nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+            return DoFunc<string>(key, 1, typeof(IUriCompatibility), nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
         }
 
         #endregion

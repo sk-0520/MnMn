@@ -267,6 +267,13 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             Dispose(true);
         }
 
+        public bool HasType(Type type)
+        {
+            NeedInstance();
+
+            return type.IsAssignableFrom(InstanceType);
+        }
+
         public object Invoke(string methodName, params object[] args)
         {
             NeedInstance();

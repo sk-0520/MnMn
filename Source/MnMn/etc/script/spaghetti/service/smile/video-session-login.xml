@@ -6,11 +6,11 @@
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
 
-public class Spaghetti: IUriCompatibility
+public class Spaghetti
 {
   public string ConvertUri(string key, string uri, ServiceType serviceType)
 	{
-		return "test" + uri;
+		return "test?" + uri;
 	}
 	
 }

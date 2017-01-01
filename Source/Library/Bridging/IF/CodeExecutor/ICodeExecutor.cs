@@ -27,6 +27,8 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
 
         bool Compile(CompileParameterModel compilerParameter, string source, string className);
 
+        bool HasType(Type type);
+
         object Invoke(string methodName, params object[] args);
         object GetProperty(string propertyName);
         void SetProperty(string propertyName, object value);
