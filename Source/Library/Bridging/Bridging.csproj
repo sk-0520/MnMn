@@ -64,6 +64,7 @@
     <Compile Include="IF\Compatibility\IResponseCompatibility.cs" />
     <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
     <Compile Include="Model\CheckModel.cs" />
+    <Compile Include="Model\CompileParameterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

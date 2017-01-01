@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
 using Gecko.DOM.Xml;
 
@@ -16,25 +17,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
     {
         #region property
 
-        [XmlElement("code")]
-        public CodeLanguage Code { get; set; }
+        [XmlElement("code-language")]
+        public CodeLanguage CodeLanguage { get; set; }
+
+        public CompileParameterModel Parameter { get; set; } = new CompileParameterModel();
 
         [XmlIgnore]
-        public string Source { get; set; }
+        public string Code { get; set; }
 
-        [XmlElement("source")]
+        [XmlElement("code")]
         [XmlText]
-        public XmlNode[] CDataSource
+        public XmlNode[] CDataCode
         {
             get
             {
                 var dummy = new System.Xml.XmlDocument();
-                return new XmlNode[] { dummy.CreateCDataSection(Source) };
+                return new XmlNode[] { dummy.CreateCDataSection(Code) };
             }
             set
             {
                 if(value == null) {
-                    Source = null;
+                    Code = null;
                     return;
                 }
 
@@ -42,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
                     throw new InvalidOperationException($"Invalid array length {value.Length}");
                 }
 
-                Source = value[0].Value;
+                Code = value[0].Value;
             }
         }
 

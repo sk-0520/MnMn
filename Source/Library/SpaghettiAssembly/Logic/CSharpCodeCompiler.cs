@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
 using Microsoft.CSharp;
 
 namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
 {
+    [Serializable]
     public class CSharpCodeCompiler: CodeCompilerBase
     {
-        public CSharpCodeCompiler(CompilerParameters compilerParameters)
-            :base(CodeLanguage.CSharp, compilerParameters)
+        public CSharpCodeCompiler()
+            :base(CodeLanguage.CSharp)
         { }
 
         #region CodeCompilerBase

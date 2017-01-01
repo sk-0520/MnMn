@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //mylist();
             //liverss();
             //dmc();
+            //src();
         }
 
         async void login()
@@ -145,11 +146,21 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void dmc()
         {
-            var path1 = @"Z:\dmc-recv1.xml";
-            var path2 = @"Z:\dmc-recv2.xml";
+            var path1 = @"X:\dmc-recv1.xml";
+            var path2 = @"X:\dmc-recv2.xml";
 
             var model = SerializeUtility.LoadXmlSerializeFromFile<RawSmileVideoDmcObjectModel>(path1);
             SerializeUtility.SaveXmlSerializeToFile(path2, model);
+        }
+
+        void src()
+        {
+            var model = new SpaghettiSourceModel() {
+                CodeLanguage = Library.SpaghettiAssembly.Define.CodeLanguage.CSharp,
+                Code = "usinf System; class asd(){  }",
+            };
+            var path = @"X:\src.xml";
+            SerializeUtility.SaveXmlSerializeToFile(path, model);
         }
 
     }

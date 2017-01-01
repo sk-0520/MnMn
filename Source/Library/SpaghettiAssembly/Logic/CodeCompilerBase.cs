@@ -2,12 +2,14 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
 
 namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
@@ -15,7 +17,8 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
     /// <summary>
     /// 
     /// </summary>
-    public abstract class CodeCompilerBase: MarshalByRefObject, IDisposable
+    [Serializable]
+    public abstract class CodeCompilerBase: IDisposable
     {
         #region define
 
@@ -23,7 +26,13 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
             "mscorlib.dll",
             "System.dll",
             "System.Core.dll",
-            "System.Data.dll"
+            "System.Data.dll",
+            //// MnMn 用
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib", "ContentTypeTextNet.SharedLibrary.dll"),
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib", "Bridging.dll"),
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MnMn.exe"),
+            //"ContentTypeTextNet.SharedLibrary.dll",
+            //"",
         };
 
         #endregion
@@ -47,14 +56,9 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
 
         #endregion
 
-        public CodeCompilerBase(CodeLanguage codeLanguage, CompilerParameters compilerParameters)
+        public CodeCompilerBase(CodeLanguage codeLanguage)
         {
-            if(compilerParameters == null) {
-                throw new ArgumentNullException(nameof(compilerParameters));
-            }
-
             CodeLanguage = codeLanguage;
-            CompilerParameters = CompilerParameters;
         }
 
         ~CodeCompilerBase()
@@ -84,14 +88,8 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
         /// 言語。
         /// </summary>
         public CodeLanguage CodeLanguage { get; }
-        /// <summary>
-        /// パラメータ。
-        /// </summary>
-        public CompilerParameters CompilerParameters { get; }
-        /// <summary>
-        /// 使用するアセンブリ名。
-        /// </summary>
-        public IList<string> AssemblyNames { get; } = new List<string>(defaultAssemblyNames);
+
+        public string Identifier { get; set; }
 
         protected CodeDomProvider Provider { get; private set; }
         protected CompilerResults Results { get; private set; }
@@ -112,38 +110,45 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
         {
             var compileMessage = CompileMessage;
             if(compileMessage != null) {
-                var e = new CompileMessageEventArgs(kind, message);
+                var e = new CompileMessageEventArgs(AppDomain.CurrentDomain.FriendlyName, Identifier, kind, message);
                 compileMessage(this, e);
             }
         }
 
-        void AppendAssembly(CompilerParameters parameters, string dllName)
+        void AppendAssembly(CompilerParameters parameters, string assemblyName)
         {
-            if(!parameters.ReferencedAssemblies.Contains(dllName)) {
-                OnCompileMessage(CompileMessageKind.PreProcessor, $"add assembly: {dllName}");
-                parameters.ReferencedAssemblies.Add(dllName);
+            if(!parameters.ReferencedAssemblies.Contains(assemblyName)) {
+                OnCompileMessage(CompileMessageKind.PreProcessor, $"add assembly: {assemblyName}");
+                parameters.ReferencedAssemblies.Add(assemblyName);
             } else {
-                OnCompileMessage(CompileMessageKind.PreProcessor, $"exists assembly: {dllName}");
+                OnCompileMessage(CompileMessageKind.PreProcessor, $"exists assembly: {assemblyName}");
             }
         }
 
         protected abstract CodeDomProvider CreateProvider();
 
-        void CreateProviderCore()
-        {
-            var provider = CreateProvider();
-
-            Provider = provider;
-        }
-
-        public bool Compile(string source)
+        public bool Compile(CompileParameterModel compilerParameter, string source)
         {
             var stopWatch = new Stopwatch();
 
             OnCompileMessage(CompileMessageKind.Compile, $"start: {DateTime.Now.ToString("u")}");
 
             stopWatch.Start();
-            Results = Provider.CompileAssemblyFromSource(CompilerParameters, source);
+
+            var compilerParameters = new CompilerParameters() {
+                CompilerOptions = compilerParameter.CompilerOptions,
+                GenerateExecutable = compilerParameter.GenerateExecutable,
+                GenerateInMemory = compilerParameter.GenerateInMemory,
+                IncludeDebugInformation = compilerParameter.IncludeDebugInformation,
+                TreatWarningsAsErrors = compilerParameter.TreatWarningsAsErrors,
+                WarningLevel = compilerParameter.WarningLevel,
+            };
+            foreach(var assemblyName in defaultAssemblyNames.Concat(compilerParameter.AssemblyNames)) {
+                AppendAssembly(compilerParameters, assemblyName);
+            }
+            Provider = CreateProvider();
+
+            Results = Provider.CompileAssemblyFromSource(compilerParameters, source);
             stopWatch.Stop();
 
             var compileElapsed = stopWatch.Elapsed;
@@ -154,11 +159,15 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
                 OnCompileMessage(CompileMessageKind.Compile, msg);
             }
 
-            foreach(var err in Results.Errors.Cast< CompilerError>()) {
-                OnCompileMessage(CompileMessageKind.Error, err.ToString());
+            foreach(var err in Results.Errors.Cast<CompilerError>()) {
+                if(err.IsWarning) {
+                    OnCompileMessage(CompileMessageKind.Warning, err.ToString());
+                } else{
+                    OnCompileMessage(CompileMessageKind.Error, err.ToString());
+                }
             }
 
-            return Results.Errors.Count == 0;
+            return !Results.Errors.HasErrors;
         }
 
         /// <summary>

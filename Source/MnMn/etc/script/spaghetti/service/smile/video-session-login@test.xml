@@ -1,1 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<spaghetti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<code-language>CSharp</code-language>
+	<code>
+		<![CDATA[
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+
+public class Spaghetti: IUriCompatibility
+{
+  public string ConvertUri(string key, string uri, ServiceType serviceType)
+	{
+		return "test" + uri;
+	}
+	
+}
+]]></code>
+</spaghetti>

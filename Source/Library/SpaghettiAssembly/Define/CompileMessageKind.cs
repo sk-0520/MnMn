@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define
         /// コンパイル処理。
         /// </summary>
         Compile,
+        Warning,
         Error,
     }
 }

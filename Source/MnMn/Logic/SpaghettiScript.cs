@@ -1,21 +1,35 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
+using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class SpaghettiScript: DisposeFinalizeBase
+    public class SpaghettiScript: DisposeFinalizeBase, IUriCompatibility
     {
         public SpaghettiScript(string domainName, ILogger logger)
         {
             Logger = logger;
             Logger.Information($"create domain: {domainName}");
+            //var domainInfo = new AppDomainSetup() {
+            //    ApplicationBase = Constants.AssemblyRootDirectoryPath,
+            //    ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
+            //};
+            //LocalDomain = AppDomain.CreateDomain(domainName, AppDomain.CurrentDomain.Evidence, domainInfo);
             LocalDomain = AppDomain.CreateDomain(domainName);
         }
 
@@ -76,6 +90,67 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
+        public bool HasKey(string key)
+        {
+            return Preparations.ContainsKey(key);
+        }
+
+        SpaghettiSourceModel LoadSource(string key, SpaghettiPreparationData data)
+        {
+            using(var logger = new TimeLogger(Logger, $"load: {key}, {data.File.FullName}")) {
+                var model = SerializeUtility.LoadXmlSerializeFromFile<SpaghettiSourceModel>(data.File.FullName);
+                return model;
+            }
+        }
+
+        CodeCompilerBase CreateSpaghettiAssembly(string key, CodeLanguage codeLanguage)
+        {
+            var codeMakerMap = new Dictionary<CodeLanguage, string> {
+                [CodeLanguage.CSharp] = typeof(CSharpCodeCompiler).FullName,
+            };
+            var spaghettiAssembly = (CodeCompilerBase)LocalDomain.CreateInstanceAndUnwrap(
+                nameof(Library.SpaghettiAssembly),
+                codeMakerMap[codeLanguage]
+            );
+
+            //spaghettiAssembly.GetType().Assembly.ger
+
+            spaghettiAssembly.Identifier = key;
+
+            return spaghettiAssembly;
+        }
+
+        void CompileSource(string key, SpaghettiPreparationData data, SpaghettiSourceModel source)
+        {
+            var spaghettiAssembly = CreateSpaghettiAssembly(key, source.CodeLanguage);
+            spaghettiAssembly.CompileMessage += SpaghettiAssembly_CompileMessage;
+
+            spaghettiAssembly.Compile(source.Parameter, source.Code);
+
+            spaghettiAssembly.CompileMessage -= SpaghettiAssembly_CompileMessage;
+        }
+
+        #endregion
+
+        #region IUriCompatibility
+
+        public string ConvertUri(string key, string uri, ServiceType serviceType)
+        {
+            foreach(var data in Preparations[key]) {
+                switch(data.State) {
+                    case Define.ScriptState.None: {
+                            // コンパイル
+                            var source = LoadSource(key, data);
+                            CompileSource(key, data, source);
+                        }
+                        break;
+                }
+            }
+
+            return uri;
+        }
+
+
         #endregion
 
         #region DisposeFinalizeBase
@@ -96,5 +171,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         }
 
         #endregion
+
+        private void SpaghettiAssembly_CompileMessage(object sender, CompileMessageEventArgs e)
+        {
+            LogPutDelegate put;
+            switch(e.Kind) {
+                case CompileMessageKind.PreProcessor:
+                case CompileMessageKind.Compile:
+                    put = Logger.Information;
+                    break;
+
+                case CompileMessageKind.Error:
+                    put = Logger.Error;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            put($"[{e.DomainName}/{e.Identifier}] {e.Kind}: {e.Message}");
+        }
+
     }
 }

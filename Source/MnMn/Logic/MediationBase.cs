@@ -449,6 +449,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected string ConvertUriCore(string key, string uri, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                return Script.ConvertUri(key, uri, serviceType);
+            }
             return uri;
         }
 
