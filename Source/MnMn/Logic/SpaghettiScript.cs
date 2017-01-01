@@ -13,8 +13,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
-using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -25,12 +26,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             Logger = logger;
             Logger.Information($"create domain: {domainName}");
-            //var domainInfo = new AppDomainSetup() {
-            //    ApplicationBase = Constants.AssemblyRootDirectoryPath,
-            //    ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
-            //};
-            //LocalDomain = AppDomain.CreateDomain(domainName, AppDomain.CurrentDomain.Evidence, domainInfo);
-            LocalDomain = AppDomain.CreateDomain(domainName);
+            var domainInfo = new AppDomainSetup() {
+                ApplicationBase = Constants.AssemblyRootDirectoryPath,
+                ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
+            };
+            LocalDomain = AppDomain.CreateDomain(domainName, AppDomain.CurrentDomain.Evidence, domainInfo);
+            //LocalDomain = AppDomain.CreateDomain(domainName);
         }
 
         #region property
@@ -103,19 +104,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        SpaghettiAssembly CreateSpaghettiAssembly(string key, CodeLanguage codeLanguage)
+        ICodeExecutor CreateSpaghettiAssembly(string key, CodeLanguage codeLanguage)
         {
             var codeMakerMap = new Dictionary<CodeLanguage, string> {
-                [CodeLanguage.CSharp] = typeof(SpaghettiAssemblyCSharp).FullName,
+                [CodeLanguage.CSharp] = "ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.SpaghettiAssemblyCSharp",
             };
-            var spaghettiAssembly = (SpaghettiAssembly)LocalDomain.CreateInstanceAndUnwrap(
-                nameof(Library.SpaghettiAssembly),
+            var spaghettiAssembly = (ICodeExecutor)LocalDomain.CreateInstanceAndUnwrap(
+                "SpaghettiAssembly",
                 codeMakerMap[codeLanguage]
             );
 
-            //spaghettiAssembly.GetType().Assembly.ger
+            var initializeModel = new CodeInitializeModel() {
+                Identifier = key,
+                DomainName = LocalDomain.FriendlyName,
+            };
 
-            spaghettiAssembly.Identifier = key;
+            spaghettiAssembly.Initialize(initializeModel);
 
             return spaghettiAssembly;
         }

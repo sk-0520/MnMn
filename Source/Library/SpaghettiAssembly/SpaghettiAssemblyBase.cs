@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
     /// 
     /// </summary>
     [Serializable]
-    public abstract class SpaghettiAssembly: ICodeExecutor
+    public abstract class SpaghettiAssemblyBase: ICodeExecutor
     {
         #region define
 
@@ -58,17 +58,19 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
         #endregion
 
-        public SpaghettiAssembly(CodeLanguage codeLanguage)
+        public SpaghettiAssemblyBase(CodeLanguage codeLanguage)
         {
             CodeLanguage = codeLanguage;
         }
 
-        ~SpaghettiAssembly()
+        ~SpaghettiAssemblyBase()
         {
             Dispose(false);
         }
 
         #region property
+
+        public bool IsInitialized { get; private set; }
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。
@@ -91,7 +93,8 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         /// </summary>
         public CodeLanguage CodeLanguage { get; }
 
-        public string Identifier { get; set; }
+        public string DomainName { get; private set; }
+        public string Identifier { get; private set; }
 
         protected CodeDomProvider Provider { get; private set; }
         protected CompilerResults Results { get; private set; }
@@ -112,7 +115,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         {
             var compileMessage = CompileMessage;
             if(compileMessage != null) {
-                var e = new CompileMessageEventArgs(AppDomain.CurrentDomain.FriendlyName, Identifier, kind, message);
+                var e = new CompileMessageEventArgs(DomainName, Identifier, kind, message);
                 compileMessage(this, e);
             }
         }
@@ -127,10 +130,31 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             }
         }
 
+        void NeedInitialized()
+        {
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
+            }
+        }
+
         protected abstract CodeDomProvider CreateProvider();
+
+        public virtual void Initialize(CodeInitializeModel initializeModel)
+        {
+            if(IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
+            }
+
+            Identifier = initializeModel.Identifier;
+            DomainName = initializeModel.DomainName;
+
+            IsInitialized = true;
+        }
 
         public bool Compile(CompileParameterModel compilerParameter, string source)
         {
+            NeedInitialized();
+
             var stopWatch = new Stopwatch();
 
             OnCompileMessage(CompileMessageKind.Compile, $"start: {DateTime.Now.ToString("u")}");

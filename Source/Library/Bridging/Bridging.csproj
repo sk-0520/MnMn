@@ -68,6 +68,7 @@
     <Compile Include="IF\Compatibility\IUriCompatibility.cs" />
     <Compile Include="IF\CodeExecutor\ICodeExecutor.cs" />
     <Compile Include="Model\CheckModel.cs" />
+    <Compile Include="Model\CodeExecutor\CodeInitializeModel.cs" />
     <Compile Include="Model\CodeExecutor\CompileParameterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

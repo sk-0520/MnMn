@@ -1384,11 +1384,6 @@
       <Name>Package</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Library\SpaghettiAssembly\SpaghettiAssembly.csproj">
-      <Project>{cde064a0-0133-4c6b-ad46-32e9429d4715}</Project>
-      <Name>SpaghettiAssembly</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">

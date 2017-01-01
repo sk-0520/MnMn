@@ -11,7 +11,7 @@ using Microsoft.CSharp;
 namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 {
     [Serializable]
-    public class SpaghettiAssemblyCSharp: SpaghettiAssembly
+    public class SpaghettiAssemblyCSharp: SpaghettiAssemblyBase
     {
         public SpaghettiAssemblyCSharp()
             :base(CodeLanguage.CSharp)
