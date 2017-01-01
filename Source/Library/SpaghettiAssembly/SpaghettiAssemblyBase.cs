@@ -219,8 +219,12 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
             var compilerParameters = new CompilerParameters() {
                 CompilerOptions = compilerParameter.CompilerOptions,
-                GenerateExecutable = compilerParameter.GenerateExecutable,
-                GenerateInMemory = compilerParameter.GenerateInMemory,
+                // NOTO: Main で死ぬからモデルの機能としては有効だけど MnMn(というかSpaghettiAssemblyBase)では無効にする
+                //GenerateExecutable = compilerParameter.GenerateExecutable,
+                GenerateExecutable = false,
+                // NOTE: どうせこちらしか有効にしない
+                //GenerateInMemory = compilerParameter.GenerateInMemory,
+                GenerateInMemory = true,
                 IncludeDebugInformation = compilerParameter.IncludeDebugInformation,
                 TreatWarningsAsErrors = compilerParameter.TreatWarningsAsErrors,
                 WarningLevel = compilerParameter.WarningLevel,

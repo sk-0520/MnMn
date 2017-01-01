@@ -3,8 +3,6 @@
 	<CodeLanguage>CSharp</CodeLanguage>
 	<SkipNext>false</SkipNext>
 	<Parameter>
-		<GenerateExecutable>true</GenerateExecutable>
-		<GenerateInMemory>true</GenerateInMemory>
 		<IncludeDebugInformation>false</IncludeDebugInformation>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningLevel>4</WarningLevel>
@@ -12,5 +10,26 @@
 		<ProviderOptions/>
 	</Parameter>
 	<Code>
+		<![CDATA[
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+
+public class SpaghettiCode{
+        public IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            return requestHeaders;
+        }
+
+        public IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            return requestParams;
+        }
+
+        public string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
+        {
+            return "#";
+        }
+    }
+]]>
 	</Code>
 </SpaghettiCode>

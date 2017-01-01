@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
         //
         // 戻り値:
         //     実行可能ファイルを生成する場合は true。それ以外の場合は false。
-        public bool GenerateExecutable { get; set; } = true;
+        public bool GenerateExecutable { get; set; } = false;
         //
         // 概要:
         //     メモリ内で出力を生成するかどうかを示す値を取得または設定します。

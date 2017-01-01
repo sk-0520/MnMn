@@ -3,8 +3,6 @@
 	<CodeLanguage>CSharp</CodeLanguage>
 	<SkipNext>false</SkipNext>
 	<Parameter>
-		<GenerateExecutable>true</GenerateExecutable>
-		<GenerateInMemory>true</GenerateInMemory>
 		<IncludeDebugInformation>false</IncludeDebugInformation>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningLevel>4</WarningLevel>
@@ -16,7 +14,7 @@
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
 
-public class Spaghetti: IUriCompatibility
+public class SpaghettiCode
 {
   public string ConvertUri(string key, string uri, ServiceType serviceType)
 	{

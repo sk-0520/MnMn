@@ -148,7 +148,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             codeExecutor.CompileMessage += SpaghettiAssembly_CompileMessage;
 
-            var compiled = codeExecutor.Compile(source.Parameter, source.Code, "Spaghetti");
+            var compiled = codeExecutor.Compile(source.Parameter, source.Code, "SpaghettiCode");
 
             codeExecutor.CompileMessage -= SpaghettiAssembly_CompileMessage;
 
