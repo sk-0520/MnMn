@@ -53,9 +53,31 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         internal abstract void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack);
 
+        protected abstract IEnumerable<string> GetCustomKeys();
+
+        protected static IEnumerable<string> GetMediationKeys(Type type)
+        {
+            // 突貫工事
+            foreach(var field  in type.GetFields()) {
+                yield return (string)field.GetValue(type);
+            }
+        }
+
         #endregion
 
-        #region 
+        #region MediationBase
+
+        protected override IEnumerable<string> GetKeys()
+        {
+            var baseKeys = base.GetKeys();
+            var customKeys = GetCustomKeys();
+
+            return baseKeys
+                .Concat(customKeys)
+                .GroupBy(k => k)
+                .Select(s => s.Key)
+            ;
+        }
 
         protected override SpaghettiScript CreateScript()
         {

@@ -25,6 +25,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
@@ -92,6 +93,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         #region MediationBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileLiveName);
+
+        protected override IEnumerable<string> GetCustomKeys()
+        {
+            return GetMediationKeys(typeof(SmileLiveMediationKey));
+        }
 
         internal override object RequestShowView(ShowViewRequestModel request)
         {

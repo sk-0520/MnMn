@@ -149,7 +149,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         #region MediationBase
 
         protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName);
-            
+
+        protected override IEnumerable<string> GetCustomKeys()
+        {
+            return GetMediationKeys(typeof(SmileMediationKey));
+        }
+
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
         {
             switch(serviceType) {

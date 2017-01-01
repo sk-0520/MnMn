@@ -428,7 +428,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected abstract SpaghettiScript CreateScript();
 
-        protected IEnumerable<string> GetKeys()
+        protected virtual IEnumerable<string> GetKeys()
         {
             var baseKeys = new[] {
                 UriList.Items.Select(i => i.Key),
