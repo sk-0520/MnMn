@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
-            return CheckModel.Success();
+            return CheckResponseHeaderCore(key, uri, headers, serviceType);
         }
 
         public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)

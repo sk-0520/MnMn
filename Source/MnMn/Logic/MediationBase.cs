@@ -450,6 +450,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return uri;
         }
 
+        protected CheckModel CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            return CheckModel.Success();
+        }
+
         #endregion
 
         #region ICommunication

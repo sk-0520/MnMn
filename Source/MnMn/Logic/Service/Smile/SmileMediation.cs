@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return CheckModel.Success();
+                    return CheckResponseHeaderCore(key, uri, headers, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.CheckResponseHeader(key, uri, headers, serviceType);
