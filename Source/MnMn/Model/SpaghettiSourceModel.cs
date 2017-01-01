@@ -24,6 +24,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         public CompileParameterModel Parameter { get; set; } = new CompileParameterModel();
 
+        /// <summary>
+        /// 使用する名前空間。
+        /// <para>コードで直接使うと重複判定がしんどい。</para>
+        /// </summary>
+        public CollectionModel<string> NameSpace { get; set; } = new CollectionModel<string>();
+
         [XmlIgnore]
         public string Code { get; set; }
 

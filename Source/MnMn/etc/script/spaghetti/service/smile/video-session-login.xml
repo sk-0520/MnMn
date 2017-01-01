@@ -11,9 +11,6 @@
 	</Parameter>
 	<Code>
 		<![CDATA[
-using ContentTypeTextNet.MnMn.Library.Bridging.Define;
-using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
-
 public class SpaghettiCode/*:IUriCompatibility*/
 {
   public string ConvertUri(string key, string uri, ServiceType serviceType)

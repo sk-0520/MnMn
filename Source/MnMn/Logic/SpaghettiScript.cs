@@ -15,6 +15,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
@@ -117,6 +118,44 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ;
 
                 model.Parameter.AssemblyNames.InitializeRange(unionAssemblyNames);
+
+                var defaultNameSpace = new[] {
+                    "System",
+                    "System.IO",
+                    "System.Linq",
+                    "System.Text",
+                    "System.Text.RegularExpressions",
+                };
+                var appendAppNameSpace = new[] {
+                    typeof(IConvertCompatibility),
+                    typeof(IRequestCompatibility),
+                    typeof(IResponseCompatibility),
+                    typeof(IUriCompatibility),
+                    typeof(ServiceType),
+                    typeof(CheckModel),
+                }.Select(t => t.Namespace);
+                var unionNameSpace = model.NameSpace
+                    .Concat(defaultNameSpace)
+                    .Concat(appendAppNameSpace)
+                    .GroupBy(s => s)
+                    .Select(g => g.Key)
+                    .Select(u => $"using {u};")
+                ;
+                switch(model.CodeLanguage) {
+                    case CodeLanguage.CSharp: {
+                            var code = new StringBuilder();
+                            //code.AppendLine("#pragma warning disable CS0105");
+                            code.AppendLine(string.Join(Environment.NewLine, unionNameSpace));
+                            code.AppendLine();
+                            code.AppendLine("#line 1");
+                            model.Code = code.ToString() + model.Code;
+                        }
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
 
                 return model;
             }

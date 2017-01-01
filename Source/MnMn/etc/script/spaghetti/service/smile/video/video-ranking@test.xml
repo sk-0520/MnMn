@@ -11,17 +11,16 @@
 	</Parameter>
 	<Code>
 		<![CDATA[
-using ContentTypeTextNet.MnMn.Library.Bridging.Define;
-using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
-
 public class SpaghettiCode{
         public IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
+				requestHeaders.Clear();
             return requestHeaders;
         }
 
         public IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
+				requestParams.Clear();
             return requestParams;
         }
 
