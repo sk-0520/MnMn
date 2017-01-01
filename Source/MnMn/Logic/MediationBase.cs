@@ -89,6 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
+        public virtual ILogger Logger { get; }
+
         public static IReadOnlyDictionary<string, string> EmptyMap { get; } = new Dictionary<string, string>();
 
         protected UrisModel UriList { get; private set; }

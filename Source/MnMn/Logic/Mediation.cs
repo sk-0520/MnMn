@@ -54,9 +54,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public class Mediation: MediationBase
     {
+        #region variable
+
+        ILogger _logger;
+
+        #endregion
+
         public Mediation(AppSettingModel mainSettingModel, ILogger logger)
         {
-            Logger = logger;
+            this._logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
 
             Logger.LoggerConfig.EnabledAll = true;
@@ -80,8 +86,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         internal SmileMediation Smile { get; private set; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
-
-        public ILogger Logger { get; }
 
         #endregion
 
@@ -313,6 +317,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region MediationBase
+
+        public override ILogger Logger { get { return this._logger; } }
 
         protected override SpaghettiScript CreateScript()
         {

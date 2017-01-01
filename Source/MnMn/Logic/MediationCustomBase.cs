@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -66,6 +67,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #endregion
 
         #region MediationBase
+
+        public override ILogger Logger { get { return Mediation.Logger; } }
 
         protected override IEnumerable<string> GetKeys()
         {
