@@ -478,6 +478,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return (IDictionary<string, string>)requestParams;
         }
 
+        protected string ConvertRequestMappingCore(string key, string mapping, ServiceType serviceType)
+        {
+            return mapping;
+        }
+
+
         #endregion
 
         #region ICommunication

@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
                 ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
             }
 
-            return mapping;
+            return ConvertRequestMappingCore(key, mapping, serviceType);
         }
 
         public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
