@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
                 ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
             }
 
-            return (IDictionary<string, string>)requestParams;
+            return ConvertRequestParameterCore(key, requestParams, serviceType);
         }
 
         public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)

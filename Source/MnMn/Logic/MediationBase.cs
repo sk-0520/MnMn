@@ -473,6 +473,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return (IDictionary<string, string>)requestHeaders;
         }
 
+        protected IDictionary<string, string> ConvertRequestParameterCore(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            return (IDictionary<string, string>)requestParams;
+        }
 
         #endregion
 

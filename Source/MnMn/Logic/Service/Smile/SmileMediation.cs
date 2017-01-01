@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return (IDictionary<string, string>)requestParams;
+                    return ConvertRequestParameterCore(key, requestParams, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.ConvertRequestParameter(key, requestParams, serviceType);
