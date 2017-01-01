@@ -79,6 +79,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'tune',
+		localize: true,
+		level: 0,
+		title: {
+			'ja-jp': '調整'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,
