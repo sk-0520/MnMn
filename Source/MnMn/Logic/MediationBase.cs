@@ -476,16 +476,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected IDictionary<string, string> ConvertRequestHeaderCore(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertRequestHeader(key, requestHeaders, serviceType);
+                return result;
+            }
             return requestHeaders;
         }
 
         protected IDictionary<string, string> ConvertRequestParameterCore(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertRequestParameter(key, requestParams, serviceType);
+                return result;
+            }
             return requestParams;
         }
 
         protected string ConvertRequestMappingCore(string key, string mapping, ServiceType serviceType)
         {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertRequestMapping(key, mapping, serviceType);
+                return result;
+            }
             return mapping;
         }
 
