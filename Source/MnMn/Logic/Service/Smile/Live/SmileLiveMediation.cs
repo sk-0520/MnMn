@@ -203,20 +203,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return mapping;
         }
 
-        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             return CheckModel.Success();
         }
 
-        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         { }
 
-        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             return Encoding.UTF8;
         }
 
-        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             return text;
         }

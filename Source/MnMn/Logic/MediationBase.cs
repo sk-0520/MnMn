@@ -174,22 +174,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(mapping)}: {mapping}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportCheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        protected void ThrowNotSupportCheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(headers)}: {headers}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        protected void ThrowNotSupportConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        protected void ThrowNotSupportGetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertString(Uri uri, string text, ServiceType serviceType)
+        protected void ThrowNotSupportConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
@@ -524,22 +524,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IResponseCompatibility
 
-        public virtual CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public virtual CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        public virtual void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public virtual Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public virtual string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

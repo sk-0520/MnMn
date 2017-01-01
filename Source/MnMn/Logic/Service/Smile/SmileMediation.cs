@@ -296,20 +296,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                     return CheckModel.Success();
 
                 case ServiceType.SmileVideo:
-                    return VideoMediation.CheckResponseHeader(uri, headers, serviceType);
+                    return VideoMediation.CheckResponseHeader(key, uri, headers, serviceType);
 
                 case ServiceType.SmileLive:
-                    return LiveMediation.CheckResponseHeader(uri, headers, serviceType);
+                    return LiveMediation.CheckResponseHeader(key, uri, headers, serviceType);
 
                 default:
-                    ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
+                    ThrowNotSupportCheckResponseHeader(key, uri, headers, serviceType);
                     throw new NotImplementedException();
             }
         }
@@ -350,58 +350,58 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                     break;
 
                 case ServiceType.SmileVideo:
-                    VideoMediation.ConvertBinary(uri, stream, serviceType);
+                    VideoMediation.ConvertBinary(key, uri, stream, serviceType);
                     break;
 
                 case ServiceType.SmileLive:
-                    LiveMediation.ConvertBinary(uri, stream, serviceType);
+                    LiveMediation.ConvertBinary(key, uri, stream, serviceType);
                     break;
 
                 default:
-                    ThrowNotSupportConvertBinary(uri, stream, serviceType);
+                    ThrowNotSupportConvertBinary(key, uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                     return Encoding.UTF8;
 
                 case ServiceType.SmileVideo:
-                    return VideoMediation.GetEncoding(uri, stream, serviceType);
+                    return VideoMediation.GetEncoding(key, uri, stream, serviceType);
 
                 case ServiceType.SmileLive:
-                    return LiveMediation.GetEncoding(uri, stream, serviceType);
+                    return LiveMediation.GetEncoding(key, uri, stream, serviceType);
 
                 default:
-                    ThrowNotSupportGetEncoding(uri, stream, serviceType);
+                    ThrowNotSupportGetEncoding(key, uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                     return text;
 
                 case ServiceType.SmileVideo:
-                    return VideoMediation.ConvertString(uri, text, serviceType);
+                    return VideoMediation.ConvertString(key, uri, text, serviceType);
 
                 case ServiceType.SmileLive:
-                    return LiveMediation.ConvertString(uri, text, serviceType);
+                    return LiveMediation.ConvertString(key, uri, text, serviceType);
 
                 default:
-                    ThrowNotSupportConvertString(uri, text, serviceType);
+                    ThrowNotSupportConvertString(key, uri, text, serviceType);
                     throw new NotImplementedException();
             }
         }

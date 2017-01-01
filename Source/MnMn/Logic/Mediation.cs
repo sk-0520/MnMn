@@ -482,59 +482,59 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.CheckResponseHeader(uri, headers, serviceType);
+                    return Smile.CheckResponseHeader(key, uri, headers, serviceType);
 
                 default:
-                    ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
+                    ThrowNotSupportCheckResponseHeader(key, uri, headers, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    Smile.ConvertBinary(uri, stream, serviceType);
+                    Smile.ConvertBinary(key, uri, stream, serviceType);
                     break;
 
                 default:
-                    ThrowNotSupportConvertBinary(uri, stream, serviceType);
+                    ThrowNotSupportConvertBinary(key, uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.GetEncoding(uri, stream, serviceType);
+                    return Smile.GetEncoding(key, uri, stream, serviceType);
 
                 default:
-                    ThrowNotSupportGetEncoding(uri, stream, serviceType);
+                    ThrowNotSupportGetEncoding(key, uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertString(uri, text, serviceType);
+                    return Smile.ConvertString(key, uri, text, serviceType);
 
                 default:
-                    ThrowNotSupportConvertString(uri, text, serviceType);
+                    ThrowNotSupportConvertString(key, uri, text, serviceType);
                     throw new NotImplementedException();
             }
         }

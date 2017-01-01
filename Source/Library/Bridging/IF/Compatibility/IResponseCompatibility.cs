@@ -38,14 +38,14 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="headers">レスポンスヘッダ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType);
+        CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType);
         /// <summary>
         /// 受信後に呼び出されるバイナリ変換処理。
         /// </summary>
         /// <param name="uri">受信データの送り元。</param>
         /// <param name="stream">バイナリデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
-        void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType);
+        void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType);
         /// <summary>
         /// 受信後に呼び出されるバイナリから文字コード取得処理。
         /// </summary>
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="stream"></param>
         /// <param name="serviceType"></param>
         /// <returns></returns>
-        Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType);
+        Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType);
         /// <summary>
         /// 受信後に呼び出される文字列変換処理。
         /// </summary>
@@ -61,6 +61,6 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="text">テキストデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        string ConvertString(Uri uri, string text, ServiceType serviceType);
+        string ConvertString(string key, Uri uri, string text, ServiceType serviceType);
     }
 }

@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected CheckModel CheckResponseHeaders(HttpResponseMessage response)
         {
-            return Mediation.CheckResponseHeader(Uri, response.Headers, ServiceType);
+            return Mediation.CheckResponseHeader(Key, Uri, response.Headers, ServiceType);
         }
 
         protected async Task<string> GetTextAsync(HttpResponseMessage response)
@@ -258,15 +258,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     stream.Position = 0;
                 }
 
-                Mediation.ConvertBinary(Uri, stream, ServiceType);
-                var encoding = Mediation.GetEncoding(Uri, stream, ServiceType);
+                Mediation.ConvertBinary(Key, Uri, stream, ServiceType);
+                var encoding = Mediation.GetEncoding(Key, Uri, stream, ServiceType);
 
                 var binary = stream.GetBuffer();
                 var length = (int)stream.Length;
 
                 var plainText = encoding.GetString(binary, 0, length);
 
-                var convertedText = Mediation.ConvertString(Uri, plainText, ServiceType);
+                var convertedText = Mediation.ConvertString(Key, Uri, plainText, ServiceType);
 
                 return convertedText;
             }
