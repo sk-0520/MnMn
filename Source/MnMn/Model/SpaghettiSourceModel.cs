@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
-using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 using Gecko.DOM.Xml;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model

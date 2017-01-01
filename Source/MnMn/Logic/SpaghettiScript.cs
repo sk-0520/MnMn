@@ -12,9 +12,9 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
-using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
-using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic;
+using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -103,12 +103,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        CodeCompilerBase CreateSpaghettiAssembly(string key, CodeLanguage codeLanguage)
+        SpaghettiAssembly CreateSpaghettiAssembly(string key, CodeLanguage codeLanguage)
         {
             var codeMakerMap = new Dictionary<CodeLanguage, string> {
-                [CodeLanguage.CSharp] = typeof(CSharpCodeCompiler).FullName,
+                [CodeLanguage.CSharp] = typeof(SpaghettiAssemblyCSharp).FullName,
             };
-            var spaghettiAssembly = (CodeCompilerBase)LocalDomain.CreateInstanceAndUnwrap(
+            var spaghettiAssembly = (SpaghettiAssembly)LocalDomain.CreateInstanceAndUnwrap(
                 nameof(Library.SpaghettiAssembly),
                 codeMakerMap[codeLanguage]
             );

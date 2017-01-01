@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
-using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
 using Microsoft.CSharp;
 
-namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
+namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 {
     [Serializable]
-    public class CSharpCodeCompiler: CodeCompilerBase
+    public class SpaghettiAssemblyCSharp: SpaghettiAssembly
     {
-        public CSharpCodeCompiler()
+        public SpaghettiAssemblyCSharp()
             :base(CodeLanguage.CSharp)
         { }
 

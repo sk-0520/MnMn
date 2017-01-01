@@ -9,16 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
-using ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
 
-namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
+namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 {
     /// <summary>
     /// 
     /// </summary>
     [Serializable]
-    public abstract class CodeCompilerBase: IDisposable
+    public abstract class SpaghettiAssembly: ICodeExecutor
     {
         #region define
 
@@ -56,12 +58,12 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Logic
 
         #endregion
 
-        public CodeCompilerBase(CodeLanguage codeLanguage)
+        public SpaghettiAssembly(CodeLanguage codeLanguage)
         {
             CodeLanguage = codeLanguage;
         }
 
-        ~CodeCompilerBase()
+        ~SpaghettiAssembly()
         {
             Dispose(false);
         }

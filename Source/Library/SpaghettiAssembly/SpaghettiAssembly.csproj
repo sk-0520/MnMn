@@ -60,11 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Define\CodeLanguage.cs" />
-    <Compile Include="Define\CompileMessageEventArgs.cs" />
-    <Compile Include="Define\CompileMessageKind.cs" />
-    <Compile Include="Logic\CodeCompilerBase.cs" />
-    <Compile Include="Logic\CSharpCodeCompiler.cs" />
+    <Compile Include="SpaghettiAssembly.cs" />
+    <Compile Include="SpaghettiAssemblyCSharp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

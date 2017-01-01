@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
@@ -156,7 +157,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         void src()
         {
             var model = new SpaghettiSourceModel() {
-                CodeLanguage = Library.SpaghettiAssembly.Define.CodeLanguage.CSharp,
+                CodeLanguage = CodeLanguage.CSharp,
                 Code = "usinf System; class asd(){  }",
             };
             var path = @"X:\src.xml";

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.Define
+namespace ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor
 {
     public enum CodeLanguage
     {

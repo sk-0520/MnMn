@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-namespace ContentTypeTextNet.MnMn.Library.Bridging.Model
+namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
 {
     /// <summary>
     /// <see cref="CompilerParameters"/>のシリアライズ用データ。
