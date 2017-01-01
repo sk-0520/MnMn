@@ -458,6 +458,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void ConvertBinaryCore(string key, Uri uri, Stream stream, ServiceType serviceType)
         { }
 
+        protected Encoding GetEncodingCore(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+            return Encoding.UTF8;
+        }
+
 
         #endregion
 

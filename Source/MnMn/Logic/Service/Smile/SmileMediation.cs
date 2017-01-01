@@ -380,7 +380,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
-                    return Encoding.UTF8;
+                    return GetEncodingCore(key, uri, stream, serviceType);
 
                 case ServiceType.SmileVideo:
                     return VideoMediation.GetEncoding(key, uri, stream, serviceType);

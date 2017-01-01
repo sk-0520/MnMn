@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
-            return Encoding.UTF8;
+            return GetEncodingCore(key, uri, stream, serviceType);
         }
 
         public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
