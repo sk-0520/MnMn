@@ -130,6 +130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     "System.Text",
                     "System.Text.RegularExpressions",
                     "System.Net.Http.Headers",
+                    "System.Diagnostics"
                 };
                 var appendAppNameSpace = new[] {
                     typeof(IConvertCompatibility),
@@ -200,6 +201,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(compiled) {
                 data.State = ScriptState.Success;
                 data.CodeExecutor = codeExecutor;
+
+                data.CodeExecutor.TraceMessage += CodeExecutor_TraceMessage;
 
                 return true;
             } else {
@@ -358,6 +361,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    foreach(var data in Preparations.Values.SelectMany(d => d)) {
+                        data.CodeExecutor.CompileMessage -= SpaghettiAssembly_CompileMessage; // 保険
+                        data.CodeExecutor.TraceMessage -= CodeExecutor_TraceMessage;
+                    }
+
                     try {
                         AppDomain.Unload(LocalDomain);
                     } catch(Exception ex) {
@@ -390,6 +398,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             put($"[{e.DomainName}/{e.Identifier}/{e.Sequence}] {e.Kind}: {e.Message}");
         }
+
+        private void CodeExecutor_TraceMessage(object sender, TraceMessageEventArgs e)
+        {
+        }
+
 
     }
 }

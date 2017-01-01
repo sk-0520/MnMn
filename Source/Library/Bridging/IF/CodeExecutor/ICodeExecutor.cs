@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
         #region proeprty
 
         event EventHandler<CompileMessageEventArgs> CompileMessage;
+        event EventHandler<TraceMessageEventArgs> TraceMessage;
 
         CodeLanguage CodeLanguage { get; }
 

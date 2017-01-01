@@ -33,6 +33,34 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             "System.Net.Http.dll",
         };
 
+        class CodeTracer: TraceListener
+        {
+            public CodeTracer(Action<string> writer)
+            {
+                Writer = writer;
+            }
+
+            #region property
+
+            public Action<string> Writer { get; set; }
+
+            #endregion
+
+            #region TraceListener
+
+            public override void Write(string message)
+            {
+                Writer(message);
+            }
+
+            public override void WriteLine(string message)
+            {
+                Writer(message + System.Environment.NewLine);
+            }
+
+            #endregion
+        }
+
         #endregion
 
         #region event
@@ -55,6 +83,10 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         public SpaghettiAssemblyBase(CodeLanguage codeLanguage)
         {
             CodeLanguage = codeLanguage;
+
+            Tracer = new CodeTracer(TraceWrite);
+            Trace.Listeners.Add(Tracer);
+            Trace.AutoFlush = true;
         }
 
         ~SpaghettiAssemblyBase()
@@ -63,6 +95,8 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         }
 
         #region property
+
+        CodeTracer Tracer { get; }
 
         public bool IsInitialized { get; private set; }
 
@@ -95,6 +129,20 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
                 var e = new CompileMessageEventArgs(DomainName, Identifier, Sequence, kind, message);
                 compileMessage(this, e);
             }
+        }
+
+        void OnTraceMessage(string message)
+        {
+            var traceMessage = TraceMessage;
+            if(traceMessage != null) {
+                var e = new TraceMessageEventArgs(DomainName, Identifier, Sequence, message);
+                traceMessage(this, e);
+            }
+        }
+
+        void TraceWrite(string s)
+        {
+            OnTraceMessage(s);
         }
 
         void AppendAssembly(CompilerParameters parameters, string assemblyName)
@@ -148,6 +196,11 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
                     if(Provider != null) {
                         Provider.Dispose();
                     }
+
+                    if(Tracer != null) {
+                        Trace.Listeners.Remove(Tracer);
+                        Tracer.Dispose();
+                    }
                 }
                 return;
             }
@@ -176,6 +229,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         #region ICodeExecutor
 
         public event EventHandler<CompileMessageEventArgs> CompileMessage;
+        public event EventHandler<TraceMessageEventArgs> TraceMessage;
 
         /// <summary>
         /// 言語。

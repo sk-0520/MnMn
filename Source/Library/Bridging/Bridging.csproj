@@ -61,6 +61,7 @@
     <Compile Include="Define\CodeExecutor\CodeLanguage.cs" />
     <Compile Include="Define\CodeExecutor\CompileMessageEventArgs.cs" />
     <Compile Include="Define\CodeExecutor\CompileMessageKind.cs" />
+    <Compile Include="Define\CodeExecutor\TraceMessageEventArgs.cs" />
     <Compile Include="Define\ServiceType.cs" />
     <Compile Include="IF\Compatibility\IConvertCompatibility.cs" />
     <Compile Include="IF\Compatibility\IRequestCompatibility.cs" />

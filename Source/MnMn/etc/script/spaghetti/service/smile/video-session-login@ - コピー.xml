@@ -6,16 +6,18 @@
 		<IncludeDebugInformation>false</IncludeDebugInformation>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningLevel>4</WarningLevel>
+		<CompilerOptions>/d:TRACE</CompilerOptions>
 		<AssemblyNames/>
 		<ProviderOptions/>
 	</Parameter>
 	<Code>
 		<![CDATA[
-public class SpaghettiCode
+public class SpaghettiCode:IUriCompatibility
 {
   public string ConvertUri(string key, string uri, ServiceType serviceType)
 	{
-		return "test!" + uri;
+	Trace.WriteLine("SpaghettiCode!!!!!!!!!!!!!");
+		return uri;
 	}
 	
 }
