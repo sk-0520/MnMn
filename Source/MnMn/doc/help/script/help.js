@@ -87,6 +87,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'tune-command_line',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'コマンドライン'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,
