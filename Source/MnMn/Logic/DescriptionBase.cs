@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region function
 
-        void ReplaceAttibute(XmlElement element, IReadOnlyDictionary<string,string> map)
+        void ReplaceAttibute(XmlElement element, IDictionary<string,string> map)
         {
             foreach(XmlAttribute attribute in element.Attributes) {
                 var attrValue = AppUtility.ReplaceString(attribute.Value, map);

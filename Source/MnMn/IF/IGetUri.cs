@@ -27,6 +27,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IGetUri
     {
-        UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
+        UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

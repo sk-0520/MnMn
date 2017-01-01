@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return RequestCore(request);
         }
 
-        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return ConvertUriCore(key, uri, serviceType);
         }
 
-        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestHeaderCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return ConvertRequestHeaderCore(key, requestHeaders, serviceType);
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);

@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
     /// </summary>
     public interface IRequestCompatibility
     {
-        IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType);
+        IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType);
 
         /// <summary>
         /// 処理前に実行されるリクエスト変更処理。
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
         /// <param name="requestParams">使用するリクエストデータ。</param>
         /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType);
+        IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType);
 
         string ConvertRequestMapping(string key, string mapping, ServiceType serviceType);
     }

@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
     {
         #region function
 
-        public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
+        public static string ReplaceString(string s, IDictionary<string, string> map)
         {
             return s.ReplaceRangeFromDictionary("${", "}", (Dictionary<string, string>)map);
         }

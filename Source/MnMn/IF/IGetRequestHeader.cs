@@ -26,6 +26,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IGetRequestHeader
     {
-        IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
+        IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

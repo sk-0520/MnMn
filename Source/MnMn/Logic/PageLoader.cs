@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void MakeRequestHeader()
         {
             var rawHeader = Mediation.GetRequestHeader(Key, ReplaceRequestHeaders, ServiceType);
-            var convertedHeader = Mediation.ConvertRequestHeader(Key, (IReadOnlyDictionary<string, string>)rawHeader, ServiceType);
+            var convertedHeader = Mediation.ConvertRequestHeader(Key, rawHeader, ServiceType);
             Headers = (Dictionary<string, string>)convertedHeader;
 
             Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(ParameterType) {
                 case ParameterType.Plain: {
                         var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
-                        var singleContent = Mediation.ConvertRequestParameter(Key, (IReadOnlyDictionary<string, string>)rawContent, ServiceType);
+                        var singleContent = Mediation.ConvertRequestParameter(Key, rawContent, ServiceType);
                         var multiContents = singleContent
                             .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
                             .ToArray()

@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.IF
 {
     public interface IGetRequestParameter
     {
-        IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
-        MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType);
+        IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
+        MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType);
     }
 }

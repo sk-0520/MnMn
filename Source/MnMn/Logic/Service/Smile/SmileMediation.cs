@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -265,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:

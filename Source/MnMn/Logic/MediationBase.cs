@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
+        public static string ReplaceString(string s, IDictionary<string, string> map)
         {
             return AppUtility.ReplaceString(s ?? string.Empty, map) ?? string.Empty;
         }
@@ -136,22 +136,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(ICommunication)} => {nameof(order)}: {order}");
         }
 
-        protected void ThrowNotSupportGetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestHeader)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
@@ -161,12 +161,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestHeaders)}: {requestHeaders}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
         }
@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
+        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
@@ -253,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IReadOnlyDictionary<string, string> replaceMap)
+        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IDictionary<string, string> replaceMap)
         {
             var result = new UriResultModel() {
                 Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
@@ -293,7 +293,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected UriResultModel GetUriCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected UriResultModel GetUriCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var uriItem = GetUriItem(key);
             if(uriItem != null) {
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected IDictionary<string, string> GetRequestHeaderCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IDictionary<string, string> GetRequestHeaderCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var usingMap = new Dictionary<string, string>() {
                 //["User-Agent"] = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/48.1",
@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return usingMap;
         }
 
-        protected IDictionary<string, string> GetRequestParameterCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IDictionary<string, string> GetRequestParameterCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var targetParameter = RequestParameterList.Parameters
                 .FirstOrDefault(up => up.Key == key)
@@ -359,7 +359,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return $"{bracket.Open}{s}{bracket.Close}";
         }
 
-        protected string ToMappingItemString(MappingItemModel item, IReadOnlyDictionary<string, string> replaceMap)
+        protected string ToMappingItemString(MappingItemModel item, IDictionary<string, string> replaceMap)
         {
             var value = ReplaceString(item.Value, replaceMap);
 
@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected MappingResultModel GetRequestMappingCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected MappingResultModel GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
             var mapping = RequestMappingList.Mappings
@@ -474,14 +474,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return text;
         }
 
-        protected IDictionary<string, string> ConvertRequestHeaderCore(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        protected IDictionary<string, string> ConvertRequestHeaderCore(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
-            return (IDictionary<string, string>)requestHeaders;
+            return requestHeaders;
         }
 
-        protected IDictionary<string, string> ConvertRequestParameterCore(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        protected IDictionary<string, string> ConvertRequestParameterCore(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
-            return (IDictionary<string, string>)requestParams;
+            return requestParams;
         }
 
         protected string ConvertRequestMappingCore(string key, string mapping, ServiceType serviceType)
@@ -523,7 +523,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetUri
 
-        public virtual UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -541,7 +541,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetRequestHeader
 
-        public virtual IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -550,12 +550,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetRequestParameter
 
-        public virtual IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -564,12 +564,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IRequestCompatibility
 
-        public virtual IDictionary<string, string> ConvertRequestHeader(string key, IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public virtual IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IDictionary<string, string> ConvertRequestParameter(string key, IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public virtual IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

@@ -21,7 +21,10 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class SpaghettiScript: DisposeFinalizeBase, IUriCompatibility
+    public class SpaghettiScript: 
+        DisposeFinalizeBase, 
+        IUriCompatibility,
+        IRequestCompatibility
     {
         public SpaghettiScript(string domainName, ILogger logger)
         {
@@ -240,6 +243,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             return DoFunc<string>(key, 1, typeof(IUriCompatibility), nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+        }
+
+        #endregion
+
+        #region IRequestCompatibility
+
+        public IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            return DoFunc<IDictionary<string, string>>(key, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestHeader), key, requestHeaders, serviceType);
+        }
+
+        public IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            return DoFunc<IDictionary<string, string>>(key, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestParameter), key, requestParams, serviceType);
+        }
+
+        public string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
+        {
+            return DoFunc<string>(key, 1, typeof(IRequestCompatibility), nameof(IRequestCompatibility.ConvertRequestMapping), key, mapping, serviceType);
         }
 
         #endregion
