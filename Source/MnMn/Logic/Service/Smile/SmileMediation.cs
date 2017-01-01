@@ -359,6 +359,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
         {
             switch(serviceType) {
                 case ServiceType.Smile:
+                    ConvertBinaryCore(key, uri, stream, serviceType);
                     break;
 
                 case ServiceType.SmileVideo:

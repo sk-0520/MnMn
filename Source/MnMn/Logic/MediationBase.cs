@@ -455,6 +455,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return CheckModel.Success();
         }
 
+        protected void ConvertBinaryCore(string key, Uri uri, Stream stream, ServiceType serviceType)
+        { }
+
+
         #endregion
 
         #region ICommunication

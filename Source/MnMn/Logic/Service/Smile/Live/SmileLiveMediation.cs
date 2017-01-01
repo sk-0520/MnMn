@@ -215,7 +215,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
         }
 
         public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
-        { }
+        {
+            ConvertBinaryCore(key, uri, stream, serviceType);
+        }
 
         public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
