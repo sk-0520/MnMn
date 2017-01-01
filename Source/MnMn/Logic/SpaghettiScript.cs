@@ -161,16 +161,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        //void DoAction(string key, SpaghettiPreparationData data, SpaghettExecutor action)
-        //{
-        //    action(data.CodeExecutor, data.DynamicExecutor);
-        //}
-
-        //TResult DoFunction<TResult>(string key, SpaghettiPreparationData data, SpaghettExecutor<TResult> func)
-        //{
-        //    return func(data.CodeExecutor, data.DynamicExecutor);
-        //}
-
         #endregion
 
         #region IUriCompatibility
@@ -193,15 +183,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     case ScriptState.Success:
                         ScriptState_Success:
                         {
-                            //var convertedUri = DoFunction(key, data, (d, c) => {
-
-                            //    return d.ConvertUri(key, convertedValue, serviceType);
-                            //});
-                            //if(data.IsSucceeding) {
-                            //    convertedValue = convertedUri;
-                            //} else {
-                            //    return convertedUri;
-                            //}
+                            var convertedUri = (string)data.CodeExecutor.Invoke(nameof(IUriCompatibility.ConvertUri), key, uri, serviceType);
+                            if(data.SkipNext) {
+                                return convertedUri;
+                            } else {
+                                convertedValue = convertedUri;
+                            }
                         }
                         break;
 

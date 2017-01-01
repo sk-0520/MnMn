@@ -71,8 +71,8 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         protected object Instance { get; private set; }
         protected Type InstanceType { get; private set; }
 
-        Caching<string, MethodInfo> InstanceMethod { get; } = new Caching<string, MethodInfo>();
-        Caching<string, PropertyInfo> InstanceProperty { get; } = new Caching<string, PropertyInfo>();
+        Dictionary<string, MethodInfo> InstanceMethod { get; } = new Dictionary<string, MethodInfo>();
+        Dictionary<string, PropertyInfo> InstanceProperty { get; } = new Dictionary<string, PropertyInfo>();
 
 
         #endregion
@@ -156,6 +156,17 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
             IsDisposed = true;
             GC.SuppressFinalize(this);
+        }
+
+        TValue GetValue<TKey, TValue>(IDictionary<TKey, TValue> map, TKey key, Func<TValue> func)
+        {
+            TValue value;
+            if(!map.TryGetValue(key, out value)) {
+                value = func();
+                map.Add(key, value);
+            }
+
+            return value;
         }
 
         #endregion
@@ -260,7 +271,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         {
             NeedInstance();
 
-            var method = InstanceMethod.Get(methodName, () => {
+            var method = GetValue(InstanceMethod, methodName, () => {
                 var typeMethod = InstanceType.GetMethod(methodName);
                 return typeMethod;
             });
@@ -272,7 +283,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         {
             NeedInstance();
 
-            var property = InstanceProperty.Get(propertyName, () => {
+            var property = GetValue(InstanceProperty, propertyName, () => {
                 var typeProperty = InstanceType.GetProperty(propertyName);
                 return typeProperty;
             });
@@ -284,7 +295,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         {
             NeedInstance();
 
-            var property = InstanceProperty.Get(propertyName, () => {
+            var property = GetValue(InstanceProperty, propertyName, () => {
                 var typeProperty = InstanceType.GetProperty(propertyName);
                 return typeProperty;
             });

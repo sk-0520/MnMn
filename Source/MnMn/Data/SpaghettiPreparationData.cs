@@ -12,12 +12,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     public class SpaghettiPreparationData
     {
-        #region variable
-
-        ICodeExecutor _codeExecutor;
-
-        #endregion
-
         #region proeprty
 
         /// <summary>
@@ -33,23 +27,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// <summary>
         /// お堅い実行環境。
         /// </summary>
-        public ICodeExecutor CodeExecutor
-        {
-            get { return this._codeExecutor; }
-            set
-            {
-                DynamicExecutor = this._codeExecutor = value;
-            }
-        }
-        /// <summary>
-        /// 便利屋の実行環境。
-        /// </summary>
-        public dynamic DynamicExecutor {get;private set;}
+        public ICodeExecutor CodeExecutor { get; set; }
 
         /// <summary>
-        /// 後続処理を許可するか。
+        /// 後続処理を無視するか。
         /// </summary>
-        public bool IsSucceeding { get; set; }
+        public bool SkipNext { get; set; }
 
         #endregion
     }
