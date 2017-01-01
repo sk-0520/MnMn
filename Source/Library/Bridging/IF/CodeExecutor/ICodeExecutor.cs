@@ -25,7 +25,11 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
 
         void Initialize(CodeInitializeModel initializeModel);
 
-        bool Compile(CompileParameterModel compilerParameter, string source);
+        bool Compile(CompileParameterModel compilerParameter, string source, string className);
+
+        object Invoke(string methodName, params object[] args);
+        object GetProperty(string propertyName);
+        void SetProperty(string propertyName, object value);
 
         #endregion
     }

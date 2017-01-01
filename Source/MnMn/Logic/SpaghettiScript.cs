@@ -16,6 +16,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor;
 using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor;
+using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
@@ -138,15 +139,37 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return spaghettiAssembly;
         }
 
-        void CompileSource(string key, SpaghettiPreparationData data, SpaghettiSourceModel source)
+        bool CompileSource(string key, SpaghettiPreparationData data, SpaghettiSourceModel source)
         {
-            var spaghettiAssembly = CreateSpaghettiAssembly(key, source.CodeLanguage);
-            spaghettiAssembly.CompileMessage += SpaghettiAssembly_CompileMessage;
+            var codeExecutor = CreateSpaghettiAssembly(key, source.CodeLanguage);
 
-            spaghettiAssembly.Compile(source.Parameter, source.Code);
+            codeExecutor.CompileMessage += SpaghettiAssembly_CompileMessage;
 
-            spaghettiAssembly.CompileMessage -= SpaghettiAssembly_CompileMessage;
+            var compiled = codeExecutor.Compile(source.Parameter, source.Code, "Spaghetti");
+
+            codeExecutor.CompileMessage -= SpaghettiAssembly_CompileMessage;
+
+            if(compiled) {
+                data.State = ScriptState.Success;
+                data.CodeExecutor = codeExecutor;
+
+                return true;
+            } else {
+                data.State = ScriptState.Error;
+
+                return false;
+            }
         }
+
+        //void DoAction(string key, SpaghettiPreparationData data, SpaghettExecutor action)
+        //{
+        //    action(data.CodeExecutor, data.DynamicExecutor);
+        //}
+
+        //TResult DoFunction<TResult>(string key, SpaghettiPreparationData data, SpaghettExecutor<TResult> func)
+        //{
+        //    return func(data.CodeExecutor, data.DynamicExecutor);
+        //}
 
         #endregion
 
@@ -154,14 +177,34 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public string ConvertUri(string key, string uri, ServiceType serviceType)
         {
+            var convertedValue = uri;
+
             foreach(var data in Preparations[key]) {
                 switch(data.State) {
-                    case Define.ScriptState.None: {
+                    case ScriptState.None: {
                             // コンパイル
                             var source = LoadSource(key, data);
-                            CompileSource(key, data, source);
+                            if(CompileSource(key, data, source)) {
+                                goto ScriptState_Success;
+                            }
                         }
                         break;
+
+                    case ScriptState.Success:
+                        ScriptState_Success:
+                        {
+                            //var convertedUri = DoFunction(key, data, (d, c) => {
+
+                            //    return d.ConvertUri(key, convertedValue, serviceType);
+                            //});
+                            //if(data.IsSucceeding) {
+                            //    convertedValue = convertedUri;
+                            //} else {
+                            //    return convertedUri;
+                            //}
+                        }
+                        break;
+
                 }
             }
 

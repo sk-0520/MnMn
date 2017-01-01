@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,13 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         protected CodeDomProvider Provider { get; private set; }
         protected CompilerResults Results { get; private set; }
 
+        protected object Instance { get; private set; }
+        protected Type InstanceType { get; private set; }
+
+        Caching<string, MethodInfo> InstanceMethod { get; } = new Caching<string, MethodInfo>();
+        Caching<string, PropertyInfo> InstanceProperty { get; } = new Caching<string, PropertyInfo>();
+
+
         #endregion
 
         #region function
@@ -102,6 +110,13 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         {
             if(!IsInitialized) {
                 throw new InvalidOperationException(nameof(IsInitialized));
+            }
+        }
+
+        void NeedInstance()
+        {
+            if(Instance == null) {
+                throw new InvalidOperationException(nameof(Instance));
             }
         }
 
@@ -173,9 +188,17 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
             }
         }
 
-        public bool Compile(CompileParameterModel compilerParameter, string source)
+        public bool Compile(CompileParameterModel compilerParameter, string source, string className)
         {
             NeedInitialized();
+
+            if(string.IsNullOrWhiteSpace(source)) {
+                throw new ArgumentException(nameof(source));
+            }
+
+            if(string.IsNullOrWhiteSpace(className)) {
+                throw new ArgumentException(nameof(className));
+            }
 
             var stopWatch = new Stopwatch();
 
@@ -215,7 +238,14 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
                 }
             }
 
-            return !Results.Errors.HasErrors;
+            var success = !Results.Errors.HasErrors;
+
+            if(success) {
+                Instance = Results.CompiledAssembly.CreateInstance(className);
+                InstanceType = Instance.GetType();
+            }
+
+            return success;
         }
 
         /// <summary>
@@ -224,6 +254,42 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         public void Dispose()
         {
             Dispose(true);
+        }
+
+        public object Invoke(string methodName, params object[] args)
+        {
+            NeedInstance();
+
+            var method = InstanceMethod.Get(methodName, () => {
+                var typeMethod = InstanceType.GetMethod(methodName);
+                return typeMethod;
+            });
+
+            return method.Invoke(Instance, args);
+        }
+
+        public object GetProperty(string propertyName)
+        {
+            NeedInstance();
+
+            var property = InstanceProperty.Get(propertyName, () => {
+                var typeProperty = InstanceType.GetProperty(propertyName);
+                return typeProperty;
+            });
+
+            return property.GetValue(Instance);
+        }
+
+        public void SetProperty(string propertyName, object value)
+        {
+            NeedInstance();
+
+            var property = InstanceProperty.Get(propertyName, () => {
+                var typeProperty = InstanceType.GetProperty(propertyName);
+                return typeProperty;
+            });
+
+            property.SetValue(Instance, value);
         }
 
         #endregion
