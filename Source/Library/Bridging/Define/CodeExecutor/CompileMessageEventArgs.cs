@@ -8,10 +8,11 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor
 {
     public class CompileMessageEventArgs: EventArgs
     {
-        public CompileMessageEventArgs(string domainName, string identifier, CompileMessageKind kind, string message)
+        public CompileMessageEventArgs(string domainName, string identifier, string sequence, CompileMessageKind kind, string message)
         {
             DomainName = domainName;
             Identifier = identifier;
+            Sequence = sequence;
             Kind = kind;
             Message = message;
         }
@@ -20,6 +21,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor
 
         public string DomainName { get; }
         public string Identifier { get; }
+        public string Sequence { get; }
 
         public CompileMessageKind Kind { get; }
         public string Message { get;}

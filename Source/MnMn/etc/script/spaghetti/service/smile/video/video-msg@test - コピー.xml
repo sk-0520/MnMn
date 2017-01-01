@@ -22,7 +22,7 @@ public class SpaghettiCode:IResponseCompatibility{
         }
         public Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
-				return Encoding.ASCII;
+				return Encoding.UTF8;
         }
         public string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {

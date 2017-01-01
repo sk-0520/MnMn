@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
         {
             var compileMessage = CompileMessage;
             if(compileMessage != null) {
-                var e = new CompileMessageEventArgs(DomainName, Identifier, kind, message);
+                var e = new CompileMessageEventArgs(DomainName, Identifier, Sequence, kind, message);
                 compileMessage(this, e);
             }
         }
@@ -129,8 +129,9 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
                 throw new InvalidOperationException(nameof(IsInitialized));
             }
 
-            Identifier = initializeModel.Identifier;
             DomainName = initializeModel.DomainName;
+            Identifier = initializeModel.Identifier;
+            Sequence = initializeModel.Sequence;
 
             IsInitialized = true;
         }
@@ -183,6 +184,7 @@ namespace ContentTypeTextNet.MnMn.Library.SpaghettiAssembly
 
         public string DomainName { get; private set; }
         public string Identifier { get; private set; }
+        public string Sequence { get; private set; }
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。

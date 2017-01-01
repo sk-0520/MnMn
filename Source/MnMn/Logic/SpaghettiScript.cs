@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        ICodeExecutor CreateSpaghettiAssembly(string key, CodeLanguage codeLanguage)
+        ICodeExecutor CreateSpaghettiAssembly(string key, string fileName,  CodeLanguage codeLanguage)
         {
             var codeMakerMap = new Dictionary<CodeLanguage, string> {
                 [CodeLanguage.CSharp] = "ContentTypeTextNet.MnMn.Library.SpaghettiAssembly.SpaghettiAssemblyCSharp",
@@ -177,8 +177,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             );
 
             var initializeModel = new CodeInitializeModel() {
-                Identifier = key,
                 DomainName = LocalDomain.FriendlyName,
+                Identifier = key,
+                Sequence = fileName,
             };
 
             spaghettiAssembly.Initialize(initializeModel);
@@ -188,7 +189,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool CompileSource(string key, SpaghettiPreparationData data, SpaghettiSourceModel source)
         {
-            var codeExecutor = CreateSpaghettiAssembly(key, source.CodeLanguage);
+            var codeExecutor = CreateSpaghettiAssembly(key, Path.GetFileNameWithoutExtension(data.File.Name), source.CodeLanguage);
 
             codeExecutor.CompileMessage += SpaghettiAssembly_CompileMessage;
 
@@ -387,7 +388,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     throw new NotImplementedException();
             }
 
-            put($"[{e.DomainName}/{e.Identifier}] {e.Kind}: {e.Message}");
+            put($"[{e.DomainName}/{e.Identifier}/{e.Sequence}] {e.Kind}: {e.Message}");
         }
 
     }

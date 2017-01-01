@@ -15,6 +15,8 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Model.CodeExecutor
 
         public string Identifier { get; set; }
 
+        public string Sequence { get; set; }
+
         #endregion
     }
 }

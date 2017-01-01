@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected override SpaghettiScript CreateScript()
         {
             var myType = GetType();
-            var domainName = myType.Namespace + "." + myType.Name;
+            var domainName = myType.Name;
 
             var script = new SpaghettiScript(domainName, Logger);
 

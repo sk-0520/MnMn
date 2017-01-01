@@ -17,8 +17,6 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.CodeExecutor
 
         CodeLanguage CodeLanguage { get; }
 
-        string Identifier { get; }
-
         #endregion
 
         #region function
