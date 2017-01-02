@@ -63,7 +63,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
         protected override Task<bool> LoadThumbnaiImageCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
             ThumbnailLoadState = LoadState.Preparation;
+
             return Task.Run(() => {
+                var resizeWidth = 130;
+                var resizeHeight = 100;
 
                 var left = (int)Screen.PrimaryScreen.DeviceBounds.X;
                 var top = (int)Screen.PrimaryScreen.DeviceBounds.Y;
@@ -76,8 +79,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
                     using(var screenBmp = new System.Drawing.Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)) {
                         using(var bmpGraphics = System.Drawing.Graphics.FromImage(screenBmp)) {
                             bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
+                        }
+
+                        using(var resizeBmp = new System.Drawing.Bitmap(resizeWidth, resizeHeight)) {
+                            using(var bmpGraphics = System.Drawing.Graphics.FromImage(resizeBmp)) {
+                                bmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                bmpGraphics.DrawImage(screenBmp, 0, 0, resizeWidth, resizeHeight);
+                            }
+
                             var image = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                                screenBmp.GetHbitmap(),
+                                resizeBmp.GetHbitmap(),
                                 IntPtr.Zero,
                                 Int32Rect.Empty,
                                 BitmapSizeOptions.FromEmptyOptions()
