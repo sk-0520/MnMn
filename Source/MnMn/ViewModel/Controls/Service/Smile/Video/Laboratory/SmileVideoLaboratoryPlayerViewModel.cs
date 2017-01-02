@@ -110,26 +110,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
         protected override Task PostCommentAsync(TimeSpan videoPosition)
         {
-            var commentModel = new RawSmileVideoMsgChatModel() {
-                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
-                Mail = string.Join(" ", PostCommandItems),
-                Content = PostCommentBody,
-                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
-                No = nameof(RawSmileVideoMsgChatModel.No),
-                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
-                Thread = nameof(RawSmileVideoMsgChatModel.Thread),
+            var chat = new RawSmileVideoMsgChatResultModel() {
+                No = nameof(RawSmileVideoMsgChatResultModel.No),
+                Thread = nameof(RawSmileVideoMsgChatResultModel.Thread),
             };
-            var commentViewModel = new SmileVideoCommentViewModel(commentModel, CommentStyleSetting) {
-                IsMyPost = true,
-                Approval = true,
-            };
-            SmileVideoCommentUtility.FireShowSingleComment(commentViewModel, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
 
-            NormalCommentList.Add(commentViewModel);
-            CommentList.Add(commentViewModel);
-            CommentItems.Refresh();
+            var commentViewModel = CreateSingleComment(chat, videoPosition);
 
-            ResetCommentInformation();
+            AppendComment(commentViewModel, true);
 
             return Task.CompletedTask;
         }

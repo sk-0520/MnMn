@@ -1401,7 +1401,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
-        SmileVideoCommentViewModel CreateSingleComment(RawSmileVideoMsgChatResultModel msgChat, TimeSpan videoPosition)
+        protected SmileVideoCommentViewModel CreateSingleComment(RawSmileVideoMsgChatResultModel msgChat, TimeSpan videoPosition)
         {
             var commentModel = new RawSmileVideoMsgChatModel() {
                 //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
@@ -1420,9 +1420,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return commentViewModel;
         }
 
-        void AppendComment(SmileVideoCommentViewModel comment)
+        protected void AppendComment(SmileVideoCommentViewModel comment, bool isShow)
         {
-            SmileVideoCommentUtility.FireShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+            if(isShow) {
+                SmileVideoCommentUtility.FireShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+            }
 
             NormalCommentList.Add(comment);
             CommentList.Add(comment);
@@ -1476,7 +1478,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //TODO: 投稿者判定なし
             var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
 
-            AppendComment(commentViewModel);
+            AppendComment(commentViewModel, true);
 
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
