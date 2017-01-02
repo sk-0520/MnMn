@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Attribute;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Attribute
@@ -10,7 +12,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Attribute
     public class EnumResourceDisplayAttribute: DisplayTextAttributeBase
     {
         public EnumResourceDisplayAttribute(string name)
-            : base(DisplayKind.Resource, name)
+            : base(name)
         { }
 
         #region DisplayAttributeBase

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<p>
+			各種通信内容や<span class="page">tune-appconfig</span>以上に流動するデータを定義しています。<br />
+			通信周りはテンプレート形式になっており一部の定義では通信内容を完全に変更することも可能ですので取り扱いは注意してください。
+		</p>
+		<p>
+			<em class="dir">&lt;<span class="word">app</span>&gt;\etc\define\</em> 以下にそれぞれ配置されています。
+		</p>
+		<p>
+			各定義ファイルはサービスの変更や実装の改修でよく変更するので書式等はドキュメント整備が手間になるためここでは記述しません。
+			見たら意外とすんなり理解できると思います。
+		</p>
+		<p>
+			固定値が追加されたとかその程度なら定義ファイルの編集ですんなり対応可能ですが、変動する値が必要であればプログラム側の改修が必要になるかもしれません。
+		</p>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

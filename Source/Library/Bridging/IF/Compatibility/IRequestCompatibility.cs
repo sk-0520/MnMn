@@ -19,21 +19,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.IF.Compatibility
+
+namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
 {
     /// <summary>
-    /// URI変換の互換処理。
+    /// リクエスト変換の互換処理。
     /// </summary>
-    public interface IUriCompatibility
+    public interface IRequestCompatibility
     {
+        IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType);
+
         /// <summary>
-        /// 処理前に実行されるURI変更処理。
+        /// 処理前に実行されるリクエスト変更処理。
         /// </summary>
-        /// <param name="uri">使用するURI</param>
-        /// <param name="serviceType">呼び出し元の使用目的</param>
+        /// <param name="requestParams">使用するリクエストデータ。</param>
+        /// <param name="serviceType">呼び出し元の使用目的。</param>
         /// <returns></returns>
-        string ConvertUri(string uri, ServiceType serviceType);
+        IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType);
+
+        string ConvertRequestMapping(string key, string mapping, ServiceType serviceType);
     }
 }

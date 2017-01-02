@@ -32,6 +32,8 @@ using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -56,6 +58,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
@@ -91,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
+        protected SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
         {
             Mediation = mediation;
             ThumbnailLoadState = LoadState.None;
@@ -174,11 +177,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 動画個別設定。
         /// </summary>
-        FileInfo IndividualVideoSettingFile { get; set; }
+        protected virtual FileInfo IndividualVideoSettingFile { get; set; }
         /// <summary>
         /// キャッシュディレクトリ。
         /// </summary>
-        public DirectoryInfo CacheDirectory { get; private set; }
+        public virtual DirectoryInfo CacheDirectory { get; private set; }
         /// <summary>
         /// 視聴ページHTMLファイル。
         /// </summary>
@@ -329,7 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region 生データから取得
 
-        public string VideoId
+        public virtual string VideoId
         {
             get
             {
@@ -409,7 +412,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public DateTime FirstRetrieve
+        public virtual DateTime FirstRetrieve
         {
             get
             {
@@ -429,7 +432,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public TimeSpan Length
+        public virtual TimeSpan Length
         {
             get
             {
@@ -447,10 +450,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public virtual SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow { get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
-        public int ViewCounter
+        public virtual int ViewCounter
         {
             get
             {
@@ -469,7 +472,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-        public int CommentCounter
+        public virtual int CommentCounter
         {
             get
             {
@@ -489,7 +492,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public int MylistCounter
+        public virtual int MylistCounter
         {
             get
             {
@@ -508,7 +511,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-        public Uri WatchUrl
+        public virtual Uri WatchUrl
         {
             get
             {
@@ -529,7 +532,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool LivePlay { get { return SmileVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
         public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
 
-        public CollectionModel<SmileVideoTagViewModel> TagList
+        public virtual CollectionModel<SmileVideoTagViewModel> TagList
         {
             get
             {
@@ -558,7 +561,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string UserName
+        public virtual string UserName
         {
             get
             {
@@ -568,7 +571,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string UserId
+        public virtual string UserId
         {
             get
             {
@@ -577,7 +580,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string ChannelId
+        public virtual string ChannelId
         {
             get
             {
@@ -586,7 +589,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string ChannelName
+        public virtual string ChannelName
         {
             get
             {
@@ -598,7 +601,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// チャンネル動画か。
         /// </summary>
-        public bool IsChannelVideo
+        public virtual bool IsChannelVideo
         {
             get
             {
@@ -816,7 +819,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// この動画に対するフィルタ。
         /// </summary>
-        public SmileVideoCommentFilteringSettingModel Filtering
+        public virtual SmileVideoCommentFilteringSettingModel Filtering
         {
             get { return IndividualVideoSetting.Filtering; }
         }
@@ -1063,8 +1066,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             ThrowNotGetthumbinfoSource();
 
             var roll = $"video.{SmileVideoInformationUtility.GetDmcRoleKey(video, audio)}.dmc";
-
-            return Path.Combine(CacheDirectory.FullName, GetCacheFileName(VideoId, roll, ext));
+            var baseName = GetCacheFileName(VideoId, roll, ext);
+            var safeName = PathUtility.ToSafeNameDefault(baseName);
+            return Path.Combine(CacheDirectory.FullName, safeName);
         }
 
         //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
@@ -1178,7 +1182,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
 
-        public Task SetPageHtmlAsync(string html, bool isSave)
+        public virtual Task SetPageHtmlAsync(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loading;
 
@@ -1211,7 +1215,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             RelationVideoLoadState = LoadState.Loading;
             var getRelation = new Getrelation(Mediation);
-            return getRelation.LoadAsync(VideoId, 1, Constants.ServiceSmileVideoRelationVideoSort, Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
+            return getRelation.LoadAsync(VideoId, 1, Constants.ServiceSmileVideoRelationVideoSort, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
                 var relation = task.Result;
 
                 if(!SmileVideoGetrelationUtility.IsSuccessResponse(relation)) {
@@ -1248,7 +1252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         /// <summary>
         /// </summary>
-        public Task LoadLocalPageHtmlAsync()
+        public virtual Task LoadLocalPageHtmlAsync()
         {
             PageHtmlLoadState = LoadState.Preparation;
 
@@ -1278,7 +1282,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
         //}
 
-        public bool SaveSetting(bool force)
+        public virtual bool SaveSetting(bool force)
         {
             if(!force && !IsChanged) {
                 return false;
@@ -1319,7 +1323,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             } else {
                 if(!openPlayerInNewWindow) {
                     var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
-                    var workingPlayer = players.FirstOrDefault(p => p.IsWorkingPlayer.Value);
+                    var workingPlayer = players
+                        .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel)) // 任意再生は除外
+                        .FirstOrDefault(p => p.IsWorkingPlayer.Value)
+                    ;
                     if(workingPlayer != null) {
                         // 再生中プレイヤーで再生
                         workingPlayer.MoveForeground();

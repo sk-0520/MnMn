@@ -241,13 +241,16 @@
         <TabItem x:Name="viewSearch" Header="検索" IsSelected="{Binding IsSelectedSearch}">
           <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-              <TextBox Width="110" mamc:TextBoxHelper.Watermark="検索 or mylist/xx" Text="{Binding InputSearchMyList, UpdateSourceTrigger=PropertyChanged}">
+              <TextBox 
+                mamc:TextBoxHelper.Watermark="検索 or mylist/xx" 
+                mamc:TextBoxHelper.ButtonCommand="{Binding SearchUserMyListCommand}"
+                Text="{Binding InputSearchMyList, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource SearchTextBox}"
+              >
                 <TextBox.InputBindings>
                   <KeyBinding Key="Enter" Command="{Binding SearchUserMyListCommand}" />
                 </TextBox.InputBindings>
               </TextBox>
-              <Button Command="{Binding SearchUserMyListCommand}">検索</Button>
-              <Separator />
               <Button Command="{Binding AddBookmarkUserMyListCommand}" CommandParameter="{Binding SelectedSearchFinder}" ToolTip="ブックマーク追加">
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">

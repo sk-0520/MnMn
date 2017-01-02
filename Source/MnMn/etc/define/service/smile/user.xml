@@ -105,7 +105,7 @@
 				<extend key="start" value="2012/05/01" />
 			</extends>
 		</element>
-		<element key=":Q">
+		<element key="Q">
 			<words>
 				<word key="ja-jp" value="ニコニコ動画:Q" />
 			</words>

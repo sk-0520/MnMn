@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<p>
+			コマンドラインは <code>/キー=値</code>のペア形式か<code>/キー</code>のスイッチ形式で指定します。
+		</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>キー</th>
+					<th>値</th>
+					<th>説明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><dfn>log</dfn></td>
+					<td>ディレクトリパス</td>
+					<td>指定ディレクトリにログファイルを出力します。出力はプログラム終了まで継続されます。</td>
+				</tr>
+				<tr>
+					<td><dfn>setting-root</dfn></td>
+					<td>ディレクトリパス</td>
+					<td>指定ディレクトリをユーザーディレクトリとして起動します。</td>
+				</tr>
+				<tr>
+					<td><dfn>cache-root</dfn></td>
+					<td>ディレクトリパス</td>
+					<td>指定ディレクトリをキャッシュディレクトリとして起動します。</td>
+				</tr>
+				<tr>
+					<td><dfn>execute-beta</dfn></td>
+					<td>(スイッチ形式)</td>
+					<td>β版実行を認識していることを<span class="word">app</span>に伝えます。β版実行時にこのスイッチがない場合、起動時に確認ダイアログが表示されます。</td>
+				</tr>
+				<tr>
+					<td><dfn>smile-login-name</dfn></td>
+					<td>ニコニコ動画ログイン名</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><dfn>smile-login-pass</dfn></td>
+					<td>ニコニコ動画ログインパスワード</td>
+					<td></td>
+				</tr>
+
+				<!--
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				-->
+			</tbody>
+		</table>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

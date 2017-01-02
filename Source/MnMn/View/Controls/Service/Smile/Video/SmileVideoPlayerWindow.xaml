@@ -393,9 +393,21 @@
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
       </Button>
-      <Menu Style="{StaticResource ToolbarMenu}">
+      <Menu>
+        <Menu.Style>
+          <!-- 
+          マイリストは「とりあえずマイリスト」があるから一つもないことはない予定だったが、
+          ラボの任意再生構築により存在しない可能性がある。
+          -->
+          <Style TargetType="Menu" BasedOn="{StaticResource ToolbarMenu}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding AccountMyListItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Menu.Style>
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
-          <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -1072,7 +1084,12 @@
               </xctk:DropDownButton.DropDownContent>
               コマンド
             </xctk:DropDownButton>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PostCommentBody}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" mamc:TextBoxHelper.Watermark="コメント入力" Text="{Binding PostCommentBody, UpdateSourceTrigger=PropertyChanged}">
+              <TextBox.InputBindings>
+                <KeyBinding Key="Return" Command="{Binding PostCommentCommand}" />
+                <KeyBinding Key="Esc" Command="{Binding ClearCommentCommand}" />
+              </TextBox.InputBindings>
+            </TextBox>
             <Button Grid.Row="1" Grid.Column="2" Command="{Binding PostCommentCommand}">投稿</Button>
 
             <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
@@ -1086,7 +1103,13 @@
                   <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
               </DockPanel.Style>
-              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">✗</Button>
+              <Button DockPanel.Dock="Left" Command="{Binding CloseCommentInformationCommand}">
+                <Viewbox Style="{StaticResource MinimumIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Remove}" Style="{StaticResource MinimumAccentIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </Button>
               <!--<xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True"  Text="{Binding CommentInformation}" />-->
               <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" IsReadOnly="True" Text="{Binding CommentInformation, Mode=OneWay}" />
             </DockPanel>

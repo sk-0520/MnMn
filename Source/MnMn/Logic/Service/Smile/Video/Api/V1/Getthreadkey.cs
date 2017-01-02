@@ -20,6 +20,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
         public async Task<RawSmileVideoGetthreadkeyModel> LoadAsync(string threadId)
         {
-            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, Define.ServiceType.SmileVideo)) {
+            using(var page = new PageLoader(Mediation, HttpUserAgentHost, SmileVideoMediationKey.getthreadkey, ServiceType.SmileVideo)) {
                 page.ReplaceUriParameters["thread-id"] = threadId;
                 var response = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(!response.IsSuccess) {

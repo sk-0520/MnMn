@@ -25,6 +25,8 @@ using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
@@ -39,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
@@ -124,7 +127,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         ResponseModel Request_WindowViewModels(RequestModel request)
         {
-            var windowViewModels = Players.Select(p => (SmileVideoPlayerViewModel)p.DataContext).ToList();
+            var windowViewModels = Players
+                .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
+                .ToList()
+            ;
             return new ResponseModel(request, windowViewModels);
         }
 
@@ -191,6 +197,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         #region MediationBase
 
+        protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileVideoName);
+
+        protected override IEnumerable<string> GetCustomKeys()
+        {
+            return GetMediationKeys(typeof(SmileVideoMediationKey));
+        }
+
         internal override void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
         {
             CheckUtility.Enforce(serviceType == ServiceType.SmileVideo);
@@ -207,7 +220,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return RequestCore(request);
         }
 
-        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -216,16 +229,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetUriCore(key, replaceMap, serviceType);
         }
 
-        public override string ConvertUri(string uri, ServiceType serviceType)
+        public override string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
-                ThrowNotSupportConvertUri(uri, serviceType);
+                ThrowNotSupportConvertUri(key, uri, serviceType);
             }
 
-            return uri;
+            return ConvertUriCore(key, uri, serviceType);
         }
 
-        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
@@ -234,17 +247,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestHeaderCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
-                ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
             }
 
-            return (IDictionary<string, string>)requestHeaders;
-
+            return ConvertRequestHeaderCore(key, requestHeaders, serviceType);
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
@@ -253,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -262,40 +274,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
-                ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
             }
 
-            return (IDictionary<string, string>)requestParams;
+            return ConvertRequestParameterCore(key, requestParams, serviceType);
         }
 
-        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileVideo) {
-                ThrowNotSupportConvertRequestMapping(mapping, serviceType);
+                ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
             }
 
-            return mapping;
+            return ConvertRequestMappingCore(key, mapping, serviceType);
         }
 
-        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
-            return CheckModel.Success();
+            return CheckResponseHeaderCore(key, uri, headers, serviceType);
         }
 
-        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
-        { }
-
-        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
-            return Encoding.UTF8;
+            ConvertBinaryCore(key, uri, stream, serviceType);
         }
 
-        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
-            return text;
+            return GetEncodingCore(key, uri, stream, serviceType);
+        }
+
+        public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
+        {
+            return ConvertStringCore(key, uri, text, serviceType);
         }
 
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
@@ -325,7 +339,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         DataContext = player,
                     };
                     window.Closed += Player_Closed;
-                    if(!Players.Any()) {
+                    if(!Players.Where(p => !(p.DataContext is SmileVideoLaboratoryPlayerViewModel)).Any() && !(player is SmileVideoLaboratoryPlayerViewModel)) {
                         player.IsWorkingPlayer.Value = true;
                     }
                     Players.Add(window);
@@ -379,6 +393,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             // 判断基準なし
             var nextPlayer = Players
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
+                .Where(vm => !(vm is SmileVideoLaboratoryPlayerViewModel)) // 任意再生は除外
                 .FirstOrDefault()
             ;
             if(nextPlayer != null) {

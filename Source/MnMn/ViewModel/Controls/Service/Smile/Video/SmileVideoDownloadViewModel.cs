@@ -28,6 +28,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Event;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -227,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadDataWithoutSessionEnd()
         { }
 
-        protected Task LoadDataWithoutSessionAsync(CacheSpan imageCacheSpan)
+        protected virtual Task LoadDataWithoutSessionAsync(CacheSpan imageCacheSpan)
         {
             ThumbnailLoadState = LoadState.Loading;
             OnLoadDataWithoutSessionStart();
@@ -278,12 +279,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadVideoEnd()
         { }
 
-        protected async Task LoadVideoAsync(Uri downloadUri, FileInfo donwloadFile, long headPosition)
+        protected async Task LoadVideoAsync(Uri downloadUri, FileInfo downloadFile, long headPosition)
         {
             OnLoadVideoStart();
 
             VideoLoadState = LoadState.Preparation;
-            VideoFile = donwloadFile;
+            VideoFile = downloadFile;
             DownloadUri = downloadUri;
 
             DownloadCancel = new CancellationTokenSource();
@@ -584,7 +585,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadVideoEnd();
         }
 
-        protected async Task LoadDataWithSessionAsync()
+        protected virtual async Task LoadDataWithSessionAsync()
         {
             OnLoadDataWithSessionStart();
 

@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Service.Smile
     public class SmileCustomSettingRequestModel: CustomSettingRequestModelBase
     {
         public SmileCustomSettingRequestModel(SmileCustomSettingKind customSettingKind)
-            :base(ServiceType.Smile)
+            :base(ContentTypeTextNet.MnMn.Library.Bridging.Define.ServiceType.Smile)
         {
             CustomSettingKind = customSettingKind;
         }

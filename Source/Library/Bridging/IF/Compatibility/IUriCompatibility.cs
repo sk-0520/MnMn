@@ -19,20 +19,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Attribute
+
+namespace ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility
 {
-    public class TextDisplayAttribute: DisplayTextAttributeBase
+    /// <summary>
+    /// URI変換の互換処理。
+    /// </summary>
+    public interface IUriCompatibility
     {
-        public TextDisplayAttribute(string text)
-            : base(DisplayKind.Text, text)
-        { }
-
-        #region DisplayAttributeBase
-
-        public override string Text { get { return Value; } }
-
-        #endregion
+        /// <summary>
+        /// 処理前に実行されるURI変更処理。
+        /// </summary>
+        /// <param name="uri">使用するURI</param>
+        /// <param name="serviceType">呼び出し元の使用目的</param>
+        /// <returns></returns>
+        string ConvertUri(string key, string uri, ServiceType serviceType);
     }
 }
