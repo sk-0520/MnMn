@@ -58,6 +58,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw.Feed;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using HtmlAgilityPack;
@@ -1322,7 +1323,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             } else {
                 if(!openPlayerInNewWindow) {
                     var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
-                    var workingPlayer = players.FirstOrDefault(p => p.IsWorkingPlayer.Value);
+                    var workingPlayer = players
+                        .Where(p => !(p is SmileVideoLaboratoryPlayerViewModel)) // 任意再生は除外
+                        .FirstOrDefault(p => p.IsWorkingPlayer.Value)
+                    ;
                     if(workingPlayer != null) {
                         // 再生中プレイヤーで再生
                         workingPlayer.MoveForeground();

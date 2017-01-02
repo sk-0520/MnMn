@@ -58,7 +58,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         ResponseModel Request_WindowViewModels(RequestModel request)
         {
-            var windowViewModels = Players.Select(p => (SmileLivePlayerViewModel)p.DataContext).ToList();
+            var windowViewModels = Players
+                .Select(p => (SmileLivePlayerViewModel)p.DataContext)
+                .ToList()
+            ;
             return new ResponseModel(request, windowViewModels);
         }
 
