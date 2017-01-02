@@ -41,7 +41,7 @@
               </Grid.ColumnDefinitions>
 
               <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding PlayInputVideoSourceFilePath}" />
-              <Button Grid.Column="1" Command="{Binding OpenPlayInputVideoSourceFilePathCommand}">開く</Button>
+              <Button Grid.Column="1" Command="{Binding OpenPlayInputVideoSourceFilePathCommand}" Style="{StaticResource VerticalButton}">開く</Button>
             </Grid>
             
             <Label Grid.Row="1" Grid.Column="0">コメントソース</Label>
@@ -52,7 +52,7 @@
               </Grid.ColumnDefinitions>
 
               <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding PlayInputMessageSourceFilePath}" />
-              <Button Grid.Column="1" Command="{Binding OpenPlayInputMessageSourceFilePathCommand}">開く</Button>
+              <Button Grid.Column="1" Command="{Binding OpenPlayInputMessageSourceFilePathCommand}" Style="{StaticResource VerticalButton}">開く</Button>
             </Grid>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
