@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 視聴者コメント表示レイヤー要素。
         /// </summary>
-        Canvas NormalCommentArea { get; set; }
+        protected Canvas NormalCommentArea { get; set; }
         /// <summary>
         /// 投稿者コメント表示レイヤー要素。
         /// </summary>
@@ -386,12 +386,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// コメント全データ。
         /// </summary>
-        CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        protected CollectionModel<SmileVideoCommentViewModel> CommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         /// <summary>
         /// 視聴者コメントデータ。
         /// <para><see cref="CommentList"/>から構築。</para>
         /// </summary>
-        CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
+        protected CollectionModel<SmileVideoCommentViewModel> NormalCommentList { get; } = new CollectionModel<SmileVideoCommentViewModel>();
         /// <summary>
         /// 投稿者コメントデータ。
         /// <para><see cref="CommentList"/>から構築。</para>
@@ -503,7 +503,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 前回再生時間。
         /// </summary>
-        TimeSpan PrevPlayedTime { get; set; }
+        protected TimeSpan PrevPlayedTime { get; set; }
 
         /// <summary>
         /// 選択中コメント。
@@ -764,7 +764,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._isEnabledOriginalPosterCommentArea, value); }
         }
 
-        SmileVideoCommentStyleSettingModel CommentStyleSetting { get; set; }
+        protected SmileVideoCommentStyleSettingModel CommentStyleSetting { get; set; }
 
         /// <summary>
         /// コメントのフォント名。

@@ -877,7 +877,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
         }
 
-        Size GetCommentArea(bool OriginalPoster)
+        protected Size GetCommentArea(bool OriginalPoster)
         {
             if(OriginalPoster && !IsEnabledOriginalPosterCommentArea) {
                 return new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight);
@@ -1401,7 +1401,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
-        async Task PostCommentAsync(TimeSpan videoPosition)
+        protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
         {
             if(CommentThread == null) {
                 var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
@@ -1475,7 +1475,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentInformation = text;
         }
 
-        void ResetCommentInformation()
+        protected void ResetCommentInformation()
         {
             CommentInformation = string.Empty;
             PostCommentBody = string.Empty;
