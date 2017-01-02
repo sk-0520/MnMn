@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenUserOrChannelIdCommand
+        public virtual ICommand OpenUserOrChannelIdCommand
         {
             get
             {
@@ -800,6 +800,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                     var prePlayTime = sw.Elapsed;
                     Player.Play();
+                    if(TotalTime == TimeSpan.Zero) {
+                        TotalTime = Player.Length;
+                    }
                     var playedTime = sw.Elapsed;
                     sw.Stop();
 
@@ -908,7 +911,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return item.FilteringView;
         }
 
-        Task LoadRelationVideoAsync()
+        protected virtual Task LoadRelationVideoAsync()
         {
             RelationVideoLoadState = LoadState.Preparation;
 
@@ -928,7 +931,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        void CheckTagPedia()
+        protected virtual void CheckTagPedia()
         {
             Debug.Assert(Information.PageHtmlLoadState == LoadState.Loaded);
 
@@ -1251,9 +1254,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
-        void AddHistory(SmileVideoPlayHistoryModel historyModel)
+        void AddHistoryCore(SmileVideoPlayHistoryModel historyModel)
         {
             Setting.History.Insert(0, historyModel);
+        }
+
+        protected virtual void AddHistory(SmileVideoInformationViewModel information)
+        {
+            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == information.VideoId);
+            if(historyModel == null) {
+                historyModel = new SmileVideoPlayHistoryModel() {
+                    VideoId = information.VideoId,
+                    VideoTitle = information.Title,
+                    Length = information.Length,
+                    FirstRetrieve = information.FirstRetrieve,
+                };
+            } else {
+                Setting.History.Remove(historyModel);
+            }
+            historyModel.WatchUrl = information.WatchUrl;
+            historyModel.LastTimestamp = DateTime.Now;
+            historyModel.Count = RangeUtility.Increment(historyModel.Count);
+
+            AddHistoryCore(historyModel);
         }
 
         double GetEnabledCommentHeight(double baseHeight, double percent)
@@ -1629,7 +1652,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <para>スレッドIDかなーと思ったけどそんなこともなかったぞ！IDの扱いがわけわからん！</para>
         /// </summary>
         /// <param name="videoId">動画ID。</param>
-        void SetCheckedCheckItLater(string videoId, Uri watchUrl)
+        protected virtual void SetCheckedCheckItLater(string videoId, Uri watchUrl)
         {
             var later = Setting.CheckItLater
                 .Where(c => !c.IsChecked)
@@ -1681,22 +1704,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Order(new AppCleanMemoryOrderModel(true));
             }
 
-            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);
-            if(historyModel == null) {
-                historyModel = new SmileVideoPlayHistoryModel() {
-                    VideoId = videoInformation.VideoId,
-                    VideoTitle = videoInformation.Title,
-                    Length = videoInformation.Length,
-                    FirstRetrieve = videoInformation.FirstRetrieve,
-                };
-            } else {
-                Setting.History.Remove(historyModel);
-            }
-            historyModel.WatchUrl = videoInformation.WatchUrl;
-            historyModel.LastTimestamp = DateTime.Now;
-            historyModel.Count = RangeUtility.Increment(historyModel.Count);
-
-            AddHistory(historyModel);
+            AddHistory(videoInformation);
 
             SetCheckedCheckItLater(videoInformation.VideoId, videoInformation.WatchUrl);
 

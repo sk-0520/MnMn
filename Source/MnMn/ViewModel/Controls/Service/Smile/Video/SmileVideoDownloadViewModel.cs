@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadDataWithoutSessionEnd()
         { }
 
-        protected Task LoadDataWithoutSessionAsync(CacheSpan imageCacheSpan)
+        protected virtual Task LoadDataWithoutSessionAsync(CacheSpan imageCacheSpan)
         {
             ThumbnailLoadState = LoadState.Loading;
             OnLoadDataWithoutSessionStart();
@@ -585,7 +585,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             OnLoadVideoEnd();
         }
 
-        protected async Task LoadDataWithSessionAsync()
+        protected virtual async Task LoadDataWithSessionAsync()
         {
             OnLoadDataWithSessionStart();
 

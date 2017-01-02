@@ -116,8 +116,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             var videoFile = new FileInfo(videoFilePath);
             var commentFile = new FileInfo(commentFilePath);
 
-            var vm = new SmileVideoLaboratoryPlayerViewModel(Mediation, videoFile, commentFile);
-            //var task = vm.LoadAsync(, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+            var vm = new SmileVideoLaboratoryPlayerViewModel(Mediation);
+            var task = vm.LoadAsync(videoFile, commentFile);
             Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
 
             return Task.CompletedTask;

@@ -411,7 +411,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public DateTime FirstRetrieve
+        public virtual DateTime FirstRetrieve
         {
             get
             {
@@ -431,7 +431,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public TimeSpan Length
+        public virtual TimeSpan Length
         {
             get
             {
@@ -449,10 +449,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
+        public virtual SmileVideoMovieType MovieType { get { return SmileVideoGetthumbinfoUtility.ConvertMovieType(Thumb.MovieType); } }
         public long SizeHigh { get { return RawValueUtility.ConvertLong(Thumb.SizeHigh); } }
         public long SizeLow { get { return RawValueUtility.ConvertLong(Thumb.SizeLow); } }
-        public int ViewCounter
+        public virtual int ViewCounter
         {
             get
             {
@@ -471,7 +471,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-        public int CommentCounter
+        public virtual int CommentCounter
         {
             get
             {
@@ -491,7 +491,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public int MylistCounter
+        public virtual int MylistCounter
         {
             get
             {
@@ -510,7 +510,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }
             }
         }
-        public Uri WatchUrl
+        public virtual Uri WatchUrl
         {
             get
             {
@@ -531,7 +531,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public bool LivePlay { get { return SmileVideoGetthumbinfoUtility.IsLivePlay(Thumb.NoLivePlay); } }
         public Uri UserIconUrl { get { return RawValueUtility.ConvertUri(Thumb.UserIconUrl); } }
 
-        public CollectionModel<SmileVideoTagViewModel> TagList
+        public virtual CollectionModel<SmileVideoTagViewModel> TagList
         {
             get
             {
@@ -560,7 +560,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string UserName
+        public virtual string UserName
         {
             get
             {
@@ -570,7 +570,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string UserId
+        public virtual string UserId
         {
             get
             {
@@ -579,7 +579,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string ChannelId
+        public virtual string ChannelId
         {
             get
             {
@@ -588,7 +588,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public string ChannelName
+        public virtual string ChannelName
         {
             get
             {
@@ -600,7 +600,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// チャンネル動画か。
         /// </summary>
-        public bool IsChannelVideo
+        public virtual bool IsChannelVideo
         {
             get
             {
@@ -818,7 +818,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// この動画に対するフィルタ。
         /// </summary>
-        public SmileVideoCommentFilteringSettingModel Filtering
+        public virtual SmileVideoCommentFilteringSettingModel Filtering
         {
             get { return IndividualVideoSetting.Filtering; }
         }
@@ -1181,7 +1181,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
 
-        public Task SetPageHtmlAsync(string html, bool isSave)
+        public virtual Task SetPageHtmlAsync(string html, bool isSave)
         {
             PageHtmlLoadState = LoadState.Loading;
 
@@ -1251,7 +1251,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         /// <summary>
         /// </summary>
-        public Task LoadLocalPageHtmlAsync()
+        public virtual Task LoadLocalPageHtmlAsync()
         {
             PageHtmlLoadState = LoadState.Preparation;
 

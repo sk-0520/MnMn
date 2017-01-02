@@ -380,7 +380,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         ///
         /// </summary>
-        bool IsCheckedTagPedia { get; set; } = false;
+        protected bool IsCheckedTagPedia { get; set; } = false;
 
         public ICollectionView CommentItems { get; private set; }
         /// <summary>
