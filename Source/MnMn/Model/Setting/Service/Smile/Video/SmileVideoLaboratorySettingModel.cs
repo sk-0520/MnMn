@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         public string PlayInputVideoSourceFilePath { get; set; } 
 
         [DataMember]
-        public string PlayInputCommentSourceFilePath { get; set; } 
+        public string PlayInputMessageMessageFilePath { get; set; } 
 
         [DataMember]
         public SmileVideoPlayerSettingModel Player { get; set; } = new SmileVideoPlayerSettingModel();

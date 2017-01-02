@@ -40,10 +40,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             get { return Setting.Laboratory.PlayInputVideoSourceFilePath; }
             set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.PlayInputVideoSourceFilePath)); }
         }
-        public string PlayInputCommentSourceFilePath
+        public string PlayInputMessageSourceFilePath
         {
-            get { return Setting.Laboratory.PlayInputCommentSourceFilePath; }
-            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.PlayInputCommentSourceFilePath)); }
+            get { return Setting.Laboratory.PlayInputMessageMessageFilePath; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.PlayInputMessageMessageFilePath)); }
         }
 
         public IDragAndDrop PlayDragAndDrop { get; }
@@ -58,22 +58,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             {
                 return CreateCommand(o => {
                     var filters = new DialogFilterList() {
-                        new DialogFilterItem("video", new [] { "*.mp4", "*.flv" }),
+                        new DialogFilterItem("video", CreatePatterns(Constants.AppSmileVideoLaboratoryPlayVideoExtensions)),
                     };
                     PlayInputVideoSourceFilePath = OpenDialogInputPath(PlayInputVideoSourceFilePath, filters);
                 });
             }
         }
 
-        public ICommand OpenPlayInputCommentSourceFilePathCommand
+        public ICommand OpenPlayInputMessageSourceFilePathCommand
         {
             get
             {
                 return CreateCommand(o => {
                     var filters = new DialogFilterList() {
-                        new DialogFilterItem("comment", new [] { "*.xml" }),
+                        new DialogFilterItem("msg", CreatePatterns(Constants.AppSmileVideoLaboratoryPlayMsgExtensions)),
                     };
-                    PlayInputCommentSourceFilePath = OpenDialogInputPath(PlayInputCommentSourceFilePath, filters);
+                    PlayInputMessageSourceFilePath = OpenDialogInputPath(PlayInputMessageSourceFilePath, filters);
                 });
             }
         }
@@ -85,15 +85,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 return CreateCommand(
                     o => {
                         var videoFilePath = PlayInputVideoSourceFilePath;
-                        var commentFilePath = PlayInputCommentSourceFilePath;
+                        var msgFilePath = PlayInputMessageSourceFilePath;
 
-                        PlayInputFileAsync(videoFilePath, commentFilePath);
+                        PlayInputFileAsync(videoFilePath, msgFilePath);
                     },
                     o => {
                         return
                             !string.IsNullOrWhiteSpace(PlayInputVideoSourceFilePath)
                             ||
-                            !string.IsNullOrWhiteSpace(PlayInputCommentSourceFilePath)
+                            !string.IsNullOrWhiteSpace(PlayInputMessageSourceFilePath)
                         ;
                     }
                 );
@@ -103,6 +103,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
         #endregion
 
         #region function
+
+        IEnumerable<string> CreatePatterns(IEnumerable<string> exts)
+        {
+            return exts.Select(ext => "*" + ext);
+        }
 
         string OpenDialogInputPath(string path, DialogFilterList filters)
         {
@@ -191,12 +196,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             Debug.WriteLine(e.Effects);
         }
 
-        private void PlayDragDop(UIElement sender, DragEventArgs e)
+        void PlayDragDop(UIElement sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.None;
             e.Handled = true;
 
             var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            ApplyPlayFilePaths(filePaths);
+        }
+
+        void ApplyPlayFilePaths(string[] filePaths)
+        {
             if(filePaths.Length == 1) {
                 var filePath = filePaths[0];
                 if(Directory.Exists(filePath)) {
@@ -206,19 +216,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                     ;
 
                     var video = files.FirstOrDefault(f => IsEnabledVideoFilePath(f));
-                    var msg = files.FirstOrDefault(f => IsEnabledMsgFilePath(f));
+
+                    var msg = files
+                        .Where(f => f != video)
+                        .FirstOrDefault(f => f.EndsWith(Constants.AppSmileVideoLaboratoryPlayMsgExtensions.First(), StringComparison.OrdinalIgnoreCase))
+                    ;
+                    if(msg == null) {
+                        msg = files.FirstOrDefault(f => IsEnabledMsgFilePath(f));
+                    }
 
                     if(!string.IsNullOrWhiteSpace(video)) {
                         PlayInputVideoSourceFilePath = video;
                     }
                     if(!string.IsNullOrWhiteSpace(msg)) {
-                        PlayInputCommentSourceFilePath = msg;
+                        PlayInputMessageSourceFilePath = msg;
                     }
                 } else {
                     if(IsEnabledVideoFilePath(filePath)) {
                         PlayInputVideoSourceFilePath = filePath;
                     } else if(IsEnabledMsgFilePath(filePath)) {
-                        PlayInputCommentSourceFilePath = filePath;
+                        PlayInputMessageSourceFilePath = filePath;
                     }
                 }
             } else if(filePaths.Length == 2) {
@@ -232,13 +249,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
                 if(f1v && f2m) {
                     PlayInputVideoSourceFilePath = f1;
-                    PlayInputCommentSourceFilePath = f2;
+                    PlayInputMessageSourceFilePath = f2;
                 } else if(f2v && f1m) {
                     PlayInputVideoSourceFilePath = f2;
-                    PlayInputCommentSourceFilePath = f1;
+                    PlayInputMessageSourceFilePath = f1;
                 }
             }
-
         }
         
         #endregion

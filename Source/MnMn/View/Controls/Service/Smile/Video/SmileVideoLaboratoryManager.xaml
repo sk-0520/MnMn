@@ -51,8 +51,8 @@
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding PlayInputCommentSourceFilePath}" />
-              <Button Grid.Column="1" Command="{Binding OpenPlayInputCommentSourceFilePathCommand}">開く</Button>
+              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding PlayInputMessageSourceFilePath}" />
+              <Button Grid.Column="1" Command="{Binding OpenPlayInputMessageSourceFilePathCommand}">開く</Button>
             </Grid>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
