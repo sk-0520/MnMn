@@ -50,6 +50,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
     {
         #region property
 
+        protected virtual SmileVideoPlayerSettingModel PlayerSetting { get { return Setting.Player; } }
+
         /// <summary>
         /// ウィンドウ要素。
         /// </summary>

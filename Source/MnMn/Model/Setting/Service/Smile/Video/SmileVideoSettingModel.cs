@@ -97,6 +97,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         [DataMember]
         public SmileVideoFinderFilteringSettingModel FinderFiltering { get; set; } = new SmileVideoFinderFilteringSettingModel();
 
+        [DataMember]
+        public SmileVideoLaboratorySettingModel Laboratory { get; set; } = new SmileVideoLaboratorySettingModel();
 
         #endregion
     }

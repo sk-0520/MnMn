@@ -26,8 +26,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
         #region property
 
-        public FewViewModel<string> PlayInputVideoSourceFilePath { get; } = new FewViewModel<string>();
-        public FewViewModel<string> PlayInputCommentSourceFilePath { get; } = new FewViewModel<string>();
+        public string PlayInputVideoSourceFilePath
+        {
+            get { return Setting.Laboratory.PlayInputVideoSourceFilePath; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.PlayInputVideoSourceFilePath)); }
+        }
+        public string PlayInputCommentSourceFilePath
+        {
+            get { return Setting.Laboratory.PlayInputCommentSourceFilePath; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.PlayInputCommentSourceFilePath)); }
+        }
+
 
         #endregion
 
@@ -41,7 +50,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                     var filters = new DialogFilterList() {
                         new DialogFilterItem("video", new [] { "*.mp4", "*.flv" }),
                     };
-                    PlayInputVideoSourceFilePath.Value = OpenDialogInputPath(PlayInputVideoSourceFilePath.Value, filters);
+                    PlayInputVideoSourceFilePath = OpenDialogInputPath(PlayInputVideoSourceFilePath, filters);
                 });
             }
         }
@@ -54,7 +63,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                     var filters = new DialogFilterList() {
                         new DialogFilterItem("comment", new [] { "*.xml" }),
                     };
-                    PlayInputCommentSourceFilePath.Value = OpenDialogInputPath(PlayInputCommentSourceFilePath.Value, filters);
+                    PlayInputCommentSourceFilePath = OpenDialogInputPath(PlayInputCommentSourceFilePath, filters);
                 });
             }
         }
@@ -65,16 +74,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             {
                 return CreateCommand(
                     o => {
-                        var videoFilePath = PlayInputVideoSourceFilePath.Value;
-                        var commentFilePath = PlayInputCommentSourceFilePath.Value;
+                        var videoFilePath = PlayInputVideoSourceFilePath;
+                        var commentFilePath = PlayInputCommentSourceFilePath;
 
                         PlayInputFileAsync(videoFilePath, commentFilePath);
                     },
                     o => {
                         return
-                            !string.IsNullOrWhiteSpace(PlayInputVideoSourceFilePath.Value)
+                            !string.IsNullOrWhiteSpace(PlayInputVideoSourceFilePath)
                             ||
-                            !string.IsNullOrWhiteSpace(PlayInputCommentSourceFilePath.Value)
+                            !string.IsNullOrWhiteSpace(PlayInputCommentSourceFilePath)
                         ;
                     }
                 );

@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
+        protected SmileVideoInformationViewModel(Mediation mediation, int number, SmileVideoInformationFlags informationFlags)
         {
             Mediation = mediation;
             ThumbnailLoadState = LoadState.None;
@@ -176,11 +176,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// <summary>
         /// 動画個別設定。
         /// </summary>
-        FileInfo IndividualVideoSettingFile { get; set; }
+        protected virtual FileInfo IndividualVideoSettingFile { get; set; }
         /// <summary>
         /// キャッシュディレクトリ。
         /// </summary>
-        public DirectoryInfo CacheDirectory { get; private set; }
+        public virtual DirectoryInfo CacheDirectory { get; private set; }
         /// <summary>
         /// 視聴ページHTMLファイル。
         /// </summary>
@@ -331,7 +331,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #region 生データから取得
 
-        public string VideoId
+        public virtual string VideoId
         {
             get
             {
@@ -1281,7 +1281,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         //    VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
         //}
 
-        public bool SaveSetting(bool force)
+        public virtual bool SaveSetting(bool force)
         {
             if(!force && !IsChanged) {
                 return false;
