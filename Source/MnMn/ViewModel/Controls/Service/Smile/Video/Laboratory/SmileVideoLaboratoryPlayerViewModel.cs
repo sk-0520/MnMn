@@ -23,6 +23,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
 
             PlayerSetting.AutoPlayLowestSize = Setting.Player.AutoPlayLowestSize;
             PlayerSetting.IsAutoPlay = Setting.Player.IsAutoPlay;
+
+            GlobalCommentFilering = new SmileVideoFilteringViweModel(new SmileVideoCommentFilteringSettingModel(), null, Mediation.Smile.VideoMediation.Filtering);
         }
 
         #region property
