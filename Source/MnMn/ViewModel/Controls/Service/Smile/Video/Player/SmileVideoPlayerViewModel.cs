@@ -1401,6 +1401,36 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
+        SmileVideoCommentViewModel CreateSingleComment(RawSmileVideoMsgChatResultModel msgChat, TimeSpan videoPosition)
+        {
+            var commentModel = new RawSmileVideoMsgChatModel() {
+                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
+                Mail = string.Join(" ", PostCommandItems),
+                Content = PostCommentBody,
+                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
+                No = msgChat.No,
+                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
+                Thread = msgChat.Thread,
+            };
+            var commentViewModel = new SmileVideoCommentViewModel(commentModel, CommentStyleSetting) {
+                IsMyPost = true,
+                Approval = true,
+            };
+
+            return commentViewModel;
+        }
+
+        void AppendComment(SmileVideoCommentViewModel comment)
+        {
+            SmileVideoCommentUtility.FireShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+
+            NormalCommentList.Add(comment);
+            CommentList.Add(comment);
+            CommentItems.Refresh();
+
+            ResetCommentInformation();
+        }
+
         protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
         {
             if(CommentThread == null) {
@@ -1444,27 +1474,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             //投稿コメントを画面上に流す
             //TODO: 投稿者判定なし
+            var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
 
-            var commentModel = new RawSmileVideoMsgChatModel() {
-                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
-                Mail = string.Join(" ", PostCommandItems),
-                Content = PostCommentBody,
-                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
-                No = resultPost.ChatResult.No,
-                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
-                Thread = resultPost.ChatResult.Thread,
-            };
-            var commentViewModel = new SmileVideoCommentViewModel(commentModel, CommentStyleSetting) {
-                IsMyPost = true,
-                Approval = true,
-            };
-            SmileVideoCommentUtility.FireShowSingleComment(commentViewModel, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
-
-            NormalCommentList.Add(commentViewModel);
-            CommentList.Add(commentViewModel);
-            CommentItems.Refresh();
-
-            ResetCommentInformation();
+            AppendComment(commentViewModel);
 
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
