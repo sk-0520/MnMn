@@ -52,6 +52,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Local;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking;
@@ -90,6 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CheckItLaterManager = new SmileVideoCheckItLaterManagerViewModel(Mediation);
 
+            LaboratoryManager = new SmileVideoLaboratoryManagerViewModel(Mediation);
+
             Mediation.SetManager(
                 ServiceType.SmileVideo,
                 new SmileVideoManagerPackModel(
@@ -99,7 +102,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     MyListManager,
                     HistoryManager,
                     BookmarkManager,
-                    CheckItLaterManager
+                    CheckItLaterManager,
+                    LaboratoryManager
                 )
             );
         }
@@ -121,6 +125,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public SmileVideoHistoryManagerViewModel HistoryManager { get; }
         public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
         public SmileVideoCheckItLaterManagerViewModel CheckItLaterManager { get; }
+        public SmileVideoLaboratoryManagerViewModel LaboratoryManager { get; }
 
         #endregion
 

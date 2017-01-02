@@ -23,6 +23,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.CheckItLater;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.History;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Local;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.NewArrivals;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ranking;
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
 {
     public class SmileVideoManagerPackModel: ManagerPackModelBase
     {
-        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager, SmileVideoBookmarkManagerViewModel bookmarkManager, SmileVideoCheckItLaterManagerViewModel checkItLaterManager)
+        public SmileVideoManagerPackModel(SmileVideoSearchManagerViewModel searchManager, SmileVideoRankingManagerViewModel rankingManager, SmileVideoNewArrivalsManagerViewModel newArrivalsManager, SmileVideoMyListManagerViewModel myListManager, SmileVideoHistoryManagerViewModel historyManager, SmileVideoBookmarkManagerViewModel bookmarkManager, SmileVideoCheckItLaterManagerViewModel checkItLaterManager, SmileVideoLaboratoryManagerViewModel laboratoryManager)
         {
             RankingManager = rankingManager;
             SearchManager = searchManager;
@@ -41,6 +42,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
             HistoryManager = historyManager;
             BookmarkManager = bookmarkManager;
             CheckItLaterManager = checkItLaterManager;
+            LaboratoryManager = laboratoryManager;
         }
 
         #region property
@@ -52,6 +54,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video
         public SmileVideoHistoryManagerViewModel HistoryManager { get; }
         public SmileVideoBookmarkManagerViewModel BookmarkManager { get; }
         public SmileVideoCheckItLaterManagerViewModel CheckItLaterManager { get; }
+        public SmileVideoLaboratoryManagerViewModel LaboratoryManager { get;}
 
         #endregion
     }

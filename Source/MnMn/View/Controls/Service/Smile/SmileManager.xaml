@@ -90,6 +90,9 @@
       <TabItem Header="設定" DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_setting:SmileSettingManager />
       </TabItem>
+      <TabItem Header="ラボ" DataContext="{Binding VideoManager.LaboratoryManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile_video:SmileVideoLaboratoryManager />
+      </TabItem>
     </TabControl>
   </DockPanel>
 </UserControl>
