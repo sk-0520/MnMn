@@ -160,6 +160,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 CodeLanguage = CodeLanguage.CSharp,
                 Code = "usinf System; class asd(){  }",
             };
+            model.Parameter.AssemblyNames.Add("123");
             var path = @"X:\src.xml";
             SerializeUtility.SaveXmlSerializeToFile(path, model);
         }

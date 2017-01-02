@@ -21,6 +21,155 @@
 			</p>
 		</div>
 
+		<h2>互換用コードの役割</h2>
+		<p>
+			各種設定値の変更でも定義ファイルの変更でも対応できなくて対応版プログラムが配布されていない場合の最後の手段になります。
+			互換用コードを用いると通信内容のデータに直接手を加えることが可能になります。
+		</p>
+		<p>
+			基本的に配布版の<span class="word">app</span>では互換用コードは使用せずプログラム内部で完結するようにしています。<br />
+			よって互換用コードは運用回避における最後の手段(本当の最後は自前でコード修正)となります。
+		</p>
+
+		<h2>使用するうえでの注意点</h2>
+		<ul>
+			<li>自動アップデート時には互換用コードのファイルを削除しません(<span class="word">app</span>側で配布した場合は削除します)。</li>
+			<li>配置場所は<span class="word">app</span>管理下にあるため<span class="word">app</span>側で互換用コードを配布した場合既存の互換用コードファイルが上書きされる可能性があります。</li>
+			<li>実行順序はファイル名ソートであるためユーザー側でファイル名の調整が必要です。</li>
+			<li>互換コードのソースの処理エラーなどがあった場合でもユーザーに明示的な通知は行われません。</li>
+			<li>互換コードの実装エラーなどで<span class="word">app</span>を巻き込んでクラッシュする可能性があります。</li>
+			<li>ファイルのフォーマットは正しいことを前提にしています。</li>
+			<li>ファイルのフォーマットは予告なく変更されます。</li>
+			<li>基本的に<span class="word">app</span>では互換コードを配布することはないため検証が甘く不具合が隠れています。</li>
+			<li>完全なプログラムが実行されるためコミュニティ等で配布された赤の他人が作った互換コードを使用する場合は色々と覚悟してください。</li>
+			<li>互換コードは必要になったときにコンパイルされるためタイミングが大事な通信処理がある場合には注意してください。</li>
+			<li>作成には Visual Studio の恩恵がありません。</li>
+		</ul>
+
+		<h2>サポートする処理</h2>
+		<p>
+			互換コードは <dfn>ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility</dfn> から必要なインターフェイスを実装することで処理を明示します(Javaっぽい)。<br />
+			インターフェイスの実装メソッドは各ソースを参照してください。
+		</p>
+		<ul>
+			<li>
+				<dfn>IUriCompatibility</dfn><br />
+				URI変換の互換処理。
+			</li>
+			<li>
+				<dfn>IRequestCompatibility</dfn><br />
+				リクエストデータの互換処理。
+			</li>
+			<li>
+				<dfn>IResponseCompatibility</dfn><br />
+				受信データの互換処理。
+			</li>
+		</ul>
+		<div class="bug">
+			<p>
+				<dfn>IConvertCompatibility</dfn>は今のところ非サポート。<br />
+				上手いこと正常状態を切り分けるのがめっちゃややこしそう。
+			</p>
+		</div>
+
+		<h2>ファイル形式</h2>
+		<p>
+			なんも考えず XML で記述します。
+			というか <dfn><a href="https://bitbucket.org/sk_0520/mnmn/src/master/Source/MnMn/Model/SpaghettiSourceModel.cs?&fileviewer=file-view-default">ContentTypeTextNet.MnMn.MnMn.Model.SpaghettiSourceModel</a></dfn> のシリアライズ状態がそれです。
+		</p>
+
+		<h3>ファイル配置場所</h3>
+		<p>
+			<em class="dir">&lt;<span class="word">app</span>&gt;\etc\script\spaghetti\</em> 以下の必要なサービスに対応したディレクトリに配置します。
+		</p>
+		<p>
+			ファイル名は<span class="page">tune-defined</span>のキーを用います。<br />
+			キーの後ろに @ を用いて自由に名前を設定可能ですので呼び出し順序等はここで変更してください。
+		</p>
+		<p>
+			例えばニコニコ動画のランキング取得部分を書き換えるのであれば以下のように配置します。
+		</p>
+		<table>
+			<tbody>
+				<tr>
+					<td>キー</td>
+					<td><dfn>video-ranking</dfn></td>
+				</tr>
+				<tr>
+					<td>ディレクトリ</td>
+					<td><em class="dir">&lt;<span class="word">app</span>&gt;\etc\script\spaghetti\service\smile\video</em></td>
+				</tr>
+				<tr>
+					<td>ファイル名</td>
+					<td><em class="file">video-ranking@000010.xml</em></td>
+				</tr>
+				<tr>
+					<td>内容</td>
+					<td>
+						<a href="https://bitbucket.org/snippets/sk_0520/Lq65G">スニペット参照: 互換用コードサンプル</a><br />
+						※ランキングを<span class="word">app</span>のサポートしてない形式(RSS→HTMLに変更)にしたので正しく取れません。
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>コード作成規約</h2>
+		<p>
+			若干 通常のコードの書き方と異なるため注意が必要です。
+		</p>
+
+		<h3>クラス名</h3>
+		<p>
+			<dfn>SpaghettiCode</dfn>固定で定義してください。
+		</p>
+
+		<h3>アセンブリ参照</h3>
+		<p>
+			<dfn>SpaghettiSourceModel/Parameter/AssemblyNames/string</dfn> に参照アセンブリを定義してください。<br />
+			以下のアセンブリは<span class="word">app</span>側で自動参照設定します。
+		</p>
+		<ul>
+			<li>mscorlib.dll</li>
+			<li>System.dll</li>
+			<li>System.Core.dll</li>
+			<li>System.Data.dll</li>
+			<li>System.Net.Http.dll</li>
+			<li>ContentTypeTextNet.SharedLibrary.dll</li>
+			<li>Bridging.dll</li>
+			<li>MnMn.exe</li>
+		</ul>
+
+		<h3>using ディレクティブ</h3>
+		<p>
+			<strong>ソースコード中で使用しないでください。</strong>
+		</p>
+		<p>
+			<dfn>SpaghettiSourceModel/NameSpace/string</dfn> に使用したい名前空間を定義してください。<br />
+			以下の名前空間は<span class="word">app</span>側で自動参照設定します。
+		</p>
+		<ul>
+			<li>System</li>
+			<li>System.Collections</li>
+			<li>System.Collections.Generic</li>
+			<li>System.Diagnostics</li>
+			<li>System.IO</li>
+			<li>System.Linq</li>
+			<li>System.Net.Http.Headers</li>
+			<li>System.Text</li>
+			<li>System.Text.RegularExpressions</li>
+			<li>ContentTypeTextNet.MnMn.Library.Bridging.Define</li>
+			<li>ContentTypeTextNet.MnMn.Library.Bridging.Model</li>
+			<li>ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility</li>
+		</ul>
+
+		<!--
+		<dt></dt>
+		<dd>
+			<p>
+
+			</p>
+		</dd>
+		-->
 
 
 	</section>

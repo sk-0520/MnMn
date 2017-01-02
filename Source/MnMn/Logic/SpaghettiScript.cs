@@ -241,7 +241,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                             try {
                                 var source = LoadSource(key, data);
 
-                                data.SkipNext = source.SkipNext;
+                                data.SkipSubsequent = source.SkipSubsequent;
 
                                 if(CompileSource(key, data, source)) {
                                     goto ScriptState_Success;
@@ -269,9 +269,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                                 var rawConvertedNewValue = data.CodeExecutor.Invoke(methodName, invokeArgs.ToArray());
                                 isChanged = true;
 
-                                if(data.SkipNext) {
+                                if(data.SkipSubsequent) {
                                     if(usingResult) {
-                                        Logger.Trace($"{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] skip next");
+                                        Logger.Trace($"{GetId(key, Path.GetFileNameWithoutExtension(data.File.Name))}] skip subsequent");
                                         return (TResult)rawConvertedNewValue;
                                     } else {
                                         return default(TResult);

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<SpaghettiCode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<SpaghettiSourceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CodeLanguage>CSharp</CodeLanguage>
 	<SkipNext>false</SkipNext>
 	<Parameter>
@@ -11,24 +11,14 @@
 	</Parameter>
 	<Code>
 		<![CDATA[
-public class SpaghettiCode{
-        public IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
-        {
-				requestHeaders.Clear();
-            return requestHeaders;
-        }
-
-        public IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
-        {
-				requestParams.Clear();
-            return requestParams;
-        }
-
-        public string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
-        {
-            return "#";
-        }
-    }
+public class SpaghettiCode/*: IUriCompatibility */
+{
+	public string ConvertUri(string key, string uri, ServiceType serviceType)
+	{
+		// クエリ部分を削っちゃう
+		return uri.Substring(0, uri.IndexOf("?"));
+	}
+}
 ]]>
 	</Code>
-</SpaghettiCode>
+</SpaghettiSourceModel>

@@ -13,14 +13,14 @@ using Gecko.DOM.Xml;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
-    [Serializable, XmlRoot("SpaghettiCode")]
+    [Serializable, XmlRoot()]
     public class SpaghettiSourceModel:ModelBase
     {
         #region property
 
         public CodeLanguage CodeLanguage { get; set; }
 
-        public bool SkipNext { get; set; }
+        public bool SkipSubsequent { get; set; }
 
         public CompileParameterModel Parameter { get; set; } = new CompileParameterModel();
 
