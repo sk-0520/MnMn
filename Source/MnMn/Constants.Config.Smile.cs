@@ -224,6 +224,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         #endregion
 
+        #region app
+
+        public static IEnumerable<string> AppSmileVideoLaboratoryPlayVideoExtensions => appConfig.Get("app-smile-labo-play-video-extensions", s => s.Split(';'));
+        public static IEnumerable<string> AppSmileVideoLaboratoryPlayMsgExtensions => appConfig.Get("app-smile-labo-play-msg-extensions", s => s.Split(';'));
+
+
+        #endregion
+
         #region setting
 
         public static double SettingServiceSmileUserGroupAreaStar = appConfig.Get("setting-service-smile-user-group-area-star", double.Parse);

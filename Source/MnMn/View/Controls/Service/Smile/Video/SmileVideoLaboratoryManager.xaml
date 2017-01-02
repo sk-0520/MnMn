@@ -18,7 +18,10 @@
   <Grid>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
       <StackPanel>
-        <GroupBox Header="任意再生">
+        <GroupBox Header="任意再生" AllowDrop="True">
+          <i:Interaction.Behaviors>
+            <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding PlayDragAndDrop, Mode=OneTime}" />
+          </i:Interaction.Behaviors>
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition />
@@ -54,6 +57,7 @@
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
               <Button Command="{Binding PlayInputFileCommand}">実行</Button>
+              <TextBlock VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">不明確で間違ってるクソみたいなユーザー入力のファイルパスを全面的信じるのでそこんとこヨロシク</TextBlock>
             </StackPanel>
 
           </Grid>

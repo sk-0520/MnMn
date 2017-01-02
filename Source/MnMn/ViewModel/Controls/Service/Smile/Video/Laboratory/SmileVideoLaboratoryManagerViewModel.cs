@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -20,9 +23,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 {
     public class SmileVideoLaboratoryManagerViewModel: SmileVideoCustomManagerViewModelBase
     {
-        public SmileVideoLaboratoryManagerViewModel(Mediation mediation) 
+        public SmileVideoLaboratoryManagerViewModel(Mediation mediation)
             : base(mediation)
-        { }
+        {
+            PlayDragAndDrop = new DelegateDragAndDrop() {
+                DragEnterAction = PlayDragEnterAndOver,
+                DragOverAction = PlayDragEnterAndOver,
+                DropAction = PlayDragDop,
+            };
+        }
 
         #region property
 
@@ -37,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.PlayInputCommentSourceFilePath)); }
         }
 
+        public IDragAndDrop PlayDragAndDrop { get; }
 
         #endregion
 
@@ -123,6 +133,114 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             return Task.CompletedTask;
         }
 
+        bool HasExtension(string path, IEnumerable<string> extensions)
+        {
+            var dotExtension = Path.GetExtension(path);
+            if(dotExtension.Length <= ".".Length) {
+                return false;
+            }
+
+            var ext = dotExtension.Substring(1);
+
+            return extensions.Any(s => string.Equals(s, ext, StringComparison.OrdinalIgnoreCase));
+        }
+
+        bool IsEnabledVideoFilePath(string path)
+        {
+            return HasExtension(path, Constants.AppSmileVideoLaboratoryPlayVideoExtensions);
+        }
+
+        bool IsEnabledMsgFilePath(string path)
+        {
+            return HasExtension(path, Constants.AppSmileVideoLaboratoryPlayMsgExtensions);
+        }
+
+        void PlayDragEnterAndOver(UIElement sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    var filePath = filePaths[0];
+                    if(Directory.Exists(filePath)) {
+                        e.Effects = DragDropEffects.Move;
+                    } else {
+                        if(IsEnabledVideoFilePath(filePath) || IsEnabledMsgFilePath(filePath)) {
+                            e.Effects = DragDropEffects.Move;
+                        }
+                    }
+                } else if(filePaths.Length == 2) {
+                    if(!filePaths.All(s => Directory.Exists(s))) {
+                        var f1 = filePaths[0];
+                        var f2 = filePaths[1];
+
+                        var f1v = IsEnabledVideoFilePath(f1);
+                        var f1m = IsEnabledMsgFilePath(f1);
+                        var f2v = IsEnabledVideoFilePath(f2);
+                        var f2m = IsEnabledMsgFilePath(f2);
+
+                        if((f1v && f2m) || (f2v && f1m)) {
+                            e.Effects = DragDropEffects.Move;
+                        }
+                    }
+                }
+            }
+
+            Debug.WriteLine(e.Effects);
+        }
+
+        private void PlayDragDop(UIElement sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+
+            var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if(filePaths.Length == 1) {
+                var filePath = filePaths[0];
+                if(Directory.Exists(filePath)) {
+                    var files = Directory.EnumerateFiles(filePath)
+                        .Where(f => IsEnabledVideoFilePath(f) || IsEnabledMsgFilePath(f))
+                        .ToArray()
+                    ;
+
+                    var video = files.FirstOrDefault(f => IsEnabledVideoFilePath(f));
+                    var msg = files.FirstOrDefault(f => IsEnabledMsgFilePath(f));
+
+                    if(!string.IsNullOrWhiteSpace(video)) {
+                        PlayInputVideoSourceFilePath = video;
+                    }
+                    if(!string.IsNullOrWhiteSpace(msg)) {
+                        PlayInputCommentSourceFilePath = msg;
+                    }
+                } else {
+                    if(IsEnabledVideoFilePath(filePath)) {
+                        PlayInputVideoSourceFilePath = filePath;
+                    } else if(IsEnabledMsgFilePath(filePath)) {
+                        PlayInputCommentSourceFilePath = filePath;
+                    }
+                }
+            } else if(filePaths.Length == 2) {
+                var f1 = filePaths[0];
+                var f2 = filePaths[1];
+
+                var f1v = IsEnabledVideoFilePath(f1);
+                var f1m = IsEnabledMsgFilePath(f1);
+                var f2v = IsEnabledVideoFilePath(f2);
+                var f2m = IsEnabledMsgFilePath(f2);
+
+                if(f1v && f2m) {
+                    PlayInputVideoSourceFilePath = f1;
+                    PlayInputCommentSourceFilePath = f2;
+                } else if(f2v && f1m) {
+                    PlayInputVideoSourceFilePath = f2;
+                    PlayInputCommentSourceFilePath = f1;
+                }
+            }
+
+        }
+        
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase
