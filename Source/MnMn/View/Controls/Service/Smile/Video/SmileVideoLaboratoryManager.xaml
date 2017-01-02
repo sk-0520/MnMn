@@ -1,0 +1,68 @@
+﻿<!--
+  呼び出し元から DataContext を設定して使用。
+-->
+<UserControl 
+  x:Class="ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video.SmileVideoLaboratoryManager"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
+  xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+  
+  xmlns:app_view_attachment="clr-namespace:ContentTypeTextNet.MnMn.MnMn.View.Attachment"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  mc:Ignorable="d" 
+  d:DesignWidth="300"
+  d:DesignHeight="300" 
+>
+  <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel>
+        <GroupBox Header="任意再生" AllowDrop="True">
+          <i:Interaction.Behaviors>
+            <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding PlayDragAndDrop, Mode=OneTime}" />
+          </i:Interaction.Behaviors>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0">動画ソース</Label>
+            <Grid Grid.Row="0" Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding PlayInputVideoSourceFilePath}" />
+              <Button Grid.Column="1" Command="{Binding OpenPlayInputVideoSourceFilePathCommand}" Style="{StaticResource VerticalButton}">開く</Button>
+            </Grid>
+            
+            <Label Grid.Row="1" Grid.Column="0">コメントソース</Label>
+            <Grid Grid.Row="1" Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBox Grid.Column="0" Style="{StaticResource VerticalTextBox}" Text="{Binding PlayInputMessageSourceFilePath}" />
+              <Button Grid.Column="1" Command="{Binding OpenPlayInputMessageSourceFilePathCommand}" Style="{StaticResource VerticalButton}">開く</Button>
+            </Grid>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+              <Button Command="{Binding PlayInputFileCommand}">実行</Button>
+              <TextBlock VerticalAlignment="Center" Margin="{StaticResource LeftMargin}">不明確で間違ってるクソみたいなユーザー入力のファイルパスを全面的信じるのでそこんとこヨロシク</TextBlock>
+            </StackPanel>
+
+          </Grid>
+        </GroupBox>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

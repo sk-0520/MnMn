@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenUserOrChannelIdCommand
+        public virtual ICommand OpenUserOrChannelIdCommand
         {
             get
             {
@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenCacheDirectoryCommand
+        public virtual ICommand OpenCacheDirectoryCommand
         {
             get
             {
@@ -456,7 +456,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        if(Setting.Player.MoseClickToPause) {
+                        if(PlayerSetting.MoseClickToPause) {
                             PlayCommand.TryExecute(null);
                         }
                     }
@@ -470,7 +470,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             {
                 return CreateCommand(
                     o => {
-                        if(Setting.Player.KeySpaceToPause) {
+                        if(PlayerSetting.KeySpaceToPause) {
                             PlayCommand.TryExecute(null);
                         }
                     }
@@ -521,18 +521,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var param = (SmileVideoChangeVideoPositionCommandParameterModel)o;
-                        Mediation.Logger.Information($"{param.PositionType}: {Setting.Player.SeekOperationAbsoluteStep}");
+                        Mediation.Logger.Information($"{param.PositionType}: {PlayerSetting.SeekOperationAbsoluteStep}");
                         switch(param.PositionType) {
                             case SmileVideoChangeVideoPositionType.Setting:
-                                ChangeSeekVideoPosition(param.IsNext, Setting.Player.SeekOperationIsPercent, Setting.Player.SeekOperationIsPercent ? Setting.Player.SeekOperationPercentStep : Setting.Player.SeekOperationAbsoluteStep);
+                                ChangeSeekVideoPosition(param.IsNext, PlayerSetting.SeekOperationIsPercent, PlayerSetting.SeekOperationIsPercent ? PlayerSetting.SeekOperationPercentStep : PlayerSetting.SeekOperationAbsoluteStep);
                                 break;
 
                             case SmileVideoChangeVideoPositionType.Percent:
-                                ChangeSeekVideoPosition(param.IsNext, true, Setting.Player.SeekOperationPercentStep);
+                                ChangeSeekVideoPosition(param.IsNext, true, PlayerSetting.SeekOperationPercentStep);
                                 break;
 
                             case SmileVideoChangeVideoPositionType.Absolute:
-                                ChangeSeekVideoPosition(param.IsNext, false, Setting.Player.SeekOperationAbsoluteStep);
+                                ChangeSeekVideoPosition(param.IsNext, false, PlayerSetting.SeekOperationAbsoluteStep);
                                 break;
 
                             default:
@@ -599,24 +599,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ImportSetting()
         {
-            Left = Setting.Player.Window.Left;
-            Top = Setting.Player.Window.Top;
-            Width = Setting.Player.Window.Width;
-            Height = Setting.Player.Window.Height;
-            Topmost = Setting.Player.Window.Topmost;
+            Left = PlayerSetting.Window.Left;
+            Top = PlayerSetting.Window.Top;
+            Width = PlayerSetting.Window.Width;
+            Height = PlayerSetting.Window.Height;
+            Topmost = PlayerSetting.Window.Topmost;
 
-            SetAreaLength(Setting.Player.PlayerArea, Setting.Player.CommentArea, Setting.Player.InformationArea);
+            SetAreaLength(PlayerSetting.PlayerArea, PlayerSetting.CommentArea, PlayerSetting.InformationArea);
 
-            PlayerShowDetailArea = Setting.Player.ShowDetailArea;
-            this._showNormalWindowCommentList = Setting.Player.ShowNormalWindowCommentList;
-            this._showFullScreenCommentList = Setting.Player.ShowFullScreenCommentList;
-            PlayerVisibleComment = Setting.Player.VisibleComment;
-            IsAutoScroll = Setting.Player.AutoScrollCommentList;
-            Volume = Setting.Player.Volume;
-            IsMute = Setting.Player.IsMute;
-            ReplayVideo = Setting.Player.ReplayVideo;
-            IsEnabledDisplayCommentLimit = Setting.Player.IsEnabledDisplayCommentLimit;
-            DisplayCommentLimitCount = Setting.Player.DisplayCommentLimitCount;
+            PlayerShowDetailArea = PlayerSetting.ShowDetailArea;
+            this._showNormalWindowCommentList = PlayerSetting.ShowNormalWindowCommentList;
+            this._showFullScreenCommentList = PlayerSetting.ShowFullScreenCommentList;
+            PlayerVisibleComment = PlayerSetting.VisibleComment;
+            IsAutoScroll = PlayerSetting.AutoScrollCommentList;
+            Volume = PlayerSetting.Volume;
+            IsMute = PlayerSetting.IsMute;
+            ReplayVideo = PlayerSetting.ReplayVideo;
+            IsEnabledDisplayCommentLimit = PlayerSetting.IsEnabledDisplayCommentLimit;
+            DisplayCommentLimitCount = PlayerSetting.DisplayCommentLimitCount;
 
             IsEnabledSharedNoGood = Setting.Comment.IsEnabledSharedNoGood;
             SharedNoGoodScore = Setting.Comment.SharedNoGoodScore;
@@ -626,26 +626,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ExportSetting()
         {
-            Setting.Player.Window.Left = Left;
-            Setting.Player.Window.Top = Top;
-            Setting.Player.Window.Width = Width;
-            Setting.Player.Window.Height = Height;
-            Setting.Player.Window.Topmost = Topmost;
+            PlayerSetting.Window.Left = Left;
+            PlayerSetting.Window.Top = Top;
+            PlayerSetting.Window.Width = Width;
+            PlayerSetting.Window.Height = Height;
+            PlayerSetting.Window.Topmost = Topmost;
 
-            Setting.Player.PlayerArea = PlayerAreaLength.Value.Value;
-            Setting.Player.CommentArea = CommentAreaLength.Value.Value;
-            Setting.Player.InformationArea = InformationAreaLength.Value.Value;
+            PlayerSetting.PlayerArea = PlayerAreaLength.Value.Value;
+            PlayerSetting.CommentArea = CommentAreaLength.Value.Value;
+            PlayerSetting.InformationArea = InformationAreaLength.Value.Value;
 
-            Setting.Player.ShowDetailArea = PlayerShowDetailArea;
-            Setting.Player.ShowNormalWindowCommentList = this._showNormalWindowCommentList;
-            Setting.Player.ShowFullScreenCommentList = this._showFullScreenCommentList;
-            Setting.Player.VisibleComment = PlayerVisibleComment;
-            Setting.Player.AutoScrollCommentList = IsAutoScroll;
-            Setting.Player.Volume = Volume;
-            Setting.Player.IsMute = IsMute;
-            Setting.Player.ReplayVideo = ReplayVideo;
-            Setting.Player.IsEnabledDisplayCommentLimit = IsEnabledDisplayCommentLimit;
-            Setting.Player.DisplayCommentLimitCount = DisplayCommentLimitCount;
+            PlayerSetting.ShowDetailArea = PlayerShowDetailArea;
+            PlayerSetting.ShowNormalWindowCommentList = this._showNormalWindowCommentList;
+            PlayerSetting.ShowFullScreenCommentList = this._showFullScreenCommentList;
+            PlayerSetting.VisibleComment = PlayerVisibleComment;
+            PlayerSetting.AutoScrollCommentList = IsAutoScroll;
+            PlayerSetting.Volume = Volume;
+            PlayerSetting.IsMute = IsMute;
+            PlayerSetting.ReplayVideo = ReplayVideo;
+            PlayerSetting.IsEnabledDisplayCommentLimit = IsEnabledDisplayCommentLimit;
+            PlayerSetting.DisplayCommentLimitCount = DisplayCommentLimitCount;
 
             Setting.Comment.IsEnabledSharedNoGood = IsEnabledSharedNoGood;
             Setting.Comment.SharedNoGoodScore = SharedNoGoodScore;
@@ -800,6 +800,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                     var prePlayTime = sw.Elapsed;
                     Player.Play();
+                    if(TotalTime == TimeSpan.Zero) {
+                        TotalTime = Player.Length;
+                    }
                     var playedTime = sw.Elapsed;
                     sw.Stop();
 
@@ -874,7 +877,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
         }
 
-        Size GetCommentArea(bool OriginalPoster)
+        protected Size GetCommentArea(bool OriginalPoster)
         {
             if(OriginalPoster && !IsEnabledOriginalPosterCommentArea) {
                 return new Size(OriginalPosterCommentArea.ActualWidth, OriginalPosterCommentArea.ActualHeight);
@@ -908,7 +911,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return item.FilteringView;
         }
 
-        Task LoadRelationVideoAsync()
+        protected virtual Task LoadRelationVideoAsync()
         {
             RelationVideoLoadState = LoadState.Preparation;
 
@@ -928,7 +931,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        void CheckTagPedia()
+        protected virtual void CheckTagPedia()
         {
             Debug.Assert(Information.PageHtmlLoadState == LoadState.Loaded);
 
@@ -1251,9 +1254,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
-        void AddHistory(SmileVideoPlayHistoryModel historyModel)
+        void AddHistoryCore(SmileVideoPlayHistoryModel historyModel)
         {
             Setting.History.Insert(0, historyModel);
+        }
+
+        protected virtual void AddHistory(SmileVideoInformationViewModel information)
+        {
+            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == information.VideoId);
+            if(historyModel == null) {
+                historyModel = new SmileVideoPlayHistoryModel() {
+                    VideoId = information.VideoId,
+                    VideoTitle = information.Title,
+                    Length = information.Length,
+                    FirstRetrieve = information.FirstRetrieve,
+                };
+            } else {
+                Setting.History.Remove(historyModel);
+            }
+            historyModel.WatchUrl = information.WatchUrl;
+            historyModel.LastTimestamp = DateTime.Now;
+            historyModel.Count = RangeUtility.Increment(historyModel.Count);
+
+            AddHistoryCore(historyModel);
         }
 
         double GetEnabledCommentHeight(double baseHeight, double percent)
@@ -1378,7 +1401,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             PostCommandItems.InitializeRange(commands);
         }
 
-        async Task PostCommentAsync(TimeSpan videoPosition)
+        protected SmileVideoCommentViewModel CreateSingleComment(RawSmileVideoMsgChatResultModel msgChat, TimeSpan videoPosition)
+        {
+            var commentModel = new RawSmileVideoMsgChatModel() {
+                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
+                Mail = string.Join(" ", PostCommandItems),
+                Content = PostCommentBody,
+                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
+                No = msgChat.No,
+                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
+                Thread = msgChat.Thread,
+            };
+            var commentViewModel = new SmileVideoCommentViewModel(commentModel, CommentStyleSetting) {
+                IsMyPost = true,
+                Approval = true,
+            };
+
+            return commentViewModel;
+        }
+
+        protected void AppendComment(SmileVideoCommentViewModel comment, bool isShow)
+        {
+            if(isShow) {
+                SmileVideoCommentUtility.FireShowSingleComment(comment, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
+            }
+
+            NormalCommentList.Add(comment);
+            CommentList.Add(comment);
+            CommentItems.Refresh();
+
+            ResetCommentInformation();
+        }
+
+        protected virtual async Task PostCommentAsync(TimeSpan videoPosition)
         {
             if(CommentThread == null) {
                 var rawMessagePacket = await LoadMsgCoreAsync(0, 0, 0, 0, 0);
@@ -1421,27 +1476,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             //投稿コメントを画面上に流す
             //TODO: 投稿者判定なし
+            var commentViewModel = CreateSingleComment(resultPost.ChatResult, videoPosition);
 
-            var commentModel = new RawSmileVideoMsgChatModel() {
-                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
-                Mail = string.Join(" ", PostCommandItems),
-                Content = PostCommentBody,
-                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
-                No = resultPost.ChatResult.No,
-                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(videoPosition),
-                Thread = resultPost.ChatResult.Thread,
-            };
-            var commentViewModel = new SmileVideoCommentViewModel(commentModel, CommentStyleSetting) {
-                IsMyPost = true,
-                Approval = true,
-            };
-            SmileVideoCommentUtility.FireShowSingleComment(commentViewModel, NormalCommentArea, GetCommentArea(false), PrevPlayedTime, ShowingCommentList, CommentStyleSetting);
-
-            NormalCommentList.Add(commentViewModel);
-            CommentList.Add(commentViewModel);
-            CommentItems.Refresh();
-
-            ResetCommentInformation();
+            AppendComment(commentViewModel, true);
 
             // コメント再取得
             await LoadMsgAsync(CacheSpan.NoCache);
@@ -1452,7 +1489,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentInformation = text;
         }
 
-        void ResetCommentInformation()
+        protected void ResetCommentInformation()
         {
             CommentInformation = string.Empty;
             PostCommentBody = string.Empty;
@@ -1570,7 +1607,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ChangeVolume(bool isUp)
         {
-            var step = isUp ? Setting.Player.VolumeOperationStep : -Setting.Player.VolumeOperationStep;
+            var step = isUp ? PlayerSetting.VolumeOperationStep : -PlayerSetting.VolumeOperationStep;
             var setVolume = Volume + step;
             Volume = RangeUtility.Clamp(setVolume, Constants.NavigatorVolumeRange);
         }
@@ -1629,7 +1666,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <para>スレッドIDかなーと思ったけどそんなこともなかったぞ！IDの扱いがわけわからん！</para>
         /// </summary>
         /// <param name="videoId">動画ID。</param>
-        void SetCheckedCheckItLater(string videoId, Uri watchUrl)
+        protected virtual void SetCheckedCheckItLater(string videoId, Uri watchUrl)
         {
             var later = Setting.CheckItLater
                 .Where(c => !c.IsChecked)
@@ -1681,22 +1718,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Order(new AppCleanMemoryOrderModel(true));
             }
 
-            var historyModel = Setting.History.FirstOrDefault(f => f.VideoId == videoInformation.VideoId);
-            if(historyModel == null) {
-                historyModel = new SmileVideoPlayHistoryModel() {
-                    VideoId = videoInformation.VideoId,
-                    VideoTitle = videoInformation.Title,
-                    Length = videoInformation.Length,
-                    FirstRetrieve = videoInformation.FirstRetrieve,
-                };
-            } else {
-                Setting.History.Remove(historyModel);
-            }
-            historyModel.WatchUrl = videoInformation.WatchUrl;
-            historyModel.LastTimestamp = DateTime.Now;
-            historyModel.Count = RangeUtility.Increment(historyModel.Count);
-
-            AddHistory(historyModel);
+            AddHistory(videoInformation);
 
             SetCheckedCheckItLater(videoInformation.VideoId, videoInformation.WatchUrl);
 
@@ -1732,7 +1754,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     // とりあえず待って、
                     VideoFile.Refresh();
                     // チェック。
-                    CanVideoPlay = Setting.Player.AutoPlayLowestSize < VideoFile.Length;
+                    CanVideoPlay = PlayerSetting.AutoPlayLowestSize < VideoFile.Length;
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
                     }
@@ -2291,7 +2313,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void Player_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             var isUp = 0 < e.Delta;
-            switch(Setting.Player.WheelOperation) {
+            switch(PlayerSetting.WheelOperation) {
                 case Define.UI.Player.WheelOperation.None:
                     break;
 
@@ -2300,7 +2322,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case Define.UI.Player.WheelOperation.Seek:
-                    ChangeSeekVideoPosition(isUp, Setting.Player.SeekOperationIsPercent, Setting.Player.SeekOperationIsPercent ? Setting.Player.SeekOperationPercentStep : Setting.Player.SeekOperationAbsoluteStep);
+                    ChangeSeekVideoPosition(isUp, PlayerSetting.SeekOperationIsPercent, PlayerSetting.SeekOperationIsPercent ? PlayerSetting.SeekOperationPercentStep : PlayerSetting.SeekOperationAbsoluteStep);
                     break;
 
                 default:
@@ -2336,9 +2358,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         private void View_Deactivated(object sender, EventArgs e)
         {
-            if(Setting.Player.InactiveIsFullScreenRestore) {
+            if(PlayerSetting.InactiveIsFullScreenRestore) {
                 var restoreNormalWindow = true;
-                if(Setting.Player.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
+                if(PlayerSetting.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
                     var hWnd = HandleUtility.GetWindowHandle(View);
                     var screenModel = Screen.FromHandle(hWnd);
                     restoreNormalWindow = screenModel.Primary;

@@ -87,6 +87,9 @@
       <TabItem Header="公式サイト" DataContext="{Binding WebSiteManager}" Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile:SmileWebSiteManager x:Name="webSite" />
       </TabItem>
+      <TabItem Header="ラボ" DataContext="{Binding VideoManager.LaboratoryManager}" Style="{StaticResource SectionTabItem}">
+        <app_view_controls_service_smile_video:SmileVideoLaboratoryManager />
+      </TabItem>
       <TabItem Header="設定" DataContext="{Binding SettingManager}"  Style="{StaticResource SectionTabItem}">
         <app_view_controls_service_smile_setting:SmileSettingManager />
       </TabItem>

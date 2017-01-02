@@ -41,6 +41,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Search;
@@ -126,7 +127,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
         ResponseModel Request_WindowViewModels(RequestModel request)
         {
-            var windowViewModels = Players.Select(p => (SmileVideoPlayerViewModel)p.DataContext).ToList();
+            var windowViewModels = Players
+                .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
+                .ToList()
+            ;
             return new ResponseModel(request, windowViewModels);
         }
 
@@ -335,7 +339,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                         DataContext = player,
                     };
                     window.Closed += Player_Closed;
-                    if(!Players.Any()) {
+                    if(!Players.Where(p => !(p.DataContext is SmileVideoLaboratoryPlayerViewModel)).Any() && !(player is SmileVideoLaboratoryPlayerViewModel)) {
                         player.IsWorkingPlayer.Value = true;
                     }
                     Players.Add(window);
@@ -389,6 +393,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             // 判断基準なし
             var nextPlayer = Players
                 .Select(p => (SmileVideoPlayerViewModel)p.DataContext)
+                .Where(vm => !(vm is SmileVideoLaboratoryPlayerViewModel)) // 任意再生は除外
                 .FirstOrDefault()
             ;
             if(nextPlayer != null) {

@@ -127,7 +127,7 @@
 
                 <Label Grid.Row="0" Grid.Column="0" Content="プログラム"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LauncherPath, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />
-                <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Content="開く" />
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenDialogLauncherPathCommand}" Style="{StaticResource VerticalButton}" Content="開く" />
 
                 <Label Grid.Row="1" Grid.Column="0" Content="パラメータ"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LauncherParameter, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource VerticalTextBox}" />

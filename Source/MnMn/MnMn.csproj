@@ -367,6 +367,7 @@
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringItemSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoFinderFilteringSettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoCommonSettingModel.cs" />
+    <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoLaboratorySettingModel.cs" />
     <Compile Include="Model\Setting\Service\Smile\Video\SmileVideoSearchPinModel.cs" />
     <Compile Include="Model\Setting\ThemeSettingModel.cs" />
     <Compile Include="Model\Setting\WebNavigatorSettingModel.cs" />
@@ -399,6 +400,9 @@
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserHistoryItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\User\SmileUserVersionViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Bookmark\SmileVideoBookmarkRootNodeViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Laboratory\SmileVideoLaboratoryInformationViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Laboratory\SmileVideoLaboratoryManagerViewModel.cs" />
+    <Compile Include="ViewModel\Controls\Service\Smile\Video\Laboratory\SmileVideoLaboratoryPlayerViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoBookmarkMyListFinderViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\MyList\SmileVideoMyListBookmarkFilterViewModel.cs" />
     <Compile Include="ViewModel\Controls\Service\Smile\Video\Player\SmileVideoPlayerViewModel.Property.cs">
@@ -437,6 +441,9 @@
     </Compile>
     <Compile Include="View\Controls\Service\Smile\Video\Setting\SmileVideoFinderFiltering.xaml.cs">
       <DependentUpon>SmileVideoFinderFiltering.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\Service\Smile\Video\SmileVideoLaboratoryManager.xaml.cs">
+      <DependentUpon>SmileVideoLaboratoryManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TokenizedTextBox.cs" />
     <Compile Include="View\Converter\Base64ImageSourceConverter.cs" />
@@ -849,6 +856,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
+    <Page Include="View\Controls\Service\Smile\Video\SmileVideoLaboratoryManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\Theme\Base\BaseGrayLight.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
