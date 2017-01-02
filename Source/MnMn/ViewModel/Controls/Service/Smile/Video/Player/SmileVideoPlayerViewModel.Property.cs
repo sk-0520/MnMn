@@ -644,7 +644,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// 自身のアカウントに紐付くマイリストの一覧。
         /// </summary>
-        public IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
+        public virtual IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems
         {
             get
             {
@@ -661,7 +661,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// ブックマーク一覧。
         /// </summary>
-        public IReadOnlyList<SmileVideoBookmarkNodeViewModel> BookmarkItems
+        public virtual IReadOnlyList<SmileVideoBookmarkNodeViewModel> BookmarkItems
         {
             get
             {

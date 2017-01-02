@@ -393,9 +393,21 @@
           <TextBlock Text="{Binding VideoId}" />
         </StackPanel>
       </Button>
-      <Menu Style="{StaticResource ToolbarMenu}">
+      <Menu>
+        <Menu.Style>
+          <!-- 
+          マイリストは「とりあえずマイリスト」があるから一つもないことはない予定だったが、
+          ラボの任意再生構築により存在しない可能性がある。
+          -->
+          <Style TargetType="Menu" BasedOn="{StaticResource ToolbarMenu}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding AccountMyListItems, Converter={StaticResource IsEmptyCollectionConverter}}" Value="True">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Menu.Style>
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
-          <!-- マイリストは「とりあえずマイリスト」があるから一つもないことはないだろうと思う -->
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />

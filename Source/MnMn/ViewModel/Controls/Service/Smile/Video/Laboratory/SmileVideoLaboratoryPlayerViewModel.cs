@@ -13,6 +13,8 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bookmark;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.MyList;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Player;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory
@@ -64,6 +66,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
         #region SmileVideoPlayerViewModel
 
         protected override SmileVideoPlayerSettingModel PlayerSetting { get { return Setting.Laboratory.Player; } }
+
+        public override IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems { get; } = new List<SmileVideoMyListFinderViewModelBase>();
+        public override IReadOnlyList<SmileVideoBookmarkNodeViewModel> BookmarkItems { get; } = new List<SmileVideoBookmarkNodeViewModel>();
 
         protected override void AddHistory(SmileVideoInformationViewModel information)
         {
