@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         /// <summary>
         /// 後続処理を無視するか。
         /// </summary>
-        public bool SkipNext { get; set; }
+        public bool SkipSubsequent { get; set; }
 
         #endregion
     }

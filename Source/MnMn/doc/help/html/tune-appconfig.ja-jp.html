@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<h2>MnMn.exe.config (別名: App.config)</h2>
+		<p>
+			起動時に読み込まれるデフォルト値になります。
+		</p>
+		<p>
+			サービス側の定義について一応の指針としては以下の命名規則になっています(努力目標)。
+		</p>
+		<ul>
+			<li><dfn>service-*</dfn>: 固定値</li>
+			<li><dfn>setting-service-*</dfn>: 設定初期値</li>
+		</ul>
+		<p>
+			各種キーに対応する使用部分はソースを参照してください。
+		</p>
+
+		<h2>MnMn.exe.user.config</h2>
+		<p>
+			<em class="file">MnMn.exe.config</em>では初期値を操作できますがプログラムの自動バージョンアップ時には変更した内容がリセットされます。<br />
+			サービスに対する編集ではなくユーザー環境に対する編集であった場合には期待されない動作であるため自動アップデート時に上書きされない構成ファイルとして<em class="file">MnMn.exe.user.config</em>を使用できます。
+		</p>
+		<p>
+			基本的な設定方法は<em class="file">MnMn.exe.config</em>と同じですが上書きしたい項目のみ記述する形になります。
+		</p>
+		<div class="warning">
+			<p>
+				意図的にリセットを回避するものであることに留意してください。
+			</p>
+		</div>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

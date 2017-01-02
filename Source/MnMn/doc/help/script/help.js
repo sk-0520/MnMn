@@ -79,6 +79,46 @@ var menuList = [
 		}
 	},
 	{
+		name: 'tune',
+		localize: true,
+		level: 0,
+		title: {
+			'ja-jp': '調整'
+		}
+	},
+	{
+		name: 'tune-command_line',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'コマンドライン'
+		}
+	},
+	{
+		name: 'tune-appconfig',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'アプリケーション構成ファイル'
+		}
+	},
+	{
+		name: 'tune-defined',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '定義ファイル'
+		}
+	},
+	{
+		name: 'tune-spaghetti',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '互換用コード🍝'
+		}
+	},
+	{
 		name: '*others',
 		localize: true,
 		level: 0,

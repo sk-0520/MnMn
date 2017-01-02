@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<SpaghettiCode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<SpaghettiSourceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<CodeLanguage>CSharp</CodeLanguage>
-	<SkipNext>false</SkipNext>
+	<SkipSubsequent>false</SkipSubsequent>
 	<Parameter>
 		<IncludeDebugInformation>false</IncludeDebugInformation>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -31,4 +31,4 @@ public class SpaghettiCode:IResponseCompatibility{
     }
 ]]>
 	</Code>
-</SpaghettiCode>
+</SpaghettiSourceModel>
