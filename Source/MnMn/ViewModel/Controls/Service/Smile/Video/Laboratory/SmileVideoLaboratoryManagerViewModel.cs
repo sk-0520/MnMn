@@ -56,6 +56,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             }
         }
 
+        public ICommand PlayInputFileCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        var videoFilePath = PlayInputVideoSourceFilePath.Value;
+                        var commentFilePath = PlayInputCommentSourceFilePath.Value;
+
+                        PlayInputFileAsync(videoFilePath, commentFilePath);
+                    },
+                    o => {
+                        return
+                            !string.IsNullOrWhiteSpace(PlayInputVideoSourceFilePath.Value)
+                            ||
+                            !string.IsNullOrWhiteSpace(PlayInputCommentSourceFilePath.Value)
+                        ;
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -75,6 +97,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             }
 
             return path;
+        }
+
+        Task PlayInputFileAsync(string videoFilePath, string commentFilePath)
+        {
+
+            return Task.CompletedTask;
         }
 
         #endregion
