@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define.CodeExecutor;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V1;
@@ -54,6 +55,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
             //mylist();
             //liverss();
             //dmc();
+            //src();
         }
 
         async void login()
@@ -145,11 +147,22 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         void dmc()
         {
-            var path1 = @"Z:\dmc-recv1.xml";
-            var path2 = @"Z:\dmc-recv2.xml";
+            var path1 = @"X:\dmc-recv1.xml";
+            var path2 = @"X:\dmc-recv2.xml";
 
             var model = SerializeUtility.LoadXmlSerializeFromFile<RawSmileVideoDmcObjectModel>(path1);
             SerializeUtility.SaveXmlSerializeToFile(path2, model);
+        }
+
+        void src()
+        {
+            var model = new SpaghettiSourceModel() {
+                CodeLanguage = CodeLanguage.CSharp,
+                Code = "usinf System; class asd(){  }",
+            };
+            model.Parameter.AssemblyNames.Add("123");
+            var path = @"X:\src.xml";
+            SerializeUtility.SaveXmlSerializeToFile(path, model);
         }
 
     }

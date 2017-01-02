@@ -22,7 +22,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Live;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Live;
@@ -89,6 +92,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
 
         #region MediationBase
 
+        protected override string ScriptDirectoryPath { get; } = Path.Combine(Constants.SpaghettiDirectoryPath, Constants.ServiceName, Constants.ServiceSmileName, Constants.ServiceSmileLiveName);
+
+        protected override IEnumerable<string> GetCustomKeys()
+        {
+            return GetMediationKeys(typeof(SmileLiveMediationKey));
+        }
+
         internal override object RequestShowView(ShowViewRequestModel request)
         {
             CheckUtility.DebugEnforce(request.ServiceType == ServiceType.SmileLive);
@@ -127,7 +137,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return RequestCore(request);
         }
 
-        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetUri(key, replaceMap, serviceType);
@@ -136,16 +146,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetUriCore(key, replaceMap, serviceType);
         }
 
-        public override string ConvertUri(string uri, ServiceType serviceType)
+        public override string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
-                ThrowNotSupportConvertUri(uri, serviceType);
+                ThrowNotSupportConvertUri(key, uri, serviceType);
             }
 
-            return uri;
+            return ConvertUriCore(key, uri, serviceType);
         }
 
-        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestHeader(key, replaceMap, serviceType);
@@ -154,16 +164,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestHeaderCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
-                ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
             }
 
-            return (IDictionary<string, string>)requestHeaders;
+            return ConvertRequestHeaderCore(key, requestHeaders, serviceType);
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestParameter(key, replaceMap, serviceType);
@@ -172,7 +182,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestParameterCore(key, replaceMap, serviceType);
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
                 ThrowNotSupportGetRequestMapping(key, replaceMap, serviceType);
@@ -181,40 +191,42 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
             return GetRequestMappingCore(key, replaceMap, serviceType);
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
-                ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
             }
 
-            return (IDictionary<string, string>)requestParams;
+            return ConvertRequestParameterCore(key, requestParams, serviceType);
         }
 
-        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             if(serviceType != ServiceType.SmileLive) {
-                ThrowNotSupportConvertRequestMapping(mapping, serviceType);
+                ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
             }
 
-            return mapping;
+            return ConvertRequestMappingCore(key, mapping, serviceType);
         }
 
-        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
-            return CheckModel.Success();
+            return CheckResponseHeaderCore(key, uri, headers, serviceType);
         }
 
-        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
-        { }
-
-        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
-            return Encoding.UTF8;
+            ConvertBinaryCore(key, uri, stream, serviceType);
         }
 
-        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
-            return text;
+            return GetEncodingCore(key, uri, stream, serviceType);
+        }
+
+        public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
+        {
+            return ConvertStringCore(key, uri, text, serviceType);
         }
 
         public override bool ConvertValue(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)

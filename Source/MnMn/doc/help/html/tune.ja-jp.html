@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<h2>思想的なもの</h2>
+		<p>
+			基本的にはなにも弄らない、弄るにしても<span class="word">app</span>の提供する設定機能を用いる前提ですが、
+			流動する外部サービスへ迅速に対応できなかったり開発側が検知していない場合にユーザー側で運用回避できればいいなと考えてます。
+		</p>
+		<p>
+			ソースを修正するのが一番良いのですがコンパイルできない環境であったり環境構築に時間を要する場合は各種リソースを編集してある程度なんとかなるかもしれません。
+		</p>
+
+		<h2>リソース編集における注意</h2>
+		<p>
+			リソース編集によって<span class="word">app</span>が起動しなくなる可能性があります。
+		</p>
+		<p>
+			編集前には設定などをバックアップすることをお勧めします。
+		</p>
+		<div class="hint">
+			<p>
+				編集が反映されるタイミングは基本的にプログラム起動時と考えてください。<br />
+				(厳密にはそのリソースによります)
+			</p>
+		</div>
+
+		<p>
+			各種リソースはリリース時点で調整されたものであるため編集したことによる不具合報告をもらっても対応できません。
+		</p>
+		<p>
+			ただし編集した箇所のロジックとしての不具合などは報告もらえると助かりますしフィードバックもらえるとありがたいです。
+		</p>
+
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

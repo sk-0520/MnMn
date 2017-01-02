@@ -27,9 +27,12 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF;
+using ContentTypeTextNet.MnMn.Library.Bridging.IF.Compatibility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
-using ContentTypeTextNet.MnMn.MnMn.IF.Compatibility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -43,6 +46,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         IGetRequestParameter,
         ICommunication,
         IUriCompatibility,
+        IRequestCompatibility,
         IResponseCompatibility,
         IConvertCompatibility
     {
@@ -85,6 +89,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region property
 
+        public virtual ILogger Logger { get; }
+
         public static IReadOnlyDictionary<string, string> EmptyMap { get; } = new Dictionary<string, string>();
 
         protected UrisModel UriList { get; private set; }
@@ -96,6 +102,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected ParametersModel RequestParameterList { get; private set; }
 
         protected MappingsModel RequestMappingList { get; }
+
+        protected SpaghettiScript Script { get; set; }
 
         #endregion
 
@@ -111,7 +119,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public static string ReplaceString(string s, IReadOnlyDictionary<string, string> map)
+        public static string ReplaceString(string s, IDictionary<string, string> map)
         {
             return AppUtility.ReplaceString(s ?? string.Empty, map) ?? string.Empty;
         }
@@ -128,62 +136,62 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotSupportedException($"{nameof(ICommunication)} => {nameof(order)}: {order}");
         }
 
-        protected void ThrowNotSupportGetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetUri)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestHeader)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected void ThrowNotSupportGetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IGetRequestParameter)} => {nameof(key)}: {key}, {nameof(replaceMap)}: {replaceMap}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertUri(string uri, ServiceType serviceType)
+        protected void ThrowNotSupportConvertUri(string key, string uri, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IUriCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestHeaders)}: {requestHeaders}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(requestParams)}: {requestParams}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertRequestMapping(string mapping, ServiceType serviceType)
+        protected void ThrowNotSupportConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IRequestCompatibility)} => {nameof(mapping)}: {mapping}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportCheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        protected void ThrowNotSupportCheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(headers)}: {headers}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        protected void ThrowNotSupportConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportGetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        protected void ThrowNotSupportGetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(stream)}: {stream}, {nameof(serviceType)}: {serviceType}");
         }
 
-        protected void ThrowNotSupportConvertString(Uri uri, string text, ServiceType serviceType)
+        protected void ThrowNotSupportConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             throw new NotSupportedException($"{nameof(IResponseCompatibility)} => {nameof(uri)}: {uri}, {nameof(serviceType)}: {serviceType}");
         }
@@ -211,7 +219,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IReadOnlyDictionary<string, string> replaceMap)
+        string ToUriParameterString(ParameterItemModel pair, UriParameterType type, IDictionary<string, string> replaceMap)
         {
             Debug.Assert(type != UriParameterType.None);
 
@@ -245,7 +253,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IReadOnlyDictionary<string, string> replaceMap)
+        protected UriResultModel GetFormatedUri(UriItemModel uriItem, IDictionary<string, string> replaceMap)
         {
             var result = new UriResultModel() {
                 Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
@@ -285,7 +293,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
-        protected UriResultModel GetUriCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected UriResultModel GetUriCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var uriItem = GetUriItem(key);
             if(uriItem != null) {
@@ -295,7 +303,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected IDictionary<string, string> GetRequestHeaderCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IDictionary<string, string> GetRequestHeaderCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var usingMap = new Dictionary<string, string>() {
                 //["User-Agent"] = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/48.1",
@@ -324,7 +332,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return usingMap;
         }
 
-        protected IDictionary<string, string> GetRequestParameterCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected IDictionary<string, string> GetRequestParameterCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var targetParameter = RequestParameterList.Parameters
                 .FirstOrDefault(up => up.Key == key)
@@ -351,7 +359,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return $"{bracket.Open}{s}{bracket.Close}";
         }
 
-        protected string ToMappingItemString(MappingItemModel item, IReadOnlyDictionary<string, string> replaceMap)
+        protected string ToMappingItemString(MappingItemModel item, IDictionary<string, string> replaceMap)
         {
             var value = ReplaceString(item.Value, replaceMap);
 
@@ -382,7 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        protected MappingResultModel GetRequestMappingCore(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        protected MappingResultModel GetRequestMappingCore(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             var result = new MappingResultModel();
             var mapping = RequestMappingList.Mappings
@@ -420,6 +428,125 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return result;
         }
 
+        protected abstract SpaghettiScript CreateScript();
+
+        protected virtual IEnumerable<string> GetKeys()
+        {
+            var baseKeys = new[] {
+                UriList.Items.Select(i => i.Key),
+                UriParameterList.Parameters.Select(i => i.Key),
+                RequestHeaderList.Parameters.Select(i => i.Key),
+                RequestParameterList.Parameters.Select(i => i.Key),
+                RequestMappingList.Mappings.Select(i => i.Key),
+            };
+
+            return baseKeys
+                .SelectMany(k => k)
+                .GroupBy(k => k)
+                .Select(s => s.Key)
+            ;
+        }
+
+        protected string ConvertUriCore(string key, string uri, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertUri(key, uri, serviceType);
+                if(result != default(string)) {
+                    return result;
+                }
+            }
+            return uri;
+        }
+
+        protected CheckModel CheckResponseHeaderCore(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.CheckResponseHeader(key, uri, headers, serviceType);
+                if(result != default(CheckModel)) {
+                    return result;
+                }
+            }
+            return CheckModel.Success();
+        }
+
+        protected void ConvertBinaryCore(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                Script.ConvertBinary(key, uri, stream, serviceType);
+            }
+        }
+
+        protected Encoding GetEncodingCore(string key, Uri uri, Stream stream, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.GetEncoding(key, uri, stream, serviceType);
+                if(result != default(Encoding)) {
+                    return result;
+                }
+            }
+            return Encoding.UTF8;
+        }
+
+        protected string ConvertStringCore(string key, Uri uri, string text, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertString(key, uri, text, serviceType);
+                if(result != default(string)) {
+                    return result;
+                }
+            }
+            return text;
+        }
+
+        protected IDictionary<string, string> ConvertRequestHeaderCore(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertRequestHeader(key, requestHeaders, serviceType);
+                if(result != default(IDictionary<string, string>)) {
+                    return result;
+                }
+            }
+            return requestHeaders;
+        }
+
+        protected IDictionary<string, string> ConvertRequestParameterCore(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertRequestParameter(key, requestParams, serviceType);
+                if(result != default(IDictionary<string, string>)) {
+                    return result;
+                }
+            }
+            return requestParams;
+        }
+
+        protected string ConvertRequestMappingCore(string key, string mapping, ServiceType serviceType)
+        {
+            if(Script.HasKey(key)) {
+                var result = Script.ConvertRequestMapping(key, mapping, serviceType);
+                if(result != default(string)) {
+                    return result;
+                }
+            }
+            return mapping;
+        }
+
+        /// <summary>
+        /// 明示的な呼び出しが必要。
+        /// </summary>
+        /// <param name="outputValue"></param>
+        /// <param name="outputType"></param>
+        /// <param name="inputKey"></param>
+        /// <param name="inputValue"></param>
+        /// <param name="inputType"></param>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        protected bool ConvertValueCompatibility(out object outputValue, Type outputType, string inputKey, object inputValue, Type inputType, ServiceType serviceType)
+        {
+            outputValue = inputValue;
+            return true;
+        }
+
         #endregion
 
         #region ICommunication
@@ -438,7 +565,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetUri
 
-        public virtual UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -447,7 +574,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IUriCompatibility
 
-        public virtual string ConvertUri(string uri, ServiceType serviceType)
+        public virtual string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -456,7 +583,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetRequestHeader
 
-        public virtual IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -465,12 +592,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IGetRequestParameter
 
-        public virtual IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public virtual MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -479,17 +606,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IRequestCompatibility
 
-        public virtual IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public virtual IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public virtual IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public virtual string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
@@ -499,22 +626,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region IResponseCompatibility
 
-        public virtual CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public virtual CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        public virtual void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public virtual Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }
 
-        public virtual string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public virtual string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             throw new NotImplementedException();
         }

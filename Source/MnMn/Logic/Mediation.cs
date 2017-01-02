@@ -31,6 +31,8 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
@@ -52,15 +54,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
     /// </summary>
     public class Mediation: MediationBase
     {
+        #region variable
+
+        ILogger _logger;
+
+        #endregion
+
         public Mediation(AppSettingModel mainSettingModel, ILogger logger)
         {
-            Logger = logger;
+            this._logger = logger;
             Debug.Listeners.Add(new LogListener(Logger, LogKind.Debug));
 
             Logger.LoggerConfig.EnabledAll = true;
             Logger.LoggerConfig.PutsDebug = true;
             Logger.LoggerConfig.PutsConsole = true;
             Logger.Information("start!");
+
+            Script = CreateScript();
 
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
@@ -76,8 +86,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         internal SmileMediation Smile { get; private set; }
 
         internal ApplicationManagerPackModel ManagerPack { get; private set; }
-
-        public ILogger Logger { get; }
 
         #endregion
 
@@ -310,6 +318,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #region MediationBase
 
+        public override ILogger Logger { get { return this._logger; } }
+
+        protected override SpaghettiScript CreateScript()
+        {
+            var myType = GetType();
+            var domainName = myType.Name;
+
+            var script = new SpaghettiScript(domainName, Logger);
+
+            script.ConstructPreparations(new DirectoryInfo(Constants.SpaghettiDirectoryPath), GetKeys());
+
+            return script;
+        }
+
         public override ResponseModel Request(RequestModel request)
         {
             CheckUtility.DebugEnforceNotNull(request);
@@ -351,7 +373,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override UriResultModel GetUri(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override UriResultModel GetUri(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Application:
@@ -368,21 +390,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override string ConvertUri(string uri, ServiceType serviceType)
+        public override string ConvertUri(string key, string uri, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertUri(uri, serviceType);
+                    return Smile.ConvertUri(key, uri, serviceType);
 
                 default:
-                    ThrowNotSupportConvertUri(uri, serviceType);
+                    ThrowNotSupportConvertUri(key, uri, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override IDictionary<string, string> GetRequestHeader(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestHeader(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -396,21 +418,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestHeader(IReadOnlyDictionary<string, string> requestHeaders, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestHeader(string key, IDictionary<string, string> requestHeaders, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertRequestHeader(requestHeaders, serviceType);
+                    return Smile.ConvertRequestHeader(key, requestHeaders, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestHeader(requestHeaders, serviceType);
+                    ThrowNotSupportConvertRequestHeader(key, requestHeaders, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override IDictionary<string, string> GetRequestParameter(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override IDictionary<string, string> GetRequestParameter(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -424,7 +446,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override MappingResultModel GetRequestMapping(string key, IReadOnlyDictionary<string, string> replaceMap, ServiceType serviceType)
+        public override MappingResultModel GetRequestMapping(string key, IDictionary<string, string> replaceMap, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
@@ -438,87 +460,87 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             }
         }
 
-        public override IDictionary<string, string> ConvertRequestParameter(IReadOnlyDictionary<string, string> requestParams, ServiceType serviceType)
+        public override IDictionary<string, string> ConvertRequestParameter(string key, IDictionary<string, string> requestParams, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertRequestParameter(requestParams, serviceType);
+                    return Smile.ConvertRequestParameter(key, requestParams, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestParameter(requestParams, serviceType);
+                    ThrowNotSupportConvertRequestParameter(key, requestParams, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override string ConvertRequestMapping(string mapping, ServiceType serviceType)
+        public override string ConvertRequestMapping(string key, string mapping, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertRequestMapping(mapping, serviceType);
+                    return Smile.ConvertRequestMapping(key, mapping, serviceType);
 
                 default:
-                    ThrowNotSupportConvertRequestMapping(mapping, serviceType);
+                    ThrowNotSupportConvertRequestMapping(key, mapping, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override CheckModel CheckResponseHeader(Uri uri, HttpHeaders headers, ServiceType serviceType)
+        public override CheckModel CheckResponseHeader(string key, Uri uri, HttpHeaders headers, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.CheckResponseHeader(uri, headers, serviceType);
+                    return Smile.CheckResponseHeader(key, uri, headers, serviceType);
 
                 default:
-                    ThrowNotSupportCheckResponseHeader(uri, headers, serviceType);
+                    ThrowNotSupportCheckResponseHeader(key, uri, headers, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override void ConvertBinary(Uri uri, Stream stream, ServiceType serviceType)
+        public override void ConvertBinary(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    Smile.ConvertBinary(uri, stream, serviceType);
+                    Smile.ConvertBinary(key, uri, stream, serviceType);
                     break;
 
                 default:
-                    ThrowNotSupportConvertBinary(uri, stream, serviceType);
+                    ThrowNotSupportConvertBinary(key, uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override Encoding GetEncoding(Uri uri, Stream stream, ServiceType serviceType)
+        public override Encoding GetEncoding(string key, Uri uri, Stream stream, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.GetEncoding(uri, stream, serviceType);
+                    return Smile.GetEncoding(key, uri, stream, serviceType);
 
                 default:
-                    ThrowNotSupportGetEncoding(uri, stream, serviceType);
+                    ThrowNotSupportGetEncoding(key, uri, stream, serviceType);
                     throw new NotImplementedException();
             }
         }
 
-        public override string ConvertString(Uri uri, string text, ServiceType serviceType)
+        public override string ConvertString(string key, Uri uri, string text, ServiceType serviceType)
         {
             switch(serviceType) {
                 case ServiceType.Smile:
                 case ServiceType.SmileVideo:
                 case ServiceType.SmileLive:
-                    return Smile.ConvertString(uri, text, serviceType);
+                    return Smile.ConvertString(key, uri, text, serviceType);
 
                 default:
-                    ThrowNotSupportConvertString(uri, text, serviceType);
+                    ThrowNotSupportConvertString(key, uri, text, serviceType);
                     throw new NotImplementedException();
             }
         }

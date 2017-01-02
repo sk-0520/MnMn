@@ -244,6 +244,10 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// スクリプトディレクトリ名。
         /// </summary>
         public static string ScriptDirectoryName { get; } = "script";
+        public static string SpaghettiDirectoryName { get; } = "spaghetti";
+        public static string SpaghettiDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, ScriptDirectoryName, SpaghettiDirectoryName); } }
+        public static string SpaghettiScriptSplit { get; } = "@";
+        public static string SpaghettiScriptSearchPattern { get; } = "*.xml";
         /// <summary>
         /// アーカイブファイル検索パターン。
         /// <para>ワイルドカード。</para>

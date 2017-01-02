@@ -32,6 +32,8 @@ using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
@@ -1212,7 +1214,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             RelationVideoLoadState = LoadState.Loading;
             var getRelation = new Getrelation(Mediation);
-            return getRelation.LoadAsync(VideoId, 1, Constants.ServiceSmileVideoRelationVideoSort, Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
+            return getRelation.LoadAsync(VideoId, 1, Constants.ServiceSmileVideoRelationVideoSort, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Ascending).ContinueWith(task => {
                 var relation = task.Result;
 
                 if(!SmileVideoGetrelationUtility.IsSuccessResponse(relation)) {

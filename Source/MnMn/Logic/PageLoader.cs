@@ -24,6 +24,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.MnMn.Library.Bridging.Define;
+using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Delegate;
 using ContentTypeTextNet.MnMn.MnMn.IF;
@@ -159,7 +161,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ParameterType = rawUri.RequestParameterType;
             Uri = RestrictUtility.IsNull(
                 ForceUri, () => {
-                    var convertedUri = Mediation.ConvertUri(rawUri.Uri, ServiceType);
+                    var convertedUri = Mediation.ConvertUri(Key, rawUri.Uri, ServiceType);
                     return new Uri(convertedUri);
                 },
                 uri => uri
@@ -170,7 +172,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         protected void MakeRequestHeader()
         {
             var rawHeader = Mediation.GetRequestHeader(Key, ReplaceRequestHeaders, ServiceType);
-            var convertedHeader = Mediation.ConvertRequestHeader((IReadOnlyDictionary<string, string>)rawHeader, ServiceType);
+            var convertedHeader = Mediation.ConvertRequestHeader(Key, rawHeader, ServiceType);
             Headers = (Dictionary<string, string>)convertedHeader;
 
             Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
@@ -181,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             switch(ParameterType) {
                 case ParameterType.Plain: {
                         var rawContent = Mediation.GetRequestParameter(Key, ReplaceRequestParameters, ServiceType);
-                        var singleContent = Mediation.ConvertRequestParameter((IReadOnlyDictionary<string, string>)rawContent, ServiceType);
+                        var singleContent = Mediation.ConvertRequestParameter(Key, rawContent, ServiceType);
                         var multiContents = singleContent
                             .Where(p => p.Value.Any(c => c == MultiStrings.defaultSeparator))
                             .ToArray()
@@ -208,7 +210,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case ParameterType.Mapping: {
                         var mappingResult = Mediation.GetRequestMapping(Key, ReplaceRequestParameters, ServiceType);
-                        var convertedContent = Mediation.ConvertRequestMapping(mappingResult.Result, ServiceType);
+                        var convertedContent = Mediation.ConvertRequestMapping(Key, mappingResult.Result, ServiceType);
                         Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, byte: {convertedContent.Length}", convertedContent);
                         MappingContent = new StringContent(convertedContent);
                         if(!string.IsNullOrWhiteSpace(mappingResult.ContentType)) {
@@ -245,7 +247,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected CheckModel CheckResponseHeaders(HttpResponseMessage response)
         {
-            return Mediation.CheckResponseHeader(Uri, response.Headers, ServiceType);
+            return Mediation.CheckResponseHeader(Key, Uri, response.Headers, ServiceType);
         }
 
         protected async Task<string> GetTextAsync(HttpResponseMessage response)
@@ -256,15 +258,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     stream.Position = 0;
                 }
 
-                Mediation.ConvertBinary(Uri, stream, ServiceType);
-                var encoding = Mediation.GetEncoding(Uri, stream, ServiceType);
+                Mediation.ConvertBinary(Key, Uri, stream, ServiceType);
+                var encoding = Mediation.GetEncoding(Key, Uri, stream, ServiceType);
 
                 var binary = stream.GetBuffer();
                 var length = (int)stream.Length;
 
                 var plainText = encoding.GetString(binary, 0, length);
 
-                var convertedText = Mediation.ConvertString(Uri, plainText, ServiceType);
+                var convertedText = Mediation.ConvertString(Key, Uri, plainText, ServiceType);
 
                 return convertedText;
             }
