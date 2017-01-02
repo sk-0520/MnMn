@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        public ICommand OpenCacheDirectoryCommand
+        public virtual ICommand OpenCacheDirectoryCommand
         {
             get
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -140,6 +141,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
             {
                 return CreateCommand(
                     o => IgnoreLaboratory()
+                );
+            }
+        }
+
+        public override ICommand OpenCacheDirectoryCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        VideoFile.Refresh();
+                        if(VideoFile.Exists) {
+                            try {
+                                var dirPath = Path.GetDirectoryName(VideoFile.FullName);
+                                Process.Start(dirPath);
+                            } catch(Exception ex) {
+                                Mediation.Logger.Warning(ex);
+                            }
+                        }
+                    }
                 );
             }
         }
