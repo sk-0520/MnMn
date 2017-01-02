@@ -536,18 +536,8 @@
     <Content Include="etc\define\theme.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="etc\script\spaghetti\service\smile\video-session-login%40 - コピー.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="etc\script\spaghetti\service\smile\video-session-login.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="etc\script\spaghetti\service\smile\video\video-msg%40test - コピー.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="etc\script\spaghetti\service\smile\video\video-ranking%40test.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="etc\script\spaghetti\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\File\Html\UpdateState.html" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
@@ -1364,6 +1354,7 @@
   <ItemGroup>
     <Folder Include="etc\image\service\smile\video\" />
     <Folder Include="etc\script\spaghetti\service\smile\live\" />
+    <Folder Include="etc\script\spaghetti\service\smile\video\" />
     <Folder Include="Logic\Service\Smile\Live\HalfBakedApi\" />
   </ItemGroup>
   <ItemGroup>
