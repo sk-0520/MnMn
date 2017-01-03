@@ -260,7 +260,7 @@
           <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
         </ToolBar>
 
-        <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
+        <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ItemsSource="{Binding LogItems, Mode=OneTime}" SelectedItem="{Binding SelectedLogItem}">
           <ListView.Resources>
             <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
               <Style.Triggers>
@@ -340,7 +340,7 @@
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                      <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" BorderThickness="0" Background="Transparent" IsReadOnly="True" Foreground="{DynamicResource TextBrush}" Text="{Binding CallerMember, Mode=OneTime}" />
+                      <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" BorderThickness="0" Background="Transparent" IsUndoEnabled="False" UndoLimit="0" IsReadOnly="True" Foreground="{DynamicResource TextBrush}" Text="{Binding CallerMember, Mode=OneTime}" />
                       <TextBlock VerticalAlignment="Center" Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
                     </StackPanel>
                   </DataTemplate>
