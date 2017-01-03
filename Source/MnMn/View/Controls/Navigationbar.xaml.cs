@@ -699,7 +699,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             DependencyPropertyUtility.GetName(nameof(SeekbarPopupIsOpenProperty)),
             typeof(bool),
             typeof(Navigationbar),
-            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSeekbarPopupIsOpenChanged))
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSeekbarPopupIsOpenChanged))
         );
 
         private static void OnSeekbarPopupIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

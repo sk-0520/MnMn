@@ -861,6 +861,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                //Debug.WriteLine("set null!");
+                //Information = null;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         private void Downloader_DownloadStart(object sender, DownloadStartEventArgs e)
         {
             VideoLoadState = LoadState.Loading;

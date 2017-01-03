@@ -922,6 +922,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     RelationVideoLoadState = LoadState.Failure;
                     return Task.CompletedTask;
                 } else {
+                    foreach(var prevItem in RelationVideoItems) {
+                        prevItem.DecrementReference();
+                    }
                     RelationVideoItems.InitializeRange(items);
                     var loader = new SmileVideoInformationLoader(items);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
@@ -1504,14 +1507,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void SetNavigationbarBaseEvent(Navigationbar navigationbar)
+        void AttachmentNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
             //navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
             //navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
         }
 
-        void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
+        void DetachmentNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
             //navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
@@ -1687,6 +1690,49 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 ResetFocus();
             }
+        }
+
+        void AttachmentEvent()
+        {
+            EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
+            EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
+
+            View.Loaded += View_Loaded;
+            View.Activated += View_Activated;
+            View.Closing += View_Closing;
+            Player.MouseDown += Player_MouseDown;
+            Player.PositionChanged += Player_PositionChanged;
+            Player.SizeChanged += Player_SizeChanged;
+            Player.StateChanged += Player_StateChanged;
+            Player.MouseWheel += Player_MouseWheel;
+            AttachmentNavigationbarBaseEvent(Navigationbar);
+            DetailComment.LostFocus += DetailComment_LostFocus;
+        }
+
+        void DetachmentEvent()
+        {
+            if(View != null) {
+                View.Loaded -= View_Loaded;
+                View.Activated -= View_Activated;
+                View.Closing -= View_Closing;
+                View.Deactivated -= View_Deactivated;
+            }
+
+            if(Player!= null) {
+                Player.PositionChanged -= Player_PositionChanged;
+                Player.SizeChanged -= Player_SizeChanged;
+                Player.StateChanged -= Player_StateChanged;
+                Player.MouseWheel -= Player_MouseWheel;
+            }
+            if(Navigationbar != null) {
+                DetachmentNavigationbarBaseEvent(Navigationbar);
+            }
+
+            if(EnabledCommentControl != null) {
+                EnabledCommentControl.MouseEnter -= EnabledCommentControl_MouseEnter;
+                EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
+            }
+
         }
 
         #endregion
@@ -1966,19 +2012,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var content = Navigationbar.ExstendsContent as Panel;
             EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
-            EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
-            EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
-
-            View.Loaded += View_Loaded;
-            View.Activated += View_Activated;
-            View.Closing += View_Closing;
-            Player.MouseDown += Player_MouseDown;
-            Player.PositionChanged += Player_PositionChanged;
-            Player.SizeChanged += Player_SizeChanged;
-            Player.StateChanged += Player_StateChanged;
-            Player.MouseWheel += Player_MouseWheel;
-            SetNavigationbarBaseEvent(Navigationbar);
-            DetailComment.LostFocus += DetailComment_LostFocus;
+            AttachmentEvent();
         }
 
         #endregion
@@ -2095,6 +2129,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
+        #region SmileVideoDownloadViewModel
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DetachmentEvent();
+
+                View = null;
+                Player = null;
+                Navigationbar = null;
+                NormalCommentArea = null;
+                OriginalPosterCommentArea = null;
+                CommentView = null;
+                DetailComment = null;
+                EnabledCommentControl = null;
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         #region event
 
         void View_Loaded(object sender, RoutedEventArgs e)
@@ -2105,23 +2160,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         private void View_Closing(object sender, CancelEventArgs e)
         {
             //TODO: closingはまずくね…?
-
-            View.Loaded -= View_Loaded;
-            View.Activated -= View_Activated;
-            View.Closing -= View_Closing;
-            Player.PositionChanged -= Player_PositionChanged;
-            Player.SizeChanged -= Player_SizeChanged;
-            Player.StateChanged -= Player_StateChanged;
-            Player.MouseWheel -= Player_MouseWheel;
-            UnsetNavigationbarBaseEvent(Navigationbar);
-
-            if(EnabledCommentControl != null) {
-                EnabledCommentControl.MouseEnter -= EnabledCommentControl_MouseEnter;
-                EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
-            }
-
-            View.Deactivated -= View_Deactivated;
-
             IsViewClosed = true;
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
