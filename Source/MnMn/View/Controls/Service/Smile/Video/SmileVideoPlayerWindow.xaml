@@ -61,6 +61,9 @@
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
+      <sys:Boolean x:Key="True">True</sys:Boolean>
+      <sys:Boolean x:Key="False">False</sys:Boolean>
+      
       <sys:Double x:Key="ImageWidth">100</sys:Double>
       <sys:Double x:Key="ImageHeight">80</sys:Double>
 
@@ -188,7 +191,7 @@
     </ResourceDictionary>
   </mamc:MetroWindow.Resources>
   <mamc:MetroWindow.InputBindings>
-    <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" />
+    <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" CommandParameter="{StaticResource False}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
 
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
@@ -812,7 +815,7 @@
                   <i:InvokeCommandAction Command="{Binding PlayerMouseClickCommand}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseDoubleClick" >
-                  <i:InvokeCommandAction Command="{Binding FullScreenCancelCommand}" />
+                  <i:InvokeCommandAction Command="{Binding FullScreenCancelCommand}" CommandParameter="{StaticResource True}" />
                 </i:EventTrigger>
               </i:Interaction.Triggers>
             </vlc_wpf:VlcPlayer>

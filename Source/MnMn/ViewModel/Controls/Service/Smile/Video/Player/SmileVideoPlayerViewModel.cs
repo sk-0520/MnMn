@@ -491,7 +491,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(IsNormalWindow) {
                         return;
                     }
-                    if(Mouse.LeftButton == MouseButtonState.Pressed) {
+
+                    var fireIsMouse = (bool)o;
+
+                    var canRestore = true;
+                    if(fireIsMouse) {
+                        canRestore = Mouse.LeftButton == MouseButtonState.Pressed;
+                    }
+
+                    if(canRestore) {
                         // フルスクリーン時は元に戻してあげる
                         SetWindowMode(true);
                     }
