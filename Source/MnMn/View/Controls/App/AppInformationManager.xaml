@@ -260,7 +260,7 @@
           <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
         </ToolBar>
 
-        <ListView x:Name="listLog" VirtualizingPanel.ScrollUnit="Item" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
+        <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogItem}">
           <ListView.Resources>
             <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
               <Style.Triggers>
@@ -287,6 +287,11 @@
               </Style.Triggers>
             </Style>
           </ListView.Resources>
+          <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+          </ListView.ItemsPanel>
           <ListView.View>
             <GridView>
               <GridViewColumn Header="タイムスタンプ">
