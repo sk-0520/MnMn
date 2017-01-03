@@ -868,6 +868,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Resources\ImageDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\Theme\Base\BaseGrayLight.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
