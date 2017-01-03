@@ -137,7 +137,7 @@
             <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_CommentOn}" Style="{StaticResource SmallDefaultIconPath}" />
+                <Path Data="{StaticResource Image_Comment-On}" Style="{StaticResource SmallDefaultIconPath}" />
               </Canvas>
             </Viewbox>
           </ToggleButton>
@@ -461,7 +461,7 @@
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+            <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
       </Button>
@@ -475,7 +475,7 @@
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
                     <Canvas Style="{StaticResource IconCanvas-24x24}">
-                      <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+                      <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
                     </Canvas>
                   </Viewbox>
                 </MenuItem.Icon>
@@ -485,7 +485,7 @@
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
                     <Canvas Style="{StaticResource IconCanvas-24x24}">
-                      <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+                      <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
                     </Canvas>
                   </Viewbox>
                 </MenuItem.Icon>
@@ -514,7 +514,7 @@
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+            <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
       </Button>
@@ -947,7 +947,7 @@
                     <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />-->
                     <Viewbox Style="{StaticResource SmallIconBox}">
                       <Canvas Style="{StaticResource IconCanvas-24x24}">
-                        <Path Data="{StaticResource Image_CommentList}" Style="{StaticResource SmallDefaultIconPath}" />
+                        <Path Data="{StaticResource Image_Comment-List}" Style="{StaticResource SmallDefaultIconPath}" />
                       </Canvas>
                     </Viewbox>
                   </ToggleButton>

@@ -895,7 +895,7 @@
             <DataTemplate>
               <Viewbox Style="{StaticResource SmallIconBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
-                  <Path Data="{StaticResource Image_OrderDescending}" Style="{StaticResource SmallDefaultIconPath}" />
+                  <Path Data="{StaticResource Image_Order-Descending}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
             </DataTemplate>
@@ -908,7 +908,7 @@
         <DataTemplate>
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_OrderAscending}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Order-Ascending}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </DataTemplate>

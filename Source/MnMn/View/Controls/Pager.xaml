@@ -52,7 +52,7 @@
     >
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
-          <Path Data="{StaticResource Image_ScrollLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+          <Path Data="{StaticResource Image_Scroll-Left}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </RepeatButton>
@@ -60,14 +60,14 @@
     <Button Grid.Column="1" Click="PrevButton_Click">
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
-          <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+          <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </Button>
     <Button Grid.Column="2" Click="NextButton_Click">
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
-          <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+          <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </Button>
@@ -107,7 +107,7 @@
     >
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
-          <Path Data="{StaticResource Image_ScrollRight}" Style="{StaticResource SmallDefaultIconPath}" />
+          <Path Data="{StaticResource Image_Scroll-Right}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </RepeatButton>

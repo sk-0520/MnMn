@@ -82,7 +82,7 @@
                 <!--<Image Source="/Resources/Common/View/Left.png" Style="{StaticResource SmallIconImage}" />-->
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path Data="{StaticResource Image_ScrollLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+                    <Path Data="{StaticResource Image_Scroll-Left}" Style="{StaticResource SmallDefaultIconPath}" />
                   </Canvas>
                 </Viewbox>
               </RepeatButton>
@@ -114,7 +114,7 @@
               >
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path Data="{StaticResource Image_ScrollLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+                    <Path Data="{StaticResource Image_Scroll-Left}" Style="{StaticResource SmallDefaultIconPath}" />
                   </Canvas>
                 </Viewbox>
               </RepeatButton>
@@ -127,7 +127,7 @@
               >
                 <Viewbox Style="{StaticResource SmallIconBox}">
                   <Canvas Style="{StaticResource IconCanvas-24x24}">
-                    <Path Data="{StaticResource Image_ScrollRight}" Style="{StaticResource SmallDefaultIconPath}" />
+                    <Path Data="{StaticResource Image_Scroll-Right}" Style="{StaticResource SmallDefaultIconPath}" />
                   </Canvas>
                 </Viewbox>
               </RepeatButton>

@@ -71,7 +71,7 @@
           <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>
@@ -79,7 +79,7 @@
           <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>
@@ -87,7 +87,7 @@
           <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/MoveParentBookmark.png" Style="{StaticResource SmallIconImage}" />-->
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_ItemLeft}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Item-Left}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>
@@ -107,7 +107,7 @@
                   <StackPanel Style="{StaticResource ItemPanel}">
                     <Viewbox Style="{StaticResource MinimumItemBox}">
                       <Canvas Style="{StaticResource IconCanvas-24x24}">
-                        <Path Data="{StaticResource Image_Play_Sequential}" Style="{StaticResource MinimumLinkIconPath}" />
+                        <Path Data="{StaticResource Image_Play-Sequential}" Style="{StaticResource MinimumLinkIconPath}" />
                       </Canvas>
                     </Viewbox>
                     <TextBlock>再生</TextBlock>
@@ -117,7 +117,7 @@
                   <StackPanel Style="{StaticResource ItemPanel}">
                     <Viewbox Style="{StaticResource MinimumIconBox}">
                       <Canvas Style="{StaticResource IconCanvas-24x24}">
-                        <Path Data="{StaticResource Image_Play_Random}" Style="{StaticResource MinimumLinkIconPath}" />
+                        <Path Data="{StaticResource Image_Play-Random}" Style="{StaticResource MinimumLinkIconPath}" />
                       </Canvas>
                     </Viewbox>
                     <TextBlock>ランダム</TextBlock>
@@ -205,7 +205,7 @@
             <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+                <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
               </Canvas>
             </Viewbox>
           </RepeatButton>
@@ -213,7 +213,7 @@
             <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+                <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
               </Canvas>
             </Viewbox>
           </RepeatButton>

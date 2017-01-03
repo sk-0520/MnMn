@@ -117,7 +117,7 @@
       <Button Grid.Column="0" Command="{Binding AllCheckCommand}">
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <Path Data="{StaticResource Image_CheckOn}" Style="{StaticResource SmallDefaultIconPath}" />
+            <Path Data="{StaticResource Image_Check-On}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
       </Button>

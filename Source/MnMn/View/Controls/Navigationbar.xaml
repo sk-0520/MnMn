@@ -49,13 +49,13 @@
               <Style TargetType="Path" BasedOn="{StaticResource SmallAccentIconPath}">
                 <Style.Triggers>
                   <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Playing">
-                    <Setter Property="Data" Value="{StaticResource Image_NavigationbarPause}" />
+                    <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Pause}" />
                   </DataTrigger>
                   <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Pause">
-                    <Setter Property="Data" Value="{StaticResource Image_NavigationbarPlayPause}" />
+                    <Setter Property="Data" Value="{StaticResource Image_Navigationbar_PlayPause}" />
                   </DataTrigger>
                   <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop">
-                    <Setter Property="Data" Value="{StaticResource Image_NavigationbarPlay}" />
+                    <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Play}" />
                   </DataTrigger>
                   <MultiDataTrigger>
                     <!-- 条件見るにこれで問題ないはず… -->
@@ -65,7 +65,7 @@
                       <Condition Binding="{Binding IsAutoPlay, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True" />
                       <Condition Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop" />
                     </MultiDataTrigger.Conditions>
-                    <Setter Property="Data" Value="{StaticResource Image_NavigationbarTimer}" />
+                    <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Timer}" />
                   </MultiDataTrigger>
                 </Style.Triggers>
               </Style>
@@ -82,7 +82,7 @@
     >
       <Viewbox Style="{StaticResource SmallIconBox}">
         <Canvas Style="{StaticResource IconCanvas-24x24}">
-          <Path Data="{StaticResource Image_NavigationbarStop}" Style="{StaticResource SmallDefaultIconPath}" />
+          <Path Data="{StaticResource Image_Navigationbar_Stop}" Style="{StaticResource SmallDefaultIconPath}" />
         </Canvas>
       </Viewbox>
     </Button>
@@ -198,10 +198,10 @@
                 <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
                   <Style.Triggers>
                     <DataTrigger Binding="{Binding IsReplayChecked, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
-                      <Setter Property="Data" Value="{StaticResource Image_NavigationbarRepeatOn}" />
+                      <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Repeat-On}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding IsReplayChecked, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False">
-                      <Setter Property="Data" Value="{StaticResource Image_NavigationbarRepeatOff}" />
+                      <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Repeat-Off}" />
                     </DataTrigger>
                   </Style.Triggers>
                 </Style>
@@ -226,10 +226,10 @@
                         <Style TargetType="Path" BasedOn="{StaticResource SmallDefaultIconPath}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="True">
-                              <Setter Property="Data" Value="{StaticResource Image_NavigationbarAudioOff}" />
+                              <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Audio-Off}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding IsMute, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="False">
-                              <Setter Property="Data" Value="{StaticResource Image_NavigationbarAudioOn}" />
+                              <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Audio-On}" />
                             </DataTrigger>
                           </Style.Triggers>
                         </Style>
