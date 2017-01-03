@@ -127,7 +127,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#332: リソースの明示的破棄',
+						'comments': [
+							'むり。わっかんねーわ',
+							'誰か助けて'
+						]
 					},
 					{
 						'revision': '',
