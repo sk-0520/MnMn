@@ -431,6 +431,13 @@
           </Style>
         </Menu.Style>
         <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}" Style="{StaticResource ToolbarMenuItem}">
+          <MenuItem.Icon>
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+          </MenuItem.Icon>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
