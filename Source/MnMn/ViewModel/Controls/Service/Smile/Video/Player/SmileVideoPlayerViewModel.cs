@@ -1738,21 +1738,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
         {
             if(VideoLoadState == LoadState.Loading) {
+                // ダウンロードが完了していない
                 Mediation.Logger.Debug("buffering stop");
-                // 終わってない
+
                 IsBufferingStop = true;
                 BufferingVideoPosition = VideoPosition;
-            } else if(IsBufferingStop) {
+
+                return;
+            }
+
+            if(IsBufferingStop) {
+                // ダウンロードが完了していないので待ち状態に移行
                 Mediation.Logger.Debug("buffering wait");
                 PlayerState = PlayerState.Pause;
                 Player.Position = BufferingVideoPosition;
                 foreach(var data in ShowingCommentList) {
                     data.Clock.Controller.Pause();
                 }
-            } else if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+                return;
+            }
+
+            if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+                // 次のプレイリストへ遷移
                 Mediation.Logger.Debug("next playlist item");
                 LoadNextPlayListItemAsync();
-            } else if(ReplayVideo && !UserOperationStop.Value) {
+                return;
+            }
+
+            if(ReplayVideo && !UserOperationStop.Value) {
+                // リプレイ
                 Mediation.Logger.Debug("replay");
                 //Player.BeginStop(() => {
                 //    Player.Dispatcher.Invoke(() => {
@@ -1763,13 +1777,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 //Player.Play();
                 StopMovie(true);
                 PlayMovie();
-            } else {
-                //PlayerState = PlayerState.Stop;
-                //VideoPosition = 0;
-                //ClearComment();
-                //PrevPlayedTime = TimeSpan.Zero;
-                StopMovie(false);
+
+                return;
             }
+
+            // 普通の停止
+            StopMovie(false);
         }
 
 
