@@ -407,6 +407,13 @@
           </Style>
         </Menu.Style>
         <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
+          <MenuItem.Icon>
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallAccentIconPath}" />
+              </Canvas>
+            </Viewbox>
+          </MenuItem.Icon>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
