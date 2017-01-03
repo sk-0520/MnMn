@@ -227,6 +227,8 @@
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
+    <Compile Include="Define\Laboratory\Service\Smile\Video\CommentCreateType.cs" />
+    <Compile Include="Define\Laboratory\VideoCreateType.cs" />
     <Compile Include="Define\ScriptState.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveInformationSource.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveMediationKey.cs" />
