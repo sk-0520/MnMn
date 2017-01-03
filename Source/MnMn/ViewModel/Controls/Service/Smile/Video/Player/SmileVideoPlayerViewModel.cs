@@ -1735,6 +1735,76 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         }
 
+        bool IsPrimaryDisplayInView()
+        {
+            var hWnd = HandleUtility.GetWindowHandle(View);
+            var screenModel = Screen.FromHandle(hWnd);
+
+            return screenModel.Primary;
+        }
+
+        void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
+        {
+            if(VideoLoadState == LoadState.Loading) {
+                // ダウンロードが完了していない
+                Mediation.Logger.Debug("buffering stop");
+
+                IsBufferingStop = true;
+                BufferingVideoPosition = VideoPosition;
+
+                return;
+            }
+
+            if(IsBufferingStop) {
+                // ダウンロードが完了していないので待ち状態に移行
+                Mediation.Logger.Debug("buffering wait");
+                PlayerState = PlayerState.Pause;
+                Player.Position = BufferingVideoPosition;
+                foreach(var data in ShowingCommentList) {
+                    data.Clock.Controller.Pause();
+                }
+                return;
+            }
+
+            if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+                // 次のプレイリストへ遷移
+                Mediation.Logger.Debug("next playlist item");
+                LoadNextPlayListItemAsync();
+                return;
+            }
+
+            if(ReplayVideo && !UserOperationStop.Value) {
+                // リプレイ
+                Mediation.Logger.Debug("replay");
+                //Player.BeginStop(() => {
+                //    Player.Dispatcher.Invoke(() => {
+                //        Player.Play();
+                //    });
+                //});
+                //Player.Stop();
+                //Player.Play();
+                StopMovie(true);
+                PlayMovie();
+
+                return;
+            }
+
+            // 普通の停止
+            StopMovie(false);
+
+            if(PlayerSetting.StopFullScreenRestore) {
+                //フルスクリーン状態の制御
+                var restoreNormalWindow = true;
+                if(PlayerSetting.StopFullScreenRestorePrimaryDisplayOnly) {
+                    restoreNormalWindow = IsPrimaryDisplayInView();
+                }
+                if(restoreNormalWindow) {
+                    SetWindowMode(true);
+                }
+            }
+        }
+
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1986,6 +2056,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //return Task.WhenAll(processTask, playerTask);
             return base.StopPrevProcessAsync();
         }
+
 
         #endregion
 
@@ -2308,39 +2379,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case Meta.Vlc.Interop.Media.MediaState.Ended:
-                    if(VideoLoadState == LoadState.Loading) {
-                        Mediation.Logger.Debug("buffering stop");
-                        // 終わってない
-                        IsBufferingStop = true;
-                        BufferingVideoPosition = VideoPosition;
-                    } else if(IsBufferingStop) {
-                        Mediation.Logger.Debug("buffering wait");
-                        PlayerState = PlayerState.Pause;
-                        Player.Position = BufferingVideoPosition;
-                        foreach(var data in ShowingCommentList) {
-                            data.Clock.Controller.Pause();
-                        }
-                    } else if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
-                        Mediation.Logger.Debug("next playlist item");
-                        LoadNextPlayListItemAsync();
-                    } else if(ReplayVideo && !UserOperationStop.Value) {
-                        Mediation.Logger.Debug("replay");
-                        //Player.BeginStop(() => {
-                        //    Player.Dispatcher.Invoke(() => {
-                        //        Player.Play();
-                        //    });
-                        //});
-                        //Player.Stop();
-                        //Player.Play();
-                        StopMovie(true);
-                        PlayMovie();
-                    } else {
-                        //PlayerState = PlayerState.Stop;
-                        //VideoPosition = 0;
-                        //ClearComment();
-                        //PrevPlayedTime = TimeSpan.Zero;
-                        StopMovie(false);
-                    }
+                    ChangedPlayerStateToStop(e);
                     break;
 
                 default:
@@ -2399,9 +2438,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(PlayerSetting.InactiveIsFullScreenRestore) {
                 var restoreNormalWindow = true;
                 if(PlayerSetting.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
-                    var hWnd = HandleUtility.GetWindowHandle(View);
-                    var screenModel = Screen.FromHandle(hWnd);
-                    restoreNormalWindow = screenModel.Primary;
+                    restoreNormalWindow = IsPrimaryDisplayInView();
                 }
                 if(restoreNormalWindow) {
                     SetWindowMode(true);

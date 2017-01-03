@@ -205,6 +205,11 @@
               <Separator Style="{StaticResource NormalIndent}" />
               <CheckBox IsChecked="{Binding InactiveIsFullScreenRestorePrimaryDisplayOnly}" Style="{StaticResource VerticalCheckBox}">メインディスプレイに限定する</CheckBox>
             </StackPanel>
+            <CheckBox IsChecked="{Binding StopFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">再生終了時にフルスクリーンを解除する</CheckBox>
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding StopFullScreenRestore, Mode=OneWay}">
+              <Separator Style="{StaticResource NormalIndent}" />
+              <CheckBox IsChecked="{Binding StopFullScreenRestorePrimaryDisplayOnly}" Style="{StaticResource VerticalCheckBox}">メインディスプレイに限定する</CheckBox>
+            </StackPanel>
             <CheckBox IsChecked="{Binding KeySpaceToPause}" Style="{StaticResource VerticalCheckBox}">スペースキーで一時停止</CheckBox>
             <CheckBox IsChecked="{Binding MoseClickToPause}" Style="{StaticResource VerticalCheckBox}">クリックで一時停止</CheckBox>
             <Grid>
