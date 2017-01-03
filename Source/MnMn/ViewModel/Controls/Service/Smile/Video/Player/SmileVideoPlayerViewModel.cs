@@ -922,6 +922,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     RelationVideoLoadState = LoadState.Failure;
                     return Task.CompletedTask;
                 } else {
+                    foreach(var prevItem in RelationVideoItems) {
+                        prevItem.DecrementReference();
+                    }
                     RelationVideoItems.InitializeRange(items);
                     var loader = new SmileVideoInformationLoader(items);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
