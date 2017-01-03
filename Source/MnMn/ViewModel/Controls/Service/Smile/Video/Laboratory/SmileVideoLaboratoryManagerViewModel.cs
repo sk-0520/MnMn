@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -16,7 +17,10 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using Microsoft.Win32;
@@ -271,21 +275,73 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             }
         }
 
+        RawSmileVideoMsgChatModel CreateDummyChat(int number, int length, CommentCreateType type, bool isOriginalPost, Random random)
+        {
+            var contentMap = new Dictionary<CommentCreateType, Func<string>>() {
+                [CommentCreateType.Sequence] = () => $"{(isOriginalPost ? "o": "n" )}:{number}",
+                [CommentCreateType.Random] = () => $"{(isOriginalPost ? "o" : "n")}:{number}:{random.Next().ToString()}",
+            };
+            var result = new RawSmileVideoMsgChatModel() {
+                Fork = isOriginalPost ? "1" : "0",
+                Content = contentMap[type](),
+                No = number.ToString(),
+                VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(TimeSpan.FromSeconds(number)),
+                Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now.AddMinutes(number)).ToString(),
+            };
+
+            return result;
+        }
+
+        void ExportDummyFile(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, int commentNormalLength, int commentOpLength)
+        {
+            var rawMessagePacket = new RawSmileVideoMsgPacketModel();
+
+            var random = new Random();
+
+            var normalChats = Enumerable
+                .Range(1, commentNormalLength)
+                .Select(i => CreateDummyChat(i, commentNormalLength, commentType, false, random))
+            ;
+            var opChats = Enumerable
+                .Range(1, commentOpLength)
+                .Select(i => CreateDummyChat(i, commentOpLength, commentType, true, random))
+            ;
+
+            rawMessagePacket.Chat.AddRange(normalChats);
+            rawMessagePacket.Chat.AddRange(opChats);
+
+            var outputFilePath = Path.Combine(outputDirectory.FullName, $"comment{Constants.AppSmileVideoLaboratoryPlayMsgExtensions.First()}");
+            SerializeUtility.SaveXmlSerializeToFile(outputFilePath, rawMessagePacket);
+        }
+
         Task ExportDummyFileAsync()
         {
 #pragma warning disable 219
+            var commentOutput = true;
+            var videoOutput = true;
+
+            if(!commentOutput && !videoOutput) {
+                return Task.CompletedTask;
+            }
+
+            var length = TimeSpan.FromSeconds(10);
 
             var outputDirectory = new DirectoryInfo(@"X:\dummy");
-
-            var videoTye = VideoCreateType.Sequence;
-            var videLength = TimeSpan.FromSeconds(10);
-            var videFps = 30;
-            var videoOutput = true;
+            outputDirectory.Refresh();
+            if(!outputDirectory.Exists) {
+                outputDirectory.Create();
+            }
 
             var commentType = CommentCreateType.Sequence;
             var commentNormalLength = 100;
             var commentOpLength = 10;
-            var commentOutput = true;
+
+            if(commentOutput && 0 < commentNormalLength && 0 < commentOpLength) {
+                ExportDummyFile(outputDirectory, length, commentType, commentNormalLength, commentOpLength);
+            }
+
+            var videoTye = VideoCreateType.Sequence;
+            var videFps = 30;
 
             return Task.CompletedTask;
 #pragma warning restore 219

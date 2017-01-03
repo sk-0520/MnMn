@@ -81,17 +81,22 @@
               <RowDefinition />
               <RowDefinition />
               <RowDefinition />
+              <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Top">動画</Label>
+            <Label Grid.Row="0" Grid.Column="0">時間</Label>
             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+              <TextBox Width="{StaticResource SimpleInputWidth}" Style="{StaticResource VerticalTextBox}" />
+            </StackPanel>
+
+            <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">動画</Label>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
               <Grid>
                 <Grid.RowDefinitions>
-                  <RowDefinition />
                   <RowDefinition />
                   <RowDefinition />
                 </Grid.RowDefinitions>
@@ -105,20 +110,15 @@
                   <RadioButton Content="{x:Static app_define_laboratory:VideoCreateType.Sequence}" />
                 </WrapPanel>
 
-                <Label Grid.Row="1" Grid.Column="0">length</Label>
+                <Label Grid.Row="1" Grid.Column="0">fps</Label>
                 <StackPanel Grid.Row="1" Grid.Column="1">
-                  <TextBox Width="{StaticResource SimpleInputWidth}" Style="{StaticResource VerticalTextBox}" />
-                </StackPanel>
-
-                <Label Grid.Row="2" Grid.Column="0">fps</Label>
-                <StackPanel Grid.Row="2" Grid.Column="1">
                   <TextBox Width="{StaticResource SimpleInputWidth}" Style="{StaticResource VerticalTextBox}" />
                 </StackPanel>
               </Grid>
             </StackPanel>
 
-            <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">コメント</Label>
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+            <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Top">コメント</Label>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
               <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition />
@@ -148,8 +148,8 @@
               </Grid>
             </StackPanel>
 
-            <Label Grid.Row="2" Grid.Column="0">出力先</Label>
-            <Grid Grid.Row="2" Grid.Column="1">
+            <Label Grid.Row="3" Grid.Column="0">出力先</Label>
+            <Grid Grid.Row="3" Grid.Column="1">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -159,7 +159,7 @@
               <Button Grid.Column="1" Style="{StaticResource VerticalButton}">開く</Button>
             </Grid>
 
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
               <Button Command="{Binding ExportDummyFileCommand}">出力</Button>
               <CheckBox>動画</CheckBox>
               <CheckBox>コメント</CheckBox>
