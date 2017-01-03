@@ -55,21 +55,21 @@
         <Button Grid.Column="0" ToolTip="ホームへ" Command="{Binding HomeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsVisibleHome, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Navigation_Home}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>
         <Button Grid.Column="1" ToolTip="戻る" Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_NavigationPrev}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>
         <Button Grid.Column="2" ToolTip="進む" Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_NavigationNext}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>
@@ -115,7 +115,7 @@
         <Button Grid.Column="5" ToolTip="移動" Command="{Binding ChangeSourceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding IsEnabledUserChangeSource, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_NavigationGo}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Navigation_Go}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </Button>

@@ -117,8 +117,7 @@
       <Button Grid.Column="0" Command="{Binding AllCheckCommand}">
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <!-- https://materialdesignicons.com/icon/checkbox-marked-outline -->
-            <Path Data="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" Style="{StaticResource SmallDefaultIconPath}" />
+            <Path Data="{StaticResource Image_Check-On}" Style="{StaticResource SmallDefaultIconPath}" />
           </Canvas>
         </Viewbox>
       </Button>
@@ -367,8 +366,24 @@
               </MenuItem.CommandParameter>
             </MenuItem>
             <Separator />
-            <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
-            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}" />
+            <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_CheckItLater}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Unorganized}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
             <Separator />
             <MenuItem Header="クリップボードにコピー">
               <MenuItem.Icon>

@@ -198,102 +198,6 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
-  <!-- ================ Common Icon ================ -->
-  <!-- https://materialdesignicons.com/icon/plus -->
-  <Geometry x:Key="Image_Add">M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/arrow-right-bold -->
-  <Geometry x:Key="Image_Insert">M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/close -->
-  <Geometry x:Key="Image_Remove">M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/arrow-left-bold -->
-  <Geometry x:Key="Image_Back">M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/arrow-left-drop-circle-outline -->
-  <Geometry x:Key="Image_ItemLeft">M22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12M14,7L9,12L14,17V7Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/arrow-right-drop-circle-outline -->
-  <Geometry x:Key="Image_ItemRight">M2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12M4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12M10,17L15,12L10,7V17Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/arrow-up-drop-circle-outline -->
-  <Geometry x:Key="Image_ItemUp">M12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M17,14L12,9L7,14H17Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/arrow-down-drop-circle-outline -->
-  <Geometry x:Key="Image_ItemDown">M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M7,10L12,15L17,10H7Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/chevron-left -->
-  <Geometry x:Key="Image_ScrollLeft">M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z</Geometry>
-  <!--  https://materialdesignicons.com/icon/chevron-right -->
-  <Geometry x:Key="Image_ScrollRight">M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/chevron-up -->
-  <Geometry x:Key="Image_ScrollUp">M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/chevron-down -->
-  <Geometry x:Key="Image_ScrollDown">M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle-outline  -->
-  <Geometry x:Key="Image_NavigationNext">M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z</Geometry>
-  <!--  https://materialdesignicons.com/icon/arrow-left-bold-circle-outline -->
-  <Geometry x:Key="Image_NavigationPrev">M7,12L12,7V10H16V14H12V17L7,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle  -->
-  <Geometry x:Key="Image_NavigationGo">M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M17,12L12,7V10H8V14H12V17L17,12Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/magnify -->
-  <Geometry x:Key="Image_Search">M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/sort-ascending -->
-  <Geometry x:Key="Image_OrderAscending">M10,11V13H18V11H10M10,5V7H14V5H10M10,17V19H22V17H10M6,7H8.5L5,3.5L1.5,7H4V20H6V7Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/sort-descending -->
-  <Geometry x:Key="Image_OrderDescending">M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V4H6V17Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/tag-text-outline -->
-  <Geometry x:Key="Image_Tag">M5.5,7A1.5,1.5 0 0,0 7,5.5A1.5,1.5 0 0,0 5.5,4A1.5,1.5 0 0,0 4,5.5A1.5,1.5 0 0,0 5.5,7M21.41,11.58C21.77,11.94 22,12.44 22,13C22,13.55 21.78,14.05 21.41,14.41L14.41,21.41C14.05,21.77 13.55,22 13,22C12.45,22 11.95,21.77 11.58,21.41L2.59,12.41C2.22,12.05 2,11.55 2,11V4C2,2.89 2.89,2 4,2H11C11.55,2 12.05,2.22 12.41,2.58L21.41,11.58M13,20L20,13L11.5,4.5L4.5,11.5L13,20M10.09,8.91L11.5,7.5L17,13L15.59,14.41L10.09,8.91M7.59,11.41L9,10L13,14L11.59,15.41L7.59,11.41Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/alphabetical -->
-  <Geometry x:Key="Image_Keyword">M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/bookmark -->
-  <Geometry x:Key="Image_Bookmark">M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/bookmark-plus -->
-  <Geometry x:Key="Image_Bookmark-Add">M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M11,7V9H9V11H11V13H13V11H15V9H13V7H11Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/bookmark-plus-outline -->
-  <Geometry x:Key="Image_Bookmark-Insert">M17,18V5H7V18L12,15.82L17,18M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M11,7H13V9H15V11H13V13H11V11H9V9H11V7Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/bookmark-remove -->
-  <Geometry x:Key="Image_Bookmark-Remove">M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/folder -->
-  <Geometry x:Key="Image_Folder">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/fullscreen -->
-  <Geometry x:Key="Image_FullScreen">M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z</Geometry>
-  <!-- https://materialdesignicons.com/icon/fullscreen-exit -->
-  <Geometry x:Key="Image_FullScreen-Exit">M14,14H19V16H16V19H14V14M5,14H10V19H8V16H5V14M8,5H10V10H5V8H8V5M19,8V10H14V5H16V8H19Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/lock-outline -->
-  <Geometry x:Key="Image_Lock">M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/book-open-page-variant -->
-  <Geometry x:Key="Image_Book">M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5V5Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/pin -->
-  <Geometry x:Key="Image_Pin">M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/filter-outline -->
-  <Geometry x:Key="Image_Filter">M3,2H21V2H21V4H20.92L15,9.92V22.91L9,16.91V9.91L3.09,4H3V2M11,16.08L13,18.08V9H13.09L18.09,4H5.92L10.92,9H11V16.08Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/reload -->
-  <Geometry x:Key="Image_Reload">M19,12H22.32L17.37,16.95L12.42,12H16.97C17,10.46 16.42,8.93 15.24,7.75C12.9,5.41 9.1,5.41 6.76,7.75C4.42,10.09 4.42,13.9 6.76,16.24C8.6,18.08 11.36,18.47 13.58,17.41L15.05,18.88C12,20.69 8,20.29 5.34,17.65C2.22,14.53 2.23,9.47 5.35,6.35C8.5,3.22 13.53,3.21 16.66,6.34C18.22,7.9 19,9.95 19,12Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/stop-circle-outline -->
-  <Geometry x:Key="Image_Stop">M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4M9,9V15H15V9</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/close -->
-  <Geometry x:Key="Image_Close">M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/content-copy -->
-  <Geometry x:Key="Image_Copy">M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/export -->
-  <Geometry x:Key="Image_Export">M23,12L19,8V11H10V13H19V16M1,18V6C1,4.89 1.9,4 3,4H15A2,2 0 0,1 17,6V9H15V6H3V18H15V15H17V18A2,2 0 0,1 15,20H3A2,2 0 0,1 1,18Z</Geometry>
-
-  <!-- https://materialdesignicons.com/icon/shuffle-disabled -->
-  <Geometry x:Key="Image_Play_Sequential">M16,4.5V7H5V9H16V11.5L19.5,8M16,12.5V15H5V17H16V19.5L19.5,16</Geometry>
-  <!-- https://materialdesignicons.com/icon/shuffle-variant -->
-  <Geometry x:Key="Image_Play_Random">M17,3L22.25,7.5L17,12L22.25,16.5L17,21V18H14.26L11.44,15.18L13.56,13.06L15.5,15H17V12L17,9H15.5L6.5,18H2V15H5.26L14.26,6H17V3M2,6H6.5L9.32,8.82L7.2,10.94L5.26,9H2V6Z</Geometry>
 
   <!-- ============ 完結させられる図形 ============= -->
   <!-- ぼやけるーん
@@ -991,7 +895,7 @@
             <DataTemplate>
               <Viewbox Style="{StaticResource SmallIconBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
-                  <Path Data="{StaticResource Image_OrderDescending}" Style="{StaticResource SmallDefaultIconPath}" />
+                  <Path Data="{StaticResource Image_Order-Descending}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
             </DataTemplate>
@@ -1004,7 +908,7 @@
         <DataTemplate>
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_OrderAscending}" Style="{StaticResource SmallDefaultIconPath}" />
+              <Path Data="{StaticResource Image_Order-Ascending}" Style="{StaticResource SmallDefaultIconPath}" />
             </Canvas>
           </Viewbox>
         </DataTemplate>

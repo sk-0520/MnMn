@@ -61,7 +61,7 @@
               <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
               <Viewbox Style="{StaticResource SmallIconBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
-                  <Path Data="{StaticResource Image_ItemUp}" Style="{StaticResource SmallDefaultIconPath}" />
+                  <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
             </Button>
@@ -69,7 +69,7 @@
               <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
               <Viewbox Style="{StaticResource SmallIconBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
-                  <Path Data="{StaticResource Image_ItemDown}" Style="{StaticResource SmallDefaultIconPath}" />
+                  <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
               </Viewbox>
             </Button>
