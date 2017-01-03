@@ -78,6 +78,7 @@
       <cttn_sl_view_converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
       <cttn_sl_view_converter:HasTextLengthConverter x:Key="HasTextLengthConverter" />
 
+      <app_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
@@ -491,7 +492,7 @@
           <MenuItem.ItemsSource>
             <CompositeCollection>
               <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->
-              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F">
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F" Style="{StaticResource {x:Type MenuItem}}">
                 <MenuItem.Icon>
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
@@ -501,7 +502,7 @@
                   </Viewbox>
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B">
+              <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B" Style="{StaticResource {x:Type MenuItem}}">
                 <MenuItem.Icon>
                   <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
@@ -513,22 +514,19 @@
               </MenuItem>
               <MenuItem Header="ランダム再生" IsCheckable="True" IsChecked="{Binding IsRandomPlay}" Style="{StaticResource {x:Type MenuItem}}" />
               <MenuItem Header="次動画へ自動遷移" IsCheckable="True" IsChecked="{Binding CanPlayNextVieo.Value}" Style="{StaticResource {x:Type MenuItem}}" />
-              <Separator />
+              <Separator Style="{StaticResource {x:Type Separator}}" />
               <CollectionContainer Collection="{Binding Source={StaticResource PlayListItems}}" />
             </CompositeCollection>
           </MenuItem.ItemsSource>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
+              <Setter Property="Header" Value="{Binding Title, Converter={StaticResource EscapeAccessKeyConverter}}" />
               <Setter Property="Command" Value="{Binding DataContext.LoadSelectPlayListItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
               <Setter Property="CommandParameter" Value="{Binding}" />
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
             </Style>
           </MenuItem.ItemContainerStyle>
-          <MenuItem.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Title}" />
-            </DataTemplate>
-          </MenuItem.ItemTemplate>
+          
         </MenuItem>
       </Menu>
       <Button Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">

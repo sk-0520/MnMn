@@ -142,6 +142,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#329: プレイリストのメニュー表示で System.Windows.Data Error: 26 が発生する'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
