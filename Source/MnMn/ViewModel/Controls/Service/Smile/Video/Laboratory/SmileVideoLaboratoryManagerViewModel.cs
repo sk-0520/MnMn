@@ -12,6 +12,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory;
+using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -95,6 +97,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                             ||
                             !string.IsNullOrWhiteSpace(PlayInputMessageSourceFilePath)
                         ;
+                    }
+                );
+            }
+        }
+
+        public ICommand ExportDummyFileCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => {
+                        ExportDummyFileAsync();
                     }
                 );
             }
@@ -256,7 +270,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 }
             }
         }
-        
+
+        Task ExportDummyFileAsync()
+        {
+#pragma warning disable 219
+
+            var outputDirectory = new DirectoryInfo(@"X:\dummy");
+
+            var videoTye = VideoCreateType.Sequence;
+            var videLength = TimeSpan.FromSeconds(10);
+            var videFps = 30;
+            var videoOutput = true;
+
+            var commentType = CommentCreateType.Sequence;
+            var commentNormalLength = 100;
+            var commentOpLength = 10;
+            var commentOutput = true;
+
+            return Task.CompletedTask;
+#pragma warning restore 219
+        }
+
         #endregion
 
         #region SmileVideoCustomManagerViewModelBase
