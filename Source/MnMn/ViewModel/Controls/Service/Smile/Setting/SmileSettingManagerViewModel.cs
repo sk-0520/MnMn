@@ -214,6 +214,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetPropertyValue(Setting.Video.Player, value); }
         }
 
+        public bool StopFullScreenRestore
+        {
+            get { return Setting.Video.Player.StopFullScreenRestore; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
+        public bool StopFullScreenRestorePrimaryDisplayOnly
+        {
+            get { return Setting.Video.Player.StopFullScreenRestorePrimaryDisplayOnly; }
+            set { SetPropertyValue(Setting.Video.Player, value); }
+        }
+
         public bool UsingDmc
         {
             get { return Setting.Video.Download.UsingDmc; }
