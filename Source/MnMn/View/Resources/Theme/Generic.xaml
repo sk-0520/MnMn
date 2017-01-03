@@ -539,6 +539,7 @@
     <Setter Property="IsUndoEnabled" Value="False" />
     <Setter Property="UndoLimit" Value="0" />
     <Setter Property="IsReadOnly" Value="True" />
+    <Setter Property="IsReadOnlyCaretVisible" Value="True" />
     <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
   </Style>
 
