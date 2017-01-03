@@ -264,24 +264,24 @@
           <ListView.Resources>
             <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
               <Style.Triggers>
-                <DataTrigger Binding="{Binding LogKind}" Value="None">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="None">
                 </DataTrigger>
-                <DataTrigger Binding="{Binding LogKind}" Value="Debug">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="Debug">
                   <Setter Property="Background" Value="#80444444" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding LogKind}" Value="Trace">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="Trace">
                   <Setter Property="Background" Value="#80cccccc" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding LogKind}" Value="Information">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="Information">
                   <Setter Property="Background" Value="#804444cc" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding LogKind}" Value="Warning">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="Warning">
                   <Setter Property="Background" Value="#80cccc44" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding LogKind}" Value="Error">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="Error">
                   <Setter Property="Background" Value="#80cc4444" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding LogKind}" Value="Fatal">
+                <DataTrigger Binding="{Binding LogKind, Mode=OneTime}" Value="Fatal">
                   <Setter Property="Background" Value="#cc4444" />
                 </DataTrigger>
               </Style.Triggers>
@@ -292,7 +292,7 @@
               <GridViewColumn Header="タイムスタンプ">
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
-                    <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Timestamp, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}, Mode=OneTime}" />
                   </DataTemplate>
                 </GridViewColumn.CellTemplate>
               </GridViewColumn>
