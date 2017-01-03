@@ -866,7 +866,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Information = null;
+                //Debug.WriteLine("set null!");
+                //Information = null;
             }
 
             base.Dispose(disposing);
