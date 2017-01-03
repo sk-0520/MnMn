@@ -17,6 +17,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory;
 using ContentTypeTextNet.MnMn.MnMn.Define.Laboratory.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -24,6 +25,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Laboratory;
 using Microsoft.Win32;
+using SharpAvi.Output;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Local
 {
@@ -318,8 +320,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
         {
             var outputFilePath = Path.Combine(outputDirectory.FullName, $"video.avi");
 
+            using(var writer = new AviWriter(outputFilePath) {
+                FramesPerSecond = videFps,
+                EmitIndex1 = true,
+            }) {
+                var videoStream = writer.AddVideoStream(videoWidth, videoHeight);
+                videoStream.BitsPerPixel = SharpAvi.BitsPerPixel.Bpp32;
+                videoStream.Codec = SharpAvi.KnownFourCCs.Codecs.Uncompressed;
 
+                var binaryLength = videoStream.Width * videoStream.Height * 4;
+                var buffer = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binaryLength);
+                foreach(var i in Enumerable.Range(0, binaryLength)) {
+                    buffer.WriteByte(0);
+                }
+                var binaryBuffer = buffer.GetBuffer();
 
+                foreach(var frame in Enumerable.Range(0, (int)(length.TotalSeconds) * videFps)) {
+                    var bitmap = new System.Drawing.Bitmap(videoStream.Width, videoStream.Height);
+
+                    using(var canvas = System.Drawing.Graphics.FromImage(bitmap)) {
+                        canvas.DrawString($"{frame}", System.Drawing.SystemFonts.MessageBoxFont, System.Drawing.Brushes.White, new System.Drawing.RectangleF(0, 0, videoStream.Width, videoStream.Height));
+                    }
+
+                    var bits = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, videoStream.Width, videoStream.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                    System.Runtime.InteropServices.Marshal.Copy(bits.Scan0, binaryBuffer, 0, binaryLength);
+                    bitmap.UnlockBits(bits);
+
+                    videoStream.WriteFrame(true, binaryBuffer, 0, binaryLength);
+                }
+            }
             return Task.CompletedTask;
         }
 

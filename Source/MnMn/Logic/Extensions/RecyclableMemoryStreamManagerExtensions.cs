@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Extensions
             return GetStreamWidthAutoTag(memoryStreamManager, buffer, 0, buffer.Length, callerFilePath, callerLineNumber, callerMemberName);
         }
 
+        public static MemoryStream GetStreamWidthAutoTag(this RecyclableMemoryStreamManager memoryStreamManager, int requiredSize, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1, [CallerMemberName] string callerMemberName = "")
+        {
+            var tag = MakeTag(callerFilePath, callerLineNumber, callerMemberName);
+            return memoryStreamManager.GetStream(tag, requiredSize);
+        }
+
         // タグ付けする意味もあんまりなさそう。
         public static MemoryStream GetStreamWidthAutoTag(this RecyclableMemoryStreamManager memoryStreamManager, [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1, [CallerMemberName] string callerMemberName = "")
         {
