@@ -192,10 +192,8 @@
                         <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                           <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}" />
                         </Style>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                          <Setter Property="IsReadOnly" Value="True" />
+                        <Style TargetType="TextBox" BasedOn="{StaticResource SelectableReadonlyText}">
                           <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
-                          <Setter Property="mamc:TextBoxHelper.SelectAllOnFocus" Value="True" />
                         </Style>
                       </StackPanel.Resources>
 

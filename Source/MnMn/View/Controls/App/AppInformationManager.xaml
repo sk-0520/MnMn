@@ -340,7 +340,7 @@
                 <GridViewColumn.CellTemplate>
                   <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                      <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" BorderThickness="0" Background="Transparent" IsUndoEnabled="False" UndoLimit="0" IsReadOnly="True" Foreground="{DynamicResource TextBrush}" Text="{Binding CallerMember, Mode=OneTime}" />
+                      <TextBox Style="{StaticResource SelectableReadonlyText}" Text="{Binding CallerMember, Mode=OneTime}" />
                       <TextBlock VerticalAlignment="Center" Text="{Binding CallerLine, StringFormat=({0}), Mode=OneTime}" />
                     </StackPanel>
                   </DataTemplate>

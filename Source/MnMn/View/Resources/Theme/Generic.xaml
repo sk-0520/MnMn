@@ -531,6 +531,18 @@
     </Setter>
   </Style>
 
+  <!-- 選択可能な文字表示 -->
+  <Style x:Key="SelectableReadonlyText" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="mamc:TextBoxHelper.SelectAllOnFocus" Value="True" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="IsUndoEnabled" Value="False" />
+    <Setter Property="UndoLimit" Value="0" />
+    <Setter Property="IsReadOnly" Value="True" />
+    <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+  </Style>
+
   <!-- 検索 -->
   <Style x:Key="SearchTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
     <Style.Resources>
