@@ -155,7 +155,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#330: 不要なリソースアイコンの破棄'
 					},
 					{
 						'revision': '',

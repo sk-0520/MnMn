@@ -845,8 +845,6 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
-    <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
-    <Resource Include="Resources\Navigationbar\Wait.png" />
     <None Include="Properties\app.manifest" />
     <None Include="Resources\File\Xaml\DescriptionLink.xaml">
       <SubType>Designer</SubType>
@@ -912,7 +910,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Resources\Service\Smile\Video\Player\FullScreen.png" />
     <Page Include="View\Controls\AcceptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1167,51 +1164,11 @@
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
-    <Resource Include="Resources\Common\Action\FolderOpen.png" />
-    <Content Include="Resources\Common\View\Down.png" />
     <Resource Include="Resources\Service\Smile\Service-Smile.ico" />
     <Resource Include="Resources\MnMn.ico" />
-    <Resource Include="Resources\Service\Smile\Video\Player\OriginalPoster.png" />
-    <Resource Include="Resources\Common\View\Up.png" />
-    <Resource Include="Resources\Common\Item\Right.png" />
-    <Resource Include="Resources\Common\Item\Left.png" />
-    <Resource Include="Resources\Common\Action\Save.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\AddBookmark.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\RemoveBookmark.png" />
-    <Resource Include="Resources\Common\Item\Down.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\InsertBookmark.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\MoveParentBookmark.png" />
-    <Resource Include="Resources\Common\Item\Up.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\EconomyMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\NormalMode.png" />
-    <Resource Include="Resources\Pager\Next.png" />
-    <Resource Include="Resources\Pager\Prev.png" />
-    <Resource Include="Resources\Service\Smile\MyList\Folder.png" />
-    <Resource Include="Resources\SearchType\Keyword.png" />
-    <Resource Include="Resources\SearchType\Tag.png" />
-    <Resource Include="Resources\Service\Smile\Video\Finder\Check.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Pedia.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Lock.png" />
-    <Resource Include="Resources\Service\Smile\Finance.png" />
     <Resource Include="Resources\Service\Smile\Smile.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\ImageState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\CommentState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\VideoState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Information.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\CommentList.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\CommentShow.png" />
-    <Resource Include="Resources\Common\View\Right.png" />
-    <Resource Include="Resources\Common\View\Left.png" />
-    <Resource Include="Resources\Service\Smile\Video\Finder\SortAscending.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Backward.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Forward.png" />
-    <Resource Include="Resources\Navigationbar\Repeat.png" />
-    <Resource Include="Resources\Navigationbar\Resume.png" />
-    <Resource Include="Resources\Navigationbar\AudioMute.png" />
-    <Resource Include="Resources\Navigationbar\AudioOn.png" />
-    <Resource Include="Resources\Navigationbar\Pause.png" />
-    <Resource Include="Resources\Navigationbar\Play.png" />
-    <Resource Include="Resources\Navigationbar\Stop.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
