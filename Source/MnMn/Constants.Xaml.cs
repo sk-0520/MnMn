@@ -18,13 +18,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public const string xamlImage_Copy = "Image_Copy";
         /// <summary>
-        /// あとで見る
+        /// 未整理のブックマーク
         /// </summary>
         public const string xamlImage_Bookmark_Unorganized = "Image_Bookmark-Unorganized";
         /// <summary>
-        /// あとで見る
+        /// プレイリスト追加
         /// </summary>
         public const string xamlImage_Playlist_Add = "Image_Playlist-Add";
+        public const string xamlImage_CheckItLater = "Image_CheckItLater";
 
     }
 }
