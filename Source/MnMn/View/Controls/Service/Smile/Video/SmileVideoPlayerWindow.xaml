@@ -467,6 +467,13 @@
       </Button>
       <Menu Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ToolbarMenu}">
         <MenuItem Header="プレイリスト" Style="{StaticResource ToolbarMenuItem}">
+          <MenuItem.Icon>
+            <Viewbox Style="{StaticResource SmallIconBox}">
+              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
+              </Canvas>
+            </Viewbox>
+          </MenuItem.Icon>
           <MenuItem.ItemsSource>
             <CompositeCollection>
               <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->

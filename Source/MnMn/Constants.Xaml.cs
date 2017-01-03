@@ -20,7 +20,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// あとで見る
         /// </summary>
-        public const string xamlImage_AddUnorganizedBookmark = "Image_Bookmark-Unorganized";
+        public const string xamlImage_Bookmark_Unorganized = "Image_Bookmark-Unorganized";
+        /// <summary>
+        /// あとで見る
+        /// </summary>
+        public const string xamlImage_Playlist_Add = "Image_Playlist-Add";
 
     }
 }
