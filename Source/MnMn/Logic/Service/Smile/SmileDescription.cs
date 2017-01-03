@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
                         new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddPlayListVideoId, nameof(ISmileDescription.MenuAddPlayListVideoIdLinkCommand), null),
                         new DescriptionContextMenuSeparator(),
                         new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddCheckItLaterVideoId, nameof(ISmileDescription.MenuAddCheckItLaterVideoIdCommand), null),
-                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId, nameof(ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommand), null),
+                        new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddUnorganizedBookmarkVideoId, nameof(ISmileDescription.MenuAddUnorganizedBookmarkVideoIdCommand), null, Constants.xamlImage_AddUnorganizedBookmark, Constants.xamlStyle_SmallDefaultIconPath),
                         new DescriptionContextMenuSeparator(),
                         new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuCopyVideoId, nameof(ISmileDescription.MenuCopyVideoIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                     };

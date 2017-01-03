@@ -367,7 +367,15 @@
             </MenuItem>
             <Separator />
             <MenuItem Header="あとで見る" Command="{Binding AddCheckItLaterCommand}" />
-            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}" />
+            <MenuItem Header="未整理のブックマークに入れておく" Command="{Binding AddUnorganizedBookmarkCommand}">
+              <MenuItem.Icon>
+                <Viewbox Style="{StaticResource SmallIconBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Bookmark-Unorganized}" Style="{StaticResource SmallDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+              </MenuItem.Icon>
+            </MenuItem>
             <Separator />
             <MenuItem Header="クリップボードにコピー">
               <MenuItem.Icon>

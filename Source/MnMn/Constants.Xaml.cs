@@ -13,7 +13,14 @@ namespace ContentTypeTextNet.MnMn.MnMn
     {
         public const string xamlStyle_SmallDefaultIconPath = "SmallDefaultIconPath";
 
+        /// <summary>
+        /// コピー。
+        /// </summary>
         public const string xamlImage_Copy = "Image_Copy";
-        
+        /// <summary>
+        /// あとで見る
+        /// </summary>
+        public const string xamlImage_AddUnorganizedBookmark = "Image_Bookmark-Unorganized";
+
     }
 }
