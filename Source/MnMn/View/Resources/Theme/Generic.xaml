@@ -226,12 +226,58 @@
   <!-- https://materialdesignicons.com/icon/chevron-down -->
   <Geometry x:Key="Image_ScrollDown">M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z</Geometry>
 
+  <!-- https://materialdesignicons.com/icon/home-outline -->
+  <Geometry x:Key="Image_NavigationHome">M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z</Geometry>
   <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle-outline  -->
   <Geometry x:Key="Image_NavigationNext">M17,12L12,17V14H8V10H12V7L17,12M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12Z</Geometry>
   <!--  https://materialdesignicons.com/icon/arrow-left-bold-circle-outline -->
   <Geometry x:Key="Image_NavigationPrev">M7,12L12,7V10H16V14H12V17L7,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12Z</Geometry>
   <!-- https://materialdesignicons.com/icon/arrow-right-bold-circle  -->
   <Geometry x:Key="Image_NavigationGo">M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M17,12L12,7V10H8V14H12V17L17,12Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/timer-sand -->
+  <Geometry x:Key="Image_NavigationbarTimer" >M20,2V4H18V8.41L14.41,12L18,15.59V20H20V22H4V20H6V15.59L9.59,12L6,8.41V4H4V2H20M16,16.41L13,13.41V10.59L16,7.59V4H8V7.59L11,10.59V13.41L8,16.41V17H10L12,15L14,17H16V16.41M12,9L10,7H14L12,9Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/play -->
+  <Geometry x:Key="Image_NavigationbarPlay">M8,5.14V19.14L19,12.14L8,5.14Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/play-pause -->
+  <Geometry x:Key="Image_NavigationbarPlayPause">M3,5V19L11,12M13,19H16V5H13M18,5V19H21V5</Geometry>
+  <!-- https://materialdesignicons.com/icon/pause -->
+  <Geometry x:Key="Image_NavigationbarPause">M14,19H18V5H14M6,19H10V5H6V19Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/stop -->
+  <Geometry x:Key="Image_NavigationbarStop">M18,18H6V6H18V18Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/repeat -->
+  <Geometry x:Key="Image_NavigationbarRepeatOn">M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/repeat-off -->
+  <Geometry x:Key="Image_NavigationbarRepeatOff">M2,5.27L3.28,4L20,20.72L18.73,22L15.73,19H7V22L3,18L7,14V17H13.73L7,10.27V11H5V8.27L2,5.27M17,13H19V17.18L17,15.18V13M17,5V2L21,6L17,10V7H8.82L6.82,5H17Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/volume-off -->
+  <Geometry x:Key="Image_NavigationbarAudioOff">M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/volume-high -->
+  <Geometry x:Key="Image_NavigationbarAudioOn">M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/comment-multiple-outline -->
+  <Geometry x:Key="Image_CommentOn">M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7C5,5.89 5.9,5 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.9 12.75,23 12.5,23V23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/comment-outline -->
+  <Geometry x:Key="Image_Comment">M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/comment-text-outline -->
+  <Geometry x:Key="Image_CommentList">M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/information-outline -->
+  <Geometry x:Key="Image_Information">M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/worker -->
+  <Geometry x:Key="Image_Worker">M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/image -->
+  <Geometry x:Key="Image_Image">M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z</Geometry>
+  <!-- https://materialdesignicons.com/icon/video -->
+  <Geometry x:Key="Image_Video">M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z</Geometry>
+
+  <!-- https://materialdesignicons.com/icon/checkbox-marked-outline -->
+  <Geometry x:Key="Image_CheckOn">M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z</Geometry>
+
+  <!--
+  <Geometry x:Key="Image_"></Geometry>
+  -->
 
   <!-- https://materialdesignicons.com/icon/magnify -->
   <Geometry x:Key="Image_Search">M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z</Geometry>
