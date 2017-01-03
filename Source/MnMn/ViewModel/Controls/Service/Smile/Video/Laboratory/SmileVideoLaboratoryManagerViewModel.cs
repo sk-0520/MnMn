@@ -20,6 +20,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 using ContentTypeTextNet.MnMn.MnMn.View.Controls;
@@ -318,38 +319,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
         Task ExportDummyVideoFileAsync(DirectoryInfo outputDirectory, TimeSpan length, VideoCreateType videoTye, int videFps, int videoWidth, int videoHeight)
         {
-            var outputFilePath = Path.Combine(outputDirectory.FullName, $"video.avi");
+            var temporaryFilePath = Path.Combine(outputDirectory.FullName, $"video.avi");
+            var outputFilePath = Path.ChangeExtension(temporaryFilePath, "mp4");
 
-            using(var writer = new AviWriter(outputFilePath) {
-                FramesPerSecond = videFps,
-                EmitIndex1 = true,
-            }) {
-                var videoStream = writer.AddVideoStream(videoWidth, videoHeight);
-                videoStream.BitsPerPixel = SharpAvi.BitsPerPixel.Bpp32;
-                videoStream.Codec = SharpAvi.KnownFourCCs.Codecs.Uncompressed;
+            return Task.Run(() => {
+                using(var logger = new TimeLogger(Mediation.Logger))
+                using(var writer = new AviWriter(temporaryFilePath) {
+                    FramesPerSecond = videFps,
+                    EmitIndex1 = true,
+                }) {
+                    var videoStream = writer.AddVideoStream(videoWidth, videoHeight);
+                    videoStream.BitsPerPixel = SharpAvi.BitsPerPixel.Bpp32;
+                    videoStream.Codec = SharpAvi.KnownFourCCs.Codecs.Uncompressed;
 
-                var binaryLength = videoStream.Width * videoStream.Height * 4;
-                var buffer = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binaryLength);
-                foreach(var i in Enumerable.Range(0, binaryLength)) {
-                    buffer.WriteByte(0);
-                }
-                var binaryBuffer = buffer.GetBuffer();
+                    var binaryLength = videoStream.Width * videoStream.Height * 4;
+                    using(var buffer = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binaryLength)) {
+                        foreach(var i in Enumerable.Range(0, binaryLength)) {
+                            buffer.WriteByte(0);
+                        }
+                        var binaryBuffer = buffer.GetBuffer();
 
-                foreach(var frame in Enumerable.Range(0, (int)(length.TotalSeconds) * videFps)) {
-                    var bitmap = new System.Drawing.Bitmap(videoStream.Width, videoStream.Height);
+                        using(var bitmap = new System.Drawing.Bitmap(videoStream.Width, videoStream.Height))
+                        using(var canvas = System.Drawing.Graphics.FromImage(bitmap))
+                        using(var format = new System.Drawing.StringFormat() {
+                            Alignment = System.Drawing.StringAlignment.Center,
+                            LineAlignment = System.Drawing.StringAlignment.Center,
+                        }) {
+                            canvas.ScaleTransform(1.0F, -1.0F);
+                            canvas.TranslateTransform(0.0F, -videoHeight);
+                            var rect = new System.Drawing.RectangleF(0, 0, videoStream.Width, videoStream.Height);
 
-                    using(var canvas = System.Drawing.Graphics.FromImage(bitmap)) {
-                        canvas.DrawString($"{frame}", System.Drawing.SystemFonts.MessageBoxFont, System.Drawing.Brushes.White, new System.Drawing.RectangleF(0, 0, videoStream.Width, videoStream.Height));
+                            foreach(var frame in Enumerable.Range(0, (int)(length.TotalSeconds) * videFps)) {
+                                canvas.FillRectangle(System.Drawing.Brushes.Black, rect);
+                                canvas.DrawString($"{frame}", System.Drawing.SystemFonts.MessageBoxFont, System.Drawing.Brushes.White, rect, format);
+
+                                var bits = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, videoStream.Width, videoStream.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                                System.Runtime.InteropServices.Marshal.Copy(bits.Scan0, binaryBuffer, 0, binaryLength);
+                                bitmap.UnlockBits(bits);
+
+                                videoStream.WriteFrame(true, binaryBuffer, 0, binaryLength);
+                            }
+                        }
                     }
-
-                    var bits = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, videoStream.Width, videoStream.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-                    System.Runtime.InteropServices.Marshal.Copy(bits.Scan0, binaryBuffer, 0, binaryLength);
-                    bitmap.UnlockBits(bits);
-
-                    videoStream.WriteFrame(true, binaryBuffer, 0, binaryLength);
                 }
-            }
-            return Task.CompletedTask;
+            }).ContinueWith(_ => {
+                if(File.Exists(outputFilePath)) {
+                    File.Delete(outputFilePath);
+                }
+                var ffmpeg = new Ffmpeg();
+                var s = $"-y -i \"{temporaryFilePath}\" \"{outputFilePath}\"";
+                return ffmpeg.ExecuteAsync(s);
+            }).Unwrap().ContinueWith(t => {
+                var exitCode = t.Result;
+                Mediation.Logger.Information($"result: {exitCode}");
+                if(exitCode == 0) {
+                    if(File.Exists(temporaryFilePath)) {
+                        File.Delete(temporaryFilePath);
+                    }
+                }
+            });
         }
 
 
