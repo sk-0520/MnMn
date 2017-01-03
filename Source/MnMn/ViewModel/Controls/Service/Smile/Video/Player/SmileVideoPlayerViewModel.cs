@@ -1735,6 +1735,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         }
 
+        bool IsPrimaryDisplayInView()
+        {
+            var hWnd = HandleUtility.GetWindowHandle(View);
+            var screenModel = Screen.FromHandle(hWnd);
+
+            return screenModel.Primary;
+        }
+
         void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
         {
             if(VideoLoadState == LoadState.Loading) {
@@ -1783,6 +1791,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             // 普通の停止
             StopMovie(false);
+
+            //フルスクリーン状態の制御
+            var restoreNormalWindow = PlayerSetting.StopFullScreenRestore;
+            if(PlayerSetting.StopFullScreenRestorePrimaryDisplayOnly) {
+                restoreNormalWindow = IsPrimaryDisplayInView();
+            }
+            if(restoreNormalWindow) {
+                SetWindowMode(true);
+            }
         }
 
 
@@ -2419,9 +2436,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(PlayerSetting.InactiveIsFullScreenRestore) {
                 var restoreNormalWindow = true;
                 if(PlayerSetting.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
-                    var hWnd = HandleUtility.GetWindowHandle(View);
-                    var screenModel = Screen.FromHandle(hWnd);
-                    restoreNormalWindow = screenModel.Primary;
+                    restoreNormalWindow = IsPrimaryDisplayInView();
                 }
                 if(restoreNormalWindow) {
                     SetWindowMode(true);
