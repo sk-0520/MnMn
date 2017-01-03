@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             return result;
         }
 
-        void ExportDummyFile(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, int commentNormalLength, int commentOpLength)
+        void ExportDummyMsgFile(DirectoryInfo outputDirectory, TimeSpan length, CommentCreateType commentType, int commentNormalLength, int commentOpLength)
         {
             var rawMessagePacket = new RawSmileVideoMsgPacketModel();
 
@@ -313,6 +313,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             var outputFilePath = Path.Combine(outputDirectory.FullName, $"comment{Constants.AppSmileVideoLaboratoryPlayMsgExtensions.First()}");
             SerializeUtility.SaveXmlSerializeToFile(outputFilePath, rawMessagePacket);
         }
+
+        Task ExportDummyVideoFileAsync(DirectoryInfo outputDirectory, TimeSpan length, VideoCreateType videoTye, int videFps, int videoWidth, int videoHeight)
+        {
+            var outputFilePath = Path.Combine(outputDirectory.FullName, $"video.avi");
+
+
+
+            return Task.CompletedTask;
+        }
+
 
         Task ExportDummyFileAsync()
         {
@@ -337,11 +347,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             var commentOpLength = 10;
 
             if(commentOutput && 0 < commentNormalLength && 0 < commentOpLength) {
-                ExportDummyFile(outputDirectory, length, commentType, commentNormalLength, commentOpLength);
+                ExportDummyMsgFile(outputDirectory, length, commentType, commentNormalLength, commentOpLength);
             }
 
             var videoTye = VideoCreateType.Sequence;
             var videFps = 30;
+            var videoWidth = 640;
+            var videoHeight = 480;
+            if(videoOutput) {
+                ExportDummyVideoFileAsync(outputDirectory, length, videoTye, videFps, videoWidth, videoHeight);
+            }
 
             return Task.CompletedTask;
 #pragma warning restore 219

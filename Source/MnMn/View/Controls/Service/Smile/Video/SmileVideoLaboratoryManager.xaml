@@ -114,6 +114,12 @@
                 <StackPanel Grid.Row="1" Grid.Column="1">
                   <TextBox Width="{StaticResource SimpleInputWidth}" Style="{StaticResource VerticalTextBox}" />
                 </StackPanel>
+                <Label Grid.Row="2" Grid.Column="0">size</Label>
+                <StackPanel Grid.Row="2" Grid.Column="1">
+                  <TextBox Width="{StaticResource SimpleInputWidth}" Style="{StaticResource VerticalTextBox}" />
+                  <TextBlock>x</TextBlock>
+                  <TextBox Width="{StaticResource SimpleInputWidth}" Style="{StaticResource VerticalTextBox}" />
+                </StackPanel>
               </Grid>
             </StackPanel>
 
