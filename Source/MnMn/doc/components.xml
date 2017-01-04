@@ -9,6 +9,7 @@
 	<Component Kind="Library" Name="GeckoFX" Uri="https://bitbucket.org/geckofx/" License="MPL" />
 	<Component Kind="Library" Name="mahapps.metro" Uri="http://mahapps.com/" License="MIT" />
 	<Component Kind="Library" Name="Microsoft.IO.RecyclableMemoryStream" Uri="https://github.com/Microsoft/Microsoft.IO.RecyclableMemoryStream" License="MIT" />
+	<Component Kind="Library" Name="SharpAvi" Uri="https://sharpavi.codeplex.com/" License="MIT" />
 
 	<Component Kind="Library" Name="FFmpeg" Uri="https://ffmpeg.org/" License="GPL2" />
 

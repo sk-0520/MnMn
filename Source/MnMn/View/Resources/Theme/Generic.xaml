@@ -46,6 +46,9 @@
   <Thickness x:Key="HorizonMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />
   <Thickness x:Key="BasePadding" Left="4" Top="4" Right="4" Bottom="4" />
 
+  <Thickness x:Key="VerticalContrlMargin" Left="0" Top="{StaticResource HalfMarginWidth}" Right="0" Bottom="{StaticResource HalfMarginWidth}" />
+  <Thickness x:Key="HorizontalContrlMargin" Left="{StaticResource HalfMarginWidth}" Top="0" Right="{StaticResource HalfMarginWidth}" Bottom="0" />
+
   <sys:Double x:Key="FontSmallSize">10</sys:Double>
   <sys:Double x:Key="FontBaseSize">12</sys:Double>
   <sys:Double x:Key="FontBigSize">14</sys:Double>
@@ -421,18 +424,10 @@
   </Style>
 
   <Style x:Key="VerticalTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-    <Setter Property="Margin">
-      <Setter.Value>
-        <Thickness Left="0" Top="{StaticResource HalfMarginWidth}" Right="0" Bottom="{StaticResource HalfMarginWidth}" />
-      </Setter.Value>
-    </Setter>
+    <Setter Property="Margin" Value="{StaticResource VerticalContrlMargin}" />
   </Style>
   <Style x:Key="HorizontalTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-    <Setter Property="Margin">
-      <Setter.Value>
-        <Thickness Left="{StaticResource HalfMarginWidth}" Top="0" Right="{StaticResource HalfMarginWidth}" Bottom="0" />
-      </Setter.Value>
-    </Setter>
+    <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
   </Style>
 
   <!-- 選択可能な文字表示 -->

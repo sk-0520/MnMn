@@ -135,6 +135,11 @@
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SharpAvi">
+      <HintPath>..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -222,6 +227,8 @@
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
+    <Compile Include="Define\Laboratory\Service\Smile\Video\CommentCreateType.cs" />
+    <Compile Include="Define\Laboratory\VideoCreateType.cs" />
     <Compile Include="Define\ScriptState.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveInformationSource.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveMediationKey.cs" />
