@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -119,7 +120,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         /// </summary>
         public void IncrementReference()
         {
+            var prev = ReferenceCount;
+
             ReferenceCount = RangeUtility.Increment(ReferenceCount);
+
+            Debug.WriteLine($"[+] {prev} -> {ReferenceCount}: {Title}");
         }
 
         /// <summary>
@@ -127,9 +132,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         /// </summary>
         public void DecrementReference()
         {
+            var prev = ReferenceCount;
+
             if(ReferenceCount > 0) {
                 ReferenceCount -= 1;
             }
+
+            Debug.WriteLine($"[-] {prev} -> {ReferenceCount}: {Title}");
         }
 
         protected abstract Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client);

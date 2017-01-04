@@ -219,6 +219,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public virtual bool IsPremiumAccount
+        {
+            get { return Session.IsPremium; }
+        }
+
+
         #endregion
 
         #region function
@@ -354,6 +360,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         //OnLoadVideoEnd();
                         stopWatch.Stop();
                         Mediation.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
+                        // 保険
+                        Information.IsDownloading = false;
                     }
                 }
             }
@@ -857,6 +865,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     DmcObject = model;
                 }
             }, cancelToken);
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                //Debug.WriteLine("set null!");
+                //Information = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

@@ -16,6 +16,7 @@
         <!-- extensions -->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
 
+        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
         <ResourceDictionary Source="/View/Resources/Theme/Generic.xaml" />
         <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>

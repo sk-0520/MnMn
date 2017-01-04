@@ -81,8 +81,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ContentTypeTextNet.SharedLibrary">
-      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.97\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\ContentTypeTextNet.SharedLibrary.1.0.0.100\lib\net46\ContentTypeTextNet.SharedLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Geckofx-Core">
@@ -133,6 +132,11 @@
     </Reference>
     <Reference Include="OxyPlot.Wpf">
       <HintPath>..\packages\OxyPlot.Wpf.1.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+      <Private>True</Private>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SharpAvi">
+      <HintPath>..\packages\SharpAvi.2.1.0\lib\net45\SharpAvi.dll</HintPath>
       <Private>True</Private>
       <Private>False</Private>
     </Reference>
@@ -223,6 +227,8 @@
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
+    <Compile Include="Define\Laboratory\Service\Smile\Video\CommentCreateType.cs" />
+    <Compile Include="Define\Laboratory\VideoCreateType.cs" />
     <Compile Include="Define\ScriptState.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveInformationSource.cs" />
     <Compile Include="Define\Service\Smile\Live\SmileLiveMediationKey.cs" />
@@ -546,6 +552,15 @@
     <Content Include="etc\script\spaghetti\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="etc\script\spaghetti\service\smile\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\script\spaghetti\service\smile\live\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\script\spaghetti\service\smile\video\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\File\Html\UpdateState.html" />
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -837,8 +852,6 @@
     <Compile Include="View\Converter\Service\Smile\Video\MyListFolderIdToColorConverter.cs" />
     <Compile Include="View\Converter\Service\Smile\Video\TimespanToHMFormatConverter.cs" />
     <Resource Include="Resources\Service\Smile\Video\Player\DmcMode.png" />
-    <Resource Include="Resources\Service\Smile\Video\Search\Pin.png" />
-    <Resource Include="Resources\Navigationbar\Wait.png" />
     <None Include="Properties\app.manifest" />
     <None Include="Resources\File\Xaml\DescriptionLink.xaml">
       <SubType>Designer</SubType>
@@ -857,6 +870,10 @@
       <SubType>Designer</SubType>
     </None>
     <Page Include="View\Controls\Service\Smile\Video\SmileVideoLaboratoryManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Resources\ImageDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -900,7 +917,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Resources\Service\Smile\Video\Player\FullScreen.png" />
     <Page Include="View\Controls\AcceptWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1155,51 +1171,11 @@
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
-    <Resource Include="Resources\Common\Action\FolderOpen.png" />
-    <Content Include="Resources\Common\View\Down.png" />
     <Resource Include="Resources\Service\Smile\Service-Smile.ico" />
     <Resource Include="Resources\MnMn.ico" />
-    <Resource Include="Resources\Service\Smile\Video\Player\OriginalPoster.png" />
-    <Resource Include="Resources\Common\View\Up.png" />
-    <Resource Include="Resources\Common\Item\Right.png" />
-    <Resource Include="Resources\Common\Item\Left.png" />
-    <Resource Include="Resources\Common\Action\Save.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\AddBookmark.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\RemoveBookmark.png" />
-    <Resource Include="Resources\Common\Item\Down.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\InsertBookmark.png" />
-    <Resource Include="Resources\Service\Smile\Video\Bookmark\MoveParentBookmark.png" />
-    <Resource Include="Resources\Common\Item\Up.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\EconomyMode.png" />
     <Resource Include="Resources\Service\Smile\Video\Player\NormalMode.png" />
-    <Resource Include="Resources\Pager\Next.png" />
-    <Resource Include="Resources\Pager\Prev.png" />
-    <Resource Include="Resources\Service\Smile\MyList\Folder.png" />
-    <Resource Include="Resources\SearchType\Keyword.png" />
-    <Resource Include="Resources\SearchType\Tag.png" />
-    <Resource Include="Resources\Service\Smile\Video\Finder\Check.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Pedia.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Lock.png" />
-    <Resource Include="Resources\Service\Smile\Finance.png" />
     <Resource Include="Resources\Service\Smile\Smile.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\ImageState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\CommentState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\VideoState.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Information.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\CommentList.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\CommentShow.png" />
-    <Resource Include="Resources\Common\View\Right.png" />
-    <Resource Include="Resources\Common\View\Left.png" />
-    <Resource Include="Resources\Service\Smile\Video\Finder\SortAscending.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Backward.png" />
-    <Resource Include="Resources\Service\Smile\Video\Player\Forward.png" />
-    <Resource Include="Resources\Navigationbar\Repeat.png" />
-    <Resource Include="Resources\Navigationbar\Resume.png" />
-    <Resource Include="Resources\Navigationbar\AudioMute.png" />
-    <Resource Include="Resources\Navigationbar\AudioOn.png" />
-    <Resource Include="Resources\Navigationbar\Pause.png" />
-    <Resource Include="Resources\Navigationbar\Play.png" />
-    <Resource Include="Resources\Navigationbar\Stop.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1364,8 +1340,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="etc\image\service\smile\video\" />
-    <Folder Include="etc\script\spaghetti\service\smile\live\" />
-    <Folder Include="etc\script\spaghetti\service\smile\video\" />
     <Folder Include="Logic\Service\Smile\Live\HalfBakedApi\" />
   </ItemGroup>
   <ItemGroup>

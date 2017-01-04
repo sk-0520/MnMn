@@ -404,6 +404,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
 
         public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestore => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore", bool.Parse);
         public static bool SettingServiceSmileVideoPlayerInactiveIsFullScreenRestorePrimaryDisplayOnly => appConfig.Get("setting-service-smile-smilevideo-player-inactive-is-fullscreen-restore-primary-display-only", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerStopFullScreenRestore => appConfig.Get("setting-service-smile-smilevideo-player-stop-fullscreen-restore", bool.Parse);
+        public static bool SettingServiceSmileVideoPlayerStopFullScreenRestorePrimaryDisplayOnly => appConfig.Get("setting-service-smile-smilevideo-player-stop-fullscreen-restore--primary-display-only", bool.Parse);
 
         public static double SettingServiceSmileVideoPlayerPlayerAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-player-area-star", double.Parse);
         public static double SettingServiceSmileVideoPlayerCommentAreaStar => appConfig.Get("setting-service-smile-smilevideo-player-comment-area-star", double.Parse);

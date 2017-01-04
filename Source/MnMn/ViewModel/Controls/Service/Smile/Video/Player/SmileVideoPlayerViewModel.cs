@@ -166,8 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     case Meta.Vlc.Interop.Media.MediaState.NothingSpecial:
                                     case Meta.Vlc.Interop.Media.MediaState.Stopped:
                                         StopMovie(true);
-                                        SetMedia();
-                                        PlayMovie();
+                                        SetMediaAndPlay();
                                         break;
 
                                     default:
@@ -491,7 +490,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(IsNormalWindow) {
                         return;
                     }
-                    if(Mouse.LeftButton == MouseButtonState.Pressed) {
+
+                    var fireIsMouse = (bool)o;
+
+                    var canRestore = true;
+                    if(fireIsMouse) {
+                        canRestore = Mouse.LeftButton == MouseButtonState.Pressed;
+                    }
+
+                    if(canRestore) {
                         // フルスクリーン時は元に戻してあげる
                         SetWindowMode(true);
                     }
@@ -779,11 +786,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void SetMediaAndPlay()
+        {
+            SetMedia();
+            PlayMovie();
+        }
+
         void StartIfAutoPlay()
         {
             if(IsAutoPlay && !UserOperationStop.Value && !IsViewClosed) {
-                SetMedia();
-                PlayMovie();
+                View.Dispatcher.Invoke(() => {
+                    if(View.IsLoaded) {
+                        SetMediaAndPlay();
+                    } else {
+                        View.Loaded += View_LoadedAutoPlay;
+                        Mediation.Logger.Information("view: not loaded, event wait!!");
+                    }
+                });
             }
         }
 
@@ -922,6 +941,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     RelationVideoLoadState = LoadState.Failure;
                     return Task.CompletedTask;
                 } else {
+                    foreach(var prevItem in RelationVideoItems) {
+                        prevItem.DecrementReference();
+                    }
                     RelationVideoItems.InitializeRange(items);
                     var loader = new SmileVideoInformationLoader(items);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
@@ -1504,14 +1526,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        void SetNavigationbarBaseEvent(Navigationbar navigationbar)
+        void AttachmentNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
             //navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
             //navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
         }
 
-        void UnsetNavigationbarBaseEvent(Navigationbar navigationbar)
+        void DetachmentNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
             //navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
@@ -1689,6 +1711,120 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void AttachmentEvent()
+        {
+            EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
+            EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
+
+            View.Loaded += View_Loaded;
+            View.Activated += View_Activated;
+            View.Closing += View_Closing;
+            Player.MouseDown += Player_MouseDown;
+            Player.PositionChanged += Player_PositionChanged;
+            Player.SizeChanged += Player_SizeChanged;
+            Player.StateChanged += Player_StateChanged;
+            Player.MouseWheel += Player_MouseWheel;
+            AttachmentNavigationbarBaseEvent(Navigationbar);
+            DetailComment.LostFocus += DetailComment_LostFocus;
+        }
+
+        void DetachmentEvent()
+        {
+            if(View != null) {
+                View.Loaded -= View_Loaded;
+                View.Loaded -= View_LoadedAutoPlay;
+                View.Activated -= View_Activated;
+                View.Closing -= View_Closing;
+                View.Deactivated -= View_Deactivated;
+            }
+
+            if(Player!= null) {
+                Player.PositionChanged -= Player_PositionChanged;
+                Player.SizeChanged -= Player_SizeChanged;
+                Player.StateChanged -= Player_StateChanged;
+                Player.MouseWheel -= Player_MouseWheel;
+            }
+            if(Navigationbar != null) {
+                DetachmentNavigationbarBaseEvent(Navigationbar);
+            }
+
+            if(EnabledCommentControl != null) {
+                EnabledCommentControl.MouseEnter -= EnabledCommentControl_MouseEnter;
+                EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
+            }
+
+        }
+
+        bool IsPrimaryDisplayInView()
+        {
+            var hWnd = HandleUtility.GetWindowHandle(View);
+            var screenModel = Screen.FromHandle(hWnd);
+
+            return screenModel.Primary;
+        }
+
+        void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
+        {
+            if(VideoLoadState == LoadState.Loading) {
+                // ダウンロードが完了していない
+                Mediation.Logger.Debug("buffering stop");
+
+                IsBufferingStop = true;
+                BufferingVideoPosition = VideoPosition;
+
+                return;
+            }
+
+            if(IsBufferingStop) {
+                // ダウンロードが完了していないので待ち状態に移行
+                Mediation.Logger.Debug("buffering wait");
+                PlayerState = PlayerState.Pause;
+                Player.Position = BufferingVideoPosition;
+                foreach(var data in ShowingCommentList) {
+                    data.Clock.Controller.Pause();
+                }
+                return;
+            }
+
+            if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+                // 次のプレイリストへ遷移
+                Mediation.Logger.Debug("next playlist item");
+                LoadNextPlayListItemAsync();
+                return;
+            }
+
+            if(ReplayVideo && !UserOperationStop.Value) {
+                // リプレイ
+                Mediation.Logger.Debug("replay");
+                //Player.BeginStop(() => {
+                //    Player.Dispatcher.Invoke(() => {
+                //        Player.Play();
+                //    });
+                //});
+                //Player.Stop();
+                //Player.Play();
+                StopMovie(true);
+                PlayMovie();
+
+                return;
+            }
+
+            // 普通の停止
+            StopMovie(false);
+
+            if(!IsNormalWindow && PlayerSetting.StopFullScreenRestore) {
+                //フルスクリーン状態の制御
+                var restoreNormalWindow = true;
+                if(PlayerSetting.StopFullScreenRestorePrimaryDisplayOnly) {
+                    restoreNormalWindow = IsPrimaryDisplayInView();
+                }
+                if(restoreNormalWindow) {
+                    SetWindowMode(true);
+                }
+            }
+        }
+
+
         #endregion
 
         #region SmileVideoDownloadViewModel
@@ -1858,7 +1994,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!PlayListItems.Any()) {
                 PlayListItems.Add(Information);
             }
-            if(Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Length) {
+            if(Session.IsLoggedIn && Session.IsPremium && CommandColorItems.Count == SmileVideoMsgUtility.normalCommentColors.Length) {
                 CommandColorItems.AddRange(SmileVideoMsgUtility.premiumCommentColors);
             }
 
@@ -1941,6 +2077,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return base.StopPrevProcessAsync();
         }
 
+
         #endregion
 
         #region ISetView
@@ -1966,19 +2103,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var content = Navigationbar.ExstendsContent as Panel;
             EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
-            EnabledCommentControl.MouseEnter += EnabledCommentControl_MouseEnter;
-            EnabledCommentControl.MouseLeave += EnabledCommentControl_MouseLeave;
+            AttachmentEvent();
 
-            View.Loaded += View_Loaded;
-            View.Activated += View_Activated;
-            View.Closing += View_Closing;
-            Player.MouseDown += Player_MouseDown;
-            Player.PositionChanged += Player_PositionChanged;
-            Player.SizeChanged += Player_SizeChanged;
-            Player.StateChanged += Player_StateChanged;
-            Player.MouseWheel += Player_MouseWheel;
-            SetNavigationbarBaseEvent(Navigationbar);
-            DetailComment.LostFocus += DetailComment_LostFocus;
+            Debug.WriteLine(View.IsInitialized);
         }
 
         #endregion
@@ -2095,6 +2222,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #endregion
 
+        #region SmileVideoDownloadViewModel
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                DetachmentEvent();
+
+                View = null;
+                Player = null;
+                Navigationbar = null;
+                NormalCommentArea = null;
+                OriginalPosterCommentArea = null;
+                CommentView = null;
+                DetailComment = null;
+                EnabledCommentControl = null;
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         #region event
 
         void View_Loaded(object sender, RoutedEventArgs e)
@@ -2102,26 +2250,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             View.Loaded -= View_Loaded;
         }
 
+        void View_LoadedAutoPlay(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_LoadedAutoPlay;
+
+            //Mediation.Logger.Trace($"{nameof(View.IsLoaded)}:{View.IsLoaded}");
+            //Mediation.Logger.Trace($"{nameof(View.IsVisible)}:{View.IsVisible}");
+
+            SetMediaAndPlay();
+        }
+
+
+
         private void View_Closing(object sender, CancelEventArgs e)
         {
             //TODO: closingはまずくね…?
-
-            View.Loaded -= View_Loaded;
-            View.Activated -= View_Activated;
-            View.Closing -= View_Closing;
-            Player.PositionChanged -= Player_PositionChanged;
-            Player.SizeChanged -= Player_SizeChanged;
-            Player.StateChanged -= Player_StateChanged;
-            Player.MouseWheel -= Player_MouseWheel;
-            UnsetNavigationbarBaseEvent(Navigationbar);
-
-            if(EnabledCommentControl != null) {
-                EnabledCommentControl.MouseEnter -= EnabledCommentControl_MouseEnter;
-                EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
-            }
-
-            View.Deactivated -= View_Deactivated;
-
             IsViewClosed = true;
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
@@ -2270,39 +2413,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     break;
 
                 case Meta.Vlc.Interop.Media.MediaState.Ended:
-                    if(VideoLoadState == LoadState.Loading) {
-                        Mediation.Logger.Debug("buffering stop");
-                        // 終わってない
-                        IsBufferingStop = true;
-                        BufferingVideoPosition = VideoPosition;
-                    } else if(IsBufferingStop) {
-                        Mediation.Logger.Debug("buffering wait");
-                        PlayerState = PlayerState.Pause;
-                        Player.Position = BufferingVideoPosition;
-                        foreach(var data in ShowingCommentList) {
-                            data.Clock.Controller.Pause();
-                        }
-                    } else if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
-                        Mediation.Logger.Debug("next playlist item");
-                        LoadNextPlayListItemAsync();
-                    } else if(ReplayVideo && !UserOperationStop.Value) {
-                        Mediation.Logger.Debug("replay");
-                        //Player.BeginStop(() => {
-                        //    Player.Dispatcher.Invoke(() => {
-                        //        Player.Play();
-                        //    });
-                        //});
-                        //Player.Stop();
-                        //Player.Play();
-                        StopMovie(true);
-                        PlayMovie();
-                    } else {
-                        //PlayerState = PlayerState.Stop;
-                        //VideoPosition = 0;
-                        //ClearComment();
-                        //PrevPlayedTime = TimeSpan.Zero;
-                        StopMovie(false);
-                    }
+                    ChangedPlayerStateToStop(e);
                     break;
 
                 default:
@@ -2361,9 +2472,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(PlayerSetting.InactiveIsFullScreenRestore) {
                 var restoreNormalWindow = true;
                 if(PlayerSetting.InactiveIsFullScreenRestorePrimaryDisplayOnly) {
-                    var hWnd = HandleUtility.GetWindowHandle(View);
-                    var screenModel = Screen.FromHandle(hWnd);
-                    restoreNormalWindow = screenModel.Primary;
+                    restoreNormalWindow = IsPrimaryDisplayInView();
                 }
                 if(restoreNormalWindow) {
                     SetWindowMode(true);
