@@ -787,11 +787,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void SetMediaAndPlay()
+        {
+            SetMedia();
+            PlayMovie();
+        }
+
         void StartIfAutoPlay()
         {
             if(IsAutoPlay && !UserOperationStop.Value && !IsViewClosed) {
-                SetMedia();
-                PlayMovie();
+                if(View.IsLoaded) {
+                    SetMediaAndPlay();
+                } else {
+                    View.Loaded += View_LoadedAutoPlay;
+                    Mediation.Logger.Information("view: not loaded, event wait");
+                }
             }
         }
 
@@ -1721,6 +1731,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             if(View != null) {
                 View.Loaded -= View_Loaded;
+                View.Loaded -= View_LoadedAutoPlay;
                 View.Activated -= View_Activated;
                 View.Closing -= View_Closing;
                 View.Deactivated -= View_Deactivated;
@@ -1800,7 +1811,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // 普通の停止
             StopMovie(false);
 
-            if(PlayerSetting.StopFullScreenRestore) {
+            if( PlayerSetting.StopFullScreenRestore) {
                 //フルスクリーン状態の制御
                 var restoreNormalWindow = true;
                 if(PlayerSetting.StopFullScreenRestorePrimaryDisplayOnly) {
@@ -2092,6 +2103,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             EnabledCommentControl = UIUtility.FindLogicalChildren<Control>(content).ElementAt(1);
 
             AttachmentEvent();
+
+            Debug.WriteLine(View.IsInitialized);
         }
 
         #endregion
@@ -2235,6 +2248,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             View.Loaded -= View_Loaded;
         }
+
+        void View_LoadedAutoPlay(object sender, RoutedEventArgs e)
+        {
+            View.Loaded -= View_LoadedAutoPlay;
+
+            Mediation.Logger.Trace($"{nameof(View.IsLoaded)}:{View.IsLoaded}");
+            Mediation.Logger.Trace($"{nameof(View.IsVisible)}:{View.IsVisible}");
+
+            SetMediaAndPlay();
+        }
+
+
 
         private void View_Closing(object sender, CancelEventArgs e)
         {
