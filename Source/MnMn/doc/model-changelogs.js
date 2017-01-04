@@ -84,39 +84,23 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.39.1',
-		'isRc': true,
+		'date': '2017/01/04',
+		'version': '0.40.0',
+		'isRc': false,
 		'contents': [
-			{
-				'type': 'note',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
 			{
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'd5cf3c6d086718baf4c5c95ec478969ff3d8c497',
 						'subject': '#283: UI要素の文言を読まなくても視覚判定できるようにアイコンを追加する',
 						'comments': [
-							'だるいから途中でやめた X('
+							'だるいから途中でやめた X(',
+							'プレイヤーのツールバーに MenuItem.Icon でアイコン設定したけど Header に格納した方が良かったかもしんないね'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '56303123ee31c90f65f6e53257d6c92246f657cf',
 						'subject': '#117: フルスクリーン状態で再生中動画が次の動画遷移もリピートもしない場合はフルスクリーンを解除する',
 						'comments': [
 							'挙動は設定の「再生終了時にフルスクリーンを解除する」で調整してください',
@@ -125,15 +109,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '089a1b3011686626531c74f336a54f0d2f6c7924',
 						'subject': '#334: ラボ用にサンプル動画とサンプルコメント生成機能を実装する',
 						'comments': [
 							'これでコメント周りの処理実装をデバッグ環境でできるんるん'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -141,7 +121,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '266ab25e16ef9b84c33ac5b77af022c79f1d7f2b',
 						'subject': '#332: リソースの明示的破棄',
 						'comments': [
 							'むり。わっかんねーわ',
@@ -149,35 +129,31 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c155eab3aa1e604d8e693f268075006230937211',
 						'subject': '#333: 読み込み専用じゃない表示専用のテキストボックススタイルを統一する'
 					},
 					{
-						'revision': '',
+						'revision': '69c3082a17b7a9286c33a30afd471d75780e6158',
 						'subject': '#329: プレイリストのメニュー表示で System.Windows.Data Error: 26 が発生する'
 					},
 					{
-						'revision': '',
+						'revision': '833b683affd435931a09aeeb41abef6367fc2794',
 						'subject': '#331: フルスクリーン時の Esc キー死んでる？',
 						'comments': [
 							'マウスボタンを識別した #285 で無残にもお亡くなりになっていた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'c3aafa8485e04b0f82389f090c7aff389e56bb36',
 						'subject': '#335: 非ログイン状態で任意再生に失敗する不具合修正'
 					},
 					{
-						'revision': '',
+						'revision': 'c307ac253868cd9d691e6ddd48f889f5783c5eac',
 						'subject': '#336: 軽量ファイルによるView構築前の動画再生を抑制する',
 						'comments': [
 							'すごい既視感です……',
 							'多分だけど #334 で作ったような読み込み時間がかなり無視できるパターンで発生する問題じゃないと思う'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -185,16 +161,8 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '572b1001fcfd2505c6104ba4f82c213bf089a52f',
 						'subject': '#330: 不要なリソースアイコンの破棄'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
