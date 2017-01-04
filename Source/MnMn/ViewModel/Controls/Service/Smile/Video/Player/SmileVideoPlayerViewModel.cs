@@ -795,12 +795,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void StartIfAutoPlay()
         {
             if(IsAutoPlay && !UserOperationStop.Value && !IsViewClosed) {
-                if(View.IsLoaded) {
-                    SetMediaAndPlay();
-                } else {
-                    View.Loaded += View_LoadedAutoPlay;
-                    Mediation.Logger.Information("view: not loaded, event wait");
-                }
+                View.Dispatcher.Invoke(() => {
+                    if(View.IsLoaded) {
+                        SetMediaAndPlay();
+                    } else {
+                        View.Loaded += View_LoadedAutoPlay;
+                        Mediation.Logger.Information("view: not loaded, event wait!!");
+                    }
+                });
             }
         }
 
@@ -2252,7 +2254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             View.Loaded -= View_LoadedAutoPlay;
 
-            Mediation.Logger.Trace($"{nameof(View.IsLoaded)}:{View.IsLoaded}");
+            //Mediation.Logger.Trace($"{nameof(View.IsLoaded)}:{View.IsLoaded}");
             //Mediation.Logger.Trace($"{nameof(View.IsVisible)}:{View.IsVisible}");
 
             SetMediaAndPlay();
