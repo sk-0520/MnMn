@@ -219,6 +219,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
+        public virtual bool IsPremiumAccount
+        {
+            get { return Session.IsPremium; }
+        }
+
+
         #endregion
 
         #region function

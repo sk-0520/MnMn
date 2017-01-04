@@ -1036,7 +1036,7 @@
                             <UniformGrid.Style>
                               <Style TargetType="UniformGrid">
                                 <Style.Triggers>
-                                  <DataTrigger Binding="{Binding Session.IsPremium}" Value="True">
+                                  <DataTrigger Binding="{Binding IsPremiumAccount}" Value="True">
                                     <Setter Property="Rows" Value="2" />
                                   </DataTrigger>
                                 </Style.Triggers>

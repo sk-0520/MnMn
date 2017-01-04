@@ -71,6 +71,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
         public override IReadOnlyList<SmileVideoMyListFinderViewModelBase> AccountMyListItems { get; } = new List<SmileVideoMyListFinderViewModelBase>();
         public override IReadOnlyList<SmileVideoBookmarkNodeViewModel> BookmarkItems { get; } = new List<SmileVideoBookmarkNodeViewModel>();
 
+        public override bool IsPremiumAccount { get; } = true;
+
         protected override void AddHistory(SmileVideoInformationViewModel information)
         {
             IgnoreLaboratory();
