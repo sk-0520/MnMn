@@ -384,10 +384,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 [CommentCreateType.Sequence] = () => $"{(isOriginalPost ? "o" : "n")}:{number}",
                 [CommentCreateType.Random] = () => $"{(isOriginalPost ? "o" : "n")}:{number}:{random.Next().ToString()}",
             };
+            var userId = number / 10 * length;
             var result = new RawSmileVideoMsgChatModel() {
                 Fork = isOriginalPost ? "1" : "0",
                 Content = contentMap[type](),
                 No = number.ToString(),
+                UserId = userId.ToString(),
+                Premium = (int.Parse(userId.ToString().Substring(0,1)) % 2 == 0) ? "1": "0",
                 VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(TimeSpan.FromSeconds(number)),
                 Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now.AddMinutes(number)).ToString(),
             };
