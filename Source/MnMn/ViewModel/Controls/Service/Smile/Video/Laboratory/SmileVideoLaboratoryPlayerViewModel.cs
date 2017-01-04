@@ -27,8 +27,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.La
         {
             Information = new SmileVideoLaboratoryInformationViewModel(Mediation);
 
+            // プレイヤー設定から UI 設定できない項目を引っ張ってくる
+
             PlayerSetting.AutoPlayLowestSize = Setting.Player.AutoPlayLowestSize;
             PlayerSetting.IsAutoPlay = Setting.Player.IsAutoPlay;
+
+            PlayerSetting.InactiveIsFullScreenRestore = Setting.Player.InactiveIsFullScreenRestore;
+            PlayerSetting.InactiveIsFullScreenRestorePrimaryDisplayOnly = Setting.Player.InactiveIsFullScreenRestorePrimaryDisplayOnly;
+            PlayerSetting.StopFullScreenRestore = Setting.Player.StopFullScreenRestore;
+            PlayerSetting.StopFullScreenRestorePrimaryDisplayOnly = Setting.Player.StopFullScreenRestorePrimaryDisplayOnly;
+
+            PlayerSetting.KeySpaceToPause = Setting.Player.KeySpaceToPause;
+            PlayerSetting.MoseClickToPause = Setting.Player.MoseClickToPause;
+
+            PlayerSetting.WheelOperation = Setting.Player.WheelOperation;
+            PlayerSetting.VolumeOperationStep = Setting.Player.VolumeOperationStep;
+            PlayerSetting.SeekOperationAbsoluteStep = Setting.Player.SeekOperationAbsoluteStep;
+            PlayerSetting.SeekOperationIsPercent = Setting.Player.SeekOperationIsPercent;
+            PlayerSetting.SeekOperationPercentStep = Setting.Player.SeekOperationPercentStep;
+
+            PlayerSetting.BackgroundColor = Setting.Player.BackgroundColor;
+            PlayerSetting.BackgroundKind = Setting.Player.BackgroundKind;
 
             GlobalCommentFilering = new SmileVideoFilteringViweModel(new SmileVideoCommentFilteringSettingModel(), null, Mediation.Smile.VideoMediation.Filtering);
         }

@@ -1810,7 +1810,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // 普通の停止
             StopMovie(false);
 
-            if( PlayerSetting.StopFullScreenRestore) {
+            if(!IsNormalWindow && PlayerSetting.StopFullScreenRestore) {
                 //フルスクリーン状態の制御
                 var restoreNormalWindow = true;
                 if(PlayerSetting.StopFullScreenRestorePrimaryDisplayOnly) {
