@@ -148,12 +148,12 @@
                   <RadioButton Style="{StaticResource HorizontalRadioButton}" IsChecked="{Binding DummyCommentCreateType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_laboratory_service_smile_video:CommentCreateType.Random}}" Content="{Binding Source={x:Static app_define_laboratory_service_smile_video:CommentCreateType.Random}, Converter={StaticResource EnumDisplayConverter}}" />
                 </WrapPanel>
 
-                <Label Grid.Row="1" Grid.Column="0">normal</Label>
+                <Label Grid.Row="1" Grid.Column="0">通常コメント数</Label>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                   <mamc:NumericUpDown HorizontalAlignment="Left" Minimum="0" Maximum="5000" Value="{Binding DummyCommentNormalCount}" Width="{StaticResource SimpleInputWidth}" Margin="{StaticResource VerticalContrlMargin}"/>
                 </StackPanel>
 
-                <Label Grid.Row="2" Grid.Column="0">op</Label>
+                <Label Grid.Row="2" Grid.Column="0">投稿者コメント数</Label>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                   <mamc:NumericUpDown HorizontalAlignment="Left" Minimum="0" Maximum="5000" Value="{Binding DummyCommentOriginalPostCount}" Width="{StaticResource SimpleInputWidth}" Margin="{StaticResource VerticalContrlMargin}" />
                 </StackPanel>

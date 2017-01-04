@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 Content = contentMap[type](),
                 No = number.ToString(),
                 UserId = userId.ToString(),
-                Premium = (int.Parse(userId.ToString().Substring(0,1)) % 2 == 0) ? "1": "0",
+                Premium = (int.Parse(userId.ToString().Substring(0, 1)) % 2 == 0) ? "1" : "0",
                 VPos = SmileVideoMsgUtility.ConvertRawElapsedTime(TimeSpan.FromSeconds(number)),
                 Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now.AddMinutes(number)).ToString(),
             };
@@ -450,10 +450,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                             canvas.ScaleTransform(1.0F, -1.0F);
                             canvas.TranslateTransform(0.0F, -videoHeight);
                             var rect = new System.Drawing.RectangleF(0, 0, videoStream.Width, videoStream.Height);
-
-                            foreach(var frame in Enumerable.Range(0, (int)(length.TotalSeconds * (double)videFps))) {
+                            var lastFrame = (int)(length.TotalSeconds * (double)videFps);
+                            foreach(var frame in Enumerable.Range(0, lastFrame)) {
                                 canvas.FillRectangle(System.Drawing.Brushes.Black, rect);
-                                canvas.DrawString($"{frame}", System.Drawing.SystemFonts.MessageBoxFont, System.Drawing.Brushes.White, rect, format);
+                                canvas.DrawString($"{frame} / {lastFrame}", System.Drawing.SystemFonts.MessageBoxFont, System.Drawing.Brushes.White, rect, format);
 
                                 var bits = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, videoStream.Width, videoStream.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
                                 System.Runtime.InteropServices.Marshal.Copy(bits.Scan0, binaryBuffer, 0, binaryLength);
