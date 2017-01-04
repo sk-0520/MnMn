@@ -166,8 +166,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     case Meta.Vlc.Interop.Media.MediaState.NothingSpecial:
                                     case Meta.Vlc.Interop.Media.MediaState.Stopped:
                                         StopMovie(true);
-                                        SetMedia();
-                                        PlayMovie();
+                                        SetMediaAndPlay();
                                         break;
 
                                     default:
