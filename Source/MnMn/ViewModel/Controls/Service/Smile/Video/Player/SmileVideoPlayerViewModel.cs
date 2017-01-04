@@ -2254,7 +2254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             View.Loaded -= View_LoadedAutoPlay;
 
             Mediation.Logger.Trace($"{nameof(View.IsLoaded)}:{View.IsLoaded}");
-            Mediation.Logger.Trace($"{nameof(View.IsVisible)}:{View.IsVisible}");
+            //Mediation.Logger.Trace($"{nameof(View.IsVisible)}:{View.IsVisible}");
 
             SetMediaAndPlay();
         }
