@@ -234,6 +234,33 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Random {
+            get {
+                return ResourceManager.GetString("String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Random", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Sequence {
+            get {
+                return ResourceManager.GetString("String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Sequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   あああ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Laboratory_VideoCreateType_Sequence {
+            get {
+                return ResourceManager.GetString("String_App_Define_Laboratory_VideoCreateType_Sequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   読込失敗 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_LoadState_Failure {

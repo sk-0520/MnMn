@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -179,6 +180,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             }
         }
 
+        public ICommand SelectDummyOutputDirectoryPathCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    DummyOutputDirectoryPath = SelectDirectoryPath(DummyOutputDirectoryPath);
+                });
+            }
+        }
         #endregion
 
         #region function
@@ -204,6 +214,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
             return path;
         }
+
+        string SelectDirectoryPath(string initialDirectoryPath)
+        {
+            using(var dialog = new FolderBrowserDialog()) {
+                dialog.SelectedPath = initialDirectoryPath;
+                if(dialog.ShowDialog().GetValueOrDefault()) {
+                    return dialog.SelectedPath;
+                }
+            }
+
+            return initialDirectoryPath;
+        }
+
 
         Task PlayInputFileAsync(string videoFilePath, string commentFilePath)
         {
