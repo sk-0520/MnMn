@@ -116,6 +116,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyVideoHeight)); }
         }
 
+        public FewViewModel<bool> NowOutput { get; } = new FewViewModel<bool>();
+
         #endregion
 
         #region command
@@ -172,9 +174,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
         {
             get
             {
-                return CreateCommand(
+                return base.CreateCommand(
                     o => {
-                        ExportDummyFileAsync();
+                        this.NowOutput.Value = true;
+                        var outputDirectoryPath = Environment.ExpandEnvironmentVariables(DummyOutputDirectoryPath);
+                        ExportDummyFileAsync(outputDirectoryPath).ContinueWith((Task<bool> t) => {
+                            this.NowOutput.Value = false;
+                            if(!t.IsFaulted && t.Result && Directory.Exists(outputDirectoryPath)) {
+                                try {
+                                    Process.Start(outputDirectoryPath);
+                                } catch(Exception ex) {
+                                    Mediation.Logger.Error(ex);
+                                }
+                            }
+                        });
+                    },
+                    o => {
+                        if(string.IsNullOrEmpty(DummyOutputDirectoryPath) || DummyOutputDirectoryPath.Length <= @"X:".Length) {
+                            return false;
+                        }
+                        return DummyOutputComment || DummyOutputVideo;
                     }
                 );
             }
@@ -398,13 +417,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
             SerializeUtility.SaveXmlSerializeToFile(outputFilePath, rawMessagePacket);
         }
 
-        Task ExportDummyVideoFileAsync(DirectoryInfo outputDirectory, TimeSpan length, VideoCreateType videoTye, int videFps, int videoWidth, int videoHeight)
+        Task<bool> ExportDummyVideoFileAsync(DirectoryInfo outputDirectory, TimeSpan length, VideoCreateType videoTye, decimal videFps, int videoWidth, int videoHeight)
         {
             var temporaryFilePath = Path.Combine(outputDirectory.FullName, $"video.avi");
             var outputFilePath = Path.ChangeExtension(temporaryFilePath, "mp4");
 
             return Task.Run(() => {
-                using(var logger = new TimeLogger(Mediation.Logger))
                 using(var writer = new AviWriter(temporaryFilePath) {
                     FramesPerSecond = videFps,
                     EmitIndex1 = true,
@@ -430,7 +448,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                             canvas.TranslateTransform(0.0F, -videoHeight);
                             var rect = new System.Drawing.RectangleF(0, 0, videoStream.Width, videoStream.Height);
 
-                            foreach(var frame in Enumerable.Range(0, (int)(length.TotalSeconds) * videFps)) {
+                            foreach(var frame in Enumerable.Range(0, (int)(length.TotalSeconds * (double)videFps))) {
                                 canvas.FillRectangle(System.Drawing.Brushes.Black, rect);
                                 canvas.DrawString($"{frame}", System.Drawing.SystemFonts.MessageBoxFont, System.Drawing.Brushes.White, rect, format);
 
@@ -450,54 +468,59 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
                 var ffmpeg = new Ffmpeg();
                 var s = $"-y -i \"{temporaryFilePath}\" \"{outputFilePath}\"";
                 return ffmpeg.ExecuteAsync(s);
-            }).Unwrap().ContinueWith(t => {
+            }, TaskContinuationOptions.NotOnFaulted).Unwrap().ContinueWith(t => {
                 var exitCode = t.Result;
                 Mediation.Logger.Information($"result: {exitCode}");
                 if(exitCode == 0) {
                     if(File.Exists(temporaryFilePath)) {
                         File.Delete(temporaryFilePath);
                     }
+                    return true;
                 }
-            });
+
+                return false;
+            }, TaskContinuationOptions.NotOnFaulted);
         }
 
 
-        Task ExportDummyFileAsync()
+        Task<bool> ExportDummyFileAsync(string outputDirectoryPath)
         {
-#pragma warning disable 219
-            var commentOutput = true;
-            var videoOutput = true;
+            var commentOutput = DummyOutputComment;
+            var videoOutput = DummyOutputVideo;
 
             if(!commentOutput && !videoOutput) {
-                return Task.CompletedTask;
+                return Task.FromResult(false);
             }
 
-            var length = TimeSpan.FromSeconds(10);
+            var length = DummyLength;
 
-            var outputDirectory = new DirectoryInfo(@"X:\dummy");
+            if(length < TimeSpan.FromSeconds(1)) {
+                return Task.FromResult(false);
+            }
+
+            var outputDirectory = new DirectoryInfo(outputDirectoryPath);
             outputDirectory.Refresh();
             if(!outputDirectory.Exists) {
                 outputDirectory.Create();
             }
 
-            var commentType = CommentCreateType.Sequence;
-            var commentNormalLength = 100;
-            var commentOpLength = 10;
+            var commentType = DummyCommentCreateType;
+            var commentNormalCount = DummyCommentNormalCount;
+            var commentOriginalPost = DummyCommentOriginalPostCount;
 
-            if(commentOutput && 0 < commentNormalLength && 0 < commentOpLength) {
-                ExportDummyMsgFile(outputDirectory, length, commentType, commentNormalLength, commentOpLength);
+            if(commentOutput && 0 < commentNormalCount && 0 < commentOriginalPost) {
+                ExportDummyMsgFile(outputDirectory, length, commentType, commentNormalCount, commentOriginalPost);
             }
 
-            var videoTye = VideoCreateType.Sequence;
-            var videFps = 30;
-            var videoWidth = 640;
-            var videoHeight = 480;
+            var videoTye = DummyVideoCreateType;
+            var videFps = DummyVideoFramesPerSecond;
+            var videoWidth = DummyVideoWidth;
+            var videoHeight = DummyVideoHeight;
             if(videoOutput) {
-                ExportDummyVideoFileAsync(outputDirectory, length, videoTye, videFps, videoWidth, videoHeight);
+                return ExportDummyVideoFileAsync(outputDirectory, length, videoTye, videFps, videoWidth, videoHeight);
+            } else {
+                return Task.FromResult(true);
             }
-
-            return Task.CompletedTask;
-#pragma warning restore 219
         }
 
         #endregion

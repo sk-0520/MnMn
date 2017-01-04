@@ -432,12 +432,12 @@
     <value>報告用設定・情報データファイル</value>
   </data>
   <data name="String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Random" xml:space="preserve">
-    <value>B</value>
+    <value>ランダム</value>
   </data>
   <data name="String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Sequence" xml:space="preserve">
-    <value>A</value>
+    <value>インクリメント</value>
   </data>
   <data name="String_App_Define_Laboratory_VideoCreateType_Sequence" xml:space="preserve">
-    <value>あああ</value>
+    <value>インクリメント</value>
   </data>
 </root>

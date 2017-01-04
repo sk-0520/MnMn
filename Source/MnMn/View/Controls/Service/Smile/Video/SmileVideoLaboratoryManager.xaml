@@ -27,6 +27,7 @@
   <UserControl.Resources>
     <sys:Double x:Key="SimpleInputWidth">120</sys:Double>
     <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
   </UserControl.Resources>
   <Grid>
@@ -78,7 +79,7 @@
           </Grid>
         </GroupBox>
 
-        <GroupBox Header="ダミー生成">
+        <GroupBox Header="ダミー生成" IsEnabled="{Binding NowOutput.Value, Converter={StaticResource LogicalNotConverter}}">
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition />

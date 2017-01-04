@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   B に類似しているローカライズされた文字列を検索します。
+        ///   ランダム に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Random {
             get {
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   A に類似しているローカライズされた文字列を検索します。
+        ///   インクリメント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Laboratory_Service_Smile_Video_CommentCreateType_Sequence {
             get {
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   あああ に類似しているローカライズされた文字列を検索します。
+        ///   インクリメント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_Laboratory_VideoCreateType_Sequence {
             get {
