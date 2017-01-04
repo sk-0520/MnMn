@@ -57,6 +57,64 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
 
         public IDragAndDrop PlayDragAndDrop { get; }
 
+        public TimeSpan DummyLength
+        {
+            get { return Setting.Laboratory.DummyLength; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyLength)); }
+        }
+        public string DummyOutputDirectoryPath
+        {
+            get { return Setting.Laboratory.DummyOutputDirectoryPath; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyOutputDirectoryPath)); }
+        }
+        public bool DummyOutputVideo
+        {
+            get { return Setting.Laboratory.DummyOutputVideo; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyOutputVideo)); }
+        }
+        public bool DummyOutputComment
+        {
+            get { return Setting.Laboratory.DummyOutputComment; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyOutputComment)); }
+        }
+
+        public CommentCreateType DummyCommentCreateType
+        {
+            get { return Setting.Laboratory.DummyCommentCreateType; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyCommentCreateType)); }
+        }
+        public int DummyCommentNormalCount
+        {
+            get { return Setting.Laboratory.DummyCommentNormalCount; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyCommentNormalCount)); }
+        }
+        public int DummyCommentOriginalPostCount
+        {
+            get { return Setting.Laboratory.DummyCommentOriginalPostCount; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyCommentOriginalPostCount)); }
+        }
+
+        public VideoCreateType DummyVideoCreateType
+        {
+            get { return Setting.Laboratory.DummyVideoCreateType; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyVideoCreateType)); }
+        }
+        public decimal DummyVideoFramesPerSecond
+        {
+            get { return Setting.Laboratory.DummyVideoFramesPerSecond; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyVideoFramesPerSecond)); }
+        }
+        public int DummyVideoWidth
+        {
+            get { return Setting.Laboratory.DummyVideoWidth; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyVideoWidth)); }
+        }
+        public int DummyVideoHeight
+        {
+            get { return Setting.Laboratory.DummyVideoHeight; }
+            set { SetPropertyValue(Setting.Laboratory, value, nameof(Setting.Laboratory.DummyVideoHeight)); }
+        }
+
         #endregion
 
         #region command
@@ -281,7 +339,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Lo
         RawSmileVideoMsgChatModel CreateDummyChat(int number, int length, CommentCreateType type, bool isOriginalPost, Random random)
         {
             var contentMap = new Dictionary<CommentCreateType, Func<string>>() {
-                [CommentCreateType.Sequence] = () => $"{(isOriginalPost ? "o": "n" )}:{number}",
+                [CommentCreateType.Sequence] = () => $"{(isOriginalPost ? "o" : "n")}:{number}",
                 [CommentCreateType.Random] = () => $"{(isOriginalPost ? "o" : "n")}:{number}:{random.Next().ToString()}",
             };
             var result = new RawSmileVideoMsgChatModel() {
