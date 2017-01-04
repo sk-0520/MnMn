@@ -360,6 +360,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         //OnLoadVideoEnd();
                         stopWatch.Stop();
                         Mediation.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
+                        // 保険
+                        Information.IsDownloading = false;
                     }
                 }
             }
