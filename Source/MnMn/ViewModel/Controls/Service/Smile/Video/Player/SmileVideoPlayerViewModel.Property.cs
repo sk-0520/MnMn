@@ -550,7 +550,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         /// <summary>
-        /// なんかの横幅。
+        /// 動画描画の実描画領域の Viewbox の横幅。
         /// </summary>
         public double BaseWidth
         {
@@ -558,7 +558,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseWidth, value); }
         }
         /// <summary>
-        /// なんかの高さ。
+        /// 動画描画の実描画領域の Viewbox の高さ。
         /// </summary>
         public double BaseHeight
         {
