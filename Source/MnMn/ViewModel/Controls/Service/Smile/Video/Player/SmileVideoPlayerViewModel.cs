@@ -744,18 +744,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseWidth = VisualVideoSize.Width * baseScale;
             BaseHeight = VisualVideoSize.Height * baseScale;
 
+            // 高さの方が大きいので動画描画横幅を補正する
             if(BaseWidth < BaseHeight) {
                 double widthScale;
-                if(CommentArea.Height <= RealVideoHeight && CommentArea.Width <= RealVideoWidth) {
+                if(CommentAreaHeight <= RealVideoHeight && CommentAreaWidth <= RealVideoWidth) {
                     // #207: sm29825902
-                    widthScale = RealVideoWidth / CommentArea.Width;
+                    widthScale = RealVideoWidth / CommentAreaWidth;
                 } else {
                     // #207: sm29681139
-                    widthScale = (BaseHeight / BaseWidth) + (RealVideoWidth / CommentArea.Width);
+                    widthScale = (BaseHeight / BaseWidth) + (RealVideoWidth / CommentAreaWidth);
                 }
 
                 BaseWidth *= widthScale;
             }
+
+            // コメント描画設定サイズと動画サイズからコメント描画サイズ
+
 
             ChangedEnabledCommentPercent();
         }
@@ -2042,6 +2046,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
             IsSettedMedia = false;
             ShowCommentChart = false;
+            CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
+            CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
             if(View != null) {
                 if(Player != null && Player.State != Meta.Vlc.Interop.Media.MediaState.Playing && Player.State != Meta.Vlc.Interop.Media.MediaState.Paused) {
                     // https://github.com/higankanshi/Meta.Vlc/issues/80

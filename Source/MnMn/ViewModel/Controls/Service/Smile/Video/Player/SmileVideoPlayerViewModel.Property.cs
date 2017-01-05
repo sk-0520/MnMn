@@ -566,9 +566,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseHeight, value); }
         }
         /// <summary>
-        /// コメント表領域。
+        /// コメント表示領域の横幅。
         /// </summary>
-        public Size CommentArea { get; } = new Size(Constants.ServiceSmileVideoPlayerCommentWidth, Constants.ServiceSmileVideoPlayerCommentHeight);
+        public double CommentAreaWidth
+        {
+            get { return this._commentAreaWidth; }
+            private set { SetVariableValue(ref this._commentAreaWidth, value); }
+        }
+        /// <summary>
+        /// コメント表示領域の高さ。
+        /// </summary>
+        public double CommentAreaHeight
+        {
+            get { return this._commentAreaHeight; }
+            private set { SetVariableValue(ref this._commentAreaHeight, value); }
+        }
 
         //[Obsolete]
         //public GridLength VisualPlayerWidth
