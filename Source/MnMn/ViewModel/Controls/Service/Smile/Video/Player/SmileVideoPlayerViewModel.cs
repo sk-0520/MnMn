@@ -756,9 +756,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
 
                 BaseWidth *= widthScale;
+
+                // コメント描画設定サイズと動画サイズからコメント描画領域調整
+                CommentAreaWidth = BaseWidth;
+            } else{
+                // コメント描画領域は規定値
+                CommentAreaWidth = RealVideoWidth;
             }
 
-            // コメント描画設定サイズと動画サイズからコメント描画サイズ
+
+            Mediation.Logger.Information($"CommentAreaWidth:{CommentAreaWidth}");
 
 
             ChangedEnabledCommentPercent();
@@ -769,7 +776,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             RealVideoWidth = Player.VlcMediaPlayer.PixelWidth;
             RealVideoHeight = Player.VlcMediaPlayer.PixelHeight;
 
-            // コメントエリアのサイズ設定
+            // 描画領域のサイズ設定
             ChangeBaseSize();
         }
 
