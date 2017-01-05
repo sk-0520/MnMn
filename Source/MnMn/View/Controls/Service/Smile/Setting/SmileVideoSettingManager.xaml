@@ -198,7 +198,7 @@
 
         <GroupBox Header="プレイヤー">
           <StackPanel>
-            <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}" Style="{StaticResource VerticalCheckBox}">新しいウィンドウで動画再生を行う</CheckBox>
+            <CheckBox IsChecked="{Binding OpenPlayerInNewWindow}" Style="{StaticResource VerticalCheckBox}">新しいプレイヤーで動画再生を行う</CheckBox>
             <CheckBox IsChecked="{Binding IsAutoPlay}" Style="{StaticResource VerticalCheckBox}">動画を自動的に再生する</CheckBox>
             <CheckBox IsChecked="{Binding InactiveIsFullScreenRestore}" Style="{StaticResource VerticalCheckBox}">フルスクリーン時に非アクティブで通常ウィンドウに戻す</CheckBox>
             <StackPanel Orientation="Horizontal" IsEnabled="{Binding InactiveIsFullScreenRestore, Mode=OneWay}">

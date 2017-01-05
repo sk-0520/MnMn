@@ -928,7 +928,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   動画を再生 に類似しているローカライズされた文字列を検索します。
+        ///   現在のプレイヤーで再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_ISmileDescription_MenuOpenVideoId {
             get {
@@ -937,7 +937,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
-        ///   新しいプレイヤーで再生 に類似しているローカライズされた文字列を検索します。
+        ///   新規プレイヤーで再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow {
             get {

@@ -423,10 +423,10 @@
     <value>動画IDのコピー</value>
   </data>
   <data name="String_Service_Smile_ISmileDescription_MenuOpenVideoId" xml:space="preserve">
-    <value>動画を再生</value>
+    <value>現在のプレイヤーで再生</value>
   </data>
   <data name="String_Service_Smile_ISmileDescription_MenuOpenVideoIdInNewWindow" xml:space="preserve">
-    <value>新しいプレイヤーで再生</value>
+    <value>新規プレイヤーで再生</value>
   </data>
   <data name="String_App_Setting_PublicExportFileName" xml:space="preserve">
     <value>報告用設定・情報データファイル</value>
