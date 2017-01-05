@@ -711,7 +711,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // リスト部は比率レイアウトなので補正が必要
 
                 // TODO: うーん、ださい
-                var defaultGridSplitterLength = (double)Application.Current.Resources["GridSplitterLength"];
+                var defaultGridSplitterLength = (double)Application.Current.Resources[Constants.xamlGridSplitterLength];
 
                 leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
             }
