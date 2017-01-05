@@ -11,6 +11,8 @@ namespace ContentTypeTextNet.MnMn.MnMn
     /// </summary>
     partial class Constants
     {
+        public const string xamlGridSplitterLength = "GridSplitterLength";
+
         public const string xamlStyle_SmallDefaultIconPath = "SmallDefaultIconPath";
 
         /// <summary>

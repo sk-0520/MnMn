@@ -68,6 +68,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //bool _commentConvertPairYenSlash;
         //TextShowKind _playerTextShowKind;
 
+        double _commentAreaWidth;
+        double _commentAreaHeight;
+
         TimeSpan _totalTime;
         TimeSpan _playTime;
 

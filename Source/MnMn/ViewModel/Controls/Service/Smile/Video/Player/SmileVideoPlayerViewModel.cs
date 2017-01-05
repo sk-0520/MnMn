@@ -711,7 +711,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // リスト部は比率レイアウトなので補正が必要
 
                 // TODO: うーん、ださい
-                var defaultGridSplitterLength = (double)Application.Current.Resources["GridSplitterLength"];
+                var defaultGridSplitterLength = (double)Application.Current.Resources[Constants.xamlGridSplitterLength];
 
                 leaveSize.Width = videoSize.Width / PlayerAreaLength.Value.Value * CommentAreaLength.Value.Value;
             }
@@ -744,18 +744,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             BaseWidth = VisualVideoSize.Width * baseScale;
             BaseHeight = VisualVideoSize.Height * baseScale;
 
+            // 高さの方が大きいので動画描画横幅を補正する
             if(BaseWidth < BaseHeight) {
                 double widthScale;
-                if(CommentArea.Height <= RealVideoHeight && CommentArea.Width <= RealVideoWidth) {
+                if(Constants.ServiceSmileVideoPlayerCommentHeight <= RealVideoHeight && Constants.ServiceSmileVideoPlayerCommentWidth <= RealVideoWidth) {
                     // #207: sm29825902
-                    widthScale = RealVideoWidth / CommentArea.Width;
+                    widthScale = VisualVideoSize.Width / Constants.ServiceSmileVideoPlayerCommentWidth;
                 } else {
                     // #207: sm29681139
-                    widthScale = (BaseHeight / BaseWidth) + (RealVideoWidth / CommentArea.Width);
+                    widthScale = (BaseHeight / BaseWidth) + (VisualVideoSize.Width / Constants.ServiceSmileVideoPlayerCommentWidth);
                 }
 
                 BaseWidth *= widthScale;
             }
+
+            // コメント描画領域の横幅を動画描画に合わせて補正する
+            var resizePercent = Constants.ServiceSmileVideoPlayerCommentHeight / BaseHeight;
+            CommentAreaWidth = resizePercent * BaseWidth;
 
             ChangedEnabledCommentPercent();
         }
@@ -765,7 +770,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             RealVideoWidth = Player.VlcMediaPlayer.PixelWidth;
             RealVideoHeight = Player.VlcMediaPlayer.PixelHeight;
 
-            // コメントエリアのサイズ設定
+            // 描画領域のサイズ設定
             ChangeBaseSize();
         }
 
@@ -2042,6 +2047,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
             IsSettedMedia = false;
             ShowCommentChart = false;
+            CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
+            CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
             if(View != null) {
                 if(Player != null && Player.State != Meta.Vlc.Interop.Media.MediaState.Playing && Player.State != Meta.Vlc.Interop.Media.MediaState.Paused) {
                     // https://github.com/higankanshi/Meta.Vlc/issues/80

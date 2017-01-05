@@ -550,7 +550,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         /// <summary>
-        /// なんかの横幅。
+        /// 動画描画の実描画領域の Viewbox の横幅。
         /// </summary>
         public double BaseWidth
         {
@@ -558,7 +558,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseWidth, value); }
         }
         /// <summary>
-        /// なんかの高さ。
+        /// 動画描画の実描画領域の Viewbox の高さ。
         /// </summary>
         public double BaseHeight
         {
@@ -566,9 +566,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._baseHeight, value); }
         }
         /// <summary>
-        /// コメント表領域。
+        /// コメント表示領域の横幅。
         /// </summary>
-        public Size CommentArea { get; } = new Size(Constants.ServiceSmileVideoPlayerCommentWidth, Constants.ServiceSmileVideoPlayerCommentHeight);
+        public double CommentAreaWidth
+        {
+            get { return this._commentAreaWidth; }
+            private set { SetVariableValue(ref this._commentAreaWidth, value); }
+        }
+        /// <summary>
+        /// コメント表示領域の高さ。
+        /// </summary>
+        public double CommentAreaHeight
+        {
+            get { return this._commentAreaHeight; }
+            private set { SetVariableValue(ref this._commentAreaHeight, value); }
+        }
 
         //[Obsolete]
         //public GridLength VisualPlayerWidth
