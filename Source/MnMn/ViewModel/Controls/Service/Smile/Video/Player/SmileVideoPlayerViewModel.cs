@@ -747,26 +747,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             // 高さの方が大きいので動画描画横幅を補正する
             if(BaseWidth < BaseHeight) {
                 double widthScale;
-                if(CommentAreaHeight <= RealVideoHeight && CommentAreaWidth <= RealVideoWidth) {
+                if(Constants.ServiceSmileVideoPlayerCommentHeight <= RealVideoHeight && Constants.ServiceSmileVideoPlayerCommentWidth <= RealVideoWidth) {
                     // #207: sm29825902
-                    widthScale = RealVideoWidth / CommentAreaWidth;
+                    widthScale = VisualVideoSize.Width / Constants.ServiceSmileVideoPlayerCommentWidth;
                 } else {
                     // #207: sm29681139
-                    widthScale = (BaseHeight / BaseWidth) + (RealVideoWidth / CommentAreaWidth);
+                    widthScale = (BaseHeight / BaseWidth) + (VisualVideoSize.Width / Constants.ServiceSmileVideoPlayerCommentWidth);
                 }
 
                 BaseWidth *= widthScale;
-
-                // コメント描画設定サイズと動画サイズからコメント描画領域調整
-                CommentAreaWidth = BaseWidth;
-            } else{
-                // コメント描画領域は規定値
-                CommentAreaWidth = RealVideoWidth;
             }
 
-
-            Mediation.Logger.Information($"CommentAreaWidth:{CommentAreaWidth}");
-
+            // コメント描画領域の横幅を動画描画に合わせて補正する
+            var resizePercent = Constants.ServiceSmileVideoPlayerCommentHeight / BaseHeight;
+            CommentAreaWidth = resizePercent * BaseWidth;
 
             ChangedEnabledCommentPercent();
         }
