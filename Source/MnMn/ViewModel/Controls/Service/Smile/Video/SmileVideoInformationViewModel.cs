@@ -1298,7 +1298,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return OpenVideoFromOpenParameterAsync(forceEconomy, Setting.Execute.OpenMode, Setting.Execute.OpenPlayerInNewWindow);
         }
 
-        Task OpenVideoFromOpenParameterAsync(bool forceEconomy, ExecuteOrOpenMode openMode, bool openPlayerInNewWindow)
+        public Task OpenVideoCurrentWindowAsync(bool forceEconomy)
+        {
+            return OpenVideoFromOpenParameterAsync(forceEconomy, Setting.Execute.OpenMode, false);
+        }
+
+        public Task OpenVideoNewWindowAsync(bool forceEconomy)
+        {
+            return OpenVideoFromOpenParameterAsync(forceEconomy, Setting.Execute.OpenMode, true);
+        }
+
+        public Task OpenVideoFromOpenParameterAsync(bool forceEconomy, ExecuteOrOpenMode openMode, bool openPlayerInNewWindow)
         {
             switch(openMode) {
                 case ExecuteOrOpenMode.Application:
@@ -1315,7 +1325,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             }
         }
 
-        public Task OpenVideoPlayerAsync(bool forceEconomy, bool openPlayerInNewWindow)
+        Task OpenVideoPlayerAsync(bool forceEconomy, bool openPlayerInNewWindow)
         {
             if(IsPlaying) {
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));

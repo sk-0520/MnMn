@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
         {
             var videoInformation = await GetVideoInformationAsync(videoId, communicator);
             if(videoInformation != null) {
-                await videoInformation.OpenVideoDefaultAsync(false);
+                await videoInformation.OpenVideoNewWindowAsync(false);
             }
         }
 
