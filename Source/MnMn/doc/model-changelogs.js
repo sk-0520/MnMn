@@ -162,7 +162,8 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'nuget',
+						'subject': '#344: mahapps.metro 1.40 -> 1.4.1'
 					},
 					{
 						'revision': '',
