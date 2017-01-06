@@ -1744,6 +1744,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
 
             if(Player!= null) {
+                Player.MouseDown -= Player_MouseDown;
                 Player.PositionChanged -= Player_PositionChanged;
                 Player.SizeChanged -= Player_SizeChanged;
                 Player.StateChanged -= Player_StateChanged;
@@ -1758,6 +1759,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 EnabledCommentControl.MouseLeave -= EnabledCommentControl_MouseLeave;
             }
 
+            if(DetailComment != null) {
+                DetailComment.LostFocus += DetailComment_LostFocus;
+            }
         }
 
         bool IsPrimaryDisplayInView()
