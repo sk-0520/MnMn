@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -84,6 +85,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             Type = type;
 
             SetContextElements(method, sort);
+
+            PagerPropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(PageVm_PropertyChanged);
+            SearchPropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(SearchFinder_PropertyChanged_TotalCount);
         }
 
         #region property
@@ -97,6 +101,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public string Query { get; }
         public SearchType Type { get; }
+
+        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PagerPropertyChangedListener { get; }
+        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> SearchPropertyChangedListener { get; }
 
         public DefinedElementModel LoadingMethod { get; private set; }
         public DefinedElementModel LoadingSort { get; private set; }
@@ -143,8 +150,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                         this._selectedPage.IsChecked = true;
                     }
                     if(oldSelectedPage != null) {
-                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
-                        oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                        //oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+                        PropertyChangedEventManager.RemoveListener(oldSelectedPage.ViewModel, PagerPropertyChangedListener, string.Empty);
+                        //oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                        PropertyChangedEventManager.RemoveListener(oldSelectedPage.ViewModel, SearchPropertyChangedListener, string.Empty);
                         oldSelectedPage.IsChecked = false;
                     }
 
@@ -250,7 +259,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                             var imageCacheSpan = Constants.ServiceSmileVideoImageCacheSpan;
 
                             SelectedPage = pageVm;
-                            pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+                            //pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
+                            PropertyChangedEventManager.AddListener(pageVm.ViewModel, PagerPropertyChangedListener, string.Empty);
+                            
                             pageVm.ViewModel.LoadAsync(thumbCacheSpan, imageCacheSpan).ConfigureAwait(true);
                         } else {
                             SelectedPage = pageVm;
@@ -351,12 +362,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             }
 
             SearchFinder = new SmileVideoSearchItemFinderViewModel(Mediation, SearchModel, nowMethod, nowSort, Type, Query, 0, Setting.Search.Count);
-            SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            //SearchFinder.PropertyChanged += PageVm_PropertyChanged;
+            PropertyChangedEventManager.AddListener(SearchFinder, PagerPropertyChangedListener, string.Empty);
 
             var query = Query;
 
             if(isReload) {
-                SearchFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+                //SearchFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+                PropertyChangedEventManager.AddListener(SearchFinder, SearchPropertyChangedListener, string.Empty);
 
                 var tag = new Logic.Service.Smile.Video.Api.V1.Tag(Mediation);
                 var tagTask = tag.LoadRelationTagListAsync(query).ContinueWith(task => {
@@ -546,7 +559,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
         {
             var searchFinder = (SmileVideoSearchItemFinderViewModel)sender;
             if(e.PropertyName == nameof(searchFinder.TotalCount)) {
-                searchFinder.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                //searchFinder.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                PropertyChangedEventManager.RemoveListener(searchFinder, SearchPropertyChangedListener, string.Empty);
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                     TotalCount = searchFinder.TotalCount;
