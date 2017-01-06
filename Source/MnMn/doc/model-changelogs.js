@@ -153,6 +153,14 @@
 					},
 					{
 						'revision': '',
+						'subject': '#343: WPF管理外のINotifyPropertyChangedは弱参照で購買させる',
+						'comments': [
+							'意外と丁寧にイベント解除してたからあんまし意味なさげ',
+							'プレイヤー側でINotifyPropertyChangedじゃないイベント解除忘れが少しあったからそこはメモリ回収に有効かも'
+						]
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
