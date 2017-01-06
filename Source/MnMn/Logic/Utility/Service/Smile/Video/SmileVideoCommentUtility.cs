@@ -88,20 +88,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return element;
         }
 
-        static IGrouping<int, SmileVideoCommentDataModel> GetTopExistsLines(IEnumerable<IGrouping<int, SmileVideoCommentDataModel>> lineList, int y,int showElementHeight)
-        {
-            var existsLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + showElementHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
-
-            return existsLine;
-        }
-
-        static IGrouping<int, SmileVideoCommentDataModel> GetBottomExistsLines(IEnumerable<IGrouping<int, SmileVideoCommentDataModel>> lineList, int y, int showElementHeight)
-        {
-            var existsLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + showElementHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
-
-            return existsLine;
-        }
-
         static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoCommentStyleSettingModel setting)
         {
             var isAsc = orderBy == OrderBy.Ascending;
@@ -113,23 +99,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 .ToArray()
             ;
 
+            var commentAreaHeight = (int)commentArea.Height;
             var myHeight = (int)element.ActualHeight;
-            var start = isAsc ? 0 : (int)commentArea.Height - myHeight;
-            //var start = isAsc ? 0 : (int)commentArea.Height;
-            var last = isAsc ? (int)commentArea.Height - myHeight : 0;
+            var start = isAsc ? 0 : commentAreaHeight - myHeight;
+            var last = isAsc ? (int)commentAreaHeight - myHeight : 0;
 
             if(lineList.Length == 0) {
                 // コメントない
                 return start;
             }
 
+            //if(!isAsc) {
+            //    var min = Math.Max(lineList.First().Key, commentAreaHeight - myHeight);
+            //    start = min;
+            //}
+
             for(var y = start; isAsc ? y < last : last < y;) {
 
-                var dupLine = isAsc
-                    ? GetTopExistsLines(lineList, y, myHeight)
-                    : GetBottomExistsLines(lineList, y, myHeight)
-                ;
-                    //lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+                var dupLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+
+                var needCorrection = false;
+                if(dupLine == null && !calculationWidth) {
+                    // 誰もいないっぽいけど入る余地はあるのか
+                    dupLine = lineList.FirstOrDefault(ls => y < ls.Key && ls.Key  < y + myHeight);
+                    if(dupLine != null) {
+                        needCorrection = true;
+                    }
+                    Debug.WriteLine($"needCorrection:{needCorrection}");
+                }
+
                 if(dupLine == null) {
                     // 誰もいなければ入れる
                     return y;
@@ -145,6 +143,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                     // 現在コメント行の最大の高さを加算して次行を検索
                     var plusValue = (int)dupLine.Max(l => l.Element.ActualHeight);
+                    if(needCorrection) {
+                        var correction = myHeight - plusValue;
+                        if(0 < correction) {
+                            //plusValue += correction;
+                        }
+
+                        Debug.WriteLine($"{plusValue}, {correction}");
+                    }
                     if(isAsc) {
                         y += plusValue;
                     } else {
