@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -87,10 +88,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return element;
         }
 
+        static IGrouping<int, SmileVideoCommentDataModel> GetTopExistsLines(IEnumerable<IGrouping<int, SmileVideoCommentDataModel>> lineList, int y,int showElementHeight)
+        {
+            var existsLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + showElementHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+
+            return existsLine;
+        }
+
+        static IGrouping<int, SmileVideoCommentDataModel> GetBottomExistsLines(IEnumerable<IGrouping<int, SmileVideoCommentDataModel>> lineList, int y, int showElementHeight)
+        {
+            var existsLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + showElementHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+
+            return existsLine;
+        }
+
         static int GetSafeYPosition(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, IList<SmileVideoCommentDataModel> showingCommentList, OrderBy orderBy, bool calculationWidth, SmileVideoCommentStyleSettingModel setting)
         {
             var isAsc = orderBy == OrderBy.Ascending;
-            // 空いている部分に放り込む
+            // 空いている部分に放り込む, 今から表示するコメントの同一条件全行を取得する
             var lineList = showingCommentList
                 .Where(i => i.ViewModel.Vertical == commentViewModel.Vertical)
                 .GroupBy(i => (int)Canvas.GetTop(i.Element))
@@ -100,6 +115,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
             var myHeight = (int)element.ActualHeight;
             var start = isAsc ? 0 : (int)commentArea.Height - myHeight;
+            //var start = isAsc ? 0 : (int)commentArea.Height;
             var last = isAsc ? (int)commentArea.Height - myHeight : 0;
 
             if(lineList.Length == 0) {
@@ -108,7 +124,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
 
             for(var y = start; isAsc ? y < last : last < y;) {
-                var dupLine = lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
+
+                var dupLine = isAsc
+                    ? GetTopExistsLines(lineList, y, myHeight)
+                    : GetBottomExistsLines(lineList, y, myHeight)
+                ;
+                    //lineList.FirstOrDefault(ls => ls.Key <= y && y + myHeight <= ls.Key + ls.Max(l => l.Element.ActualHeight));
                 if(dupLine == null) {
                     // 誰もいなければ入れる
                     return y;
