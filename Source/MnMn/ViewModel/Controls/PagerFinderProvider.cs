@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         SelectedPage.IsChecked = true;
                     }
                     if(oldSelectedPage != null) {
-                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+                        DetachmentChildProprtyChange(oldSelectedPage.ViewModel);
                         //oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
                         oldSelectedPage.IsChecked = false;
                     }
