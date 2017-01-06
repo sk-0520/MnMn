@@ -254,6 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
                 if(element != null) {
                     commentParentElement.Children.Remove(element);
+                    element.DataContext = null;
                 }
                 element = null;
 
@@ -264,6 +265,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
                 showingCommentList.Remove(data);
                 data.ViewModel.NowShowing = false;
+
+                data = null;
 
             }, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
 
