@@ -265,9 +265,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// </summary>
         public static string SettingFileName { get; } = "setting.json";
         /// <summary>
-        /// 設定ファイル名。
+        /// 情報ファイル名。
         /// </summary>
         public static string InformationFileName { get; } = "information.txt";
+        /// <summary>
+        /// ログファイル名。
+        /// </summary>
+        public static string LogFileName { get; } = "log.log";
         /// <summary>
         /// アーカイブディレクトリ名。
         /// </summary>

@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
         }
 
-        void WriteLog(Stream stream)
+        public void WriteLog(Stream stream)
         {
             using(var writer = new StreamWriter(stream, Encoding.UTF8, Constants.TextFileSaveBuffer, true)) {
                 writer.Write(GetTextAllLog());
