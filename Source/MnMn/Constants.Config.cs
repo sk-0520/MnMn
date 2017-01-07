@@ -138,6 +138,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
         public static IReadOnlyRange<int> NavigatorVolumeRange => appConfig.Get("navigator-volume-range", RangeModel.Parse<int>);
 
         /// <summary>
+        /// サービスへのログインを自動的に行うか。
+        /// </summary>
+        public static bool SettingApplicationServiceAutoLogin => appConfig.Get("setting-application-service-auto-login", bool.Parse);
+
+        /// <summary>
         /// タブヘッダ部をマウスホイールでスクロールするか。
         /// <para>暫定対応: https://groups.google.com/d/topic/mnmn-forum/jm663Y8Wnn4/discussion </para>
         /// </summary>
