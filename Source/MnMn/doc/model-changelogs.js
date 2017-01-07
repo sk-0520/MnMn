@@ -119,7 +119,15 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#195: 通信にパスワード的な情報が含まれている際にログ出力は生で吐かないようにする',
+						'comments': [
+							'定義ファイルの URI 定義(モデル: ContentTypeTextNet.MnMn.MnMn.Model.UriItemModel, XPath: /uri/item) のうち以下の要素が各保護用設定とし、初期値は偽とする',
+							' * safety-uri',
+							' * safety-header',
+							' * safety-parameter',
+							"現運用に合わせて <MnMn>\\etc\\define\\service\\smile\\uri-list.xml の /uri/item[@key='video-session-login'] は真とした",
+							'-> 簡単に言うとニコニコログイン時のパスワードはログに出力時にマスクされるようになった'
+						]
 					},
 					{
 						'revision': '',
