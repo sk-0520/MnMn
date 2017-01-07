@@ -121,6 +121,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         public override TimeSpan RegardLoginTime { get; } = TimeSpan.FromMinutes(30);
 
+        public override bool EnabledStartupAutoLogin
+        {
+            get { return UserAccount.EnabledStartupAutoLogin; }
+        }
+
         public override async Task LoginAsync()
         {
             if(LoginState == LoginState.In || LoginState == LoginState.Check || LoginState == LoginState.LoggedIn) {

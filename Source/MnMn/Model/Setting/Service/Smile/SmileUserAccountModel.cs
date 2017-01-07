@@ -41,6 +41,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         [DataMember]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 自動ログインするか。
+        /// </summary>
+        [DataMember]
+        public bool EnabledStartupAutoLogin { get; set; } = Constants.SettingApplicationServiceEnabledStartupAutoLogin;
+
         #endregion
     }
 }
