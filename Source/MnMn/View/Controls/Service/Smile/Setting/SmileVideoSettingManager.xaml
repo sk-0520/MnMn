@@ -45,6 +45,8 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -80,6 +82,13 @@
                   ログインチェックするまでアカウント情報は有効になりません。
                 </TextBlock>
               </Grid>
+
+              <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource AllMargin}" />
+              
+              <StackPanel Grid.Row="4" Grid.Column="1">
+                
+                <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding EnabledStartupAutoLogin}">起動時に自動ログインする</CheckBox>
+              </StackPanel>
             </Grid>
           </StackPanel>
         </GroupBox>
