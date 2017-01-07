@@ -26,7 +26,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 {
     public class UriResultModel: ModelBase
     {
+        #region property
+
         public string Uri { get; set; }
+
         public ParameterType RequestParameterType { get; set; } = ParameterType.Plain;
+
+        public bool SafetyUri { get; set; }
+
+        public bool SafetyParameter { get; set; }
+
+        #endregion
     }
 }

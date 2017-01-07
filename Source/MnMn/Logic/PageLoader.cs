@@ -84,6 +84,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Dictionary<string, string> ReplaceRequestParameters { get; } = new Dictionary<string, string>();
 
         public Uri Uri { get; private set; }
+        public bool SafetyUri { get; private set; }
+        public bool SafetyParameter { get; private set; }
 
         protected IDictionary<string, string> Headers { get; private set; }
 
@@ -159,6 +161,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
             ParameterType = rawUri.RequestParameterType;
+            SafetyUri = rawUri.SafetyUri;
+            SafetyParameter = rawUri.SafetyParameter;
             Uri = RestrictUtility.IsNull(
                 ForceUri, () => {
                     var convertedUri = Mediation.ConvertUri(Key, rawUri.Uri, ServiceType);
