@@ -166,6 +166,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#348: WPF原理主義に負けずプレイヤーのメニュー部アイコン `<MenuItem.Icon>` を `<MenuItem.Header>` に移す'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
