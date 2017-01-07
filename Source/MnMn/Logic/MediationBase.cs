@@ -259,6 +259,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 Uri = ReplaceString(uriItem.Uri, replaceMap).Trim(),
                 RequestParameterType = uriItem.RequestParameterType,
                 SafetyUri = uriItem.SafetyUri,
+                SafetyHeader = uriItem.SafetyHeader,
                 SafetyParameter = uriItem.SafetyParameter,
             };
 

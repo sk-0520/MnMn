@@ -828,6 +828,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   保護されたヘッダ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Logic_PageLoader_SafetyHeader {
+            get {
+                return ResourceManager.GetString("String_App_Logic_PageLoader_SafetyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   保護されたパラメータ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Logic_PageLoader_SafetyParameter {

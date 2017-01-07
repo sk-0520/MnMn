@@ -84,7 +84,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public Dictionary<string, string> ReplaceRequestParameters { get; } = new Dictionary<string, string>();
 
         public Uri Uri { get; private set; }
+
         public bool SafetyUri { get; private set; }
+        public bool SafetyHeader { get; private set; }
         public bool SafetyParameter { get; private set; }
 
         protected IDictionary<string, string> Headers { get; private set; }
@@ -162,6 +164,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var rawUri = Mediation.GetUri(Key, ReplaceUriParameters, ServiceType);
             ParameterType = rawUri.RequestParameterType;
             SafetyUri = rawUri.SafetyUri;
+            SafetyHeader = rawUri.SafetyHeader;
             SafetyParameter = rawUri.SafetyParameter;
             Uri = RestrictUtility.IsNull(
                 ForceUri, () => {
@@ -183,7 +186,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var convertedHeader = Mediation.ConvertRequestHeader(Key, rawHeader, ServiceType);
             Headers = (Dictionary<string, string>)convertedHeader;
 
-            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
+            if(SafetyHeader) {
+                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={Properties.Resources.String_App_Logic_PageLoader_SafetyHeader}")) : null);
+            } else {
+                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(ParameterType)}: {ParameterType}, count: {Headers.Count}", Headers.Any() ? string.Join(Environment.NewLine, Headers.OrderBy(p => p.Key).Select(p => $"{p.Key}={p.Value}")) : null);
+            }
         }
 
         protected void MakeRequestParameter()

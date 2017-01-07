@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
 
         public bool SafetyUri { get; set; }
 
+        public bool SafetyHeader { get; set; }
+
         public bool SafetyParameter { get; set; }
 
         #endregion

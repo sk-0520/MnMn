@@ -63,6 +63,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         public bool SafetyUri { get; set; }
 
         /// <summary>
+        /// リクエストヘッダーはセキュリティを考慮するか。
+        /// <para>ログ出力で用いられる。</para>
+        /// </summary>
+        [XmlAttribute("safety-header")]
+        public bool SafetyHeader { get; set; }
+
+        /// <summary>
         /// パラメータはセキュリティを考慮するか。
         /// <para>ログ出力で用いられる。</para>
         /// </summary>
