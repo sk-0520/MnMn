@@ -139,15 +139,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
 
         public async override Task InitializeAsync()
         {
-            await Session.LoginAsync();
-            //var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
-            //await session.LoginAsync();
-            // TODO: ログインできない場合は設定画面へ
-            if(Session.LoginState != LoginState.LoggedIn) {
+            if(Session.EnabledStartupAutoLogin) {
+                await Session.LoginAsync();
 
-            } else {
-                foreach(var manager in ManagerChildren) {
-                    await manager.InitializeAsync();
+                // TODO: ログインできない場合は設定画面へ
+                if(Session.LoginState != LoginState.LoggedIn) {
+
+                } else {
+                    foreach(var manager in ManagerChildren) {
+                        await manager.InitializeAsync();
+                    }
                 }
             }
         }

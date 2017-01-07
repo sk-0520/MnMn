@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// サービスへのログインを自動的に行うか。
         /// </summary>
-        public static bool SettingApplicationServiceAutoLogin => appConfig.Get("setting-application-service-auto-login", bool.Parse);
+        public static bool SettingApplicationServiceEnabledStartupAutoLogin => appConfig.Get("setting-application-service-enabled-startup-auto-login", bool.Parse);
 
         /// <summary>
         /// タブヘッダ部をマウスホイールでスクロールするか。

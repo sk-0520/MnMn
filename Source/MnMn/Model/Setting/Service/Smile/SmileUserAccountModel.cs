@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile
         /// 自動ログインするか。
         /// </summary>
         [DataMember]
-        public bool AutoLogin { get; set; } = Constants.SettingApplicationServiceAutoLogin;
+        public bool EnabledStartupAutoLogin { get; set; } = Constants.SettingApplicationServiceEnabledStartupAutoLogin;
 
         #endregion
     }
