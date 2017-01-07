@@ -43,8 +43,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
         public AppInformationManagerViewModel(Mediation mediation, AppLogger appLogger)
             : base(mediation)
         {
-            AppAboutManager = new AppAboutManagerViewModel(Mediation);
-            AppLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
+            var appLoggingManager = new AppLoggingManagerViewModel(Mediation, appLogger);
+            AppAboutManager = new AppAboutManagerViewModel(Mediation, appLoggingManager);
+            AppLoggingManager = appLoggingManager;
             AppIssueManager = new AppIssueManagerViewModel(Mediation);
             AppForumManager = new AppForumManagerViewModel(Mediation);
             AppQuestionnaireManager = new AppQuestionnaireManagerViewModel(Mediation);
