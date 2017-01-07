@@ -287,6 +287,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 } else if(information.PostFinder.FinderLoadState == SourceLoadState.InformationLoading || information.PostFinder.FinderLoadState == SourceLoadState.Completed) {
                     AddBookmarkVideos(item, information);
                 } else {
+                    // 弱参照はむりぽ
                     PropertyChangedEventHandler propertyChanged = null;
                     propertyChanged = (object sender, PropertyChangedEventArgs e) => {
                         if(e.PropertyName == nameof(information.PostFinder.FinderLoadState)) {

@@ -77,6 +77,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetVariableValue(ref this._editingAccountPassword, value); }
         }
 
+        /// <summary>
+        /// 編集用アカウントパスワード。
+        /// </summary>
+        public bool EnabledStartupAutoLogin
+        {
+            get { return Setting.Account.EnabledStartupAutoLogin; }
+            set { SetPropertyValue(Setting.Account, value, nameof(Setting.Account.EnabledStartupAutoLogin)); }
+        }
+
         public string CommonCustomCopyFormat
         {
             get { return Setting.Video.Common.CustomCopyFormat; }

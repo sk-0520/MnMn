@@ -16,6 +16,7 @@ along with MnMn.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using ContentTypeTextNet.Library.PInvoke.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
@@ -84,7 +86,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            ShowWebPlayer.PropertyChanged += ShowWebPlayer_PropertyChanged;
+            PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(ShowWebPlayer_PropertyChanged);
+            PropertyChangedEventManager.AddListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+            //ShowWebPlayer.PropertyChanged += ShowWebPlayer_PropertyChanged;
 
             ImportSetting();
         }
@@ -97,9 +101,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public SmileSessionViewModel Session { get; }
         SmileLiveSettingModel Setting { get; }
 
+        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
+
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
 
         public SmileLiveInformationViewModel Information { get; private set; }
+
 
         SmileLivePlayerWindow View { get; set; }
         WebNavigator NavigatorPlayer { get; set; }
@@ -604,7 +611,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         protected override void Dispose(bool disposing)
         {
             if(ShowWebPlayer != null) {
-                ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
+                PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+                //ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
             }
 
             base.Dispose(disposing);
@@ -618,7 +626,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             NavigatorPlayer.NavigateEmpty();
 
-            ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
+            PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
         }
 
         void ShowWebPlayer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

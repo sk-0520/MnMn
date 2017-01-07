@@ -68,6 +68,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         };
 
+        public abstract bool EnabledStartupAutoLogin { get; }
+
         /// <summary>
         /// ログイン状態。
         /// </summary>

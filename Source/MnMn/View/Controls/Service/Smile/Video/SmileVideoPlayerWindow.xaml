@@ -410,14 +410,17 @@
             </Style.Triggers>
           </Style>
         </Menu.Style>
-        <MenuItem Header="マイリスト追加" ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
-          <MenuItem.Icon>
-            <Viewbox Style="{StaticResource SmallIconBox}">
-              <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallAccentIconPath}" />
-              </Canvas>
-            </Viewbox>
-          </MenuItem.Icon>
+        <MenuItem ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
+          <MenuItem.Header>
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallAccentIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock>マイリスト追加</TextBlock>
+            </StackPanel>
+          </MenuItem.Header>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddMyListCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -441,14 +444,17 @@
             </Style.Triggers>
           </Style>
         </Menu.Style>
-        <MenuItem Header="ブックマーク追加" ItemsSource="{Binding BookmarkItems}" Style="{StaticResource ToolbarMenuItem}">
-          <MenuItem.Icon>
-            <Viewbox Style="{StaticResource SmallIconBox}">
-              <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
-              </Canvas>
-            </Viewbox>
-          </MenuItem.Icon>
+        <MenuItem ItemsSource="{Binding BookmarkItems}" Style="{StaticResource ToolbarMenuItem}">
+          <MenuItem.Header>
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock>ブックマーク追加</TextBlock>
+            </StackPanel>
+          </MenuItem.Header>
           <MenuItem.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource ToolbarMenuItem}">
               <Setter Property="Command" Value="{Binding DataContext.AddBookmarkCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -484,14 +490,17 @@
         </Viewbox>
       </Button>
       <Menu Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ToolbarMenu}">
-        <MenuItem Header="プレイリスト" Style="{StaticResource ToolbarMenuItem}">
-          <MenuItem.Icon>
-            <Viewbox Style="{StaticResource SmallIconBox}">
-              <Canvas Style="{StaticResource IconCanvas-24x24}">
-                <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
-              </Canvas>
-            </Viewbox>
-          </MenuItem.Icon>
+        <MenuItem Style="{StaticResource ToolbarMenuItem}">
+          <MenuItem.Header>
+            <StackPanel Style="{StaticResource ItemPanel}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
+                <Canvas Style="{StaticResource IconCanvas-24x24}">
+                  <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
+                </Canvas>
+              </Viewbox>
+              <TextBlock>プレイリスト</TextBlock>
+            </StackPanel>
+          </MenuItem.Header>
           <MenuItem.ItemsSource>
             <CompositeCollection>
               <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->
@@ -821,7 +830,7 @@
             </vlc_wpf:VlcPlayer>
 
             <Viewbox x:Name="layer" ClipToBounds="True" Stretch="Fill" Width="{Binding BaseWidth}" Height="{Binding BaseHeight}" Visibility="{Binding PlayerVisibleComment, Converter={StaticResource BooleanToVisibilityConverter}}">
-              <Grid Width="{Binding CommentArea.Width, Mode=OneTime}" Height="{Binding CommentArea.Height, Mode=OneTime}" >
+              <Grid Width="{Binding CommentAreaWidth, Mode=OneWay}" Height="{Binding CommentAreaHeight, Mode=OneWay}" >
                 <Canvas x:Name="normalCommentArea" />
                 <Canvas x:Name="originalPosterCommentArea" />
                 <Border
@@ -829,7 +838,7 @@
                   Background="#80ffffff"
                   BorderBrush="{DynamicResource AccentBaseColorBrush}"
                   BorderThickness="4"
-                  Width="{Binding CommentArea.Width, Mode=OneTime}"
+                  Width="{Binding CommentAreaWidth, Mode=OneWay}"
                   Height="{Binding CommentEnabledHeight}"
                   Visibility="{Binding ShowEnabledCommentPreviewArea, Converter={StaticResource BooleanToVisibilityConverter}}"
                 >

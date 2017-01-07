@@ -55,6 +55,27 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model
         [XmlAttribute("request-type")]
         public ParameterType RequestParameterType { get; set; }
 
+        /// <summary>
+        /// URIはセキュリティを考慮するか。
+        /// <para>ログ出力で用いられる。</para>
+        /// </summary>
+        [XmlAttribute("safety-uri")]
+        public bool SafetyUri { get; set; }
+
+        /// <summary>
+        /// リクエストヘッダーはセキュリティを考慮するか。
+        /// <para>ログ出力で用いられる。</para>
+        /// </summary>
+        [XmlAttribute("safety-header")]
+        public bool SafetyHeader { get; set; }
+
+        /// <summary>
+        /// パラメータはセキュリティを考慮するか。
+        /// <para>ログ出力で用いられる。</para>
+        /// </summary>
+        [XmlAttribute("safety-param")]
+        public bool SafetyParameter { get; set; }
+
         #endregion
     }
 }

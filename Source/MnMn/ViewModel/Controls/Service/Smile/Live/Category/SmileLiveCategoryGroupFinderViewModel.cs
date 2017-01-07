@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
@@ -56,6 +57,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
                 this
             );
             PagerFinderProvider.ChangedSelectedPage += PagerFinderProvider_ChangedSelectedPage;
+
+            PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(SearchFinder_PropertyChanged_TotalCount);
         }
 
         #region property
@@ -82,6 +85,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
 
         public IList<DefinedElementModel> SortItems { get { return CategoryModel.SortItems; } }
         public IList<DefinedElementModel> OrderItems { get { return CategoryModel.OrderItems; } }
+
+        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
 
         public SmileLiveCategoryItemFinderViewModel CurrentFinder
         {
@@ -247,7 +252,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             //PagerFinderProvider.AttachmentChildProprtyChange(SearchFinder);
 
             if(isReload) {
-                CurrentFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+                //CurrentFinder.PropertyChanged += SearchFinder_PropertyChanged_TotalCount;
+                PropertyChangedEventManager.AddListener(CurrentFinder, PropertyChangedListener, string.Empty);
             }
 
             return CurrentFinder.LoadAsync(informationCacheSpan, imageCacheSpan);
@@ -267,7 +273,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
             //throw new NotImplementedException();
             var searchFinder = (SmileLiveCategoryItemFinderViewModel)sender;
             if(e.PropertyName == nameof(searchFinder.TotalCount)) {
-                searchFinder.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                //searchFinder.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                PropertyChangedEventManager.RemoveListener(searchFinder, PropertyChangedListener, string.Empty);
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                     TotalCount = searchFinder.TotalCount;
@@ -306,7 +313,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Cat
         void PagerFinderProvider_ChangedSelectedPage(object sender, Define.Event.ChangedSelectedPageEventArgs<SmileLiveCategoryItemFinderViewModel, SmileLiveInformationViewModel, SmileLiveFinderItemViewModel> e)
         {
             if(e.OldSelectedPage != null) {
-                e.OldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                //e.OldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
+                PropertyChangedEventManager.RemoveListener(e.OldSelectedPage.ViewModel, PropertyChangedListener, string.Empty);
             }
             if(e.NewSelectedPage != null && e.OldSelectedPage != null) {
                 //e.NewSelectedPage.ViewModel.SelectedSortType = e.OldSelectedPage.ViewModel.SelectedSortType;

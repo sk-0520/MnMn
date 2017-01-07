@@ -24,6 +24,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -77,6 +78,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             if(changePropertyNames.Any()) {
                 CustomChangePagePropertyNames.AddRange(changePropertyNames);
             }
+
+            PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(PageVm_PropertyChanged);
         }
 
         public PagerFinderProvider(Mediation mediation, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
@@ -86,6 +89,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         #region property
 
         Mediation Mediation { get; }
+
+        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
+
         CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(DefaultChangePagePropertyNames);
         public IReadOnlyList<string> ChangePagePropertyNames => CustomChangePagePropertyNames;
 
@@ -169,12 +175,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         public void AttachmentChildProprtyChange(INotifyPropertyChanged target)
         {
-            target.PropertyChanged += PageVm_PropertyChanged;
+            //target.PropertyChanged += PageVm_PropertyChanged;
+            PropertyChangedEventManager.AddListener(target, PropertyChangedListener, string.Empty);
         }
 
         public void DetachmentChildProprtyChange(INotifyPropertyChanged target)
         {
-            target.PropertyChanged -= PageVm_PropertyChanged;
+            //target.PropertyChanged -= PageVm_PropertyChanged;
+            PropertyChangedEventManager.RemoveListener(target, PropertyChangedListener, string.Empty);
         }
 
         KeyValuePair<MemberInfo, TBaseFinderVideModel> GetMemberInfo(bool getMethod, string memberName)
@@ -273,7 +281,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         SelectedPage.IsChecked = true;
                     }
                     if(oldSelectedPage != null) {
-                        oldSelectedPage.ViewModel.PropertyChanged -= PageVm_PropertyChanged;
+                        DetachmentChildProprtyChange(oldSelectedPage.ViewModel);
                         //oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
                         oldSelectedPage.IsChecked = false;
                     }

@@ -62,11 +62,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
 
         #endregion
 
-        public AppAboutManagerViewModel(Mediation mediation)
+        public AppAboutManagerViewModel(Mediation mediation, AppLoggingManagerViewModel loggingManager)
             : base(mediation)
-        { }
+        {
+            LoggingManager = loggingManager;
+        }
 
         #region property
+
+        AppLoggingManagerViewModel LoggingManager { get; }
 
         public ComponentItemCollectionModel ComponentCollection
         {
@@ -303,6 +307,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                             var info = new AppInformationCollection();
                             streamWriter.Write(info.ToString());
                         }
+                    }
+
+                    var logEntry = exportStream.CreateEntry(Constants.LogFileName);
+                    using(var zipStream = logEntry.Open()) {
+                        LoggingManager.WriteLog(zipStream);
                     }
                 }
             }
