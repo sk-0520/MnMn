@@ -413,7 +413,7 @@
         <MenuItem ItemsSource="{Binding AccountMyListItems}" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.Header>
             <StackPanel Style="{StaticResource ItemPanel}">
-              <Viewbox Style="{StaticResource SmallIconBox}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Playlist-Add}" Style="{StaticResource SmallAccentIconPath}" />
                 </Canvas>
@@ -447,7 +447,7 @@
         <MenuItem ItemsSource="{Binding BookmarkItems}" Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.Header>
             <StackPanel Style="{StaticResource ItemPanel}">
-              <Viewbox Style="{StaticResource SmallIconBox}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Bookmark-Add}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
@@ -493,7 +493,7 @@
         <MenuItem Style="{StaticResource ToolbarMenuItem}">
           <MenuItem.Header>
             <StackPanel Style="{StaticResource ItemPanel}">
-              <Viewbox Style="{StaticResource SmallIconBox}">
+              <Viewbox Style="{StaticResource SmallItemBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Playlist}" Style="{StaticResource SmallDefaultIconPath}" />
                 </Canvas>
