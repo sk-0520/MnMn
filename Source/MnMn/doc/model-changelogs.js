@@ -84,9 +84,9 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.40.1',
-		'isRc': true,
+		'date': '2017/01/07',
+		'version': '0.41.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
@@ -94,14 +94,6 @@
 					{
 						'revision': '',
 						'subject': '#195 実装により資格情報をログに含まなくなったため #351 で報告用情報出力に現在ログが含まれるようになりました'
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -109,7 +101,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'fb4262e07cc563e255de7c64f98f165cc6c3b25d',
 						'subject': '#341: サービスへの自動ログインは許可制にする',
 						'comments': [
 							'今まで微妙だった資格情報を用いた起動時の自動ログインを明示的にした',
@@ -118,7 +110,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'f651b25ab505bbaa0e2021530fa89c1436e434a5',
 						'subject': '#195: 通信にパスワード的な情報が含まれている際にログ出力は生で吐かないようにする',
 						'comments': [
 							'定義ファイルの URI 定義(モデル: ContentTypeTextNet.MnMn.MnMn.Model.UriItemModel, XPath: /uri/item) のうち以下の要素が各保護用設定とし、初期値は偽とする',
@@ -130,7 +122,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a9c1193579044c5d86b8aa0a7304ff0252581d75',
 						'subject': '#351: 報告用データ出力に現在ログを含める'
 					}
 				]
@@ -139,7 +131,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '0d800475f6684404a86e92a0576c590cb8fd0463',
 						'subject': '#338: 動画説明文動画リンクのコンテキストメニュー「新しいプレイヤーで再生」動いてない',
 						'comments': [
 							'ご丁寧に設定値を参照していた',
@@ -147,7 +139,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'a991a89c5d3cb8079f950332572ab760c8d8102e',
 						'subject': '#211: 動画サイズとコメント描画領域の比率が異なる場合に横方向に伸縮する',
 						'comments': [
 							'算　数　レ　ベ　ル　の　計　算　が　出　来　な　か　っ　た',
@@ -156,7 +148,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '4d079e29363d7f2dc3358ef47f55f2bd443c15c1',
 						'subject': '#245: 水平位置固定コメントがコメント領域(横)を超過した場合はコメント内容がコメント領域(横)内に収まるべき',
 						'comments': [
 							'本実装に追加で上下コメント(特に下側)の位置補正処理も修正したのでコメントの重なりが軽減されたはず',
@@ -165,7 +157,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'd3c09b424a826ba968ab30bcd6921c6b40ae6a2c',
 						'subject': '#343: WPF管理外のINotifyPropertyChangedは弱参照で購買させる',
 						'comments': [
 							'意外と丁寧にイベント解除してたからあんまし意味なさげ',
@@ -173,12 +165,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '9851ea781a9b324b52686876b961c543c4c4bc1b',
 						'subject': '#348: WPF原理主義に負けずプレイヤーのメニュー部アイコン `<MenuItem.Icon>` を `<MenuItem.Header>` に移す'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -186,21 +174,17 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '4edcd4346e3d77d0b66147efa8ce56ca07bf5127',
 						'class': 'nuget',
 						'subject': '#344: mahapps.metro 1.40 -> 1.4.1'
 					},
 					{
-						'revision': '',
+						'revision': 'd3b3b5e2e0746829bebe37f414740c3e0aca2078',
 						'subject': 'ヘルプにキャッシュの在り様を明文化する',
 						'comments': [
 							'ヘルプ -> 本体設定',
 							'そろそろこの手のメールが鬱陶しい'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
