@@ -440,4 +440,10 @@
   <data name="String_App_Define_Laboratory_VideoCreateType_Sequence" xml:space="preserve">
     <value>インクリメント</value>
   </data>
+  <data name="String_App_Logic_PageLoader_SafetyParameter" xml:space="preserve">
+    <value>保護されたパラメータ</value>
+  </data>
+  <data name="String_App_Logic_PageLoader_SafetyUri" xml:space="preserve">
+    <value>保護されたURI</value>
+  </data>
 </root>

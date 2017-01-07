@@ -2,7 +2,7 @@
 <uri>
 	<item key="smile-web-site" uri="http://www.nicovideo.jp" param="none" />
 
-	<item key="video-session-login" uri="https://secure.nicovideo.jp/secure/login" param="query" safety-param="true" />
+	<item key="video-session-login" uri="https://secure.nicovideo.jp/secure/login" param="query" safety-uri="true" safety-param="true" />
 	<item key="video-session-logout" uri="https://secure.nicovideo.jp/secure/logout" param="none" />
 	<item key="video-session-check" uri="http://www.nicovideo.jp/rss" param="none" />
 

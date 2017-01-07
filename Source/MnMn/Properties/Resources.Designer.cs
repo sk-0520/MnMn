@@ -828,6 +828,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   保護されたパラメータ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Logic_PageLoader_SafetyParameter {
+            get {
+                return ResourceManager.GetString("String_App_Logic_PageLoader_SafetyParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   保護されたURI に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Logic_PageLoader_SafetyUri {
+            get {
+                return ResourceManager.GetString("String_App_Logic_PageLoader_SafetyUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   報告用設定・情報データファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Setting_PublicExportFileName {

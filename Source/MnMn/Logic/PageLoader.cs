@@ -170,7 +170,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 },
                 uri => uri
             );
-            Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Uri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
+            if(SafetyUri) {
+                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Properties.Resources.String_App_Logic_PageLoader_SafetyUri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
+            } else {
+                Mediation.Logger.Trace($"[{ServiceType}] {nameof(Key)}: {Key}, {nameof(Uri)}: {Uri}, {nameof(rawUri.RequestParameterType)}: {rawUri.RequestParameterType}");
+            }
         }
 
         protected void MakeRequestHeader()
