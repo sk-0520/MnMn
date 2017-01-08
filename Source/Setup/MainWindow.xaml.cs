@@ -333,14 +333,30 @@ namespace ContentTypeTextNet.MnMn.Setup
             OpenLink(Constants.ProjectUri);
         }
 
+        private void commandOpenLicense_Click(object sender, RoutedEventArgs e)
+        {
+            OpenLink(Constants.LicenseUri);
+        }
+
         private void commandOpenHelp_Click(object sender, RoutedEventArgs e)
         {
             OpenLink(Constants.HelpUri);
         }
 
-        private void commandOpenLicense_Click(object sender, RoutedEventArgs e)
+        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            OpenLink(Constants.LicenseUri);
+            base.OnMouseLeftButtonDown(e);
+
+            if(e.OriginalSource != null) {
+                var run = e.OriginalSource as Run;
+                if(run != null && run.Parent == this.commandOpenHelp) {
+                    return;
+                }
+            }
+
+            if(e.LeftButton == MouseButtonState.Pressed) {
+                DragMove();
+            }
         }
     }
 }
