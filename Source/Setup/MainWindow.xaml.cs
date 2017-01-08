@@ -1,6 +1,6 @@
 ﻿#if RAM
-//#define DUMMY_WAIT
-#define _DUMMY_WAIT
+#define DUMMY_WAIT
+//#define _DUMMY_WAIT
 #endif
 
 using System;
@@ -22,6 +22,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.MnMn.Setup
 {
@@ -44,7 +45,9 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         void AddLog(LogItem logItem)
         {
-            this.listLog.Items.Add(logItem);
+            this.listLog.Dispatcher.BeginInvoke(new Action(() => {
+                this.listLog.Items.Add(logItem);
+            }));
         }
 
         void AddMessageLog(string message)
@@ -145,9 +148,35 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         Task ExpandAsync(string archivePath, string installPath)
         {
-            ZipFile.ExtractToDirectory(archivePath, installPath);
+            return Task.Run(() => {
+                using(var archive = ZipFile.OpenRead(archivePath)) {
+                    var entries = archive.Entries
+                        .Where(e => e.Name.Length > 0)
+                        .ToList()
+                    ;
 
-            return Task.CompletedTask;
+                    this.progressExpand.Dispatcher.Invoke(() => {
+                        this.progressExpand.Maximum = entries.Count;
+                    });
+
+                    foreach(var entry in entries) {
+                        var expandPath = System.IO.Path.Combine(installPath, entry.FullName);
+                        var dirPath = System.IO.Path.GetDirectoryName(expandPath);
+                        if(!Directory.Exists(dirPath)) {
+                            Directory.CreateDirectory(dirPath);
+                        }
+                        AddMessageLog($"{expandPath}");
+                        entry.ExtractToFile(expandPath, true);
+                        this.progressExpand.Dispatcher.Invoke(() => {
+                            this.progressExpand.Value += 1;
+                        });
+
+#if DUMMY_WAIT
+                        Task.Delay(TimeSpan.FromMilliseconds(25)).Wait();
+#endif
+                    }
+                }
+            });
         }
 
         async Task InstallCoreAsync(string installPath, bool createShortcut, bool installToExecute)
@@ -169,13 +198,28 @@ namespace ContentTypeTextNet.MnMn.Setup
                 Directory.CreateDirectory(expandPath);
             }
             await ExpandAsync(downloadPath, expandPath);
+
+            // 各種登録処理開始
+            var appPath = System.IO.Path.Combine(expandPath, Constants.ApplicationFileName);
+
+            // レジストリ登録
+            using(var reg = Registry.CurrentUser.CreateSubKey(Constants.BaseRegistryPath, true)) {
+                reg.SetValue(Constants.ApplicationPathName, appPath);
+            }
+
+
         }
+
 
         Task InstallAsync()
         {
             var installPath = inputInstallDirectoryPath.Text;
             var createShortcut = selectCreateShortcut.IsChecked.GetValueOrDefault();
             var installToExecute = selectInstallToExecute.IsChecked.GetValueOrDefault();
+
+            this.progressInformation.Value = 0;
+            this.progressDownload.Value = 0;
+            this.progressExpand.Value = 0;
 
             AddLog(new LogItem(LogKind.Message, "start"));
 
@@ -187,7 +231,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        #endregion
+#endregion
 
         private void Window_Initialized(object sender, EventArgs e)
         {

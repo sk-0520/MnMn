@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                 Shutdown();
                 return;
             }
-
+            
             // すでにインストールされていればそちらを実行
             var installedPath = GetInstalledApplicationPath();
             if(installedPath != null) {
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                     Trace.WriteLine(ex);
                 }
             }
-
+            
             base.OnStartup(e);
         }
 
