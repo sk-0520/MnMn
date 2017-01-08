@@ -7,8 +7,8 @@
   mc:Ignorable="d"
   
   Title="MnMn セットアップ" 
-  Width="250"
-  Height="350" 
+  Width="350"
+  Height="550" 
   
   Initialized="Window_Initialized"
 >
@@ -70,14 +70,33 @@
 
       </Grid>
 
-      <ListView x:Name="listLog" Grid.Row="3">
-        <ListView.View>
-          <GridView>
-            <GridViewColumn DisplayMemberBinding="{Binding Kind}" Header="Kind" />
-            <GridViewColumn DisplayMemberBinding="{Binding Message}" Header="Message" />
-          </GridView>
-        </ListView.View>
-      </ListView>
+      <ListBox x:Name="listLog" Grid.Row="3" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling">
+        <ListBox.ItemContainerStyle>
+          <Style TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+          </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
+              <TextBlock Grid.Column="1" Text="{Binding Kind}" />
+              <TextBlock Grid.Column="2" Text="{Binding Message}" />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
     </Grid>
 
     <Grid Grid.Row="2">

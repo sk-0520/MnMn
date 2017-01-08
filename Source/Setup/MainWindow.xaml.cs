@@ -3,6 +3,10 @@
 #define _DUMMY_WAIT
 #endif
 
+/*
+ * ようこそ古き良き Forms 時代へ！
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -17,11 +17,14 @@ namespace ContentTypeTextNet.MnMn.Setup
     {
         public LogItem(LogKind kind, string message)
         {
+            Timestamp = DateTime.Now;
             Kind = kind;
             Message = message;
         }
 
         #region property
+
+        public DateTime Timestamp { get; }
 
         public LogKind Kind { get; }
 
