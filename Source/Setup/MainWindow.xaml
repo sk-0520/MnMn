@@ -67,7 +67,22 @@
       <StackPanel Grid.Row="0" Margin="{StaticResource DefaultMargin}">
         <TextBlock TextWrapping="Wrap" >
           基本的に以下の設定を編集する必要はありません。
-          <LineBreak />
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0">※</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap">自動アップデートやその他動的なファイル処理を行えるよう非管理権限でインストール先ディレクトリへ書き込みアクセス可能なパスの設定が必要です。</TextBlock>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0">※</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap">自由度確保のため本プログラムではそれらをチェックしません。</TextBlock>
+          </Grid>
           それでも編集しますか。
         </TextBlock>
         
