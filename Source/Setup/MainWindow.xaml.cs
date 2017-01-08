@@ -220,6 +220,9 @@ namespace ContentTypeTextNet.MnMn.Setup
                 file.Save(System.IO.Path.Combine(desktopPath, Constants.ProjectName + ".lnk"), false);
             }
 
+            if(installToExecute) {
+                Process.Start(appPath);
+            }
         }
 
 
