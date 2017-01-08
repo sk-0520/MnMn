@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace ContentTypeTextNet.MnMn.Setup
 {
@@ -37,9 +39,52 @@ namespace ContentTypeTextNet.MnMn.Setup
             this.listLog.Items.Add(logItem);
         }
 
-        Task InstallCoreAsync(string installPath, bool createShortcut, bool installToExecute)
+        void AddMessageLog(string message)
         {
-            return Task.CompletedTask;
+            AddLog(new LogItem(LogKind.Message, message));
+        }
+
+        async Task<Uri> GetDownloadUriAsync()
+        {
+            AddMessageLog("get archive uri");
+
+            var client = new HttpClient();
+
+            var xmlSource = await client.GetStringAsync(Constants.UpdateUri);
+
+            var xml = XElement.Parse(xmlSource);
+
+            var item = xml
+                .Elements()
+                .Select(
+                    x => new {
+                        Version = new Version(x.Attribute("version").Value),
+                            //IsRC = x.Attribute("type").Value == "rc",
+                            ArchiveElements = x.Elements(),
+                    }
+                )
+                //.Where(x => Constants.ApplicationVersionNumber <= x.Version)
+                .OrderByDescending(x => x.Version)
+                .FirstOrDefault()
+            ;
+
+            var archive = item.ArchiveElements
+                .Select(x => new {
+                    Uri = new Uri(x.Attribute("uri").Value),
+                    Platform = x.Attribute("platform").Value,
+                    Version = item.Version,
+                })
+                //.FirstOrDefault(x => x.Platform == (Environment.Is64BitProcess ? "x64" : "x86"))
+                .FirstOrDefault(x => x.Platform == "x86")
+            ;
+
+            return archive.Uri;
+        }
+
+        async Task InstallCoreAsync(string installPath, bool createShortcut, bool installToExecute)
+        {
+            var archiveUri = await GetDownloadUriAsync();
+            AddMessageLog($"archive uri: {archiveUri}");
         }
 
         Task InstallAsync()
