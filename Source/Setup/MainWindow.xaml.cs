@@ -226,10 +226,20 @@ namespace ContentTypeTextNet.MnMn.Setup
 
             // 各種登録処理開始
             var appPath = System.IO.Path.Combine(expandPath, Constants.ApplicationFileName);
+            var uninstallBatchFilePath = System.IO.Path.Combine(expandPath, "bat", "uninstall.bat");
 
             // レジストリ登録
             using(var reg = Registry.CurrentUser.CreateSubKey(Constants.BaseRegistryPath, true)) {
                 reg.SetValue(Constants.ApplicationPathName, appPath);
+
+                // レジストリのサブキー以下を削除するアンインストール処理用バッチ作成
+                using(var stream = new StreamWriter(new FileStream(uninstallBatchFilePath, FileMode.Create, FileAccess.Write, FileShare.Read), Encoding.Default)) {
+                    stream.WriteLine($"echo off");
+                    stream.WriteLine($"echo レジストリデータ削除処理開始");
+                    stream.WriteLine($"reg delete {reg.Name} /f");
+                    stream.WriteLine($"echo レジストリデータ削除処理終了");
+                    stream.WriteLine($"pause");
+                }
             }
 
             if(createShortcut) {
@@ -245,6 +255,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             }
 
             if(installToExecute) {
+                // 10秒の待機時間にすべてを託して起動
                 Process.Start(appPath);
             }
 
