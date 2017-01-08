@@ -72,6 +72,9 @@ namespace ContentTypeTextNet.MnMn.Setup
         public static string InstallDirectoryPath { get; } = Path.Combine(SettingBaseDirectoryPath, "application");
         public static string ArchiveDirectoryPath { get; } = Path.Combine(SettingBaseDirectoryPath, "archive");
 
+        public static string BaseRegistryPath { get; } = @"SOFTWARE\ContentTypeTextNet\" + ProjectName;
+        public static string ApplicationPathName { get; } = "application";
+
 #endregion
     }
 }
