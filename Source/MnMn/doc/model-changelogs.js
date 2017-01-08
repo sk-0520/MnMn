@@ -110,7 +110,11 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#267: インストーラー作成',
+						'comments': [
+							'ZIPの展開方法とかの問い合わせに疲れました',
+							'.NET Framework 入ってる前提でのみ動くなんちゃって Web インストーラですん'
+						]
 					},
 					{
 						'revision': '',
