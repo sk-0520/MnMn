@@ -57,6 +57,16 @@ namespace ContentTypeTextNet.MnMn.Setup
             }
         }
 
+        string GetInstalledApplicationPathFromDefaultPath()
+        {
+            var path = Environment.ExpandEnvironmentVariables(Path.Combine(Constants.InstallDirectoryPath, Constants.ApplicationFileName));
+            if(File.Exists(path)) {
+                return path;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// インストール済みパスの取得。
         /// </summary>
@@ -64,8 +74,13 @@ namespace ContentTypeTextNet.MnMn.Setup
         string GetInstalledApplicationPath()
         {
             var regPath = GetInstalledApplicationPathFromRegistry();
+            if(regPath != null) {
+                return regPath;
+            }
 
-            return null;
+            var defaultPath = GetInstalledApplicationPathFromDefaultPath();
+
+            return defaultPath;
         }
 
         #endregion
@@ -82,12 +97,14 @@ namespace ContentTypeTextNet.MnMn.Setup
 
             // すでにインストールされていればそちらを実行
             var installedPath = GetInstalledApplicationPath();
-            try {
-                Process.Start(installedPath);
-                Shutdown();
-            } catch(Exception ex) {
-                // 起動失敗ならインストール処理を継続
-                Trace.WriteLine(ex);
+            if(installedPath != null) {
+                try {
+                    Process.Start(installedPath);
+                    Shutdown();
+                } catch(Exception ex) {
+                    // 起動失敗ならインストール処理を継続
+                    Trace.WriteLine(ex);
+                }
             }
 
             base.OnStartup(e);

@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         #region property
 
+        public static string ApplicationFileName { get; } = "MnMn.exe";
+
         public static string ProjectName
         {
             get
