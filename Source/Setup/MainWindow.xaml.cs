@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -44,7 +46,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             AddLog(new LogItem(LogKind.Message, message));
         }
 
-        async Task<Uri> GetDownloadUriAsync()
+        async Task<Tuple<Uri, Version>> GetArchiveUriAsync()
         {
             AddMessageLog("get archive uri");
 
@@ -78,13 +80,71 @@ namespace ContentTypeTextNet.MnMn.Setup
                 .FirstOrDefault(x => x.Platform == "x86")
             ;
 
-            return archive.Uri;
+            return Tuple.Create(archive.Uri, archive.Version) ;
+        }
+
+        async Task<bool> DownloadArchiveAsync(Uri uri, string savePath)
+        {
+            var client = new HttpClient();
+
+            var downloadTotalSize = 0;
+
+            var response = await client.GetAsync(uri);
+
+            var downloadFileSize = response.Content.Headers.ContentLength;
+            if(!downloadFileSize.HasValue) {
+                this.progressDownload.IsIndeterminate = true;
+            }
+
+            using(var archiveStream = await response.Content.ReadAsStreamAsync()) {
+                var buffer = new byte[Constants.DownloadBufferSize];
+                using(var localStream = new FileStream(savePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+#if RAM
+                    var _i = 0;
+#endif
+                    while(true) {
+                        var downloadCurrentSize = archiveStream.Read(buffer, 0, buffer.Length);
+
+                        if(downloadCurrentSize == 0) {
+                            break;
+                        }
+
+                        if(0 < downloadCurrentSize) {
+                            downloadTotalSize += downloadCurrentSize;
+                            localStream.Write(buffer, 0, downloadCurrentSize);
+
+                            if(downloadFileSize.HasValue) {
+                                var percent = ((double)downloadTotalSize / (double)downloadFileSize.Value) * 100.0;
+                                this.progressDownload.Value = percent;
+                            }
+                        }
+
+#if RAM
+                        if(10 < _i++) {
+                        await Task.Delay(TimeSpan.FromMilliseconds(5));
+                            _i = 0;
+                        }
+#endif
+                    }
+                }
+            }
+
+            return true;
         }
 
         async Task InstallCoreAsync(string installPath, bool createShortcut, bool installToExecute)
         {
-            var archiveUri = await GetDownloadUriAsync();
-            AddMessageLog($"archive uri: {archiveUri}");
+            var archiveInfo = await GetArchiveUriAsync();
+            AddMessageLog($"archive uri: {archiveInfo.Item1} , {archiveInfo.Item2}");
+
+            // bitbucket を信じる！
+            var downloadName = archiveInfo.Item1.Segments.Last();
+            var downloadDirPath = Environment.ExpandEnvironmentVariables(Constants.ArchiveDirectoryPath);
+            if(!Directory.Exists(downloadDirPath)) {
+                Directory.CreateDirectory(downloadDirPath);
+            }
+            var downloadPath = System.IO.Path.Combine(downloadDirPath, downloadName);
+            await DownloadArchiveAsync(archiveInfo.Item1, Environment.ExpandEnvironmentVariables(downloadPath));
         }
 
         Task InstallAsync()

@@ -77,6 +77,8 @@ namespace ContentTypeTextNet.MnMn.Setup
         public static string BaseRegistryPath { get; } = @"SOFTWARE\ContentTypeTextNet\" + ProjectName;
         public static string ApplicationPathName { get; } = "application";
 
+        public static int DownloadBufferSize { get; } = 1024 * 60;
+
 #endregion
     }
 }
