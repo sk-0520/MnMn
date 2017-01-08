@@ -1,7 +1,13 @@
-﻿using System;
+﻿#if RAM
+//#define DUMMY_WAIT
+#define _DUMMY_WAIT
+#endif
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -53,6 +59,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             var client = new HttpClient();
 
             var xmlSource = await client.GetStringAsync(Constants.UpdateUri);
+            this.progressInformation.Value = 1;
 
             var xml = XElement.Parse(xmlSource);
 
@@ -70,6 +77,8 @@ namespace ContentTypeTextNet.MnMn.Setup
                 .FirstOrDefault()
             ;
 
+            this.progressInformation.Value = 2;
+
             var archive = item.ArchiveElements
                 .Select(x => new {
                     Uri = new Uri(x.Attribute("uri").Value),
@@ -79,6 +88,8 @@ namespace ContentTypeTextNet.MnMn.Setup
                 //.FirstOrDefault(x => x.Platform == (Environment.Is64BitProcess ? "x64" : "x86"))
                 .FirstOrDefault(x => x.Platform == "x86")
             ;
+
+            this.progressInformation.Value = 3;
 
             return Tuple.Create(archive.Uri, archive.Version) ;
         }
@@ -99,7 +110,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             using(var archiveStream = await response.Content.ReadAsStreamAsync()) {
                 var buffer = new byte[Constants.DownloadBufferSize];
                 using(var localStream = new FileStream(savePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
-#if RAM
+#if DUMMY_WAIT
                     var _i = 0;
 #endif
                     while(true) {
@@ -119,7 +130,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                             }
                         }
 
-#if RAM
+#if DUMMY_WAIT
                         if(10 < _i++) {
                         await Task.Delay(TimeSpan.FromMilliseconds(5));
                             _i = 0;
@@ -130,6 +141,13 @@ namespace ContentTypeTextNet.MnMn.Setup
             }
 
             return true;
+        }
+
+        Task ExpandAsync(string archivePath, string installPath)
+        {
+            ZipFile.ExtractToDirectory(archivePath, installPath);
+
+            return Task.CompletedTask;
         }
 
         async Task InstallCoreAsync(string installPath, bool createShortcut, bool installToExecute)
@@ -145,6 +163,12 @@ namespace ContentTypeTextNet.MnMn.Setup
             }
             var downloadPath = System.IO.Path.Combine(downloadDirPath, downloadName);
             await DownloadArchiveAsync(archiveInfo.Item1, Environment.ExpandEnvironmentVariables(downloadPath));
+
+            var expandPath = Environment.ExpandEnvironmentVariables(installPath);
+            if(!Directory.Exists(expandPath)) {
+                Directory.CreateDirectory(expandPath);
+            }
+            await ExpandAsync(downloadPath, expandPath);
         }
 
         Task InstallAsync()

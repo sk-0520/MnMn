@@ -60,7 +60,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0">info</Label>
-        <ProgressBar x:Name="progressInformation" Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="2" />
+        <ProgressBar x:Name="progressInformation" Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="3" />
 
         <Label Grid.Row="1" Grid.Column="0">download</Label>
         <ProgressBar x:Name="progressDownload" Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="100" />
