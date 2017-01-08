@@ -223,6 +223,9 @@ namespace ContentTypeTextNet.MnMn.Setup
             if(installToExecute) {
                 Process.Start(appPath);
             }
+
+            // ばいびー
+            Close();
         }
 
 
@@ -239,7 +242,13 @@ namespace ContentTypeTextNet.MnMn.Setup
             AddLog(new LogItem(LogKind.Message, "start"));
 
             IsEnabled = false;
-            return InstallCoreAsync(installPath, createShortcut, installToExecute).ContinueWith(_ => {
+            return InstallCoreAsync(installPath, createShortcut, installToExecute).ContinueWith(t => {
+                if(t.IsFaulted) {
+                    if(t.Exception != null) {
+                        var msg = string.Join(Environment.NewLine, t.Exception.InnerExceptions.Select(ex => ex.ToString()));
+                        AddLog(new LogItem(LogKind.Error, msg));
+                    }
+                }
                 IsEnabled = true;
 
                 AddLog(new LogItem(LogKind.Message, "end"));
