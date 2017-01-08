@@ -1,6 +1,6 @@
 ﻿#if RAM
-#define DUMMY_WAIT
-//#define _DUMMY_WAIT
+//#define DUMMY_WAIT
+#define _DUMMY_WAIT
 #endif
 
 using System;
@@ -48,12 +48,37 @@ namespace ContentTypeTextNet.MnMn.Setup
         {
             this.listLog.Dispatcher.BeginInvoke(new Action(() => {
                 this.listLog.Items.Add(logItem);
+                this.listLog.ScrollIntoView(logItem);
             }));
         }
 
         void AddMessageLog(string message)
         {
             AddLog(new LogItem(LogKind.Message, message));
+        }
+
+        static void SetProgressValue(ProgressBar progressBar, double value)
+        {
+            progressBar.Dispatcher.Invoke(() => {
+                progressBar.Value = value;
+            });
+        }
+
+        void SetDisabled(bool isDisabled)
+        {
+            var controls = new Control[] {
+                this.inputInstallDirectoryPath,
+                this.commandResetInstallDirectoryPath,
+                this.selectCreateShortcut,
+                this.selectInstallToExecute,
+                this.commandInstall,
+                this.commandClose,
+            };
+
+            foreach(var control in controls) {
+                control.IsEnabled = !isDisabled;
+            }
+
         }
 
         async Task<Tuple<Uri, Version>> GetArchiveUriAsync()
@@ -63,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             var client = new HttpClient();
 
             var xmlSource = await client.GetStringAsync(Constants.UpdateUri);
-            this.progressInformation.Value = 1;
+            SetProgressValue(this.progressInformation, 1);
 
             var xml = XElement.Parse(xmlSource);
 
@@ -81,7 +106,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                 .FirstOrDefault()
             ;
 
-            this.progressInformation.Value = 2;
+            SetProgressValue(this.progressInformation, 2);
 
             var archive = item.ArchiveElements
                 .Select(x => new {
@@ -93,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                 .FirstOrDefault(x => x.Platform == "x86")
             ;
 
-            this.progressInformation.Value = 3;
+            SetProgressValue(this.progressInformation, 3);
 
             return Tuple.Create(archive.Uri, archive.Version) ;
         }
@@ -130,7 +155,7 @@ namespace ContentTypeTextNet.MnMn.Setup
 
                             if(downloadFileSize.HasValue) {
                                 var percent = ((double)downloadTotalSize / (double)downloadFileSize.Value) * 100.0;
-                                this.progressDownload.Value = percent;
+                                SetProgressValue(this.progressDownload, percent);
                             }
                         }
 
@@ -160,6 +185,8 @@ namespace ContentTypeTextNet.MnMn.Setup
                         this.progressExpand.Maximum = entries.Count;
                     });
 
+                    int fileCount = 0;
+
                     foreach(var entry in entries) {
                         var expandPath = System.IO.Path.Combine(installPath, entry.FullName);
                         var dirPath = System.IO.Path.GetDirectoryName(expandPath);
@@ -168,10 +195,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                         }
                         AddMessageLog($"{expandPath}");
                         entry.ExtractToFile(expandPath, true);
-                        this.progressExpand.Dispatcher.Invoke(() => {
-                            this.progressExpand.Value += 1;
-                        });
-
+                        SetProgressValue(this.progressExpand, ++fileCount);
 #if DUMMY_WAIT
                         Task.Delay(TimeSpan.FromMilliseconds(25)).Wait();
 #endif
@@ -241,7 +265,7 @@ namespace ContentTypeTextNet.MnMn.Setup
 
             AddLog(new LogItem(LogKind.Message, "start"));
 
-            IsEnabled = false;
+            SetDisabled(true);
             return InstallCoreAsync(installPath, createShortcut, installToExecute).ContinueWith(t => {
                 if(t.IsFaulted) {
                     if(t.Exception != null) {
@@ -249,7 +273,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                         AddLog(new LogItem(LogKind.Error, msg));
                     }
                 }
-                IsEnabled = true;
+                SetDisabled(false);
 
                 AddLog(new LogItem(LogKind.Message, "end"));
             }, TaskScheduler.FromCurrentSynchronizationContext());
