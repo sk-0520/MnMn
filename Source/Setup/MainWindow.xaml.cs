@@ -10,6 +10,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -207,6 +208,17 @@ namespace ContentTypeTextNet.MnMn.Setup
                 reg.SetValue(Constants.ApplicationPathName, appPath);
             }
 
+            if(createShortcut) {
+                // 解放？ いらんいらん
+
+                var link = (IShellLink)new ShellLink();
+                link.SetDescription(Constants.ProjectName);
+                link.SetPath(appPath);
+
+                var file = (IPersistFile)link;
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                file.Save(System.IO.Path.Combine(desktopPath, Constants.ProjectName + ".lnk"), false);
+            }
 
         }
 
