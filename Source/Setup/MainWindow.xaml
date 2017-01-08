@@ -3,7 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   
-  
+  Icon="/Resources/Icon/MnMn-Setup.ico"
   
   Title="MnMn セットアップ" 
   Width="400"
@@ -34,11 +34,18 @@
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>-->
         
-        <TextBlock>MnMn セットアップ</TextBlock>
+        <StackPanel Orientation="Horizontal">
+          <StackPanel.Background>
+            <SolidColorBrush Color="{StaticResource Color_025}" />
+          </StackPanel.Background>
+          
+          <Image Source="/Resources/Icon/MnMn-Setup.ico" Width="48" Height="48" Margin="6" />
+          <TextBlock VerticalAlignment="Center" FontSize="26" FontWeight="Bold">MnMn セットアップ</TextBlock>
+        </StackPanel>
 
         <StackPanel HorizontalAlignment="Right">
-          <TextBlock x:Name="textVersion" />
-          <TextBlock><Hyperlink x:Name="commandOpenHelp" Click="commandOpenHelp_Click">help</Hyperlink></TextBlock>
+          <TextBlock x:Name="textVersion" TextAlignment="Right" />
+          <TextBlock TextAlignment="Right"><Hyperlink x:Name="commandOpenHelp" Click="commandOpenHelp_Click">help</Hyperlink></TextBlock>
         </StackPanel>
       </Grid>
 
