@@ -11,12 +11,42 @@
   Height="350" 
 >
   <Grid>
-    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="157,93,0,0" VerticalAlignment="Top" Width="75"/>
-    <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="27,39,0,0" VerticalAlignment="Top"/>
-    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="60,65,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-    <CheckBox x:Name="checkBox" Content="CheckBox" HorizontalAlignment="Left" Margin="27,162,0,0" VerticalAlignment="Top"/>
-    <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="75"/>
-    <Button x:Name="button1_Copy" Content="Button" HorizontalAlignment="Left" Margin="157,289,0,0" VerticalAlignment="Top" Width="75"/>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <StackPanel>
+      <TextBlock>MnMn セットアップ</TextBlock>
+    </StackPanel>
+    
+    <StackPanel Grid.Row="1">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0">インストール先</Label>
+        <TextBox x:Name="inputInstallDirectoryPath"  Grid.Column="1" />
+        <Button  Grid.Column="2">デフォルト</Button>
+      </Grid>
+
+      <CheckBox x:Name="selectCreateShortcut">デスクトップにショートカットを作成する</CheckBox>
+      <CheckBox x:Name="selectInstallToExecute">インストール完了後に MnMn を起動する</CheckBox>
+    </StackPanel>
+
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      
+      <Button x:Name="commandInstall" Grid.Column="0">インストール開始</Button>
+      <Button x:Name="commandClose" Grid.Column="1">閉じる</Button>
+    </Grid>
 
 
   </Grid>
