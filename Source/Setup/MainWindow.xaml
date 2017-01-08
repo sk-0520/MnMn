@@ -6,14 +6,13 @@
   Icon="/Resources/Icon/MnMn-Setup.ico"
   
   Title="MnMn セットアップ" 
-  Width="400"
-  Height="660" 
+  Width="420"
+  Height="700" 
   WindowStyle="None"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
   
   Initialized="Window_Initialized"
-  
   
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -29,7 +28,7 @@
     </Grid.RowDefinitions>
 
     <StackPanel>
-      <Grid PreviewMouseDown="Grid_PreviewMouseDown">
+      <Grid PreviewMouseDown="Grid_PreviewMouseDown" Cursor="SizeAll">
         <StackPanel Orientation="Horizontal">
           <StackPanel.Background>
             <SolidColorBrush Color="{StaticResource Color_025}" />
@@ -133,13 +132,29 @@
           <DataTemplate>
             <Grid>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120" />
-                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
               <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
-              <TextBlock Grid.Column="1" Text="{Binding Kind}" />
+              <TextBlock Grid.Column="1" TextAlignment="Center">
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding Kind}" Value="Message">
+                        <Setter Property="Text" Value="情報" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding Kind}" Value="Warning">
+                        <Setter Property="Text" Value="警報" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding Kind}" Value="Error">
+                        <Setter Property="Text" Value="異常" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
               <TextBlock Grid.Column="2" Text="{Binding Message}" />
             </Grid>
           </DataTemplate>
