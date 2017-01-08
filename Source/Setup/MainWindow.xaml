@@ -122,6 +122,11 @@
       </Grid>
 
       <ListBox x:Name="listLog" Grid.Row="3" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" Margin="{StaticResource DefaultMargin}">
+        <ListBox.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="ログをコピー" Click="MenuItem_Click" />
+          </ContextMenu>
+        </ListBox.ContextMenu>
         <ListBox.ItemContainerStyle>
           <Style TargetType="ListBoxItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />

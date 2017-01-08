@@ -328,6 +328,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             this.progressDownload.Value = 0;
             this.progressExpand.Value = 0;
 
+            this.listLog.Items.Clear();
             AddMessageLog(Properties.Resources.String_App_Start);
 
             SetDisabled(true);
@@ -406,6 +407,21 @@ namespace ContentTypeTextNet.MnMn.Setup
             if(e.LeftButton == MouseButtonState.Pressed) {
                 DragMove();
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.listLog.Dispatcher.Invoke(() => {
+                if(0 < this.listLog.Items.Count) {
+                    var logs = this.listLog.Items
+                        .Cast<LogItem>()
+                        .ToArray()
+                        .Select(l => $"{l.Timestamp:yyyy/MM/dd HH:mm:ss}:{l.Kind.ToString()[0]}: {l.Message}")
+                    ;
+
+                    Clipboard.SetText(string.Join(Environment.NewLine, logs));
+                }
+            });
         }
     }
 }
