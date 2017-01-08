@@ -59,6 +59,10 @@ namespace ContentTypeTextNet.MnMn.Setup
             }
         }
 
+        public static Uri ProjectUri { get; } = new Uri("https://bitbucket.org/sk_0520/mnmn");
+        //TODO: ページ作ってない
+        public static Uri HelpUri { get; } = new Uri("https://bitbucket.org/sk_0520/mnmn");
+
         public static string SettingBaseDirectoryPath
         {
             get

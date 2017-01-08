@@ -12,6 +12,9 @@
   
   Initialized="Window_Initialized"
 >
+  <Window.Resources>
+    <Thickness x:Key="DefaultMargin">8</Thickness>
+  </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -20,7 +23,25 @@
     </Grid.RowDefinitions>
 
     <StackPanel>
-      <TextBlock>MnMn セットアップ</TextBlock>
+      <Grid>
+        <!--<Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>-->
+        
+        <TextBlock>MnMn セットアップ</TextBlock>
+
+        <StackPanel HorizontalAlignment="Right">
+          <TextBlock x:Name="textVersion" />
+          <TextBlock><Hyperlink x:Name="commandOpenHelp" Click="commandOpenHelp_Click">help</Hyperlink></TextBlock>
+        </StackPanel>
+      </Grid>
+
+      <TextBlock TextWrapping="Wrap" Margin="{StaticResource DefaultMargin}">
+        本セットアップは新規に MnMn のダウンロード・アーカイブ展開・プログラム配置の諸々を自動実行するものです。
+        <LineBreak />
+        すでに MnMn を使用している方や自分で対応したい方は<Hyperlink x:Name="commandOpenProject" Click="commandOpenProject_Click">プロジェクトサイト</Hyperlink>から手動で操作してください。
+      </TextBlock>
     </StackPanel>
     
     <Grid Grid.Row="1">
@@ -31,7 +52,7 @@
         <RowDefinition />
       </Grid.RowDefinitions>
 
-      <Grid Grid.Row="0">
+      <Grid Grid.Row="0" Margin="{StaticResource DefaultMargin}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
@@ -42,13 +63,13 @@
         <TextBox x:Name="inputInstallDirectoryPath" Grid.Column="1" />
         <Button x:Name="commandResetInstallDirectoryPath" Grid.Column="2" Click="commandResetInstallDirectoryPath_Click">デフォルト</Button>
       </Grid>
-      
-      <StackPanel Grid.Row="1">
+
+      <StackPanel Grid.Row="1" Margin="{StaticResource DefaultMargin}">
         <CheckBox x:Name="selectCreateShortcut" IsChecked="True">デスクトップにショートカットを作成する</CheckBox>
         <CheckBox x:Name="selectInstallToExecute" IsChecked="True">インストール完了後に MnMn を起動する</CheckBox>
       </StackPanel>
 
-      <Grid Grid.Row="2">
+      <Grid Grid.Row="2" Margin="{StaticResource DefaultMargin}">
         <Grid.RowDefinitions>
           <RowDefinition />
           <RowDefinition />
@@ -70,7 +91,7 @@
 
       </Grid>
 
-      <ListBox x:Name="listLog" Grid.Row="3" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling">
+      <ListBox x:Name="listLog" Grid.Row="3" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling" Margin="{StaticResource DefaultMargin}">
         <ListBox.ItemContainerStyle>
           <Style TargetType="ListBoxItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />

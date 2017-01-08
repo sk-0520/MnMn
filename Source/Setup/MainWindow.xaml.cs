@@ -14,6 +14,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -294,10 +295,21 @@ namespace ContentTypeTextNet.MnMn.Setup
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        void OpenLink(Uri uri)
+        {
+            try {
+                Process.Start(uri.OriginalString);
+            }catch(Exception ex) {
+                AddLog(new LogItem(LogKind.Warning, ex.ToString()));
+            }
+        }
+
 #endregion
 
         private void Window_Initialized(object sender, EventArgs e)
         {
+            var asm = Assembly.GetExecutingAssembly().GetName();
+            this.textVersion.Text = $"{asm.Name}: {asm.Version}";
             ResetInstallDirectoryPath();
         }
 
@@ -314,6 +326,16 @@ namespace ContentTypeTextNet.MnMn.Setup
         private void commandClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void commandOpenProject_Click(object sender, RoutedEventArgs e)
+        {
+            OpenLink(Constants.ProjectUri);
+        }
+
+        private void commandOpenHelp_Click(object sender, RoutedEventArgs e)
+        {
+            OpenLink(Constants.HelpUri);
         }
     }
 }
