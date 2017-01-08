@@ -11,6 +11,13 @@
   Height="350" 
 >
   <Grid>
+    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="157,93,0,0" VerticalAlignment="Top" Width="75"/>
+    <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="27,39,0,0" VerticalAlignment="Top"/>
+    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="60,65,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+    <CheckBox x:Name="checkBox" Content="CheckBox" HorizontalAlignment="Left" Margin="27,162,0,0" VerticalAlignment="Top"/>
+    <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="75"/>
+    <Button x:Name="button1_Copy" Content="Button" HorizontalAlignment="Left" Margin="157,289,0,0" VerticalAlignment="Top" Width="75"/>
+
 
   </Grid>
 </Window>
