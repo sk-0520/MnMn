@@ -3,14 +3,19 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  mc:Ignorable="d"
+  
   
   Title="MnMn セットアップ" 
-  Width="350"
-  Height="550" 
+  Width="400"
+  Height="660" 
+  
+  WindowStartupLocation="CenterScreen"
   
   Initialized="Window_Initialized"
+  
+  
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
 >
   <Window.Resources>
     <Thickness x:Key="DefaultMargin">8</Thickness>
@@ -39,8 +44,9 @@
 
       <TextBlock TextWrapping="Wrap" Margin="{StaticResource DefaultMargin}">
         本セットアップは新規に MnMn のダウンロード・アーカイブ展開・プログラム配置の諸々を自動実行するものです。
-        <LineBreak />
         すでに MnMn を使用している方や自分で対応したい方は<Hyperlink x:Name="commandOpenProject" Click="commandOpenProject_Click">プロジェクトサイト</Hyperlink>から手動で操作してください。
+        <LineBreak />
+        本プログラムは<Hyperlink x:Name="commandOpenLicense" Click="commandOpenLicense_Click">GPL3でライセンス</Hyperlink>されていますのでインストール処理内容を確認したい場合はプロジェクトサイトで確認してください。
       </TextBlock>
     </StackPanel>
     
@@ -48,26 +54,44 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
-        <RowDefinition />
+        <RowDefinition Height="Auto"/>
         <RowDefinition />
       </Grid.RowDefinitions>
 
-      <Grid Grid.Row="0" Margin="{StaticResource DefaultMargin}">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <Label Grid.Column="0">インストール先</Label>
-        <TextBox x:Name="inputInstallDirectoryPath" Grid.Column="1" />
-        <Button x:Name="commandResetInstallDirectoryPath" Grid.Column="2" Click="commandResetInstallDirectoryPath_Click">デフォルト</Button>
-      </Grid>
-
-      <StackPanel Grid.Row="1" Margin="{StaticResource DefaultMargin}">
-        <CheckBox x:Name="selectCreateShortcut" IsChecked="True">デスクトップにショートカットを作成する</CheckBox>
-        <CheckBox x:Name="selectInstallToExecute" IsChecked="True">インストール完了後に MnMn を起動する</CheckBox>
+      <StackPanel Grid.Row="0" Margin="{StaticResource DefaultMargin}">
+        <TextBlock TextWrapping="Wrap" >
+          基本的に以下の設定を編集する必要はありません。
+          <LineBreak />
+          それでも編集しますか。
+        </TextBlock>
+        
+        <CheckBox x:Name="selectEdit" >内容を理解しているので編集する</CheckBox>
       </StackPanel>
+
+      <Grid Grid.Row="1" IsEnabled="{Binding IsChecked, ElementName=selectEdit}" >
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="{StaticResource DefaultMargin}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Column="0">インストール先</Label>
+          <TextBox x:Name="inputInstallDirectoryPath" Grid.Column="1" />
+          <Button x:Name="commandResetInstallDirectoryPath" Grid.Column="2" Click="commandResetInstallDirectoryPath_Click">デフォルト設定</Button>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Margin="{StaticResource DefaultMargin}">
+          <CheckBox x:Name="selectCreateShortcut" IsChecked="True">デスクトップにショートカットを作成する</CheckBox>
+          <CheckBox x:Name="selectInstallToExecute" IsChecked="True">インストール完了後に MnMn を起動する</CheckBox>
+        </StackPanel>
+      </Grid>
 
       <Grid Grid.Row="2" Margin="{StaticResource DefaultMargin}">
         <Grid.RowDefinitions>
@@ -76,17 +100,17 @@
           <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0">info</Label>
+        <Label Grid.Row="0" Grid.Column="0">1. 最新情報取得</Label>
         <ProgressBar x:Name="progressInformation" Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="3" />
 
-        <Label Grid.Row="1" Grid.Column="0">download</Label>
+        <Label Grid.Row="1" Grid.Column="0">2. アーカイブ取得</Label>
         <ProgressBar x:Name="progressDownload" Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="100" />
 
-        <Label Grid.Row="2" Grid.Column="0">expand</Label>
+        <Label Grid.Row="2" Grid.Column="0">3. ファイル配置</Label>
         <ProgressBar x:Name="progressExpand" Grid.Row="2" Grid.Column="1" Minimum="0" />
 
       </Grid>
@@ -120,10 +144,10 @@
       </ListBox>
     </Grid>
 
-    <Grid Grid.Row="2">
+    <Grid Grid.Row="2" Height="60">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
-        <ColumnDefinition />
+        <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
       
       <Button x:Name="commandInstall" Grid.Column="0" Click="commandInstall_Click">インストール開始</Button>

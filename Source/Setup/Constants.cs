@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.MnMn.Setup
         public static Uri ProjectUri { get; } = new Uri("https://bitbucket.org/sk_0520/mnmn");
         //TODO: ページ作ってない
         public static Uri HelpUri { get; } = new Uri("https://bitbucket.org/sk_0520/mnmn");
+        public static Uri LicenseUri { get; } = new Uri("http://www.gnu.org/licenses/gpl-3.0.html");
+        
 
         public static string SettingBaseDirectoryPath
         {

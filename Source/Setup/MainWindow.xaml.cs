@@ -337,5 +337,10 @@ namespace ContentTypeTextNet.MnMn.Setup
         {
             OpenLink(Constants.HelpUri);
         }
+
+        private void commandOpenLicense_Click(object sender, RoutedEventArgs e)
+        {
+            OpenLink(Constants.LicenseUri);
+        }
     }
 }
