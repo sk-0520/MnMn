@@ -11,6 +11,7 @@
   WindowStyle="None"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
+  BorderThickness="3"
   
   Initialized="Window_Initialized"
   
@@ -20,6 +21,9 @@
   <Window.Resources>
     <Thickness x:Key="DefaultMargin">8</Thickness>
   </Window.Resources>
+  <Window.BorderBrush>
+    <SolidColorBrush Color="{StaticResource Color_026}" />
+  </Window.BorderBrush>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -38,9 +42,9 @@
           <TextBlock VerticalAlignment="Center" FontSize="26" FontWeight="Bold">MnMn セットアップ</TextBlock>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Right">
+        <StackPanel HorizontalAlignment="Right" Margin="0, 0, 2, 0">
           <TextBlock x:Name="textVersion" TextAlignment="Right" />
-          <TextBlock TextAlignment="Right"><Hyperlink x:Name="commandOpenHelp" Click="commandOpenHelp_Click">HELP</Hyperlink></TextBlock>
+          <TextBlock TextAlignment="Right" FontWeight="Bold"><Hyperlink x:Name="commandOpenHelp" Click="commandOpenHelp_Click">HELP</Hyperlink></TextBlock>
         </StackPanel>
       </Grid>
 
@@ -67,7 +71,7 @@
           それでも編集しますか。
         </TextBlock>
         
-        <CheckBox x:Name="selectEdit" >内容を理解しているので編集する</CheckBox>
+        <CheckBox x:Name="selectEdit" >内容を理解しているので設定を編集する</CheckBox>
       </StackPanel>
 
       <Grid Grid.Row="1" IsEnabled="{Binding IsChecked, ElementName=selectEdit}" >
@@ -132,12 +136,12 @@
           <DataTemplate>
             <Grid>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat={}{0:yyyy/MM/dd HH:mm:ss}}" />
+              <TextBlock Grid.Column="0" Text="{Binding Timestamp, StringFormat={}{0:HH:mm:ss}}" />
               <TextBlock Grid.Column="1" TextAlignment="Center">
                 <TextBlock.Style>
                   <Style TargetType="TextBlock">

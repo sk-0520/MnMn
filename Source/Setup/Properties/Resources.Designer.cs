@@ -59,5 +59,104 @@ namespace ContentTypeTextNet.MnMn.Setup.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_End {
+            get {
+                return ResourceManager.GetString("String_App_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   開始 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Start {
+            get {
+                return ResourceManager.GetString("String_App_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最新アーカイブ取得 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_DownloadArchive {
+            get {
+                return ResourceManager.GetString("String_DownloadArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アーカイブデータ長未取得 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_DownloadArchive_Disabled_ContentLength {
+            get {
+                return ResourceManager.GetString("String_DownloadArchive_Disabled_ContentLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アーカイブデータ({0} byte) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_DownloadArchive_Enabled_ContentLength_Format {
+            get {
+                return ResourceManager.GetString("String_DownloadArchive_Enabled_ContentLength_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アーカイブデータ取得終了(所要時間: ) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_DownloadArchive_End_Format {
+            get {
+                return ResourceManager.GetString("String_DownloadArchive_End_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アーカイブデータ取得開始 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_DownloadArchive_Start {
+            get {
+                return ResourceManager.GetString("String_DownloadArchive_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アーカイブ展開・ファイル配置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Expand {
+            get {
+                return ResourceManager.GetString("String_Expand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最新情報取得開始 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_GetArchiveInformation {
+            get {
+                return ResourceManager.GetString("String_GetArchiveInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最新情報: バージョン {0}, Uri = {1} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_GetArchiveInformation_Fromat {
+            get {
+                return ResourceManager.GetString("String_GetArchiveInformation_Fromat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   HTTP通信: {0}, ステータスコード: {1} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_Http_Response_Header_Format {
+            get {
+                return ResourceManager.GetString("String_Http_Response_Header_Format", resourceCulture);
+            }
+        }
     }
 }

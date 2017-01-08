@@ -86,13 +86,22 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         }
 
-        async Task<Tuple<Uri, Version>> GetArchiveUriAsync()
+        async Task<Tuple<Uri, Version>> GetArchiveInformationAsync()
         {
-            AddMessageLog("get archive uri");
+            AddMessageLog(Properties.Resources.String_GetArchiveInformation);
 
             var client = new HttpClient();
 
-            var xmlSource = await client.GetStringAsync(Constants.UpdateUri);
+            var response = await client.GetAsync(Constants.UpdateUri);
+            AddMessageLog(
+                string.Format(
+                    Properties.Resources.String_Http_Response_Header_Format,
+                    response.IsSuccessStatusCode,
+                    response.StatusCode
+                )
+            );
+
+            var xmlSource = await response.Content.ReadAsStringAsync();
             SetProgressValue(this.progressInformation, 1);
 
             var xml = XElement.Parse(xmlSource);
@@ -130,16 +139,39 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         async Task<bool> DownloadArchiveAsync(Uri uri, string savePath)
         {
+            AddMessageLog(Properties.Resources.String_DownloadArchive);
+
             var client = new HttpClient();
 
             var downloadTotalSize = 0;
 
             var response = await client.GetAsync(uri);
+            AddMessageLog(
+                string.Format(
+                    Properties.Resources.String_Http_Response_Header_Format, 
+                    response.IsSuccessStatusCode, 
+                    response.StatusCode
+                )
+            );
+            
 
             var downloadFileSize = response.Content.Headers.ContentLength;
             if(!downloadFileSize.HasValue) {
+                AddMessageLog(Properties.Resources.String_DownloadArchive_Disabled_ContentLength);
                 this.progressDownload.IsIndeterminate = true;
+            } else {
+                AddMessageLog(
+                    string.Format(
+                        Properties.Resources.String_DownloadArchive_Enabled_ContentLength_Format,
+                        downloadFileSize.Value
+                    )
+                );
             }
+
+            AddMessageLog(Properties.Resources.String_DownloadArchive_Start);
+
+            var sw = new Stopwatch();
+            sw.Start();
 
             using(var archiveStream = await response.Content.ReadAsStreamAsync()) {
                 var buffer = new byte[Constants.DownloadBufferSize];
@@ -174,11 +206,21 @@ namespace ContentTypeTextNet.MnMn.Setup
                 }
             }
 
+            sw.Stop();
+            AddMessageLog(
+                string.Format(
+                    Properties.Resources.String_DownloadArchive_End_Format,
+                    sw.Elapsed
+                )
+            );
+
             return true;
         }
 
         Task ExpandAsync(string archivePath, string installPath)
         {
+            AddMessageLog(Properties.Resources.String_Expand);
+
             return Task.Run(() => {
                 using(var archive = ZipFile.OpenRead(archivePath)) {
                     var entries = archive.Entries
@@ -198,7 +240,8 @@ namespace ContentTypeTextNet.MnMn.Setup
                         if(!Directory.Exists(dirPath)) {
                             Directory.CreateDirectory(dirPath);
                         }
-                        AddMessageLog($"{expandPath}");
+                        
+                        AddMessageLog($"{entry.FullName}, {entry.Length} byte");
                         entry.ExtractToFile(expandPath, true);
                         SetProgressValue(this.progressExpand, ++fileCount);
 #if DUMMY_WAIT
@@ -211,9 +254,15 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         async Task InstallCoreAsync(string installPath, bool createShortcut, bool installToExecute)
         {
-            var archiveInfo = await GetArchiveUriAsync();
-            AddMessageLog($"archive uri: {archiveInfo.Item1} , {archiveInfo.Item2}");
-
+            var archiveInfo = await GetArchiveInformationAsync();
+            AddMessageLog(
+                string.Format(
+                    Properties.Resources.String_GetArchiveInformation_Fromat,
+                    archiveInfo.Item1,
+                    archiveInfo.Item2
+                )
+            );
+            
             // bitbucket を信じる！
             var downloadName = archiveInfo.Item1.Segments.Last();
             var downloadDirPath = Environment.ExpandEnvironmentVariables(Constants.ArchiveDirectoryPath);
@@ -279,7 +328,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             this.progressDownload.Value = 0;
             this.progressExpand.Value = 0;
 
-            AddLog(new LogItem(LogKind.Message, "start"));
+            AddMessageLog(Properties.Resources.String_App_Start);
 
             SetDisabled(true);
             return InstallCoreAsync(installPath, createShortcut, installToExecute).ContinueWith(t => {
@@ -291,7 +340,7 @@ namespace ContentTypeTextNet.MnMn.Setup
                 }
                 SetDisabled(false);
 
-                AddLog(new LogItem(LogKind.Message, "end"));
+                AddMessageLog(Properties.Resources.String_App_End);
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
