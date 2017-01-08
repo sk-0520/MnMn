@@ -19,6 +19,18 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         #region property
 
+        public static string ProjectName
+        {
+            get
+            {
+#if DEBUG
+                return projectName + "-debug";
+#else
+                return projectName;
+#endif
+            }
+        }
+
         public static string MutexName
         {
             get
@@ -50,17 +62,16 @@ namespace ContentTypeTextNet.MnMn.Setup
             get
             {
                 var basePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-#if DEBUG
-                return Path.Combine(basePath, projectName + "-debug");
-#else
-                return Path.Combine(basePath, projectName);
+#if RAM
+                basePath = @"%RAM%\mnmn-setup-root";
 #endif
+                return Path.Combine(basePath, ProjectName);
             }
         }
 
         public static string InstallDirectoryPath { get; } = Path.Combine(SettingBaseDirectoryPath, "application");
         public static string ArchiveDirectoryPath { get; } = Path.Combine(SettingBaseDirectoryPath, "archive");
 
-        #endregion
+#endregion
     }
 }
