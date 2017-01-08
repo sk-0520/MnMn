@@ -9,6 +9,8 @@
   Title="MnMn セットアップ" 
   Width="250"
   Height="350" 
+  
+  Initialized="Window_Initialized"
 >
   <Grid>
     <Grid.RowDefinitions>
@@ -21,8 +23,15 @@
       <TextBlock>MnMn セットアップ</TextBlock>
     </StackPanel>
     
-    <StackPanel Grid.Row="1">
-      <Grid>
+    <Grid Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
@@ -30,13 +39,27 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Column="0">インストール先</Label>
-        <TextBox x:Name="inputInstallDirectoryPath"  Grid.Column="1" />
-        <Button  Grid.Column="2">デフォルト</Button>
+        <TextBox x:Name="inputInstallDirectoryPath" Grid.Column="1" />
+        <Button x:Name="commandResetInstallDirectoryPath" Grid.Column="2" Click="commandResetInstallDirectoryPath_Click">デフォルト</Button>
+      </Grid>
+      
+      <StackPanel Grid.Row="1">
+        <CheckBox x:Name="selectCreateShortcut" IsChecked="True">デスクトップにショートカットを作成する</CheckBox>
+        <CheckBox x:Name="selectInstallToExecute" IsChecked="True">インストール完了後に MnMn を起動する</CheckBox>
+      </StackPanel>
+
+      <Grid Grid.Row="2">
       </Grid>
 
-      <CheckBox x:Name="selectCreateShortcut">デスクトップにショートカットを作成する</CheckBox>
-      <CheckBox x:Name="selectInstallToExecute">インストール完了後に MnMn を起動する</CheckBox>
-    </StackPanel>
+      <ListView x:Name="listLog" Grid.Row="3">
+        <ListView.View>
+          <GridView>
+            <GridViewColumn DisplayMemberBinding="{Binding Kind}" Header="Kind" />
+            <GridViewColumn DisplayMemberBinding="{Binding Message}" Header="Message" />
+          </GridView>
+        </ListView.View>
+      </ListView>
+    </Grid>
 
     <Grid Grid.Row="2">
       <Grid.ColumnDefinitions>
@@ -44,8 +67,8 @@
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
       
-      <Button x:Name="commandInstall" Grid.Column="0">インストール開始</Button>
-      <Button x:Name="commandClose" Grid.Column="1">閉じる</Button>
+      <Button x:Name="commandInstall" Grid.Column="0" Click="commandInstall_Click">インストール開始</Button>
+      <Button x:Name="commandClose" Grid.Column="1" Click="commandClose_Click">閉じる</Button>
     </Grid>
 
 
