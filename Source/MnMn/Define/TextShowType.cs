@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     public enum TextShowKind
     {
+        None = -10, // Shadow は 0 始まりだった故の対応
         Shadow,
         Outline,
     }
