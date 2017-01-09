@@ -129,18 +129,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region command
 
-        public ICommand OpenLinkCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        Mediation.Logger.Warning($"{o}");
-                    }
-                );
-            }
-        }
-
         public ICommand OpenRelationVideo
         {
             get
@@ -1107,7 +1095,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     return Task.CompletedTask;
                 }
                 var videoInformation = t.Result;
-                return LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                if(SmileVideoInformationUtility.CheckCanPlay(videoInformation, Mediation.Logger)) {
+                    return LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                } else {
+                    return Task.CompletedTask;
+                }
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
