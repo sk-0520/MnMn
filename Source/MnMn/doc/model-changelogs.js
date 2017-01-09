@@ -132,7 +132,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': "#356: UI 表示状態遷移の `<`, `>` ボタンに対する MinWidth, MinHeight は除外して Content (Template) に依存した大きさにする",
+						'comments': [
+							'リロード・スクロール用の UI を各種コンテンツ(タブヘッダとか)に合わせるようにした'
+						]
 					},
 					{
 						'revision': '',

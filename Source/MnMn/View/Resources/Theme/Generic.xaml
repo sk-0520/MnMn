@@ -37,6 +37,7 @@
   <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
   <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
   <sys:Double x:Key="BigIndentWidth">40</sys:Double>
+  <Thickness x:Key="BitMargin" Left="{StaticResource BitMarginWidth}" Top="{StaticResource BitMarginWidth}" Right="{StaticResource BitMarginWidth}" Bottom="{StaticResource BitMarginWidth}" />
   <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="0" Bottom="0" />
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMarginWidth}" Right="0" Bottom="0" />
   <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />
@@ -251,6 +252,7 @@
         </DataTemplate>
       </Setter.Value>
     </Setter>
+    <Setter Property="Padding" Value="{StaticResource BitMargin}" />
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="MinWidth" Value="0" />
     <!--なんできえるかねー-->
@@ -272,6 +274,9 @@
   <!-- RepeatButton -->
   <Style x:Key="ScrollButton" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
     <Setter Property="Focusable" Value="False" />
+    <Setter Property="Padding" Value="{StaticResource BitMargin}" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
   </Style>
 
   <Style x:Key="Indent" TargetType="Separator">
@@ -366,6 +371,8 @@
   <Style x:Key="TabReloadButton" TargetType="Button" BasedOn="{StaticResource ReloadButton}">
     <Setter Property="Command" Value="{Binding ReloadCommand}" />
     <Setter Property="IsEnabled" Value="{Binding CanLoad}" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
   </Style>
 
   <Style x:Key="TabHeader" TargetType="StackPanel">
