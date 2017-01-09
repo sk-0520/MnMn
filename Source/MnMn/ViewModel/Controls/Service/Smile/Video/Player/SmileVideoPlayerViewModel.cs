@@ -1274,15 +1274,65 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
         }
 
+        /// <summary>
+        /// 再生中・ダウンロード中のデータは再生できないものとする。
+        /// </summary>
+        /// <param name="videoInformation"></param>
+        /// <returns></returns>
+        bool CheckCanPlay(SmileVideoInformationViewModel videoInformation)
+        {
+            if(videoInformation.IsDownloading) {
+                Mediation.Logger.Information($"downloading: {videoInformation.UserId}");
+                return false;
+            }
+            if(videoInformation.IsPlaying) {
+                Mediation.Logger.Information($"playing: {videoInformation.UserId}");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 次(前)の動画を安全に取得する。
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>動画。null で元動画。</returns>
+        SmileVideoInformationViewModel GetSafeChangeItem(Func<SmileVideoInformationViewModel> getNextItem)
+        {
+            var current = Information;
+            var targetViewModel = getNextItem();
+
+            while(!CheckCanPlay(targetViewModel)) {
+                targetViewModel = getNextItem();
+                if(targetViewModel == current) {
+                    // 一周したならもう何もしない
+                    return null;
+                }
+            }
+
+            return targetViewModel;
+        }
+
         Task LoadNextPlayListItemAsync()
         {
-            var targetViewModel = PlayListItems.ChangeNextItem();
+            var targetViewModel = GetSafeChangeItem(PlayListItems.ChangeNextItem);
+
+            if(targetViewModel == null) {
+                return Task.CompletedTask;
+            }
+
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
         Task LoadPrevPlayListItemAsync()
         {
-            var targetViewModel = PlayListItems.ChangePrevItem();
+            var targetViewModel = GetSafeChangeItem(PlayListItems.ChangePrevItem);
+
+            if(targetViewModel == null) {
+                return Task.CompletedTask;
+            }
+
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
