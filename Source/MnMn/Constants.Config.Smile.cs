@@ -361,7 +361,7 @@ namespace ContentTypeTextNet.MnMn.MnMn
         /// <summary>
         /// コメントのテキスト描画方法。
         /// </summary>
-        public static TextShowKind SettingServiceSmileVideoCommentTextShowKind => appConfig.Get("setting-service-smile-smilevideo-comment-text_show_kind", s => (TextShowKind)Enum.Parse(typeof(TextShowKind), s));
+        public static TextShowMode SettingServiceSmileVideoCommentTextShowMode => appConfig.Get("setting-service-smile-smilevideo-comment-text_show_mode", s => (TextShowMode)Enum.Parse(typeof(TextShowMode), s));
         /// <summary>
         /// コメントを自動スクロールするか。
         /// </summary>
