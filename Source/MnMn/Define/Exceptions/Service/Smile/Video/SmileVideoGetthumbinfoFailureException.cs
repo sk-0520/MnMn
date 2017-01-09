@@ -23,7 +23,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Exceptions.Service.Smile.Video
 {
-    public class SmileVideoGetthumbinfoFailureException: System.Exception
+    public class SmileVideoGetthumbinfoFailureException: ApplicationException
     {
         public SmileVideoGetthumbinfoFailureException(string videoId, RawSmileVideoThumbResponseModel thumb)
             : base(videoId)
