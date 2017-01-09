@@ -318,7 +318,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var selectVideoInformation = o as SmileVideoInformationViewModel;
-                        if(CheckCanPlay(selectVideoInformation)) {
+                        if(SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger)) {
                             LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                         }
                     }
@@ -1277,25 +1277,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         }
 
         /// <summary>
-        /// 再生中・ダウンロード中のデータは再生できないものとする。
-        /// </summary>
-        /// <param name="videoInformation"></param>
-        /// <returns></returns>
-        bool CheckCanPlay(SmileVideoInformationViewModel videoInformation)
-        {
-            if(videoInformation.IsDownloading) {
-                Mediation.Logger.Information($"downloading: {videoInformation.VideoId}");
-                return false;
-            }
-            if(videoInformation.IsPlaying) {
-                Mediation.Logger.Information($"playing: {videoInformation.VideoId}");
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// 次(前)の動画を安全に取得する。
         /// </summary>
         /// <param name=""></param>
@@ -1305,7 +1286,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             var current = Information;
             var targetViewModel = getNextItem();
 
-            while(!CheckCanPlay(targetViewModel)) {
+            while(!SmileVideoInformationUtility.CheckCanPlay(targetViewModel, Mediation.Logger)) {
                 targetViewModel = getNextItem();
                 if(targetViewModel == current) {
                     // 一周したならもう何もしない
