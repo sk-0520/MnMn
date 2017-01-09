@@ -91,12 +91,20 @@
                   </Setter.Value>
                 </Setter>
               </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="None">
+              <DataTrigger Binding="{Binding TextShowKind}" Value="Double">
                 <Setter Property="Content">
                   <Setter.Value>
                     <Grid>
+                      <TextBlock Style="{StaticResource CommentShadow}" />
                       <TextBlock Style="{StaticResource CommentText}" />
                     </Grid>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TextShowKind}" Value="None">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <TextBlock Style="{StaticResource CommentText}" />
                   </Setter.Value>
                 </Setter>
               </DataTrigger>

@@ -1638,7 +1638,8 @@
               <Label Grid.Row="7" Grid.Column="0" Content="テキスト描画" DockPanel.Dock="Left" />
               <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
                 <RadioButton VerticalAlignment="Center" Content="フチなし" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.None}}" />
-                <RadioButton VerticalAlignment="Center" Content="影付き" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
+                <RadioButton VerticalAlignment="Center" Content="影(シンプル)" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Double}}" />
+                <RadioButton VerticalAlignment="Center" Content="影(ぼかし)" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Shadow}}" />
                 <RadioButton VerticalAlignment="Center" Content="縁取り" IsChecked="{Binding PlayerTextShowKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowKind.Outline}}" />
               </StackPanel>
             </Grid>
