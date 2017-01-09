@@ -2071,6 +2071,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 });
             }
             SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
+            TagItems.Clear();
         }
 
         protected override Task StopPrevProcessAsync()
