@@ -318,7 +318,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var selectVideoInformation = o as SmileVideoInformationViewModel;
-                        LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        if(CheckCanPlay(selectVideoInformation)) {
+                            LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        }
                     }
                 );
             }
@@ -1282,11 +1284,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool CheckCanPlay(SmileVideoInformationViewModel videoInformation)
         {
             if(videoInformation.IsDownloading) {
-                Mediation.Logger.Information($"downloading: {videoInformation.UserId}");
+                Mediation.Logger.Information($"downloading: {videoInformation.VideoId}");
                 return false;
             }
             if(videoInformation.IsPlaying) {
-                Mediation.Logger.Information($"playing: {videoInformation.UserId}");
+                Mediation.Logger.Information($"playing: {videoInformation.VideoId}");
                 return false;
             }
 
@@ -1897,9 +1899,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // TODO:forceEconomyは今のところ無効
 
-            foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
-                item.IsPlaying = false;
-            }
+            //foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
+            //    item.IsPlaying = false;
+            //}
 
             if(PlayListItems.All(i => i != videoInformation)) {
                 // プレイリストに存在しない動画は追加する
