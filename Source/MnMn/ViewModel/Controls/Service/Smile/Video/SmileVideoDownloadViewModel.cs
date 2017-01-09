@@ -361,7 +361,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         stopWatch.Stop();
                         Mediation.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
                         // 保険
-                        Information.IsDownloading = false;
+                        if(Information.IsDownloading) {
+                            Information.IsDownloading = false;
+                        }
                     }
                 }
             }
@@ -693,6 +695,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected virtual void InitializeStatus()
         {
+            // ダウンロード終了と強制で判断。ここじゃダメなんだろうなぁ、やだなぁ
+            if(Information != null) {
+                Information.IsDownloading = false;
+            }
+
             VideoLoadedSize = initVideoLoadSize;
             VideoTotalSize = initVideoTotalSize;
             VideoLoadState = LoadState.None;

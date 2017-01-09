@@ -976,7 +976,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             foreach(var prevItem in RelationVideoItems) {
                 prevItem.DecrementReference();
             }
-            RelationVideoItems.InitializeRange(items);
+            if(!IsViewClosed) {
+                Application.Current.Dispatcher.Invoke(() => {
+                    RelationVideoItems.InitializeRange(items);
+                });
+            }
         }
 
         protected virtual void CheckTagPedia()
@@ -2126,7 +2130,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 });
             }
             SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
-            TagItems.Clear();
+            //TagItems.Clear();
         }
 
         protected override Task StopPrevProcessAsync()
