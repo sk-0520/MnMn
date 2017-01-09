@@ -147,6 +147,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#353: 更新履歴 #195 内容の要素が間違ってる、属性だよ'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
@@ -200,7 +204,7 @@
 						'revision': 'f651b25ab505bbaa0e2021530fa89c1436e434a5',
 						'subject': '#195: 通信にパスワード的な情報が含まれている際にログ出力は生で吐かないようにする',
 						'comments': [
-							'定義ファイルの URI 定義(モデル: ContentTypeTextNet.MnMn.MnMn.Model.UriItemModel, XPath: /uri/item) のうち以下の要素が各保護用設定とし、初期値は偽とする',
+							'定義ファイルの URI 定義(モデル: ContentTypeTextNet.MnMn.MnMn.Model.UriItemModel, XPath: /uri/item) のうち以下の属性が各保護用設定とし、初期値は偽とする',
 							' * safety-uri',
 							' * safety-header',
 							' * safety-parameter',
