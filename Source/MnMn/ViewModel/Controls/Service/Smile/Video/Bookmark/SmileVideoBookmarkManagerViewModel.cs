@@ -537,8 +537,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             if(playList.Any()) {
                 var vm = new SmileVideoPlayerViewModel(Mediation);
                 vm.IsRandomPlay = isRandom;
-                var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-                Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+                try {
+                    var task = vm.LoadAsync(playList, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                    Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, vm, ShowViewState.Foreground));
+                } catch(SmileVideoCanNotPlayItemInPlayListException ex) {
+                    Mediation.Logger.Warning(ex);
+                    vm.Dispose();
+                }
             } else {
                 Mediation.Logger.Warning($"{node.Name}: {nameof(playList)}: empty");
             }

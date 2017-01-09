@@ -8,7 +8,8 @@ MnMn は Windows 上で動作するWebサービス専用ブラウザです。
 
 # ダウンロード
 
-[ダウンロード](https://bitbucket.org/sk_0520/mnmn/downloads)を参照。
+ * インストーラー: [自動セットアップ](https://bitbucket.org/sk_0520/mnmn/downloads/MnMn-Setup.exe)
+ * アーカイブ手動展開: [ダウンロード](https://bitbucket.org/sk_0520/mnmn/downloads)を参照。
 
 
 # フォーラム

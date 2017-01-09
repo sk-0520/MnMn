@@ -22,9 +22,11 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public enum TextShowKind
+    public enum TextShowMode
     {
-        Shadow,
+        None,
+        SimpleShadow,
+        BlurShadow,
         Outline,
     }
 }

@@ -1330,6 +1330,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(IsPlaying) {
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileVideo, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
+            } else if(IsDownloading) {
+                Mediation.Logger.Warning($"[{VideoId}] {nameof(IsDownloading)}: {IsDownloading}");
+                return Task.CompletedTask;
             } else {
                 if(!openPlayerInNewWindow) {
                     var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));

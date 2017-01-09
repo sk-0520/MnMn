@@ -253,9 +253,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         public bool FontItalic { get { return Setting.FontItalic; } }
 
-        public TextShowKind TextShowKind
+        public TextShowMode TextShowMode
         {
-            get { return Setting.TextShowKind; }
+            get { return Setting.TextShowMode; }
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         internal void ChangeTextShow()
         {
             var propertyNames = new[] {
-                nameof(TextShowKind),
+                nameof(TextShowMode),
                 nameof(ActualShadow),
                 nameof(ActualStroke),
             };

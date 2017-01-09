@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         /// コメント描画方法。
         /// </summary>
         [DataMember, IsDeepClone]
-        public TextShowKind TextShowKind { get; set; } = Constants.SettingServiceSmileVideoCommentTextShowKind;
+        public TextShowMode TextShowMode { get; set; } = Constants.SettingServiceSmileVideoCommentTextShowMode;
 
 
         #endregion

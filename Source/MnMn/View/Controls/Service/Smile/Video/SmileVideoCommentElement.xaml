@@ -21,6 +21,23 @@
     <cttn_sl_view_converter:BooleanFontStyleConverter x:Key="BooleanFontStyleConverter" />
     <cttn_sl_view_converter:BooleanFontWeightConverter x:Key="BooleanFontWeightConverter" />
     <app_view_converter:OutlinedTextBlockFontSizeToStrokeConverter x:Key="OutlinedTextBlockFontSizeToStrokeConverter" />
+
+    <Style x:Key="CommentText" TargetType="TextBlock">
+      <Setter Property="FontSize" Value="{Binding FontSize}" />
+      <Setter Property="FontFamily" Value="{Binding FontFamily}" />
+      <Setter Property="Foreground" Value="{Binding ActualForeground}" />
+      <Setter Property="FontWeight" Value="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}" />
+      <Setter Property="FontStyle" Value="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}" />
+      <Setter Property="Text" Value="{Binding ActualContent}" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="CommentShadow" TargetType="TextBlock" BasedOn="{StaticResource CommentText}">
+      <Setter Property="Foreground" Value="{Binding ActualShadow}" />
+      <Setter Property="Margin" Value="1,1,0,0" />
+    </Style>
+
   </UserControl.Resources>
   <Border>
     <Border.Style>
@@ -38,40 +55,28 @@
         <ContentControl.Style>
           <Style TargetType="ContentControl">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="Outline">
+              <DataTrigger Binding="{Binding TextShowMode}" Value="None">
                 <Setter Property="Content">
                   <Setter.Value>
-                    <app_view_controls:OutlinedTextBlock
-                    FontSize="{Binding FontSize}"
-                    FontFamily="{Binding FontFamily}"
-                    Fill="{Binding ActualForeground}"
-                    StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
-                    FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                    FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                    Text="{Binding ActualContent}"
-                    Stroke="{Binding ActualStroke}"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Center"
-                  />
+                    <TextBlock Style="{StaticResource CommentText}" />
                   </Setter.Value>
                 </Setter>
               </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="Shadow">
+              <DataTrigger Binding="{Binding TextShowMode}" Value="SimpleShadow">
                 <Setter Property="Content">
                   <Setter.Value>
                     <Grid>
-                      <TextBlock
-                      FontSize="{Binding FontSize}"
-                      FontFamily="{Binding FontFamily}"
-                      FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
-                      FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
-                      Text="{Binding ActualContent}"
-                      Opacity="0.8"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Center"
-                      Foreground="{Binding ActualShadow}"
-                    >
-                        <TextBlock.Margin>1,1,0,0</TextBlock.Margin>
+                      <TextBlock Style="{StaticResource CommentShadow}" Opacity="0.6" />
+                      <TextBlock Style="{StaticResource CommentText}" />
+                    </Grid>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TextShowMode}" Value="BlurShadow">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Grid>
+                      <TextBlock Style="{StaticResource CommentShadow}" Opacity="0.8">
                         <TextBlock.Effect>
                           <BlurEffect
                             Radius="2"
@@ -79,17 +84,26 @@
                           />
                         </TextBlock.Effect>
                       </TextBlock>
-                      <TextBlock
+                      <TextBlock Style="{StaticResource CommentText}" />
+                    </Grid>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TextShowMode}" Value="Outline">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <app_view_controls:OutlinedTextBlock
                       FontSize="{Binding FontSize}"
                       FontFamily="{Binding FontFamily}"
-                      Foreground="{Binding ActualForeground}"
+                      Fill="{Binding ActualForeground}"
+                      StrokeThickness="{Binding FontSize, Converter={StaticResource OutlinedTextBlockFontSizeToStrokeConverter}}"
                       FontWeight="{Binding FontBold, Converter={StaticResource BooleanFontWeightConverter}}"
                       FontStyle="{Binding FontItalic, Converter={StaticResource BooleanFontStyleConverter}}"
                       Text="{Binding ActualContent}"
+                      Stroke="{Binding ActualStroke}"
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Center"
                     />
-                    </Grid>
                   </Setter.Value>
                 </Setter>
               </DataTrigger>

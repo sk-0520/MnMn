@@ -22,6 +22,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
@@ -167,6 +168,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             return result;
         }
 
-    #endregion
-}
+        /// <summary>
+        /// 再生中・ダウンロード中のデータは再生できないものとする。
+        /// </summary>
+        /// <param name="videoInformation"></param>
+        /// <returns></returns>
+        public static bool CheckCanPlay(SmileVideoInformationViewModel videoInformation, ILogger logger)
+        {
+            if(videoInformation.IsDownloading) {
+                logger.Information($"downloading: {videoInformation.VideoId}");
+                return false;
+            }
+            if(videoInformation.IsPlaying) {
+                logger.Information($"playing: {videoInformation.VideoId}");
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
+    }
 }

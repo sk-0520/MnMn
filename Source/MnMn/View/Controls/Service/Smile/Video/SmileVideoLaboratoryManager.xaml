@@ -73,7 +73,7 @@
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
               <Button Command="{Binding PlayInputFileCommand}">実行</Button>
               <Separator Style="{StaticResource NormalIndent}" />
-              <TextBlock VerticalAlignment="Center">不明確で間違ってるクソみたいなユーザー入力のファイルパスを全面的信じるのでそこんとこヨロシク</TextBlock>
+              <TextBlock VerticalAlignment="Center" TextWrapping="Wrap">不明確で間違ってるクソみたいなユーザー入力のファイルパスを全面的に信じるのでそこんとこヨロシク</TextBlock>
             </StackPanel>
 
           </Grid>

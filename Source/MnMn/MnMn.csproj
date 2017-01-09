@@ -227,6 +227,7 @@
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
+    <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoCanNotPlayItemInPlayListException.cs" />
     <Compile Include="Define\Laboratory\Service\Smile\Video\CommentCreateType.cs" />
     <Compile Include="Define\Laboratory\VideoCreateType.cs" />
     <Compile Include="Define\ScriptState.cs" />
@@ -277,7 +278,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="Define\SourceLoadState.cs" />
-    <Compile Include="Define\TextShowType.cs" />
+    <Compile Include="Define\TextShowMode.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
     <Compile Include="IF\Control\IDraggable.cs" />
     <Compile Include="IF\Control\IDropable.cs" />
@@ -485,6 +486,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\help\html\tune.ja-jp.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\help\html\general-uninstall.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="doc\License\MnMn-GPLv3.html">

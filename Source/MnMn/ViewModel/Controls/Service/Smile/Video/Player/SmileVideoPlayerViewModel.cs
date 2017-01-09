@@ -129,18 +129,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         #region command
 
-        public ICommand OpenLinkCommand
-        {
-            get
-            {
-                return CreateCommand(
-                    o => {
-                        Mediation.Logger.Warning($"{o}");
-                    }
-                );
-            }
-        }
-
         public ICommand OpenRelationVideo
         {
             get
@@ -148,7 +136,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var videoInformation = (SmileVideoInformationViewModel)o;
-                        LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        if(SmileVideoInformationUtility.CheckCanPlay(videoInformation, Mediation.Logger)) {
+                            LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        }
                     }
                 );
             }
@@ -318,7 +308,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 return CreateCommand(
                     o => {
                         var selectVideoInformation = o as SmileVideoInformationViewModel;
-                        LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        if(SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger)) {
+                            LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
+                        }
+                    },
+                    o => {
+                        var selectVideoInformation = o as SmileVideoInformationViewModel;
+                        if(Information == selectVideoInformation) {
+                            // 自分自身は活性
+                            return true;
+                        }
+                        // よそで何かしているかもしれない
+                        return SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger);
                     }
                 );
             }
@@ -664,7 +665,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             PlayListItems.AddRange(videoInformations);
             CanPlayNextVieo.Value = true;
-            return LoadAsync(PlayListItems.GetFirstItem(), false, thumbCacheSpan, imageCacheSpan);
+
+            // 再生(DL)可能か
+            var firstVideo = PlayListItems.GetFirstItem();
+            if(!SmileVideoInformationUtility.CheckCanPlay(firstVideo, Mediation.Logger)) {
+                if(PlayListItems.CanItemChange) {
+                    firstVideo = GetSafeChangeItem(firstVideo, PlayListItems.ChangeNextItem);
+                } else {
+                    firstVideo = null;
+                }
+                if(firstVideo == null) {
+                    // もうどうしようもねーな
+                    throw new SmileVideoCanNotPlayItemInPlayListException(videoInformations);
+                }
+            }
+
+            return LoadAsync(firstVideo, false, thumbCacheSpan, imageCacheSpan);
         }
 
         void ChangePlayerSizeFromPercent(int percent)
@@ -946,16 +962,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     RelationVideoLoadState = LoadState.Failure;
                     return Task.CompletedTask;
                 } else {
-                    foreach(var prevItem in RelationVideoItems) {
-                        prevItem.DecrementReference();
-                    }
-                    RelationVideoItems.InitializeRange(items);
+                    SetRelationVideoItems(items);
                     var loader = new SmileVideoInformationLoader(items);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
                         RelationVideoLoadState = LoadState.Loaded;
                     });
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void SetRelationVideoItems(IEnumerable<SmileVideoInformationViewModel> items)
+        {
+            foreach(var prevItem in RelationVideoItems) {
+                prevItem.DecrementReference();
+            }
+            if(!IsViewClosed) {
+                Application.Current.Dispatcher.Invoke(() => {
+                    RelationVideoItems.InitializeRange(items);
+                });
+            }
         }
 
         protected virtual void CheckTagPedia()
@@ -1098,7 +1123,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     return Task.CompletedTask;
                 }
                 var videoInformation = t.Result;
-                return LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                if(SmileVideoInformationUtility.CheckCanPlay(videoInformation, Mediation.Logger)) {
+                    return LoadAsync(videoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
+                } else {
+                    return Task.CompletedTask;
+                }
             }, cancel.Token, TaskContinuationOptions.AttachedToParent, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -1269,15 +1298,45 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
         }
 
+        /// <summary>
+        /// 次(前)の動画を安全に取得する。
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns>動画。null で元動画。</returns>
+        SmileVideoInformationViewModel GetSafeChangeItem(SmileVideoInformationViewModel current, Func<SmileVideoInformationViewModel> getNextItem)
+        {
+            var targetViewModel = getNextItem();
+
+            while(!SmileVideoInformationUtility.CheckCanPlay(targetViewModel, Mediation.Logger)) {
+                targetViewModel = getNextItem();
+                if(targetViewModel == current) {
+                    // 一周したならもう何もしない
+                    return null;
+                }
+            }
+
+            return targetViewModel;
+        }
+
         Task LoadNextPlayListItemAsync()
         {
-            var targetViewModel = PlayListItems.ChangeNextItem();
+            var targetViewModel = GetSafeChangeItem(Information, PlayListItems.ChangeNextItem);
+
+            if(targetViewModel == null) {
+                return Task.CompletedTask;
+            }
+
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
         Task LoadPrevPlayListItemAsync()
         {
-            var targetViewModel = PlayListItems.ChangePrevItem();
+            var targetViewModel = GetSafeChangeItem(Information, PlayListItems.ChangePrevItem);
+
+            if(targetViewModel == null) {
+                return Task.CompletedTask;
+            }
+
             return LoadAsync(targetViewModel, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
         }
 
@@ -1373,7 +1432,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentStyleSetting.Fps = Constants.SettingServiceSmileVideoPlayerCommentFps;
             CommentStyleSetting.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
             CommentStyleSetting.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
-            CommentStyleSetting.TextShowKind = Constants.SettingServiceSmileVideoCommentTextShowKind;
+            CommentStyleSetting.TextShowMode = Constants.SettingServiceSmileVideoCommentTextShowMode;
 
             ChangedCommentFont();
             ChangedCommentContent();
@@ -1388,7 +1447,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentFps),
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
-                nameof(PlayerTextShowKind),
+                nameof(PlayerTextShowMode),
                 nameof(CommentInformation),
             };
             CallOnPropertyChange(propertyNames);
@@ -1553,6 +1612,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SetWindowMode(bool toNormalWindow)
         {
             IsNormalWindow = toNormalWindow;
+
+            if(IsViewClosed) {
+                Mediation.Logger.Debug("view: closed");
+                return;
+            }
 
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(toNormalWindow) {
@@ -1842,9 +1906,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // TODO:forceEconomyは今のところ無効
 
-            foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
-                item.IsPlaying = false;
-            }
+            //foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
+            //    item.IsPlaying = false;
+            //}
 
             if(PlayListItems.All(i => i != videoInformation)) {
                 // プレイリストに存在しない動画は追加する
@@ -2065,6 +2129,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     ClearComment();
                 });
             }
+            SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
+            //TagItems.Clear();
         }
 
         protected override Task StopPrevProcessAsync()
@@ -2297,6 +2363,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Information.SaveSetting(true);
 
             Information.IsPlaying = false;
+
+            InitializeStatus();
 
             try {
                 Player.Dispose();
