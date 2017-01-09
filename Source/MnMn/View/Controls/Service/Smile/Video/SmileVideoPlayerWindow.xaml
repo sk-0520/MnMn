@@ -1532,7 +1532,7 @@
                             <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                           </Button>
                         </Grid>
-                        <TextBox Grid.Row="6" Grid.RowSpan="2" Grid.Column="1" Height="Auto" VerticalAlignment="Top" Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
+                        <TextBox Grid.Row="6" Grid.RowSpan="2" Grid.Column="1" Height="Auto" VerticalAlignment="Top" TextWrapping="Wrap" AcceptsReturn="False"  Text="{Binding SelectedComment.Content, Mode=OneWay}"/>
 
                       </Grid>
                     </ScrollViewer>
