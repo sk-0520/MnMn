@@ -311,6 +311,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         if(SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger)) {
                             LoadAsync(selectVideoInformation, false, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan).ConfigureAwait(false);
                         }
+                    },
+                    o => {
+                        var selectVideoInformation = o as SmileVideoInformationViewModel;
+                        if(Information == selectVideoInformation) {
+                            // 自分自身は活性
+                            return true;
+                        }
+                        // よそで何かしているかもしれない
+                        return SmileVideoInformationUtility.CheckCanPlay(selectVideoInformation, Mediation.Logger);
                     }
                 );
             }
