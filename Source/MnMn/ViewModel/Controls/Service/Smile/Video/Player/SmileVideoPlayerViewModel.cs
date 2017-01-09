@@ -946,16 +946,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     RelationVideoLoadState = LoadState.Failure;
                     return Task.CompletedTask;
                 } else {
-                    foreach(var prevItem in RelationVideoItems) {
-                        prevItem.DecrementReference();
-                    }
-                    RelationVideoItems.InitializeRange(items);
+                    SetRelationVideoItems(items);
                     var loader = new SmileVideoInformationLoader(items);
                     return loader.LoadThumbnaiImageAsync(Constants.ServiceSmileVideoImageCacheSpan).ContinueWith(_ => {
                         RelationVideoLoadState = LoadState.Loaded;
                     });
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        void SetRelationVideoItems(IEnumerable<SmileVideoInformationViewModel> items)
+        {
+            foreach(var prevItem in RelationVideoItems) {
+                prevItem.DecrementReference();
+            }
+            RelationVideoItems.InitializeRange(items);
         }
 
         protected virtual void CheckTagPedia()
@@ -2065,6 +2070,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     ClearComment();
                 });
             }
+            SetRelationVideoItems(Enumerable.Empty<SmileVideoInformationViewModel>());
         }
 
         protected override Task StopPrevProcessAsync()
@@ -2297,6 +2303,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Information.SaveSetting(true);
 
             Information.IsPlaying = false;
+
+            InitializeStatus();
 
             try {
                 Player.Dispose();
