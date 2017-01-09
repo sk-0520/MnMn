@@ -891,12 +891,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// コメントのテキスト描画方法。
         /// </summary>
-        public TextShowKind PlayerTextShowKind
+        public TextShowMode PlayerTextShowMode
         {
-            get { return CommentStyleSetting.TextShowKind; }
+            get { return CommentStyleSetting.TextShowMode; }
             set
             {
-                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.TextShowKind))) {
+                if(SetPropertyValue(CommentStyleSetting, value, nameof(CommentStyleSetting.TextShowMode))) {
                     ChangedCommentContent();
                 }
             }

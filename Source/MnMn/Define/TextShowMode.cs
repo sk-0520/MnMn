@@ -22,11 +22,11 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
-    public enum TextShowKind
+    public enum TextShowMode
     {
-        None = -10, // Shadow は 0 始まりだった故の対応
-        Double = -8,
-        Shadow = 0,
+        None,
+        SimpleShadow,
+        BlurShadow,
         Outline,
     }
 }

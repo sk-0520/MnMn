@@ -34,7 +34,6 @@
     </Style>
 
     <Style x:Key="CommentShadow" TargetType="TextBlock" BasedOn="{StaticResource CommentText}">
-      <Setter Property="Opacity" Value="0.8" />
       <Setter Property="Foreground" Value="{Binding ActualShadow}" />
       <Setter Property="Margin" Value="1,1,0,0" />
     </Style>
@@ -56,7 +55,41 @@
         <ContentControl.Style>
           <Style TargetType="ContentControl">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="Outline">
+              <DataTrigger Binding="{Binding TextShowMode}" Value="None">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <TextBlock Style="{StaticResource CommentText}" />
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TextShowMode}" Value="SimpleShadow">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Grid>
+                      <TextBlock Style="{StaticResource CommentShadow}" Opacity="0.6" />
+                      <TextBlock Style="{StaticResource CommentText}" />
+                    </Grid>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TextShowMode}" Value="BlurShadow">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Grid>
+                      <TextBlock Style="{StaticResource CommentShadow}" Opacity="0.8">
+                        <TextBlock.Effect>
+                          <BlurEffect
+                            Radius="2"
+                            RenderingBias="Performance"
+                          />
+                        </TextBlock.Effect>
+                      </TextBlock>
+                      <TextBlock Style="{StaticResource CommentText}" />
+                    </Grid>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TextShowMode}" Value="Outline">
                 <Setter Property="Content">
                   <Setter.Value>
                     <app_view_controls:OutlinedTextBlock
@@ -71,40 +104,6 @@
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Center"
                     />
-                  </Setter.Value>
-                </Setter>
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="Shadow">
-                <Setter Property="Content">
-                  <Setter.Value>
-                    <Grid>
-                      <TextBlock Style="{StaticResource CommentShadow}">
-                        <TextBlock.Effect>
-                          <BlurEffect
-                            Radius="2"
-                            RenderingBias="Performance"
-                          />
-                        </TextBlock.Effect>
-                      </TextBlock>
-                      <TextBlock Style="{StaticResource CommentText}" />
-                    </Grid>
-                  </Setter.Value>
-                </Setter>
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="Double">
-                <Setter Property="Content">
-                  <Setter.Value>
-                    <Grid>
-                      <TextBlock Style="{StaticResource CommentShadow}" />
-                      <TextBlock Style="{StaticResource CommentText}" />
-                    </Grid>
-                  </Setter.Value>
-                </Setter>
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TextShowKind}" Value="None">
-                <Setter Property="Content">
-                  <Setter.Value>
-                    <TextBlock Style="{StaticResource CommentText}" />
                   </Setter.Value>
                 </Setter>
               </DataTrigger>

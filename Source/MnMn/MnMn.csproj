@@ -278,7 +278,7 @@
     <Compile Include="Define\Service\Smile\Video\SmileVideoUserKind.cs" />
     <Compile Include="Define\ShowViewState.cs" />
     <Compile Include="Define\SourceLoadState.cs" />
-    <Compile Include="Define\TextShowType.cs" />
+    <Compile Include="Define\TextShowMode.cs" />
     <Compile Include="IF\Control\ICaptionCommand.cs" />
     <Compile Include="IF\Control\IDraggable.cs" />
     <Compile Include="IF\Control\IDropable.cs" />

@@ -1428,7 +1428,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             CommentStyleSetting.Fps = Constants.SettingServiceSmileVideoPlayerCommentFps;
             CommentStyleSetting.ShowTime = Constants.SettingServiceSmileVideoCommentShowTime;
             CommentStyleSetting.ConvertPairYenSlash = Constants.SettingServiceSmileVideoCommentConvertPairYenSlash;
-            CommentStyleSetting.TextShowKind = Constants.SettingServiceSmileVideoCommentTextShowKind;
+            CommentStyleSetting.TextShowMode = Constants.SettingServiceSmileVideoCommentTextShowMode;
 
             ChangedCommentFont();
             ChangedCommentContent();
@@ -1443,7 +1443,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 nameof(CommentFps),
                 nameof(CommentShowTime),
                 nameof(CommentConvertPairYenSlash),
-                nameof(PlayerTextShowKind),
+                nameof(PlayerTextShowMode),
                 nameof(CommentInformation),
             };
             CallOnPropertyChange(propertyNames);
