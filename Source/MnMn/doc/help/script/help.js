@@ -47,6 +47,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'general-uninstall',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'アンインストール'
+		}
+	},
+	{
 		name: 'smile',
 		localize: true,
 		level: 0,

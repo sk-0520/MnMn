@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<h2>共通事項</h2>
+		<p>
+			プログラムの配置ディレクトリを削除するだけでアンインストールは完了します。
+		</p>
+		<p>
+			各種データ(設定・キャッシュ)は残りますので不要であれば手動で削除してください。<br />
+			以下が各種データの配置ディレクトリになりますが、それぞれ設定やコマンドラインで変更できるため自身の環境に合わせてください。
+		</p>
+		<ul>
+			<li><em class="dir">%APPDATA%\MnMn</em></li>
+			<li><em class="dir">%LOCALAPPDATA%\MnMn</em></li>
+		</ul>
+
+		<h2>自動セットアップからインストールした場合</h2>
+		<p>
+			自動セットアップではそのへんてこりんな機能によりレジストリにデータ書き込みが発生します。<br />
+			よって完全に削除したい場合はレジストリの一部削除が必要になります。
+		</p>
+		<p>
+			削除するには <em class="file">&lt;MnMn&gt;\bat\uninstall.bat</em> を実行してください。
+		</p>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>
