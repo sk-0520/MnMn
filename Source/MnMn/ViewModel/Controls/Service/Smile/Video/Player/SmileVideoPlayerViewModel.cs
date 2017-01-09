@@ -656,7 +656,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             PlayListItems.AddRange(videoInformations);
             CanPlayNextVieo.Value = true;
-            return LoadAsync(PlayListItems.GetFirstItem(), false, thumbCacheSpan, imageCacheSpan);
+
+            // 再生(DL)可能か
+            var firstVideo = PlayListItems.GetFirstItem();
+            if(!SmileVideoInformationUtility.CheckCanPlay(firstVideo, Mediation.Logger)) {
+                if(PlayListItems.CanItemChange) {
+                    firstVideo = GetSafeChangeItem(firstVideo, PlayListItems.ChangeNextItem);
+                } else {
+                    firstVideo = null;
+                }
+                if(firstVideo == null) {
+                    // もうどうしようもねーな
+                    throw new SmileVideoCanNotPlayItemInPlayListException(videoInformations);
+                }
+            }
+
+            return LoadAsync(firstVideo, false, thumbCacheSpan, imageCacheSpan);
         }
 
         void ChangePlayerSizeFromPercent(int percent)
@@ -1275,9 +1290,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// </summary>
         /// <param name=""></param>
         /// <returns>動画。null で元動画。</returns>
-        SmileVideoInformationViewModel GetSafeChangeItem(Func<SmileVideoInformationViewModel> getNextItem)
+        SmileVideoInformationViewModel GetSafeChangeItem(SmileVideoInformationViewModel current, Func<SmileVideoInformationViewModel> getNextItem)
         {
-            var current = Information;
             var targetViewModel = getNextItem();
 
             while(!SmileVideoInformationUtility.CheckCanPlay(targetViewModel, Mediation.Logger)) {
@@ -1293,7 +1307,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         Task LoadNextPlayListItemAsync()
         {
-            var targetViewModel = GetSafeChangeItem(PlayListItems.ChangeNextItem);
+            var targetViewModel = GetSafeChangeItem(Information, PlayListItems.ChangeNextItem);
 
             if(targetViewModel == null) {
                 return Task.CompletedTask;
@@ -1304,7 +1318,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         Task LoadPrevPlayListItemAsync()
         {
-            var targetViewModel = GetSafeChangeItem(PlayListItems.ChangePrevItem);
+            var targetViewModel = GetSafeChangeItem(Information, PlayListItems.ChangePrevItem);
 
             if(targetViewModel == null) {
                 return Task.CompletedTask;

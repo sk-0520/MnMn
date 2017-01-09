@@ -227,6 +227,7 @@
     <Compile Include="Define\CacheState.cs" />
     <Compile Include="Define\CheckedProcessType.cs" />
     <Compile Include="Define\Event\ChangedSelectedPageEventArgs.cs" />
+    <Compile Include="Define\Exceptions\Service\Smile\Video\SmileVideoCanNotPlayItemInPlayListException.cs" />
     <Compile Include="Define\Laboratory\Service\Smile\Video\CommentCreateType.cs" />
     <Compile Include="Define\Laboratory\VideoCreateType.cs" />
     <Compile Include="Define\ScriptState.cs" />
