@@ -1609,6 +1609,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             IsNormalWindow = toNormalWindow;
 
+            if(IsViewClosed) {
+                Mediation.Logger.Debug("view: closed");
+                return;
+            }
+
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(toNormalWindow) {
                 //ResizeBorderThickness = enabledResizeBorderThickness;
