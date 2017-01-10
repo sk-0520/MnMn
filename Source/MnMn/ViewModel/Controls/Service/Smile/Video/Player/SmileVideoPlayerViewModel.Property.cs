@@ -622,7 +622,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// <summary>
         /// バッファ開始時点での動画位置。
         /// </summary>
-        float BufferingVideoPosition { get; set; }
+        TimeSpan BufferingVideoTime { get; set; }
         /// <summary>
         /// リプレイ状態。
         /// </summary>

@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     //PlayMovie().Task.ContinueWith(task => {
                                     //    Player.Position = VideoPosition;
                                     //});
-                                    RestartPosition(BufferingVideoPosition);
+                                    RestartTime(BufferingVideoTime);
                                 } else {
                                     Mediation.Logger.Debug("resume");
                                     View.Dispatcher.BeginInvoke(new Action(() => {
@@ -1837,11 +1837,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return screenModel.Primary;
         }
 
-        void RestartPosition(float startPosition)
+        void RestartTime(TimeSpan startTime)
         {
             Player.Stop();
             PlayMovie();
-            Player.Position = BufferingVideoPosition;
+            Player.Time = BufferingVideoTime;
         }
 
         void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
@@ -1851,7 +1851,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Debug("buffering stop");
 
                 IsBufferingStop = true;
-                BufferingVideoPosition = VideoPosition;
+                var position = TotalTime.TotalMilliseconds * VideoPosition;
+                BufferingVideoTime = TimeSpan.FromMilliseconds(position);
                 PlayerState = PlayerState.Pause;
 
                 return;
@@ -1859,12 +1860,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(IsBufferingStop) {
                 // ダウンロードが完了していないので待ち状態に移行
-                Mediation.Logger.Debug("buffering wait");
-                PlayerState = PlayerState.Pause;
-                Player.Position = BufferingVideoPosition;
-                foreach(var data in ShowingCommentList) {
-                    data.Clock.Controller.Pause();
-                }
+                //Mediation.Logger.Debug("buffering wait");
+                //PlayerState = PlayerState.Pause;
+                //Player.Position = BufferingVideoTime;
+                //foreach(var data in ShowingCommentList) {
+                //    data.Clock.Controller.Pause();
+                //}
+                Debug.Assert(false);
                 return;
             }
 
