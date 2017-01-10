@@ -157,7 +157,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'あれな IDisposable を Dispose する……やだなぁ',
+						'comments': [
+							'#373: 以外と言うかやっぱりと言うか、既存でもかなりやってんすよねぇ'
+						]
 					},
 					{
 						'revision': '',
