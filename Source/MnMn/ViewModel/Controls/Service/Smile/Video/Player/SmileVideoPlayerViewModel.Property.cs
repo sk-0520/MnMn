@@ -623,6 +623,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         /// バッファ開始時点での動画位置。
         /// </summary>
         TimeSpan BufferingVideoTime { get; set; }
+        TimeSpan SafeShowTime { get; set; }
+        long SafeDownloadedSize { get; set; }
+
         /// <summary>
         /// リプレイ状態。
         /// </summary>

@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     //PlayMovie().Task.ContinueWith(task => {
                                     //    Player.Position = VideoPosition;
                                     //});
-                                    RestartTime(BufferingVideoTime);
+                                    ResumeBufferingStop();
                                 } else {
                                     Mediation.Logger.Debug("resume");
                                     View.Dispatcher.BeginInvoke(new Action(() => {
@@ -1837,8 +1837,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return screenModel.Primary;
         }
 
-        void RestartTime(TimeSpan startTime)
+        void ResumeBufferingStop()
         {
+            //EventHandler<Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState>> stateChanged = null;
+
+            //stateChanged = (sender, e) => {
+            //    if(e.Value == Meta.Vlc.Interop.Media.MediaState.Opening) {
+            //        return;
+            //    }
+            //    if(e.Value == Meta.Vlc.Interop.Media.MediaState.Ended) {
+
+            //    }
+            //    Debug.WriteLine(e.Value);
+
+            //    Player.StateChanged -= stateChanged;
+            //};
+
+            //Player.StateChanged += stateChanged;
+            IsBufferingStop = false;
+
             Player.Stop();
             PlayMovie();
             Player.Time = BufferingVideoTime;
@@ -1851,6 +1868,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 Mediation.Logger.Debug("buffering stop");
 
                 IsBufferingStop = true;
+                SafeShowTime = Player.Time;
+                SafeDownloadedSize = VideoLoadedSize;
+
                 var position = TotalTime.TotalMilliseconds * VideoPosition;
                 BufferingVideoTime = TimeSpan.FromMilliseconds(position);
                 PlayerState = PlayerState.Pause;
@@ -1978,7 +1998,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
                     }
+                } else if(IsBufferingStop) {
+                    VideoFile.Refresh();
+                    var canVideoPlay = (SafeDownloadedSize + PlayerSetting.AutoPlayLowestSize) < VideoFile.Length;
+                    if(canVideoPlay) {
+                        ResumeBufferingStop();
+                    }
                 }
+
             }
 
             e.Cancel |= IsViewClosed || (DownloadCancel != null && DownloadCancel.IsCancellationRequested);
