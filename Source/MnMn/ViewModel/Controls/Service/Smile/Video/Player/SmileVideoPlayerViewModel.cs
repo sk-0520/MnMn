@@ -897,7 +897,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 if(percentLoaded < targetPosition) {
                     setPosition = (float)percentLoaded;
                 }
+
+                if(PlayerState == PlayerState.Buffering) {
+                    var changePosition = TotalTime.TotalMilliseconds / SafeShowTime.TotalMilliseconds;
+                    if(setPosition <= changePosition) {
+                        var changeTime = TimeSpan.FromMilliseconds(TotalTime.TotalMilliseconds * setPosition);
+                        BufferingVideoTime = changeTime;
+                        ResumeBufferingStop();
+                    }
+                    return;
+                }
             }
+
             ClearComment();
 
             Mediation.Logger.Debug(setPosition.ToString());
