@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region define
 
         public static int DefaultReceiveBufferSize { get; } = 8 * 1024;
-        public static long UnknownDonwloadSize { get; } = -1;
+        public static long UnknownDownloadSize { get; } = -1;
         public static long RangeAll { get; } = -1;
 
         #endregion
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         public long RangeHeadPotision { get; set; }
         public long RangeTailPotision { get; set; } = RangeAll;
 
-        public bool UsingRangeDonwload => RangeHeadPotision != 0;
+        public bool UsingRangeDownload => RangeHeadPotision != 0;
 
         /// <summary>
         /// 受信時のバッファサイズ。
@@ -96,12 +96,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <summary>
         /// ダウンロードするデータ量。
         /// </summary>
-        public long DownloadTotalSize { get; set; } = UnknownDonwloadSize;
+        public long DownloadTotalSize { get; set; } = UnknownDownloadSize;
 
         /// <summary>
         /// ダウンロード済みデータ量。
         /// </summary>
-        public long DownloadedSize { get; protected set; } = UnknownDonwloadSize;
+        public long DownloadedSize { get; protected set; } = UnknownDownloadSize;
 
         public bool Canceled { get; protected set; }
         public bool Completed { get; protected set; }
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             return e;
         }
 
-        protected bool OnDonwloading(ArraySegment<byte> data, int counter, long secondsDownlodingSize)
+        protected bool OnDownloading(ArraySegment<byte> data, int counter, long secondsDownlodingSize)
         {
             if(Downloading == null) {
                 return false;
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         protected void IfUsingSetRangeHeader()
         {
-            if(UsingRangeDonwload) {
+            if(UsingRangeDownload) {
                 if(RangeTailPotision == RangeAll) {
                     UserAgent.DefaultRequestHeaders.Range = new RangeHeaderValue(RangeHeadPotision, null);
                 } else {
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     return;
                 }
                 using(var reader = new BinaryReader(task.Result)) {
-                    var downloadStartType = UsingRangeDonwload ? DownloadStartType.Range : DownloadStartType.Begin;
+                    var downloadStartType = UsingRangeDownload ? DownloadStartType.Range : DownloadStartType.Begin;
                     var downloadStartArgs = OnDownloadStart(downloadStartType, RangeHeadPotision, RangeTailPotision);
                     if(downloadStartArgs.Cancel) {
                         Canceled = true;
@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                         DownloadedSize += currentReadSize;
                         var slice = new ArraySegment<byte>(buffer, 0, currentReadSize);
-                        if(OnDonwloading(slice, counter++, secondsDownlodingSize)) {
+                        if(OnDownloading(slice, counter++, secondsDownlodingSize)) {
                             Canceled = true;
                             return;
                         }
