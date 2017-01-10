@@ -290,7 +290,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
                 InitializeCrashReportAsync(),
                 AppManager.InitializeAsync(),
             };
-            await Task.WhenAll(initializeTasks);
+            var initializeTask = Task.WhenAll(initializeTasks);
+            await initializeTask;
+
+            initializeTask.Dispose();
+            foreach(var task in initializeTasks) {
+                task.Dispose();
+            }
 
             View = new MainWindow() {
                 DataContext = AppManager,
