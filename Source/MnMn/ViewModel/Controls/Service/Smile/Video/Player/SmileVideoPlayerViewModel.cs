@@ -180,8 +180,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                     //PlayMovie().Task.ContinueWith(task => {
                                     //    Player.Position = VideoPosition;
                                     //});
-                                    PlayMovie();
-                                    Player.Position = VideoPosition;
+                                    RestartPosition(BufferingVideoPosition);
                                 } else {
                                     Mediation.Logger.Debug("resume");
                                     View.Dispatcher.BeginInvoke(new Action(() => {
@@ -840,9 +839,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                     var prePlayTime = sw.Elapsed;
                     Player.Play();
+                    
                     if(TotalTime == TimeSpan.Zero) {
                         TotalTime = Player.Length;
                     }
+
                     var playedTime = sw.Elapsed;
                     sw.Stop();
 
@@ -1836,6 +1837,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             return screenModel.Primary;
         }
 
+        void RestartPosition(float startPosition)
+        {
+            Player.Stop();
+            PlayMovie();
+            Player.Position = BufferingVideoPosition;
+        }
+
         void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
         {
             if(VideoLoadState == LoadState.Loading) {
@@ -1844,6 +1852,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 IsBufferingStop = true;
                 BufferingVideoPosition = VideoPosition;
+                PlayerState = PlayerState.Pause;
 
                 return;
             }
