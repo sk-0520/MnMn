@@ -167,27 +167,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                                         PlayMovie();
                                         break;
                                 }
-                                return;
+                                break;
 
                             case PlayerState.Playing:
                                 Player.PauseOrResume();
-                                return;
+                                break;
 
                             case PlayerState.Pause:
-                                if(IsBufferingStop) {
-                                    Mediation.Logger.Debug("restart");
-                                    //SetMedia();
-                                    //PlayMovie().Task.ContinueWith(task => {
-                                    //    Player.Position = VideoPosition;
-                                    //});
-                                    ResumeBufferingStop();
-                                } else {
-                                    Mediation.Logger.Debug("resume");
-                                    View.Dispatcher.BeginInvoke(new Action(() => {
-                                        Player.PauseOrResume();
-                                    }));
-                                }
-                                return;
+                                Mediation.Logger.Debug("resume");
+                                View.Dispatcher.BeginInvoke(new Action(() => {
+                                    Player.PauseOrResume();
+                                }));
+                                break;
+
+                            case PlayerState.Buffering:
+                                Mediation.Logger.Debug("restart");
+                                ResumeBufferingStop();
+                                break;
 
                             default:
                                 break;
@@ -839,7 +835,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                     var prePlayTime = sw.Elapsed;
                     Player.Play();
-                    
+
                     if(TotalTime == TimeSpan.Zero) {
                         TotalTime = Player.Length;
                     }
@@ -1808,7 +1804,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 View.Deactivated -= View_Deactivated;
             }
 
-            if(Player!= null) {
+            if(Player != null) {
                 Player.MouseDown -= Player_MouseDown;
                 Player.PositionChanged -= Player_PositionChanged;
                 Player.SizeChanged -= Player_SizeChanged;
@@ -1839,7 +1835,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResumeBufferingStop()
         {
-            IsBufferingStop = false;
+            //IsBufferingStop = false;
 
             if(!UserOperationStop.Value && !IsViewClosed) {
                 PrevPlayedTime = BufferingVideoTime;
@@ -1855,28 +1851,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // ダウンロードが完了していない
                 Mediation.Logger.Debug("buffering stop");
 
-                IsBufferingStop = true;
+                //IsBufferingStop = true;
+
                 SafeShowTime = Player.Time;
                 SafeDownloadedSize = VideoLoadedSize;
 
                 var position = TotalTime.TotalMilliseconds * VideoPosition;
                 BufferingVideoTime = TimeSpan.FromMilliseconds(position);
-                PlayerState = PlayerState.Pause;
+                PlayerState = PlayerState.Buffering;
 
                 return;
             }
 
-            if(IsBufferingStop) {
-                // ダウンロードが完了していないので待ち状態に移行
-                //Mediation.Logger.Debug("buffering wait");
-                //PlayerState = PlayerState.Pause;
-                //Player.Position = BufferingVideoTime;
-                //foreach(var data in ShowingCommentList) {
-                //    data.Clock.Controller.Pause();
-                //}
-                Debug.Assert(false);
-                return;
-            }
+            //if(IsBufferingStop) {
+            //    // ダウンロードが完了していないので待ち状態に移行
+            //    //Mediation.Logger.Debug("buffering wait");
+            //    //PlayerState = PlayerState.Pause;
+            //    //Player.Position = BufferingVideoTime;
+            //    //foreach(var data in ShowingCommentList) {
+            //    //    data.Clock.Controller.Pause();
+            //    //}
+            //    Debug.Assert(false);
+            //    return;
+            //}
 
             if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
                 // 次のプレイリストへ遷移
@@ -1986,7 +1983,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(CanVideoPlay) {
                         StartIfAutoPlay();
                     }
-                } else if(IsBufferingStop) {
+                } else if(PlayerState == PlayerState.Buffering) {
                     VideoFile.Refresh();
                     var canVideoPlay = (SafeDownloadedSize + PlayerSetting.AutoPlayLowestSize) < VideoFile.Length;
                     if(canVideoPlay) {
@@ -2055,7 +2052,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                         StartIfAutoPlay();
                     }
 
-                    if(IsBufferingStop) {
+                    if(PlayerState == PlayerState.Buffering) {
                         ResumeBufferingStop();
                     }
                 }
@@ -2132,7 +2129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
             _prevStateChangedPosition = initPrevStateChangedPosition;
-            IsBufferingStop = false;
+            //IsBufferingStop = false;
             UserOperationStop.Value = false;
             //IsMadeDescription = false;
             IsCheckedTagPedia = false;
@@ -2145,6 +2142,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             SelectedComment = null;
             IsSettedMedia = false;
             ShowCommentChart = false;
+            BufferingVideoTime = TimeSpan.Zero;
+            SafeShowTime = TimeSpan.Zero;
+            SafeDownloadedSize = 0;
+
             CommentAreaWidth = Constants.ServiceSmileVideoPlayerCommentWidth;
             CommentAreaHeight = Constants.ServiceSmileVideoPlayerCommentHeight;
             if(View != null) {

@@ -57,6 +57,9 @@
                   <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Stop">
                     <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Play}" />
                   </DataTrigger>
+                  <DataTrigger Binding="{Binding PlayerState, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" Value="Buffering">
+                    <Setter Property="Data" Value="{StaticResource Image_Navigationbar_Buffering}" />
+                  </DataTrigger>
                   <MultiDataTrigger>
                     <!-- 条件見るにこれで問題ないはず… -->
                     <MultiDataTrigger.Conditions>
