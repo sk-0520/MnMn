@@ -1839,26 +1839,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResumeBufferingStop()
         {
-            //EventHandler<Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState>> stateChanged = null;
-
-            //stateChanged = (sender, e) => {
-            //    if(e.Value == Meta.Vlc.Interop.Media.MediaState.Opening) {
-            //        return;
-            //    }
-            //    if(e.Value == Meta.Vlc.Interop.Media.MediaState.Ended) {
-
-            //    }
-            //    Debug.WriteLine(e.Value);
-
-            //    Player.StateChanged -= stateChanged;
-            //};
-
-            //Player.StateChanged += stateChanged;
             IsBufferingStop = false;
 
-            Player.Stop();
-            PlayMovie();
-            Player.Time = BufferingVideoTime;
+            if(!UserOperationStop.Value && !IsViewClosed) {
+                PrevPlayedTime = BufferingVideoTime;
+                Player.Stop();
+                PlayMovie();
+                Player.Time = BufferingVideoTime;
+            }
         }
 
         void ChangedPlayerStateToStop(Meta.Vlc.ObjectEventArgs<Meta.Vlc.Interop.Media.MediaState> e)
@@ -2065,6 +2053,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     if(!CanVideoPlay && !UserOperationStop.Value) {
                         CanVideoPlay = true;
                         StartIfAutoPlay();
+                    }
+
+                    if(IsBufferingStop) {
+                        ResumeBufferingStop();
                     }
                 }
             }
