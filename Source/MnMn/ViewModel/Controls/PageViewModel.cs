@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #endregion
 
-        #region
+        #region ICheckable
 
         public bool? IsChecked
         {
@@ -72,7 +72,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        public ViewModelBase ViewModelBase { get; }
+        public ViewModelBase ViewModelBase { get; private set; }
+
+        #endregion
+
+        #region PageViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                ViewModelBase = null;
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }
@@ -88,7 +101,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         #region property
 
-        public TViewModel ViewModel { get; }
+        public TViewModel ViewModel { get; private set; }
+
+        #endregion
+
+        #region PageViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                ViewModel = null;
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }
