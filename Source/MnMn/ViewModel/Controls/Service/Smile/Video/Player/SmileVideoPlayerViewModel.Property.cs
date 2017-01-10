@@ -611,18 +611,21 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._playerState, value); }
         }
 
-        /// <summary>
-        /// 読込中で停止しているか。
-        /// </summary>
-        public bool IsBufferingStop
-        {
-            get { return this._isBufferingStop; }
-            set { SetVariableValue(ref this._isBufferingStop, value); }
-        }
+        ///// <summary>
+        ///// 読込中で停止しているか。
+        ///// </summary>
+        //public bool IsBufferingStop
+        //{
+        //    get { return this._isBufferingStop; }
+        //    set { SetVariableValue(ref this._isBufferingStop, value); }
+        //}
         /// <summary>
         /// バッファ開始時点での動画位置。
         /// </summary>
-        float BufferingVideoPosition { get; set; }
+        TimeSpan BufferingVideoTime { get; set; }
+        TimeSpan SafeShowTime { get; set; }
+        long SafeDownloadedSize { get; set; }
+
         /// <summary>
         /// リプレイ状態。
         /// </summary>

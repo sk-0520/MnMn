@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         //GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
 
         PlayerState _playerState;
-        bool _isBufferingStop;
+        //bool _isBufferingStop;
 
         IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
         IReadOnlyList<SmileVideoBookmarkNodeViewModel> _bookmarkItems;
