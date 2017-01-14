@@ -81,8 +81,6 @@
       <ComboBox
         x:Name="listSearch"
         Grid.Column="1"
-        VirtualizingStackPanel.IsVirtualizing="True" 
-        VirtualizingStackPanel.VirtualizationMode="Recycling"
         mamc:TextBoxHelper.Watermark="検索タグ・ワード"
         IsEditable="True"
         Text="{Binding InputQuery}"
@@ -101,7 +99,10 @@
         </ComboBox.InputBindings>
         <ComboBox.ItemsPanel>
           <ItemsPanelTemplate>
-            <VirtualizingStackPanel Orientation="Vertical"  />
+            <VirtualizingStackPanel 
+              VirtualizingStackPanel.IsVirtualizing="True" 
+              VirtualizingStackPanel.VirtualizationMode="Recycling" 
+            />
           </ItemsPanelTemplate>
         </ComboBox.ItemsPanel>
         <ComboBox.ItemTemplate>
