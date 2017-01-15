@@ -304,12 +304,15 @@ namespace ContentTypeTextNet.MnMn.MnMn
             MainWindow = View;
             MainWindow.Closed += MainWindow_Closed;
             AppManager.InitializeView(View);
+            Exit += App_Exit;
             MainWindow.Show();
             SplashWindow.Close();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            Mutex.Dispose();
+
             AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
 
             base.OnExit(e);
@@ -339,8 +342,13 @@ namespace ContentTypeTextNet.MnMn.MnMn
             WebNavigatorCore.Uninitialize();
 
             AppManager.UninitializeView(View);
+        }
 
-            Mutex.Dispose();
+        private async void App_Exit(object sender, ExitEventArgs e)
+        {
+            Exit -= App_Exit;
+
+            await AppManager.UninitializeAsync();
         }
     }
 }

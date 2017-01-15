@@ -389,6 +389,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             });
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         public override void InitializeView(MainWindow view)
         {
             UpdateBrowser = view.updateBrowser;

@@ -267,6 +267,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             });
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.WhenAll(ManagerChildren.Select(m => m.UninitializeAsync()));
+        }
+
         public override void InitializeView(MainWindow view)
         {
             foreach(var item in ManagerChildren) {
