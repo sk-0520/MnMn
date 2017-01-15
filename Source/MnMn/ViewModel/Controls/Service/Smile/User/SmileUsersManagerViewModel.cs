@@ -445,6 +445,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             });
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.WhenAll(ManagerChildren.Select(m => m.UninitializeAsync()));
+        }
+
         public override void InitializeView(MainWindow view)
         { }
 

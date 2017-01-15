@@ -101,6 +101,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
             return Task.CompletedTask;
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         public override void InitializeView(MainWindow view)
         { }
 

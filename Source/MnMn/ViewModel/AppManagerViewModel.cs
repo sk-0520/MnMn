@@ -202,6 +202,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             return Task.WhenAll(ManagerChildren.Select(m => m.InitializeAsync()));
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.WhenAll(ManagerChildren.Select(m => m.UninitializeAsync()));
+        }
+
         public override void InitializeView(MainWindow view)
         {
             View = (MainWindow)view;
