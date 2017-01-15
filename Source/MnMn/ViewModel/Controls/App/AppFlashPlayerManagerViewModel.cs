@@ -68,6 +68,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             return Task.CompletedTask;
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         public override void InitializeView(MainWindow view)
         {
             FlashPlayerNavigator = view.information.flashPlayerBrowser;

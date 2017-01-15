@@ -160,6 +160,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         public abstract Task InitializeAsync();
 
         /// <summary>
+        /// 破棄処理。
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task UninitializeAsync();
+
+        /// <summary>
         /// Viewの初期化処理。
         /// </summary>
         /// <param name="view"></param>

@@ -36,5 +36,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// 一時停止。
         /// </summary>
         Pause,
+        /// <summary>
+        /// バッファ中。
+        /// </summary>
+        Buffering,
     }
 }

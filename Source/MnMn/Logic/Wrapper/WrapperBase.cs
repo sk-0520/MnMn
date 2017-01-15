@@ -73,6 +73,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Wrapper
         private void Process_Exited(object sender, EventArgs e)
         {
             var process = (Process)sender;
+            process.Exited -= Process_Exited;
+
             ExecuteTask.SetResult(process.ExitCode);
         }
 

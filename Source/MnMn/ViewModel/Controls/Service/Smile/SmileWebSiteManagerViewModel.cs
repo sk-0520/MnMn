@@ -80,6 +80,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile
             return Task.CompletedTask;
         }
 
+        public override Task UninitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         public override void InitializeView(MainWindow view)
         {
             WebSiteNavigator = view.smile.webSite.navigator;

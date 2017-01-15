@@ -23,7 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
-    public class CacheSpan: ModelBase
+    public class CacheSpan
     {
         #region define
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         #endregion
 
-        #region ModelBase
+        #region Object
 
         public override string ToString()
         {

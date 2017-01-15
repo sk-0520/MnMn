@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
     {
         #region define
 
-        const long isDonwloaded = -1;
+        const long isDownloaded = -1;
         const long initVideoLoadSize = 0;
         const long initVideoTotalSize = 1;
 
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected Stream VideoStream { get; private set; }
 
-        protected long DonwloadStartPosition { get; private set; }
+        protected long DownloadStartPosition { get; private set; }
 
         protected RawSmileVideoMsgThreadModel CommentThread { get; private set; }
 
@@ -304,7 +304,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                var fileMode = downloader.UsingRangeDonwload ? FileMode.Append : FileMode.Create;
+                var fileMode = downloader.UsingRangeDownload ? FileMode.Append : FileMode.Create;
                 using(VideoStream = new FileStream(VideoFile.FullName, fileMode, FileAccess.Write, FileShare.Read)) {
                     try {
                         downloader.DownloadStart += Downloader_DownloadStart;
@@ -573,7 +573,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             if(fileInfo.Exists) {
                 if(fileInfo.Length == completeSize) {
-                    return isDonwloaded;
+                    return isDownloaded;
                 } else {
                     // 途中からダウンロード
                     return fileInfo.Length;
@@ -627,7 +627,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             var normalVideoFile = new FileInfo(Path.Combine(Information.CacheDirectory.FullName, Information.GetVideoFileName(false)));
             var normalHeadPosition = GetDownloadHeadPosition(normalVideoFile, Information.SizeHigh);
-            if(normalHeadPosition == isDonwloaded) {
+            if(normalHeadPosition == isDownloaded) {
                 // ダウンロード済み
                 IsEconomyMode = false;
                 LoadVideoFromCache(normalVideoFile);
@@ -641,7 +641,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(IsEconomyMode) {
                 var economyVideoFile = new FileInfo(Path.Combine(Information.CacheDirectory.FullName, Information.GetVideoFileName(true)));
                 var economyHeadPosition = GetDownloadHeadPosition(economyVideoFile, Information.SizeLow);
-                if(economyHeadPosition == isDonwloaded) {
+                if(economyHeadPosition == isDownloaded) {
                     // エコノミーダウンロード済み
                     IsEconomyMode = true;
                     LoadVideoFromCache(economyVideoFile);
@@ -895,7 +895,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             VideoLoadState = LoadState.Loading;
 
             if(e.DownloadStartType == DownloadStartType.Range) {
-                DonwloadStartPosition = e.RangeHeadPosition;
+                DownloadStartPosition = e.RangeHeadPosition;
             }
             var downloader = (SmileVideoDownloader)sender;
             Information.SetPageHtmlAsync(downloader.PageHtml, true).Wait();
@@ -961,7 +961,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var downloader = (Downloader)sender;
             var buffer = e.Data;
             VideoStream.Write(buffer.Array, 0, e.Data.Count);
-            VideoLoadedSize = DonwloadStartPosition + downloader.DownloadedSize;
+            VideoLoadedSize = DownloadStartPosition + downloader.DownloadedSize;
 
             if(e.Cancel || downloader.Canceled) {
                 return;

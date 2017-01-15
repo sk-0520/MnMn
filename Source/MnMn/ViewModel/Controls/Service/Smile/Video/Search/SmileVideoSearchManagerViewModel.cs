@@ -496,6 +496,25 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             SearchGroups.Remove(finder);
         }
 
+        /// <summary>
+        /// 無効アイテムの破棄。
+        /// </summary>
+        void RemoveInvalidHistoryItems()
+        {
+            var removeItems = SearchHistoryList.ModelList
+                .Where(m => m.TotalCount == 0)
+                .ToList()
+            ;
+
+            if(removeItems.Any()) {
+                Mediation.Logger.Information($"remove history: {removeItems.Count}", string.Join(Environment.NewLine, removeItems.Select(i => i.Query)));
+
+                foreach(var item in removeItems) {
+                    SearchHistoryList.Remove(item);
+                }
+            }
+        }
+
         #endregion
 
         #region ManagerViewModelBase
@@ -513,6 +532,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
 
         public override Task InitializeAsync()
         {
+            RemoveInvalidHistoryItems();
+
             if(!Setting.Search.SearchPinItems.Any()) {
                 return Task.CompletedTask;
             }
@@ -522,6 +543,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
             return Task.WhenAll(tasks).ContinueWith(t => {
                 SelectedSearchGroup = SearchGroups.First();
             }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public override Task UninitializeAsync()
+        {
+            return Task.CompletedTask;
         }
 
         public override void InitializeView(MainWindow view)
