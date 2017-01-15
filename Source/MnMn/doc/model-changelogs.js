@@ -84,24 +84,22 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.42.1',
-		'isRc': true,
+		'date': '2017/01/15',
+		'version': '0.43.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
 					}
 				]
 			},
@@ -109,7 +107,7 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '38ee4015a007b7886190cf4c488073330d4b0540',
 						'subject': '#20: ダウンロード中動画バッファリング時の制御',
 						'comments': [
 							'いと難し',
@@ -122,7 +120,7 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '9cab78028da4031d1b94fb1a9b4fab9c2919ddd0',
 						'subject': '#337: 動画検索時に検索結果が 0 件の場合は検索履歴から破棄する',
 						'comments': [
 							'起動時(正確にはログイン時)に検索結果が 0 件の履歴を破棄するようにした',
@@ -130,11 +128,11 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '2948bfd18e1531867fa861840510089b95b7cbdb',
 						'subject': '#372: コメント詳細部で前後のコメントに移動する'
 					},
 					{
-						'revision': '',
+						'revision': '54c757feaa36cb5889a8cfa813774f52b214410f',
 						'subject': '#363: プログラム終了時にサービスログアウトを実施する',
 						'comments': [
 							'終了時の非同期処理の制御が少し怪しいけど終了時だし落ちてもまぁいいかという投げやり実装'
@@ -146,11 +144,11 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '8682616a208a569d5676d67e173b44dd426c67f7',
 						'subject': '#364: コメント詳細表示のコメント内容を表示要素幅で改行する'
 					},
 					{
-						'revision': '',
+						'revision': '5928c9b532f13c5254d04ad2b2f6e58901bcdc75',
 						'subject': '#370: プレイヤー新規作成設定の初期値は同じプレイヤーで表示する',
 						'comments': [
 							'本バージョンから新規使用する場合のみ有効な設定項目初期値変更',
@@ -158,12 +156,8 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': '477b001bb32c22d01c39a59f2d33f06d1df626e6',
 						'subject': '#367: 検索履歴のプルダウンが重い'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -171,19 +165,11 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
-						'subject': 'あれな IDisposable を Dispose する……やだなぁ',
+						'revision': 'acc3b44f7d7c6c5b1e92bf4e9591b627118244e0',
+						'subject': '#373: あれな IDisposable を Dispose する……やだなぁ',
 						'comments': [
-							'#373: 以外と言うかやっぱりと言うか、既存でもかなりやってんすよねぇ'
+							'意外と言うかやっぱりと言うか前も同じ結論だったけど、既存でもかなりやってんすよねぇ'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
