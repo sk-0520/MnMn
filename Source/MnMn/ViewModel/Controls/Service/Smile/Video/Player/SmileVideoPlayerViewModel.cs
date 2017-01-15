@@ -584,6 +584,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand ChangeSelectedCommentUpCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ChangeSelectedComment(true),
+                    o => SelectedComment != null
+                );
+            }
+        }
+
+        public ICommand ChangeSelectedCommentDownCommand
+        {
+            get
+            {
+                return CreateCommand(
+                    o => ChangeSelectedComment(false),
+                    o => SelectedComment != null
+                );
+            }
+        }
+
         #endregion
 
         #region function
@@ -1924,6 +1946,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        void ChangeSelectedComment(bool isUp)
+        {
+            var comments = CommentItems
+                .Cast<SmileVideoCommentViewModel>()
+                .ToList()
+            ;
+            var currentIndex = comments.IndexOf(SelectedComment);
+            if(currentIndex == -1) {
+                Mediation.Logger.Debug("current comment is null");
+            }
+
+            if(isUp && 0 < currentIndex) {
+                SelectedComment = comments[currentIndex - 1];
+            } else if(!isUp && currentIndex < comments.Count - 1) {
+                SelectedComment = comments[currentIndex + 1];
+            }
+        }
 
         #endregion
 

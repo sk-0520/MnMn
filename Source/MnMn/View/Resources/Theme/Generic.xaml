@@ -202,6 +202,23 @@
     <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
   </Style>
 
+  <Style x:Key="NormalDefaultIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource LabelTextBrush}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
+  <Style x:Key="NormalAccentIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{DynamicResource AccentBaseColorBrush}" />
+    <Setter Property="Stroke" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="Clip" Value="{Binding Data, RelativeSource={RelativeSource Self}}" />
+  </Style>
+
+  <Style x:Key="NormalLinkIconPath" TargetType="Path" BasedOn="{StaticResource IconPath}">
+    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+    <!--<Setter Property="Stroke" Value="{DynamicResource WhiteBrush}" />-->
+  </Style>
+
 
   <!-- ============ 完結させられる図形 ============= -->
   <!-- ぼやけるーん
