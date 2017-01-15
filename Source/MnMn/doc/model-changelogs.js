@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning',
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open',
 						'comments': [
 							''
 						]
@@ -127,7 +127,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'class': 'open',
+						'subject': '#342: メモリ断片化: System.Runtime.InteropServices.COMException (0x80070008)',
+						'comments': [
+							'シリアライズ処理、特に XML データ通信周りの仕組みを変更',
+							'参考: http://stackoverflow.com/questions/1127431/xmlserializer-giving-filenotfoundexception-at-constructor'
+						]
 					},
 					{
 						'revision': '',
