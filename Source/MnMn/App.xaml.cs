@@ -334,11 +334,12 @@ namespace ContentTypeTextNet.MnMn.MnMn
             CatchUnhandleException((Exception)e.ExceptionObject, false);
         }
 
-        private void MainWindow_Closed(object sender, EventArgs e)
+        private async void MainWindow_Closed(object sender, EventArgs e)
         {
             WebNavigatorCore.Uninitialize();
 
             AppManager.UninitializeView(View);
+            await AppManager.UninitializeAsync();
 
             Mutex.Dispose();
         }
