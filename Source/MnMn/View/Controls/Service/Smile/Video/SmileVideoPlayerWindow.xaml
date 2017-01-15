@@ -1437,8 +1437,11 @@
                             Height="20"
                           />
                         </Button>
-                        
-                        
+
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                          <Button Command="{Binding DataContext.ChangeSelectedCommentUpCommand, RelativeSource={RelativeSource AncestorType=Window}}">↑</Button>
+                          <Button Command="{Binding DataContext.ChangeSelectedCommentDownCommand, RelativeSource={RelativeSource AncestorType=Window}}">↓</Button>
+                        </StackPanel>
                         
                         <TextBlock x:Name="PART_BackHeaderText"
                           Margin="15 0 0 0"
