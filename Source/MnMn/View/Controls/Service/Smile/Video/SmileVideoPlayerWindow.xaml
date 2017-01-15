@@ -1439,8 +1439,20 @@
                         </Button>
 
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                          <Button Command="{Binding DataContext.ChangeSelectedCommentUpCommand, RelativeSource={RelativeSource AncestorType=Window}}">↑</Button>
-                          <Button Command="{Binding DataContext.ChangeSelectedCommentDownCommand, RelativeSource={RelativeSource AncestorType=Window}}">↓</Button>
+                          <RepeatButton Command="{Binding DataContext.ChangeSelectedCommentUpCommand, RelativeSource={RelativeSource AncestorType=Window}}">
+                            <Viewbox Style="{StaticResource NormalIconBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource NormalDefaultIconPath}" />
+                              </Canvas>
+                            </Viewbox>
+                          </RepeatButton>
+                          <RepeatButton Command="{Binding DataContext.ChangeSelectedCommentDownCommand, RelativeSource={RelativeSource AncestorType=Window}}">
+                            <Viewbox Style="{StaticResource NormalIconBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource NormalDefaultIconPath}" />
+                              </Canvas>
+                            </Viewbox>
+                          </RepeatButton>
                         </StackPanel>
                         
                         <TextBlock x:Name="PART_BackHeaderText"
