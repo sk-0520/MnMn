@@ -260,7 +260,7 @@
           <ToggleButton IsChecked="{Binding AttachmentOutputLogging}">ログを継続出力</ToggleButton>
         </ToolBar>
 
-        <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ItemsSource="{Binding LogItems, Mode=OneTime}" SelectedItem="{Binding SelectedLogItem}">
+        <ListView x:Name="listLog" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding LogItems, Mode=OneTime}" SelectedItem="{Binding SelectedLogItem}">
           <ListView.Resources>
             <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
               <Style.Triggers>
