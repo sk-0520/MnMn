@@ -81,6 +81,7 @@
       <ComboBox
         x:Name="listSearch"
         Grid.Column="1"
+        ScrollViewer.CanContentScroll="True"
         mamc:TextBoxHelper.Watermark="検索タグ・ワード"
         IsEditable="True"
         Text="{Binding InputQuery}"
