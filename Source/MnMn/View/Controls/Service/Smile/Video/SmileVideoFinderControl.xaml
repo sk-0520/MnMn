@@ -247,6 +247,7 @@
         x:Name="PART_List"
         ItemsSource="{Binding FinderItems}"
         SelectedItem="{Binding SelectedFinderItem}"
+        ScrollViewer.CanContentScroll="True"
       >
         <i:Interaction.Behaviors>
           <app_view_attachment:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
@@ -256,6 +257,15 @@
           <KeyBinding Key="Space" Command="{Binding SelectedFinderItem.ToggleCheckCommand}" />
           <KeyBinding Modifiers="Ctrl" Key="A" Command="{Binding AllCheckCommand}" />
         </ListBox.InputBindings>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel
+              VirtualizingPanel.IsVirtualizing="True"
+              VirtualizingPanel.VirtualizationMode="Recycling"
+              
+            />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
         <ListBox.ItemContainerStyle>
           <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
