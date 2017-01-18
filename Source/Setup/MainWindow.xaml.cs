@@ -143,6 +143,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             AddMessageLog(Properties.Resources.String_DownloadArchive);
 
             var client = new HttpClient();
+            client.Timeout = TimeSpan.FromMinutes(25);
 
             var downloadTotalSize = 0;
 
