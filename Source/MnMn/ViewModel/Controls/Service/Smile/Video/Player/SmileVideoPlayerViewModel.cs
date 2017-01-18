@@ -1908,14 +1908,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             //    return;
             //}
 
-            if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any() && !UserOperationStop.Value) {
+            if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any()) {
                 // 次のプレイリストへ遷移
                 Mediation.Logger.Debug("next playlist item");
                 LoadNextPlayListItemAsync();
                 return;
             }
 
-            if(ReplayVideo && !UserOperationStop.Value) {
+            if(ReplayVideo) {
                 // リプレイ
                 Mediation.Logger.Debug("replay");
                 //Player.BeginStop(() => {
