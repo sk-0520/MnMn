@@ -53,6 +53,7 @@ namespace ContentTypeTextNet.MnMn.Setup
         void AddLog(LogItem logItem)
         {
             this.listLog.Dispatcher.BeginInvoke(new Action(() => {
+                Trace.WriteLine($"{logItem.Timestamp}, {logItem.Kind}, {logItem.Message}");
                 this.listLog.Items.Add(logItem);
                 this.listLog.ScrollIntoView(logItem);
             }));
@@ -84,15 +85,22 @@ namespace ContentTypeTextNet.MnMn.Setup
             foreach(var control in controls) {
                 control.IsEnabled = !isDisabled;
             }
+        }
 
+        HttpClient CreateHttpClient()
+        {
+            var client = new HttpClient() {
+                Timeout = Constants.HttpWaitTime,
+            };
+
+            return client;
         }
 
         async Task<Tuple<Uri, Version>> GetArchiveInformationAsync()
         {
             AddMessageLog(Properties.Resources.String_GetArchiveInformation);
 
-            var client = new HttpClient();
-            client.Timeout = Constants.HttpWaitTime;
+            var client = CreateHttpClient();
 
             var response = await client.GetAsync(Constants.UpdateUri);
             AddMessageLog(
@@ -143,8 +151,7 @@ namespace ContentTypeTextNet.MnMn.Setup
         {
             AddMessageLog(Properties.Resources.String_DownloadArchive);
 
-            var client = new HttpClient();
-            client.Timeout = Constants.HttpWaitTime;
+            var client = CreateHttpClient();
 
             var downloadTotalSize = 0;
 
@@ -321,7 +328,7 @@ namespace ContentTypeTextNet.MnMn.Setup
         }
 
 
-        Task InstallAsync()
+        async Task InstallAsync()
         {
             var installPath = inputInstallDirectoryPath.Text;
             var createShortcut = selectCreateShortcut.IsChecked.GetValueOrDefault();
@@ -335,17 +342,15 @@ namespace ContentTypeTextNet.MnMn.Setup
             AddMessageLog(Properties.Resources.String_App_Start);
 
             SetDisabled(true);
-            return InstallCoreAsync(installPath, createShortcut, installToExecute).ContinueWith(t => {
-                if(t.IsFaulted) {
-                    if(t.Exception != null) {
-                        var msg = string.Join(Environment.NewLine, t.Exception.InnerExceptions.Select(ex => ex.ToString()));
-                        AddLog(new LogItem(LogKind.Error, msg));
-                    }
-                }
-                SetDisabled(false);
 
+            try {
+                await InstallCoreAsync(installPath, createShortcut, installToExecute);
+            } catch(Exception ex) {
+                AddMessageLog(ex.ToString());
+            } finally {
+                SetDisabled(false);
                 AddMessageLog(Properties.Resources.String_App_End);
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
 
         void OpenLink(Uri uri)
@@ -373,7 +378,7 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         private void commandInstall_Click(object sender, RoutedEventArgs e)
         {
-            InstallAsync();
+            InstallAsync().ConfigureAwait(false);
         }
 
         private void commandClose_Click(object sender, RoutedEventArgs e)
