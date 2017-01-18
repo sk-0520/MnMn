@@ -139,7 +139,12 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#380: 自動セットアップさぁ、タイムアウトしてね？',
+						'comments': [
+							'git tag: setup-1.10',
+							'25分待ちにした',
+							'HttpClient.GetAsync(Uri)の動作がなんか思ってるのと違う'
+						]
 					},
 					{
 						'revision': '',

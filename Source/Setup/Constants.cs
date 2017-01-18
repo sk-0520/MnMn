@@ -47,11 +47,13 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         public static TimeSpan MutexWaitTime { get; } = TimeSpan.FromSeconds(3);
 
+        public static TimeSpan HttpWaitTime { get; } = TimeSpan.FromMinutes(25);
+
         public static Uri UpdateUri
         {
             get
             {
-#if DEBUG
+#if _DEBUG
                 return new Uri("http://localhost/test/mnmn/update.xml");
 #else
                 return new Uri("https://bitbucket.org/sk_0520/mnmn/downloads/update.xml");
