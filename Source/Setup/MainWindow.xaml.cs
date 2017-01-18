@@ -92,6 +92,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             AddMessageLog(Properties.Resources.String_GetArchiveInformation);
 
             var client = new HttpClient();
+            client.Timeout = Constants.HttpWaitTime;
 
             var response = await client.GetAsync(Constants.UpdateUri);
             AddMessageLog(
@@ -143,7 +144,7 @@ namespace ContentTypeTextNet.MnMn.Setup
             AddMessageLog(Properties.Resources.String_DownloadArchive);
 
             var client = new HttpClient();
-            client.Timeout = TimeSpan.FromMinutes(25);
+            client.Timeout = Constants.HttpWaitTime;
 
             var downloadTotalSize = 0;
 

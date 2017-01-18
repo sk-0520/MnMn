@@ -47,6 +47,8 @@ namespace ContentTypeTextNet.MnMn.Setup
 
         public static TimeSpan MutexWaitTime { get; } = TimeSpan.FromSeconds(3);
 
+        public static TimeSpan HttpWaitTime { get; } = TimeSpan.FromMinutes(25);
+
         public static Uri UpdateUri
         {
             get
