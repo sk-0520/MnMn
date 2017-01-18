@@ -1979,6 +1979,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(PlayListItems.All(i => i != videoInformation)) {
                 // プレイリストに存在しない動画は追加する
                 PlayListItems.Add(videoInformation);
+                //#371
+                CanPlayNextVieo.Value = false;
             }
 
             videoInformation.IsPlaying = true;
