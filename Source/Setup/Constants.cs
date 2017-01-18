@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.MnMn.Setup
         {
             get
             {
-#if DEBUG
+#if _DEBUG
                 return new Uri("http://localhost/test/mnmn/update.xml");
 #else
                 return new Uri("https://bitbucket.org/sk_0520/mnmn/downloads/update.xml");

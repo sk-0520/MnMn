@@ -27,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml.Linq;
 using Microsoft.Win32;
 
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.MnMn.Setup
         {
             progressBar.Dispatcher.Invoke(() => {
                 progressBar.Value = value;
-            });
+            }, DispatcherPriority.ApplicationIdle);
         }
 
         void SetDisabled(bool isDisabled)
