@@ -449,4 +449,19 @@
   <data name="String_App_Logic_PageLoader_SafetyUri" xml:space="preserve">
     <value>保護されたURI</value>
   </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoUserKind_Alert" xml:space="preserve">
+    <value>アラート</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoUserKind_Noraml" xml:space="preserve">
+    <value>一般</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoUserKind_Official" xml:space="preserve">
+    <value>運営</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoUserKind_Premium" xml:space="preserve">
+    <value>プレミアム</value>
+  </data>
+  <data name="String_App_Define_Service_Smile_Video_SmileVideoUserKind_Real" xml:space="preserve">
+    <value>生放送</value>
+  </data>
 </root>

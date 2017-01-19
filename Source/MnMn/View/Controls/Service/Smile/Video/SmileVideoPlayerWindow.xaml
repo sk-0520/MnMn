@@ -85,6 +85,7 @@
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
+      <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
@@ -1265,16 +1266,25 @@
                     ItemsSource="{Binding FilteringUserList}"
                     IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
                   >
+                  <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                  </ComboBox.ItemContainerStyle>
                   <ComboBox.ItemTemplate>
                     <DataTemplate>
-                      <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding UserId, Mode=OneTime}"/>
-                        <TextBlock>(</TextBlock>
-                        <TextBlock Text="{Binding UserKind, Mode=OneTime}" />
-                        <TextBlock>:</TextBlock>
-                        <TextBlock Text="{Binding Count, Mode=OneTime}" />
-                        <TextBlock>)</TextBlock>
-                      </StackPanel>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" TextAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding UserId, Mode=OneTime}"/>
+                        <TextBlock Grid.Column="1" TextAlignment="Left" Text="{Binding UserKind, Mode=OneTime, Converter={StaticResource EnumDisplayConverter}}" Margin="{StaticResource HorizonMargin}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Right" Text="{Binding Count, Mode=OneTime}" />
+                      </Grid>
                     </DataTemplate>
                   </ComboBox.ItemTemplate>
                 </ComboBox>
