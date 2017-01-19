@@ -1261,11 +1261,21 @@
                 
                 <ComboBox
                   Grid.Column="3"
-                    IsEditable="True"
-                    Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
-                    ItemsSource="{Binding FilteringUserList}"
-                    IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
-                  >
+                  ScrollViewer.CanContentScroll="True"
+                  IsEditable="True"
+                  Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding FilteringUserList}"
+                  IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
+                >
+                  <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <VirtualizingStackPanel
+                        VirtualizingPanel.IsVirtualizing="True"
+                        VirtualizingPanel.VirtualizationMode="Recycling"
+                        VirtualizingPanel.ScrollUnit="Item"
+                      />
+                    </ItemsPanelTemplate>
+                  </ComboBox.ItemsPanel>
                   <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
                       <Setter Property="HorizontalAlignment" Value="Stretch" />
