@@ -131,10 +131,6 @@
         <Setter Property="LoadedToVisibility" Value="Visible" />
       </Style>
 
-      <Style x:Key="UserSelect" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
-        <Setter Property="Margin" Value="4,0,0,0" />
-      </Style>
-
       <ControlTemplate x:Key="CommentTemplate">
         <Grid>
           <ToggleButton x:Name="PART_SwitchComment" ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
@@ -1219,13 +1215,13 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 
-                <RadioButton Grid.Column="0" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
+                <RadioButton Grid.Column="0" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}" Style="{StaticResource HorizontalRadioButton}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
                 </RadioButton>
                 
                 <RadioButton Grid.Column="1" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
                   <RadioButton.Style>
-                    <Style TargetType="RadioButton" BasedOn="{StaticResource UserSelect}">
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource HorizontalRadioButton}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding OriginalPosterCommentListCount}" Value="0">
                           <Setter Property="Visibility" Value="Collapsed" />
@@ -1238,7 +1234,7 @@
                 
                 <RadioButton Grid.Column="2" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
                   <RadioButton.Style>
-                    <Style TargetType="RadioButton" BasedOn="{StaticResource UserSelect}">
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding CommentListCount}" Value="0">
                           <Setter Property="IsEnabled" Value="False" />
