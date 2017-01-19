@@ -1193,7 +1193,17 @@
         />
 
         <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
-          <TabItem Header="コメント">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Comment}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>コメント</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
             <DockPanel>
               <DockPanel DockPanel.Dock="Top">
                 <DockPanel DockPanel.Dock="Top">
