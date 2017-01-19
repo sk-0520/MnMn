@@ -626,6 +626,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   アラート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoUserKind_Alert {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoUserKind_Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   一般 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoUserKind_Noraml {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoUserKind_Noraml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   運営 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoUserKind_Official {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoUserKind_Official", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プレミアム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoUserKind_Premium {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoUserKind_Premium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   生放送 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Define_Service_Smile_Video_SmileVideoUserKind_Real {
+            get {
+                return ResourceManager.GetString("String_App_Define_Service_Smile_Video_SmileVideoUserKind_Real", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ニコニコ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_ServiceType_Smile {

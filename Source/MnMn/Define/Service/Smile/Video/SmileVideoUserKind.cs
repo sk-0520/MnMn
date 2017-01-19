@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.Attribute;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
 {
@@ -27,10 +28,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video
     /// </summary>
     public enum SmileVideoUserKind
     {
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoUserKind_Noraml))]
         Noraml,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoUserKind_Premium))]
         Premium,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoUserKind_Alert))]
         Alert,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoUserKind_Real))]
         Real,
+        [EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_Service_Smile_Video_SmileVideoUserKind_Official))]
         Official,
     }
 }
