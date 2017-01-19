@@ -1331,12 +1331,13 @@
                   <Border Grid.Column="1">
                     <Grid>
                       <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                       </Grid.ColumnDefinitions>
 
-                      <TextBlock Grid.Column="0">コメント</TextBlock>
-                      <CheckBox Grid.Column="1" Content="投稿時間の表示" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
+                      <CheckBox Grid.Column="0" Content="コメント自動スクロール" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding IsAutoScroll}" />
+                      <CheckBox Grid.Column="2" Content="投稿時間" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
                     </Grid>
                   </Border>
                 </Grid>
@@ -1354,13 +1355,13 @@
                     -->
 
                   <ListBox
-                      x:Name="commentView"
-                      VirtualizingPanel.ScrollUnit="Item"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      HorizontalContentAlignment="Stretch"
-                      SelectedItem="{Binding SelectedComment}"
-                      ItemsSource="{Binding CommentItems}"
-                    >
+                    x:Name="commentView"
+                    VirtualizingPanel.ScrollUnit="Item"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    HorizontalContentAlignment="Stretch"
+                    SelectedItem="{Binding SelectedComment}"
+                    ItemsSource="{Binding CommentItems}"
+                  >
                     <ListBox.ItemContainerStyle>
                       <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                         <Style.Triggers>
@@ -1370,13 +1371,13 @@
                                 <Storyboard>
                                   <!-- テーマの随時適用はすぐには無理っすね -->
                                   <ColorAnimation
-                                      Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                      From="Transparent"
-                                      To="{StaticResource AccentColor}"
-                                      Duration="00:00:00.2"
-                                      AutoReverse="False"
-                                      FillBehavior="HoldEnd"
-                                    />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    From="Transparent"
+                                    To="{StaticResource AccentColor}"
+                                    Duration="00:00:00.2"
+                                    AutoReverse="False"
+                                    FillBehavior="HoldEnd"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.EnterActions>
@@ -1384,11 +1385,11 @@
                               <BeginStoryboard>
                                 <Storyboard>
                                   <ColorAnimation
-                                      Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                      To="Transparent"
-                                      Duration="00:00:01"
-                                      AutoReverse="False"
-                                    />
+                                    Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                    To="Transparent"
+                                    Duration="00:00:01"
+                                    AutoReverse="False"
+                                  />
                                 </Storyboard>
                               </BeginStoryboard>
                             </DataTrigger.ExitActions>
@@ -1446,42 +1447,42 @@
                 </Grid>
 
                 <mamc:Flyout
-                    x:Name="detailComment"
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Header="コメント詳細"
-                    Visibility="Hidden"
-                    Padding="4"
-                    BorderThickness="1"
-                    Position="Right"
-                    BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                    Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                    IsOpen="{Binding IsOpenCommentDetail}"
-                    Width="{Binding ActualWidth, ElementName=listComment}"
-                  >
+                  x:Name="detailComment"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Header="コメント詳細"
+                  Visibility="Hidden"
+                  Padding="4"
+                  BorderThickness="1"
+                  Position="Right"
+                  BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                  Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                  IsOpen="{Binding IsOpenCommentDetail}"
+                  Width="{Binding ActualWidth, ElementName=listComment}"
+                >
                   <mamc:Flyout.HeaderTemplate>
                     <ItemContainerTemplate>
                       <DockPanel>
                         <Button x:Name="PART_BackButton"
-                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type mamc:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type mamc:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
-                            Width="34"
-                            Height="34"
-                            Margin="2 4 2 2"
-                            VerticalAlignment="Bottom"
-                            Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
-                            Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type mamc:Flyout}}, Path=Foreground}"
-                            FontFamily="Segoe UI Symbol"
-                            FontSize="16"
-                            DockPanel.Dock="Left"
-                            IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=CloseButtonIsCancel}"
-                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=CloseButtonVisibility}"
-                          >
+                          Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type mamc:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type mamc:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
+                          Width="34"
+                          Height="34"
+                          Margin="2 4 2 2"
+                          VerticalAlignment="Bottom"
+                          Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                          Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type mamc:Flyout}}, Path=Foreground}"
+                          FontFamily="Segoe UI Symbol"
+                          FontSize="16"
+                          DockPanel.Dock="Left"
+                          IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=CloseButtonIsCancel}"
+                          Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=CloseButtonVisibility}"
+                        >
                           <ContentControl Style="{DynamicResource PathIconContentControlStyle}"
-                              Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
-                              Width="20"
-                              Height="20"
-                            />
+                            Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
+                            Width="20"
+                            Height="20"
+                          />
                         </Button>
 
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
@@ -1502,11 +1503,11 @@
                         </StackPanel>
 
                         <TextBlock x:Name="PART_BackHeaderText"
-                            Margin="15 0 0 0"
-                            VerticalAlignment="Center"
-                            Text="{Binding}"
-                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=TitleVisibility}" 
-                          />
+                          Margin="15 0 0 0"
+                          VerticalAlignment="Center"
+                          Text="{Binding}"
+                          Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mamc:Flyout}}, Path=TitleVisibility}" 
+                        />
                       </DockPanel>
                     </ItemContainerTemplate>
                   </mamc:Flyout.HeaderTemplate>
@@ -1641,21 +1642,18 @@
                 <Grid.RowDefinitions>
                   <RowDefinition />
                   <RowDefinition />
-                  <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 
-                <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding IsAutoScroll}">自動スクロール</CheckBox>
-
-                <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
-                <Grid Grid.Row="1" Grid.Column="1">
+                <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
+                <Grid Grid.Row="0" Grid.Column="1">
                   <Slider VerticalAlignment="Center" Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
                 </Grid>
 
-                <CheckBox Grid.Row="2" Grid.Column="0" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
+                <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
                   <TextBlock>
                       <TextBlock>表示制限</TextBlock>
                       <TextBlock>(</TextBlock>
@@ -1674,7 +1672,7 @@
                       <TextBlock>)</TextBlock>
                     </TextBlock>
                 </CheckBox>
-                <Grid Grid.Row="2" Grid.Column="1">
+                <Grid Grid.Row="1" Grid.Column="1">
                   <Slider
                       VerticalAlignment="Center"
                       Minimum="1"
