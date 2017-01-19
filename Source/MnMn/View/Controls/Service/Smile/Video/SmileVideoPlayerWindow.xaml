@@ -63,7 +63,7 @@
 
       <sys:Boolean x:Key="True">True</sys:Boolean>
       <sys:Boolean x:Key="False">False</sys:Boolean>
-      
+
       <sys:Double x:Key="ImageWidth">100</sys:Double>
       <sys:Double x:Key="ImageHeight">80</sys:Double>
 
@@ -554,7 +554,7 @@
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
             </Style>
           </MenuItem.ItemContainerStyle>
-          
+
         </MenuItem>
       </Menu>
       <Button Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -1215,11 +1215,11 @@
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <RadioButton Grid.Column="0" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}" Style="{StaticResource HorizontalRadioButton}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
                 </RadioButton>
-                
+
                 <RadioButton Grid.Column="1" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
                   <RadioButton.Style>
                     <Style TargetType="RadioButton" BasedOn="{StaticResource HorizontalRadioButton}">
@@ -1232,7 +1232,7 @@
                   </RadioButton.Style>
                   <TextBlock Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=投稿者({0})}" />
                 </RadioButton>
-                
+
                 <RadioButton Grid.Column="2" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
                   <RadioButton.Style>
                     <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
@@ -1258,7 +1258,7 @@
                     </TextBlock>
                   </TextBlock>
                 </RadioButton>
-                
+
                 <ComboBox
                   Grid.Column="3"
                   ScrollViewer.CanContentScroll="True"
@@ -1290,7 +1290,7 @@
                           <ColumnDefinition Width="Auto" />
                           <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <TextBlock Grid.Column="0" TextAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding UserId, Mode=OneTime}"/>
                         <TextBlock Grid.Column="1" TextAlignment="Left" Text="{Binding UserKind, Mode=OneTime, Converter={StaticResource EnumDisplayConverter}}" Margin="{StaticResource HorizonMargin}" />
                         <TextBlock Grid.Column="2" TextAlignment="Right" Text="{Binding Count, Mode=OneTime}" />
@@ -1638,7 +1638,24 @@
                 </mamc:Flyout>
               </Grid>
 
-              <Grid Grid.Row="2">
+              <Grid Grid.Row="2" Margin="{StaticResource IndependentMargin}">
+                <Grid.Resources>
+                  <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                    <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
+                  </Style>
+                  <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0.65" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                    <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                  </Style>
+                  <Style x:Key="Counter" TargetType="ContentControl">
+                    <Setter Property="FontSize" Value="10" />
+                  </Style>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                   <RowDefinition />
                   <RowDefinition />
@@ -1647,44 +1664,66 @@
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
-                <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
-                <Grid Grid.Row="0" Grid.Column="1">
-                  <Slider VerticalAlignment="Center" Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
+
+                <CheckBox Grid.Row="0" Grid.Column="0" Margin="{StaticResource VerticalContrlMargin}" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="{StaticResource VerticalContrlMargin}">
+                  <Slider
+                    VerticalAlignment="Center" 
+                    Minimum="-3000" 
+                    Maximum="-1" 
+                    LargeChange="100" 
+                    IsEnabled="{Binding IsEnabledSharedNoGood}" 
+                    Value="{Binding SharedNoGoodScore}" 
+                  />
+                  <Border Visibility="{Binding IsEnabledSharedNoGood, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ContentControl Style="{StaticResource Counter}">
+                      <TextBlock Text="{Binding SharedNoGoodScore}" />
+                    </ContentControl>
+                  </Border>
                 </Grid>
 
-                <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
-                  <TextBlock>
-                      <TextBlock>表示制限</TextBlock>
-                      <TextBlock>(</TextBlock>
-                      <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
-                      <TextBlock>
-                      <TextBlock.Style>
-                        <Style TargetType="TextBlock">
+                <CheckBox Grid.Row="1" Grid.Column="0" Margin="{StaticResource VerticalContrlMargin}" IsChecked="{Binding IsEnabledDisplayCommentLimit}">表示制限</CheckBox>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="{StaticResource VerticalContrlMargin}">
+                  <Slider
+                    VerticalAlignment="Center"
+                    Minimum="1"
+                    Maximum="50"
+                    LargeChange="5"
+                    Value="{Binding DisplayCommentLimitCount}"
+                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
+                  />
+                  <Border>
+                    <ContentControl>
+                      <ContentControl.Style>
+                        <Style TargetType="ContentControl" BasedOn="{StaticResource Counter}">
                           <Style.Triggers>
                             <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
-                              <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                                    <TextBlock >/</TextBlock>
+                                    <TextBlock Text="{Binding DisplayCommentLimitCount, Mode=OneWay}" />
+                                  </StackPanel>
+                                </Setter.Value>
+                              </Setter>
                             </DataTrigger>
                           </Style.Triggers>
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                              </StackPanel>
+                            </Setter.Value>
+                          </Setter>
                         </Style>
-                      </TextBlock.Style>
-                      </TextBlock>
-                      <TextBlock>)</TextBlock>
-                    </TextBlock>
-                </CheckBox>
-                <Grid Grid.Row="1" Grid.Column="1">
-                  <Slider
-                      VerticalAlignment="Center"
-                      Minimum="1"
-                      Maximum="50"
-                      LargeChange="5"
-                      Value="{Binding DisplayCommentLimitCount}"
-                      IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
-                    />
+                      </ContentControl.Style>
+                    </ContentControl>
+                  </Border>
                 </Grid>
 
               </Grid>
-                            
+
             </Grid>
           </TabItem>
           <TabItem Header="フィルタ">
