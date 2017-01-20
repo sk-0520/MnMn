@@ -1726,7 +1726,17 @@
 
             </Grid>
           </TabItem>
-          <TabItem Header="フィルタ">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>フィルタ</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
