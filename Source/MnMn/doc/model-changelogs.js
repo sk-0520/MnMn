@@ -84,6 +84,81 @@
 	},
 	*/
 	{
+		'date': 'YYYY/MM/DD',
+		'version': '0.44.1',
+		'isRc': true,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
+	{
 		'date': '2017/01/20',
 		'version': '0.44.0',
 		'isRc': false,
@@ -138,10 +213,6 @@
 							'「設定」のアイコンって歯車なのかレンチなのかメタファとしてどっちの方がいいのか分からん。個人的にはレンチだと思う、だって歯車って設定(調節)される側だからする側のレンチとかドライバーが設定のアイコンであるべきじゃないかと思うのですよ。じゃあなんで今回追加した設定アイコンはレンチじゃなくて歯車かっていうとそりゃおめぇ、Material Design Icons に歯車アイコンしかなかったからだよ(ドライバーあったけど角度が気に入らなかったし編集するのもだるかった)',
 							'機能的にはフォント設定のプルダウンを仮想化した'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -176,27 +247,6 @@
 						'comments': [
 							'これが正しい動作なのかは知らんけど新規に開くわけだからそうあるべきな感じがしなくもないような気がしないでもないような気がするようなそんなフワフワした自信のない修正'
 						]
-					},
-					{
-						'revision': '',
-						'subject': ''
-					}
-				]
-			},
-			{
-				'type': 'developer',
-				'logs': [
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			}
