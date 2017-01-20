@@ -1786,7 +1786,7 @@
                 <TextBlock>設定</TextBlock>
               </StackPanel>
             </TabItem.Header>
-            <Grid>
+            <Grid Margin="{StaticResource IndependentMargin}">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -1842,6 +1842,9 @@
 
               <Label Grid.Row="7" Grid.Column="0" Content="テキスト描画" />
               <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <WrapPanel.Resources>
+                  <Style TargetType="RadioButton"  BasedOn="{StaticResource HorizontalRadioButton}" />
+                </WrapPanel.Resources>
                 <RadioButton VerticalAlignment="Center" Content="装飾無し" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.None}}" />
                 <RadioButton VerticalAlignment="Center" Content="影(シンプル)" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.SimpleShadow}}" />
                 <RadioButton VerticalAlignment="Center" Content="影(ぼかし)" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.BlurShadow}}" />
