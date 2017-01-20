@@ -79,7 +79,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 CustomChangePagePropertyNames.AddRange(changePropertyNames);
             }
 
-            PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(PageVm_PropertyChanged);
+            //PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(PageVm_PropertyChanged);
+            PropertyChangedListener = new PropertyChangedWeakEventListener(PageVm_PropertyChanged);
         }
 
         public PagerFinderProvider(Mediation mediation, IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel> parentFinder)
@@ -90,7 +91,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         Mediation Mediation { get; }
 
-        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
+        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
+        PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
         CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(DefaultChangePagePropertyNames);
         public IReadOnlyList<string> ChangePagePropertyNames => CustomChangePagePropertyNames;
@@ -176,13 +178,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
         public void AttachmentChildProprtyChange(INotifyPropertyChanged target)
         {
             //target.PropertyChanged += PageVm_PropertyChanged;
-            PropertyChangedEventManager.AddListener(target, PropertyChangedListener, string.Empty);
+            //PropertyChangedEventManager.AddListener(target, PropertyChangedListener, string.Empty);
+            PropertyChangedListener.Add(target);
         }
 
         public void DetachmentChildProprtyChange(INotifyPropertyChanged target)
         {
             //target.PropertyChanged -= PageVm_PropertyChanged;
-            PropertyChangedEventManager.RemoveListener(target, PropertyChangedListener, string.Empty);
+            //PropertyChangedEventManager.RemoveListener(target, PropertyChangedListener, string.Empty);
+            PropertyChangedListener.Remove(target);
         }
 
         KeyValuePair<MemberInfo, TBaseFinderVideModel> GetMemberInfo(bool getMethod, string memberName)

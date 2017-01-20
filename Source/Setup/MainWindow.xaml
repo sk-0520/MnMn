@@ -6,7 +6,7 @@
   Icon="/Resources/Icon/MnMn-Setup.ico"
   
   Title="MnMn セットアップ" 
-  Width="420"
+  Width="460"
   Height="700" 
   WindowStyle="None"
   ResizeMode="NoResize"

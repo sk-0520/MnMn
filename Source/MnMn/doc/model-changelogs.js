@@ -1,6 +1,6 @@
 ﻿var changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning',
+						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open',
 						'comments': [
 							''
 						]
@@ -83,6 +83,125 @@
 		]
 	},
 	*/
+	{
+		'date': '2017/01/20',
+		'version': '0.44.0',
+		'isRc': false,
+		'contents': [
+			{
+				'type': 'note',
+				'logs': [
+					{
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
+					}
+				]
+			},
+			{
+				'type': 'features',
+				'logs': [
+					{
+						'revision': '43cdf9cf58adccb3025ae2153eba78c34a3e9aeb',
+						'subject': '#379: ファインダーの仮想化',
+						'comments': [
+							'サムネイル取得失敗時の挙動が上手く通知されない気がするけど地味に軽くはなったから別にいいや'
+						]
+					},
+					{
+						'revision': '0b3f232321ba0c154b05abf92803a51ad926272a',
+						'subject': '#339: プレイリストに二件以上動画が存在して次の動画へ遷移する場合はあらかじめ何かわかるようにする',
+						'comments': [
+							'#371, #377 の対応であんま意味ない気がしてきた'
+						]
+					},
+					{
+						'revision': 'd9f5e8def972a44f230cbd3151be5cc271fadce7',
+						'subject': '#345: プレイヤー コメントタブのUIを調整する',
+						'comments': [
+							'スライダーを下側に移動させた'
+						]
+					},
+					{
+						'revision': '78a92050dbce1e8c120cea87a28e5cb271985612',
+						'subject': '#346: プレイヤー フィルタタブのUIを調整する'
+					},
+					{
+						'revision': '23360cd1b2a0d88db5792250eaf68ee12d73006a',
+						'subject': '#347: プレイヤー 設定タブのUIを調整する',
+						'comments': [
+							'なんかもうだるいし UI としては歯車アイコン設定しただけ',
+							'「設定」のアイコンって歯車なのかレンチなのかメタファとしてどっちの方がいいのか分からん。個人的にはレンチだと思う、だって歯車って設定(調節)される側だからする側のレンチとかドライバーが設定のアイコンであるべきじゃないかと思うのですよ。じゃあなんで今回追加した設定アイコンはレンチじゃなくて歯車かっていうとそりゃおめぇ、Material Design Icons に歯車アイコンしかなかったからだよ(ドライバーあったけど角度が気に入らなかったし編集するのもだるかった)',
+							'機能的にはフォント設定のプルダウンを仮想化した'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'fixes',
+				'logs': [
+					{
+						'revision': 'e3ed3a8e86991f5852f5db56ba5a5a633b144ef4',
+						'class': 'open',
+						'subject': '#342: メモリ断片化: System.Runtime.InteropServices.COMException (0x80070008)',
+						'comments': [
+							'シリアライズ処理、特に XML データ通信周りの仕組みを変更',
+							'参考: http://stackoverflow.com/questions/1127431/xmlserializer-giving-filenotfoundexception-at-constructor'
+						]
+					},
+					{
+						'revision': 'fdd716425db4f0cc9123c1ff67f5e7ff3ccedd83',
+						'subject': '#380: 自動セットアップさぁ、タイムアウトしてね？',
+						'comments': [
+							'実運用: 2017/01/18, git tag: setup-1.10',
+							'25分待ちにした',
+							'HttpClient.GetAsync(Uri) の動作がなんか思ってるのと違う'
+						]
+					},
+					{
+						'revision': 'fea1d8161601957c259ce8c38ed5cb4c92419c91',
+						'subject': '#377: プレイリスト再生中で次動画への遷移が有効であればユーザー操作による停止後の再生で動画終端まで再生したら次動画に遷移すべき'
+					},
+					{
+						'revision': 'a9902710fa45c95c6cbc9ab3bbc6877f98170fd5',
+						'subject': '#371: 今までの実装理由の理屈としてプレイリスト再生中のプレイヤーでプレイリスト外の新規動画を再生する場合に「次動画へ自動遷移」は非チェック状態にすべき',
+						'comments': [
+							'これが正しい動作なのかは知らんけど新規に開くわけだからそうあるべきな感じがしなくもないような気がしないでもないような気がするようなそんなフワフワした自信のない修正'
+						]
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			},
+			{
+				'type': 'developer',
+				'logs': [
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					},
+					{
+						'revision': '',
+						'subject': ''
+					}
+				]
+			}
+		]
+	},
 	{
 		'date': '2017/01/15',
 		'version': '0.43.0',

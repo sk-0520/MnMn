@@ -63,7 +63,7 @@
 
       <sys:Boolean x:Key="True">True</sys:Boolean>
       <sys:Boolean x:Key="False">False</sys:Boolean>
-      
+
       <sys:Double x:Key="ImageWidth">100</sys:Double>
       <sys:Double x:Key="ImageHeight">80</sys:Double>
 
@@ -85,6 +85,7 @@
       <app_view_converter:LoadStateIsLoadedConverter x:Key="LoadStateIsLoadedConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
       <app_view_converter:NegativeDoubleConverter x:Key="NegativeDoubleConverter" />
+      <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter_service_smile_video:TimespanToHMFormatConverter x:Key="TimespanToHMFormatConverter" />
       <app_view_converter_service_smile_video:BookmarkLevelConverter x:Key="BookmarkLevelConverter" />
       <app_view_converter_service_smile_video:CaptionHeightConverter x:Key="CaptionHeightConverter" />
@@ -129,10 +130,6 @@
         <Setter Property="Canvas.Left" Value="10" />
         <Setter Property="Canvas.Top" Value="10" />
         <Setter Property="LoadedToVisibility" Value="Visible" />
-      </Style>
-
-      <Style x:Key="UserSelect" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
-        <Setter Property="Margin" Value="4,0,0,0" />
       </Style>
 
       <ControlTemplate x:Key="CommentTemplate">
@@ -504,15 +501,34 @@
           <MenuItem.ItemsSource>
             <CompositeCollection>
               <!-- ショートカット名バインドしたかったけど今のレイアウトだとできなんだ -->
-              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F" Style="{StaticResource {x:Type MenuItem}}">
-                <MenuItem.Icon>
-                  <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource SmallIconImage}" />-->
-                  <Viewbox Style="{StaticResource SmallIconBox}">
-                    <Canvas Style="{StaticResource IconCanvas-24x24}">
-                      <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
-                    </Canvas>
-                  </Viewbox>
-                </MenuItem.Icon>
+              <MenuItem Header="次の動画" Command="{Binding LoadNextPlayListItemCommand}" InputGestureText="Ctrl + F">
+                <MenuItem.Style>
+                  <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding CanPlayNextVieo.Value}" Value="True">
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Icon">
+                          <Setter.Value>
+                            <Viewbox Style="{StaticResource SmallIconBox}">
+                              <Canvas Style="{StaticResource IconCanvas-24x24}">
+                                <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallAccentIconPath}" />
+                              </Canvas>
+                            </Viewbox>
+                          </Setter.Value>
+                        </Setter>
+                      </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Icon">
+                      <Setter.Value>
+                        <Viewbox Style="{StaticResource SmallIconBox}">
+                          <Canvas Style="{StaticResource IconCanvas-24x24}">
+                            <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
+                          </Canvas>
+                        </Viewbox>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+                </MenuItem.Style>
               </MenuItem>
               <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B" Style="{StaticResource {x:Type MenuItem}}">
                 <MenuItem.Icon>
@@ -538,16 +554,41 @@
               <Setter Property="IsChecked" Value="{Binding IsPlaying}" />
             </Style>
           </MenuItem.ItemContainerStyle>
-          
+
         </MenuItem>
       </Menu>
       <Button Command="{Binding LoadNextPlayListItemCommand}" Visibility="{Binding PlayListItems.CanItemChange, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Button.Style>
+          <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding CanPlayNextVieo.Value}" Value="True">
+                <Setter Property="ContentTemplate">
+                  <Setter.Value>
+                    <DataTemplate>
+                      <Viewbox Style="{StaticResource SmallIconBox}">
+                        <Canvas Style="{StaticResource IconCanvas-24x24}">
+                          <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallAccentIconPath}" />
+                        </Canvas>
+                      </Viewbox>
+                    </DataTemplate>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="ContentTemplate">
+              <Setter.Value>
+                <DataTemplate>
+                  <Viewbox Style="{StaticResource SmallIconBox}">
+                    <Canvas Style="{StaticResource IconCanvas-24x24}">
+                      <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
+                    </Canvas>
+                  </Viewbox>
+                </DataTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </Button.Style>
         <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />-->
-        <Viewbox Style="{StaticResource SmallIconBox}">
-          <Canvas Style="{StaticResource IconCanvas-24x24}">
-            <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
-          </Canvas>
-        </Viewbox>
       </Button>
 
       <Separator />
@@ -1149,22 +1190,39 @@
         />
 
         <TabControl Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerShowCommentArea, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource FinderTab}">
-          <TabItem Header="コメント">
-            <DockPanel>
-              <DockPanel DockPanel.Dock="Top">
-                <DockPanel DockPanel.Dock="Top">
-                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsAutoScroll}">自動スクロール</CheckBox>
-                  <CheckBox DockPanel.Dock="Left" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
-                  <TextBlock DockPanel.Dock="Left" Margin="2,0,0,0">低</TextBlock>
-                  <TextBlock DockPanel.Dock="Right">高</TextBlock>
-                  <Slider VerticalAlignment="Center" Minimum="-3000" Maximum="-1" LargeChange="100" IsEnabled="{Binding IsEnabledSharedNoGood}" Value="{Binding SharedNoGoodScore}" ToolTip="{Binding SharedNoGoodScore}" />
-                </DockPanel>
-                <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Comment}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>コメント</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <RadioButton Grid.Column="0" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.All}}" Style="{StaticResource HorizontalRadioButton}">
                   <TextBlock Text="{Binding CommentListCount, Mode=OneWay, StringFormat=全て({0})}" />
                 </RadioButton>
-                <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
+
+                <RadioButton Grid.Column="1" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.OriginalPoster}}">
                   <RadioButton.Style>
-                    <Style TargetType="RadioButton" BasedOn="{StaticResource UserSelect}">
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource HorizontalRadioButton}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding OriginalPosterCommentListCount}" Value="0">
                           <Setter Property="Visibility" Value="Collapsed" />
@@ -1174,9 +1232,10 @@
                   </RadioButton.Style>
                   <TextBlock Text="{Binding OriginalPosterCommentListCount, Mode=OneWay, StringFormat=投稿者({0})}" />
                 </RadioButton>
-                <RadioButton DockPanel.Dock="Left" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
+
+                <RadioButton Grid.Column="2" IsChecked="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}">
                   <RadioButton.Style>
-                    <Style TargetType="RadioButton" BasedOn="{StaticResource UserSelect}">
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding CommentListCount}" Value="0">
                           <Setter Property="IsEnabled" Value="False" />
@@ -1184,78 +1243,65 @@
                       </Style.Triggers>
                     </Style>
                   </RadioButton.Style>
-                  <TextBlock>ユーザー</TextBlock>
-                </RadioButton>
-                <TextBlock DockPanel.Dock="Right">
-                  <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding FilteringCommentType}" Value="UserId">
-                          <Setter Property="Text" Value="{Binding CommentItems.CanItemChange, Mode=OneWay, StringFormat=({0})}" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </TextBlock.Style>
-                </TextBlock>
-                <ComboBox
-                  IsEditable="True"
-                  Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
-                  ItemsSource="{Binding FilteringUserList}"
-                  IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
-                >
-                  <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                      <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding UserId, Mode=OneTime}"/>
-                        <TextBlock>(</TextBlock>
-                        <TextBlock Text="{Binding UserKind, Mode=OneTime}" />
-                        <TextBlock>:</TextBlock>
-                        <TextBlock Text="{Binding Count, Mode=OneTime}" />
-                        <TextBlock>)</TextBlock>
-                      </StackPanel>
-                    </DataTemplate>
-                  </ComboBox.ItemTemplate>
-                </ComboBox>
-              </DockPanel>
-              <Grid DockPanel.Dock="Bottom">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="4*" />
-                  <ColumnDefinition Width="6*" />
-                </Grid.ColumnDefinitions>
-                <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsEnabledDisplayCommentLimit}">
                   <TextBlock>
-                    <TextBlock>表示制限</TextBlock>
-                    <TextBlock>(</TextBlock>
-                    <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                    <TextBlock>ユーザー</TextBlock>
                     <TextBlock>
                       <TextBlock.Style>
-                        <Style TargetType="TextBlock">
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                           <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
-                              <Setter Property="Text" Value="{Binding DisplayCommentLimitCount, StringFormat=/{0}}" />
+                            <DataTrigger Binding="{Binding FilteringCommentType}" Value="UserId">
+                              <Setter Property="Text" Value="{Binding Items.Count, Mode=OneWay, StringFormat=({0}), ElementName=commentView}" />
                             </DataTrigger>
                           </Style.Triggers>
                         </Style>
                       </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock>)</TextBlock>
                   </TextBlock>
-                </CheckBox>
-                <DockPanel Grid.Column="1">
-                  <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" >少</TextBlock>
-                  <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">多</TextBlock>
-                  <Slider
-                    VerticalAlignment="Center"
-                    Minimum="1"
-                    Maximum="50"
-                    LargeChange="5"
-                    Value="{Binding DisplayCommentLimitCount}"
-                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
-                  />
-                </DockPanel>
+                </RadioButton>
+
+                <ComboBox
+                  Grid.Column="3"
+                  ScrollViewer.CanContentScroll="True"
+                  IsEditable="True"
+                  Text="{Binding FilteringUserId, Delay=500, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding FilteringUserList}"
+                  IsEnabled="{Binding FilteringCommentType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define_service_smile_video:SmileVideoFilteringCommentType.UserId}}"
+                >
+                  <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <VirtualizingStackPanel
+                        VirtualizingPanel.IsVirtualizing="True"
+                        VirtualizingPanel.VirtualizationMode="Recycling"
+                        VirtualizingPanel.ScrollUnit="Item"
+                      />
+                    </ItemsPanelTemplate>
+                  </ComboBox.ItemsPanel>
+                  <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                  </ComboBox.ItemContainerStyle>
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" TextAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding UserId, Mode=OneTime}"/>
+                        <TextBlock Grid.Column="1" TextAlignment="Left" Text="{Binding UserKind, Mode=OneTime, Converter={StaticResource EnumDisplayConverter}}" Margin="{StaticResource HorizonMargin}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Right" Text="{Binding Count, Mode=OneTime}" />
+                      </Grid>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
               </Grid>
 
-              <Grid x:Name="listComment">
+
+              <Grid Grid.Row="1" x:Name="listComment">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="*" />
@@ -1285,27 +1331,28 @@
                   <Border Grid.Column="1">
                     <Grid>
                       <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                       </Grid.ColumnDefinitions>
 
-                      <TextBlock Grid.Column="0">コメント</TextBlock>
-                      <CheckBox Grid.Column="1" Content="投稿時間の表示" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
+                      <CheckBox Grid.Column="0" Content="コメント自動スクロール" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding IsAutoScroll}" />
+                      <CheckBox Grid.Column="2" Content="投稿時間" Foreground="{DynamicResource WhiteBrush}" IsChecked="{Binding PlayerShowPostTimestamp}" />
                     </Grid>
                   </Border>
                 </Grid>
 
                 <Grid Grid.Row="1">
                   <!--
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                  </Grid.RowDefinitions>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="8*" />
-                  </Grid.ColumnDefinitions>
-                  -->
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="*" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="2*" />
+                      <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+                    -->
 
                   <ListBox
                     x:Name="commentView"
@@ -1378,12 +1425,12 @@
                                   <DataTrigger Binding="{Binding Approval}" Value="False">
                                     <Setter Property="Text" Value="{Binding NoApprovalRemark.Value, StringFormat=&lt;{0}としてマークされました&gt;}" />
                                     <!--<Setter Property="TextDecorations">
-                                      <Setter.Value>
-                                        <TextDecorationCollection>
-                                          <TextDecoration Location="Strikethrough" />
-                                        </TextDecorationCollection>
-                                      </Setter.Value>
-                                    </Setter>-->
+                                        <Setter.Value>
+                                          <TextDecorationCollection>
+                                            <TextDecoration Location="Strikethrough" />
+                                          </TextDecorationCollection>
+                                        </Setter.Value>
+                                      </Setter>-->
                                   </DataTrigger>
                                 </Style.Triggers>
 
@@ -1454,7 +1501,7 @@
                             </Viewbox>
                           </RepeatButton>
                         </StackPanel>
-                        
+
                         <TextBlock x:Name="PART_BackHeaderText"
                           Margin="15 0 0 0"
                           VerticalAlignment="Center"
@@ -1473,19 +1520,19 @@
                           </Style>
                           <Style TargetType="TextBox" BasedOn="{StaticResource SelectableReadonlyText}">
                             <!--
-                            <Style.Triggers>
-                              <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property = "BorderBrush" Value="Transparent"/>
-                              </Trigger>
-                              <Trigger Property="IsFocused" Value="true">
-                                <Setter Property = "BorderBrush" Value="Transparent"/>
-                              </Trigger>
-                            </Style.Triggers>
-                            <Setter Property="IsReadOnly" Value="True" />
-                            <Setter Property="IsReadOnlyCaretVisible" Value="True" />
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderBrush" Value="Transparent" />
-                            -->
+                              <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                  <Setter Property = "BorderBrush" Value="Transparent"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="true">
+                                  <Setter Property = "BorderBrush" Value="Transparent"/>
+                                </Trigger>
+                              </Style.Triggers>
+                              <Setter Property="IsReadOnly" Value="True" />
+                              <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+                              <Setter Property="Background" Value="Transparent" />
+                              <Setter Property="BorderBrush" Value="Transparent" />
+                              -->
                             <Setter Property="VerticalContentAlignment" Value="Center" />
                           </Style>
                           <Style x:Key="FilteringGrid" TargetType="Grid">
@@ -1562,11 +1609,11 @@
                               </Style>
                             </mamc:DropDownButton.Resources>
                             <!--<mamc:DropDownButton.ItemContainerStyle>
-                              <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
-                                <Setter Property="Command" Value="{Binding }" />
-                                <Setter Property="CommandParameter" Value="{Binding}" />
-                              </Style>
-                            </mamc:DropDownButton.ItemContainerStyle>-->
+                                <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
+                                  <Setter Property="Command" Value="{Binding }" />
+                                  <Setter Property="CommandParameter" Value="{Binding}" />
+                                </Style>
+                              </mamc:DropDownButton.ItemContainerStyle>-->
                             <mamc:DropDownButton.Content>
                               <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                             </mamc:DropDownButton.Content>
@@ -1590,9 +1637,106 @@
                   </Grid>
                 </mamc:Flyout>
               </Grid>
-            </DockPanel>
+
+              <Grid Grid.Row="2" Margin="{StaticResource IndependentMargin}">
+                <Grid.Resources>
+                  <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                    <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
+                  </Style>
+                  <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0.65" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                    <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                  </Style>
+                  <Style x:Key="Counter" TargetType="ContentControl">
+                    <Setter Property="FontSize" Value="10" />
+                  </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Row="0" Grid.Column="0" Margin="{StaticResource VerticalContrlMargin}" IsChecked="{Binding IsEnabledSharedNoGood}">共有NG</CheckBox>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="{StaticResource VerticalContrlMargin}">
+                  <Slider
+                    VerticalAlignment="Center" 
+                    Minimum="-3000" 
+                    Maximum="-1" 
+                    LargeChange="100" 
+                    IsEnabled="{Binding IsEnabledSharedNoGood}" 
+                    Value="{Binding SharedNoGoodScore}" 
+                  />
+                  <Border Visibility="{Binding IsEnabledSharedNoGood, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ContentControl Style="{StaticResource Counter}">
+                      <TextBlock Text="{Binding SharedNoGoodScore}" />
+                    </ContentControl>
+                  </Border>
+                </Grid>
+
+                <CheckBox Grid.Row="1" Grid.Column="0" Margin="{StaticResource VerticalContrlMargin}" IsChecked="{Binding IsEnabledDisplayCommentLimit}">表示制限</CheckBox>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="{StaticResource VerticalContrlMargin}">
+                  <Slider
+                    VerticalAlignment="Center"
+                    Minimum="1"
+                    Maximum="50"
+                    LargeChange="5"
+                    Value="{Binding DisplayCommentLimitCount}"
+                    IsEnabled="{Binding IsEnabledDisplayCommentLimit}"
+                  />
+                  <Border>
+                    <ContentControl>
+                      <ContentControl.Style>
+                        <Style TargetType="ContentControl" BasedOn="{StaticResource Counter}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEnabledDisplayCommentLimit}" Value="True">
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                                    <TextBlock >/</TextBlock>
+                                    <TextBlock Text="{Binding DisplayCommentLimitCount, Mode=OneWay}" />
+                                  </StackPanel>
+                                </Setter.Value>
+                              </Setter>
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ShowingCommentList.Count, Mode=OneWay}" />
+                              </StackPanel>
+                            </Setter.Value>
+                          </Setter>
+                        </Style>
+                      </ContentControl.Style>
+                    </ContentControl>
+                  </Border>
+                </Grid>
+
+              </Grid>
+
+            </Grid>
           </TabItem>
-          <TabItem Header="フィルタ">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>フィルタ</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -1616,8 +1760,8 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                       <!--<TextBlock>全ての動画</TextBlock>
                     <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />-->
-                      <CheckBox Margin="0,0,4,0" ToolTip="全体フィルタ設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
                       <TextBlock>全ての動画</TextBlock>
+                      <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding IsEnabledGlobalCommentFilering}">この動画で有効にする</CheckBox>
                     </StackPanel>
                   </TabItem.Header>
                   <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">
@@ -1631,8 +1775,18 @@
               </TabControl>
             </Grid>
           </TabItem>
-          <TabItem Header="設定">
-            <Grid>
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Setting}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>設定</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
+            <Grid Margin="{StaticResource IndependentMargin}">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -1688,6 +1842,9 @@
 
               <Label Grid.Row="7" Grid.Column="0" Content="テキスト描画" />
               <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <WrapPanel.Resources>
+                  <Style TargetType="RadioButton"  BasedOn="{StaticResource HorizontalRadioButton}" />
+                </WrapPanel.Resources>
                 <RadioButton VerticalAlignment="Center" Content="装飾無し" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.None}}" />
                 <RadioButton VerticalAlignment="Center" Content="影(シンプル)" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.SimpleShadow}}" />
                 <RadioButton VerticalAlignment="Center" Content="影(ぼかし)" IsChecked="{Binding PlayerTextShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_define:TextShowMode.BlurShadow}}" />

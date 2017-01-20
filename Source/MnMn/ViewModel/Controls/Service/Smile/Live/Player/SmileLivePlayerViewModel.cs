@@ -86,8 +86,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(ShowWebPlayer_PropertyChanged);
-            PropertyChangedEventManager.AddListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+            //PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(ShowWebPlayer_PropertyChanged);
+            //PropertyChangedEventManager.AddListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+            PropertyChangedListener = new PropertyChangedWeakEventListener(ShowWebPlayer_PropertyChanged);
+            PropertyChangedListener.Add(ShowWebPlayer);
             //ShowWebPlayer.PropertyChanged += ShowWebPlayer_PropertyChanged;
 
             ImportSetting();
@@ -101,7 +103,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public SmileSessionViewModel Session { get; }
         SmileLiveSettingModel Setting { get; }
 
-        WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
+        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
+        PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
 
@@ -611,7 +614,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         protected override void Dispose(bool disposing)
         {
             if(ShowWebPlayer != null) {
-                PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+                //PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+                PropertyChangedListener.Remove(ShowWebPlayer);
                 //ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
             }
 
@@ -626,7 +630,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             NavigatorPlayer.NavigateEmpty();
 
-            PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+            //PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
+            PropertyChangedListener.Remove(ShowWebPlayer);
         }
 
         void ShowWebPlayer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

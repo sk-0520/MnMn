@@ -153,13 +153,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     .Concat(defaultAppNameSpace)
                     .GroupBy(s => s)
                     .Select(g => g.Key)
-                    .Select(u => $"using {u};")
                 ;
                 switch(model.CodeLanguage) {
                     case CodeLanguage.CSharp: {
                             var code = new StringBuilder();
                             //code.AppendLine("#pragma warning disable CS0105");
-                            code.AppendLine(string.Join(Environment.NewLine, unionNameSpace));
+                            foreach(var name in unionNameSpace) {
+                                code.Append("using ");
+                                code.Append(name);
+                                code.Append(";");
+                            }
                             code.AppendLine();
                             code.AppendLine("#line 1");
                             model.Code = code.ToString() + model.Code;
