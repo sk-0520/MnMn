@@ -1726,7 +1726,17 @@
 
             </Grid>
           </TabItem>
-          <TabItem Header="フィルタ">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Filter}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>フィルタ</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -1750,8 +1760,8 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                       <!--<TextBlock>全ての動画</TextBlock>
                     <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />-->
-                      <CheckBox Margin="0,0,4,0" ToolTip="全体フィルタ設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />
                       <TextBlock>全ての動画</TextBlock>
+                      <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding IsEnabledGlobalCommentFilering}">この動画で有効にする</CheckBox>
                     </StackPanel>
                   </TabItem.Header>
                   <app_view_controls_service_smile_video_setting:SmileVideoCommentFiltering Filtering="{Binding GlobalCommentFilering}">

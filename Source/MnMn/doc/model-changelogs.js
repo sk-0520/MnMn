@@ -131,6 +131,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#346: プレイヤー フィルタタブのUIを調整する'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
