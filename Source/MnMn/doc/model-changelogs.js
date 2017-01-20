@@ -84,24 +84,21 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.43.1',
-		'isRc': true,
+		'date': '2017/01/20',
+		'version': '0.44.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
+						'comments': [
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
+						]
 					}
 				]
 			},
@@ -109,32 +106,32 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '43cdf9cf58adccb3025ae2153eba78c34a3e9aeb',
 						'subject': '#379: ファインダーの仮想化',
 						'comments': [
 							'サムネイル取得失敗時の挙動が上手く通知されない気がするけど地味に軽くはなったから別にいいや'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '0b3f232321ba0c154b05abf92803a51ad926272a',
 						'subject': '#339: プレイリストに二件以上動画が存在して次の動画へ遷移する場合はあらかじめ何かわかるようにする',
 						'comments': [
 							'#371, #377 の対応であんま意味ない気がしてきた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'd9f5e8def972a44f230cbd3151be5cc271fadce7',
 						'subject': '#345: プレイヤー コメントタブのUIを調整する',
 						'comments': [
 							'スライダーを下側に移動させた'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '78a92050dbce1e8c120cea87a28e5cb271985612',
 						'subject': '#346: プレイヤー フィルタタブのUIを調整する'
 					},
 					{
-						'revision': '',
+						'revision': '23360cd1b2a0d88db5792250eaf68ee12d73006a',
 						'subject': '#347: プレイヤー 設定タブのUIを調整する',
 						'comments': [
 							'なんかもうだるいし UI としては歯車アイコン設定しただけ',
@@ -152,7 +149,7 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': 'e3ed3a8e86991f5852f5db56ba5a5a633b144ef4',
 						'class': 'open',
 						'subject': '#342: メモリ断片化: System.Runtime.InteropServices.COMException (0x80070008)',
 						'comments': [
@@ -161,20 +158,20 @@
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'fdd716425db4f0cc9123c1ff67f5e7ff3ccedd83',
 						'subject': '#380: 自動セットアップさぁ、タイムアウトしてね？',
 						'comments': [
-							'git tag: setup-1.10',
+							'実運用: 2017/01/18, git tag: setup-1.10',
 							'25分待ちにした',
-							'HttpClient.GetAsync(Uri)の動作がなんか思ってるのと違う'
+							'HttpClient.GetAsync(Uri) の動作がなんか思ってるのと違う'
 						]
 					},
 					{
-						'revision': '',
+						'revision': 'fea1d8161601957c259ce8c38ed5cb4c92419c91',
 						'subject': '#377: プレイリスト再生中で次動画への遷移が有効であればユーザー操作による停止後の再生で動画終端まで再生したら次動画に遷移すべき'
 					},
 					{
-						'revision': '',
+						'revision': 'a9902710fa45c95c6cbc9ab3bbc6877f98170fd5',
 						'subject': '#371: 今までの実装理由の理屈としてプレイリスト再生中のプレイヤーでプレイリスト外の新規動画を再生する場合に「次動画へ自動遷移」は非チェック状態にすべき',
 						'comments': [
 							'これが正しい動作なのかは知らんけど新規に開くわけだからそうあるべきな感じがしなくもないような気がしないでもないような気がするようなそんなフワフワした自信のない修正'
