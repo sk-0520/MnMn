@@ -1775,7 +1775,17 @@
               </TabControl>
             </Grid>
           </TabItem>
-          <TabItem Header="設定">
+          <TabItem>
+            <TabItem.Header>
+              <StackPanel Style="{StaticResource ItemPanel}">
+                <Viewbox Style="{StaticResource MinimumItemBox}">
+                  <Canvas Style="{StaticResource IconCanvas-24x24}">
+                    <Path Data="{StaticResource Image_Setting}" Style="{StaticResource MinimumDefaultIconPath}" />
+                  </Canvas>
+                </Viewbox>
+                <TextBlock>設定</TextBlock>
+              </StackPanel>
+            </TabItem.Header>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
