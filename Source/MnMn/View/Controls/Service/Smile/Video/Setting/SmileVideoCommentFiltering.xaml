@@ -57,7 +57,7 @@
         <ItemsControl x:Name="filteringList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  >
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <CheckBox Checked="DefinedItemCheckBox_Checked_Unchecked" Unchecked="DefinedItemCheckBox_Checked_Unchecked" IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" ToolTip="{Binding Source}" />
+              <CheckBox Checked="DefinedItemCheckBox_Checked_Unchecked" Unchecked="DefinedItemCheckBox_Checked_Unchecked" IsChecked="{Binding IsChecked}" Content="{Binding DisplayText}" ToolTip="{Binding Source}" Style="{StaticResource VerticalCheckBox}" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
