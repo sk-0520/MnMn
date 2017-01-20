@@ -25,15 +25,21 @@
       <RowDefinition />
       <RowDefinition />
     </Grid.RowDefinitions>
-    <ComboBox x:Name="listFont" Grid.Row="0" VerticalContentAlignment="Center"  SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+    <ComboBox x:Name="listFont" Grid.Row="0" ScrollViewer.CanContentScroll="True" VerticalContentAlignment="Center"  SelectedValue="{Binding FamilyName, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedValuePath="Source" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
       <ComboBox.ItemsPanel>
         <ItemsPanelTemplate>
-          <VirtualizingStackPanel ScrollUnit="Item" />
+          <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.ScrollUnit="Item" />
         </ItemsPanelTemplate>
       </ComboBox.ItemsPanel>
+      <ComboBox.ItemContainerStyle>
+        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+          <Setter Property="HorizontalAlignment" Value="Stretch" />
+          <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+      </ComboBox.ItemContainerStyle>
       <ComboBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Height="20" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+          <TextBlock Height="20" VerticalAlignment="Center" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
@@ -45,8 +51,8 @@
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
-      <CheckBox Grid.Column="0" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}">太字</CheckBox>
-      <CheckBox Grid.Column="1" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}">斜体</CheckBox>
+      <CheckBox Grid.Column="0" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HorizontalCheckBox}">太字</CheckBox>
+      <CheckBox Grid.Column="1" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource HorizontalCheckBox}">斜体</CheckBox>
       <ContentControl Grid.Column="2" Content="{Binding AdditionalContent, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <!--<xctk:DoubleUpDown Grid.Column="3" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
       <mamc:NumericUpDown Grid.Column="3" HasDecimals="True" Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />
