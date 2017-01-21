@@ -10,12 +10,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<DataTrigger x:Key="ButtonTrigger" Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">
-        <Setter Property="Visibility" Value="Collapsed"/>
-      </DataTrigger>-->
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Style.Triggers>
           <DataTrigger Binding="{Binding Items.Count, ElementName=PART_Items}" Value="0">
