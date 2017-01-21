@@ -176,8 +176,10 @@ function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
 	if (isEmbeddedImage) {
 
 	} else {
-
+		img.setAttibute('src', imageBaseDirPath + '/' + image);
 	}
+
+	return img;
 }
 
 function convertMessage(s) {
