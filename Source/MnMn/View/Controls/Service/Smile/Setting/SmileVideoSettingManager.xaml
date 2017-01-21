@@ -27,9 +27,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <cttn_sl_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <app_view_converter:HumanLikeByteConverter x:Key="HumanLikeByteConverter" />
