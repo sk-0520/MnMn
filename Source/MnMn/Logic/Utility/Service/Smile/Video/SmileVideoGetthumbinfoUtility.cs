@@ -135,11 +135,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             }
         }
 
-        //public static bool isScrapingMovie(string videoId)
-        //{
-        //    return videoId.StartsWith("so", StringComparison.OrdinalIgnoreCase);
-        //}
-
         #endregion
 
     }

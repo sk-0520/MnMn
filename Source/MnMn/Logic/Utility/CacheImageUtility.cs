@@ -47,14 +47,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             return bitmap;
         }
 
-        [Obsolete]
-        public static BitmapSource GetBitmapSource(byte[] binary)
-        {
-            using(var stream = GlobalManager.MemoryStream.GetStreamWidthAutoTag(binary)) {
-                return GetBitmapSource(stream);
-            }
-        }
-
         static void SaveBitmapSource(BitmapSource bitmapSource, string savePath, BitmapEncoder encoder, ILogger logger)
         {
             var frame = BitmapFrame.Create(bitmapSource);
@@ -67,12 +59,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
 
         public static Task SaveBitmapSourceToPngAsync(BitmapSource bitmapSource, string savePath, ILogger logger)
         {
-            //return Task.Run(() => {
-            //    Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
-            //        var encoder = new PngBitmapEncoder();
-            //        SaveBitmapSource(bitmapSource, savePath, encoder, logger);
-            //    }));
-            //});
             return Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
                 var encoder = new PngBitmapEncoder();
                 SaveBitmapSource(bitmapSource, savePath, encoder, logger);
@@ -82,7 +68,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
         public static async Task<BitmapSource> LoadBitmapBinaryAsync(HttpClient client, Uri loadUri, int maxCount, TimeSpan waitTime, ILogger logger)
         {
             var count = 0;
-            //byte[] binary = null;
+            
             logger.Trace($"{nameof(loadUri)}({loadUri}), start");
             do {
                 try {

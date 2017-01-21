@@ -73,16 +73,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile
 
             return MenuOpenVideoLinkInNewWindowCoreAsync(videoId, communicator);
         }
-        /*
-                void AddCheckItLater(SmileVideoFinderItemViewModel finderItem)
-        {
-            var information = finderItem.Information;
-            var item = information.ToVideoItemModel();
-            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(item, true)));
-            //Mediation.Smile.VideoMediation.ManagerPack.CheckItLaterManager.AddLater(information.ToVideoItemModel());
-        }
-
-         * */
 
         static async Task AddCheckItLaterVideoIdCoreAsync(string videoId, ICommunication communicator, SmileVideoCheckItLaterManagerViewModel checkItLaterManager)
         {

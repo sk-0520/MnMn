@@ -85,7 +85,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility
             var parameter = new AppBrowserParameterModel() {
                 Uri = uri,
             };
-            //communication.GetResultFromRequest();
             communication.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Application, parameter, ShowViewState.Foreground));
         }
 
