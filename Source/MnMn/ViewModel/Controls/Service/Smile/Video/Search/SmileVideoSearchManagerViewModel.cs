@@ -116,11 +116,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Se
                 }
             }
         }
-        //public DefinedElementModel SelectedType
-        //{
-        //    get { return this._selectedType; }
-        //    set { SetVariableValue(ref this._selectedType, value); }
-        //}
 
         public string InputQuery
         {

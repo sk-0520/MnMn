@@ -85,10 +85,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
         /// </summary>
         public FileInfo ThumbnaiImageFile { get; private set; }
 
-
-        //public FileInfo WatchPageHtmlFile { get; private set; }
-
-
         #endregion
 
         public bool IsPlaying
@@ -256,10 +252,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             get
             {
                 return CreateCommand(
-                    o => {
-                        //var commandParameter = (SmileVideoOpenVideoCommandParameterModel)o;
-                        //OpenVideoFromOpenParameterAsync(false, commandParameter.OpenMode, commandParameter.OpenPlayerInNewWindow);
-                    }
+                    o => { }
                 );
             }
         }
@@ -305,17 +298,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, this, ShowViewState.Foreground));
                 return Task.CompletedTask;
             } else {
-                //if(!openPlayerInNewWindow) {
-                //    var players = Mediation.GetResultFromRequest<IEnumerable<SmileVideoPlayerViewModel>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
-                //    var workingPlayer = players.FirstOrDefault(p => p.IsWorkingPlayer.Value);
-                //    if(workingPlayer != null) {
-                //        // 再生中プレイヤーで再生
-                //        workingPlayer.MoveForeground();
-                //        return workingPlayer.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-                //        //return Task.CompletedTask;
-                //    }
-                //}
-
                 var vm = new SmileLivePlayerViewModel(Mediation);
 
                 Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.SmileLive, vm, ShowViewState.Foreground));
@@ -354,7 +336,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected override Task<bool> LoadInformationCoreAsync(CacheSpan cacheSpan, HttpClient client)
         {
-            //throw new NotImplementedException();
             return Task.FromResult(true);
         }
 
@@ -366,7 +347,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
                 ThumbnailLoadState = LoadState.Loading;
                 var cacheImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
                 SetThumbnaiImage(cacheImage);
-                //ThumbnailLoadState = LoadState.Loaded;
                 return Task.FromResult(true);
             }
 
@@ -374,7 +354,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
                 var image = task.Result;
                 if(image != null) {
-                    //this._thumbnailImage = image;
                     SetThumbnaiImage(image);
                     CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
                     return true;

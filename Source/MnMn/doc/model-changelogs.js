@@ -147,7 +147,7 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#354: コメントアウトしたソース全部殺せ'
 					},
 					{
 						'revision': '',

@@ -56,9 +56,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected IEnumerable<SmileVideoInformationViewModel> ConvertInformationFromChannelItems(IEnumerable<FeedSmileVideoItemModel> channelItems)
         {
             return channelItems
-                //.AsParallel()
                 .Select((item, index) => {
-                    //new SmileVideoInformationViewModel(Mediation, item, index + 1, InformationFlags)
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, InformationFlags));
                     return Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
                 })

@@ -276,25 +276,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
                 { Colors.Black,  "black"  },
 
                 { (Color)ColorConverter.ConvertFromString("#CCCC99"), "niconicowhite" },
-                //{ (Color)ColorConverter.ConvertFromString("#CCCC99"), "white2"},
 
                 { (Color)ColorConverter.ConvertFromString("#CC0033"), "truered" },
-                //{ (Color)ColorConverter.ConvertFromString("#CC0033"), "red2" },
 
                 { (Color)ColorConverter.ConvertFromString("#FF6600"), "passionorange" },
-                //{ (Color)ColorConverter.ConvertFromString("#FF6600"), "orange2" },
 
                 { (Color)ColorConverter.ConvertFromString("#999900"), "madyellow" },
-                //{ (Color)ColorConverter.ConvertFromString("#999900"), "yellow2" },
 
                 { (Color)ColorConverter.ConvertFromString("#00CC66"), "elementalgreen" },
-                //{ (Color)ColorConverter.ConvertFromString("#00CC66"), "green2" },
 
                 { (Color)ColorConverter.ConvertFromString("#33FFFC"), "marineblue" },
-                //{ (Color)ColorConverter.ConvertFromString("#33FFFC"), "blue2" },
 
                 { (Color)ColorConverter.ConvertFromString("#6633CC"), "nobleviolet" },
-                //{ (Color)ColorConverter.ConvertFromString("#6633CC"), "purple2" },
             };
             string result;
             if(colorMap.TryGetValue(color, out result)) {

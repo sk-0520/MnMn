@@ -55,19 +55,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ne
         SmileVideoRecommendationsFinderViewModel Recommendations { get; }
 
         public CollectionModel<SmileVideoNewArrivalsFinderViewModel> ItemsList { get; }
-        //public SmileVideoNewArrivalsFinderViewModel SelectedItem
-        //{
-        //    get { return this._selectedItem; }
-        //    set
-        //    {
-        //        var prevItem = this._selectedItem;
-        //        if(SetVariableValue(ref this._selectedItem, value)) {
-        //            if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
-        //                this._selectedItem.LoadDefaultCacheAsync();
-        //            }
-        //        }
-        //    }
-        //}
 
         #endregion
 

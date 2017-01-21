@@ -21,20 +21,9 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
-
-      <!--<Style x:Key="ReloadButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="FontFamily" Value="Webdings" />
-        <Setter Property="Content" Value="q" />
-      </Style>-->
 
       <ControlTemplate x:Key="TagsItemsTemplate" TargetType="ItemsControl">
         <ItemsControl ItemsSource="{TemplateBinding ItemsSource}">
@@ -146,15 +135,6 @@
                 <Button Grid.Column="1" Content="{Binding Query, Mode=OneTime}" Command="{Binding DataContext.SearchHistoryFromHistoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
                   <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource Hyperlink}">
-                      <!--<Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                          -->
-                      <!--<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />-->
-                      <!--
-                          <Setter Property="Foreground" Value="Red" />
-                        </Trigger>
-                      </Style.Triggers>
-                      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" />-->
                     </Style>
                   </Button.Style>
                   <Button.Template>
@@ -357,20 +337,6 @@
 
             <app_view_controls:SourceLoadStateNavigator Style="{StaticResource SmallItemSourceLoadState}" SourceLoadState="{Binding FinderLoadState}" />
             <TextBlock Text="{Binding Query}" Style="{StaticResource TabHeaderText}" />
-            <!--<Image>
-              <Image.Style>
-                <Style TargetType="Image" BasedOn="{StaticResource ItemImage}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding Type}" Value="Keyword">
-                      <Setter Property="Source" Value="/Resources/SearchType/Keyword.png" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Type}" Value="Tag">
-                      <Setter Property="Source" Value="/Resources/SearchType/Tag.png" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Image.Style>
-            </Image>-->
             <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}" >
                 <Path>
@@ -399,8 +365,6 @@
             />
             <Button Style="{StaticResource TabReloadButton}" />
 
-            <!-- contentcontrol の datatrigger で適当にやろうと思ったけどコマンドのバインドが null っちゃう -->
-            <!--<Image Source="/Resources/Service/Smile/Video/Search/Pin.png" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource ItemImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}" Visibility="{Binding IsPin, Converter={StaticResource BooleanToVisibilityConverter}}" >
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Pin}" Style="{StaticResource SmallDefaultIconPath}" />

@@ -30,13 +30,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
-
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <cttn_sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
@@ -89,10 +82,6 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <!--<Grid.ColumnDefinitions>
-      <ColumnDefinition Width="17*"/>
-      <ColumnDefinition Width="33*"/>
-    </Grid.ColumnDefinitions>-->
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -135,7 +124,6 @@
         </mamc:SplitButton.ItemTemplate>
       </mamc:SplitButton>
 
-      <!--<xctk:WatermarkTextBox Grid.Column="2" VerticalAlignment="Center" Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" />-->
       <TextBox Grid.Column="2" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
       <ToggleButton Grid.Column="3" IsChecked="{Binding IsBlacklist}" Margin="{StaticResource RightMargin}">除外</ToggleButton>
@@ -169,39 +157,6 @@
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>
-      <!--<ToggleButton Grid.Column="7" IsChecked="{Binding ShowFilterSetting}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock>フィルタ</TextBlock>
-          <ContentControl VerticalContentAlignment="Stretch">
-            <ContentControl.Style>
-              <Style TargetType="ContentControl">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="True">
-                    <Setter Property="Content">
-                      <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                          <TextBlock>(</TextBlock>
-                          <TextBlock Text="{Binding FinderItems.Count}" />
-                          <TextBlock>/</TextBlock>
-                          <TextBlock Text="{Binding FinderItemsViewer.Count}" />
-                          <TextBlock>)</TextBlock>
-                        </StackPanel>
-                      </Setter.Value>
-                    </Setter>
-                  </DataTrigger>
-                  <DataTrigger Binding="{Binding IsEnabledFinderFiltering}" Value="False">
-                    <Setter Property="Content">
-                      <Setter.Value>
-                        <TextBlock>(無効)</TextBlock>
-                      </Setter.Value>
-                    </Setter>
-                  </DataTrigger>
-                </Style.Triggers>
-              </Style>
-            </ContentControl.Style>
-          </ContentControl>
-        </StackPanel>
-      </ToggleButton>-->
       <Button Grid.Column="7" Command="{Binding SwitchShowFilterCommand}" Visibility="{Binding IsUsingFinderFilter, Converter={StaticResource BooleanToVisibilityConverter}}">
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource ParentItemLikeText}">フィルタ</TextBlock>
@@ -238,11 +193,6 @@
     </Grid>
 
     <Grid Grid.Row="2" Style="{StaticResource BodyContentVisibility}" Grid.ColumnSpan="2">
-      <!--<Grid.RowDefinitions>
-        <RowDefinition Height="6*" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>-->
-
       <ListBox
         x:Name="PART_List"
         ItemsSource="{Binding FinderItems}"
@@ -262,7 +212,6 @@
             <VirtualizingStackPanel
               VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.VirtualizationMode="Recycling"
-              
             />
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
@@ -278,7 +227,6 @@
             <ContextMenu.Resources>
               <CollectionViewSource x:Key="TagList" Source="{Binding SelectedFinderItem.Information.TagList}" />
             </ContextMenu.Resources>
-            <!--EnumToBooleanConverter-->
             <MenuItem Header="再生中プレイヤーで開く" Command="{Binding SelectedFinderItem.Information.OpenVideoFrommParameterCommnad}" >
               <MenuItem.Style>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">

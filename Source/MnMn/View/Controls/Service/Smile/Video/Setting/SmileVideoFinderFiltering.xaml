@@ -26,7 +26,6 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
-      <!--<RowDefinition Height="Auto" />-->
     </Grid.RowDefinitions>
 
     <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">

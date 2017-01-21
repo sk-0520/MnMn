@@ -59,14 +59,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         bool _isEnabledSharedNoGood;
         int _sharedNoGoodScore;
-        //FontFamily _commentFontFamily;
-        //bool _commentFontBold;
-        //bool _commentFontItalic;
-        //double _commentFontSize;
-        //double _commentFontAlpha;
-        //TimeSpan _commentShowTime;
-        //bool _commentConvertPairYenSlash;
-        //TextShowKind _playerTextShowKind;
 
         double _commentAreaWidth;
         double _commentAreaHeight;
@@ -88,15 +80,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         bool _showEnabledCommentPreviewArea = false;
         bool _isEnabledOriginalPosterCommentArea = false;
 
-        [Obsolete]
-        GridLength _commentListLength = new GridLength(3, GridUnitType.Star);
-        //[Obsolete]
-        //GridLength _visualPlayerWidth = new GridLength(7, GridUnitType.Star);
-        //[Obsolete]
-        //GridLength _visualPlayerHeight = new GridLength(1, GridUnitType.Star);
-
         PlayerState _playerState;
-        //bool _isBufferingStop;
 
         IReadOnlyList<SmileVideoAccountMyListFinderViewModel> _accountMyListItems;
         IReadOnlyList<SmileVideoBookmarkNodeViewModel> _bookmarkItems;
@@ -122,8 +106,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         string _commentInformation;
 
         bool _isNormalWindow = true;
-        //Thickness _resizeBorderThickness = enabledResizeBorderThickness;
-        //Thickness _windowBorderThickness = normalWindowBorderThickness;
 
         bool _showCommentChart;
 

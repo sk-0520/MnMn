@@ -226,35 +226,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         /// </summary>
         public SmileVideoInformationSource InformationSource { get; private set; }
 
-        ///// <summary>
-        ///// サムネイル読み込み状態。
-        ///// </summary>
-        //public LoadState ThumbnailLoadState
-        //{
-        //    get { return this._thumbnailLoadState; }
-        //    set
-        //    {
-        //        if(SetVariableValue(ref this._thumbnailLoadState, value)) {
-        //            CallOnPropertyChange(nameof(ThumbnailImage));
-        //        }
-        //    }
-        //}
-
-        ///// <summary>
-        ///// 動画情報読込状態。
-        ///// <para>使ってないと思ったらいたるところで使ってて困った。</para>
-        ///// </summary>
-        //public LoadState InformationLoadState
-        //{
-        //    get { return this._informationLoadState; }
-        //    set
-        //    {
-        //        if(SetVariableValue(ref this._informationLoadState, value)) {
-        //            CallOnPropertyChange(nameof(ThumbnailImage));
-        //        }
-        //    }
-        //}
-
         /// <summary>
         /// ページ読み込み状態。
         /// </summary>
@@ -313,16 +284,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             get { return this._isPlaying; }
             set { SetVariableValue(ref this._isPlaying, value); }
         }
-
-        ///// <summary>
-        ///// キャッシュ上の参照カウンタ。
-        ///// <para><see cref="SmileVideoFinderViewModelBase.SetItemsAsync"/>で減算して<see cref="Logic.Service.Smile.Video.SmileVideoInformationCaching"/>で加算するイメージ。</para>
-        ///// </summary>
-        //public int ReferenceCount
-        //{
-        //    get { return this._referenceCount; }
-        //    set { SetVariableValue(ref this._referenceCount, value); }
-        //}
 
         public DateTime LastShowTimestamp
         {
@@ -759,32 +720,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         #endregion
 
-        //public ImageSource ThumbnailImage
-        //{
-        //    get
-        //    {
-        //        switch(ThumbnailLoadState) {
-        //            case LoadState.None:
-        //                return null;
-
-        //            case LoadState.Preparation:
-        //                return null;
-
-        //            case LoadState.Loading:
-        //                return null;
-
-        //            case LoadState.Loaded:
-        //                return this._thumbnailImage;
-
-        //            case LoadState.Failure:
-        //                return null;
-
-        //            default:
-        //                throw new NotImplementedException();
-        //        }
-        //    }
-        //}
-
         public bool HasGetflv => Getflv != null;
 
         #region IndividualVideoSetting
@@ -982,42 +917,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Directory.CreateDirectory(cachedDirPath);
         }
 
-        //static async Task<RawSmileVideoThumbResponseModel> LoadGetthumbinfoAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
-        //{
-        //    var cacheDir = GetCahceDirectory(mediation, videoId);
-
-        //    RawSmileVideoThumbResponseModel rawGetthumbinfo = null;
-        //    var cachedThumbFilePath = Path.Combine(cacheDir.FullName, GetCacheFileName(videoId, "thumb", "xml"));
-        //    if(File.Exists(cachedThumbFilePath)) {
-        //        var fileInfo = new FileInfo(cachedThumbFilePath);
-        //        if(thumbCacheSpan.IsCacheTime(fileInfo.LastWriteTime) && Constants.MinimumXmlFileSize <= fileInfo.Length) {
-        //            using(var stream = new FileStream(cachedThumbFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-        //                rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
-        //            }
-        //        }
-        //    }
-        //    if(rawGetthumbinfo == null || !SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
-        //        var getthumbinfo = new Getthumbinfo(mediation);
-        //        rawGetthumbinfo = await getthumbinfo.LoadAsync(videoId);
-        //    }
-
-        //    // キャッシュ構築
-        //    try {
-        //        SerializeUtility.SaveXmlSerializeToFile(cachedThumbFilePath, rawGetthumbinfo);
-        //    } catch(FileNotFoundException) {
-        //        // BUGS: いかんのう
-        //    }
-
-        //    return rawGetthumbinfo;
-        //}
-
-        //[Obsolete]
-        //public static async Task<SmileVideoInformationViewModel> CreateFromVideoIdAsync(Mediation mediation, string videoId, CacheSpan thumbCacheSpan)
-        //{
-        //    var rawGetthumbinfo = await SmileVideoInformationUtility.LoadGetthumbinfoAsync(mediation, videoId, thumbCacheSpan);
-        //    return new SmileVideoInformationViewModel(mediation, rawGetthumbinfo.Thumb, NoOrderd);
-        //}
-
         void Initialize()
         {
             CacheDirectory = GetCahceDirectory(Mediation, VideoId);
@@ -1070,73 +969,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var safeName = PathUtility.ToSafeNameDefault(baseName);
             return Path.Combine(CacheDirectory.FullName, safeName);
         }
-
-        //public Task LoadThumbnaiImageAsync(CacheSpan cacheSpan, HttpClient client)
-        //{
-        //    ThumbnailLoadState = LoadState.Preparation;
-
-        //    //var cachedFilePath = Path.Combine(CacheDirectory.FullName, GetCacheFileName("png"));
-        //    if(CacheImageUtility.ExistImage(ThumbnaiImageFile.FullName, cacheSpan)) {
-        //        ThumbnailLoadState = LoadState.Loading;
-        //        this._thumbnailImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
-        //        ThumbnailLoadState = LoadState.Loaded;
-        //        return Task.CompletedTask;
-        //    }
-
-        //    ThumbnailLoadState = LoadState.Loading;
-        //    return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, ThumbnailUri, Mediation.Logger).ContinueWith(task => {
-        //        var image = task.Result;
-        //        if(image != null) {
-        //            this._thumbnailImage = image;
-        //            ThumbnailLoadState = LoadState.Loaded;
-        //            CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
-        //        } else {
-        //            ThumbnailLoadState = LoadState.Failure;
-        //        }
-        //    });
-        //}
-
-        //public Task LoadThumbnaiImageDefaultAsync(CacheSpan cacheSpan)
-        //{
-        //    var client = new HttpClient();
-        //    return LoadThumbnaiImageAsync(cacheSpan, client).ContinueWith(_ => {
-        //        client.Dispose();
-        //    });
-        //}
-
-        //public Task LoadInformationAsync(CacheSpan cacheSpan, HttpClient client)
-        //{
-        //    InformationLoadState = LoadState.Preparation;
-
-        //    InformationLoadState = LoadState.Loading;
-
-        //    return SmileVideoInformationUtility.LoadGetthumbinfoAsync(Mediation, VideoId, cacheSpan).ContinueWith(task => {
-        //        var rawGetthumbinfo = task.Result;
-        //        if(!SmileVideoGetthumbinfoUtility.IsSuccessResponse(rawGetthumbinfo)) {
-        //            InformationLoadState = LoadState.Failure;
-        //            return;
-        //        }
-        //        //SmileVideoTh
-        //        //if(rawGetthumbinfo.Status)
-        //        Thumb = rawGetthumbinfo.Thumb;
-        //        InformationLoadState = LoadState.Loaded;
-        //        InformationSource = SmileVideoInformationSource.Getthumbinfo;
-        //        var propertyNames = new[] {
-        //            nameof(Length),
-        //            nameof(HasLength),
-        //            nameof(InformationLoadState),
-        //        };
-        //        CallOnPropertyChange(propertyNames);
-        //    });
-        //}
-
-        //public Task LoadInformationDefaultAsync(CacheSpan cacheSpan)
-        //{
-        //    var client = new HttpClient();
-        //    return LoadInformationAsync(cacheSpan, client).ContinueWith(_ => {
-        //        client.Dispose();
-        //    });
-        //}
 
         /// <summary>
         ///
@@ -1192,7 +1024,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.Run(() => {
                 WatchPageHtmlSource = html;
                 htmlDocument.LoadHtml(html);
-                //document.DocumentNode.SelectSingleNode("@")
                 var description = htmlDocument.DocumentNode.SelectSingleNode("//*[@class='videoDescription']");
                 DescriptionHtmlSource = description.InnerHtml;
 
@@ -1239,7 +1070,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     };
                     item.Description = SmileVideoFeedUtility.ConvertDescriptionFromFeedDetailModel(detailModel);
 
-                    //var videoInformation = new SmileVideoInformationViewModel(Mediation, item, video.Index + 1, SmileVideoInformationFlags.All);
                     var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(item, SmileVideoInformationFlags.All));
                     var videoInformation = Mediation.GetResultFromRequest<SmileVideoInformationViewModel>(request);
 
@@ -1270,17 +1100,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 }, TaskContinuationOptions.AttachedToParent);
             }
         }
-
-        //public void SetGetflvModel(RawSmileVideoGetflvModel getFlvModel)
-        //{
-        //    Getflv = getFlvModel;
-        //}
-
-        //public void SetThumbModel(RawSmileVideoThumbModel thumbModel)
-        //{
-        //    Thumb = thumbModel;
-        //    VideoInformationSource = SmileVideoVideoInformationSource.Getthumbinfo;
-        //}
 
         public virtual bool SaveSetting(bool force)
         {
@@ -1344,7 +1163,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         // 再生中プレイヤーで再生
                         workingPlayer.MoveForeground();
                         return workingPlayer.LoadAsync(this, forceEconomy, Constants.ServiceSmileVideoThumbCacheSpan, Constants.ServiceSmileVideoImageCacheSpan);
-                        //return Task.CompletedTask;
                     }
                 }
 
@@ -1380,24 +1198,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             return Task.CompletedTask;
         }
 
-        ///// <summary>
-        ///// <see cref="ReferenceCount"/>を加算。
-        ///// </summary>
-        //public void IncrementReference()
-        //{
-        //    ReferenceCount = RangeUtility.Increment(ReferenceCount);
-        //}
-
-        ///// <summary>
-        ///// <see cref="ReferenceCount"/>を減算。
-        ///// </summary>
-        //public void DecrementReference()
-        //{
-        //    if(ReferenceCount > 0) {
-        //        ReferenceCount -= 1;
-        //    }
-        //}
-
         #endregion
 
         #region IGarbageCollection
@@ -1408,7 +1208,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                 file.Refresh();
 
                 if(file.Exists) {
-                    //var timestamp = file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime;
                     var timestamps = new[] {
                         file.CreationTime,
                         file.LastWriteTime,

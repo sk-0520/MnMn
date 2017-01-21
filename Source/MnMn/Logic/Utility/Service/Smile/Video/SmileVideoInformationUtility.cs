@@ -95,9 +95,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             var cachedThumbFile = GetGetthumbinfoFile(mediation, videoId);
             if(cachedThumbFile.Exists) {
                 if(thumbCacheSpan.IsCacheTime(cachedThumbFile.LastWriteTime) && Constants.MinimumXmlFileSize <= cachedThumbFile.Length) {
-                    //using(var stream = new FileStream(cachedThumbFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
-                    //    rawGetthumbinfo = Getthumbinfo.ConvertFromRawData(stream);
-                    //}
                     rawGetthumbinfo = LoadGetthumbinfo(cachedThumbFile);
                 }
             }

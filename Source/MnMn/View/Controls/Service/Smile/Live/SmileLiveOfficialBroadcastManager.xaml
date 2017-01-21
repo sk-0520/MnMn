@@ -12,11 +12,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
     </ResourceDictionary>
   </UserControl.Resources>
 

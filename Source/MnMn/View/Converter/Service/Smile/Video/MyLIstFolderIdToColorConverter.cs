@@ -40,9 +40,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Converter.Service.Smile.Video
             var element = value as DefinedElementModel;
             if(element != null) {
                 var color = SmileMyListUtility.GetColorsFromExtends(element.Extends).First();
-                //var image = BitmapFrame.Create(SharedConstants.GetPackUri((string)parameter));
-                //FreezableUtility.SafeFreeze(image);
-                //return MediaUtility.ColoringImage(image, color);
                 return color;
             }
 

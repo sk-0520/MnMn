@@ -17,9 +17,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
       <sys:Double x:Key="ProgressHeight">NaN</sys:Double>
       <sl_view_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
@@ -185,7 +182,6 @@
         <ColumnDefinition />
         <ColumnDefinition />
         <ColumnDefinition />
-        <!--<ColumnDefinition />-->
       </Grid.ColumnDefinitions>
       <ToggleButton
         Grid.Column="0"

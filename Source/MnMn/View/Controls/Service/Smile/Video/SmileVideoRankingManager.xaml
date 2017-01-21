@@ -14,14 +14,6 @@
   mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="400"
 >
-  <UserControl.Resources>
-    <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
-    </ResourceDictionary>
-  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>

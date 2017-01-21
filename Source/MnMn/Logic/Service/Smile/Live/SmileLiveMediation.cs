@@ -74,9 +74,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Live
                 case RequestKind.Setting:
                     return new ResponseModel(request, Setting);
 
-                //case RequestKind.CacheData:
-                //    return Request_CacheData((SmileVideoInformationCacheRequestModel)request);
-
                 case RequestKind.WindowViewModels:
                     return Request_WindowViewModels(request);
 

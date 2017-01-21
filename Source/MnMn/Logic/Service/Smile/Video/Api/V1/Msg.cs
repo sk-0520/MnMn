@@ -91,10 +91,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 
                 var rawMessage = await page.GetResponseTextAsync(Define.PageLoaderMethod.Get);
                 if(rawMessage.IsSuccess) {
-                    //var head = "postkey=";
-                    //if(rawMessage.Result.IndexOf(head) == 0) {
-                    //    return rawMessage.Result.Substring(head.Length);
-                    //}
                     var result = RawValueUtility.ConvertNameModelFromWWWFormData<RawSmileVideoPostKeyModel>(rawMessage.Result);
                     return result;
                 }
