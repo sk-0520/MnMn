@@ -50,15 +50,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             OwnershipUA = true;
         }
 
-        //public PageLoader(Mediation mediation, HttpUserAgentHost host, string key, ServiceType serviceType)
-        //{
-        //    Mediation = mediation;
-        //    HttpUserAgent = host.Client;
-        //    Key = key;
-        //    ServiceType = serviceType;
-        //    OwnershipUA = false;
-        //}
-
         #region proeprty
 
         /// <summary>
@@ -371,7 +362,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             if(!IsDisposed) {
                 if(OwnershipUA) {
-                    //HttpUserAgent.CancelPendingRequests();
                     HttpUserAgent.Dispose();
                 }
                 HttpUserAgent = null;

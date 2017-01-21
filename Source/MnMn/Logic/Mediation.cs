@@ -224,7 +224,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         bool OrderCore_Exit(OrderModel order)
         {
-            //Application.Current.Dispatcher.InvokeShutdown;
             Application.Current.Dispatcher.Invoke(() => {
                 Application.Current.Shutdown();
             });
@@ -255,7 +254,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 });
                 var backupFilePath = Path.Combine(backupDirectory.FullName, fileName);
                 FileUtility.MakeFileParentDirectory(backupFilePath);
-                //File.Copy(settingFilePath, backupFilePath, true);
+
                 // 1ファイル集約の元 gzip でポン!
                 using(var output = new GZipStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.ReadWrite), CompressionMode.Compress)) {
                     using(var input = File.OpenRead(settingFilePath)) {

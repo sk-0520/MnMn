@@ -69,7 +69,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
             };
             LocalDomain = AppDomain.CreateDomain(domainName, AppDomain.CurrentDomain.Evidence, domainInfo);
-            //LocalDomain = AppDomain.CreateDomain(domainName);
         }
 
         #region property
@@ -157,7 +156,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 switch(model.CodeLanguage) {
                     case CodeLanguage.CSharp: {
                             var code = new StringBuilder();
-                            //code.AppendLine("#pragma warning disable CS0105");
                             foreach(var name in unionNameSpace) {
                                 code.Append("using ");
                                 code.Append(name);

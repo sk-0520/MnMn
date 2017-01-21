@@ -62,11 +62,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// </summary>
         public bool IsRandom { get; set; }
 
-        ///// <summary>
-        ///// プレイリストはループするか。
-        ///// </summary>
-        //public bool IsLoop { get; set; }
-
         /// <summary>
         /// プレイリストは変更可能か。
         /// </summary>
