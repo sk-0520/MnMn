@@ -489,6 +489,8 @@
     <Content Include="doc\help\html\general-uninstall.ja-jp.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="doc\help\image\changelog\MnMn.jpg" />
+    <Resource Include="doc\help\image\changelog\MnMn.png" />
     <Content Include="doc\License\MnMn-GPLv3.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

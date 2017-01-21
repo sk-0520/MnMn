@@ -136,7 +136,8 @@
 						'revision': '',
 						'subject': 'test',
 						'comments': [
-							['text!', 'image.png']
+							['jpg!', 'MnMn.jpg'],
+							['png!', 'MnMn.png']
 						]
 					},
 					{

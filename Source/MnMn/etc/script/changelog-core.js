@@ -53,9 +53,9 @@ function Element(tagName) {
 /**
 主処理。
 */
-function makeChangeLogBlock(changelog) {
+function makeChangeLogBlock(changelog, isEmbeddedImage) {
 	var title = makeChangeLogTitle(changelog);
-	var contents = makeChangeLogContents(changelog['contents']);
+	var contents = makeChangeLogContents(changelog['contents'], isEmbeddedImage);
 
 	return {
 		'title': title,
@@ -81,13 +81,13 @@ function makeChangeLogTitle(changelog) {
 	return title;
 }
 
-function makeChangeLogContents(contents) {
+function makeChangeLogContents(contents, isEmbeddedImage) {
 	var parent = new Element('dl')
 	parent.setAttibute('class', 'changelog');
 	var hasContent = false;
 
 	for (var i = 0; i < contents.length; i++) {
-		var content = makeChangeLogContent(contents[i]);
+		var content = makeChangeLogContent(contents[i], isEmbeddedImage);
 		if (content.body != null) {
 			hasContent = true;
 			parent.append(content.head);
@@ -98,7 +98,7 @@ function makeChangeLogContents(contents) {
 	return hasContent ? parent : null;
 }
 
-function makeChangeLogContent(content) {
+function makeChangeLogContent(content, isEmbeddedImage) {
 	var result = {
 		head: null,
 		body: null
@@ -143,8 +143,15 @@ function makeChangeLogContent(content) {
 							if (!is('String', commentData)) {
 								var text = commentData[0];
 								var image = commentData[1];
-								comment.append(text);
-								comment.append(image);
+								if (isEmbeddedImage) {
+									comment.append('a');
+									comment.append(text);
+									comment.append(image);
+								} else {
+									comment.append('b');
+									comment.append(text);
+									comment.append(image);
+								}
 							} else {
 								comment.append(convertMessage(commentData));
 							}
