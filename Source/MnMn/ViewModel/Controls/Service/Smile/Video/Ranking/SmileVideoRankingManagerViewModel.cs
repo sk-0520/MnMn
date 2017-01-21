@@ -51,8 +51,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Ra
 
             SelectedPeriod = PeriodItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultPeriodKey) ?? PeriodItems.First();
             SelectedTarget = TargetItems.FirstOrDefault(m => m.Key == Setting.Ranking.DefaultTargetKey) ?? TargetItems.First();
-
-            //MakeUsingCategory();
         }
 
         #region property
