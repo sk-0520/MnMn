@@ -174,7 +174,18 @@ function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
 	var img = new Element('img');
 	img.setAttibute('alt', text);
 	if (isEmbeddedImage) {
+		var ext = image.split('.').pop().toLowerCase();
+		var map = {
+			'jpg': 'jpeg',
+			'jpeg': 'jpeg',
+			'png': 'png'
+		};
+		var srcHead = 'data:image/' + map[ext] + ';base64,';
+		var srcBase64 = '';
 
+		var src = srcHead + srcBase64;
+
+		img.setAttibute('src', src);
 	} else {
 		img.setAttibute('src', imageBaseDirPath + '/' + image);
 	}
