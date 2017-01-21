@@ -25,13 +25,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
-
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
       <app_view_converter_service_smile:SmileUserHasBookmarkConverter x:Key="SmileUserHasBookmarkConverter" />
@@ -58,7 +51,6 @@
 
           <ToolBar Grid.Row="0">
             <Button Command="{Binding MoveUpBookmarkSelectedItemCommand}">
-              <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
               <Viewbox Style="{StaticResource SmallIconBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -66,7 +58,6 @@
               </Viewbox>
             </Button>
             <Button Command="{Binding MoveDownBookmarkSelectedItemCommand}">
-              <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
               <Viewbox Style="{StaticResource SmallIconBox}">
                 <Canvas Style="{StaticResource IconCanvas-24x24}">
                   <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -304,17 +295,6 @@
                         DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                       />
                     </i:Interaction.Behaviors>
-                    <!--<FlowDocument
-                      FontSize="11.5"
-                      PagePadding="10, 2, 10, 0"
-                    />-->
-                    <!--<FlowDocumentScrollViewer.Document>
-                      <FlowDocument>
-                        <Paragraph>
-                          <TextBlock Text="{Binding DescriptionHtmlSource}" />
-                        </Paragraph>
-                      </FlowDocument>
-                    </FlowDocumentScrollViewer.Document>-->
                   </FlowDocumentScrollViewer>
 
                 </Grid>
