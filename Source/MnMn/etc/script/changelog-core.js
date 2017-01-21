@@ -53,9 +53,9 @@ function Element(tagName) {
 /**
 主処理。
 */
-function makeChangeLogBlock(changelog, isEmbeddedImage) {
+function makeChangeLogBlock(changelog, isEmbeddedImage, imageBaseDirPath) {
 	var title = makeChangeLogTitle(changelog);
-	var contents = makeChangeLogContents(changelog['contents'], isEmbeddedImage);
+	var contents = makeChangeLogContents(changelog['contents'], isEmbeddedImage, imageBaseDirPath);
 
 	return {
 		'title': title,
@@ -81,13 +81,13 @@ function makeChangeLogTitle(changelog) {
 	return title;
 }
 
-function makeChangeLogContents(contents, isEmbeddedImage) {
+function makeChangeLogContents(contents, isEmbeddedImage, imageBaseDirPath) {
 	var parent = new Element('dl')
 	parent.setAttibute('class', 'changelog');
 	var hasContent = false;
 
 	for (var i = 0; i < contents.length; i++) {
-		var content = makeChangeLogContent(contents[i], isEmbeddedImage);
+		var content = makeChangeLogContent(contents[i], isEmbeddedImage, imageBaseDirPath);
 		if (content.body != null) {
 			hasContent = true;
 			parent.append(content.head);
@@ -98,7 +98,7 @@ function makeChangeLogContents(contents, isEmbeddedImage) {
 	return hasContent ? parent : null;
 }
 
-function makeChangeLogContent(content, isEmbeddedImage) {
+function makeChangeLogContent(content, isEmbeddedImage, imageBaseDirPath) {
 	var result = {
 		head: null,
 		body: null
@@ -143,15 +143,8 @@ function makeChangeLogContent(content, isEmbeddedImage) {
 							if (!is('String', commentData)) {
 								var text = commentData[0];
 								var image = commentData[1];
-								if (isEmbeddedImage) {
-									comment.append('a');
-									comment.append(text);
-									comment.append(image);
-								} else {
-									comment.append('b');
-									comment.append(text);
-									comment.append(image);
-								}
+								var imageElement = CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath);
+								comment.append(imageElement);
 							} else {
 								comment.append(convertMessage(commentData));
 							}
@@ -174,6 +167,17 @@ function makeChangeLogContent(content, isEmbeddedImage) {
 	}
 
 	return result;
+}
+
+function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
+{
+	var img = new Element('img');
+	img.setAttibute('alt', text);
+	if (isEmbeddedImage) {
+
+	} else {
+
+	}
 }
 
 function convertMessage(s) {
