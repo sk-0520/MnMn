@@ -51,9 +51,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
             nameof(IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageItems),
             nameof(IPagerFinder<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>.PageChangeCommand),
             nameof(FinderViewModelBase<TInformationViewModel, TFinderItemViewModel>.IsAscending),
-            //nameof(TFinderViewModel.SelectedSortType),
-            //nameof(TFinderViewModel.IsEnabledFinderFiltering),
-            //nameof(TFinderViewModel.ShowFilterSetting),
         };
 
         #endregion
@@ -79,7 +76,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 CustomChangePagePropertyNames.AddRange(changePropertyNames);
             }
 
-            //PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(PageVm_PropertyChanged);
             PropertyChangedListener = new PropertyChangedWeakEventListener(PageVm_PropertyChanged);
         }
 
@@ -91,7 +87,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
 
         Mediation Mediation { get; }
 
-        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
         PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
         CollectionModel<string> CustomChangePagePropertyNames { get; } = new CollectionModel<string>(DefaultChangePagePropertyNames);
@@ -170,22 +165,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                 return;
             }
 
-            //var e = new ChangedSelectedPageEventArgs(oldSelectedPage, newSelectedPage);
             var e = new ChangedSelectedPageEventArgs<TChildFinderViewModel, TInformationViewModel, TFinderItemViewModel>(oldSelectedPage, newSelectedPage);
             ChangedSelectedPage(this, e);
         }
 
         public void AttachmentChildProprtyChange(INotifyPropertyChanged target)
         {
-            //target.PropertyChanged += PageVm_PropertyChanged;
-            //PropertyChangedEventManager.AddListener(target, PropertyChangedListener, string.Empty);
             PropertyChangedListener.Add(target);
         }
 
         public void DetachmentChildProprtyChange(INotifyPropertyChanged target)
         {
-            //target.PropertyChanged -= PageVm_PropertyChanged;
-            //PropertyChangedEventManager.RemoveListener(target, PropertyChangedListener, string.Empty);
             PropertyChangedListener.Remove(target);
         }
 
@@ -286,13 +276,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                     }
                     if(oldSelectedPage != null) {
                         DetachmentChildProprtyChange(oldSelectedPage.ViewModel);
-                        //oldSelectedPage.ViewModel.PropertyChanged -= SearchFinder_PropertyChanged_TotalCount;
                         oldSelectedPage.IsChecked = false;
                     }
 
                     if(SelectedPage != null && oldSelectedPage != null) {
                         SelectedPage.ViewModel.InputTitleFilter = oldSelectedPage.ViewModel.InputTitleFilter;
-                        //SelectedPage.ViewModel.SelectedSortType = oldSelectedPage.ViewModel.SelectedSortType;
                         // #168
                         SelectedPage.ViewModel.IsAscending = oldSelectedPage.ViewModel.IsAscending;
                         SelectedPage.ViewModel.IsBlacklist = oldSelectedPage.ViewModel.IsBlacklist;
@@ -316,7 +304,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
                         var pageVm = (PageViewModel<TChildFinderViewModel>)o;
                         if(pageVm.LoadState != LoadState.Loaded) {
                             SelectedPage = pageVm;
-                            //pageVm.ViewModel.PropertyChanged += PageVm_PropertyChanged;
                             AttachmentChildProprtyChange(pageVm.ViewModel);
                             pageVm.ViewModel.LoadDefaultCacheAsync().ConfigureAwait(true);
                         } else {
