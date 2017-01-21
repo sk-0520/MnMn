@@ -263,9 +263,6 @@
     <Compile Include="Define\PlayerState.cs" />
     <Compile Include="Define\SearchType.cs" />
     <Compile Include="Define\Service\Smile\SmileCustomSettingKind.cs" />
-    <Compile Include="Define\Service\Smile\SmileContentsSearchType.cs" />
-    <Compile Include="Define\Service\Smile\SmileContentsSearchField.cs" />
-    <Compile Include="Define\Service\Smile\SmileContentsSearchService.cs" />
     <Compile Include="Define\Service\Smile\SmileJsonResultState.cs" />
     <Compile Include="Define\Service\Smile\Video\Parameter\SmileVideoSearchMyListQueryType.cs" />
     <Compile Include="Define\Service\Smile\Video\SmileVideoCommentResultStatus.cs" />

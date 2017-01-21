@@ -40,69 +40,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
             : base(mediation)
         { }
 
-        [Obsolete]
-        string ToContentsSearchServiceString(SmileContentsSearchService searchService)
-        {
-            var map = new Dictionary<SmileContentsSearchService, string>() {
-                { SmileContentsSearchService.Video,          "video" },
-                { SmileContentsSearchService.Live,           "live" },
-                { SmileContentsSearchService.Illust,         "illust" },
-                { SmileContentsSearchService.Manga,          "manga" },
-                { SmileContentsSearchService.Book,           "book" },
-                { SmileContentsSearchService.Channel,        "channel" },
-                { SmileContentsSearchService.ChannelArticle, "channelarticle" },
-                { SmileContentsSearchService.News,           "news" },
-            };
-
-            return map[searchService];
-        }
-
-        [Obsolete]
-        string ToSmileContentsSearchTypeString(SmileContentsSearchType searchType)
-        {
-            var map = new Dictionary<SmileContentsSearchType, string[]>() {
-                { SmileContentsSearchType.Tag, new [] { "tagsExact", } },
-                { SmileContentsSearchType.Keyword, new [] { "title", "description", "tags" } },
-            };
-
-            var typeList = map[searchType];
-            var result = string.Join(",", typeList);
-            return result;
-        }
-
-        [Obsolete]
-        string ToOrderByString(OrderBy orderBy)
-        {
-            var map = new Dictionary<OrderBy, string>() {
-                { OrderBy.Ascending, "-" },
-                { OrderBy.Descending, "+" },
-            };
-
-            return map[orderBy];
-        }
-
-        [Obsolete]
-        string ToSmileContentsSearchFieldString(SmileContentsSearchField searchField)
-        {
-            var map = new Dictionary<SmileContentsSearchField, string>() {
-                { SmileContentsSearchField.ContentId,              "contentId" },
-                { SmileContentsSearchField.Title,                  "title" },
-                { SmileContentsSearchField.Description,            "description" },
-                { SmileContentsSearchField.Tags,                   "tags" },
-                { SmileContentsSearchField.CategoryTags,           "categoryTags" },
-                { SmileContentsSearchField.ViewCounter,            "viewCounter" },
-                { SmileContentsSearchField.MylistCounter,          "mylistCounter" },
-                { SmileContentsSearchField.CommentCounter,         "commentCounter" },
-                { SmileContentsSearchField.StartTime,              "startTime" },
-                { SmileContentsSearchField.ThumbnailUrl,           "thumbnailUrl" },
-                { SmileContentsSearchField.CommunityIcon,          "communityIcon" },
-                { SmileContentsSearchField.ScoreTimeshiftReserved, "scoreTimeshiftReserved" },
-                { SmileContentsSearchField.LiveStatus,             "liveStatus" },
-            };
-
-            return map[searchField];
-        }
-
         public async Task<RawSmileContentsSearchModel> SearchAsync(string searchService, string query, string searchType, string sortField, IEnumerable<string> getFilelds, string orderBy, int fromIndex, int getCount)
         {
             CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
@@ -122,21 +59,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Api.V2
                     return SerializeUtility.LoadJsonDataFromStream<RawSmileContentsSearchModel>(stream);
                 }
             }
-        }
-        [Obsolete]
-        public Task<RawSmileContentsSearchModel> SearchAsync(SmileContentsSearchService searchService, string query, SmileContentsSearchType searchType, SmileContentsSearchField searchField, IEnumerable<SmileContentsSearchField> getFilelds, OrderBy orderBy, int fromIndex, int getCount)
-        {
-            CheckUtility.EnforceNotNullAndNotWhiteSpace(query);
-            return SearchAsync(
-                ToContentsSearchServiceString(searchService),
-                query,
-                ToSmileContentsSearchTypeString(searchType),
-                ToSmileContentsSearchFieldString(searchField),
-                getFilelds.Select(f => ToSmileContentsSearchFieldString(f)),
-                ToOrderByString(orderBy),
-                fromIndex,
-                getCount
-            );
         }
     }
 }
