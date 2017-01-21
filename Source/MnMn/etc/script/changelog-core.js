@@ -189,9 +189,15 @@ function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
 		stream.Open();
 
 		stream.LoadFromFile(path);
-		//stream.CharSet = "ascii"
-		var adReadAll = -1;
-		var binary = stream.Read(adReadAll);
+		
+		//var binary = stream.Read(stream.Size);
+		var binary = stream.Read(stream.Size);
+		var doc = new ActiveXObject("Msxml2.DOMDocument");
+		var element = doc.createElement("hex");
+		element.dataType = "bin.hex";
+		element.nodeTypedValue = binary;
+		// 「text」を取得
+		binary = element.text;
 
 		img.setAttibute('src', binary);
 
