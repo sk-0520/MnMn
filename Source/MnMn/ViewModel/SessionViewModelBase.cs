@@ -144,20 +144,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
         }
 
         protected abstract void ApplyToWebNavigatorEngineCore(WebNavigatorEngine engine, Uri uri);
-        //protected virtual void ApplyToWebNavigatorCore(WebNavigator webNavigator, Uri uri)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void ApplyToWebNavigatorEngine(WebNavigatorEngine engine, Uri uri)
         {
             ApplyToWebNavigatorEngineCore(engine, uri);
         }
-
-        //public void ApplyToWebNavigator(WebNavigator webNavigator, Uri uri)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         #endregion
 
