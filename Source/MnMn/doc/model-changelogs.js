@@ -127,7 +127,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#381: 動画の背景色をデフォルトでは黒にしておく',
+						'comments': [
+							'既存ユーザーは影響なし'
+						]
 					},
 					{
 						'revision': '',
