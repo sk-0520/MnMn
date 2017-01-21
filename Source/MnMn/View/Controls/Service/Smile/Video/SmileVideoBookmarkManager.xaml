@@ -19,10 +19,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <CollectionViewSource  x:Key="SystemNodes" Source="{Binding SystemNodes}" />
       <CollectionViewSource  x:Key="UserNodes" Source="{Binding UserNodes}" />
@@ -43,7 +39,6 @@
       </Grid.RowDefinitions>
       <ToolBar Grid.Row="0">
         <Button Command="{Binding AddNodeCommand}">
-          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/AddBookmark.png" Style="{StaticResource SmallIconImage}" />-->
           <StackPanel Style="{StaticResource ItemPanel}">
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -54,7 +49,6 @@
           </StackPanel>
         </Button>
         <Button Command="{Binding InsertNodeCommand}">
-          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/InsertBookmark.png" Style="{StaticResource SmallIconImage}" />-->
           <StackPanel Style="{StaticResource ItemPanel}">
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -65,7 +59,6 @@
           </StackPanel>
         </Button>
         <Button Command="{Binding RemoveNodeCommand}">
-          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/RemoveBookmark.png" Style="{StaticResource SmallIconImage}" />-->
           <StackPanel Style="{StaticResource ItemPanel}">
             <Viewbox Style="{StaticResource SmallItemBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
@@ -77,7 +70,6 @@
         </Button>
         <Separator />
         <Button Command="{Binding UpNodeCommand}">
-          <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -85,7 +77,6 @@
           </Viewbox>
         </Button>
         <Button Command="{Binding DownNodeCommand}">
-          <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -93,7 +84,6 @@
           </Viewbox>
         </Button>
         <Button Command="{Binding UpParentNodeCommand}" ToolTip="親ノードへ移動">
-          <!--<Image Source="/Resources/Service/Smile/Video/Bookmark/MoveParentBookmark.png" Style="{StaticResource SmallIconImage}" />-->
           <Viewbox Style="{StaticResource SmallIconBox}">
             <Canvas Style="{StaticResource IconCanvas-24x24}">
               <Path Data="{StaticResource Image_Item-Left}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -176,16 +166,10 @@
         </TreeView.ItemContainerStyle>
         <TreeView.ItemsSource>
           <CompositeCollection>
-            <!--<TreeViewItem x:Name="nodeUnorganized" Header="未整理のブックマーク" />-->
             <CollectionContainer Collection="{Binding Source={StaticResource SystemNodes}}" />
             <CollectionContainer Collection="{Binding Source={StaticResource UserNodes}}" />
           </CompositeCollection>
         </TreeView.ItemsSource>
-        <!--<TreeView.ItemTemplate>
-          <HierarchicalDataTemplate ItemsSource="{Binding NodeItems}">
-            <TextBlock Text="{Binding Name}" />
-          </HierarchicalDataTemplate>
-        </TreeView.ItemTemplate>-->
       </TreeView>
       <Grid Grid.Row="2">
         <Grid.ColumnDefinitions>
@@ -211,7 +195,6 @@
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <RepeatButton Grid.Column="0" Command="{Binding UpSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
-            <!--<Image Source="/Resources/Common/Item/Up.png" Style="{StaticResource SmallIconImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Item-Up}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -219,7 +202,6 @@
             </Viewbox>
           </RepeatButton>
           <RepeatButton Grid.Column="1" Command="{Binding DownSelectedVideoCommand}" IsEnabled="{Binding IsUpDownEnabled}">
-            <!--<Image Source="/Resources/Common/Item/Down.png" Style="{StaticResource SmallIconImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Item-Down}" Style="{StaticResource SmallDefaultIconPath}" />
