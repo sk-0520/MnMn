@@ -134,7 +134,10 @@
 					},
 					{
 						'revision': '',
-						'subject': ''
+						'subject': 'test',
+						'comments': [
+							['text!', 'image.png']
+						]
 					},
 					{
 						'revision': '',

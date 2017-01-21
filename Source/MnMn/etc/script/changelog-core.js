@@ -136,10 +136,18 @@ function makeChangeLogContent(content) {
 					var comments = new Element('ul');
 					comments.setAttibute('class', 'comment');
 					for (var j = 0; j < log['comments'].length; j++) {
-						if (log['comments'][j]) {
+						var commentData = log['comments'][j];
+						if (commentData) {
 							hasComment = true;
 							var comment = new Element('li')
-							comment.append(convertMessage(log['comments'][j]));
+							if (!is('String', commentData)) {
+								var text = commentData[0];
+								var image = commentData[1];
+								comment.append(text);
+								comment.append(image);
+							} else {
+								comment.append(convertMessage(commentData));
+							}
 
 							comments.append(comment);
 						}
