@@ -80,7 +80,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
                 var watchElement = parentElement.SelectSingleNode(".//a[@class='watch']");
                 item.Title = watchElement.InnerText;
                 item.Link = watchElement.GetAttributeValue("href", string.Empty);
-                //Debug.WriteLine(item.Title);
 
                 var detailModel = new RawSmileVideoFeedDetailModel();
                 var imageElement = parentElement.SelectSingleNode(".//img[@class='img_std96']");
@@ -98,7 +97,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.HalfBakedApi
                 var descriptionElement = parentElement.SelectSingleNode(".//*[@class='vinfo_description']");
                 detailModel.Description = descriptionElement.InnerText;
 
-                //var dateElement = parentElement.SelectSingleNode(".//*[contains(@class,'thumb_num']");
                 var dateElement = parentElement.SelectNodes(".//p")
                     .FirstOrDefault(n => n.Attributes.Contains("class") && n.Attributes["class"].Value.Contains("thumb_num"))
                     ?.SelectSingleNode("./strong")

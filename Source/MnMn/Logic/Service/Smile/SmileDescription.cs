@@ -52,7 +52,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile
 
                     var menuItems = new DescriptionContextMenuBase[] {
                         new DescriptionContextMenuItem(true, Properties.Resources.String_Service_Smile_ISmileDescription_MenuOpenMyListId, nameof(ISmileDescription.MenuOpenMyListIdLinkCommand), null),
-                        //new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuAddMyList, nameof(ISmileDescription.MenuAddMyListLinkCommand), null),
                         new DescriptionContextMenuSeparator(),
                         new DescriptionContextMenuItem(false, Properties.Resources.String_Service_Smile_ISmileDescription_MenuCopyMyListId, nameof(ISmileDescription.MenuCopyMyListIdCommand), null, Constants.xamlImage_Copy, Constants.xamlStyle_SmallDefaultIconPath),
                     };
