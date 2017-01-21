@@ -582,25 +582,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             private set { SetVariableValue(ref this._commentAreaHeight, value); }
         }
 
-        //[Obsolete]
-        //public GridLength VisualPlayerWidth
-        //{
-        //    get { return this._visualPlayerWidth; }
-        //    set { SetVariableValue(ref this._visualPlayerWidth, value); }
-        //}
-        //[Obsolete]
-        //public GridLength VisualPlayerHeight
-        //{
-        //    get { return this._visualPlayerHeight; }
-        //    set { SetVariableValue(ref this._visualPlayerHeight, value); }
-        //}
-        [Obsolete]
-        public GridLength CommentListLength
-        {
-            get { return this._commentListLength; }
-            set { SetVariableValue(ref this._commentListLength, value); }
-        }
-
         public FewViewModel<GridLength> PlayerAreaLength { get; } = new FewViewModel<GridLength>();
         public FewViewModel<GridLength> CommentAreaLength { get; } = new FewViewModel<GridLength>();
         public FewViewModel<GridLength> InformationAreaLength { get; } = new FewViewModel<GridLength>();
@@ -611,14 +592,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             set { SetVariableValue(ref this._playerState, value); }
         }
 
-        ///// <summary>
-        ///// 読込中で停止しているか。
-        ///// </summary>
-        //public bool IsBufferingStop
-        //{
-        //    get { return this._isBufferingStop; }
-        //    set { SetVariableValue(ref this._isBufferingStop, value); }
-        //}
         /// <summary>
         /// バッファ開始時点での動画位置。
         /// </summary>
@@ -1054,22 +1027,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 }
             }
         }
-        ///// <summary>
-        ///// リサイズ幅。
-        ///// </summary>
-        //public Thickness ResizeBorderThickness
-        //{
-        //    get { return this._resizeBorderThickness; }
-        //    set { SetVariableValue(ref this._resizeBorderThickness, value); }
-        //}
-        ///// <summary>
-        ///// ウィンドウ枠幅。
-        ///// </summary>
-        //public Thickness WindowBorderThickness
-        //{
-        //    get { return this._windowBorderThickness; }
-        //    set { SetVariableValue(ref this._windowBorderThickness, value); }
-        //}
         /// <summary>
         /// コメントグラフ表示状態。
         /// </summary>
