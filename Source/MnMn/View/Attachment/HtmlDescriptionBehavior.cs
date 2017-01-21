@@ -42,32 +42,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         #endregion
 
-        //#region TargetProperty
-
-        //public static readonly DependencyProperty TargetProperty = DependencyProperty.Register(
-        //    DependencyPropertyUtility.GetName(nameof(TargetProperty)),
-        //    typeof(IDescription),
-        //    typeof(HtmlDescriptionBehavior),
-        //    new FrameworkPropertyMetadata(default(IDescription), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTargetChanged))
-        //);
-
-        //private static void OnTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    var control = d as HtmlDescriptionBehavior;
-        //    if(control != null) {
-        //        control.Target = e.NewValue as IDescription;
-        //        control.ChangedProperty();
-        //    }
-        //}
-
-        //public IDescription Target
-        //{
-        //    get { return GetValue(TargetProperty) as IDescription; }
-        //    set { SetValue(TargetProperty, value); }
-        //}
-
-        //#endregion
-
         #region DescriptionProcessorProperty
 
         public static readonly DependencyProperty DescriptionProcessorProperty = DependencyProperty.Register(
@@ -101,10 +75,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         void ChangedProperty()
         {
-            //if(Target == null) {
-            //    return;
-            //}
-
             if(DescriptionProcessor == null) {
                 return;
             }
