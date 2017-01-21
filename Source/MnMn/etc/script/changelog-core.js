@@ -174,26 +174,8 @@ function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
 	var img = new Element('img');
 	img.setAttibute('alt', text);
 	if (isEmbeddedImage) {
-		var ext = image.split('.').pop().toLowerCase();
-		var map = {
-			'jpg': 'jpeg',
-			'jpeg': 'jpeg',
-			'png': 'png'
-		};
-		var srcHead = 'data:image/' + map[ext] + ';base64,';
-		var srcBase64 = '';
-
-		var stream = WScript.CreateObject('ADODB.Stream');
-		stream.Mode = 3;
-		stream.Type = 2;
-		stream.Charset = 'UTF-8';
-		stream.Open();
-		stream.LoadFromFile(imageBaseDirPath + "\\" + image);
-		var binary = stream.Read();
-
-		var src = srcHead + srcBase64;
-
-		img.setAttibute('src', src);
+		img.setAttibute('src', imageBaseDirPath + '\\' + image);
+		img.setAttibute('class', 'embedded')
 	} else {
 		img.setAttibute('src', imageBaseDirPath + '/' + image);
 	}
