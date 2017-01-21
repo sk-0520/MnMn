@@ -75,7 +75,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var defaultGroup = await myList.LoadAccountDefaultAsync();
 
             var feedModel = new FeedSmileVideoModel();
-            //feedModel.Channel.Title = global::ContentTypeTextNet.MnMn.MnMn.Properties.Resources.String_Service_Smile_MyList_DefaultName;
             foreach(var srcItem in defaultGroup.Items) {
                 var dstItem = new FeedSmileVideoItemModel();
 
