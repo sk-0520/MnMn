@@ -5,12 +5,29 @@ function is(type, obj) {
 	return obj !== undefined && obj !== null && clas === type;
 }
 
+function CheckHasEndTag(tagName)
+{
+	var noEndTags = [
+		'img',
+		'br'
+	];
+	var lowerTagName = tagName.toLowerCase()
+	for(var i = 0, iMax = noEndTags.length; i < iMax; i++) {
+		if(lowerTagName == noEndTags[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function Element(tagName) {
 	if (!tagName) {
 		throw "tagName is null";
 	}
 
 	this.tagName = tagName;
+	this.hasEndTag = CheckHasEndTag(tagName);
 	this.nodes = [];
 	this.attributes = {};
 
@@ -33,18 +50,25 @@ function Element(tagName) {
 
 		var result = [];
 		var attr = attr.join(' ');
-		result.push('<' + this.tagName + (attr ? ' ' + attr : '') + '>');
 
-		for (var i = 0; i < this.nodes.length; i++) {
-			var node = this.nodes[i];
-			if (is('String', node)) {
-				result.push(convertElementText(node));
-			} else if (is('Object', node)) {
-				result.push(node.toCode());
+		result.push('<' + this.tagName + (attr ? ' ' + attr : ''));
+
+		if(this.hasEndTag) {
+			result.push('>');
+			
+			for (var i = 0; i < this.nodes.length; i++) {
+				var node = this.nodes[i];
+				if (is('String', node)) {
+					result.push(convertElementText(node));
+				} else if (is('Object', node)) {
+					result.push(node.toCode());
+				}
 			}
+			result.push('</' + this.tagName + '>');
+		} else {
+			result.push(' />');
 		}
 
-		result.push('</' + this.tagName + '>');
 
 		return result.join('');
 	}
