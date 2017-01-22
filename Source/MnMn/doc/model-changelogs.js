@@ -85,27 +85,28 @@
 	},
 	*/
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.44.1',
-		'isRc': true,
+		'date': '2017/01/22',
+		'version': '0.45.0',
+		'isRc': false,
 		'contents': [
 			{
 				'type': 'note',
 				'logs': [
 					{
-						'revision': '',
-						'subject': '更新履歴に画像を表示できるようにしたよ！',
+						'class': 'notice',
+						'subject': 'プロジェクトサイトの提供元 Bitbucket がネットワークメンテを 2/7 に予定してるので当日は更新チェック・モジュールDL周りにエラーが出るかもです',
 						'comments': [
-							['そうなんだ、すごいね！', '0.45.0/issue294.png']
+							'以下抜粋(https://status.bitbucket.org/incidents/3j1rv37r33m5)',
+							'Network maintenance; MTU/MSS changes coming',
+							'Scheduled for Feb 7, 00:00 - 03:00 UTC'
 						]
 					},
 					{
 						'revision': '',
-						'subject': ''
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'subject': '更新履歴に画像が表示できるようになったよ！',
+						'comments': [
+							['そうなんだ、すごいね！', '0.45.0/issue294.png']
+						]
 					}
 				]
 			},
@@ -113,21 +114,21 @@
 				'type': 'features',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '3591b8025bb6920d7cfa588387b3e602cca3aac6',
 						'subject': '#294: 更新履歴に画像を表示する',
 						'comments': [
 							'更新履歴表示の際に画像があると説明が楽なのだよ',
 							'ヘルプの更新履歴はただの画像だけどアップデート時の更新履歴は base64 にしたのだよ',
-							'作り終わってから思ったけどなんで base64 で頑張ったんだろうね'
+							'アップデート時の更新履歴は速度の関係で完全な単独ファイルにしないとレスポンス悪いのだよ'
 						]
 					},
 					{
-						'revision': '',
-						'subject': '#378: プレイヤーのコメント一覧表示切替にキーバインドを設定する'
-					},
-					{
-						'revision': '',
-						'subject': ''
+						'revision': '66eed2be1c4d955ddfdc479f66049a6d3f7dc994',
+						'subject': '#378: プレイヤーのコメント一覧表示切替にキーバインドを設定する',
+						'comments': [
+							'Ctrl + L: コメント一覧切り替え',
+							'Ctrl + I: 動画情報切り替え'
+						]
 					}
 				]
 			},
@@ -135,27 +136,24 @@
 				'type': 'fixes',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '53299460f20db21830332f64b157b10f29a4958d',
 						'subject': '#381: 動画の背景色をデフォルトでは黒にしておく',
 						'comments': [
 							'既存ユーザーは影響なし'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '3eae93125b17ce584131b58a67e9d56c8c4375c0',
 						'subject': '#301: シークバーのつまみをそろそろテーマに合わせる',
 						'comments': [
 							'使える色がない',
-							'もともと位置表示だけの役割だからつまみを狭くした'
+							'もともと位置表示だけの役割だからつまみを狭くした',
+							'本対応により 0.01.0 から酷使した初代つまみが長い眠りにつきました'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '29379dae19cf7946164a909db9cc90b460a851ab',
 						'subject': '#383: ストレージのGC結果出力で単位が重複してる(n,nnn KB byte)'
-					},
-					{
-						'revision': '',
-						'subject': ''
 					}
 				]
 			},
@@ -163,18 +161,18 @@
 				'type': 'developer',
 				'logs': [
 					{
-						'revision': '',
+						'revision': '932afb56a537c1f76469d57099ce3a900cb2036e',
 						'subject': '#354: コメントアウトしたソース全部殺せ'
 					},
 					{
-						'revision': '',
+						'revision': '78e1f874c5fb2dcf4aa07d28f17f1335a7c54dfe',
 						'subject': '#382: いつ古くなるかわからない新形式を DMC に名称変更する',
 						'comments': [
 							'配信サーバーであってフォーマットの話じゃないと思うけど浸透してそうなので DMC形式 で統一した'
 						]
 					},
 					{
-						'revision': '',
+						'revision': '954fb64dbabad126d6f113f0eea8d5cb4da8c499',
 						'subject': '#45: ヘルプファイルの整備',
 						'comments': [
 							'最低限だけ',
