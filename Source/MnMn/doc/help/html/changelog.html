@@ -21,7 +21,7 @@
 
 			var htmlList = [];
 			for (var i = 0, i_max = changelogs.length; i < i_max; i++) {
-				var log = makeChangeLogBlock(changelogs[i]);
+				var log = makeChangeLogBlock(changelogs[i], false, '../image/changelog');
 				if (log.contents) {
 					htmlList.push(log.title.toCode());
 					htmlList.push(log.contents.toCode());
