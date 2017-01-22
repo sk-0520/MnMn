@@ -174,3 +174,11 @@ a *.out-link {
 	a *.out-link:after {
 		content: ']';
 	}
+
+dl {
+	margin-left: 1em;
+}
+
+	dl dt {
+		font-weight: bold;
+	}
