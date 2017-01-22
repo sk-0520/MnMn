@@ -132,11 +132,11 @@
                             StrokeThickness="2"
                           >
                             <Rectangle.Fill>
-                              <LinearGradientBrush MappingMode="RelativeToBoundingBox" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="0,1">
+                              <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="0,3">
                                 <GradientStop Offset="0" Color="{DynamicResource ProgressIndeterminateColor1}" />
-                                <GradientStop Offset="0.40" Color="{DynamicResource ProgressIndeterminateColor2}" />
-                                <GradientStop Offset="0.75" Color="{DynamicResource ProgressIndeterminateColor3}" />
-                                <GradientStop Offset="0.90" Color="{DynamicResource ProgressIndeterminateColor4}" />
+                                <GradientStop Offset="0.2" Color="{DynamicResource ProgressIndeterminateColor2}" />
+                                <GradientStop Offset="0.8" Color="{DynamicResource ProgressIndeterminateColor3}" />
+                                <GradientStop Offset="1.0" Color="{DynamicResource ProgressIndeterminateColor4}" />
                               </LinearGradientBrush>
                             </Rectangle.Fill>
                           </Rectangle>
