@@ -181,6 +181,9 @@
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" CommandParameter="{StaticResource False}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
 
+    <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding SwitchPlayerShowCommentAreaCommand}" />
+    <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding SwicthPlayerShowDetailAreaCommand}" />
+
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
 
