@@ -837,66 +837,164 @@
   </Style>
 
   <Style TargetType="xctk:SplitButton">
+    <Style.Resources>
+      <Style x:Key="ButtonSplitFocusVisual">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate>
+              <Rectangle Margin="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeThickness="1"
+                               SnapsToDevicePixels="true"
+                               StrokeDashArray="1 2" />
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </Style.Resources>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type xctk:SplitButton}">
-          <ControlTemplate.Resources>
-            <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-            <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-          </ControlTemplate.Resources>
-          <Grid x:Name="MainGrid" SnapsToDevicePixels="True" ShowGridLines="True">
-            <Button
-              x:Name="PART_DropDownButton"
-              VerticalAlignment="Stretch"
-              VerticalContentAlignment="Stretch"
-              HorizontalAlignment="Stretch"
-              HorizontalContentAlignment="Stretch"
-              Margin="0"
-              Padding="0"
-              IsHitTestVisible="{Binding IsChecked, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalNotConverter}}"
-            >
-              <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+          <Grid UseLayoutRounding="True">
+            <Border x:Name="PART_Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+              <Grid x:Name="PART_Container"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Button x:Name="PART_Button"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Style="{DynamicResource ButtonSplitStyle}"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding Foreground}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Command="{TemplateBinding Command}"
+                            CommandParameter="{TemplateBinding CommandParameter}"
+                            CommandTarget="{TemplateBinding CommandTarget}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                  <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Orientation="Horizontal">
 
-                <ContentPresenter
-                  Name="ActionButtonContent"
-                  Grid.Column="0"
-                  Margin="{TemplateBinding Padding}"
+                    <mamc:ContentControlEx x:Name="PART_ButtonContent"
+                                                       Margin="2"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mamc:ControlsHelper.ContentCharacterCasing)}"
                   Content="{TemplateBinding Content}"
                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  RecognizesAccessKey="true"
-                />
-
-                <ToggleButton IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
-                  <Path
-                    x:Name="BtnArrow"
-                    Grid.Column="1"
-                    Margin="4,3,4,3"
-                    Width="8"
-                    Height="8"
-                    HorizontalAlignment="Center"
-                    Fill="{DynamicResource GrayBrush1}"
-                    Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
-                    IsHitTestVisible="false"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    Stretch="Uniform"
-                  />
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       UseLayoutRounding="False" />
+                  </StackPanel>
+                </Button>
+                <ToggleButton x:Name="PART_Expander"
+                            Grid.Column="1"
+                            Width="20"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding Foreground}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+              IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                              
+                        >
+                  <ToggleButton.Style>
+                      <Style BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" TargetType="{x:Type ToggleButton}">
+                        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+                        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Padding" Value="2" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+                      <Setter Property="HorizontalAlignment" Value="Stretch" />
+                      <Setter Property="VerticalAlignment" Value="Stretch" />
+                      <Setter Property="HorizontalContentAlignment" Value="Center" />
+                      <Setter Property="VerticalContentAlignment" Value="Center" />
+                      <Setter Property="Template">
+                          <Setter.Value>
+                          <ControlTemplate TargetType="{x:Type ToggleButton}">
+                              <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                              </Border>
+                              <ControlTemplate.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                  <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                  <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                  <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                  <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
+                                </Trigger>
+                              </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                          </Setter.Value>
+                        </Setter>
+                      </Style>
+                  </ToggleButton.Style>
+                  <!-- Material - ChevronDown -->
+                  <ContentControl Style="{DynamicResource PathIconContentControlStyle}" Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Width="9" Height="9" />
                 </ToggleButton>
               </Grid>
-            </Button>
-            <!-- MENU -->
-            <Popup x:Name="PART_Popup" StaysOpen="False" IsOpen="{TemplateBinding IsOpen}">
+            </Border>
+            <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
+                   MinWidth="{TemplateBinding ActualWidth}"
+                   IsOpen="{Binding IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   PlacementTarget="{Binding ElementName=PART_Border}"
+                   PopupAnimation="Fade"
+                   StaysOpen="True">
               <ContentPresenter Content="{TemplateBinding DropDownContent}" />
             </Popup>
           </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <!--<Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />-->
+            </Trigger>
+            <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
+              <!--<Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />-->
+            </Trigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+    <Style.Triggers>
+      <Trigger Property="IsFocused" Value="True">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+      </Trigger>
+      <Trigger Property="IsKeyboardFocusWithin" Value="True">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value=".55" />
+      </Trigger>
+    </Style.Triggers>
   </Style>
 
   <!-- ToggleButton -->

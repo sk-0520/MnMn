@@ -110,19 +110,19 @@
           </Canvas>
         </Viewbox>
       </Button>
-      <!--<xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
+      <xctk:SplitButton Grid.Column="1" Margin="0,0,10,0" ToolTip="チェックされた項目を連続再生します" Command="{Binding ContinuousPlaybackCommand}" IsOpen="{Binding ShowContinuousPlaybackMenu}">
         <xctk:SplitButton.Content>連続再生(_P)</xctk:SplitButton.Content>
         <xctk:SplitButton.DropDownContent>
           <MenuItem Header="ランダム連続再生(_R)" Command="{Binding RandomContinuousPlaybackCommand}" />
         </xctk:SplitButton.DropDownContent>
-      </xctk:SplitButton>-->
-      <mamc:SplitButton Grid.Column="1" SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
+      </xctk:SplitButton>
+      <!--<mamc:SplitButton Grid.Column="1" SelectedItem="{Binding SelectedCheckedProcess}" ItemsSource="{Binding CheckedProcessItems}" Command="{Binding CheckedProcessCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Self}}">
         <mamc:SplitButton.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
           </DataTemplate>
         </mamc:SplitButton.ItemTemplate>
-      </mamc:SplitButton>
+      </mamc:SplitButton>-->
 
       <TextBox Grid.Column="2" mamc:TextBoxHelper.ClearTextButton="True" mamc:TextBoxHelper.Watermark="タイトルフィルタ" Text="{Binding InputTitleFilter, UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource LeftMargin}" />
 
