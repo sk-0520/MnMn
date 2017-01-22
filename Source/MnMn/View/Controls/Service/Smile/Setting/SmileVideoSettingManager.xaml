@@ -156,7 +156,7 @@
 
         <GroupBox Header="ダウンロード">
           <StackPanel>
-            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding UsingDmc}">新形式を使用</CheckBox>
+            <CheckBox Style="{StaticResource VerticalCheckBox}" IsChecked="{Binding UsingDmc}">DMC形式を使用</CheckBox>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition />

@@ -380,9 +380,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         /// <summary>
-        /// 新形式でダウンロードする。
+        /// DMC形式でダウンロードする。
         /// </summary>
-        /// <returns>真: 新形式で処理できた(ダウンロードが成功したかどうかではない)、偽: 新形式では処理できない。</returns>
+        /// <returns>真: DMC形式で処理できた(ダウンロードが成功したかどうかではない)、偽: 新形式では処理できない。</returns>
         protected async Task<bool> LoadDmcVideoAsync()
         {
             if(!Information.IsDmc) {
@@ -567,7 +567,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(Setting.Download.UsingDmc) {
                 if(await LoadDmcVideoAsync()) {
-                    // 新形式で何かしら処理できた
+                    // DMC形式で何かしら処理できた
                     return;
                 }
             }

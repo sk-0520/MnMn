@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         public FileInfo MsgFile { get; private set; }
 
         /// <summary>
-        /// 新形式受信ファイル。
+        /// DMC形式受信ファイル。
         /// </summary>
         public FileInfo DmcFile { get; private set; }
 
@@ -974,7 +974,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         ///
         /// </summary>
         /// <param name="isSave"></param>
-        /// <param name="usingDmc">ダウンロードに新形式を使用するか</param>
+        /// <param name="usingDmc">ダウンロードにDMC形式を使用するか</param>
         /// <returns></returns>
         public Task<CheckModel> LoadGetflvAsync(bool isSave, bool usingDmc)
         {
