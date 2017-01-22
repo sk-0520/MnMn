@@ -89,7 +89,7 @@
     <Slider
       x:Name="seekbar"
       Grid.Column="2"
-      Margin="4,2"
+      Margin="1,2"
       Minimum="0"
       Maximum="1"
       LargeChange="0.05"
@@ -118,14 +118,35 @@
                   <Thumb Visibility="{Binding CanSeek, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Thumb.Template>
                       <ControlTemplate>
-                        <Rectangle
-                          Width="20"
-                          RadiusX="4"
-                          RadiusY="4"
-                          Fill="AliceBlue"
-                          Stroke="Red"
-                          StrokeThickness="1"
-                        />
+                        <Grid>
+                          <Grid.Resources>
+                            <Style TargetType="Rectangle">
+                              <Setter Property="RadiusX" Value="2" />
+                              <Setter Property="RadiusY" Value="2" />
+                            </Style>
+                          </Grid.Resources>
+                          <Rectangle 
+                            x:Name="IndeterminateSolidFill"
+                            Margin="{TemplateBinding BorderThickness}"
+                            Fill="{DynamicResource HighlightBrush}"
+                            StrokeThickness="0"
+                            Opacity="1"
+                          />
+                          <Rectangle
+                            Width="8"
+                            Stroke="{DynamicResource WhiteColorBrush}"
+                            StrokeThickness="2"
+                          >
+                            <Rectangle.Fill>
+                              <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="{DynamicResource ProgressIndeterminateColor1}" />
+                                <GradientStop Offset="0.651" Color="{DynamicResource ProgressIndeterminateColor2}" />
+                                <GradientStop Offset="0.093" Color="{DynamicResource ProgressIndeterminateColor3}" />
+                                <GradientStop Offset="0.548" Color="{DynamicResource ProgressIndeterminateColor4}" />
+                              </LinearGradientBrush>
+                            </Rectangle.Fill>
+                          </Rectangle>
+                        </Grid>
                       </ControlTemplate>
                     </Thumb.Template>
                   </Thumb>
