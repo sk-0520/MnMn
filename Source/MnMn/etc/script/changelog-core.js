@@ -169,11 +169,11 @@ function makeChangeLogContent(content, isEmbeddedImage, imageBaseDirPath) {
 	return result;
 }
 
-function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
-{
+function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath) {
 	var img = new Element('img');
 	img.setAttibute('alt', text);
 	if (isEmbeddedImage) {
+		// それいけ WSH
 		var ext = image.split('.').pop().toLowerCase();
 		var map = {
 			'jpg': 'jpeg',
@@ -189,20 +189,18 @@ function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath)
 		stream.Open();
 
 		stream.LoadFromFile(path);
-		
-		//var binary = stream.Read(stream.Size);
-		var binary = stream.Read(stream.Size);
-		var doc = new ActiveXObject("Msxml2.DOMDocument");
-		var element = doc.createElement("hex");
-		element.dataType = "bin.hex";
-		element.nodeTypedValue = binary;
-		// 「text」を取得
-		binary = element.text;
 
-		img.setAttibute('src', binary);
+		var tempDocument = new ActiveXObject("Msxml2.DOMDocument");
+		var tempElement = tempDocument.createElement("hex");
+		tempElement.dataType = 'bin.base64';
+		tempElement.nodeTypedValue = stream.Read(stream.Size);
+		var base64Text = tempElement.text;
+		var srcBody = base64Text.replace(/\r?\n|\r/g, '');
+
+		var srcData = srcHead + srcBody;
+		img.setAttibute('src', srcData);
 
 		stream.Close();
-
 
 		img.setAttibute('class', 'embedded')
 	} else {
