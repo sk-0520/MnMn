@@ -55,7 +55,7 @@ var menuList = [
 		}
 	},
 	{
-		name: 'smile',
+		name: '*smile',
 		localize: true,
 		level: 0,
 		title: {
@@ -63,11 +63,11 @@ var menuList = [
 		}
 	},
 	{
-		name: 'smile-video-setting',
+		name: 'smile-setting',
 		localize: true,
 		level: 1,
 		title: {
-			'ja-jp': 'ニコニコ動画用設定'
+			'ja-jp': '設定'
 		}
 	},
 	{
