@@ -105,7 +105,7 @@
             <Grid x:Name="PART_SliderBase">
               <ProgressBar
                 x:Name="PART_ProgressBar"
-                Margin="8,0"
+                Margin="2,0"
                 Height="{StaticResource ProgressHeight}"
                 Minimum="0"
                 Maximum="{Binding VideoTotalSize, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -119,16 +119,10 @@
                     <Thumb.Template>
                       <ControlTemplate>
                         <Grid>
-                          <Grid.Resources>
-                            <Style TargetType="Rectangle">
-                              <Setter Property="RadiusX" Value="2" />
-                              <Setter Property="RadiusY" Value="2" />
-                            </Style>
-                          </Grid.Resources>
                           <Rectangle 
                             x:Name="IndeterminateSolidFill"
                             Margin="{TemplateBinding BorderThickness}"
-                            Fill="{DynamicResource HighlightBrush}"
+                            Fill="{DynamicResource AccentColorBrush}"
                             StrokeThickness="0"
                             Opacity="1"
                           />
@@ -138,11 +132,11 @@
                             StrokeThickness="2"
                           >
                             <Rectangle.Fill>
-                              <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="0,1">
+                              <LinearGradientBrush MappingMode="RelativeToBoundingBox" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Offset="0" Color="{DynamicResource ProgressIndeterminateColor1}" />
-                                <GradientStop Offset="0.651" Color="{DynamicResource ProgressIndeterminateColor2}" />
-                                <GradientStop Offset="0.093" Color="{DynamicResource ProgressIndeterminateColor3}" />
-                                <GradientStop Offset="0.548" Color="{DynamicResource ProgressIndeterminateColor4}" />
+                                <GradientStop Offset="0.40" Color="{DynamicResource ProgressIndeterminateColor2}" />
+                                <GradientStop Offset="0.75" Color="{DynamicResource ProgressIndeterminateColor3}" />
+                                <GradientStop Offset="0.90" Color="{DynamicResource ProgressIndeterminateColor4}" />
                               </LinearGradientBrush>
                             </Rectangle.Fill>
                           </Rectangle>
