@@ -151,6 +151,10 @@
 					},
 					{
 						'revision': '',
+						'subject': '#383: ストレージのGC結果出力で単位が重複してる(n,nnn KB byte)'
+					},
+					{
+						'revision': '',
 						'subject': ''
 					}
 				]
