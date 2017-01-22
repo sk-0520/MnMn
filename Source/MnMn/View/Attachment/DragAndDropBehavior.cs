@@ -37,63 +37,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Attachment
 
         #endregion
 
-        //#region AllowDropProperty
-
-        //public static readonly DependencyProperty AllowDropProperty = DependencyProperty.Register(
-        //    DependencyPropertyUtility.GetName(nameof(AllowDropProperty)),
-        //    typeof(bool),
-        //    typeof(DragAndDropBehavior),
-        //    new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnAllowDropChanged))
-        //);
-
-        //private static void OnAllowDropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    var control = d as DragAndDropBehavior;
-        //    if(control != null) {
-        //        control.AllowDrop = (bool)e.NewValue;
-        //    }
-        //}
-
-        //public bool AllowDrop
-        //{
-        //    get { return (bool)GetValue(AllowDropProperty); }
-        //    set { SetValue(AllowDropProperty, value); }
-        //}
-
-        //#endregion
-
-        //#region IsEnabledDragProperty
-
-        //public static readonly DependencyProperty IsEnabledDragProperty = DependencyProperty.Register(
-        //    DependencyPropertyUtility.GetName(nameof(IsEnabledDragProperty)),
-        //    typeof(bool),
-        //    typeof(DragAndDropBehavior),
-        //    new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsEnabledDragChanged))
-        //);
-
-        //private static void OnIsEnabledDragChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    var control = d as DragAndDropBehavior;
-        //    if(control != null) {
-        //        control.IsEnabledDrag = (bool)e.NewValue;
-        //    }
-        //}
-
-        //public bool IsEnabledDrag
-        //{
-        //    get { return (bool)GetValue(IsEnabledDragProperty); }
-        //    set { SetValue(IsEnabledDragProperty, value); }
-        //}
-
-        //#endregion
-
         #region Behavior
 
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            //AllowDrop = this.AssociatedObject.AllowDrop;
 
             this.AssociatedObject.PreviewMouseDown += AssociatedObject_MouseDown;
             this.AssociatedObject.MouseMove += AssociatedObject_MouseMove;

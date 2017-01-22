@@ -120,8 +120,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Bo
             var nextVideo = FinderItemList[nextIndex];
 
             var srcNumber = srcVideo.Number;
-            //srcVideo.ResetNumber(nextVideo.Number);
-            //nextVideo.ResetNumber(srcNumber);
             srcVideo.Number = nextVideo.Number;
             nextVideo.Number = srcNumber;
 

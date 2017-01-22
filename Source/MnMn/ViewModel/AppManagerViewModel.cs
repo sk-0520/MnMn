@@ -152,13 +152,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #region function
 
-        //void SaveSetting()
-        //{
-        //    var dir = VariableConstants.GetSettingDirectory();
-        //    var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
-
-        //    SerializeUtility.SaveSetting(filePath, Setting, SerializeFileType.Json, true, Mediation.Logger);
-        //}
         IEnumerable<ViewModelBase> GetChildWindowViewModels()
         {
             var videoPlayers = Mediation.GetResultFromRequest<IEnumerable<ViewModelBase>>(new RequestModel(RequestKind.WindowViewModels, ServiceType.SmileVideo));
@@ -174,7 +167,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         void OutputLogGarbageCollection(long gcSize)
         {
-            Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)} byte", $"{gcSize:n0} byte");
+            Mediation.Logger.Information($"Storage GC: {RawValueUtility.ConvertHumanLikeByte(gcSize)}", $"{gcSize:n0} byte");
         }
 
         #endregion
@@ -228,7 +221,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
                 BackgroundGarbageCollectionTimer.Start();
             }
 
-            //View.UserClosing += View_UserClosing;
             View.Closing += View_Closing;
             View.Closed += View_Closed;
 
@@ -251,20 +243,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
 
         #endregion
 
-        //private void View_UserClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    var viewModels = GetChildWindowViewModels();
-
-        //    if(viewModels.Any()) {
-        //        // TODO: 将来何かに使いましょうさ
-        //        //e.Cancel = true;
-        //    }
-
-        //    if(!e.Cancel) {
-        //        Mediation.Order(new AppSaveOrderModel(true));
-        //    }
-        //}
-
         private void View_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var closeItems = GetChildWindowViewModels().Cast<ICloseView>();
@@ -285,7 +263,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel
             BackgroundGarbageCollectionTimer.Stop();
             BackgroundGarbageCollectionTimer.Tick -= BackgroundGarbageCollectionTimer_Tick;
 
-            //View.UserClosing -= View_UserClosing;
             View.Closing -= View_Closing;
             View.Closed -= View_Closed;
         }

@@ -72,12 +72,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
                 ;
                 page.ForceUri = usingUri;
                 var response = await page.GetResponseTextAsync(PageLoaderMethod.Get);
-                //var document = new HtmlDocument();
-                //document.LoadHtml(response.Result);
-                //var watchApiDataElement = document.DocumentNode.SelectSingleNode("//*[@id='watchAPIDataContainer']");
-                //var watchApiDataText = HtmlEntity.DeEntitize(watchApiDataElement.InnerText);
 
-                //var json = JObject.Parse(watchApiDataText);
                 var json = SmileVideoWatchAPIUtility.ConvertJsonFromWatchPage(response.Result);
 
                 var flashvars = json.SelectToken("flashvars");
@@ -131,17 +126,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
         {
             await LoginIfNotLoginAsync();
 
-            //if(IsScrapingPattern(videoId)) {
-            //    return await LoadScrapingAsync(watchUri, movieType);
-            //} else {
-            //    var map = new StringsModel() {
-            //        { "video-id", videoId },
-            //    };
-            //    var srcUri = Mediation.GetUri(SmileVideoMediationKey.getflvNormal, map, Define.ServiceType.SmileVideo);
-            //    var convertedUri = Mediation.ConvertUri(srcUri.Uri, Define.ServiceType.SmileVideo);
-            //    var uri = new Uri(convertedUri);
-            //    return await LoadNormalAsync(uri, movieType);
-            //}
             var usingUri = movieType == SmileVideoMovieType.Swf
                 ? new Uri(watchUri.OriginalString + "?as3=1")
                 : watchUri

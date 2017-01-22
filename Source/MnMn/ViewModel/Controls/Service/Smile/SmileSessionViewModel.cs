@@ -92,17 +92,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
 
         #region function
 
-        //public IEnumerable<Cookie> GetCookies(Uri uri)
-        //{
-        //    //return ClientHandler.CookieContainer.GetCookies(uri).[Constants.ServiceSmileSessionKey].Value;
-        //    var cookies = ClientHandler.CookieContainer.GetCookies(uri)
-        //        .Cast<Cookie>()
-        //    //.Select(c => $"{c.Name}={c.Value}")
-        //    ;
-        //    //return string.Join(";", cookies);
-        //    return cookies;
-        //}
-
         public Task ChangeUserAccountAsync(SmileUserAccountModel userAccount)
         {
             if(LoginState == LoginState.LoggedIn) {
@@ -225,9 +214,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile
                     CookieManager.Remove(cookie.Domain, cookie.Name, cookie.Path, false);
                 }
             }
-            //foreach(var cookie in cookies) {
-            //    CookieManager.Add(cookie.Domain, cookie.Path, cookie.Name, cookie.Value, cookie.Secure, cookie.HttpOnly, true, cookie.Expires.Ticks);
-            //}
         }
 
         #endregion

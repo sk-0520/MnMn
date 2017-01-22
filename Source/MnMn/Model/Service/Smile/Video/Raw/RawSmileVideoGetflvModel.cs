@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Service.Smile.Video.Raw
         [Name("optional_thread_id")]
         public string OptionalThreadId { get; set; }
 
-        // 新形式 --------------------------
+        // DMC形式 --------------------------
 
         public string IsDmc { get; set; }
 

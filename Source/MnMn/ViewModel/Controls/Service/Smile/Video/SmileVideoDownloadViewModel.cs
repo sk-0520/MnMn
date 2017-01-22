@@ -197,12 +197,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             set { SetVariableValue(ref this._isEconomyMode, value); }
         }
 
-        //public bool IsProcessCancel
-        //{
-        //    get { return this._isProcessCancel; }
-        //    set { SetVariableValue(ref this._isProcessCancel, value); }
-        //}
-
         protected CancellationTokenSource DownloadCancel { get; set; }
 
         protected FileInfo PlayFile
@@ -254,27 +248,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected virtual void OnLoadGetflvEnd()
         { }
 
-        //Task<RawSmileVideoGetflvModel> LoadGetflvFromServiceAsync()
-        //{
-        //    if(Information.InformationLoadState == LoadState.Failure) {
-        //        return Task.FromResult(default(RawSmileVideoGetflvModel));
-        //    }
-
-        //    var getflv = new Getflv(Mediation);
-        //    return getflv.LoadAsync(VideoId, Information.WatchUrl, Information.MovieType);
-        //}
-
         async Task LoadGetflvAsync()
         {
             OnLoadGetflvStart();
 
-            //var rawVideoGetflvModel = await LoadGetflvFromServiceAsync();
-            //if(rawVideoGetflvModel != null) {
-            //    Information.SetGetflvModel(rawVideoGetflvModel);
-
-            //    var path = Path.Combine(Information.CacheDirectory.FullName, PathUtility.CreateFileName(VideoId, "getflv", "xml"));
-            //    SerializeUtility.SaveXmlSerializeToFile(path, rawVideoGetflvModel);
-            //}
             var result = await Information.LoadGetflvAsync(true, Setting.Download.UsingDmc);
 
             OnLoadGetflvEnd();
@@ -317,15 +294,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             if(UsingDmc.Value) {
                                 var mux = DmcMultiplexer;
                                 var role = SmileVideoInformationUtility.GetDmcRoleKey(mux.VideoSrcIds.First(), mux.AudioSrcIds.First());
-                                //if(!Information.DmcItems.ContainsKey(role)) {
-                                //    var dmcItem = new SmileVideoDmcItemModel() {
-                                //        Video = mux.VideoSrcIds.First(),
-                                //        Audio = mux.AudioSrcIds.First(),
-                                //    };
-                                //    Information.DmcItems[role] = dmcItem;
-                                //}
                                 VideoFile.Refresh();
-                                //Information.DmcItems[role].IsLoaded = VideoFile.Length == Information.DmcItems[role].Length;
                                 // 理屈で言えばここは絶対に存在する
                                 Information.SetDmcLoaded(mux.VideoSrcIds.First(), mux.AudioSrcIds.First(), VideoFile.Length == Information.DmcItems[role].Length);
                                 if(Information.DmcItems[role].IsLoaded) {
@@ -357,7 +326,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                         downloader.Downloading -= Downloader_Downloading;
                         downloader.Downloaded -= Downloader_Downloaded;
 
-                        //OnLoadVideoEnd();
                         stopWatch.Stop();
                         Mediation.Logger.Information($"{VideoId}: download end: {stopWatch.Elapsed}");
                         // 保険
@@ -412,9 +380,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         }
 
         /// <summary>
-        /// 新形式でダウンロードする。
+        /// DMC形式でダウンロードする。
         /// </summary>
-        /// <returns>真: 新形式で処理できた(ダウンロードが成功したかどうかではない)、偽: 新形式では処理できない。</returns>
+        /// <returns>真: DMC形式で処理できた(ダウンロードが成功したかどうかではない)、偽: 新形式では処理できない。</returns>
         protected async Task<bool> LoadDmcVideoAsync()
         {
             if(!Information.IsDmc) {
@@ -490,16 +458,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected async Task<RawSmileVideoMsgPacketModel> LoadMsgCoreAsync(int getCount, int rangeHeadMinutes, int rangeTailMinutes, int rangeGetCount, int rangeGetAllCount)
         {
-            //var getThreadkey = new Getthreadkey(Mediation);
-            //var threadkeyModel = await getThreadkey.LoadAsync(
-            //    Information.ThreadId
-            //);
             await Information.LoadGetthreadkeyAsync();
 
             var msg = new Msg(Mediation);
             return await msg.LoadAsync(
                 Information.MessageServerUrl,
-                //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
                 Information.ThreadId,
                 Information.UserId,
                 getCount,
@@ -531,22 +494,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             CommentLoadState = LoadState.Loading;
 
-            //var getThreadkey = new Getthreadkey(Mediation);
-            //var threadkeyModel = await getThreadkey.LoadAsync(
-            //    VideoInformation.ThreadId
-            //);
-
-            //var msg = new Msg(Mediation);
-            //var rawMessagePacket = await msg.LoadAsync(
-            //    VideoInformation.MessageServerUrl,
-            //    //string.IsNullOrWhiteSpace(VideoInformationViewModel.OptionalThreadId) ? VideoInformationViewModel.ThreadId: VideoInformationViewModel.OptionalThreadId,
-            //    VideoInformation.ThreadId,
-            //    VideoInformation.UserId,
-            //    1000,
-            //    1, (int)VideoInformation.Length.TotalMinutes, 100,
-            //    500,
-            //    threadkeyModel
-            //);
             var rawMessagePacket = await LoadMsgCoreAsync(1000, 1, (int)Information.Length.TotalMinutes, 100, 500);
             ImportCommentThread(rawMessagePacket);
 
@@ -620,7 +567,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             if(Setting.Download.UsingDmc) {
                 if(await LoadDmcVideoAsync()) {
-                    // 新形式で何かしら処理できた
+                    // DMC形式で何かしら処理できた
                     return;
                 }
             }
@@ -673,18 +620,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         {
             InformationLoadState = LoadState.Loading;
 
-            //var baseDir = RestrictUtility.Block(() => {
-            //    var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            //    return (DirectoryInfo)response.Result;
-            //});
-            ////TODO: キャッシュディレクトリ処理重複
-            ////DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoId));
-            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoId));
-
             OnLoadGetthumbinfoStart();
-            //var rawGetthumbinfoModel = await LoadGetthumbinfoAsync(videoId, thumbCacheSpan);
-            //VideoInformationViewModel = new SmileVideoInformationViewModel(Mediation, rawGetthumbinfoModel.Thumb, SmileVideoInformationViewModel.NoOrderd);
-            //VideoInformation = await SmileVideoInformationViewModel.CreateFromVideoIdAsync(Mediation, videoId, thumbCacheSpan);
+
             var request = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
             Information = await Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(request);
 
@@ -706,7 +643,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             InformationLoadState = LoadState.None;
             ThumbnailLoadState = LoadState.None;
             CommentLoadState = LoadState.None;
-            //IsProcessCancel = false;
             UsingDmc.Value = false;
             DmcObject = null;
             DmcApiUri = null;
@@ -719,21 +655,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
         protected virtual Task StopPrevProcessAsync()
         {
-            //// ぐっちゃぐちゃ
-            //var wait = new EventWaitHandle(false, EventResetMode.AutoReset);
-            //PropertyChangedEventHandler changedEvent = null;
-
-            //changedEvent = (sender, e) => {
-            //    if(e.PropertyName == nameof(VideoLoadState) && VideoLoadState == LoadState.None) {
-            //        PropertyChanged -= changedEvent;
-            //        wait.Set();
-            //    }
-            //};
-            //PropertyChanged += changedEvent;
-
-            //var prevState = VideoLoadState;
-            //IsProcessCancel = true;
-
             if(DownloadCancel != null) {
                 Mediation.Logger.Trace($"{VideoId}: download cancel!");
                 DownloadCancel.Cancel();
@@ -749,19 +670,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             InitializeStatus();
 
-            //if(prevState == LoadState.Preparation || prevState == LoadState.Loading) {
-            //    return Task.Run(() => {
-            //        wait.WaitOne();
-            //        wait.Dispose();
-            //        PropertyChanged -= changedEvent;
-            //        InitializeStatus();
-            //    });
-            //} else {
-            //    wait.Dispose();
-            //    PropertyChanged -= changedEvent;
-            //    InitializeStatus();
-            //    return Task.CompletedTask;
-            //}
             return Task.CompletedTask;
         }
 
@@ -774,13 +682,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
 
             InformationLoadState = LoadState.Loading;
 
-            //var baseDir = RestrictUtility.Block(() => {
-            //    var response = Mediation.Request(new RequestModel(RequestKind.CacheDirectory, ServiceType.SmileVideo));
-            //    return (DirectoryInfo)response.Result;
-            //});
-            ////DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, Constants.SmileVideoCacheVideosDirectoryName, videoInformation.VideoId));
-            //DownloadDirectory = Directory.CreateDirectory(Path.Combine(baseDir.FullName, videoInformation.VideoId));
-
             OnLoadGetthumbinfoStart();
             Information = videoInformation;
             if(Information.InformationSource != SmileVideoInformationSource.Getthumbinfo) {
@@ -792,7 +693,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             var noSessionTask = LoadDataWithoutSessionAsync(imageCacheSpan);
             var sessionTask = LoadDataWithSessionAsync();
 
-            //Task.WaitAll(noSessionTask, sessionTask);
             await noSessionTask;
             await sessionTask;
 
@@ -881,8 +781,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                //Debug.WriteLine("set null!");
-                //Information = null;
             }
 
             base.Dispose(disposing);
@@ -911,7 +809,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                     Mediation.Logger.Information($"file:{VideoFile.Length}, response:{downloader.ResponseHeaders.ContentLength.Value}, total:{VideoTotalSize}");
 
                     var mux = DmcMultiplexer;
-                    //var ext = DmcFileExtension;
                     var video = mux.VideoSrcIds.First();
                     var audio = mux.AudioSrcIds.First();
                     var role = SmileVideoInformationUtility.GetDmcRoleKey(video, audio);
@@ -934,18 +831,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
                             Information.DmcItems[role] = dmcItem;
                         }
                     }
-                    //bool isDmcLoaded;
-                    //if(Information.DmcItems.TryGetValue(SmileVideoInformationUtility.GetDmcRoleKey(video, audio), out isDmcLoaded)) {
-                    //    if(isDmcLoaded) {
-                    //        // TODO: 根本的におかしいのかなんなのか、とりあえずの妥協
-                    //        if(VideoTotalSize - 1 <= VideoFile.Length) {
-                    //            VideoLoadedSize = VideoFile.Length;
-                    //            e.Cancel = true;
-                    //            e.Completed = true;
-                    //            return;
-                    //        }
-                    //    }
-                    //}
                 }
 
                 DmcPollingWait = new AutoResetEvent(false);
@@ -966,7 +851,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video
             if(e.Cancel || downloader.Canceled) {
                 return;
             }
-            //Mediation.Logger.Trace($"{VideoId}-{e.Counter}: {e.Data.Count}, {VideoLoadedSize:#,###}/{VideoTotalSize:#,###}, {e.SecondsDownlodingSize}");
 
             Information.IsDownloading = true;
 

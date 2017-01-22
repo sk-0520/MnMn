@@ -122,70 +122,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
         public virtual bool IsMyAccount { get; }
         public bool IsNotMyAccount { get { return !IsMyAccount; } }
 
-
-        //public ImageSource ThumbnailImage
-        //{
-        //    get
-        //    {
-        //        switch(UserThumbnailLoadState) {
-        //            case LoadState.None:
-        //                return null;
-
-        //            case LoadState.Preparation:
-        //                return null;
-
-        //            case LoadState.Loading:
-        //                return null;
-
-        //            case LoadState.Loaded:
-        //                return this._thumbnailImage;
-
-        //            case LoadState.Failure:
-        //                return null;
-
-        //            default:
-        //                throw new NotImplementedException();
-        //        }
-        //    }
-        //}
-
-        //public LoadState UserInformationLoadState
-        //{
-        //    get { return this._userInformationLoadState; }
-        //    set
-        //    {
-        //        if(SetVariableValue(ref this._userInformationLoadState, value)) {
-        //            var propertyNames = new[] {
-        //                nameof(UserName),
-        //                nameof(IsPublicLocation),
-        //                nameof(Location),
-        //                nameof(IsPublicGender),
-        //                nameof(Gender),
-        //                nameof(IsPublicBirthday),
-        //                nameof(Birthday),
-        //                nameof(ResistedVersion),
-        //                nameof(IsPremium),
-        //                nameof(Description),
-        //                nameof(IsPublicMyList),
-        //                nameof(IsPublicPost),
-        //                nameof(IsPublicReport),
-        //            };
-        //            CallOnPropertyChange(propertyNames);
-        //        }
-        //    }
-        //}
-
-        //public LoadState UserThumbnailLoadState
-        //{
-        //    get { return this._userThumbnailLoadState; }
-        //    set
-        //    {
-        //        if(SetVariableValue(ref this._userThumbnailLoadState, value)) {
-        //            CallOnPropertyChange(nameof(ThumbnailImage));
-        //        }
-        //    }
-        //}
-
         public DirectoryInfo CacheDirectory { get; private set; }
 
         public string UserId { get; }
@@ -483,7 +419,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
                 ThumbnailLoadState = LoadState.Loading;
                 var cacheImage = CacheImageUtility.LoadBitmapBinary(ThumbnaiImageFile.FullName);
                 SetThumbnaiImage(cacheImage);
-                //ThumbnailLoadState = LoadState.Loaded;
                 return Task.FromResult(true);
             }
 
@@ -491,7 +426,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.User
             return CacheImageUtility.LoadBitmapBinaryDefaultAsync(client, UserInformation.ThumbnailUri, Mediation.Logger).ContinueWith(task => {
                 var image = task.Result;
                 if(image != null) {
-                    //this._thumbnailImage = image;
                     SetThumbnaiImage(image);
                     CacheImageUtility.SaveBitmapSourceToPngAsync(image, ThumbnaiImageFile.FullName, Mediation.Logger);
                     return true;

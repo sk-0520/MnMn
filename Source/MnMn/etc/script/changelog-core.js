@@ -5,12 +5,29 @@ function is(type, obj) {
 	return obj !== undefined && obj !== null && clas === type;
 }
 
+function CheckHasEndTag(tagName)
+{
+	var noEndTags = [
+		'img',
+		'br'
+	];
+	var lowerTagName = tagName.toLowerCase()
+	for(var i = 0, iMax = noEndTags.length; i < iMax; i++) {
+		if(lowerTagName == noEndTags[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function Element(tagName) {
 	if (!tagName) {
 		throw "tagName is null";
 	}
 
 	this.tagName = tagName;
+	this.hasEndTag = CheckHasEndTag(tagName);
 	this.nodes = [];
 	this.attributes = {};
 
@@ -33,18 +50,25 @@ function Element(tagName) {
 
 		var result = [];
 		var attr = attr.join(' ');
-		result.push('<' + this.tagName + (attr ? ' ' + attr : '') + '>');
 
-		for (var i = 0; i < this.nodes.length; i++) {
-			var node = this.nodes[i];
-			if (is('String', node)) {
-				result.push(convertElementText(node));
-			} else if (is('Object', node)) {
-				result.push(node.toCode());
+		result.push('<' + this.tagName + (attr ? ' ' + attr : ''));
+
+		if(this.hasEndTag) {
+			result.push('>');
+			
+			for (var i = 0; i < this.nodes.length; i++) {
+				var node = this.nodes[i];
+				if (is('String', node)) {
+					result.push(convertElementText(node));
+				} else if (is('Object', node)) {
+					result.push(node.toCode());
+				}
 			}
+			result.push('</' + this.tagName + '>');
+		} else {
+			result.push(' />');
 		}
 
-		result.push('</' + this.tagName + '>');
 
 		return result.join('');
 	}
@@ -53,9 +77,9 @@ function Element(tagName) {
 /**
 主処理。
 */
-function makeChangeLogBlock(changelog) {
+function makeChangeLogBlock(changelog, isEmbeddedImage, imageBaseDirPath) {
 	var title = makeChangeLogTitle(changelog);
-	var contents = makeChangeLogContents(changelog['contents']);
+	var contents = makeChangeLogContents(changelog['contents'], isEmbeddedImage, imageBaseDirPath);
 
 	return {
 		'title': title,
@@ -81,13 +105,13 @@ function makeChangeLogTitle(changelog) {
 	return title;
 }
 
-function makeChangeLogContents(contents) {
+function makeChangeLogContents(contents, isEmbeddedImage, imageBaseDirPath) {
 	var parent = new Element('dl')
 	parent.setAttibute('class', 'changelog');
 	var hasContent = false;
 
 	for (var i = 0; i < contents.length; i++) {
-		var content = makeChangeLogContent(contents[i]);
+		var content = makeChangeLogContent(contents[i], isEmbeddedImage, imageBaseDirPath);
 		if (content.body != null) {
 			hasContent = true;
 			parent.append(content.head);
@@ -98,7 +122,7 @@ function makeChangeLogContents(contents) {
 	return hasContent ? parent : null;
 }
 
-function makeChangeLogContent(content) {
+function makeChangeLogContent(content, isEmbeddedImage, imageBaseDirPath) {
 	var result = {
 		head: null,
 		body: null
@@ -136,10 +160,19 @@ function makeChangeLogContent(content) {
 					var comments = new Element('ul');
 					comments.setAttibute('class', 'comment');
 					for (var j = 0; j < log['comments'].length; j++) {
-						if (log['comments'][j]) {
+						var commentData = log['comments'][j];
+						if (commentData) {
 							hasComment = true;
 							var comment = new Element('li')
-							comment.append(convertMessage(log['comments'][j]));
+							if (!is('String', commentData)) {
+								var text = commentData[0];
+								var image = commentData[1];
+								var imageElement = CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath);
+								comment.append(imageElement);
+								comment.setAttibute('class', 'image');
+							} else {
+								comment.append(convertMessage(commentData));
+							}
 
 							comments.append(comment);
 						}
@@ -159,6 +192,47 @@ function makeChangeLogContent(content) {
 	}
 
 	return result;
+}
+
+function CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath) {
+	var img = new Element('img');
+	img.setAttibute('alt', text);
+	if (isEmbeddedImage) {
+		// それいけ WSH
+		var ext = image.split('.').pop().toLowerCase();
+		var map = {
+			'jpg': 'jpeg',
+			'jpeg': 'jpeg',
+			'png': 'png'
+		};
+		var srcHead = 'data:image/' + map[ext] + ';base64,';
+
+		var path = imageBaseDirPath + '\\' + image;
+
+		var stream = new ActiveXObject("ADODB.Stream");
+		stream.Type = 1;
+		stream.Open();
+
+		stream.LoadFromFile(path);
+
+		var tempDocument = new ActiveXObject("Msxml2.DOMDocument");
+		var tempElement = tempDocument.createElement("hex");
+		tempElement.dataType = 'bin.base64';
+		tempElement.nodeTypedValue = stream.Read(stream.Size);
+		var base64Text = tempElement.text;
+		var srcBody = base64Text.replace(/\r?\n|\r/g, '');
+
+		var srcData = srcHead + srcBody;
+		img.setAttibute('src', srcData);
+
+		stream.Close();
+
+		img.setAttibute('class', 'embedded')
+	} else {
+		img.setAttibute('src', imageBaseDirPath + '/' + image);
+	}
+
+	return img;
 }
 
 function convertMessage(s) {

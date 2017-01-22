@@ -49,15 +49,6 @@
   </i:Interaction.Behaviors>
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/ImageDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/MenuDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <app_view_converter:MultiCommandParameterConverter x:Key="MultiCommandParameterConverter" />
 
@@ -135,7 +126,6 @@
       <ControlTemplate x:Key="CommentTemplate">
         <Grid>
           <ToggleButton x:Name="PART_SwitchComment" ToolTip="コメント表示" IsChecked="{Binding PlayerVisibleComment}">
-            <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentShow.png" Style="{StaticResource ButtonImage}" />-->
             <Viewbox Style="{StaticResource SmallIconBox}">
               <Canvas Style="{StaticResource IconCanvas-24x24}">
                 <Path Data="{StaticResource Image_Comment-On}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -190,6 +180,9 @@
   <mamc:MetroWindow.InputBindings>
     <KeyBinding Key="Esc" Command="{Binding FullScreenCancelCommand}" CommandParameter="{StaticResource False}" />
     <KeyBinding Key="Return" Modifiers="Alt" Command="{Binding SwitchFullScreenCommand}" />
+
+    <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding SwitchPlayerShowCommentAreaCommand}" />
+    <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding SwicthPlayerShowDetailAreaCommand}" />
 
     <KeyBinding Key="Space" Command="{Binding PlayerKeySpaceCommand}" />
     <KeyBinding Key="Home" Command="{Binding SeekHeadCommand}" />
@@ -296,90 +289,10 @@
       <Setter Property="ShowCloseButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMaxRestoreButton" Value="{Binding IsNormalWindow}" />
       <Setter Property="ShowMinButton" Value="{Binding IsNormalWindow}" />
-      <!--<Setter Property="BorderBrush">
-        <Setter.Value>
-          <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
-        </Setter.Value>
-      </Setter>-->
     </Style>
   </mamc:MetroWindow.Style>
-  <!--<WindowChrome.WindowChrome>
-    <WindowChrome
-      ResizeBorderThickness="{Binding ResizeBorderThickness}"
-      GlassFrameThickness="0"
-      CornerRadius="0"
-    >
-      <WindowChrome.CaptionHeight>
-        <MultiBinding Converter="{StaticResource CaptionHeightConverter}">
-          <MultiBinding.ConverterParameter>
-            <sys:Double>0</sys:Double>
-          </MultiBinding.ConverterParameter>
-          <MultiBinding.Bindings>
-            <Binding Path="IsNormalWindow" />
-            <Binding Path="ActualHeight" ElementName="caption" />
-          </MultiBinding.Bindings>
-        </MultiBinding>
-      </WindowChrome.CaptionHeight>
-    </WindowChrome>
-  </WindowChrome.WindowChrome>-->
 
   <DockPanel>
-    <!--<ContentControl
-      x:Name="caption"
-      DockPanel.Dock="Top"
-      Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
-      Style="{StaticResource WindowChromeCaption}"
-    />-->
-    <!--<Grid
-      x:Name="caption"
-      DockPanel.Dock="Top"
-      Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
-      Style="{StaticResource WindowChromeCaption}"
-    >
-      -->
-    <!--<Grid.Style>
-        <Style TargetType="Grid">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </Grid.Style>-->
-    <!--
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="Auto" />
-      </Grid.ColumnDefinitions>
-      <Button Grid.Column="0">
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="MouseRightButtonDown">
-            <i:InvokeCommandAction Command="{Binding ShowSystemMenuCommand}"/>
-          </i:EventTrigger>
-          <i:EventTrigger EventName="MouseDoubleClick">
-            <i:InvokeCommandAction Command="{Binding CaptionCloseCommand}"/>
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
-        <Button.Template>
-          <ControlTemplate>
-            <Image Width="16" Height="16" WindowChrome.IsHitTestVisibleInChrome="True" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
-          </ControlTemplate>
-        </Button.Template>
-      </Button>
-      <Grid Grid.Column="1" >
-        <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
-      </Grid>
-      <StackPanel Grid.Column="2" Orientation="Horizontal">
-        <Button Style="{StaticResource WindowChromeMinimum}"  />
-        <Button Style="{StaticResource WindowChromeMaximum}" />
-        <Button Style="{StaticResource WindowChromeClose}" />
-      </StackPanel>
-    </Grid>-->
-
     <ToolBar DockPanel.Dock="Top" Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}">
       <Button Command="{Binding OpenCacheDirectoryCommand}">
         <StackPanel Orientation="Horizontal">
@@ -532,7 +445,6 @@
               </MenuItem>
               <MenuItem Header="前の動画" Command="{Binding LoadPrevPlayListItemCommand}" InputGestureText="Ctrl + B" Style="{StaticResource {x:Type MenuItem}}">
                 <MenuItem.Icon>
-                  <!--<Image Source="/Resources/Service/Smile/Video/Player/Backward.png" Style="{StaticResource SmallIconImage}" />-->
                   <Viewbox Style="{StaticResource SmallIconBox}">
                     <Canvas Style="{StaticResource IconCanvas-24x24}">
                       <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -588,7 +500,6 @@
             </Setter>
           </Style>
         </Button.Style>
-        <!--<Image Source="/Resources/Service/Smile/Video/Player/Forward.png" Style="{StaticResource ButtonImage}" />-->
       </Button>
 
       <Separator />
@@ -675,7 +586,6 @@
         </Canvas>
       </Viewbox>
       <Canvas Style="{StaticResource StatePanel}">
-        <!--<Image Source="/Resources/Service/Smile/Video/Player/ImageState.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Image}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -692,7 +602,6 @@
         <app_view_controls:LoadStateNavigator LoadState="{Binding CommentLoadState}" Style="{StaticResource StateControl}" />
       </Canvas>
       <Canvas Style="{StaticResource StatePanel}">
-        <!--<Image Source="/Resources/Service/Smile/Video/Player/VideoState.png" Style="{StaticResource ButtonImage}" />-->
         <Viewbox Style="{StaticResource SmallIconBox}">
           <Canvas Style="{StaticResource IconCanvas-24x24}">
             <Path Data="{StaticResource Image_Video}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -732,7 +641,7 @@
                 <Setter Property="ToolTip">
                   <Setter.Value>
                     <StackPanel>
-                      <TextBlock FontWeight="Bold">新形式</TextBlock>
+                      <TextBlock FontWeight="Bold">DMC形式</TextBlock>
                       <TextBlock Margin="{StaticResource LeftMargin}">
                         <Run>画質:</Run>
                         <Run Text="{Binding DmcVideoSrc, Mode=OneWay}" />
@@ -979,7 +888,6 @@
               <app_view_controls:Navigationbar.ExstendsContent>
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton ToolTip="フルスクリーン" IsChecked="{Binding IsNormalWindow, Converter={StaticResource LogicalNotConverter}, Mode=OneWay}" Command="{Binding SwitchFullScreenCommand}">
-                    <!--<Image Source="/Resources/Service/Smile/Video/Player/FullScreen.png" Style="{StaticResource ButtonImage}" />-->
                     <Viewbox Style="{StaticResource SmallIconBox}">
                       <Canvas Style="{StaticResource IconCanvas-24x24}">
                         <Path>
@@ -1016,7 +924,6 @@
                     </Control.ContextMenu>
                   </Control>
                   <ToggleButton ToolTip="コメントリスト表示" IsChecked="{Binding PlayerShowCommentArea}">
-                    <!--<Image Source="/Resources/Service/Smile/Video/Player/CommentList.png" Style="{StaticResource ButtonImage}" />-->
                     <Viewbox Style="{StaticResource SmallIconBox}">
                       <Canvas Style="{StaticResource IconCanvas-24x24}">
                         <Path Data="{StaticResource Image_Comment-List}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -1176,7 +1083,6 @@
                   </Canvas>
                 </Viewbox>
               </Button>
-              <!--<xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" IsReadOnly="True"  Text="{Binding CommentInformation}" />-->
               <TextBox mamc:TextBoxHelper.SelectAllOnFocus="True" IsReadOnly="True" Text="{Binding CommentInformation, Mode=OneWay}" />
             </DockPanel>
 
@@ -1343,17 +1249,6 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                  <!--
-                    <Grid.RowDefinitions>
-                      <RowDefinition Height="*" />
-                      <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="2*" />
-                      <ColumnDefinition Width="8*" />
-                    </Grid.ColumnDefinitions>
-                    -->
-
                   <ListBox
                     x:Name="commentView"
                     VirtualizingPanel.ScrollUnit="Item"
@@ -1519,20 +1414,6 @@
                             <Setter Property="VerticalAlignment" Value="Center" />
                           </Style>
                           <Style TargetType="TextBox" BasedOn="{StaticResource SelectableReadonlyText}">
-                            <!--
-                              <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                  <Setter Property = "BorderBrush" Value="Transparent"/>
-                                </Trigger>
-                                <Trigger Property="IsFocused" Value="true">
-                                  <Setter Property = "BorderBrush" Value="Transparent"/>
-                                </Trigger>
-                              </Style.Triggers>
-                              <Setter Property="IsReadOnly" Value="True" />
-                              <Setter Property="IsReadOnlyCaretVisible" Value="True" />
-                              <Setter Property="Background" Value="Transparent" />
-                              <Setter Property="BorderBrush" Value="Transparent" />
-                              -->
                             <Setter Property="VerticalContentAlignment" Value="Center" />
                           </Style>
                           <Style x:Key="FilteringGrid" TargetType="Grid">
@@ -1582,7 +1463,6 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="0">表示時間</TextBlock>
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedComment.ElapsedTime, Mode=OneWay}"/>
-                        <!--<Button Grid.Row="0" Grid.Column="2">add filter</Button>-->
 
                         <TextBlock Grid.Row="1" Grid.Column="0">投稿時間</TextBlock>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedComment.Timestamp, Mode=OneWay, StringFormat={}{0:yyy/MM/dd HH:mm:ss}}"/>
@@ -1608,12 +1488,6 @@
                                 <Setter Property="CommandParameter" Value="{Binding}" />
                               </Style>
                             </mamc:DropDownButton.Resources>
-                            <!--<mamc:DropDownButton.ItemContainerStyle>
-                                <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
-                                  <Setter Property="Command" Value="{Binding }" />
-                                  <Setter Property="CommandParameter" Value="{Binding}" />
-                                </Style>
-                              </mamc:DropDownButton.ItemContainerStyle>-->
                             <mamc:DropDownButton.Content>
                               <ContentControl ContentTemplate="{StaticResource FilterIcon}" />
                             </mamc:DropDownButton.Content>
@@ -1758,8 +1632,6 @@
                 <TabItem VerticalContentAlignment="Stretch">
                   <TabItem.Header>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                      <!--<TextBlock>全ての動画</TextBlock>
-                    <ToggleButton Margin="4,0,0,0" FontSize="9" Content="使用" ToolTip="全体NG設定を有効にします" IsChecked="{Binding IsEnabledGlobalCommentFilering}" />-->
                       <TextBlock>全ての動画</TextBlock>
                       <CheckBox Margin="{StaticResource LeftMargin}" IsChecked="{Binding IsEnabledGlobalCommentFilering}">この動画で有効にする</CheckBox>
                     </StackPanel>
@@ -1877,7 +1749,6 @@
             <StackPanel Grid.Column="0">
               <Image Style="{StaticResource ThumbnailImage}" Source="{Binding ThumbnailImage}" />
 
-              <!--<TextBlock Text="{Binding UserName}" />-->
               <Grid>
                 <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" />
                 <Button Style="{StaticResource Hyperlink}" Width="{StaticResource ImageWidth}" Command="{Binding OpenUserOrChannelIdCommand}">
@@ -1919,7 +1790,6 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                  <!--<Image Source="/Resources/SearchType/Tag.png" Style="{StaticResource ItemImage}" />-->
                   <Viewbox DockPanel.Dock="Left" Style="{StaticResource SmallItemBox}">
                     <Canvas Style="{StaticResource IconCanvas-24x24}" >
                       <Path Data="{StaticResource Image_Tag}" Style="{StaticResource SmallDefaultIconPath}" />
@@ -1936,11 +1806,6 @@
                     <Style TargetType="Viewbox" BasedOn="{StaticResource MinimumIconBox}">
                       <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
-                    <!--<Style TargetType="Image">
-                      <Setter Property="VerticalAlignment" Value="Center" />
-                      <Setter Property="Width" Value="12" />
-                      <Setter Property="Height" Value="12" />
-                    </Style>-->
                   </ItemsControl.Resources>
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -1952,8 +1817,6 @@
                       <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Border x:Name="separator" Width="{StaticResource SeparatorWidth}" />
 
-                        <!--<TextBlock Visibility="{Binding IsCategory, Converter={StaticResource BooleanToVisibilityConverter}}" >[C]</TextBlock>-->
-                        <!--<Image Source="/Resources/Service/Smile/Video/Player/Lock.png" Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
                         <Viewbox Visibility="{Binding IsLocked, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource {x:Type Viewbox}}">
                           <Canvas Style="{StaticResource IconCanvas-24x24}" >
                             <Path Data="{StaticResource Image_Lock}" Style="{StaticResource MinimumDefaultIconPath}" />
@@ -1992,15 +1855,6 @@
                       DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
                     />
                   </i:Interaction.Behaviors>
-                  <!--<FlowDocumentScrollViewer.Resources>
-                    <Style TargetType="Run">
-                      <Setter Property="BaselineAlignment" Value="Center"/>
-                    </Style>
-                  </FlowDocumentScrollViewer.Resources>
-                  <FlowDocument
-                    FontSize="11.5"
-                    PagePadding="10, 2, 10, 0"
-                  />-->
                 </FlowDocumentScrollViewer>
               </Grid>
             </Grid>

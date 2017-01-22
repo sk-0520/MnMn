@@ -206,8 +206,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
         static AnimationTimeline CreateTopBottomCommentAnimeation(SmileVideoCommentViewModel commentViewModel, FrameworkElement element, Size commentArea, TimeSpan prevTime, TimeSpan showTime)
         {
             var animation = new DoubleAnimation();
-            //var starTime = commentViewModel.ElapsedTime.TotalMilliseconds - prevTime.TotalMilliseconds;
-            //var diffPosition = starTime / commentArea.Width;
 
             // アニメーションさせる必要ないけど停止や移動なんかを考えるとIFとしてアニメーションの方が楽
             animation.From = animation.To = 0;
@@ -281,11 +279,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
 
         public static void FireShowCommentsCore(Canvas commentParentElement, Size commentArea, TimeSpan prevTime, TimeSpan nowTime, IList<SmileVideoCommentViewModel> commentViewModelList, IList<SmileVideoCommentDataModel> showingCommentList, bool isEnabledDisplayCommentLimit, int displayCommentLimitCount, SmileVideoCommentStyleSettingModel setting)
         {
-            //var commentArea = new Size(
-            //   commentParentElement.ActualWidth,
-            //   commentParentElement.ActualHeight
-            //);
-
             var list = commentViewModelList.ToArray();
             // 現在時間から-1秒したものを表示対象とする
             var newComments = list
@@ -297,40 +290,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video
             if(newComments.Any()) {
                 foreach(var commentViewModel in newComments) {
                     FireShowSingleComment(commentViewModel, commentParentElement, commentArea, prevTime, showingCommentList, setting);
-                    //var element = CreateCommentElement(commentViewModel, commentArea, setting);
-
-                    //commentViewModel.NowShowing = true;
-
-                    //commentParentElement.Children.Add(element);
-                    //commentParentElement.UpdateLayout();
-
-                    //SetCommentPosition(commentViewModel, element, commentArea, showingCommentList, setting);
-
-                    //// アニメーション設定
-                    //var animation = CreateCommentAnimeation(commentViewModel, element, commentArea, prevTime - correctionTime, setting.Comment.ShowTime + correctionTime);
-
-                    //var data = new SmileVideoCommentDataModel(element, commentViewModel, animation);
-                    //showingCommentList.Add(data);
-
-                    //EventDisposer<EventHandler> ev = null;
-                    //data.Clock.Completed += EventUtility.Create<EventHandler>((object sender, EventArgs e) => {
-                    //    if(element != null) {
-                    //        commentParentElement.Children.Remove(element);
-                    //    }
-                    //    element = null;
-
-                    //    if(ev != null) {
-                    //        ev.Dispose();
-                    //    }
-                    //    ev = null;
-
-                    //    showingCommentList.Remove(data);
-                    //    data.ViewModel.NowShowing = false;
-
-                    //}, h => commentParentElement.Dispatcher.BeginInvoke(new Action(() => animation.Completed -= h)), out ev);
-
-                    //element.ApplyAnimationClock(Canvas.LeftProperty, data.Clock);
-                }
+               }
                 // 超過分のコメントを破棄
                 if(isEnabledDisplayCommentLimit && 0 < displayCommentLimitCount) {
                     var removeList = showingCommentList

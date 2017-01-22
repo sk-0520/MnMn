@@ -15,10 +15,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
-
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     </ResourceDictionary>
@@ -127,11 +123,7 @@
       </Grid>
     </ToolBar>
 
-    <!--<WebBrowser x:Name="browser" Grid.Row="1" Loaded="browser_Loaded" Navigating="browser_Navigating" Navigated="browser_Navigated" />-->
-
     <ContentControl x:Name="container" Grid.Row="1" />
-
-    <!--<WindowsFormsHost x:Name="browserHost" Grid.Row="2" />-->
 
   </Grid>
 </UserControl>

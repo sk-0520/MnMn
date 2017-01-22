@@ -100,11 +100,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             BookmarkUserMyListItems.Filter = BookmarkUserMyListFilter;
             HistoryUserMyListItems = CollectionViewSource.GetDefaultView(HistoryUserMyList);
 
-            //TagNamesPropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(SelectedBookmarkFinder_PropertyChanged);
             TagNamesPropertyChangedListener = new PropertyChangedWeakEventListener(SelectedBookmarkFinder_PropertyChanged);
-            //TagItemPropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(Item_PropertyChanged);
             TagItemPropertyChangedListener = new PropertyChangedWeakEventListener(Item_PropertyChanged);
-            //FinderLoadStatePropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(SelectedCurrentFinder_PropertyChanged);
             FinderLoadStatePropertyChangedListener = new PropertyChangedWeakEventListener(SelectedCurrentFinder_PropertyChanged);
 
             SetTagItems();
@@ -114,11 +111,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
 
         SmileMyListSettingModel MyListSetting { get; }
 
-        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> TagNamesPropertyChangedListener { get; }
         PropertyChangedWeakEventListener TagNamesPropertyChangedListener { get; }
-        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> TagItemPropertyChangedListener { get; }
         PropertyChangedWeakEventListener TagItemPropertyChangedListener { get; }
-        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> FinderLoadStatePropertyChangedListener { get; }
         PropertyChangedWeakEventListener FinderLoadStatePropertyChangedListener { get; }
 
         SmileVideoMyListModel MyList { get; }
@@ -276,14 +270,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var prev = SelectedBookmarkFinder;
                 if(SetVariableValue(ref this._selectedBookmarkFinder, value)) {
                     if(prev != null) {
-                        //prev.PropertyChanged -= SelectedBookmarkFinder_PropertyChanged;
-                        //PropertyChangedEventManager.RemoveListener(prev, TagNamesPropertyChangedListener, string.Empty);
                         TagNamesPropertyChangedListener.Remove(prev);
                     }
                     if(SelectedBookmarkFinder != null) {
-                        //SelectedBookmarkFinder.PropertyChanged += SelectedBookmarkFinder_PropertyChanged;
-                        //PropertyChangedEventManager.RemoveListener(SelectedBookmarkFinder, TagNamesPropertyChangedListener, string.Empty);
-                        //PropertyChangedEventManager.AddListener(SelectedBookmarkFinder, TagNamesPropertyChangedListener, string.Empty);
                         TagNamesPropertyChangedListener.Remove(SelectedBookmarkFinder);
                         TagNamesPropertyChangedListener.Add(SelectedBookmarkFinder);
                     }
@@ -320,13 +309,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var prev = SelectedCurrentFinder;
                 if(SetVariableValue(ref this._selectedCurrentFinder, value)) {
                     if(prev != null) {
-                        //prev.PropertyChanged -= SelectedCurrentFinder_PropertyChanged;
-                        //PropertyChangedEventManager.RemoveListener(prev, FinderLoadStatePropertyChangedListener, string.Empty);
                         FinderLoadStatePropertyChangedListener.Remove(prev);
                     }
                     if(SelectedCurrentFinder != null) {
-                        //SelectedCurrentFinder.PropertyChanged += SelectedCurrentFinder_PropertyChanged;
-                        //PropertyChangedEventManager.AddListener(SelectedCurrentFinder, FinderLoadStatePropertyChangedListener, string.Empty);
                         FinderLoadStatePropertyChangedListener.Add(SelectedCurrentFinder);
                     }
                 }
@@ -470,7 +455,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                                 return task.Result;
                             }).ContinueWith(task => {
                                 if(task.Result.IsSuccess) {
-                                    //public Task LoadAsync(CacheSpan thumbCacheSpan, CacheSpan imageCacheSpan, object extends)
                                     finder.IgnoreCache = true;
                                     return finder.LoadDefaultCacheAsync().ContinueWith(t => {
                                         finder.IgnoreCache = false;
@@ -510,7 +494,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                         mylist.SearchPage(page.ViewModel.Query, page.ViewModel.PageNumber).ContinueWith(task => {
                             page.ViewModel.Items.InitializeRange(task.Result);
                             SelectedPage = page;
-                            //SearchUserMyList.InitializeRange(page.ViewModel.Items);
                         }, TaskScheduler.FromCurrentSynchronizationContext());
                     }
                 );
@@ -847,9 +830,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             CheckUtility.DebugEnforceNotNull(finder);
 
-            // TODO 情報読み込み待ち
-            //finder.FinderLoadState == SourceLoadState.None || SourceLoadState.SourceLoading || SourceLoadState.SourceChecking
-
             var model = new SmileMyListBookmarkItemModel() {
                 MyListId = finder.MyListId,
                 MyListName = finder.MyListName,
@@ -929,8 +909,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
         {
             var prevItems = BookmarkTagItems.ToArray();
             foreach(var item in prevItems) {
-                //item.PropertyChanged -= Item_PropertyChanged;
-                //PropertyChangedEventManager.RemoveListener(item, TagItemPropertyChangedListener, string.Empty);
                 TagItemPropertyChangedListener.Remove(item);
             }
 
@@ -951,8 +929,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                     item.IsChecked = prev.IsChecked;
                 }
 
-                //item.PropertyChanged += Item_PropertyChanged;
-                //PropertyChangedEventManager.AddListener(item, TagItemPropertyChangedListener, string.Empty);
                 TagItemPropertyChangedListener.Add(item);
             }
             BookmarkTagItems.InitializeRange(tagNames);
@@ -973,7 +949,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
             var vm = (SmileVideoBookmarkMyListFinderViewModel)obj;
             var myTags = vm.TagNameItems.ToArray();
             var show = targetTags.All(t => myTags.Any(s => s == t.TagName));
-            //Mediation.Logger.Information($"{show}");
 
             return show;
         }
@@ -1069,14 +1044,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.My
                 var finder = sender as SmileVideoMyListFinderViewModelBase;
                 if(finder != null) {
                     if(finder.FinderLoadState == SourceLoadState.Completed) {
-                        //finder.PropertyChanged -= SelectedCurrentFinder_PropertyChanged;
-                        //PropertyChangedEventManager.RemoveListener(finder, FinderLoadStatePropertyChangedListener, string.Empty);
                         FinderLoadStatePropertyChangedListener.Remove(finder);
                     }
                 }
             }
         }
-
-
     }
 }

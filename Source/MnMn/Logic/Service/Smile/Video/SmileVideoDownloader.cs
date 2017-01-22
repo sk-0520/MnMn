@@ -59,29 +59,20 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
-                //var t = UserAgent.GetStringAsync(ReferrerUri);
-                //t.Wait();
-                //PageHtml = t.Result;
-                // 新形式は不要だと思うけど他との互換性のため残しとく
+                // DMC形式は不要だと思うけど他との互換性のため残しとく
                 var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
-                //task.Wait();
                 PageHtml = task;
 
                 //cancel = false;
                 UserAgent.DefaultRequestHeaders.Referrer = ReferrerUri;
                 IfUsingSetRangeHeader();
-                //UserAgent.GetStringAsync(ReferrerUri);
-                //return UserAgent.GetStreamAsync(DownloadUri);
                 var getTask = await UserAgent.GetAsync(DownloadUri, HttpCompletionOption.ResponseHeadersRead);
-                //getTask.Wait();
                 var response = getTask;
 
                 ResponseHeaders = response.Content.Headers;
                 return await response.Content.ReadAsStreamAsync();
             } catch(Exception ex) {
                 Debug.WriteLine(ex);
-                //cancel = true;
-                //return new Task<Stream>(() => null);
                 return null;
             }
         }

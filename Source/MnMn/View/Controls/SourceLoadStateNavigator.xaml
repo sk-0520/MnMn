@@ -11,9 +11,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/SourceLoadStateDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <app_view_converter:EnumDisplayConverter x:Key="EnumDisplayConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
@@ -27,9 +24,6 @@
               <SolidColorBrush Color="{StaticResource SourceLoadState_None}" />
             </Setter.Value>
           </Setter>
-
-          <!--<Setter Property="RadiusX" Value="5" />
-          <Setter Property="RadiusY" Value="5" />-->
 
           <Style.Triggers>
             <DataTrigger Binding="{Binding SourceLoadState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="None">

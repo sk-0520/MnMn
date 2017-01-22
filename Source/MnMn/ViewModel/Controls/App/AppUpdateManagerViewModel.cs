@@ -233,9 +233,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
             }
 
             return Task.CompletedTask;
-            //} else {
-            //    return SetUpdateStateViewAsync();
-            //}
         }
 
         Task SetUpdateStateViewAsync()
@@ -305,20 +302,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App
                 { "script",          Path.Combine(Constants.ApplicationEtcDirectoryPath, Constants.ScriptDirectoryName, "Updater", "UpdaterScript.cs") },
                 { "uri",             ArchiveUri.OriginalString },
             };
-            //FileUtility.MakeFileParentDirectory(archiveDirPath);
-            //if(!Directory.Exists(archiveDirPath)) {
-            //    Directory.CreateDirectory(archiveDirPath);
-            //}
+
             // #158
             FileUtility.RotateFiles(archiveDir.FullName, Constants.ArchiveSearchPattern, ContentTypeTextNet.Library.SharedLibrary.Define.OrderBy.Descending, Constants.BackupArchiveCount, e => {
                 Mediation.Logger.Warning(e);
                 return true;
             });
 
-            //var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
             var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
             var process = CreateProcess(map);
-            //this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
             Mediation.Logger.Information("update exec", process.StartInfo.Arguments);
 
             process.Start();

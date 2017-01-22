@@ -81,12 +81,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
 
         protected virtual bool FilterItems(object obj)
         {
-            //var isHitFinder = IsShowFilteringItem(obj);
-            //
-            //if(IsEnabledFinderFiltering && !isHitFinder) {
-            //    return false;
-            //}
-
             var filter = InputTitleFilter;
             if(string.IsNullOrEmpty(filter)) {
                 return true;
@@ -121,11 +115,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live
             var loader = new SmileLiveInformationLoader(informationItems);
             return loader.LoadThumbnaiImageAsync(imageCacheSpan);
         }
-
-        //protected override Task LoadCoreAsync(CacheSpan informationCacheSpan, CacheSpan imageCacheSpan, object extends)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         protected override SmileLiveFinderItemViewModel CreateFinderItem(SmileLiveInformationViewModel information, int number)
         {

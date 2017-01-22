@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>ヘルプ</title>
+	<link rel="shortcut icon" href="../image/favicon.ico" type="image/vnd.microsoft.icon" />
+	<style>
+		@import url('../../../etc/style/common.css');
+		@import url('../style/help.css');
+	</style>
+	<script src="../../../etc/script/jquery.js"></script>
+	<script src="../../../etc/script/changelog.js"></script>
+	<script src="../script/help.js"></script>
+</head>
+<body>
+	<h1>ヘルプ</h1>
+	<section id="content">
+		<h2>普通のインストール</h2>
+		<p>
+			内臓ブラウザで Flash 配信コンテンツを視聴するにはプラグインが必要です。
+		</p>
+		<p>
+			Flash Player は ActiveX ではなく <strong>Firefox 用の NPAPI 形式</strong>が必要です。
+			Firefox を使用しており Firefox 用の Flash Player をインストール済みであれば基本的にそのまま使用可能です。
+		</p>
+
+		<h3>インストール方法</h3>
+		<p>
+			<a href="https://get.adobe.com/jp/flashplayer/otherversions/">Adobe Flash Player インストール (すべてのバージョン)</a>
+		</p>
+		<ol>
+			<li><em class="ui">手順1</em>: 該当するOSを選択。</li>
+			<li><em class="ui">手順2</em>: <dfn>FP ** for Firefox - NPAPI</dfn>を選択。</li>
+			<li><em class="ui">提供オプション</em>: お好きに。</li>
+			<li><em class="ui">今すぐダウンロード</em></li>
+		</ol>
+
+		<h2>あれなインストール</h2>
+		<p>
+			システムにインストールせず <span class="word">app</span> のみで Flash Player を有効にするには<em class="dir">&lt;MnMn&gt;\lib\Firefox\plugins</em>に<em class="file">FlashPlayerPlugin_*.exe</em>と<em class="file">NPSWF32_*.dll</em>を配置して<dfn>plugin.scan.plid.all</dfn>を有効にすればいいよ。<br />
+			<span class="word">app</span>の再起動よろぴく。
+		</p>
+
+	</section>
+	<nav id="main-menu">
+		<noscript>
+			<p>
+				本ヘルプファイルの表示には JavaScript を有効にしてください。
+			</p>
+		</noscript>
+	</nav>
+</body>
+</html>

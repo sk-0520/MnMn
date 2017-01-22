@@ -55,11 +55,19 @@ var menuList = [
 		}
 	},
 	{
-		name: 'smile',
+		name: '*smile',
 		localize: true,
 		level: 0,
 		title: {
 			'ja-jp': 'ニコニコ動画'
+		}
+	},
+	{
+		name: 'smile-setting',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': '設定'
 		}
 	},
 	{
@@ -148,6 +156,14 @@ var menuList = [
 		level: 1,
 		title: {
 			'ja-jp': 'β版'
+		}
+	},
+	{
+		name: 'others-flash',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'Flash Player について'
 		}
 	},
 	{

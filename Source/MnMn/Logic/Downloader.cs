@@ -194,12 +194,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         public virtual Task StartAsync()
         {
-            //bool isCancel;
             return GetStreamAsync().ContinueWith(task => {
-                //if(isCancel) {
-                //    Cancled = true;
-                //    return;
-                //}
                 if(task.Result == null) {
                     Canceled = true;
                     return;

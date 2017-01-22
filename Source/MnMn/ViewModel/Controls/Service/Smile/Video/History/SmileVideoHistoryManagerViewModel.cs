@@ -47,7 +47,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
 
         #region property
 
-        //LoadPageHtmlDocument
         public SmileVideoAccountHistoryFinderViewModel AccountHistory { get; }
         public SmileVideoApplicationHistoryFinderViewModel ApplicationHistory { get; }
 
@@ -59,20 +58,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Hi
         #region function
 
         public CollectionModel<SmileVideoFinderViewModelBase> ItemsList { get; }
-
-        //public SmileVideoFinderViewModelBase SelectedItem
-        //{
-        //    get { return this._selectedItem; }
-        //    set
-        //    {
-        //        var prevItem = this._selectedItem;
-        //        if(SetVariableValue(ref this._selectedItem, value)) {
-        //            if(prevItem != null && this._selectedItem.FinderLoadState == SourceLoadState.None) {
-        //                this._selectedItem.LoadDefaultCacheAsync();
-        //            }
-        //        }
-        //    }
-        //}
 
         #endregion
 

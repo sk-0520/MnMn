@@ -30,21 +30,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
     {
         #region variable
 
-        //FilteringType _editingType;
-        //SmileVideoFinderFilteringTarget _editingTarget;
-        //string _editingSource;
-        //bool _editingIgnoreCase;
-
         #endregion
 
         public SmileVideoFinderFilteringItemEditViewModel(SmileVideoFinderFilteringItemSettingModel model)
             : base(model)
-        {
-            //EditingType = model.Type;
-            //EditingTarget = model.Target;
-            //EditingSource = model.Source;
-            //EditingIgnoreCase = model.IgnoreCase;
-        }
+        { }
 
         #region property
 
@@ -80,49 +70,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Setting
             set { SetModelValue(value); }
         }
 
-        //public FilteringType EditingType
-        //{
-        //    get { return this._editingType; }
-        //    set { SetVariableValue(ref this._editingType, value); }
-        //}
-        //public SmileVideoFinderFilteringTarget EditingTarget
-        //{
-        //    get { return this._editingTarget; }
-        //    set { SetVariableValue(ref this._editingTarget, value); }
-        //}
-        //public string EditingSource
-        //{
-        //    get { return this._editingSource; }
-        //    set { SetVariableValue(ref this._editingSource, value); }
-        //}
-        //public bool EditingIgnoreCase
-        //{
-        //    get { return this._editingIgnoreCase; }
-        //    set { SetVariableValue(ref this._editingIgnoreCase, value); }
-        //}
-
         #endregion
 
         #region function
 
-        //internal void Update()
-        //{
-        //    Type = EditingType;
-        //    Target = EditingTarget;
-        //    Source = EditingSource;
-        //    IgnoreCase = EditingIgnoreCase;
-
-        //    ResetChangeFlag();
-        //}
-
-        //internal void Reset()
-        //{
-        //    EditingIgnoreCase = IgnoreCase;
-        //    EditingSource = Source;
-        //    EditingTarget = Target;
-        //    Type = Type;
-        //    ResetChangeFlag();
-        //}
 
         #endregion
     }

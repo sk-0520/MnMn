@@ -53,12 +53,6 @@ namespace ContentTypeTextNet.MnMn.MnMn
         App()
         {
             SplashWindow = new SplashWindow();
-
-            //var t = new DispatcherTimer() {
-            //    Interval = TimeSpan.FromSeconds(10),
-            //};
-            //t.Tick += (sender, e) => { throw new Exception("dmy"); };
-            //t.Start();
         }
 
         #region property
@@ -247,18 +241,11 @@ namespace ContentTypeTextNet.MnMn.MnMn
             DoDebug();
 #endif
 
-            //var dir = VariableConstants.GetSettingDirectory();
-            //var filePath = Path.Combine(dir.FullName, Constants.SettingFileName);
-            //var setting = SerializeUtility.LoadSetting<AppSettingModel>(filePath, SerializeFileType.Json, logger);
             var settingResult = LoadSetting(logger);
             var setting = settingResult.Result;
             SetLanguage(setting.CultureName);
 
             Mediation = new Mediation(setting, logger);
-
-            //var ieVersion = SystemEnvironmentUtility.GetInternetExplorerVersion();
-            //logger.Information("IE version: " + ieVersion);
-            //SystemEnvironmentUtility.SetUsingBrowserVersionForExecutingAssembly(ieVersion);
 
             AppManager = new AppManagerViewModel(Mediation, logger);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

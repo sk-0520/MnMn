@@ -201,7 +201,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     o => {
                         UserOperationStop.Value = true;
                         StopMovie(true);
-                        //UserOperationStop = false;
                     }
                 );
             }
@@ -606,6 +605,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SwitchPlayerShowCommentAreaCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    PlayerShowCommentArea = !PlayerShowCommentArea;
+                });
+            }
+        }
+
+        public ICommand SwicthPlayerShowDetailAreaCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    PlayerShowDetailArea = !PlayerShowDetailArea;
+                });
+            }
+        }
+
         #endregion
 
         #region function
@@ -813,13 +832,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(!IsSettedMedia && !IsViewClosed) {
                 Mediation.Logger.Debug($"{VideoId}: {nameof(Player.RebuildPlayer)}");
 
-                //Player.RebuildPlayer();
-
-                //Player.Dispatcher.Invoke(() => {
                 Mediation.Logger.Debug($"{VideoId}: set media {PlayFile.FullName}");
                 Player.LoadMedia(PlayFile.FullName);
 
-                //});
                 IsSettedMedia = true;
             }
         }
@@ -877,13 +892,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(IsSettedMedia && !IsViewClosed) {
                 Player.Stop();
             }
-            //Player.BeginStop(() => {
-            //    Mediation.Logger.Debug("stoped");
-            //    PlayerState = PlayerState.Stop;
-            //    VideoPosition = 0;
-            //    ClearComment();
-            //    PrevPlayedTime = TimeSpan.Zero;
-            //});
+
             Mediation.Logger.Debug("stoped");
             PlayerState = PlayerState.Stop;
             VideoPosition = 0;
@@ -941,8 +950,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void FireShowComments()
         {
-            //Mediation.Logger.Trace($"{VideoId}: {PrevPlayedTime} - {PlayTime}, {Player.ActualWidth}x{Player.ActualHeight}");
-
             SmileVideoCommentUtility.FireShowCommentsCore(NormalCommentArea, GetCommentArea(false), PrevPlayedTime, PlayTime, NormalCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
             SmileVideoCommentUtility.FireShowCommentsCore(OriginalPosterCommentArea, GetCommentArea(true), PrevPlayedTime, PlayTime, OriginalPosterCommentList, ShowingCommentList, IsEnabledDisplayCommentLimit, DisplayCommentLimitCount, CommentStyleSetting);
         }
@@ -1041,58 +1048,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        //        void MakeDescription()
-        //        {
-        //            //var a = true; if(a) return;
-
-        //            IsMadeDescription = true;
-
-        //            //var flowDocumentSource = SmileDescriptionUtility.ConvertFlowDocumentFromHtml(Mediation, Information.DescriptionHtmlSource);
-        //            var description = new SmileDescription(Mediation);
-        //            var flowDocumentSource = description.ConvertFlowDocumentFromHtml(Information.DescriptionHtmlSource);
-        //#if false
-        //#if DEBUG
-        //            var h = Path.Combine(Information.CacheDirectory.FullName, $"description.html");
-        //            using(var s = File.CreateText(h)) {
-        //                s.Write(Information.DescriptionHtmlSource);
-        //            }
-        //            foreach(var ext in new[] { "xml", "xaml" }) {
-        //                var x = Path.Combine(Information.CacheDirectory.FullName, $"description.{ext}");
-        //                using(var s = File.CreateText(x)) {
-        //                    s.Write(flowDocumentSource);
-        //                }
-        //            }
-        //#endif
-        //#endif
-        //            DocumentDescription.Dispatcher.Invoke(() => {
-        //                var document = DocumentDescription.Document;
-
-        //                document.Blocks.Clear();
-
-        //                using(var stringReader = new StringReader(flowDocumentSource))
-        //                using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
-        //                    try {
-        //                        var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
-        //                        document.Blocks.AddRange(flowDocument.Blocks.ToArray());
-        //                    } catch(XamlParseException ex) {
-        //                        Mediation.Logger.Error(ex);
-        //                        var error = new Paragraph();
-        //                        error.Inlines.Add(ex.ToString());
-
-        //                        var raw = new Paragraph();
-        //                        raw.Inlines.Add(flowDocumentSource);
-
-        //                        document.Blocks.Add(error);
-        //                        document.Blocks.Add(raw);
-        //                    }
-        //                }
-
-        //                document.FontSize = DocumentDescription.FontSize;
-        //                document.FontFamily = DocumentDescription.FontFamily;
-        //                document.FontStretch = DocumentDescription.FontStretch;
-        //            });
-        //        }
-
         void AddBookmark(SmileVideoBookmarkNodeViewModel bookmarkNode)
         {
             var videoItem = Information.ToVideoItemModel();
@@ -1111,14 +1066,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         Task<SmileJsonResultModel> AddAccountDefaultMyListAsync(SmileVideoAccountMyListDefaultFinderViewModel defaultMyListFinder)
         {
-            //var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountDefaultMyListFromVideo(VideoId, Information.PageVideoToken);
         }
 
         Task<SmileJsonResultModel> AddAccountMyListAsync(SmileVideoMyListFinderViewModelBase myListFinder)
         {
-            //var session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
             var myList = new Logic.Service.Smile.Api.V1.MyList(Mediation);
             return myList.AdditionAccountMyListFromVideo(myListFinder.MyListId, Information.ThreadId, Information.PageVideoToken);
         }
@@ -1135,11 +1088,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void OpenUserId(string userId)
         {
-            //    var parameter = new SmileOpenUserIdParameterModel() {
-            //        UserId = userId,
-            //    };
-
-            //    Mediation.Request(new ShowViewRequestModel(RequestKind.ShowView, ServiceType.Smile, parameter, ShowViewState.Foreground));
             SmileDescriptionUtility.OpenUserId(userId, Mediation);
         }
 
@@ -1520,7 +1468,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         protected SmileVideoCommentViewModel CreateSingleComment(RawSmileVideoMsgChatResultModel msgChat, TimeSpan videoPosition)
         {
             var commentModel = new RawSmileVideoMsgChatModel() {
-                //Anonymity = SmileVideoCommentUtility.GetIsAnonymous(PostCommandItems)
                 Mail = string.Join(" ", PostCommandItems),
                 Content = PostCommentBody,
                 Date = RawValueUtility.ConvertRawUnixTime(DateTime.Now).ToString(),
@@ -1623,15 +1570,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void AttachmentNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown += VideoSilder_PreviewMouseDown;
-            //navigationbar.seekbar.MouseEnter += Seekbar_MouseEnter;
-            //navigationbar.seekbar.MouseLeave += Seekbar_MouseLeave;
         }
 
         void DetachmentNavigationbarBaseEvent(Navigationbar navigationbar)
         {
             navigationbar.seekbar.PreviewMouseDown -= VideoSilder_PreviewMouseDown;
-            //navigationbar.seekbar.MouseEnter -= Seekbar_MouseEnter;
-            //navigationbar.seekbar.MouseLeave -= Seekbar_MouseLeave;
         }
 
         void SwitchFullScreen()
@@ -1650,22 +1593,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             var hWnd = HandleUtility.GetWindowHandle(View);
             if(toNormalWindow) {
-                //ResizeBorderThickness = enabledResizeBorderThickness;
-                ////重複
-                //if(State == WindowState.Maximized) {
-                //    WindowBorderThickness = maximumWindowBorderThickness;
-                //    State = WindowState.Normal;
-                //} else {
-                //    WindowBorderThickness = normalWindowBorderThickness;
-                //}
-
                 View.Deactivated -= View_Deactivated;
 
-                //var logicalViewArea = new Rect(Left, Top, Width, Height);
-                //var deviceViewArea = UIUtility.ToLogicalPixel(View, logicalViewArea);
-                //var podRect = PodStructUtility.Convert(deviceViewArea);
-                //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
-                //View.WindowState = WindowState.Normal;
                 State = WindowState.Normal;
 
                 View.UseNoneWindowStyle = false;
@@ -1674,22 +1603,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 ResetFocus();
             } else {
-                //ResizeBorderThickness = new Thickness(0);
-                //WindowBorderThickness = new Thickness(0);
-
-                //var podRect = PodStructUtility.Convert(Screen.PrimaryScreen.DeviceBounds);
-                //NativeMethods.MoveWindow(hWnd, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
-
-                //View.ShowMaxRestoreButton = false;
-                //View.ShowMinButton = false;
-                //View.ShowCloseButton = false;
-                ////View.WindowStyle = WindowStyle.None;
-                //View.IgnoreTaskbarOnMaximize = true;
-                //View.ResizeMode = ResizeMode.NoResize;
-                //View.IgnoreTaskbarOnMaximize = true;
-                //View.WindowState = WindowState.Maximized;
-                //State = WindowState.Maximized;
-
                 View.IgnoreTaskbarOnMaximize = true;
                 State = WindowState.Maximized;
                 View.UseNoneWindowStyle = true;
@@ -1699,8 +1612,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                     ResetFocus();
                 }), DispatcherPriority.SystemIdle);
             }
-
-            //CallOnPropertyChange(nameof(IsNormalWindow));
         }
 
         void ResetFocus()
@@ -1802,7 +1713,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void SeekHead()
         {
             if(Player != null && Player.IsSeekable) {
-                //ChangeSeekVideoPosition(true, true, 0);
                 ClearComment();
                 Player.Position = 0;
 
@@ -1868,8 +1778,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         void ResumeBufferingStop()
         {
-            //IsBufferingStop = false;
-
             if(!UserOperationStop.Value && !IsViewClosed) {
                 PrevPlayedTime = BufferingVideoTime;
                 Player.Stop();
@@ -1884,8 +1792,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 // ダウンロードが完了していない
                 Mediation.Logger.Debug("buffering stop");
 
-                //IsBufferingStop = true;
-
                 SafeShowTime = Player.Time;
                 SafeDownloadedSize = VideoLoadedSize;
 
@@ -1895,18 +1801,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
                 return;
             }
-
-            //if(IsBufferingStop) {
-            //    // ダウンロードが完了していないので待ち状態に移行
-            //    //Mediation.Logger.Debug("buffering wait");
-            //    //PlayerState = PlayerState.Pause;
-            //    //Player.Position = BufferingVideoTime;
-            //    //foreach(var data in ShowingCommentList) {
-            //    //    data.Clock.Controller.Pause();
-            //    //}
-            //    Debug.Assert(false);
-            //    return;
-            //}
 
             if(CanPlayNextVieo.Value && PlayListItems.Skip(1).Any()) {
                 // 次のプレイリストへ遷移
@@ -1918,13 +1812,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(ReplayVideo) {
                 // リプレイ
                 Mediation.Logger.Debug("replay");
-                //Player.BeginStop(() => {
-                //    Player.Dispatcher.Invoke(() => {
-                //        Player.Play();
-                //    });
-                //});
-                //Player.Stop();
-                //Player.Play();
                 StopMovie(true);
                 PlayMovie();
 
@@ -1972,10 +1859,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             // TODO:forceEconomyは今のところ無効
 
-            //foreach(var item in PlayListItems.Where(i => i != videoInformation)) {
-            //    item.IsPlaying = false;
-            //}
-
             if(PlayListItems.All(i => i != videoInformation)) {
                 // プレイリストに存在しない動画は追加する
                 PlayListItems.Add(videoInformation);
@@ -2004,24 +1887,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override void OnDownloadStart(object sender, DownloadStartEventArgs e)
         {
-            //if(!IsMadeDescription) {
-            //    MakeDescription();
-            //}
             if(!IsCheckedTagPedia) {
                 CheckTagPedia();
             }
 
             base.OnDownloadStart(sender, e);
-
-            // スレッドIDですらなかった
-            //Information.LoadGetthreadkeyAsync().ContinueWith(t => {
-            //    try {
-            //        var id = Information.ThreadId;
-            //        SetCheckedCheckItLater(id);
-            //    } catch(InvalidOperationException ex) {
-            //        Mediation.Logger.Error(ex);
-            //    }
-            //});
         }
 
         protected override void OnDownloading(object sender, DownloadingEventArgs e)
@@ -2047,9 +1917,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             e.Cancel |= IsViewClosed || (DownloadCancel != null && DownloadCancel.IsCancellationRequested);
             if(e.Cancel) {
-                //if(UsingDmc.Value) {
-                //    StopDmcDownloadAsync();
-                //}
                 StopMovie(true);
 
                 Information.IsDownloading = false;
@@ -2062,7 +1929,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         void ResetSwf()
         {
             PlayFile.Refresh();
-            //VideoLoadedSize = VideoTotalSize = PlayFile.Length;
         }
 
         protected override void OnLoadVideoEnd()
@@ -2073,9 +1939,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
             if(DownloadCancel == null || !DownloadCancel.IsCancellationRequested) {
                 if(Information.PageHtmlLoadState == LoadState.Loaded) {
-                    //if(!IsMadeDescription) {
-                    //    MakeDescription();
-                    //}
                     if(!IsCheckedTagPedia) {
                         CheckTagPedia();
                     }
@@ -2181,9 +2044,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             VideoPosition = 0;
             PrevPlayedTime = TimeSpan.Zero;
             _prevStateChangedPosition = initPrevStateChangedPosition;
-            //IsBufferingStop = false;
             UserOperationStop.Value = false;
-            //IsMadeDescription = false;
             IsCheckedTagPedia = false;
             ChangingVideoPosition = false;
             MovingSeekbarThumb = false;
@@ -2218,22 +2079,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
 
         protected override Task StopPrevProcessAsync()
         {
-            //var processTask = base.StopPrevProcessAsync();
-            //var playerTask = Task.CompletedTask;
             if(Player != null) {
                 if(Player.State != Meta.Vlc.Interop.Media.MediaState.Stopped) {
-                    //playerTask = Task.Run(() => {
-                    //var sleepTime = TimeSpan.FromMilliseconds(500);
-                    //Thread.Sleep(sleepTime);
                     StopMovie(true);
-                    //InitializeStatus();
-                    //});
                 }
-                //Mediation.Logger.Debug($"{nameof(Player.RebuildPlayer)}");
-                //Player.RebuildPlayer();
             }
 
-            //return Task.WhenAll(processTask, playerTask);
             return base.StopPrevProcessAsync();
         }
 
@@ -2253,7 +2104,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             Navigationbar = View.seekbar;
             CommentView = View.commentView;
             DetailComment = View.detailComment;
-            //DocumentDescription = View.documentDescription;
 
             // 初期設定
             Player.Volume = Volume;
@@ -2286,26 +2136,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         public WindowState State
         {
             get { return this._state; }
-            //set
-            //{
-            //    if(SetVariableValue(ref this._state, value)) {
-            //        if(State == WindowState.Maximized) {
-            //            WindowBorderThickness = maximumWindowBorderThickness;
-            //        } else {
-            //            //if(!IsNormalWindow) {
-            //            //    SetWindowMode(false);
-            //            //}
-            //            WindowBorderThickness = normalWindowBorderThickness;
-            //        }
-            //    }
-            //}
             set { SetVariableValue(ref this._state, value); }
         }
-
-        //public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
-        //public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
-        //public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
-        //public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
 
         #endregion
 
@@ -2414,9 +2246,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
         {
             View.Loaded -= View_LoadedAutoPlay;
 
-            //Mediation.Logger.Trace($"{nameof(View.IsLoaded)}:{View.IsLoaded}");
-            //Mediation.Logger.Trace($"{nameof(View.IsVisible)}:{View.IsVisible}");
-
             SetMediaAndPlay();
         }
 
@@ -2428,7 +2257,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             IsViewClosed = true;
 
             if(Player.State == Meta.Vlc.Interop.Media.MediaState.Playing) {
-                //Player.BeginStop();
                 if(UsingDmc.Value) {
                     if(DownloadCancel != null) {
                         Mediation.Logger.Trace($"{VideoId}: download cancel! from dmc");
@@ -2519,15 +2347,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             seekbar.PreviewMouseUp -= VideoSilder_PreviewMouseUp;
             seekbar.MouseMove -= Seekbar_MouseMove;
 
-
-            //#82: これなんの処理だ、わからん
-            //float nextPosition;
-            //if(!MovingSeekbarThumb) {
-            //    var pos = e.GetPosition(seekbar);
-            //    nextPosition = (float)(pos.X / seekbar.ActualWidth);
-            //} else {
-            //    nextPosition = (float)((Navigationbar)seekbar.Parent).VideoPosition;
-            //}
             var pos = e.GetPosition(seekbar);
             var nextPosition = (float)(pos.X / seekbar.ActualWidth);
             // TODO: 読み込んでない部分は移動不可にする
@@ -2550,9 +2369,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             if(e.Value == Meta.Vlc.Interop.Media.MediaState.Opening) {
                 return;
             }
-            //if(PlayerState != PlayerState.Pause && this._prevStateChangedPosition == VideoPosition && this._prevStateChangedPosition != initPrevStateChangedPosition) {
-            //    return;
-            //}
             this._prevStateChangedPosition = VideoPosition;
 
             Mediation.Logger.Debug($"{VideoId}: {e.Value}, pos: {VideoPosition}, time: {PlayTime} / {Player.Length}");
@@ -2603,16 +2419,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
-        //private void EnabledCommentPopup_Opened(object sender, EventArgs e)
-        //{
-        //    ShowEnabledCommentPreviewArea = true;
-        //}
-
-        //private void EnabledCommentPopup_Closed(object sender, EventArgs e)
-        //{
-        //    ShowEnabledCommentPreviewArea = false;
-        //}
-
         private void EnabledCommentControl_MouseEnter(object sender, MouseEventArgs e)
         {
             ShowEnabledCommentPreviewArea = true;
@@ -2648,19 +2454,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
                 ResetFocus();
             }
         }
-
-        //private void Seekbar_MouseEnter(object sender, MouseEventArgs e)
-        //{
-        //    //ShowCommentChart = CommentChartList.Any(c => 0 < c.Y)
-        //    //    ? Visibility.Visible
-        //    //    : Visibility.Collapsed
-        //    //;
-        //}
-
-        //private void Seekbar_MouseLeave(object sender, MouseEventArgs e)
-        //{
-        //    //ShowCommentChart = Visibility.Collapsed;
-        //}
 
         void Player_MouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -71,8 +71,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         double _width;
         double _height;
         bool _topmost;
-        //Thickness _resizeBorderThickness = enabledResizeBorderThickness;
-        //Thickness _windowBorderThickness = normalWindowBorderThickness;
         bool _isNormalWindow = true;
 
         string _descriptionHtmlSource;
@@ -86,15 +84,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             Setting = Mediation.GetResultFromRequest<SmileLiveSettingModel>(new RequestModel(RequestKind.Setting, ServiceType.SmileLive));
             Session = Mediation.GetResultFromRequest<SmileSessionViewModel>(new RequestModel(RequestKind.Session, ServiceType.Smile));
 
-            //PropertyChangedListener = new WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs>(ShowWebPlayer_PropertyChanged);
-            //PropertyChangedEventManager.AddListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
             PropertyChangedListener = new PropertyChangedWeakEventListener(ShowWebPlayer_PropertyChanged);
             PropertyChangedListener.Add(ShowWebPlayer);
-            //ShowWebPlayer.PropertyChanged += ShowWebPlayer_PropertyChanged;
 
             ImportSetting();
         }
-
 
         #region proeprty
 
@@ -103,7 +97,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public SmileSessionViewModel Session { get; }
         SmileLiveSettingModel Setting { get; }
 
-        //WeakEventListener<PropertyChangedEventManager, PropertyChangedEventArgs> PropertyChangedListener { get; }
         PropertyChangedWeakEventListener PropertyChangedListener { get; }
 
         public FewViewModel<bool> IsWorkingPlayer { get; } = new FewViewModel<bool>(false);
@@ -120,20 +113,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         public FewViewModel<bool> PlayerShowDetailArea { get; } = new FewViewModel<bool>();
 
         public FewViewModel<LoadState> PlayerLoadState { get; } = new FewViewModel<LoadState>();
-        ///// <summary>
-        ///// 動画紹介文書表示要素。
-        ///// </summary>
-        //FlowDocumentScrollViewer DocumentDescription { get; set; }
 
         /// <summary>
         /// ビューが閉じられたか。
         /// </summary>
         bool IsViewClosed { get; set; }
-
-        ///// <summary>
-        ///// 投降者コメントが構築されたか。
-        ///// </summary>
-        //bool IsMadeDescription { get; set; } = false;
 
         public bool IsNormalWindow
         {
@@ -290,7 +274,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                 NavigatorPlayer.Navigate(Information.WatchUrl);
                 PlayerLoadState.Value = LoadState.Loading;
             })).Task;
-            //NavigatorPlayer.Navigate(new Uri(Constants.SmileLivePlayerContainerPath));
         }
 
         internal Task LoadAsync(SmileLiveInformationViewModel information, bool forceEconomy, CacheSpan informationCacheSpan, CacheSpan imageCacheSpan)
@@ -312,7 +295,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
                     var htmlSource = response.Result;
 
                     DescriptionHtmlSource = GetDescription(htmlSource);
-                    //MakeDescription(descriptionHtml);
                 }
 
                 return LoadWatchPageAsync();
@@ -408,42 +390,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
             return baseElement.InnerHtml;
         }
 
-        //void MakeDescription(string htmlSource)
-        //{
-        //    IsMadeDescription = true;
-
-        //    var description = new SmileDescription(Mediation);
-        //    var flowDocumentSource = description.ConvertFlowDocumentFromHtml(htmlSource);
-
-        //    DocumentDescription.Dispatcher.Invoke(() => {
-        //        var document = DocumentDescription.Document;
-
-        //        document.Blocks.Clear();
-
-        //        using(var stringReader = new StringReader(flowDocumentSource))
-        //        using(var xmlReader = System.Xml.XmlReader.Create(stringReader)) {
-        //            try {
-        //                var flowDocument = XamlReader.Load(xmlReader) as FlowDocument;
-        //                document.Blocks.AddRange(flowDocument.Blocks.ToArray());
-        //            } catch(XamlParseException ex) {
-        //                Mediation.Logger.Error(ex);
-        //                var error = new Paragraph();
-        //                error.Inlines.Add(ex.ToString());
-
-        //                var raw = new Paragraph();
-        //                raw.Inlines.Add(flowDocumentSource);
-
-        //                document.Blocks.Add(error);
-        //                document.Blocks.Add(raw);
-        //            }
-        //        }
-
-        //        document.FontSize = DocumentDescription.FontSize;
-        //        document.FontFamily = DocumentDescription.FontFamily;
-        //        document.FontStretch = DocumentDescription.FontStretch;
-        //    });
-        //}
-
         void SourceLoaded(WebNavigatorEventDataBase eventData)
         {
             switch(eventData.Engine) {
@@ -512,66 +458,15 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
         #endregion
 
-        //#region ICaptionCommand
-
-        ///// <summary>
-        ///// リサイズ幅。
-        ///// </summary>
-        //public Thickness ResizeBorderThickness
-        //{
-        //    get { return this._resizeBorderThickness; }
-        //    set { SetVariableValue(ref this._resizeBorderThickness, value); }
-        //}
-        ///// <summary>
-        ///// ウィンドウ枠幅。
-        ///// </summary>
-        //public Thickness WindowBorderThickness
-        //{
-        //    get { return this._windowBorderThickness; }
-        //    set { SetVariableValue(ref this._windowBorderThickness, value); }
-        //}
+        #region ICaptionCommand
 
         public WindowState State
         {
             get { return this._state; }
-            //set
-            //{
-            //    if(SetVariableValue(ref this._state, value)) {
-            //        if(State == WindowState.Maximized) {
-            //            WindowBorderThickness = maximumWindowBorderThickness;
-            //        } else {
-            //            //if(!IsNormalWindow) {
-            //            //    SetWindowMode(false);
-            //            //}
-            //            WindowBorderThickness = normalWindowBorderThickness;
-            //        }
-            //    }
-            //}
             set { SetVariableValue(ref this._state, value); }
         }
-
-        ////TODO: Videoと重複
-        //public ICommand ShowSystemMenuCommand
-        //{
-        //    get
-        //    {
-        //        return CreateCommand(o => {
-        //            var hWnd = HandleUtility.GetWindowHandle(View);
-        //            var _WM_SYSTEM_MENU = 0x313;
-        //            var devicePoint = MouseUtility.GetDevicePosition();
-        //            var desktopPoint = PodStructUtility.Convert(devicePoint);
-        //            var lParam = new IntPtr(desktopPoint.X | desktopPoint.Y << 16);
-        //            NativeMethods.PostMessage(hWnd, (WM)_WM_SYSTEM_MENU, IntPtr.Zero, lParam);
-        //        });
-        //    }
-        //}
-
-        //public ICommand CaptionMinimumCommand { get { return CreateCommand(o => State = WindowState.Minimized); } }
-        //public ICommand CaptionMaximumCommand { get { return CreateCommand(o => State = WindowState.Maximized); } }
-        //public ICommand CaptionRestoreCommand { get { return CreateCommand(o => State = WindowState.Normal); } }
-        //public ICommand CaptionCloseCommand { get { return CreateCommand(o => View.Close()); } }
-
-        //#endregion
+        
+        #endregion
 
         #region ISmileDescription
 
@@ -614,9 +509,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
         protected override void Dispose(bool disposing)
         {
             if(ShowWebPlayer != null) {
-                //PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
                 PropertyChangedListener.Remove(ShowWebPlayer);
-                //ShowWebPlayer.PropertyChanged -= ShowWebPlayer_PropertyChanged;
             }
 
             base.Dispose(disposing);
@@ -630,7 +523,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Live.Pla
 
             NavigatorPlayer.NavigateEmpty();
 
-            //PropertyChangedEventManager.RemoveListener(ShowWebPlayer, PropertyChangedListener, string.Empty);
             PropertyChangedListener.Remove(ShowWebPlayer);
         }
 

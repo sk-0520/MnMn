@@ -31,13 +31,6 @@
   </i:Interaction.Behaviors>
   <mamc:MetroWindow.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/GridSplitterDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/TextBoxDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/WindowChromeDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
-
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
       <sys:Double x:Key="ImageWidth">100</sys:Double>
@@ -55,111 +48,19 @@
   <Window.Style>
     <Style TargetType="mamc:MetroWindow" BasedOn="{StaticResource {x:Type mamc:MetroWindow}}">
       <Setter Property="Topmost" Value="{Binding Topmost}" />
-      <!--<Setter Property="BorderBrush">
-        <Setter.Value>
-          <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
-        </Setter.Value>
-      </Setter>-->
     </Style>
   </Window.Style>
-  <!--<WindowChrome.WindowChrome>
-    <WindowChrome
-      ResizeBorderThickness="{Binding ResizeBorderThickness}"
-      GlassFrameThickness="0"
-      CornerRadius="0"
-      CaptionHeight="{Binding ActualHeight, ElementName=caption}"
-    />
-  </WindowChrome.WindowChrome>-->
-
 
   <DockPanel>
-    <!--<Grid
-      x:Name="caption"
-      DockPanel.Dock="Top"
-      Margin="4"
-      Visibility="{Binding IsNormalWindow, Converter={StaticResource BooleanToVisibilityConverter}}"
-      TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
-    >-->
-    <!--<ContentControl
-      x:Name="caption"
-      DockPanel.Dock="Top"
-      Style="{StaticResource WindowChromeCaption}"
-    />-->
-    <!--<Grid
-      x:Name="caption"
-      DockPanel.Dock="Top"
-      Style="{StaticResource WindowChromeCaption}"
-    >
-      -->
-    <!--<Grid.Style>
-        <Style TargetType="Grid">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-              <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </Grid.Style>-->
-    <!--
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="Auto" />
-      </Grid.ColumnDefinitions>
-      <Button Grid.Column="0">
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="MouseRightButtonDown">
-            <i:InvokeCommandAction Command="{Binding ShowSystemMenuCommand}"/>
-          </i:EventTrigger>
-          <i:EventTrigger EventName="MouseDoubleClick">
-            <i:InvokeCommandAction Command="{Binding CaptionCloseCommand}"/>
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
-        <Button.Template>
-          <ControlTemplate>
-            <Image Width="16" Height="16" WindowChrome.IsHitTestVisibleInChrome="True" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=Window}}" />
-          </ControlTemplate>
-        </Button.Template>
-      </Button>
-      <Grid Grid.Column="1" >
-        <TextBlock VerticalAlignment="Center" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
-      </Grid>
-      <StackPanel Grid.Column="2" Orientation="Horizontal">
-        <Button Style="{StaticResource WindowChromeMinimum}"  />
-        <Button Style="{StaticResource WindowChromeMaximum}" />
-        <Button Style="{StaticResource WindowChromeClose}" />
-      </StackPanel>
-    </Grid>-->
-
     <ToolBar DockPanel.Dock="Top">
       <Button Command="{Binding ForceShowPlayerCommand}">メクラ板を外す</Button>
     </ToolBar>
     <StatusBar DockPanel.Dock="Bottom">
       <StatusBarItem DockPanel.Dock="Right" WindowChrome.ResizeGripDirection="BottomRight" Margin="0" Padding="0" VerticalAlignment="Bottom">
-        <!--<StatusBarItem.Style>
-          <Style TargetType="StatusBarItem">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding State}" Value="Maximized">
-                <Setter Property="Visibility" Value="Collapsed" />
-              </DataTrigger>
-              -->
-        <!-- フルスクリーンはそもそもステータスバーが消えるので考慮しない -->
-        <!--
-            </Style.Triggers>
-            <Setter Property="Visibility" Value="Visible" />
-          </Style>
-        </StatusBarItem.Style>-->
         <ResizeGrip />
       </StatusBarItem>
 
       <ToggleButton x:Name="switchInformation" IsChecked="{Binding PlayerShowDetailArea.Value}">
-        <!--<Canvas Style="{StaticResource StatePanel}">
-          <Image Source="/Resources/Service/Smile/Video/Player/Information.png" Style="{StaticResource ButtonImage}" />
-          <app_view_controls:LoadStateNavigator LoadState="{Binding InformationLoadState}" Style="{StaticResource StateControl}" />
-        </Canvas>-->
         info
       </ToggleButton>
 
@@ -240,32 +141,8 @@
                     />
                   </i:Interaction.Behaviors>
                 </FlowDocumentScrollViewer>
-                <!--<FlowDocumentScrollViewer
-                  x:Name="documentDescription"
-                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                  FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
-                >
-                  <i:Interaction.Behaviors>
-                    <app_view_attachment:HtmlDescriptionBehavior 
-                      HtmlSource="{Binding DescriptionHtmlSource, Mode=OneWay}" 
-                      DescriptionProcessor="{Binding DescriptionProcessor, Mode=OneWay}"
-                    />
-                  </i:Interaction.Behaviors>
-                  <FlowDocumentScrollViewer.Resources>
-                    <Style TargetType="Run">
-                      <Setter Property="BaselineAlignment" Value="Center"/>
-                    </Style>
-                  </FlowDocumentScrollViewer.Resources>
-                  <FlowDocument
-                    FontSize="11.5"
-                    PagePadding="10, 2, 10, 0"
-                  />
-                </FlowDocumentScrollViewer>-->
               </Grid>
-
-
             </Grid>
-
           </Grid>
         </TabItem>
       </TabControl>

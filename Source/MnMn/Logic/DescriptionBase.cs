@@ -101,17 +101,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         } else {
                             var menu = (DescriptionContextMenuItem)menuItem;
                             var menuItemElement = AppUtility.ExtractResourceXamlElement(Properties.Resources.File_Xaml_DescriptionMenuItem, null);
-                            //var menuItemElement = x.CreateElement($"{nameof(MenuItem)}");
                             var menuMap = new StringsModel() {
                                 ["header"] = menu.HeaderText,
                                 ["command"] = menu.Command,
                                 ["link"] = menu.CommandParameter ?? link,
                                 ["font-weight"] = menu.IsDefault ? nameof(FontWeights.Bold) : nameof(FontWeights.Normal),
                             };
-                            //foreach(XmlAttribute attribute in menuItemElement.Attributes) {
-                            //    var attrValue = AppUtility.ReplaceString(attribute.Value, menuMap);
-                            //    attribute.Value = attrValue;
-                            //}
+
                             ReplaceAttibute(menuItemElement, menuMap);
 
                             var xMenuItemNode = x.ImportNode(menuItemElement, true);
@@ -153,17 +149,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             var madeElementSource = AppUtility.ReplaceString(elementSource, map);
 
             return madeElementSource;
-
-            //var linkElementSource = $@"
-            //    <Button Style='{{StaticResource Hyperlink}}' Command='{{Binding {commandName}}}' CommandParameter='{link}'>
-            //        <TextBlock Text='{text}' />
-            //    </Button>
-            //"
-            //    .SplitLines()
-            //    .Select(s => s.Trim())
-            //;
-
-            //return string.Join(string.Empty, linkElementSource);
         }
 
         protected string ConvertRunTarget(string flowDocumentSource, MatchEvaluator func)

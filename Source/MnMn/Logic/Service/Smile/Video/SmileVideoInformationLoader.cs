@@ -32,15 +32,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             : base(informations)
         { }
 
-        //#region property
-
-        //IReadOnlyList<SmileVideoInformationViewModel> List { get; }
-
-        //public CancellationTokenSource Cancel { get; } = new CancellationTokenSource();
-
-        //#endregion
-
-
         public override Task LoadThumbnaiImageAsync(CacheSpan imageCacheSpan)
         {
             var tasks = new List<Task>();
@@ -72,21 +63,5 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
             return Task.WhenAll(tasks);
         }
-
-        //public Task LoadInformationAsync(CacheSpan cacheSpan)
-        //{
-        //    var client = new HttpClient();
-        //    var tasks = new List<Task>();
-
-        //    foreach(var item in List) {
-        //        var task = item.LoadInformationAsync(cacheSpan, client);
-        //        tasks.Add(task);
-        //    }
-
-        //    return Task.WhenAll(tasks).ContinueWith(_ => {
-        //        client.Dispose();
-        //    });
-        //}
-
     }
 }

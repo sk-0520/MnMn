@@ -22,10 +22,6 @@
 >
   <UserControl.Resources>
     <ResourceDictionary>
-      <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/View/Resources/TabDictionary.xaml" />
-        <ResourceDictionary Source="/View/Resources/ListBoxDictionary.xaml" />
-      </ResourceDictionary.MergedDictionaries>-->
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
@@ -74,11 +70,6 @@
         <TabItem.Header>
           <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <TextBlock Style="{StaticResource ParentItemLikeText}">あとで見る</TextBlock>
-            <!--
-            <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="1" BorderBrush="Red" Background="Red" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}">
-              <TextBlock FontSize="9" Text="{Binding ItemCount}" />
-            </Border>
-            -->
             <Label Style="{StaticResource HighlightLabel}" Visibility="{Binding HasItem, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding ItemCount}" />
           </Grid>
         </TabItem.Header>
