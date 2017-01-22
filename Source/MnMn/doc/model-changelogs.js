@@ -3,6 +3,7 @@
 						'class': 'compatibility' 'notice' 'nuget' 'myget' 'warning' 'open',
 						'comments': [
 							''
+							['alt', 'image-path']
 						]
 	*/
 	//---------------------------------------------
@@ -93,7 +94,10 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '更新履歴に画像を表示できるようにしたよ！',
+						'comments': [
+							['そうなんだ、すごいね！', '0.45.0/issue294.png']
+						]
 					},
 					{
 						'revision': '',
@@ -110,7 +114,12 @@
 				'logs': [
 					{
 						'revision': '',
-						'subject': ''
+						'subject': '#294: 更新履歴に画像を表示する',
+						'comments': [
+							'更新履歴表示の際に画像があると説明が楽なのだよ',
+							'ヘルプの更新履歴はただの画像だけどアップデート時の更新履歴は base64 にしたのだよ',
+							'作り終わってから思ったけどなんで base64 で頑張ったんだろうね'
+						]
 					},
 					{
 						'revision': '',
@@ -134,11 +143,7 @@
 					},
 					{
 						'revision': '',
-						'subject': 'test',
-						'comments': [
-							['jpg!', 'MnMn.jpg'],
-							['png!', 'MnMn.png']
-						]
+						'subject': ''
 					},
 					{
 						'revision': '',
