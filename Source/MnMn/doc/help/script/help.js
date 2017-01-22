@@ -63,6 +63,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'smile-video-setting',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'ニコニコ動画用設定'
+		}
+	},
+	{
 		name: 'smile-video-finder',
 		localize: true,
 		level: 1,
