@@ -159,6 +159,14 @@ var menuList = [
 		}
 	},
 	{
+		name: 'others-flash',
+		localize: true,
+		level: 1,
+		title: {
+			'ja-jp': 'Flash Player について'
+		}
+	},
+	{
 		name: 'others-older',
 		localize: true,
 		level: 1,
