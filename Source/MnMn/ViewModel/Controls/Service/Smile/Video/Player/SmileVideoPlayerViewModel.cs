@@ -605,6 +605,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video.Pl
             }
         }
 
+        public ICommand SwitchShowCommentAreaCommand
+        {
+            get
+            {
+                return CreateCommand(o => {
+                    PlayerShowCommentArea = !PlayerShowCommentArea;
+                });
+            }
+        }
+
         #endregion
 
         #region function
