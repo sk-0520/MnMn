@@ -86,3 +86,10 @@ p.uri {
 *.changelog *.comment {
 	font-size: 90%;
 }
+
+*.changelog li.image {
+	list-style: none;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+

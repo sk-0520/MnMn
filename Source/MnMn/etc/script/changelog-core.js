@@ -169,6 +169,7 @@ function makeChangeLogContent(content, isEmbeddedImage, imageBaseDirPath) {
 								var image = commentData[1];
 								var imageElement = CreateImageElement(text, image, isEmbeddedImage, imageBaseDirPath);
 								comment.append(imageElement);
+								comment.setAttibute('class', 'image');
 							} else {
 								comment.append(convertMessage(commentData));
 							}

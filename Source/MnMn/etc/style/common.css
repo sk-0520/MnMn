@@ -53,6 +53,8 @@ img {
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 2px 1px;
 	padding: 1px;
 	margin: 1px 1px 2px 2px;
+	max-width: 100%;
+	height: auto;
 }
 
 div.hint, div.warning, div.bug, div.ref {
