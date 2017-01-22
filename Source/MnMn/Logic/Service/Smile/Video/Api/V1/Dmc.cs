@@ -32,7 +32,7 @@ using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video.Api.V1
 {
     /// <summary>
-    /// 新形式ダウンロード。
+    /// DMC形式ダウンロード。
     /// </summary>
     public class Dmc: SessionApiBase<SmileSessionViewModel>
     {

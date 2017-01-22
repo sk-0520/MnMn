@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
         {
             try {
                 UserAgent = UserAgentCreator.CreateHttpUserAgent();
-                // 新形式は不要だと思うけど他との互換性のため残しとく
+                // DMC形式は不要だと思うけど他との互換性のため残しとく
                 var task = await SmileVideoInformationUtility.LoadWatchPageHtmlSource(UserAgent, ReferrerUri);
                 PageHtml = task;
 

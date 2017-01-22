@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Setting.Service.Smile.Video
         #region property
 
         /// <summary>
-        /// ダウンロードに新形式を使用するか。
+        /// ダウンロードにDMC形式を使用するか。
         /// </summary>
         [DataMember]
         public bool UsingDmc { get; set; } = Constants.SettingServiceSmileVideoDownloadUsingDmc;

@@ -638,7 +638,7 @@
                 <Setter Property="ToolTip">
                   <Setter.Value>
                     <StackPanel>
-                      <TextBlock FontWeight="Bold">新形式</TextBlock>
+                      <TextBlock FontWeight="Bold">DMC形式</TextBlock>
                       <TextBlock Margin="{StaticResource LeftMargin}">
                         <Run>画質:</Run>
                         <Run Text="{Binding DmcVideoSrc, Mode=OneWay}" />
