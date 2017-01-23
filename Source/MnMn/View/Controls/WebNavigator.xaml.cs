@@ -632,7 +632,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedDefault()
         {
-            BrowserDefault = new WebBrowser();
+            BrowserDefault = WebNavigatorCore.CreateDefaultBrowser();
 
             BrowserDefault.Loaded += Browser_Loaded;
             BrowserDefault.Loaded += BrowserDefault_Loaded;
@@ -648,7 +648,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void InitializedGeckoFx()
         {
-            BrowserGeckoFx = WebNavigatorCore.CreateBrowser();
+            BrowserGeckoFx = WebNavigatorCore.CreateGeckoBrowser();
             BrowserGeckoFx.CreateControl();
 
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;

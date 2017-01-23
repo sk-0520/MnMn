@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         /// <para>あくまで呼び出し側で<see cref="WebNavigatorEngine.GeckoFx"/>を保証すること</para>
         /// </summary>
         /// <returns></returns>
-        public static ServiceGeckoWebBrowser CreateBrowser()
+        public static ServiceGeckoWebBrowser CreateGeckoBrowser()
         {
             ServiceGeckoWebBrowser browser = null;
 

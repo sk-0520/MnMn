@@ -314,6 +314,9 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoBookmarkUtility.cs" />
     <Compile Include="Logic\View\CursorHider.cs" />
+    <Compile Include="Logic\WebNavigatorCore.Default.cs">
+      <DependentUpon>WebNavigatorCore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\WebNavigatorCore.GeckoFx.cs">
       <DependentUpon>WebNavigatorCore.cs</DependentUpon>
     </Compile>
