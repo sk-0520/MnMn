@@ -19,6 +19,29 @@
       <cttn_sl_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
+  <UserControl.ContextMenu>
+    <!-- おお、なんだこれ、なんなんだ -->
+    <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
+      <MenuItem Header="戻る" Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <MenuItem.Icon>
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="進む" Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <MenuItem.Icon>
+          <Viewbox Style="{StaticResource SmallIconBox}">
+            <Canvas Style="{StaticResource IconCanvas-24x24}">
+              <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
+            </Canvas>
+          </Viewbox>
+        </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
+  </UserControl.ContextMenu>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />

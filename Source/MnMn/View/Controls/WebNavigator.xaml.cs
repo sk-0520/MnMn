@@ -656,6 +656,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx = WebNavigatorCore.CreateGeckoBrowser();
             BrowserGeckoFx.CreateControl();
 
+            BrowserGeckoFx.NoDefaultContextMenu = true;
+
             BrowserGeckoFx.Disposed += BrowserGeckoFx_Disposed;
             BrowserGeckoFx.Navigating += BrowserGeckoFx_Navigating;
             BrowserGeckoFx.Navigated += BrowserGeckoFx_Navigated;
@@ -663,6 +665,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.Load += BrowserGeckoFx_Load;
             BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick += BrowserGeckoFx_DomClick;
+            BrowserGeckoFx.DomContextMenu += BrowserGeckoFx_DomContextMenu;
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -751,6 +754,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.Load -= BrowserGeckoFx_Load;
             BrowserGeckoFx.DOMContentLoaded -= BrowserGeckoFx_DOMContentLoaded;
             BrowserGeckoFx.DomClick -= BrowserGeckoFx_DomClick;
+            BrowserGeckoFx.DomContextMenu -= BrowserGeckoFx_DomContextMenu;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -854,6 +858,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(e.Cancelable) {
                 e.Handled = result.Cancel;
             }
+        }
+
+        private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
+        {
+            ContextMenu.IsOpen = true;
         }
 
 
