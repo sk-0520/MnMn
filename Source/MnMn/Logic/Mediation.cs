@@ -42,6 +42,8 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser;
+using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
@@ -204,6 +206,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
+        private ResponseModel Request_Browser(BrowserRequestModel request)
+        {
+            var clickParameter = request.Parameter as BrowserClickParameterModel;
+            if(clickParameter != null) {
+                
+                //return new ResponseModel(request, result);
+            }
+
+            var result = new BrowserResultModel(false);
+            return new ResponseModel(request, result);
+        }
+
         public void SetManager(ServiceType serviceType, ManagerPackModelBase managerPack)
         {
             switch(serviceType) {
@@ -341,6 +355,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             if(request.RequestKind == RequestKind.ShowView) {
                 return Request_ShowView((ShowViewRequestModel)request);
+            }
+
+            if(request.RequestKind == RequestKind.Browser) {
+                return Request_Browser((BrowserRequestModel)request);
             }
 
             switch(request.ServiceType) {

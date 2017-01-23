@@ -24,9 +24,14 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
+using ContentTypeTextNet.MnMn.MnMn.Data.Browser;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Logic;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser;
+using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using Gecko;
 
@@ -657,6 +662,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.CreateWindow += BrowserGeckoFx_CreateWindow;
             BrowserGeckoFx.Load += BrowserGeckoFx_Load;
             BrowserGeckoFx.DOMContentLoaded += BrowserGeckoFx_DOMContentLoaded;
+            BrowserGeckoFx.DomClick += BrowserGeckoFx_DomClick;
 
             var host = new WindowsFormsHost();
             using(Initializer.BeginInitialize(host)) {
@@ -744,6 +750,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             BrowserGeckoFx.CreateWindow -= BrowserGeckoFx_CreateWindow;
             BrowserGeckoFx.Load -= BrowserGeckoFx_Load;
             BrowserGeckoFx.DOMContentLoaded -= BrowserGeckoFx_DOMContentLoaded;
+            BrowserGeckoFx.DomClick -= BrowserGeckoFx_DomClick;
         }
 
         private void BrowserDefault_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -757,7 +764,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             this.location.Text = e.Uri?.ToString() ?? string.Empty;
             IsNavigating = true;
         }
-
 
         private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
         {
@@ -800,6 +806,43 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(DomLoadedCommand != null) {
                 var eventData = WebNavigatorEventData.Create(WebNavigatorEngine.GeckoFx, sender, e, DomLoadedCommandParameter);
                 DomLoadedCommand.TryExecute(eventData);
+            }
+        }
+
+        private void BrowserGeckoFx_DomClick(object sender, DomMouseEventArgs e)
+        {
+            var parameter = new BrowserClickParameterModel(e, WebNavigatorEngine.GeckoFx);
+
+            switch(e.Button) {
+                case GeckoMouseButton.Left:
+                    parameter.MouseButton = MouseButton.Left;
+                    break;
+
+                case GeckoMouseButton.Middle:
+                    parameter.MouseButton = MouseButton.Middle;
+                    break;
+
+                case GeckoMouseButton.Right:
+                    parameter.MouseButton = MouseButton.Right;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var element = e.Target.CastToGeckoElement();
+
+            parameter.Element = WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(element);
+            var rootElements = WebNavigatorCore.GetRootElementsGeckoFx(element);
+            parameter.RootNodes = rootElements
+                .Select(elm => WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(elm))
+                .ToList()
+            ;
+
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
+
+            if(e.Cancelable) {
+                e.Handled = result.Cancel;
             }
         }
 
