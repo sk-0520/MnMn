@@ -16,6 +16,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 
         #region property
 
+        /// <summary>
+        /// 後続のデフォルト処理をキャンセルするか。
+        /// </summary>
         public bool Cancel { get; }
 
         #endregion

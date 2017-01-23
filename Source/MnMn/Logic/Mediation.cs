@@ -208,10 +208,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         private ResponseModel Request_Browser(BrowserRequestModel request)
         {
+            var navigatingParameter = request.Parameter as BrowserNavigatingParameterModel;
+            if(navigatingParameter != null) {
+            }
+
             var clickParameter = request.Parameter as BrowserClickParameterModel;
             if(clickParameter != null) {
-                
-                //return new ResponseModel(request, result);
             }
 
             var result = new BrowserResultModel(false);

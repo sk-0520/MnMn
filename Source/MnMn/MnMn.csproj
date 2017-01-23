@@ -333,6 +333,7 @@
     <Compile Include="Model\Request\BrowserRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserClickParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\Browser\BrowserNavigatingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\ProcessRequestModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessCheckItLaterParameterModel.cs" />

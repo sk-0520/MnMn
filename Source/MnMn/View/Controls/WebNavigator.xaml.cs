@@ -761,8 +761,18 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
-            this.location.Text = e.Uri?.ToString() ?? string.Empty;
-            IsNavigating = true;
+            var parameter = new BrowserNavigatingParameterModel(e, WebNavigatorEngine.GeckoFx) {
+                Uri = e.Uri,
+            };
+
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
+
+            e.Cancel = result.Cancel;
+
+            if(!e.Cancel) {
+                this.location.Text = e.Uri?.ToString() ?? string.Empty;
+                IsNavigating = true;
+            }
         }
 
         private void BrowserDefault_Navigated(object sender, NavigationEventArgs e)
