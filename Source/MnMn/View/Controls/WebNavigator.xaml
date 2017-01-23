@@ -8,6 +8,7 @@
   xmlns:cttn_sl_view_converter="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=ContentTypeTextNet.SharedLibrary"
   xmlns:app_logic="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Logic"
   xmlns:app_define="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Define"
+  xmlns:app_data_browser="clr-namespace:ContentTypeTextNet.MnMn.MnMn.Data.Browser"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -20,27 +21,7 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.ContextMenu>
-    <!-- おお、なんだこれ、なんなんだ -->
-    <ContextMenu DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}">
-      <MenuItem Header="戻る" Command="{Binding BackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <MenuItem.Icon>
-          <Viewbox Style="{StaticResource SmallIconBox}">
-            <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_Navigation_Prev}" Style="{StaticResource SmallDefaultIconPath}" />
-            </Canvas>
-          </Viewbox>
-        </MenuItem.Icon>
-      </MenuItem>
-      <MenuItem Header="進む" Command="{Binding ForwardCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <MenuItem.Icon>
-          <Viewbox Style="{StaticResource SmallIconBox}">
-            <Canvas Style="{StaticResource IconCanvas-24x24}">
-              <Path Data="{StaticResource Image_Navigation_Next}" Style="{StaticResource SmallDefaultIconPath}" />
-            </Canvas>
-          </Viewbox>
-        </MenuItem.Icon>
-      </MenuItem>
-    </ContextMenu>
+    <ContextMenu />
   </UserControl.ContextMenu>
   <Grid>
     <Grid.RowDefinitions>

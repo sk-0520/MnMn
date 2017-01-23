@@ -220,6 +220,7 @@
     <Compile Include="Constants.Xaml.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Browser\BrowserContextMenuItem.cs" />
     <Compile Include="Data\Browser\SimpleHtmlElement.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuItem.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuBase.cs" />

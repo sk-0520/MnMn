@@ -22,6 +22,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Data;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Data;
 using ContentTypeTextNet.MnMn.MnMn.Data.Browser;
@@ -862,6 +863,24 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
         {
+            var menus = new List<BrowserContextMenuItem>() {
+                new BrowserContextMenuItem() { Header = "a", },
+                null,
+                new BrowserContextMenuItem() { Header = "b", },
+            };
+
+            ContextMenu.ItemsSource = menus.Select(m => {
+                object viewItem;
+                if(m == null) {
+                    viewItem = new Separator();
+                } else {
+                    viewItem = new MenuItem() {
+                        Header = m.Header,
+                    };
+                }
+                return viewItem; 
+            }).ToList();
+
             ContextMenu.IsOpen = true;
         }
 
