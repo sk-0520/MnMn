@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
+using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Service.Smile;
 using Gecko;
@@ -29,9 +30,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 {
     public class ServiceGeckoWebBrowser: GeckoWebBrowser
     {
-        public ServiceGeckoWebBrowser()
+        public ServiceGeckoWebBrowser(Mediation mediation)
             : base()
-        { }
+        {
+            Mediation = mediation;
+        }
 
         #region property
 
@@ -40,6 +43,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// <para>OnInitializeで設定できないから無理やりやるべ。</para>
         /// </summary>
         public ServiceType ServiceType { get; private set; }
+
+        public Mediation Mediation { get; private set; }
 
         #endregion
 

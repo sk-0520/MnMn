@@ -125,8 +125,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         /// <summary>
         /// GeckFxのブラウザ生成。
-        /// <para><see cref="Engine"/>には影響されない。</para>
-        /// <para>あくまで呼び出し側で<see cref="WebNavigatorEngine.GeckoFx"/>を保証すること</para>
         /// </summary>
         /// <returns></returns>
         public static ServiceGeckoWebBrowser CreateGeckoBrowser()
@@ -134,7 +132,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             ServiceGeckoWebBrowser browser = null;
 
             Application.Current.Dispatcher.Invoke(() => {
-                browser = new ServiceGeckoWebBrowser() {
+                browser = new ServiceGeckoWebBrowser(Mediation) {
                     Dock = System.Windows.Forms.DockStyle.Fill,
                 };
                 browser.Disposed += GeckoBrowser_Disposed;

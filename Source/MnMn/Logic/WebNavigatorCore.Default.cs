@@ -48,7 +48,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             WebBrowser browser = null;
             Application.Current.Dispatcher.Invoke(() => {
-                browser = new WebBrowser();
+                browser = new WebBrowser() {
+                    Tag = Mediation,
+                };
             });
 
             return browser;
