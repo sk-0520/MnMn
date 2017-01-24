@@ -220,6 +220,8 @@
     <Compile Include="Constants.Xaml.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Browser\BrowserContextMenuBase.cs" />
+    <Compile Include="Data\Browser\BrowserContextMenuSeparator.cs" />
     <Compile Include="Data\Browser\BrowserContextMenuItem.cs" />
     <Compile Include="Data\Browser\SimpleHtmlElement.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuItem.cs" />
@@ -334,6 +336,7 @@
     <Compile Include="Model\Request\BrowserRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserClickParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\Browser\BrowserContextMenuParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserNavigatingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\ProcessRequestModelBase.cs" />

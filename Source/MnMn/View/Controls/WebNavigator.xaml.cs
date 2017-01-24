@@ -689,6 +689,61 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        void SetClickParameterGeckoFx(BrowserClickParameterModel model, DomMouseEventArgs e)
+        {
+            switch(e.Button) {
+                case GeckoMouseButton.Left:
+                    model.MouseButton = MouseButton.Left;
+                    break;
+
+                case GeckoMouseButton.Middle:
+                    model.MouseButton = MouseButton.Middle;
+                    break;
+
+                case GeckoMouseButton.Right:
+                    model.MouseButton = MouseButton.Right;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var element = e.Target.CastToGeckoElement();
+
+            model.Element = WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(element);
+            var rootElements = WebNavigatorCore.GetRootElementsGeckoFx(element);
+            model.RootNodes = rootElements
+                .Select(elm => WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(elm))
+                .ToList()
+            ;
+        }
+
+        IEnumerable<BrowserContextMenuBase> CreateContextMenu()
+        {
+            return new List<BrowserContextMenuBase>() {
+                new BrowserContextMenuItem() { Header = "a", },
+                new BrowserContextMenuSeparator(),
+                new BrowserContextMenuItem() { Header = "b", },
+            };
+        }
+
+        Control MakeContextMenuItem(BrowserContextMenuBase menuItemBase)
+        {
+            if(menuItemBase is BrowserContextMenuSeparator) {
+                return new Separator() {
+                    DataContext = menuItemBase,
+                };
+            } else {
+                var menuItem = (BrowserContextMenuItem)menuItemBase;
+
+                return new MenuItem() {
+                    DataContext = menuItemBase,
+
+                    Header = menuItem.Header,
+                };
+            }
+        }
+
         #endregion
 
         #region UserControl
@@ -827,32 +882,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_DomClick(object sender, DomMouseEventArgs e)
         {
             var parameter = new BrowserClickParameterModel(e, WebNavigatorEngine.GeckoFx);
-
-            switch(e.Button) {
-                case GeckoMouseButton.Left:
-                    parameter.MouseButton = MouseButton.Left;
-                    break;
-
-                case GeckoMouseButton.Middle:
-                    parameter.MouseButton = MouseButton.Middle;
-                    break;
-
-                case GeckoMouseButton.Right:
-                    parameter.MouseButton = MouseButton.Right;
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
-
-            var element = e.Target.CastToGeckoElement();
-
-            parameter.Element = WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(element);
-            var rootElements = WebNavigatorCore.GetRootElementsGeckoFx(element);
-            parameter.RootNodes = rootElements
-                .Select(elm => WebNavigatorCore.ConvertSimleHtmlElementGeckoFx(elm))
-                .ToList()
-            ;
+            SetClickParameterGeckoFx(parameter, e);
 
             var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
 
@@ -863,25 +893,22 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
         {
-            var menus = new List<BrowserContextMenuItem>() {
-                new BrowserContextMenuItem() { Header = "a", },
-                null,
-                new BrowserContextMenuItem() { Header = "b", },
-            };
+            if(ContextMenu.ItemsSource == null) {
+                var menuItems = CreateContextMenu();
+                ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
+            }
 
-            ContextMenu.ItemsSource = menus.Select(m => {
-                object viewItem;
-                if(m == null) {
-                    viewItem = new Separator();
-                } else {
-                    viewItem = new MenuItem() {
-                        Header = m.Header,
-                    };
-                }
-                return viewItem; 
-            }).ToList();
+            var parameter = new BrowserContextMenuParameterModel(e, WebNavigatorEngine.GeckoFx);
+            SetClickParameterGeckoFx(parameter, e);
 
-            ContextMenu.IsOpen = true;
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
+            if(e.Cancelable) {
+                e.Handled = result.Cancel;
+            }
+
+            if(!e.Handled) {
+                ContextMenu.IsOpen = true;
+            }
         }
 
 

@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Data.Browser
 {
-    public class BrowserContextMenuItem: BrowserContextMenuBase
-    {
-        #region property
-
-        public string Header { get; set; }
-
-        #endregion
-    }
+    public sealed class BrowserContextMenuSeparator: BrowserContextMenuBase
+    { }
 }
