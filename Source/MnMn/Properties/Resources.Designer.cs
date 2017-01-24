@@ -180,6 +180,51 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   すべて選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_AllSelect {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_AllSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   戻る に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_Back {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   選択をコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_CopySelection {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_CopySelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   進む に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_Forward {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_Forward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ⛄ソース⛇ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_ShowSource {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_ShowSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランダム再生 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Define_CheckedProcessType_RandomPlay {

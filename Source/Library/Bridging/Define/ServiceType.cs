@@ -13,24 +13,24 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define
     public enum ServiceType
     {
         /// <summary>
+        /// 共通。
+        /// </summary>
+        Common,
+        /// <summary>
         /// 本体。
         /// </summary>
-        //[TextDisplay(Constants.applicationName)]
         Application,
         /// <summary>
         /// ニコニコ。
         /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_Smile))]
         Smile,
         /// <summary>
         /// ニコニコ動画。
         /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileVideo))]
         SmileVideo,
         /// <summary>
         /// ニコニコ生放送。
         /// </summary>
-        //[EnumResourceDisplay(nameof(Properties.Resources.String_App_Define_ServiceType_SmileLive))]
         SmileLive,
     }
 }

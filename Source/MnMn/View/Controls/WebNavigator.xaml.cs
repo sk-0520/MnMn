@@ -721,9 +721,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         IEnumerable<BrowserContextMenuBase> CreateContextMenu()
         {
             return new List<BrowserContextMenuBase>() {
-                new BrowserContextMenuItem() { Header = "a", },
-                new BrowserContextMenuSeparator(),
-                new BrowserContextMenuItem() { Header = "b", },
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserBack, ServiceType.Common) { Header = Properties.Resources.String_App_Browser_Common_Back, Command = BackCommand },
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserForward, ServiceType.Common) { Header = Properties.Resources.String_App_Browser_Common_Forward, Command = ForwardCommand },
+                new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common),
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserCopySelection, ServiceType.Common) { Header = Properties.Resources.String_App_Browser_Common_CopySelection  },
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserSelerctAll, ServiceType.Common){ Header = Properties.Resources.String_App_Browser_Common_AllSelect  },
+                new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common),
             };
         }
 
@@ -740,6 +743,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                     DataContext = menuItemBase,
 
                     Header = menuItem.Header,
+
+                    Command = menuItem.Command,
+                    CommandParameter = menuItem.CommandParameter,
                 };
             }
         }

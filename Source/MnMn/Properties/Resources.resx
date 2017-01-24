@@ -464,4 +464,19 @@
   <data name="String_App_Define_Service_Smile_Video_SmileVideoUserKind_Real" xml:space="preserve">
     <value>生放送</value>
   </data>
+  <data name="String_App_Browser_Common_AllSelect" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="String_App_Browser_Common_Back" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="String_App_Browser_Common_CopySelection" xml:space="preserve">
+    <value>選択をコピー</value>
+  </data>
+  <data name="String_App_Browser_Common_Forward" xml:space="preserve">
+    <value>進む</value>
+  </data>
+  <data name="String_App_Browser_Common_ShowSource" xml:space="preserve">
+    <value>⛄ソース⛇</value>
+  </data>
 </root>
