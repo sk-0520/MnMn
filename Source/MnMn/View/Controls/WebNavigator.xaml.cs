@@ -31,7 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
-using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
 using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using Gecko;
@@ -764,7 +764,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-        void SetClickParameterGeckoFx(BrowserClickParameterModel model, DomMouseEventArgs e)
+        void SetClickParameterGeckoFx(WebNavigatorClickParameterModel model, DomMouseEventArgs e)
         {
             switch(e.Button) {
                 case GeckoMouseButton.Left:
@@ -975,11 +975,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
-            var parameter = new BrowserNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
+            var parameter = new WebNavigatorNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                 NextUri = e.Uri,
             };
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
             e.Cancel = result.Cancel;
 
@@ -1035,10 +1035,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomClick(object sender, DomMouseEventArgs e)
         {
-            var parameter = new BrowserClickParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+            var parameter = new WebNavigatorClickParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(parameter, e);
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
             if(e.Cancelable) {
                 e.Handled = result.Cancel;
@@ -1052,16 +1052,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
             } 
 
-            var contextMenuParameter = new BrowserContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+            var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(contextMenuParameter, e);
 
-            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, contextMenuParameter));
+            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuParameter));
             if(e.Cancelable) {
                 e.Handled = contextMenuResult.Cancel;
             }
 
             if(!e.Handled) {
-                var contextMenuItemParameter = new BrowserContextMenuItemParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+                var contextMenuItemParameter = new WebNavigatorContextMenuItemParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
                 SetClickParameterGeckoFx(contextMenuItemParameter, e);
 
                 var menuItems = ContextMenu.Items
@@ -1071,7 +1071,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ;
                 foreach(var menuItem in menuItems) {
                     contextMenuItemParameter.Key = menuItem.Menu.Key;
-                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserContextMenuItemResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, contextMenuItemParameter));
+                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserContextMenuItemResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuItemParameter));
 
                     if(contextMenuItemResult.Cancel) {
                         // 基本的にここでキャンセルは通さないけど一応例外投げておく(必要になったら対応する)

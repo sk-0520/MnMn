@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser
+namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator
 {
-    public abstract class BrowserParameterModelBase: ModelBase
+    public abstract class WebNavigatorParameterModelBase: ModelBase
     {
-        public BrowserParameterModelBase(Uri currentUri, EventArgs e, WebNavigatorEngine engine)
+        public WebNavigatorParameterModelBase(Uri currentUri, EventArgs e, WebNavigatorEngine engine, WebNavigatorParameterKind kind)
         {
             CurrentUri = currentUri;
             OriginalSourceBase = e;
             Engine = engine;
+            Kind = kind;
         }
 
         #region property
@@ -24,6 +25,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser
         public EventArgs OriginalSourceBase { get; }
 
         public WebNavigatorEngine Engine { get; }
+
+        public WebNavigatorParameterKind Kind { get; }
 
         #endregion
     }

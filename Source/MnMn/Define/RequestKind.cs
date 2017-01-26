@@ -82,6 +82,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         /// <summary>
         /// 内臓ブラウザ処理。
         /// </summary>
-        Browser,
+        WebNavigator,
     }
 }

@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define;
-using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
-    public class BrowserRequestModel: RequestModel
+    public class WebNavigatorRequestModel: RequestModel
     {
-        public BrowserRequestModel(RequestKind requestKind, ServiceType serviceType, BrowserParameterModelBase parameter) 
+        public WebNavigatorRequestModel(RequestKind requestKind, ServiceType serviceType, WebNavigatorParameterModelBase parameter) 
             : base(requestKind, serviceType)
         {
             Parameter = parameter;
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 
         #region property
 
-        public BrowserParameterModelBase Parameter { get; }
+        public WebNavigatorParameterModelBase Parameter { get; }
 
         #endregion
     }

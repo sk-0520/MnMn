@@ -42,7 +42,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
-using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
 using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.Model.Setting;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
@@ -210,24 +210,32 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
-        private ResponseModel Request_Browser(BrowserRequestModel request)
+        private ResponseModel Request_WebNavigator(WebNavigatorRequestModel request)
         {
-            var navigatingParameter = request.Parameter as BrowserNavigatingParameterModel;
-            if(navigatingParameter != null) {
-            }
+            switch(request.Parameter.Kind) {
+                case WebNavigatorParameterKind.Navigating: {
+                        var parameter = (WebNavigatorNavigatingParameterModel)request.Parameter;
+                    }
+                    break;
 
-            var clickParameter = request.Parameter as BrowserClickParameterModel;
-            if(clickParameter != null) {
-            }
+                case WebNavigatorParameterKind.Click: {
+                        var parameter = (WebNavigatorClickParameterModel)request.Parameter;
+                    }
+                    break;
 
-            var contextMenuParameter = request.Parameter as BrowserContextMenuParameterModel;
-            if(contextMenuParameter != null) {
-            }
+                case WebNavigatorParameterKind.ContextMenu: {
+                        var parameter = (WebNavigatorContextMenuParameterModel)request.Parameter;
+                    }
+                    break;
 
-            var contextMenuItemParameter = request.Parameter as BrowserContextMenuItemParameterModel;
-            if(contextMenuItemParameter != null) {
-                var contextMenuItemResult = new BrowserContextMenuItemResultModel(false, true, true);
-                return new ResponseModel(request, contextMenuItemResult);
+                case WebNavigatorParameterKind.ContextMenuItem: {
+                        var parameter = (WebNavigatorContextMenuItemParameterModel)request.Parameter;
+                        var contextMenuItemResult = new BrowserContextMenuItemResultModel(false, true, true);
+                        return new ResponseModel(request, contextMenuItemResult);
+                    }
+
+                default:
+                    throw new NotImplementedException();
             }
 
             var result = new BrowserResultModel(false);
@@ -373,8 +381,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 return Request_ShowView((ShowViewRequestModel)request);
             }
 
-            if(request.RequestKind == RequestKind.Browser) {
-                return Request_Browser((BrowserRequestModel)request);
+            if(request.RequestKind == RequestKind.WebNavigator) {
+                return Request_WebNavigator((WebNavigatorRequestModel)request);
             }
 
             switch(request.ServiceType) {
