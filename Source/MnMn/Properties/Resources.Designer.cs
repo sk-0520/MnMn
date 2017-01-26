@@ -216,11 +216,29 @@ namespace ContentTypeTextNet.MnMn.MnMn.Properties {
         }
         
         /// <summary>
+        ///   プロパティ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_Property {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ⛄ソース⛇ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string String_App_Browser_Common_ShowSource {
             get {
                 return ResourceManager.GetString("String_App_Browser_Common_ShowSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ソース に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String_App_Browser_Common_Source {
+            get {
+                return ResourceManager.GetString("String_App_Browser_Common_Source", resourceCulture);
             }
         }
         

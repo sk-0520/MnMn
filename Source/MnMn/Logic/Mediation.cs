@@ -216,6 +216,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             if(clickParameter != null) {
             }
 
+            var contextMenuParameter = request.Parameter as BrowserContextMenuParameterModel;
+            if(contextMenuParameter != null) {
+            }
+
+            var contextMenuItemParameter = request.Parameter as BrowserContextMenuItemParameterModel;
+            if(contextMenuItemParameter != null) {
+                var contextMenuItemResult = new BrowserContextMenuItemResultModel(false, true, true);
+                return new ResponseModel(request, contextMenuItemResult);
+            }
+
             var result = new BrowserResultModel(false);
             return new ResponseModel(request, result);
         }

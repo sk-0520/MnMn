@@ -718,16 +718,89 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             ;
         }
 
+        IEnumerable<BrowserContextMenuBase> CreateNavigationContextMenuItems()
+        {
+            return new BrowserContextMenuBase[] {
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserBack, ServiceType.Common) {
+                    Header = Properties.Resources.String_App_Browser_Common_Back,
+                    Command = BackCommand
+                },
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserForward, ServiceType.Common) {
+                    Header = Properties.Resources.String_App_Browser_Common_Forward,
+                    Command = ForwardCommand
+                },
+            };
+        }
+
+        IEnumerable<BrowserContextMenuBase> CreateCommonEditContextMenuItems()
+        {
+            return new BrowserContextMenuBase[] {
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserCopySelection, ServiceType.Common) {
+                    Header = Properties.Resources.String_App_Browser_Common_CopySelection,
+                    Command = new DelegateCommand(
+                        o => DoAction(
+                            b => { /* not impl */ },
+                            b => b.CopySelection()
+                        ),
+                        o => DoFunction(
+                            b => true,
+                            b => b.CanCopySelection
+                        )
+                    ),
+                },
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserSelerctAll, ServiceType.Common){
+                    Header = Properties.Resources.String_App_Browser_Common_AllSelect,
+                    Command = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.SelectAll()
+                    ))
+                },
+            };
+        }
+
+        IEnumerable<BrowserContextMenuBase> CreateCommonPageContextMenuItems()
+        {
+            return new BrowserContextMenuBase[] {
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserSource, ServiceType.Common) {
+                    Header = Properties.Resources.String_App_Browser_Common_Source,
+                    Command = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.ViewSource()
+                    )),
+                },
+                new BrowserContextMenuItem(BrowserContextMenuKey.browserProperty, ServiceType.Common){
+                    Header = Properties.Resources.String_App_Browser_Common_Property,
+                    Command = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.ShowPageProperties()
+                    )),
+                },
+            };
+        }
+
+        IEnumerable<BrowserContextMenuBase> CreateSmileContextMenuItems()
+        {
+            return new BrowserContextMenuBase[] {
+
+            };
+        }
+
         IEnumerable<BrowserContextMenuBase> CreateContextMenu()
         {
-            return new List<BrowserContextMenuBase>() {
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserBack, ServiceType.Common) { Header = Properties.Resources.String_App_Browser_Common_Back, Command = BackCommand },
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserForward, ServiceType.Common) { Header = Properties.Resources.String_App_Browser_Common_Forward, Command = ForwardCommand },
-                new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common),
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserCopySelection, ServiceType.Common) { Header = Properties.Resources.String_App_Browser_Common_CopySelection  },
-                new BrowserContextMenuItem(BrowserContextMenuKey.browserSelerctAll, ServiceType.Common){ Header = Properties.Resources.String_App_Browser_Common_AllSelect  },
-                new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common),
+            var menuItems = new[] {
+                CreateNavigationContextMenuItems(),
+                new [] { new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common) },
+                CreateSmileContextMenuItems(),
+                new [] { new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common) },
+                CreateCommonEditContextMenuItems(),
+                new [] { new BrowserContextMenuSeparator(BrowserContextMenuKey.browserSeparator, ServiceType.Common) },
+                CreateCommonPageContextMenuItems(),
             };
+
+            return menuItems
+                .SelectMany(m => m)
+                .ToList()
+            ;
         }
 
         Control MakeContextMenuItem(BrowserContextMenuBase menuItemBase)
@@ -902,17 +975,39 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(ContextMenu.ItemsSource == null) {
                 var menuItems = CreateContextMenu();
                 ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
-            }
+            } 
 
-            var parameter = new BrowserContextMenuParameterModel(e, WebNavigatorEngine.GeckoFx);
-            SetClickParameterGeckoFx(parameter, e);
+            var contextMenuParameter = new BrowserContextMenuParameterModel(e, WebNavigatorEngine.GeckoFx);
+            SetClickParameterGeckoFx(contextMenuParameter, e);
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
+            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, contextMenuParameter));
             if(e.Cancelable) {
-                e.Handled = result.Cancel;
+                e.Handled = contextMenuResult.Cancel;
             }
 
             if(!e.Handled) {
+                var contextMenuItemParameter = new BrowserContextMenuItemParameterModel(e, WebNavigatorEngine.GeckoFx);
+
+                var menuItems = ContextMenu.Items
+                    .Cast<Control>()
+                    .Select(c => new { View = c, Menu = (BrowserContextMenuBase)c.DataContext })
+                    .ToList()
+                ;
+                foreach(var menuItem in menuItems) {
+                    contextMenuItemParameter.Key = menuItem.Menu.Key;
+                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserContextMenuItemResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, contextMenuItemParameter));
+
+                    if(contextMenuItemResult.Cancel) {
+                        // 基本的にここでキャンセルは通さないけど一応例外投げておく(必要になったら対応する)
+                        throw new NotImplementedException();
+                    }
+
+                    menuItem.View.IsEnabled = contextMenuItemResult.IsEnabled;
+                    menuItem.View.Visibility = contextMenuItemResult.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+                }
+
+                //TODO: 重複するセパレータの除外とかとか
+
                 ContextMenu.IsOpen = true;
             }
         }

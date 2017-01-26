@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.MnMn.Library.Bridging.Define
     {
         /// <summary>
         /// 共通。
+        /// <para>これなんかやだなぁ。</para>
         /// </summary>
         Common,
         /// <summary>

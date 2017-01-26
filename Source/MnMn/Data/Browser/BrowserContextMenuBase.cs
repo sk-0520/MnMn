@@ -10,9 +10,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.Data.Browser
     public abstract class BrowserContextMenuBase
     {
         public BrowserContextMenuBase(string key, ServiceType serviceType)
-        { }
+        {
+            Key = key;
+            ServiceType = serviceType;
+        }
 
         #region property
+
+        public string Key { get; }
+
+        public ServiceType ServiceType { get; }
+
         #endregion
     }
 }

@@ -11,8 +11,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         public const string browserBack = "browser-back";
         public const string browserForward = "browser-forward";
         public const string browserSeparator = "browser-separator";
-        internal static string browserCopySelection = "browser-copy-selection";
-        internal static string browserSelerctAll = "browser-selerct-all";
+        public static string browserCopySelection = "browser-copy-selection";
+        public static string browserSelerctAll = "browser-selerct-all";
+        public static string browserSource = "browser-source";
+        public static string browserProperty = "browser-property";
     }
 
 }

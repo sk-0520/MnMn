@@ -337,6 +337,7 @@
     <Compile Include="Model\Request\BrowserRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\AppBrowserParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserClickParameterModel.cs" />
+    <Compile Include="Model\Request\Parameter\Browser\BrowserContextMenuItemParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserContextMenuParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserNavigatingParameterModel.cs" />
     <Compile Include="Model\Request\Parameter\ProcessParameterModelBase.cs" />
@@ -345,6 +346,7 @@
     <Compile Include="Model\Request\Service\Smile\Video\Parameter\SmileVideoProcessParameterModelBase.cs" />
     <Compile Include="Model\Request\Service\Smile\Video\SmileVideoProcessRequestModel.cs" />
     <Compile Include="Model\Request\Parameter\Browser\BrowserParameterModelBase.cs" />
+    <Compile Include="Model\Response\BrowserContextMenuItemResultModel.cs" />
     <Compile Include="Model\Response\BrowserResultModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveChannelModel.cs" />
     <Compile Include="Model\Service\Smile\Live\Raw\Feed\FeedSmileLiveGuidModel.cs" />
