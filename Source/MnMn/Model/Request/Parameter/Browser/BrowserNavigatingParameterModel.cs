@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser
 
         #region property
 
-        public Uri Uri { get; set; }
+        public Uri NextUri { get; set; }
 
         #endregion
     }

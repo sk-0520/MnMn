@@ -901,7 +901,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
             var parameter = new BrowserNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
-                Uri = e.Uri,
+                NextUri = e.Uri,
             };
 
             var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));

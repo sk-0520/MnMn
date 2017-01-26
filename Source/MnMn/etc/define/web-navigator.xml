@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<web-navigator>
+	<navigating>
+		<element key="">
+			<extends>
+				<extend key="" value="" />
+			</extends>
+		</element>
+	</navigating>
+	<click>
+		<element key="">
+			<extends>
+				<extend key="" value="" />
+			</extends>
+		</element>
+	</click>
+	<contextmenu>
+		<element key="">
+			<extends>
+				<extend key="" value="" />
+			</extends>
+		</element>
+	</contextmenu>
+</web-navigator>

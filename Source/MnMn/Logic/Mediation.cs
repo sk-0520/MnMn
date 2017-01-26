@@ -74,6 +74,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
             Script = CreateScript();
 
+            WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
+
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
         }
@@ -81,6 +83,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         #region property
 
         AppSettingModel Setting { get; }
+
+        WebNavigatorBridgeModel WebNavigatorBridge { get; }
 
         /// <summary>
         /// ニコニコ関係。
