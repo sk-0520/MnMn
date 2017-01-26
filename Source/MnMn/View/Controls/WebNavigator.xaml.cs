@@ -900,7 +900,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_Navigating(object sender, Gecko.Events.GeckoNavigatingEventArgs e)
         {
-            var parameter = new BrowserNavigatingParameterModel(e, WebNavigatorEngine.GeckoFx) {
+            var parameter = new BrowserNavigatingParameterModel(Source, e, WebNavigatorEngine.GeckoFx) {
                 Uri = e.Uri,
             };
 
@@ -960,7 +960,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         private void BrowserGeckoFx_DomClick(object sender, DomMouseEventArgs e)
         {
-            var parameter = new BrowserClickParameterModel(e, WebNavigatorEngine.GeckoFx);
+            var parameter = new BrowserClickParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(parameter, e);
 
             var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, parameter));
@@ -977,7 +977,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
             } 
 
-            var contextMenuParameter = new BrowserContextMenuParameterModel(e, WebNavigatorEngine.GeckoFx);
+            var contextMenuParameter = new BrowserContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(contextMenuParameter, e);
 
             var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new BrowserRequestModel(RequestKind.Browser, ServiceType, contextMenuParameter));
@@ -986,7 +986,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
 
             if(!e.Handled) {
-                var contextMenuItemParameter = new BrowserContextMenuItemParameterModel(e, WebNavigatorEngine.GeckoFx);
+                var contextMenuItemParameter = new BrowserContextMenuItemParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
+                SetClickParameterGeckoFx(contextMenuItemParameter, e);
 
                 var menuItems = ContextMenu.Items
                     .Cast<Control>()

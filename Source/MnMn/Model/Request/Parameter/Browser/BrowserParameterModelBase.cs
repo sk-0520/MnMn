@@ -10,13 +10,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser
 {
     public abstract class BrowserParameterModelBase: ModelBase
     {
-        public BrowserParameterModelBase(EventArgs e, WebNavigatorEngine engine)
+        public BrowserParameterModelBase(Uri currentUri, EventArgs e, WebNavigatorEngine engine)
         {
+            CurrentUri = currentUri;
             OriginalSourceBase = e;
             Engine = engine;
         }
 
         #region property
+
+        public Uri CurrentUri { get; }
 
         public EventArgs OriginalSourceBase { get; }
 

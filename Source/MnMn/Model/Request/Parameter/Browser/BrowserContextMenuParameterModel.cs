@@ -9,8 +9,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser
 {
     public class BrowserContextMenuParameterModel: BrowserClickParameterModel
     {
-        public BrowserContextMenuParameterModel(EventArgs e, WebNavigatorEngine engine)
-            : base(e, engine)
+        public BrowserContextMenuParameterModel(Uri currentUri, EventArgs e, WebNavigatorEngine engine)
+            : base(currentUri, e, engine)
         {
         }
     }

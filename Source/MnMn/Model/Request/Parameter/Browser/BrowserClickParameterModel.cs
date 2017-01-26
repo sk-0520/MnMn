@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.Browser
 {
     public class BrowserClickParameterModel: BrowserParameterModelBase
     {
-        public BrowserClickParameterModel(EventArgs e, WebNavigatorEngine engine)
-            : base(e, engine)
+        public BrowserClickParameterModel(Uri currentUri, EventArgs e, WebNavigatorEngine engine)
+            : base(currentUri, e, engine)
         { }
 
         #region property
