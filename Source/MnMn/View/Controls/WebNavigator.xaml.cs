@@ -48,6 +48,81 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             InitializeComponent();
         }
 
+        #region BridgeClickProperty
+
+        public static readonly DependencyProperty BridgeClickProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeClickProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeClickChanged))
+        );
+
+        private static void OnBridgeClickChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeClick = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeClick
+        {
+            get { return (bool)GetValue(BridgeClickProperty); }
+            set { SetValue(BridgeClickProperty, value); }
+        }
+
+        #endregion
+
+        #region BridgeNavigatingProperty
+
+        public static readonly DependencyProperty BridgeNavigatingProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeNavigatingProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeNavigatingChanged))
+        );
+
+        private static void OnBridgeNavigatingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeNavigating = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeNavigating
+        {
+            get { return (bool)GetValue(BridgeNavigatingProperty); }
+            set { SetValue(BridgeNavigatingProperty, value); }
+        }
+
+        #endregion
+
+        #region BridgeContextMenuProperty
+
+        public static readonly DependencyProperty BridgeContextMenuProperty = DependencyProperty.Register(
+            DependencyPropertyUtility.GetName(nameof(BridgeContextMenuProperty)),
+            typeof(bool),
+            typeof(WebNavigator),
+            new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnBridgeContextMenuChanged))
+        );
+
+        private static void OnBridgeContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as WebNavigator;
+            if(control != null) {
+                control.BridgeContextMenu = (bool)e.NewValue;
+            }
+        }
+
+        public bool BridgeContextMenu
+        {
+            get { return (bool)GetValue(BridgeContextMenuProperty); }
+            set { SetValue(BridgeContextMenuProperty, value); }
+        }
+
+        #endregion
+
         #region IsVisibleToolbarProperty
 
         public static readonly DependencyProperty IsVisibleToolbarProperty = DependencyProperty.Register(
