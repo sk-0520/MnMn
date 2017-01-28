@@ -31,6 +31,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
+using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
 using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
@@ -943,9 +944,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(contextMenuItem.SendService == ServiceType.Common) {
                 ExecuteCommonCommand(contextMenuItem, parameter);
             } else {
+                var processParameter = new WebNavigatorProcessParameterModel();
+                var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
-                    b => { ((Mediation)b.Tag).Request(new RequestModel(RequestKind.WebNavigator, ServiceType)); },
-                    b => { (b.Mediation).Request(new RequestModel(RequestKind.WebNavigator, ServiceType)); }
+                    b => { ((Mediation)b.Tag).Request(processRequest); },
+                    b => { (b.Mediation).Request(processRequest); }
                 );
             }
         }
