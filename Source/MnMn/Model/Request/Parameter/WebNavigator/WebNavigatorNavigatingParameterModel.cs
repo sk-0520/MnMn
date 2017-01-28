@@ -7,7 +7,7 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator
 {
-    public class WebNavigatorNavigatingParameterModel: WebNavigatorParameterModelBase
+    public class WebNavigatorNavigatingParameterModel: WebNavigatorParameterModel
     {
         public WebNavigatorNavigatingParameterModel(Uri currentUri, EventArgs e, WebNavigatorEngine engine)
             : base(currentUri, e, engine, WebNavigatorParameterKind.Navigating)

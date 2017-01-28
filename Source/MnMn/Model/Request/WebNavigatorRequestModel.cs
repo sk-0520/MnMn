@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
     public class WebNavigatorRequestModel: RequestModel
     {
-        public WebNavigatorRequestModel(RequestKind requestKind, ServiceType serviceType, WebNavigatorParameterModelBase parameter) 
+        public WebNavigatorRequestModel(RequestKind requestKind, ServiceType serviceType, WebNavigatorParameterModel parameter) 
             : base(requestKind, serviceType)
         {
             Parameter = parameter;
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 
         #region property
 
-        public WebNavigatorParameterModelBase Parameter { get; }
+        public WebNavigatorParameterModel Parameter { get; }
 
         #endregion
     }

@@ -7,9 +7,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 {
-    public class BrowserContextMenuItemResultModel: BrowserResultModel
+    public class WebNavigatorContextMenuItemResultModel: WebNavigatorResultModel
     {
-        public BrowserContextMenuItemResultModel(bool cancel, bool isEnabled, bool isVisible)
+        public WebNavigatorContextMenuItemResultModel(bool cancel, bool isEnabled, bool isVisible)
             :base(cancel)
         {
             IsEnabled = isEnabled;

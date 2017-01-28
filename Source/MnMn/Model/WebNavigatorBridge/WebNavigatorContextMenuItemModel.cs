@@ -17,6 +17,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
     {
         #region property
 
+        [XmlAttribute("separator")]
+        public bool IsSeparator { get; set; }
+
         /// <summary>
         /// 受け付けるサービス。
         /// <para><see cref="ContentTypeTextNet.MnMn.MnMn.View.Controls.WebNavigator.ServiceType"/>が渡される。</para>

@@ -8,9 +8,9 @@ using ContentTypeTextNet.MnMn.MnMn.Define;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator
 {
-    public abstract class WebNavigatorParameterModelBase: ModelBase
+    public class WebNavigatorParameterModel: ModelBase
     {
-        public WebNavigatorParameterModelBase(Uri currentUri, EventArgs e, WebNavigatorEngine engine, WebNavigatorParameterKind kind)
+        public WebNavigatorParameterModel(Uri currentUri, EventArgs e, WebNavigatorEngine engine, WebNavigatorParameterKind kind)
         {
             CurrentUri = currentUri;
             OriginalSourceBase = e;
