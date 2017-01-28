@@ -11,7 +11,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 {
-    public class WebNavigatorContextMenuItemViewModel: DefinedElementViewModelBase<WebNavigatorContextMenuItemModel>
+    public class WebNavigatorContextMenuItemViewModel: WebNavigatorDefinedElementViewModelBase<WebNavigatorContextMenuItemModel>
     {
         #region variable
 
@@ -26,9 +26,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         #region property
 
         public bool IsSeparator { get { return DefinedModel.IsSeparator; } }
-
-        public ServiceType AllowService { get { return DefinedModel.AllowService; } }
-        public ServiceType SendService { get { return DefinedModel.SendService; } }
 
         public IReadOnlyList<WebNavigatorElementConditionItemViewModel> Conditions {
             get

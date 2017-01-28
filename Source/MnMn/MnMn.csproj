@@ -399,7 +399,7 @@
     <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
-    <Compile Include="Model\WebNavigatorBridge\WebNavigatorDefinedElementBase.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorDefinedElementModelBase.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuModel.cs" />
@@ -446,6 +446,7 @@
       <DependentUpon>SmileVideoPlayerViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorContextMenuItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorDefinedElementViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionItemViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionParameterViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModelBase.cs" />

@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
     /// <para>キー自体は<see cref="ContentTypeTextNet.MnMn.MnMn.Define.WebNavigatorContextMenuKey"/>で定義してるはず。</para>
     /// </summary>
     [Serializable]
-    public class WebNavigatorContextMenuItemModel: WebNavigatorDefinedElementBase
+    public class WebNavigatorContextMenuItemModel: WebNavigatorDefinedElementModelBase
     {
         #region property
 

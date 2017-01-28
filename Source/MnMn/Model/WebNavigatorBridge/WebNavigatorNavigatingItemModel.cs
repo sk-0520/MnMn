@@ -9,7 +9,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
 {
     [Serializable]
-    public class WebNavigatorNavigatingItemModel: WebNavigatorDefinedElementBase
+    public class WebNavigatorNavigatingItemModel: WebNavigatorDefinedElementModelBase
     {
         #region property
 
