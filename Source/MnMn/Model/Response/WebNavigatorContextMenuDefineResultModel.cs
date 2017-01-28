@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 {
     public class WebNavigatorContextMenuDefineResultModel: WebNavigatorResultModel
     {
-        public WebNavigatorContextMenuDefineResultModel(IReadOnlyList<WebNavigatorContextMenuItemViewModel> items)
+        public WebNavigatorContextMenuDefineResultModel(IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> items)
             :base(false)
         {
             Items = items;
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 
         #region property
 
-        public IReadOnlyList<WebNavigatorContextMenuItemViewModel> Items { get; }
+        public IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> Items { get; }
 
         #endregion
     }

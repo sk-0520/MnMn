@@ -8,8 +8,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     public static class WebNavigatorContextMenuKey
     {
-        public const string separator = "separator";
-
         public const string commonBack = "common-back";
         public const string commonForward = "common-forward";
         public const string commonCopySelection = "common-copy-selection";

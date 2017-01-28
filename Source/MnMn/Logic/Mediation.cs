@@ -77,7 +77,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Script = CreateScript();
 
             WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
-            WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items.Select(i => new WebNavigatorContextMenuItemViewModel(i)).ToList();
+            WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
+                .Select(i => new WebNavigatorContextMenuItemViewModel(i))
+                .ToDictionary(i => i.Key, i => i)
+            ;
 
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
@@ -88,7 +91,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         AppSettingModel Setting { get; }
 
         WebNavigatorBridgeModel WebNavigatorBridge { get; }
-        IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
+        IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
 
         /// <summary>
         /// ニコニコ関係。
@@ -214,6 +217,14 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             throw new NotImplementedException();
         }
 
+        WebNavigatorContextMenuItemResultModel Request_WebNavigatorFromContextMenuItem(WebNavigatorRequestModel request, WebNavigatorContextMenuItemParameterModel parameter)
+        {
+            
+            var result = new WebNavigatorContextMenuItemResultModel(false, true, true, null);
+
+            return result;
+        }
+
         private ResponseModel Request_WebNavigator(WebNavigatorRequestModel request)
         {
             switch(request.Parameter.Kind) {
@@ -240,7 +251,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                 case WebNavigatorParameterKind.ContextMenuItem: {
                         //todo:parameter
                         var parameter = (WebNavigatorContextMenuItemParameterModel)request.Parameter;
-                        var contextMenuItemResult = new WebNavigatorContextMenuItemResultModel(false, true, true, null);
+                        var contextMenuItemResult = Request_WebNavigatorFromContextMenuItem(request, parameter);
                         return new ResponseModel(request, contextMenuItemResult);
                     }
 
