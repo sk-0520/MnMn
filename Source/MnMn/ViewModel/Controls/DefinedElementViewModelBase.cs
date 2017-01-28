@@ -62,12 +62,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls
     {
         public DefinedElementViewModelBase(TDefinedElementModel model) : base(model)
         {
-            Define = model;
+            DefinedModel = model;
         }
 
         #region property
 
-        protected TDefinedElementModel Define { get; }
+        protected TDefinedElementModel DefinedModel { get; }
 
         #endregion
     }

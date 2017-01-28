@@ -13,27 +13,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
     /// <para>キー自体は<see cref="ContentTypeTextNet.MnMn.MnMn.Define.WebNavigatorContextMenuKey"/>で定義してるはず。</para>
     /// </summary>
     [Serializable]
-    public class WebNavigatorContextMenuItemModel: DefinedElementModel
+    public class WebNavigatorContextMenuItemModel: WebNavigatorDefinedElementBase
     {
         #region property
 
         [XmlAttribute("separator")]
         public bool IsSeparator { get; set; }
-
-        /// <summary>
-        /// 受け付けるサービス。
-        /// <para><see cref="ContentTypeTextNet.MnMn.MnMn.View.Controls.WebNavigator.ServiceType"/>が渡される。</para>
-        /// <para>基本的に<see cref="ServiceType.All"/>でOK。</para>
-        /// </summary>
-        [XmlAttribute("allow-service")]
-        public ServiceType AllowService { get; set; }
-
-        /// <summary>
-        /// 処理するサービス。
-        /// <para><see cref="ServiceType.All"/>はダメ。</para>
-        /// </summary>
-        [XmlAttribute("send-service")]
-        public ServiceType SendService { get; set; }
 
         /// <summary>
         /// 表示・使用条件。

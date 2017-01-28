@@ -25,16 +25,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #region property
 
-        public bool IsSeparator { get { return Define.IsSeparator; } }
+        public bool IsSeparator { get { return DefinedModel.IsSeparator; } }
 
-        public ServiceType AllowService { get { return Define.AllowService; } }
-        public ServiceType SendService { get { return Define.SendService; } }
+        public ServiceType AllowService { get { return DefinedModel.AllowService; } }
+        public ServiceType SendService { get { return DefinedModel.SendService; } }
 
         public IReadOnlyList<WebNavigatorElementConditionItemViewModel> Conditions {
             get
             {
                 if(this._conditions == null) {
-                    this._conditions = Define.Conditions
+                    this._conditions = DefinedModel.Conditions
                         .Select(c => new WebNavigatorElementConditionItemViewModel(c))
                         .ToList()
                     ;

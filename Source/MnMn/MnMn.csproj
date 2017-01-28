@@ -399,11 +399,15 @@
     <Compile Include="Model\SpaghettiSourceModel.cs" />
     <Compile Include="Model\ThemeDefineModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorBridgeModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorDefinedElementBase.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuItemModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorContextMenuModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionParameterModel.cs" />
     <Compile Include="Model\WebNavigatorBridge\WebNavigatorElementConditionTagModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingItemModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorNavigatingModel.cs" />
+    <Compile Include="Model\WebNavigatorBridge\WebNavigatorPageConditionModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppBrowserManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppFlashPlayerManagerViewModel.cs" />
     <Compile Include="ViewModel\Controls\App\AppQuestionnaireManagerViewModel.cs" />
@@ -446,6 +450,8 @@
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionParameterViewModel.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModelBase.cs" />
     <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorElementConditionTagViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorNavigatingItemViewModel.cs" />
+    <Compile Include="ViewModel\Controls\WebNavigatorBridge\WebNavigatorPageConditionViewModel.cs" />
     <Compile Include="View\Attachment\DragAndDropBehavior.cs" />
     <Compile Include="View\Attachment\HtmlDescriptionBehavior.cs" />
     <Compile Include="View\Attachment\WindowTitleBehavior.cs" />

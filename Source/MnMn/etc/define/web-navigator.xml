@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <web-navigator>
 	<navigating>
-		<element key="">
-			<extends>
-				<extend key="" value="" />
-			</extends>
+		<element key="smile-video-open-player" allow-service="*" send-service="smile-video">
+			<conditions>
+				<condition uri="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+			</conditions>
 		</element>
 	</navigating>
 	<!--
+	使い道が分からんくなった
 	<click>
 		<element key="">
 			<extends>

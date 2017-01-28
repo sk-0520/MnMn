@@ -13,6 +13,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
     {
         #region property
 
+        [XmlElement("navigating")]
+        public WebNavigatorNavigatingModel Navigating { get; set; } = new WebNavigatorNavigatingModel();
+
+
         [XmlElement("context-menu")]
         public WebNavigatorContextMenuModel ContextMenu { get; set; } = new WebNavigatorContextMenuModel();
 

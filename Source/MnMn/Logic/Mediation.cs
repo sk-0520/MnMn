@@ -80,6 +80,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Script = CreateScript();
 
             WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
+            WebNavigatorNavigatingItems = WebNavigatorBridge.Navigating.Items
+                .Select(i => new WebNavigatorNavigatingItemViewModel(i))
+                .ToList()
+            ;
+            WebNavigatorNavigatingMap = WebNavigatorNavigatingItems.ToDictionary(i => i.Key, i => i);
+
             WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
                 .Select(i => new WebNavigatorContextMenuItemViewModel(i))
                 .ToList()
@@ -95,6 +101,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         AppSettingModel Setting { get; }
 
         WebNavigatorBridgeModel WebNavigatorBridge { get; }
+        IReadOnlyList<WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingItems { get; }
+        IReadOnlyDictionary<string, WebNavigatorNavigatingItemViewModel> WebNavigatorNavigatingMap { get; }
         IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
         IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuMap { get; }
 
