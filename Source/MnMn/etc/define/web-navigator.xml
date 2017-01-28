@@ -15,9 +15,9 @@
 		</element>
 	</click>
 	<context-menu>
-		<element key="" allow-service="*" send-service="common">
+		<element key="common-back" separator="false" allow-service="*" send-service="common">
 			<words>
-				<word key="ja-jp" value="基本" />
+				<word key="ja-jp" value="戻る" />
 			</words>
 		</element>
 	</context-menu>

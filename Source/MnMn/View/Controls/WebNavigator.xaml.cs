@@ -33,6 +33,7 @@ using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
 using ContentTypeTextNet.MnMn.MnMn.Model.Response;
+using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using Gecko;
 
@@ -43,6 +44,16 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
     /// </summary>
     public partial class WebNavigator: UserControl
     {
+        #region variable
+
+        ICommand _copySelectionCommand;
+        ICommand _selectAllCommand;
+
+        ICommand _showSourceCommand;
+        ICommand _showPropertyCommand;
+
+        #endregion
+
         public WebNavigator()
         {
             InitializeComponent();
@@ -590,6 +601,70 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
+        ICommand CopySelectionCommand
+        {
+            get
+            {
+                if(this._copySelectionCommand == null) {
+                    this._copySelectionCommand = new DelegateCommand(
+                        o => DoAction(
+                            b => { /* not impl */ },
+                            b => b.CopySelection()
+                        ),
+                        o => DoFunction(
+                            b => true,
+                            b => b.CanCopySelection
+                        )
+                    );
+                }
+                return this._copySelectionCommand;
+            }
+        }
+
+        ICommand SelectAllCommand
+        {
+            get
+            {
+                if(this._selectAllCommand == null) {
+                    this._selectAllCommand = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.SelectAll()
+                    ));
+                }
+                return this._selectAllCommand;
+            }
+        }
+
+        ICommand ShowSourceCommand
+        {
+            get
+            {
+                if(this._showSourceCommand == null) {
+                    this._showSourceCommand = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.ViewSource()
+                    ));
+                }
+
+                return this._showSourceCommand;
+            }
+        }
+
+        ICommand ShowPropertyCommand
+        {
+            get
+            {
+                if(this._showPropertyCommand == null) {
+                    this._showPropertyCommand = new DelegateCommand(o => DoAction(
+                        b => { /* not impl */ },
+                        b => b.ShowPageProperties()
+                    ));
+                }
+
+                return this._showPropertyCommand;
+            }
+        }
+
         #endregion
 
         #region function
@@ -615,7 +690,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         /// </summary>
         /// <param name="defaultAction">標準ブラウザ使用時の処理。</param>
         /// <param name="geckoFxAction">Gecko版使用時の処理。</param>
-        void DoAction(Action<WebBrowser> defaultAction, Action<GeckoWebBrowser> geckoFxAction)
+        void DoAction(Action<WebBrowser> defaultAction, Action<ServiceGeckoWebBrowser> geckoFxAction)
         {
             WebNavigatorUtility.DoAction(
                 WebNavigatorCore.Engine,
@@ -793,109 +868,102 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             ;
         }
 
-        IEnumerable<BrowserContextMenuBase> CreateNavigationContextMenuItems()
+        Separator MakeContextMenuItemSeparator(WebNavigatorContextMenuItemModel contextMenuItem)
         {
-            return new BrowserContextMenuBase[] {
-                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserBack, ServiceType.Common) {
-                    Header = Properties.Resources.String_App_Browser_Common_Back,
-                    Command = BackCommand
-                },
-                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserForward, ServiceType.Common) {
-                    Header = Properties.Resources.String_App_Browser_Common_Forward,
-                    Command = ForwardCommand
-                },
-            };
-        }
-
-        IEnumerable<BrowserContextMenuBase> CreateCommonEditContextMenuItems()
-        {
-            return new BrowserContextMenuBase[] {
-                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserCopySelection, ServiceType.Common) {
-                    Header = Properties.Resources.String_App_Browser_Common_CopySelection,
-                    Command = new DelegateCommand(
-                        o => DoAction(
-                            b => { /* not impl */ },
-                            b => b.CopySelection()
-                        ),
-                        o => DoFunction(
-                            b => true,
-                            b => b.CanCopySelection
-                        )
-                    ),
-                },
-                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserSelerctAll, ServiceType.Common){
-                    Header = Properties.Resources.String_App_Browser_Common_AllSelect,
-                    Command = new DelegateCommand(o => DoAction(
-                        b => { /* not impl */ },
-                        b => b.SelectAll()
-                    ))
-                },
-            };
-        }
-
-        IEnumerable<BrowserContextMenuBase> CreateCommonPageContextMenuItems()
-        {
-            return new BrowserContextMenuBase[] {
-                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserSource, ServiceType.Common) {
-                    Header = Properties.Resources.String_App_Browser_Common_Source,
-                    Command = new DelegateCommand(o => DoAction(
-                        b => { /* not impl */ },
-                        b => b.ViewSource()
-                    )),
-                },
-                new BrowserContextMenuItem(WebNavigatorContextMenuKey.browserProperty, ServiceType.Common){
-                    Header = Properties.Resources.String_App_Browser_Common_Property,
-                    Command = new DelegateCommand(o => DoAction(
-                        b => { /* not impl */ },
-                        b => b.ShowPageProperties()
-                    )),
-                },
-            };
-        }
-
-        IEnumerable<BrowserContextMenuBase> CreateSmileContextMenuItems()
-        {
-            return new BrowserContextMenuBase[] {
-
-            };
-        }
-
-        IEnumerable<BrowserContextMenuBase> CreateContextMenu()
-        {
-            var menuItems = new[] {
-                CreateNavigationContextMenuItems(),
-                new [] { new BrowserContextMenuSeparator(WebNavigatorContextMenuKey.browserSeparator, ServiceType.Common) },
-                CreateSmileContextMenuItems(),
-                new [] { new BrowserContextMenuSeparator(WebNavigatorContextMenuKey.browserSeparator, ServiceType.Common) },
-                CreateCommonEditContextMenuItems(),
-                new [] { new BrowserContextMenuSeparator(WebNavigatorContextMenuKey.browserSeparator, ServiceType.Common) },
-                CreateCommonPageContextMenuItems(),
+            var result = new Separator() {
+                DataContext = contextMenuItem,
             };
 
-            return menuItems
-                .SelectMany(m => m)
-                .ToList()
-            ;
+            return result;
         }
 
-        Control MakeContextMenuItem(BrowserContextMenuBase menuItemBase)
+        MenuItem MakeContextMenuItemCore(WebNavigatorContextMenuItemModel contextMenuItem)
         {
-            if(menuItemBase is BrowserContextMenuSeparator) {
-                return new Separator() {
-                    DataContext = menuItemBase,
-                };
+            var result = new MenuItem() {
+                DataContext = contextMenuItem,
+
+                Header = contextMenuItem.DisplayText,
+            };
+            result.Command = new DelegateCommand(
+                o => DoContextMenuItemCommand(result, o),
+                o => CanDoContextMenuItemCommand(result, o)
+            );
+
+            return result;
+        }
+
+        Control MakeContextMenuItem(WebNavigatorContextMenuItemModel contextMenuItem)
+        {
+            if(contextMenuItem.IsSeparator) {
+                return MakeContextMenuItemSeparator(contextMenuItem);
             } else {
-                var menuItem = (BrowserContextMenuItem)menuItemBase;
-
-                return new MenuItem() {
-                    DataContext = menuItemBase,
-
-                    Header = menuItem.Header,
-
-                    Command = menuItem.Command,
-                    CommandParameter = menuItem.CommandParameter,
-                };
+                return MakeContextMenuItemCore(contextMenuItem);
             }
+        }
+
+        ICommand GetCommonCommand(string key)
+        {
+            switch(key) {
+                case WebNavigatorContextMenuKey.commonBack:
+                    return BackCommand;
+
+                case WebNavigatorContextMenuKey.commonForward:
+                    return ForwardCommand;
+
+                case WebNavigatorContextMenuKey.commonCopySelection:
+                    return CopySelectionCommand;
+
+                case WebNavigatorContextMenuKey.commonSelerctAll:
+                    return SelectAllCommand;
+
+                case WebNavigatorContextMenuKey.commonSource:
+                    return ShowSourceCommand;
+
+                case WebNavigatorContextMenuKey.commonProperty:
+                    return ShowPropertyCommand;
+
+                default:
+                    return null;
+            }
+        }
+
+        void ExecuteCommonCommand(WebNavigatorContextMenuItemModel contextMenuItem, object parameter)
+        {
+            Debug.Assert(contextMenuItem.SendService == ServiceType.Common);
+
+            var command = GetCommonCommand(contextMenuItem.Key);
+            if(command != null) {
+                command.TryExecute(parameter);
+            }
+        }
+
+        void DoContextMenuItemCommand(MenuItem menuItem, object parameter)
+        {
+            var contextMenuItem = (WebNavigatorContextMenuItemModel)menuItem.DataContext;
+            if(contextMenuItem.SendService == ServiceType.Common) {
+                ExecuteCommonCommand(contextMenuItem, parameter);
+            } else {
+                DoAction(
+                    b => { ((Mediation)b.Tag).Request(new RequestModel(RequestKind.WebNavigator, ServiceType)); },
+                    b => { (b.Mediation).Request(new RequestModel(RequestKind.WebNavigator, ServiceType)); }
+                );
+            }
+        }
+
+        bool CanDoContextMenuItemCommand(MenuItem menuItem, object parameter)
+        {
+            var contextMenuItem = (WebNavigatorContextMenuItemModel)menuItem.DataContext;
+            if(contextMenuItem.SendService == ServiceType.Common) {
+                // 共通処理は特殊
+                var command = GetCommonCommand(contextMenuItem.Key);
+                if(command != null) {
+                    return command.CanExecute(parameter);
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #endregion
@@ -979,7 +1047,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 NextUri = e.Uri,
             };
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
             e.Cancel = result.Cancel;
 
@@ -1038,7 +1106,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             var parameter = new WebNavigatorClickParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(parameter, e);
 
-            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
+            var result = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, parameter));
 
             if(e.Cancelable) {
                 e.Handled = result.Cancel;
@@ -1048,14 +1116,17 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         private void BrowserGeckoFx_DomContextMenu(object sender, DomMouseEventArgs e)
         {
             if(ContextMenu.ItemsSource == null) {
-                var menuItems = CreateContextMenu();
-                ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
+                //var menuItems = CreateContextMenu();
+                var contextMenuDefineParameter = new WebNavigatorParameterModel(null, null, WebNavigatorEngine.GeckoFx, WebNavigatorParameterKind.ContextMenuDefine);
+                var contextMenuDefineResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuDefineResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuDefineParameter));
+                //ContextMenu.ItemsSource = menuItems.Select(MakeContextMenuItem).ToList();
+                ContextMenu.ItemsSource = contextMenuDefineResult.Items.Select(MakeContextMenuItem).ToList();
             } 
 
             var contextMenuParameter = new WebNavigatorContextMenuParameterModel(Source, e, WebNavigatorEngine.GeckoFx);
             SetClickParameterGeckoFx(contextMenuParameter, e);
 
-            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuParameter));
+            var contextMenuResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuParameter));
             if(e.Cancelable) {
                 e.Handled = contextMenuResult.Cancel;
             }
@@ -1066,12 +1137,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 var menuItems = ContextMenu.Items
                     .Cast<Control>()
-                    .Select(c => new { View = c, Menu = (BrowserContextMenuBase)c.DataContext })
+                    .Select(c => new { View = c, Define = (WebNavigatorContextMenuItemModel)c.DataContext })
                     .ToList()
                 ;
                 foreach(var menuItem in menuItems) {
-                    contextMenuItemParameter.Key = menuItem.Menu.Key;
-                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<BrowserContextMenuItemResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuItemParameter));
+                    contextMenuItemParameter.Key = menuItem.Define.Key;
+                    var contextMenuItemResult = BrowserGeckoFx.Mediation.GetResultFromRequest<WebNavigatorContextMenuItemResultModel>(new WebNavigatorRequestModel(RequestKind.WebNavigator, ServiceType, contextMenuItemParameter));
 
                     if(contextMenuItemResult.Cancel) {
                         // 基本的にここでキャンセルは通さないけど一応例外投げておく(必要になったら対応する)
@@ -1087,7 +1158,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
                 ContextMenu.IsOpen = true;
             }
         }
-
-
+        
     }
 }

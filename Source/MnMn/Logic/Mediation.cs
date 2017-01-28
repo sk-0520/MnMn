@@ -214,6 +214,11 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         private ResponseModel Request_WebNavigator(WebNavigatorRequestModel request)
         {
             switch(request.Parameter.Kind) {
+                case WebNavigatorParameterKind.ContextMenuDefine: {
+                        var contextMenuDefineResult = new WebNavigatorContextMenuDefineResultModel(WebNavigatorBridge.ContextMenu.Items);
+                        return new ResponseModel(request, contextMenuDefineResult);
+                    }
+
                 case WebNavigatorParameterKind.Navigating: {
                         var parameter = (WebNavigatorNavigatingParameterModel)request.Parameter;
                     }
@@ -231,7 +236,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
                 case WebNavigatorParameterKind.ContextMenuItem: {
                         var parameter = (WebNavigatorContextMenuItemParameterModel)request.Parameter;
-                        var contextMenuItemResult = new BrowserContextMenuItemResultModel(false, true, true);
+                        var contextMenuItemResult = new WebNavigatorContextMenuItemResultModel(false, true, true);
                         return new ResponseModel(request, contextMenuItemResult);
                     }
 
@@ -239,7 +244,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     throw new NotImplementedException();
             }
 
-            var result = new BrowserResultModel(false);
+            var result = new WebNavigatorResultModel(false);
             return new ResponseModel(request, result);
         }
 

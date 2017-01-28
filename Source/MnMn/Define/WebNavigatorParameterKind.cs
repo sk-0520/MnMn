@@ -8,6 +8,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
 {
     public enum WebNavigatorParameterKind
     {
+        ContextMenuDefine,
         Navigating,
         Click,
         ContextMenu,

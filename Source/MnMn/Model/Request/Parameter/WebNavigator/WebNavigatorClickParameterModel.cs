@@ -10,7 +10,7 @@ using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator
 {
-    public class WebNavigatorClickParameterModel: WebNavigatorParameterModelBase
+    public class WebNavigatorClickParameterModel: WebNavigatorParameterModel
     {
         protected WebNavigatorClickParameterModel(Uri currentUri, EventArgs e, WebNavigatorEngine engine, WebNavigatorParameterKind kind)
             : base(currentUri, e, engine, kind)

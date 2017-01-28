@@ -7,9 +7,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 {
-    public class BrowserResultModel: ModelBase
+    public class WebNavigatorResultModel: ModelBase
     {
-        public BrowserResultModel(bool cancel)
+        public WebNavigatorResultModel(bool cancel)
         {
             Cancel = cancel;
         }
