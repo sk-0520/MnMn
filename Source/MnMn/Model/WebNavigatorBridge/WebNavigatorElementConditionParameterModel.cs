@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
         #region property
 
         [XmlAttribute("param")]
-        public string Parameter { get; set; }
+        public string ParameterSource { get; set; }
 
         #endregion
     }

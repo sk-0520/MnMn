@@ -36,6 +36,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter.WebNavigator;
 using ContentTypeTextNet.MnMn.MnMn.Model.Response;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 using Gecko;
 
 namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
@@ -869,7 +870,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             ;
         }
 
-        Separator MakeContextMenuItemSeparator(WebNavigatorContextMenuItemModel contextMenuItem)
+        Separator MakeContextMenuItemSeparator(WebNavigatorContextMenuItemViewModel contextMenuItem)
         {
             var result = new Separator() {
                 DataContext = contextMenuItem,
@@ -878,7 +879,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return result;
         }
 
-        MenuItem MakeContextMenuItemCore(WebNavigatorContextMenuItemModel contextMenuItem)
+        MenuItem MakeContextMenuItemCore(WebNavigatorContextMenuItemViewModel contextMenuItem)
         {
             var result = new MenuItem() {
                 DataContext = contextMenuItem,
@@ -893,7 +894,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             return result;
         }
 
-        Control MakeContextMenuItem(WebNavigatorContextMenuItemModel contextMenuItem)
+        Control MakeContextMenuItem(WebNavigatorContextMenuItemViewModel contextMenuItem)
         {
             if(contextMenuItem.IsSeparator) {
                 return MakeContextMenuItemSeparator(contextMenuItem);
@@ -957,7 +958,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         bool CanDoContextMenuItemCommand(MenuItem menuItem, object parameter)
         {
-            var contextMenuItem = (WebNavigatorContextMenuItemModel)menuItem.DataContext;
+            var contextMenuItem = (WebNavigatorContextMenuItemViewModel)menuItem.DataContext;
             if(contextMenuItem.SendService == ServiceType.Common) {
                 // 共通処理は特殊
                 var command = GetCommonCommand(contextMenuItem.Key);
@@ -1142,7 +1143,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                 var menuItems = ContextMenu.Items
                     .Cast<Control>()
-                    .Select(c => new { View = c, Define = (WebNavigatorContextMenuItemModel)c.DataContext })
+                    .Select(c => new { View = c, Define = (WebNavigatorContextMenuItemViewModel)c.DataContext })
                     .ToList()
                 ;
                 foreach(var menuItem in menuItems) {

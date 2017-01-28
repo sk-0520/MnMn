@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 {
     public class WebNavigatorContextMenuDefineResultModel: WebNavigatorResultModel
     {
-        public WebNavigatorContextMenuDefineResultModel(IReadOnlyList<WebNavigatorContextMenuItemModel> items)
+        public WebNavigatorContextMenuDefineResultModel(IReadOnlyList<WebNavigatorContextMenuItemViewModel> items)
             :base(false)
         {
             Items = items;
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Response
 
         #region property
 
-        public IReadOnlyList<WebNavigatorContextMenuItemModel> Items { get; }
+        public IReadOnlyList<WebNavigatorContextMenuItemViewModel> Items { get; }
 
         #endregion
     }

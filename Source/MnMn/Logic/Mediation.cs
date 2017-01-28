@@ -49,6 +49,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.App;
 using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.Service.Smile.Video;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Logic
 {
@@ -76,6 +77,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             Script = CreateScript();
 
             WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
+            WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items.Select(i => new WebNavigatorContextMenuItemViewModel(i)).ToList();
 
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
@@ -86,6 +88,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         AppSettingModel Setting { get; }
 
         WebNavigatorBridgeModel WebNavigatorBridge { get; }
+        IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
 
         /// <summary>
         /// ニコニコ関係。
@@ -215,7 +218,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         {
             switch(request.Parameter.Kind) {
                 case WebNavigatorParameterKind.ContextMenuDefine: {
-                        var contextMenuDefineResult = new WebNavigatorContextMenuDefineResultModel(WebNavigatorBridge.ContextMenu.Items);
+                        var contextMenuDefineResult = new WebNavigatorContextMenuDefineResultModel(WebNavigatorContextMenuItems);
                         return new ResponseModel(request, contextMenuDefineResult);
                     }
 
