@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +40,7 @@ using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility;
+using ContentTypeTextNet.MnMn.MnMn.Logic.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Order;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -237,35 +239,13 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                         showMenuItem = condition.BaseUriRegex.IsMatch(parameter.CurrentUri.OriginalString);
                     }
 
-                    var elementsFullNodeList = new List<SimpleHtmlElement>(parameter.RootNodes);
-                    elementsFullNodeList.Add(parameter.Element);
-                    var elementsFullNodePath = string.Join("/", elementsFullNodeList.Select(n => n.Name));
+                    var elementList = new SimleHtmlElementList(condition.TagNameRegex, parameter.RootNodes, parameter.Element);
 
-                    var hitTagName = condition.TagNameRegex.IsMatch(elementsFullNodePath);
+                    var hitElements = condition.TargetItems
+                        .Select(i => elementList.MatchElement(i))
+                    ;
 
-                    var hitTargets = hitTagName && condition.TargetItems.All(tagItem => {
-                        var hitAttribute = false;
-                        for(var i = 0; i < elementsFullNodeList.Count; i++) {
-                            var currentElements = elementsFullNodeList
-                                .Take(i + 1)
-                                .ToList()
-                            ;
-                            var elementsCurrentNodePath = string.Join("/", currentElements.Select(n => n.Name));
-                            if(condition.TagNameRegex.IsMatch(elementsCurrentNodePath)) {
-                                var tagetElement = currentElements.Last();
-                                if(tagetElement.Attributes.ContainsKey(tagItem.Attribute)) {
-                                    var attributeValue = tagetElement.Attributes[tagItem.Attribute];
-                                    hitAttribute = tagItem.ValueRegex.IsMatch(attributeValue);
-                                }
-                                if(hitAttribute) {
-                                    break;
-                                }
-                            }
-                        }
-                        return hitAttribute;
-                    });
-
-                    if(hitTargets) {
+                    if(elementList.HitTagNameInNodesPath && hitElements.All(h => h.IsHit)) {
                         if(showMenuItem) {
                             enabledMenuItem = true;
                         } else {
@@ -277,12 +257,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     if(showMenuItem) {
                         var param = string.Empty;
                         if(enabledMenuItem) {
-                            if(parameter.Element.Attributes.ContainsKey(condition.Parameter.Attribute)) {
-                                var attributeValue = parameter.Element.Attributes[condition.Parameter.Attribute];
-                                var valueMatch = condition.Parameter.ValueRegex.Match(attributeValue);
-                                if(valueMatch.Success && 0 < valueMatch.Groups.Count) {
-                                    var sss= valueMatch.Groups[0].Captures;
-                                }
+                            var hit = elementList.MatchElement(condition.Parameter);
+                            if(hit.IsHit) {
+                                param = hit.Match.Result(condition.Parameter.ParameterSource);
                             }
                         }
 

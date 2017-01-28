@@ -29,17 +29,17 @@
 					<base>//www\.nicovideo\.jp</base>
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="\.*/watch/.+" />
+						<target attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;.+)" param="${PARAM}" />
+					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
 				</condition>
 				<condition visible="false">
 					<base />
 					<tag>.*/a</tag>
 					<targets>
-						<target attribute="href" value="//www.nicovideo.jp/watch/.+" />
+						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
 					</targets>
-					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;.+)" param="${PARAM}" />
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
 				</condition>
 			</conditions>
 		</element>

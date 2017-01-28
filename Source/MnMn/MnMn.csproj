@@ -220,6 +220,7 @@
     <Compile Include="Constants.Xaml.cs">
       <DependentUpon>Constants.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\WebNavigatorBridge\MatchSmileHtmlElement.cs" />
     <Compile Include="Data\WebNavigatorBridge\SimpleHtmlElement.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuItem.cs" />
     <Compile Include="Data\Description\DescriptionContextMenuBase.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Logic\Utility\Service\Smile\SmileDescriptionUtility.cs" />
     <Compile Include="Logic\Utility\Service\Smile\Video\SmileVideoDmcObjectUtility.cs" />
     <Compile Include="Logic\Utility\WebNavigatorUtility.cs" />
+    <Compile Include="Logic\WebNavigatorBridge\SimleHtmlElementList.cs" />
     <Compile Include="Logic\WebNavigatorCore.cs" />
     <Compile Include="Logic\Service\Smile\Video\SmileVideoFinderFiltering.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
