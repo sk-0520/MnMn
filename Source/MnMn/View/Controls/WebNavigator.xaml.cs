@@ -904,26 +904,26 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
         ICommand GetCommonCommand(string key)
         {
             switch(key) {
-                case WebNavigatorContextMenuKey.browserBack:
+                case WebNavigatorContextMenuKey.commonBack:
                     return BackCommand;
 
-                case WebNavigatorContextMenuKey.browserForward:
+                case WebNavigatorContextMenuKey.commonForward:
                     return ForwardCommand;
 
-                case WebNavigatorContextMenuKey.browserCopySelection:
+                case WebNavigatorContextMenuKey.commonCopySelection:
                     return CopySelectionCommand;
 
-                case WebNavigatorContextMenuKey.browserSelerctAll:
+                case WebNavigatorContextMenuKey.commonSelerctAll:
                     return SelectAllCommand;
 
-                case WebNavigatorContextMenuKey.browserSource:
+                case WebNavigatorContextMenuKey.commonSource:
                     return ShowSourceCommand;
 
-                case WebNavigatorContextMenuKey.browserProperty:
+                case WebNavigatorContextMenuKey.commonProperty:
                     return ShowPropertyCommand;
 
                 default:
-                    throw new NotImplementedException();
+                    return null;
             }
         }
 
