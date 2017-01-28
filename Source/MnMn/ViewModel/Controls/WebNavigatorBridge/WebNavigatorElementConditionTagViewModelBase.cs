@@ -26,18 +26,6 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         #region property
 
-        public Regex TagNameRegex
-        {
-            get
-            {
-                if(this._tagNameRegex == null) {
-                    this._tagNameRegex = WebNavigatorUtility.CreateConditionRegex(Model.TagNamePattern);
-                }
-
-                return this._tagNameRegex;
-            }
-        }
-
         public string Attribute { get { return Model.Attribute; } }
 
         public Regex ValueRegex

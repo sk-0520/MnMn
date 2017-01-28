@@ -27,10 +27,19 @@
 			<conditions >
 				<condition visible="true">
 					<base>//www\.nicovideo\.jp</base>
+					<tag>.*/a</tag>
 					<targets>
-						<target tag=".*/a" attribute="href" value="\.*/watach/[\w]+" />
+						<target attribute="href" value="\.*/watch/.+" />
 					</targets>
-					<parameter tag=".*/a" attribute="href" value="\.*/watach/(?&lt;PARAM&gt;[\w])+" param="${PARAM}" />
+					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;.+)" param="${PARAM}" />
+				</condition>
+				<condition visible="false">
+					<base />
+					<tag>.*/a</tag>
+					<targets>
+						<target attribute="href" value="//www.nicovideo.jp/watch/.+" />
+					</targets>
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;.+)" param="${PARAM}" />
 				</condition>
 			</conditions>
 		</element>

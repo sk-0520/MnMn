@@ -17,6 +17,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
         IReadOnlyList<WebNavigatorElementConditionTagViewModel> _targetItems;
         WebNavigatorElementConditionParameterViewModel _parameter;
         Regex _baseUriRegex;
+        Regex _tagNameRegex;
 
         #endregion
 
@@ -28,6 +29,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
 
         public bool IsVisible { get { return Model.IsVisible; } }
 
+        public bool IsEnabledBaseUri => !string.IsNullOrEmpty(Model.BaseUriPattern);
+
         public Regex BaseUriRegex
         {
             get
@@ -38,6 +41,19 @@ namespace ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge
                 return this._baseUriRegex;
             }
         }
+
+        public Regex TagNameRegex
+        {
+            get
+            {
+                if(this._tagNameRegex == null) {
+                    this._tagNameRegex = WebNavigatorUtility.CreateConditionRegex(Model.TagNamePattern);
+                }
+
+                return this._tagNameRegex;
+            }
+        }
+
 
         public IReadOnlyList<WebNavigatorElementConditionTagViewModel> TargetItems
         {

@@ -33,6 +33,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 using ContentTypeTextNet.MnMn.Library.Bridging.Define;
 using ContentTypeTextNet.MnMn.Library.Bridging.Model;
+using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.IF;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
@@ -79,8 +80,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
             WebNavigatorBridge = LoadModelFromFile<WebNavigatorBridgeModel>(Constants.ApplicationWebNavigatorBridgePath);
             WebNavigatorContextMenuItems = WebNavigatorBridge.ContextMenu.Items
                 .Select(i => new WebNavigatorContextMenuItemViewModel(i))
-                .ToDictionary(i => i.Key, i => i)
+                .ToList()
             ;
+            WebNavigatorContextMenuMap = WebNavigatorContextMenuItems.ToDictionary(i => i.Key, i => i);
 
             Setting = mainSettingModel;
             Smile = new SmileMediation(this, Setting.ServiceSmileSetting);
@@ -91,7 +93,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
         AppSettingModel Setting { get; }
 
         WebNavigatorBridgeModel WebNavigatorBridge { get; }
-        IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
+        IReadOnlyList<WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuItems { get; }
+        IReadOnlyDictionary<string, WebNavigatorContextMenuItemViewModel> WebNavigatorContextMenuMap { get; }
 
         /// <summary>
         /// ニコニコ関係。
@@ -219,10 +222,76 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
 
         WebNavigatorContextMenuItemResultModel Request_WebNavigatorFromContextMenuItem(WebNavigatorRequestModel request, WebNavigatorContextMenuItemParameterModel parameter)
         {
-            
-            var result = new WebNavigatorContextMenuItemResultModel(false, true, true, null);
+            WebNavigatorContextMenuItemViewModel menuItemResult;
+            if(WebNavigatorContextMenuMap.TryGetValue(parameter.Key, out menuItemResult)) {
+                if(!menuItemResult.Conditions.Any()) {
+                    return new WebNavigatorContextMenuItemResultModel(false, true, true, null);
+                }
 
-            return result;
+                foreach(var condition in menuItemResult.Conditions) {
+                    var showMenuItem = false;
+                    var enabledMenuItem = false;
+
+                    if(condition.IsEnabledBaseUri) {
+                        // メニュー表示可能サイト判定
+                        showMenuItem = condition.BaseUriRegex.IsMatch(parameter.CurrentUri.OriginalString);
+                    }
+
+                    var elementsFullNodeList = new List<SimpleHtmlElement>(parameter.RootNodes);
+                    elementsFullNodeList.Add(parameter.Element);
+                    var elementsFullNodePath = string.Join("/", elementsFullNodeList.Select(n => n.Name));
+
+                    var hitTagName = condition.TagNameRegex.IsMatch(elementsFullNodePath);
+
+                    var hitTargets = hitTagName && condition.TargetItems.All(tagItem => {
+                        var hitAttribute = false;
+                        for(var i = 0; i < elementsFullNodeList.Count; i++) {
+                            var currentElements = elementsFullNodeList
+                                .Take(i + 1)
+                                .ToList()
+                            ;
+                            var elementsCurrentNodePath = string.Join("/", currentElements.Select(n => n.Name));
+                            if(condition.TagNameRegex.IsMatch(elementsCurrentNodePath)) {
+                                var tagetElement = currentElements.Last();
+                                if(tagetElement.Attributes.ContainsKey(tagItem.Attribute)) {
+                                    var attributeValue = tagetElement.Attributes[tagItem.Attribute];
+                                    hitAttribute = tagItem.ValueRegex.IsMatch(attributeValue);
+                                }
+                                if(hitAttribute) {
+                                    break;
+                                }
+                            }
+                        }
+                        return hitAttribute;
+                    });
+
+                    if(hitTargets) {
+                        if(showMenuItem) {
+                            enabledMenuItem = true;
+                        } else {
+                            showMenuItem = true;
+                            enabledMenuItem = true;
+                        }
+                    }
+
+                    if(showMenuItem) {
+                        var param = string.Empty;
+                        if(enabledMenuItem) {
+                            if(parameter.Element.Attributes.ContainsKey(condition.Parameter.Attribute)) {
+                                var attributeValue = parameter.Element.Attributes[condition.Parameter.Attribute];
+                                var valueMatch = condition.Parameter.ValueRegex.Match(attributeValue);
+                                if(valueMatch.Success && 0 < valueMatch.Groups.Count) {
+                                    var sss= valueMatch.Groups[0].Captures;
+                                }
+                            }
+                        }
+
+                        return new WebNavigatorContextMenuItemResultModel(false, enabledMenuItem, showMenuItem, param);
+                    }
+                }
+            }
+
+            return new WebNavigatorContextMenuItemResultModel(false, false, false, null);
         }
 
         private ResponseModel Request_WebNavigator(WebNavigatorRequestModel request)

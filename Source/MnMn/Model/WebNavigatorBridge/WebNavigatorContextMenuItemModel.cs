@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
 
         /// <summary>
         /// 表示・使用条件。
+        /// <para>上から順に一番最初に合致したものが使用される。</para>
         /// </summary>
         [XmlArray("conditions"), XmlArrayItem("condition")]
         public CollectionModel<WebNavigatorElementConditionItemModel> Conditions { get; set; } = new CollectionModel<WebNavigatorElementConditionItemModel>();

@@ -929,7 +929,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             }
         }
 
-        void ExecuteCommonCommand(WebNavigatorContextMenuItemModel contextMenuItem, object parameter)
+        void ExecuteCommonCommand(WebNavigatorContextMenuItemViewModel contextMenuItem, object parameter)
         {
             Debug.Assert(contextMenuItem.SendService == ServiceType.Common);
 
@@ -941,7 +941,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
         void DoContextMenuItemCommand(MenuItem menuItem, object parameter)
         {
-            var contextMenuItem = (WebNavigatorContextMenuItemModel)menuItem.DataContext;
+            var contextMenuItem = (WebNavigatorContextMenuItemViewModel)menuItem.DataContext;
             if(contextMenuItem.SendService == ServiceType.Common) {
                 ExecuteCommonCommand(contextMenuItem, parameter);
             } else {
