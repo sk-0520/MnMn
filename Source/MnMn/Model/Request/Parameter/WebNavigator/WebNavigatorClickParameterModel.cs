@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ContentTypeTextNet.MnMn.MnMn.Data.Browser;
+using ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using Gecko;
 

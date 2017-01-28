@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.MnMn.MnMn.Data.Browser
+namespace ContentTypeTextNet.MnMn.MnMn.Data.WebNavigatorBridge
 {
     public class SimpleHtmlElement
     {
