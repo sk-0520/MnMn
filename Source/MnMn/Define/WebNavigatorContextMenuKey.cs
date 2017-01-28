@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         public const string commonSource = "common-source";
         public const string commonProperty = "common-property";
 
-        public const string smileVideoOopenPlayer = "smile-video-open-player";
+        public const string smileVideoOpenPlayer = "smile-video-open-player";
     }
 
 }

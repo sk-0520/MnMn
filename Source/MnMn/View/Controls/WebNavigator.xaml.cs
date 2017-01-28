@@ -947,6 +947,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             } else {
                 var processParameter = new WebNavigatorProcessParameterModel() {
                     ParameterVaule = (string)parameter,
+                    MenuItem = (WebNavigatorContextMenuItemViewModel)menuItem.DataContext,
                 };
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(

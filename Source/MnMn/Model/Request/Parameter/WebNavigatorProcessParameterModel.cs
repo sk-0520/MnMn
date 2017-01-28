@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.MnMn.MnMn.ViewModel.Controls.WebNavigatorBridge;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter
 {
@@ -11,6 +12,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter
         #region property
 
         public string ParameterVaule { get; set; }
+        public WebNavigatorContextMenuItemViewModel MenuItem { get; set; }
 
         #endregion
     }

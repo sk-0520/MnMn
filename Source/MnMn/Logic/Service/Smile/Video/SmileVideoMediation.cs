@@ -30,6 +30,7 @@ using ContentTypeTextNet.MnMn.Library.Bridging.Model;
 using ContentTypeTextNet.MnMn.MnMn.Define;
 using ContentTypeTextNet.MnMn.MnMn.Define.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.IF.Control;
+using ContentTypeTextNet.MnMn.MnMn.Logic.Extensions;
 using ContentTypeTextNet.MnMn.MnMn.Logic.Utility.Service.Smile.Video;
 using ContentTypeTextNet.MnMn.MnMn.Model;
 using ContentTypeTextNet.MnMn.MnMn.Model.Request;
@@ -152,7 +153,23 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
 
             var webProcessRequest = request as WebNavigatorProcessRequestModel;
             if(webProcessRequest != null) {
+                if(webProcessRequest.Parameter.MenuItem != null) {
+                    // メニューから処理された
+                    switch(webProcessRequest.Parameter.MenuItem.Key) {
+                        case WebNavigatorContextMenuKey.smileVideoOpenPlayer: {
+                                var videoId = webProcessRequest.Parameter.ParameterVaule;
+                                var videoInformationRequest = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
+                                Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(videoInformationRequest).ContinueWith(t => {
+                                    var videoInformation = t.Result;
+                                    videoInformation.OpenVideoDefaultAsync(false);
+                                }, TaskScheduler.FromCurrentSynchronizationContext());
+                                return new ResponseModel(request, videoId);
+                            }
 
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
             }
 
             throw new NotImplementedException();
