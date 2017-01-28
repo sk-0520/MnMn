@@ -16,6 +16,8 @@ namespace ContentTypeTextNet.MnMn.MnMn.Define
         public const string commonProperty = "common-property";
 
         public const string smileVideoOpenPlayer = "smile-video-open-player";
+        public const string smileVideoAddCheckItlater = "smile-video-add-checkItlater";
+        public const string smileVideoAddUnorganizedBookmark = "smile-video-add-unorganized-bookmark";
     }
 
 }

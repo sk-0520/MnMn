@@ -7,6 +7,7 @@
 			</extends>
 		</element>
 	</navigating>
+	<!--
 	<click>
 		<element key="">
 			<extends>
@@ -14,17 +15,74 @@
 			</extends>
 		</element>
 	</click>
+	-->
 	<context-menu>
 		<element key="common-back" separator="false" allow-service="*" send-service="common">
 			<words>
 				<word key="ja-jp" value="戻る" />
 			</words>
 		</element>
+		<element key="common-forward" separator="false" allow-service="*" send-service="common">
+			<words>
+				<word key="ja-jp" value="進む" />
+			</words>
+		</element>
+		
+		<element key="common-separator" separator="true" allow-service="*" send-service="common" />
+			
 		<element key="smile-video-open-player" separator="false" allow-service="*" send-service="smile-video">
 			<words>
 				<word key="ja-jp" value="プレイヤーで開く" />
 			</words>
-			<conditions >
+			<conditions>
+				<condition visible="true">
+					<base>//www\.nicovideo\.jp</base>
+					<tag>.*/a</tag>
+					<targets>
+						<target attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+					</targets>
+					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+				</condition>
+				<condition visible="false">
+					<base />
+					<tag>.*/a</tag>
+					<targets>
+						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+					</targets>
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+				</condition>
+			</conditions>
+		</element>
+		
+		<element key="smile-video-add-checkItlater" separator="false" allow-service="*" send-service="smile-video">
+			<words>
+				<word key="ja-jp" value="あとで見る" />
+			</words>
+			<conditions>
+				<condition visible="true">
+					<base>//www\.nicovideo\.jp</base>
+					<tag>.*/a</tag>
+					<targets>
+						<target attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+					</targets>
+					<parameter attribute="href" value="\.*/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+				</condition>
+				<condition visible="false">
+					<base />
+					<tag>.*/a</tag>
+					<targets>
+						<target attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" />
+					</targets>
+					<parameter attribute="href" value="//www.nicovideo.jp/watch/(?&lt;PARAM&gt;(sm|nm|so)?\d+)" param="${PARAM}" />
+				</condition>
+			</conditions>
+		</element>
+		
+		<element key="smile-video-add-unorganized-bookmark" separator="false" allow-service="*" send-service="smile-video">
+			<words>
+				<word key="ja-jp" value="未整理のブックマークに入れておく" />
+			</words>
+			<conditions>
 				<condition visible="true">
 					<base>//www\.nicovideo\.jp</base>
 					<tag>.*/a</tag>

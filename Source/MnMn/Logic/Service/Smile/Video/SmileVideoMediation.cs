@@ -156,15 +156,35 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                 if(webProcessRequest.Parameter.MenuItem != null) {
                     // メニューから処理された
                     switch(webProcessRequest.Parameter.MenuItem.Key) {
-                        case WebNavigatorContextMenuKey.smileVideoOpenPlayer: {
+                        case WebNavigatorContextMenuKey.smileVideoOpenPlayer:
+                        case WebNavigatorContextMenuKey.smileVideoAddCheckItlater:
+                        case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark: {
                                 var videoId = webProcessRequest.Parameter.ParameterVaule;
                                 var videoInformationRequest = new SmileVideoInformationCacheRequestModel(new SmileVideoInformationCacheParameterModel(videoId, Constants.ServiceSmileVideoThumbCacheSpan));
                                 Mediation.GetResultFromRequest<Task<SmileVideoInformationViewModel>>(videoInformationRequest).ContinueWith(t => {
                                     var videoInformation = t.Result;
-                                    videoInformation.OpenVideoDefaultAsync(false);
+
+                                    switch(webProcessRequest.Parameter.MenuItem.Key) {
+                                        case WebNavigatorContextMenuKey.smileVideoOpenPlayer:
+                                            videoInformation.OpenVideoDefaultAsync(false);
+                                            break;
+
+                                        case WebNavigatorContextMenuKey.smileVideoAddCheckItlater:
+                                            Mediation.Request(new SmileVideoProcessRequestModel(new SmileVideoProcessCheckItLaterParameterModel(videoInformation.ToVideoItemModel(), true)));
+                                            break;
+
+                                        case WebNavigatorContextMenuKey.smileVideoAddUnorganizedBookmark:
+                                            ManagerPack.BookmarkManager.Node.VideoItems.Add(videoInformation.ToVideoItemModel());
+                                            break;
+
+                                        default:
+                                            throw new NotImplementedException();
+                                    }
                                 }, TaskScheduler.FromCurrentSynchronizationContext());
+
                                 return new ResponseModel(request, videoId);
                             }
+
 
                         default:
                             throw new NotImplementedException();
