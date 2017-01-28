@@ -134,18 +134,28 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
             return new ResponseModel(request, windowViewModels);
         }
 
-        ResponseModel Request_Process(SmileVideoProcessRequestModel request)
+        ResponseModel Request_Process(ProcessRequestModelBase request)
         {
-            switch(request.Parameter.Process) {
-                case SmileVideoProcess.CheckItLater: {
-                        var param = (SmileVideoProcessCheckItLaterParameterModel)request.Parameter;
-                        var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
-                        return new ResponseModel(request, result);
-                    }
+            var smileProcessRequest = request as SmileVideoProcessRequestModel;
+            if(smileProcessRequest != null) {
+                switch(smileProcessRequest.Parameter.Process) {
+                    case SmileVideoProcess.CheckItLater: {
+                            var param = (SmileVideoProcessCheckItLaterParameterModel)smileProcessRequest.Parameter;
+                            var result = ManagerPack.CheckItLaterManager.AddLater(param.VideoItem, param.IsForce);
+                            return new ResponseModel(request, result);
+                        }
 
-                default:
-                    throw new NotImplementedException();
+                    default:
+                        throw new NotImplementedException();
+                }
             }
+
+            var webProcessRequest = request as WebNavigatorProcessRequestModel;
+            if(webProcessRequest != null) {
+
+            }
+
+            throw new NotImplementedException();
         }
 
         ResponseModel RequestCore(RequestModel request)
@@ -173,7 +183,7 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic.Service.Smile.Video
                     return Request_WindowViewModels(request);
 
                 case RequestKind.Process:
-                    return Request_Process((SmileVideoProcessRequestModel)request);
+                    return Request_Process((ProcessRequestModelBase)request);
 
                 default:
                     throw new NotImplementedException();

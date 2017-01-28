@@ -20,5 +20,10 @@
 				<word key="ja-jp" value="戻る" />
 			</words>
 		</element>
+		<element key="smile-video--open-player" separator="false" allow-service="*" send-service="smile-video">
+			<words>
+				<word key="ja-jp" value="プレイヤーで開く" />
+			</words>
+		</element>
 	</context-menu>
 </web-navigator>

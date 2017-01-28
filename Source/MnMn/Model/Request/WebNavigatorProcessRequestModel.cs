@@ -8,7 +8,7 @@ using ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter;
 
 namespace ContentTypeTextNet.MnMn.MnMn.Model.Request
 {
-    public class WebNavigatorProcessRequestModel: ProcessRequestModelBase
+    public class WebNavigatorProcessRequestModel: ProcessRequestModelBase<WebNavigatorProcessParameterModel>
     {
         public WebNavigatorProcessRequestModel(ServiceType serviceType, WebNavigatorProcessParameterModel parameter) 
             : base(serviceType, parameter)
