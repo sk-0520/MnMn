@@ -35,6 +35,12 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.WebNavigatorBridge
         [XmlAttribute("send-service")]
         public ServiceType SendService { get; set; }
 
+        /// <summary>
+        /// 表示・使用条件。
+        /// </summary>
+        [XmlArray("conditions"), XmlArrayItem("condition")]
+        public CollectionModel<WebNavigatorElementConditionItemModel> Conditions { get; set; } = new CollectionModel<WebNavigatorElementConditionItemModel>();
+
         #endregion
     }
 }

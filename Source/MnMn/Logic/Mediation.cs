@@ -235,8 +235,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.Logic
                     break;
 
                 case WebNavigatorParameterKind.ContextMenuItem: {
+                        //todo:parameter
                         var parameter = (WebNavigatorContextMenuItemParameterModel)request.Parameter;
-                        var contextMenuItemResult = new WebNavigatorContextMenuItemResultModel(false, true, true);
+                        var contextMenuItemResult = new WebNavigatorContextMenuItemResultModel(false, true, true, null);
                         return new ResponseModel(request, contextMenuItemResult);
                     }
 

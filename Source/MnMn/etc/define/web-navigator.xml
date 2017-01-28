@@ -24,6 +24,15 @@
 			<words>
 				<word key="ja-jp" value="プレイヤーで開く" />
 			</words>
+			<conditions >
+				<condition visible="true">
+					<base>//www\.nicovideo\.jp</base>
+					<targets>
+						<target tag=".*/a" attribute="href" value="\.*/watach/[\w]+" />
+					</targets>
+					<parameter tag=".*/a" attribute="href" value="\.*/watach/(?&lt;PARAM&gt;[\w])+" param="${PARAM}" />
+				</condition>
+			</conditions>
 		</element>
 	</context-menu>
 </web-navigator>

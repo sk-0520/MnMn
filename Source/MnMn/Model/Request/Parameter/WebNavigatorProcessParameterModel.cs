@@ -8,5 +8,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.Model.Request.Parameter
 {
     public class WebNavigatorProcessParameterModel: ProcessParameterModelBase
     {
+        #region property
+
+        public string ParameterVaule { get; set; }
+
+        #endregion
     }
 }

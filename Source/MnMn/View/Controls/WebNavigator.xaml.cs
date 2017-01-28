@@ -944,7 +944,9 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
             if(contextMenuItem.SendService == ServiceType.Common) {
                 ExecuteCommonCommand(contextMenuItem, parameter);
             } else {
-                var processParameter = new WebNavigatorProcessParameterModel();
+                var processParameter = new WebNavigatorProcessParameterModel() {
+                    ParameterVaule = (string)parameter,
+                };
                 var processRequest = new WebNavigatorProcessRequestModel(contextMenuItem.SendService, processParameter);
                 DoAction(
                     b => { ((Mediation)b.Tag).Request(processRequest); },
@@ -1154,6 +1156,10 @@ namespace ContentTypeTextNet.MnMn.MnMn.View.Controls
 
                     menuItem.View.IsEnabled = contextMenuItemResult.IsEnabled;
                     menuItem.View.Visibility = contextMenuItemResult.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+                    if(!menuItem.Define.IsSeparator) {
+                        var viewMenuItem = (MenuItem)menuItem.View;
+                        viewMenuItem.CommandParameter = contextMenuItemResult.Parameter;
+                    }
                 }
 
                 //TODO: 重複するセパレータの除外とかとか
